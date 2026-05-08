@@ -1,0 +1,598 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schema/bayani-knowledge-system.schema.json",
+  "title": "Bayani Knowledge System",
+  "type": "object",
+  "required": [
+    "name",
+    "formal_kernel",
+    "governing_rules",
+    "knowledge_foundation",
+    "ontology",
+    "grammar_engine",
+    "reasoning_engine",
+    "governance_engine",
+    "schema_artifacts"
+  ],
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "formal_kernel": {
+      "$ref": "#/$defs/formalKernel"
+    },
+    "governing_rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "knowledge_foundation": {
+      "$ref": "#/$defs/knowledgeFoundation"
+    },
+    "ontology": {
+      "$ref": "#/$defs/ontologySection"
+    },
+    "grammar_engine": {
+      "$ref": "#/$defs/grammarEngine"
+    },
+    "reasoning_engine": {
+      "$ref": "#/$defs/reasoningEngine"
+    },
+    "governance_engine": {
+      "$ref": "#/$defs/governanceEngine"
+    },
+    "schema_artifacts": {
+      "$ref": "#/$defs/schemaArtifacts"
+    }
+  },
+  "$defs": {
+    "idField": {
+      "type": "string",
+      "minLength": 1
+    },
+    "namedRule": {
+      "type": "object",
+      "required": [
+        "id",
+        "claim"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/idField"
+        },
+        "claim": {
+          "type": "string"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "requires": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "zeros": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "formalKernel": {
+      "type": "object",
+      "required": [
+        "equation",
+        "components"
+      ],
+      "properties": {
+        "equation": {
+          "const": "S + D + T + E + Z + C + R + P"
+        },
+        "components": {
+          "type": "object",
+          "required": [
+            "S",
+            "D",
+            "T",
+            "E",
+            "Z",
+            "C",
+            "R",
+            "P"
+          ],
+          "properties": {
+            "S": {"const": "States"},
+            "D": {"const": "Dimensions"},
+            "T": {"const": "Transitions"},
+            "E": {"const": "Evidence"},
+            "Z": {"const": "Zeros"},
+            "C": {"const": "Certificates"},
+            "R": {"const": "Recursive Relation"},
+            "P": {"const": "Proof Layer"}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "knowledgeUnit": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "type",
+        "domain",
+        "claim",
+        "inputs_required",
+        "outputs",
+        "evidence_required",
+        "zeros",
+        "confidence_policy"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/idField"},
+        "name": {"type": "string"},
+        "type": {"type": "string"},
+        "domain": {"type": "string"},
+        "claim": {"type": "string"},
+        "inputs_required": {"type": "array", "items": {"type": "string"}},
+        "outputs": {"type": "array", "items": {"type": "string"}},
+        "evidence_required": {"type": "array", "items": {"type": "string"}},
+        "zeros": {"type": "array", "items": {"type": "string"}},
+        "confidence_policy": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "knowledgeFoundation": {
+      "type": "object",
+      "required": [
+        "definition",
+        "components",
+        "knowledge_unit_types",
+        "operating_rules",
+        "knowledge_units"
+      ],
+      "properties": {
+        "definition": {"type": "string"},
+        "components": {"type": "array", "items": {"type": "string"}},
+        "knowledge_unit_types": {"type": "array", "items": {"type": "string"}},
+        "operating_rules": {"type": "array", "items": {"type": "string"}},
+        "knowledge_units": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/knowledgeUnit"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "ontologyNode": {
+      "type": "object",
+      "required": [
+        "id",
+        "label",
+        "arabic_label",
+        "definition"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/idField"},
+        "label": {"type": "string"},
+        "arabic_label": {"type": "string"},
+        "definition": {"type": "string"},
+        "requires": {"type": "array", "items": {"type": "string"}},
+        "may_have": {"type": "array", "items": {"type": "string"}},
+        "zeros": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "ontologySection": {
+      "type": "object",
+      "required": [
+        "top_types",
+        "rules",
+        "concept_examples"
+      ],
+      "properties": {
+        "top_types": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/ontologyNode"}
+        },
+        "rules": {"type": "array", "items": {"type": "string"}},
+        "concept_examples": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["concept", "ontological_type", "roles"],
+            "properties": {
+              "concept": {"type": "string"},
+              "ontological_type": {"type": "string"},
+              "roles": {"type": "object"}
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "amilRule": {
+      "type": "object",
+      "required": [
+        "id",
+        "surface",
+        "category",
+        "input_contract",
+        "effects",
+        "expected_marks",
+        "semantic_effect",
+        "zeros",
+        "evidence_required"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/idField"},
+        "surface": {"type": "string"},
+        "category": {"type": "string"},
+        "input_contract": {"type": "object"},
+        "effects": {"type": "object"},
+        "expected_marks": {"type": "array", "items": {"type": "string"}},
+        "semantic_effect": {"type": "array", "items": {"type": "string"}},
+        "zeros": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {"type": "string"},
+              {
+                "type": "object",
+                "required": ["type", "severity"],
+                "properties": {
+                  "type": {"type": "string"},
+                  "severity": {"type": "string"}
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "evidence_required": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "qarinaRule": {
+      "type": "object",
+      "required": [
+        "id",
+        "type",
+        "surface_evidence",
+        "supports_claim",
+        "strength",
+        "requires",
+        "blocks",
+        "result_effect"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/idField"},
+        "type": {"type": "string"},
+        "surface_evidence": {"type": "string"},
+        "supports_claim": {"type": "string"},
+        "strength": {"type": "number", "minimum": 0, "maximum": 1},
+        "requires": {"type": "array", "items": {"type": "string"}},
+        "blocks": {"type": "array", "items": {"type": "string"}},
+        "result_effect": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "ellipsisRule": {
+      "type": "object",
+      "required": [
+        "id",
+        "surface",
+        "missing_element",
+        "necessity",
+        "can_estimate",
+        "qarina_available",
+        "result_type"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/idField"},
+        "surface": {"type": "string"},
+        "missing_element": {"type": "string"},
+        "necessity": {"type": "string"},
+        "can_estimate": {"type": "boolean"},
+        "qarina_available": {"type": "boolean"},
+        "result_type": {"type": "string"},
+        "zero_type": {"type": "string"},
+        "blocks": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "referenceRule": {
+      "type": "object",
+      "required": [
+        "id",
+        "surface",
+        "type",
+        "candidate_antecedents",
+        "constraints",
+        "selected_antecedent",
+        "confidence",
+        "result_type"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/idField"},
+        "surface": {"type": "string"},
+        "type": {"type": "string"},
+        "candidate_antecedents": {"type": "array", "items": {"type": "string"}},
+        "constraints": {"type": "array", "items": {"type": "string"}},
+        "selected_antecedent": {"type": "string"},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "result_type": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "conflictRecord": {
+      "type": "object",
+      "required": [
+        "id",
+        "claim_a",
+        "claim_b",
+        "conflict_type",
+        "reason",
+        "status",
+        "result_type"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/idField"},
+        "claim_a": {"type": "string"},
+        "claim_b": {"type": "string"},
+        "conflict_type": {"type": "string"},
+        "reason": {"type": "string"},
+        "status": {"type": "string"},
+        "result_type": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "sourceBinding": {
+      "type": "object",
+      "required": [
+        "claim_id",
+        "claim",
+        "source_type",
+        "evidence",
+        "traceable"
+      ],
+      "properties": {
+        "claim_id": {"$ref": "#/$defs/idField"},
+        "claim": {"type": "string"},
+        "source_type": {"type": "string"},
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["type", "value"],
+            "properties": {
+              "type": {"type": "string"},
+              "value": {"type": "string"}
+            },
+            "additionalProperties": false
+          }
+        },
+        "traceable": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "learningEvent": {
+      "type": "object",
+      "required": [
+        "id",
+        "failed_claim",
+        "error_type",
+        "failed_layer",
+        "correction",
+        "rule_update",
+        "tests_added"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/idField"},
+        "failed_claim": {"type": "string"},
+        "error_type": {"type": "string"},
+        "failed_layer": {"type": "string"},
+        "correction": {"type": "string"},
+        "rule_update": {
+          "type": "object",
+          "required": ["rule", "new_behavior"],
+          "properties": {
+            "rule": {"type": "string"},
+            "new_behavior": {"type": "string"}
+          },
+          "additionalProperties": false
+        },
+        "tests_added": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "testCase": {
+      "type": "object",
+      "required": [
+        "id",
+        "input",
+        "expected"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/idField"},
+        "input": {"type": "string"},
+        "expected": {"type": "object"}
+      },
+      "additionalProperties": false
+    },
+    "proofInvariant": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "rule"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/idField"},
+        "name": {"type": "string"},
+        "rule": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "proofObject": {
+      "type": "object",
+      "required": [
+        "unit_id",
+        "certificate",
+        "checked_invariants",
+        "status"
+      ],
+      "properties": {
+        "unit_id": {"$ref": "#/$defs/idField"},
+        "certificate": {"type": "string"},
+        "checked_invariants": {"type": "array", "items": {"type": "string"}},
+        "status": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "recursiveRelation": {
+      "type": "object",
+      "required": [
+        "signature",
+        "description",
+        "examples",
+        "invariant"
+      ],
+      "properties": {
+        "signature": {"const": "R(level_n, level_n+1)"},
+        "description": {"type": "string"},
+        "examples": {"type": "array", "items": {"type": "string"}},
+        "invariant": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "epistemicUnitSchema": {
+      "type": "object",
+      "required": [
+        "type",
+        "required",
+        "properties"
+      ],
+      "properties": {
+        "type": {"const": "object"},
+        "required": {"type": "array", "items": {"type": "string"}},
+        "properties": {"type": "object"}
+      },
+      "additionalProperties": false
+    },
+    "grammarEngine": {
+      "type": "object",
+      "required": [
+        "amil_categories",
+        "amil_rules",
+        "amil_ruleset_rules",
+        "qarina_types",
+        "qarina_rules",
+        "qarina_ruleset_rules",
+        "ellipsis_types",
+        "ellipsis_rules",
+        "ellipsis_ruleset_rules",
+        "reference_units",
+        "reference_rules",
+        "reference_zero_types"
+      ],
+      "properties": {
+        "amil_categories": {"type": "array", "items": {"type": "string"}},
+        "amil_rules": {"type": "array", "items": {"$ref": "#/$defs/amilRule"}},
+        "amil_ruleset_rules": {"type": "array", "items": {"type": "string"}},
+        "qarina_types": {"type": "array", "items": {"type": "string"}},
+        "qarina_rules": {"type": "array", "items": {"$ref": "#/$defs/qarinaRule"}},
+        "qarina_ruleset_rules": {"type": "array", "items": {"type": "string"}},
+        "ellipsis_types": {"type": "array", "items": {"type": "string"}},
+        "ellipsis_rules": {"type": "array", "items": {"$ref": "#/$defs/ellipsisRule"}},
+        "ellipsis_ruleset_rules": {"type": "array", "items": {"type": "string"}},
+        "reference_units": {"type": "array", "items": {"type": "string"}},
+        "reference_rules": {"type": "array", "items": {"$ref": "#/$defs/referenceRule"}},
+        "reference_zero_types": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "reasoningEngine": {
+      "type": "object",
+      "required": [
+        "conflict_types",
+        "conflicts",
+        "tarjih_rules",
+        "recursive_relation"
+      ],
+      "properties": {
+        "conflict_types": {"type": "array", "items": {"type": "string"}},
+        "conflicts": {"type": "array", "items": {"$ref": "#/$defs/conflictRecord"}},
+        "tarjih_rules": {"type": "array", "items": {"type": "string"}},
+        "recursive_relation": {"$ref": "#/$defs/recursiveRelation"}
+      },
+      "additionalProperties": false
+    },
+    "governanceEngine": {
+      "type": "object",
+      "required": [
+        "source_rules",
+        "source_bindings",
+        "learning_rules",
+        "learning_events",
+        "test_case_rules",
+        "test_cases",
+        "proof_layer"
+      ],
+      "properties": {
+        "source_rules": {"type": "array", "items": {"type": "string"}},
+        "source_bindings": {"type": "array", "items": {"$ref": "#/$defs/sourceBinding"}},
+        "learning_rules": {"type": "array", "items": {"type": "string"}},
+        "learning_events": {"type": "array", "items": {"$ref": "#/$defs/learningEvent"}},
+        "test_case_rules": {"type": "array", "items": {"type": "string"}},
+        "test_cases": {"type": "array", "items": {"$ref": "#/$defs/testCase"}},
+        "proof_layer": {
+          "type": "object",
+          "required": ["definition", "invariants", "proof_objects"],
+          "properties": {
+            "definition": {"type": "string"},
+            "invariants": {"type": "array", "items": {"$ref": "#/$defs/proofInvariant"}},
+            "proof_objects": {"type": "array", "items": {"$ref": "#/$defs/proofObject"}}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "executionPhase": {
+      "type": "object",
+      "required": ["name", "components"],
+      "properties": {
+        "name": {"type": "string"},
+        "components": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "schemaArtifacts": {
+      "type": "object",
+      "required": [
+        "upper_entities",
+        "epistemic_unit_schema_excerpt",
+        "laravel_models",
+        "neo4j_graph",
+        "execution_phases"
+      ],
+      "properties": {
+        "upper_entities": {"type": "array", "items": {"type": "string"}},
+        "epistemic_unit_schema_excerpt": {"$ref": "#/$defs/epistemicUnitSchema"},
+        "laravel_models": {"type": "array", "items": {"type": "string"}},
+        "neo4j_graph": {"type": "array", "items": {"type": "string"}},
+        "execution_phases": {"type": "array", "items": {"$ref": "#/$defs/executionPhase"}}
+      },
+      "additionalProperties": false
+    }
+  }
+}

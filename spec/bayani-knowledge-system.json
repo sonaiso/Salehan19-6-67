@@ -1,0 +1,838 @@
+{
+  "name": "Bayani Knowledge System",
+  "formal_kernel": {
+    "equation": "S + D + T + E + Z + C + R + P",
+    "components": {
+      "S": "States",
+      "D": "Dimensions",
+      "T": "Transitions",
+      "E": "Evidence",
+      "Z": "Zeros",
+      "C": "Certificates",
+      "R": "Recursive Relation",
+      "P": "Proof Layer"
+    }
+  },
+  "governing_rules": [
+    "كل طبقة لها عقد.",
+    "كل انتقال مسجل.",
+    "كل دعوى مربوطة بدليل.",
+    "كل صفر مانع يوقف الشهادة.",
+    "كل فرضية معلنة كفرضية.",
+    "كل مستوى لا يقفز فوق الذي قبله."
+  ],
+  "knowledge_foundation": {
+    "definition": "المخزون المنظم من القواعد والمعاجم والموازين والأدلة الذي يمكّن النظام من تفسير الأثر وربطه بالواقع أو المعنى.",
+    "components": [
+      "معاجم",
+      "قواعد",
+      "موازين",
+      "مصادر",
+      "حدود استعمال",
+      "أصفار",
+      "اختبارات"
+    ],
+    "knowledge_unit_types": [
+      "Unicode Rule",
+      "Glyph Rule",
+      "Phoneme Rule",
+      "Haraka Rule",
+      "Syllable Rule",
+      "Root Rule",
+      "Pattern Rule",
+      "Lexicon Entry",
+      "Amil Rule",
+      "Qarina Rule",
+      "Mantuq Rule",
+      "Mafhum Rule",
+      "Tarjih Rule",
+      "Zero Rule",
+      "Proof Rule"
+    ],
+    "operating_rules": [
+      "لا قاعدة بلا مجال.",
+      "لا قاعدة بلا مدخلات.",
+      "لا قاعدة بلا مخرجات.",
+      "لا قاعدة بلا دليل مطلوب.",
+      "لا قاعدة بلا أصفار محتملة.",
+      "لا استعمال لقاعدة خارج مجالها."
+    ],
+    "knowledge_units": [
+      {
+        "id": "KU-0001",
+        "name": "ArabicPastVerbPattern",
+        "type": "rule",
+        "domain": "morphology",
+        "claim": "صيغة فَعَلَ تدل غالبًا على فعل ماض مجرد معلوم",
+        "inputs_required": [
+          "root_candidate",
+          "haraka_sequence",
+          "pattern_alignment"
+        ],
+        "outputs": [
+          "past_event",
+          "active_voice",
+          "verbal_class"
+        ],
+        "evidence_required": [
+          "three_radicals",
+          "fatha_fatha_fatha",
+          "pattern_match"
+        ],
+        "zeros": [
+          "MissingRoot",
+          "PatternMismatch",
+          "HarakaConflict"
+        ],
+        "confidence_policy": "certificate_if_all_required_evidence_exists"
+      }
+    ]
+  },
+  "ontology": {
+    "top_types": [
+      {
+        "id": "ONT-ENTITY",
+        "label": "Entity",
+        "arabic_label": "ذات",
+        "definition": "مدلول قائم في نفسه أو باعتبارٍ مستقل في التحليل."
+      },
+      {
+        "id": "ONT-EVENT",
+        "label": "Event",
+        "arabic_label": "حدث",
+        "definition": "مدلول يدل على وقوع أو إمكان وقوع فعل أو تغير.",
+        "requires": [
+          "time_axis"
+        ],
+        "may_have": [
+          "agent",
+          "patient",
+          "instrument",
+          "cause",
+          "condition",
+          "purpose",
+          "result"
+        ],
+        "zeros": [
+          "EventWithoutTimeAxis",
+          "EventRoleConflict"
+        ]
+      },
+      {
+        "id": "ONT-ATTRIBUTE",
+        "label": "Attribute",
+        "arabic_label": "صفة",
+        "definition": "مدلول يقيّد ذاتًا أو حدثًا بوصف أو حالة."
+      },
+      {
+        "id": "ONT-RELATION",
+        "label": "Relation",
+        "arabic_label": "علاقة",
+        "definition": "مدلول رابط بين طرفين أو أكثر."
+      },
+      {
+        "id": "ONT-QUANTITY",
+        "label": "Quantity",
+        "arabic_label": "كمية",
+        "definition": "مدلول يعبّر عن قدر أو عدد أو مقياس."
+      },
+      {
+        "id": "ONT-TIME",
+        "label": "Time",
+        "arabic_label": "زمن",
+        "definition": "محور زمني يضبط الوقوع أو الامتداد."
+      },
+      {
+        "id": "ONT-PLACE",
+        "label": "Place",
+        "arabic_label": "مكان",
+        "definition": "حيز وقوع أو تموضع."
+      },
+      {
+        "id": "ONT-INSTRUMENT",
+        "label": "Instrument",
+        "arabic_label": "أداة",
+        "definition": "واسطة تنفيذ الفعل أو التغيّر."
+      },
+      {
+        "id": "ONT-DIRECTION",
+        "label": "Direction",
+        "arabic_label": "جهة",
+        "definition": "مدلول يحدد الاتجاه أو الجهة."
+      },
+      {
+        "id": "ONT-JUDGMENT",
+        "label": "Judgment",
+        "arabic_label": "حكم",
+        "definition": "مدلول تقويمي أو إلزامي أو خبري منضبط."
+      },
+      {
+        "id": "ONT-CAUSE",
+        "label": "Cause",
+        "arabic_label": "سبب",
+        "definition": "ما يفسر ترتب الأثر أو يفضي إليه."
+      },
+      {
+        "id": "ONT-CONDITION",
+        "label": "Condition",
+        "arabic_label": "شرط",
+        "definition": "ما يتوقف عليه الحكم أو الحدث دون أن يستقل بالإيجاد."
+      },
+      {
+        "id": "ONT-PREVENTER",
+        "label": "Preventer",
+        "arabic_label": "مانع",
+        "definition": "ما يمنع ترتب الأثر أو تمام الحكم."
+      },
+      {
+        "id": "ONT-PURPOSE",
+        "label": "Purpose",
+        "arabic_label": "غاية",
+        "definition": "الغاية المقصودة من الحدث أو الحكم."
+      },
+      {
+        "id": "ONT-AGENCY",
+        "label": "Agency",
+        "arabic_label": "فاعلية",
+        "definition": "جهة الإسناد الفاعل أو المباشر."
+      },
+      {
+        "id": "ONT-PATIENTHOOD",
+        "label": "Patienthood",
+        "arabic_label": "مفعولية",
+        "definition": "جهة التأثر بالفعل أو الحكم."
+      },
+      {
+        "id": "ONT-CAUSALITY",
+        "label": "Causality",
+        "arabic_label": "سببية",
+        "definition": "علاقة السببية بين ما قبل وما بعد."
+      },
+      {
+        "id": "ONT-RESULT",
+        "label": "Result",
+        "arabic_label": "مسببية",
+        "definition": "الأثر الناتج عن سبب أو فعل."
+      },
+      {
+        "id": "ONT-QARINA",
+        "label": "Qarina",
+        "arabic_label": "قرينة",
+        "definition": "أثر مساعد يرفع الاحتمال أو يصرف المعنى أو يرجحه."
+      },
+      {
+        "id": "ONT-EVIDENCE",
+        "label": "Evidence",
+        "arabic_label": "دليل",
+        "definition": "ما يصح ربط الدعوى به على وجه التتبع والتوثيق."
+      }
+    ],
+    "rules": [
+      "لا مدلول بلا نوع وجودي.",
+      "لا حدث بلا محور زمن.",
+      "لا علاقة بلا طرفين.",
+      "لا سبب بلا أثر.",
+      "لا شرط بلا مشروط.",
+      "لا مانع بلا ممنوع.",
+      "لا حكم بلا متعلق."
+    ],
+    "concept_examples": [
+      {
+        "concept": "writing",
+        "ontological_type": "Event",
+        "roles": {
+          "agent": {
+            "required": true,
+            "role_name": "كاتب"
+          },
+          "patient": {
+            "required": false,
+            "role_name": "مكتوب"
+          },
+          "instrument": {
+            "required": false,
+            "role_name": "أداة كتابة"
+          },
+          "purpose": {
+            "required": false
+          }
+        }
+      }
+    ]
+  },
+  "grammar_engine": {
+    "amil_categories": [
+      "عوامل الجزم",
+      "عوامل النصب",
+      "عوامل الجر",
+      "النواسخ الفعلية",
+      "النواسخ الحرفية",
+      "عوامل الابتداء",
+      "عوامل الإضافة",
+      "عوامل التبعية",
+      "عوامل العطف",
+      "عوامل الشرط",
+      "عوامل الاستثناء",
+      "عوامل النداء",
+      "عوامل النفي",
+      "عوامل التوكيد",
+      "العوامل المعنوية"
+    ],
+    "amil_rules": [
+      {
+        "id": "AMIL-0001",
+        "surface": "لَمْ",
+        "category": "jazm_particle",
+        "input_contract": {
+          "requires_next": "present_verb",
+          "requires_mood_capability": "jussive"
+        },
+        "effects": {
+          "irab": "jazm",
+          "judgment": "negation",
+          "time": "past_reversal"
+        },
+        "expected_marks": [
+          "sukun",
+          "حذف حرف العلة في المعتل",
+          "حذف النون في الأفعال الخمسة"
+        ],
+        "semantic_effect": [
+          "نفي وقوع الحدث",
+          "قلب زمن المضارع إلى الماضي"
+        ],
+        "zeros": [
+          {
+            "type": "NoFollowingPresentVerb",
+            "severity": "BLOCKING"
+          },
+          {
+            "type": "UnexpectedFinalHarakaAfterJazm",
+            "severity": "BLOCKING"
+          }
+        ],
+        "evidence_required": [
+          "particle_observed",
+          "following_present_verb",
+          "jussive_mark_observed"
+        ]
+      }
+    ],
+    "amil_ruleset_rules": [
+      "لا إعراب بلا عامل.",
+      "لا عامل بلا محل.",
+      "لا عامل بلا أثر.",
+      "لا أثر بلا دليل.",
+      "إذا ظهر أثر مخالف للعامل ظهر صفر."
+    ],
+    "qarina_types": [
+      "قرينة لفظية",
+      "قرينة حركية",
+      "قرينة صرفية",
+      "قرينة نحوية",
+      "قرينة دلالية",
+      "قرينة سياقية",
+      "قرينة مقامية",
+      "قرينة حالية",
+      "قرينة عرفية",
+      "قرينة اصطلاحية",
+      "قرينة مصدرية",
+      "قرينة تداولية"
+    ],
+    "qarina_rules": [
+      {
+        "id": "QAR-0001",
+        "type": "syntactic",
+        "surface_evidence": "زَيْدٌ بعد فعل معلوم",
+        "supports_claim": "زيد فاعل",
+        "strength": 0.85,
+        "requires": [
+          "active_verb_before",
+          "raf_mark",
+          "open_agent_slot"
+        ],
+        "blocks": [
+          "patient_role_without_new_evidence"
+        ],
+        "result_effect": "raises_hypothesis_to_certificate"
+      }
+    ],
+    "qarina_ruleset_rules": [
+      "لا معنى متعدد بلا قرينة.",
+      "لا مجاز بلا صارف.",
+      "لا تخصيص بلا قرينة.",
+      "لا ترجيح بلا قرينة أو دليل."
+    ],
+    "ellipsis_types": [
+      "حذف المبتدأ",
+      "حذف الخبر",
+      "حذف الفاعل",
+      "حذف المفعول",
+      "حذف جواب الشرط",
+      "حذف عامل",
+      "حذف متعلق جار ومجرور",
+      "حذف عائد موصول",
+      "حذف جملة",
+      "حذف قرينة مقامية"
+    ],
+    "ellipsis_rules": [
+      {
+        "id": "ELL-0001",
+        "surface": "إن كتب زيد",
+        "missing_element": "جواب الشرط",
+        "necessity": "الإفادة غير تامة بدونه",
+        "can_estimate": false,
+        "qarina_available": false,
+        "result_type": "Zero",
+        "zero_type": "IncompleteIfadah",
+        "blocks": "FullSentenceCertificate"
+      }
+    ],
+    "ellipsis_ruleset_rules": [
+      "لا تقدير بلا ضرورة.",
+      "لا ضرورة بلا بيان.",
+      "لا تقدير محدد بلا قرينة.",
+      "إذا وُجد حذف يمنع الإفادة ولا قرينة للتقدير → صفر أو فرضية."
+    ],
+    "reference_units": [
+      "الضمير المنفصل",
+      "الضمير المتصل",
+      "اسم الإشارة",
+      "الاسم الموصول",
+      "العائد",
+      "المحذوف العائد",
+      "الإحالة السياقية",
+      "الإحالة المقامية"
+    ],
+    "reference_rules": [
+      {
+        "id": "REF-0001",
+        "surface": "ه",
+        "type": "attached_pronoun",
+        "candidate_antecedents": [
+          "زيد",
+          "الدرس"
+        ],
+        "constraints": [
+          "gender",
+          "number",
+          "person",
+          "semantic_role",
+          "proximity",
+          "syntax"
+        ],
+        "selected_antecedent": "زيد",
+        "confidence": 0.82,
+        "result_type": "Certificate"
+      }
+    ],
+    "reference_zero_types": [
+      "NoAntecedent",
+      "MultipleAntecedentsWithoutQarina",
+      "GenderMismatch",
+      "NumberMismatch",
+      "PersonMismatch",
+      "SemanticRoleMismatch",
+      "BrokenRelativeReturn"
+    ]
+  },
+  "reasoning_engine": {
+    "conflict_types": [
+      "تعارض قراءة",
+      "تعارض تشكيل",
+      "تعارض إعراب",
+      "تعارض عامل",
+      "تعارض دلالة",
+      "تعارض حقيقة ومجاز",
+      "تعارض منطوق ومفهوم",
+      "تعارض مصدر",
+      "تعارض حكم",
+      "تعارض واقع ودعوى"
+    ],
+    "conflicts": [
+      {
+        "id": "CON-0001",
+        "claim_a": "كتب = كَتَبَ فعل ماض",
+        "claim_b": "كتب = كُتُب جمع كتاب",
+        "conflict_type": "vocalization_conflict",
+        "reason": "غياب الحركات",
+        "status": "unresolved",
+        "result_type": "Hypothesis"
+      }
+    ],
+    "tarjih_rules": [
+      "الدليل الأقوى يقدم على الأضعف.",
+      "القطعي يقدم على الظني.",
+      "المنطوق يقدم على المفهوم عند التعارض.",
+      "الحقيقة تقدم على المجاز ما لم توجد قرينة صارفة.",
+      "الإعراب الموافق للعامل يقدم على المخالف.",
+      "القراءة التي تحفظ الإفادة تقدم على التي تكسرها.",
+      "القرينة الأقوى تقدم على الأضعف.",
+      "المصدر المباشر يقدم على غير المباشر.",
+      "الأقل تقديرًا يقدم على الأكثر تقديرًا.",
+      "التعارض غير المحلول يمنع الشهادة."
+    ],
+    "recursive_relation": {
+      "signature": "R(level_n, level_n+1)",
+      "description": "شهادة المستوى الأدنى تصبح مدخلًا أو دليلًا للمستوى الأعلى.",
+      "examples": [
+        "حرف Certificate → كلمة Evidence",
+        "كلمة Certificate → عبارة Evidence",
+        "عبارة Certificate → جملة Evidence",
+        "جملة Certificate → منطوق Evidence",
+        "منطوق Certificate → مفهوم Evidence",
+        "مفهوم Certificate → حكم Evidence",
+        "حكم Certificate → استدلال Evidence"
+      ],
+      "invariant": [
+        "لا مستوى أعلى بلا مدخل من المستوى السابق.",
+        "لا مستوى أعلى بلا عقد انتقال.",
+        "لا مستوى أعلى بلا دليل انتقال.",
+        "لا مستوى أعلى بلا تقرير تدقيق."
+      ]
+    }
+  },
+  "governance_engine": {
+    "source_rules": [
+      "لا claim بلا source_binding.",
+      "لا source_binding بلا نوع.",
+      "لا شهادة بلا evidence_trace."
+    ],
+    "source_bindings": [
+      {
+        "claim_id": "CLAIM-0001",
+        "claim": "زيد فاعل",
+        "source_type": "syntactic_evidence",
+        "evidence": [
+          {
+            "type": "surface",
+            "value": "زَيْدٌ"
+          },
+          {
+            "type": "irab",
+            "value": "damma"
+          },
+          {
+            "type": "rule",
+            "value": "الفعل المعلوم يطلب فاعلًا"
+          }
+        ],
+        "traceable": true
+      }
+    ],
+    "learning_rules": [
+      "لا تعلم بلا خطأ موثق.",
+      "لا تصحيح بلا تحديد طبقة الخلل.",
+      "لا تحديث قاعدة بلا اختبار يمنع تكرار الخطأ."
+    ],
+    "learning_events": [
+      {
+        "id": "LEARN-0001",
+        "failed_claim": "كتب دائمًا فعل ماض",
+        "error_type": "overgeneralization",
+        "failed_layer": "LexicalClass",
+        "correction": "كتب بلا تشكيل فرضية لا شهادة",
+        "rule_update": {
+          "rule": "UnvocalizedArabicToken",
+          "new_behavior": "HypothesisUntilHarakaOrContext"
+        },
+        "tests_added": [
+          "test_unvocalized_kataba_returns_hypothesis"
+        ]
+      }
+    ],
+    "test_case_rules": [
+      "كل طبقة تحتاج اختبار شهادة.",
+      "كل طبقة تحتاج اختبار فرضية.",
+      "كل طبقة تحتاج اختبار صفر.",
+      "كل طبقة تحتاج اختبار تعارض.",
+      "كل طبقة تحتاج اختبار ترجيح.",
+      "كل طبقة تحتاج اختبار invariant."
+    ],
+    "test_cases": [
+      {
+        "id": "TEST-0001",
+        "input": "كتب",
+        "expected": {
+          "result_type": "Hypothesis",
+          "reason": "غياب الحركات يمنع شهادة التصنيف الكامل"
+        }
+      },
+      {
+        "id": "TEST-0002",
+        "input": "كَتَبَ زَيْدٌ الدَّرْسَ",
+        "expected": {
+          "result_type": "Certificate",
+          "ifadah": "Certificate",
+          "blocking_zeros": []
+        }
+      },
+      {
+        "id": "TEST-0003",
+        "input": "لَمْ يُكْتَبِ الدَّرْسُ",
+        "expected": {
+          "result_type": "Zero",
+          "zero_type": "UnexpectedFinalHarakaAfterJazm"
+        }
+      }
+    ],
+    "proof_layer": {
+      "definition": "طبقة تفحص أن النظام لم يخالف قواعده.",
+      "invariants": [
+        {
+          "id": "I1",
+          "name": "NoCertificateWithBlockingZero",
+          "rule": "لا شهادة مع صفر مانع."
+        },
+        {
+          "id": "I2",
+          "name": "NoClaimWithoutEvidence",
+          "rule": "كل دعوى مربوطة بدليل."
+        },
+        {
+          "id": "I3",
+          "name": "NoTransitionWithoutContract",
+          "rule": "كل انتقال يحتاج عقد انتقال."
+        },
+        {
+          "id": "I4",
+          "name": "NoLevelSkip",
+          "rule": "كل مستوى لا يقفز فوق الذي قبله."
+        },
+        {
+          "id": "I5",
+          "name": "HypothesisMustBeDeclared",
+          "rule": "كل فرضية معلنة كفرضية."
+        },
+        {
+          "id": "I6",
+          "name": "NoIrabWithoutAmil",
+          "rule": "لا إعراب بلا عامل."
+        },
+        {
+          "id": "I7",
+          "name": "NoMafhumWithoutMantuq",
+          "rule": "لا مفهوم بلا منطوق."
+        },
+        {
+          "id": "I8",
+          "name": "NoQarinaFreeMultiplicity",
+          "rule": "لا معنى متعدد بلا قرينة."
+        },
+        {
+          "id": "I9",
+          "name": "NoLearningWithoutTest",
+          "rule": "لا تعلم بلا اختبار."
+        },
+        {
+          "id": "I10",
+          "name": "NoSourceFreeExternalClaim",
+          "rule": "لا دعوى خارجية بلا مصدر."
+        }
+      ],
+      "proof_objects": [
+        {
+          "unit_id": "SENT-0001",
+          "certificate": "SentenceCertificate",
+          "checked_invariants": [
+            "NoCertificateWithBlockingZero",
+            "NoClaimWithoutEvidence",
+            "NoTransitionWithoutContract",
+            "NoLevelSkip"
+          ],
+          "status": "valid"
+        }
+      ]
+    }
+  },
+  "schema_artifacts": {
+    "upper_entities": [
+      "EpistemicUnit",
+      "DimensionContract",
+      "TransitionLog",
+      "EvidenceTrace",
+      "ZeroRecord",
+      "HypothesisRecord",
+      "CertificateRecord",
+      "OntologyNode",
+      "KnowledgeUnit",
+      "AmilRule",
+      "QarinaRule",
+      "EllipsisRule",
+      "ReferenceRule",
+      "ConflictRecord",
+      "TarjihRule",
+      "SourceBinding",
+      "LearningEvent",
+      "TestCase",
+      "ProofInvariant",
+      "MalakahScore"
+    ],
+    "epistemic_unit_schema_excerpt": {
+      "type": "object",
+      "required": [
+        "id",
+        "level",
+        "state",
+        "claims",
+        "evidence",
+        "zeros",
+        "hypotheses",
+        "audit"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "level": {
+          "enum": [
+            "letter",
+            "word",
+            "phrase",
+            "sentence",
+            "discourse",
+            "mantuq",
+            "mafhum",
+            "judgment",
+            "istidlal"
+          ]
+        },
+        "state": {
+          "enum": [
+            "Pending",
+            "Certificate",
+            "Hypothesis",
+            "Zero"
+          ]
+        },
+        "claims": {
+          "type": "array"
+        },
+        "evidence": {
+          "type": "array"
+        },
+        "zeros": {
+          "type": "array"
+        },
+        "hypotheses": {
+          "type": "array"
+        },
+        "audit": {
+          "type": "array"
+        }
+      }
+    },
+    "laravel_models": [
+      "KnowledgeUnit",
+      "OntologyNode",
+      "EpistemicUnit",
+      "DimensionContract",
+      "TransitionLog",
+      "EvidenceTrace",
+      "ZeroRecord",
+      "HypothesisRecord",
+      "CertificateRecord",
+      "AmilRule",
+      "QarinaRule",
+      "EllipsisRule",
+      "ReferenceRule",
+      "ConflictRecord",
+      "TarjihRule",
+      "SourceBinding",
+      "LearningEvent",
+      "TestCase",
+      "ProofInvariant",
+      "MalakahScore"
+    ],
+    "neo4j_graph": [
+      "(:KnowledgeUnit)-[:DEFINES]->(:Rule)",
+      "(:EpistemicUnit)-[:HAS_DIMENSION]->(:Dimension)",
+      "(:Dimension)-[:PRODUCES]->(:Claim)",
+      "(:Claim)-[:SUPPORTED_BY]->(:Evidence)",
+      "(:Claim)-[:BLOCKED_BY]->(:Zero)",
+      "(:EpistemicUnit)-[:TRANSITIONS_TO]->(:EpistemicUnit)",
+      "(:Word)-[:BUILT_FROM]->(:Letter)",
+      "(:Phrase)-[:BUILT_FROM]->(:Word)",
+      "(:Sentence)-[:BUILT_FROM]->(:Phrase)",
+      "(:Mantuq)-[:BASED_ON]->(:Sentence)",
+      "(:Mafhum)-[:BASED_ON]->(:Mantuq)",
+      "(:Judgment)-[:BASED_ON]->(:Mafhum)"
+    ],
+    "execution_phases": [
+      {
+        "name": "Core Engine",
+        "components": [
+          "State",
+          "EpistemicUnit",
+          "Claim",
+          "Evidence",
+          "Zero",
+          "Hypothesis",
+          "Certificate",
+          "Audit",
+          "Transition"
+        ]
+      },
+      {
+        "name": "Knowledge Foundation",
+        "components": [
+          "KnowledgeUnit",
+          "Ontology",
+          "Lexicons",
+          "Rules",
+          "Mizan",
+          "Sources"
+        ]
+      },
+      {
+        "name": "Arabic Engine",
+        "components": [
+          "Unicode",
+          "Grapheme",
+          "Phoneme",
+          "Haraka",
+          "Root",
+          "Pattern",
+          "Function",
+          "Lexicon"
+        ]
+      },
+      {
+        "name": "Grammar Engine",
+        "components": [
+          "Amil",
+          "Irab",
+          "Qarina",
+          "Ellipsis",
+          "Reference",
+          "Nisbah",
+          "Isnad",
+          "Ifadah"
+        ]
+      },
+      {
+        "name": "Usul Engine",
+        "components": [
+          "Dal-Madlul",
+          "Mantuq",
+          "Mafhum",
+          "Manat",
+          "Qiyas",
+          "Tarjih",
+          "Judgment"
+        ]
+      },
+      {
+        "name": "Governance Engine",
+        "components": [
+          "Source",
+          "Learning",
+          "Testing",
+          "Proof",
+          "Malakah",
+          "Audit"
+        ]
+      }
+    ]
+  }
+}
