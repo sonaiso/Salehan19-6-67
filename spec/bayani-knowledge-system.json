@@ -3595,7 +3595,7 @@
         "arabic_name": "برومبت مفهوم",
         "example": "هل يدل القيد على نفي الحكم عما عداه؟",
         "jump_risk": "بناء حكم من قيد غير معتبر أو جعل المفهوم أقوى من المنطوق",
-        "processing_layer": "mafhoom_layer",
+        "processing_layer": "mantuq_layer",
         "processing_flow": [
           "منطوق",
           "قيد/صفة/شرط/غاية/عدد",

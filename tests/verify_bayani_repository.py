@@ -226,14 +226,18 @@ PROMPT_TYPE_REQUIRED_FIELDS = [
 # Each of these prompt types must route through a specific pipeline layer
 PROMPT_TYPE_LAYER_MAP = {
     "PT-01": "reality_grounding_layer",
+    "PT-02": "essence_assignment_layer",
+    "PT-03": "causal_juridical_relations_layer",
+    "PT-04": "relational_mapping_layer",
     "PT-05": "arabic_operator_layer",
     "PT-06": "mantuq_layer",
-    "PT-07": "mafhoom_layer",
+    "PT-07": "mantuq_layer",   # mafhoom analysis begins from mantuq as prerequisite
     "PT-08": "general_specific_layer",
+    "PT-09": "causal_juridical_relations_layer",
     "PT-10": "application_layer",
 }
-# These types must carry a jump_risk mentioning takhqeeq or application/tahqeeq for PT-10
-PROMPT_TYPES_REQUIRING_TAHQEEQ_CONSTRAINT = {"PT-10"}
+# PT-10 (Application) must reference tahqeeq al-manat in its processing_flow
+PROMPT_TYPES_REQUIRING_TAHQEEQ_IN_FLOW = {"PT-10"}
 
 
 def load_json(path):
