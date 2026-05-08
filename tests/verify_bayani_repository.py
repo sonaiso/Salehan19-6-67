@@ -120,6 +120,12 @@ REFERENCE_ZERO_TYPE_REQUIRED = "NoAntecedent"
 REQUIRED_TOP_TYPE_FIELDS = {"id", "label", "arabic_label", "definition"}
 REQUIRED_CONCEPT_EXAMPLE_FIELDS = {"concept", "ontological_type", "roles"}
 
+# Dal/Madlul coupling tests
+GRAPH_CONTRACT_COUPLING_NODES = {"Dal", "Madlul"}
+GRAPH_CONTRACT_COUPLING_EDGES = {"RELATES_TO", "SUPPORTED_BY", "DEPENDS_ON", "REQUIRES", "BLOCKED_BY"}
+VECTOR_DAL_MADLUL_DIMENSIONS = {"DalScore", "MadlulScore"}
+REQUIRED_AMIL_COUPLING_FIELDS = ("surface", "semantic_effect", "evidence_required", "zeros")
+
 
 def load_json(path):
     """Load and parse a UTF-8 JSON file."""
@@ -573,6 +579,135 @@ class BayaniRepositoryVerification(unittest.TestCase):
         for rule in ont["rules"]:
             self.assertIsInstance(rule, str)
             self.assertTrue(rule)
+
+    # ------------------------------------------------------------------
+    # Dal/Madlul coupling tests
+    # ------------------------------------------------------------------
+
+    def test_graph_contract_contains_dal_and_madlul_nodes(self):
+        """graph_contract must expose Dal and Madlul as named graph nodes.
+        vector_dimensions must include DalScore and MadlulScore so that
+        the signifier–signified coupling is measurable at inference time.
+        """
+        engine = self.spec["answer_analysis_engine"]
+        graph_nodes = set(engine["graph_contract"]["nodes"])
+        for node in GRAPH_CONTRACT_COUPLING_NODES:
+            self.assertIn(node, graph_nodes, f"graph_contract.nodes must contain {node!r}")
+
+        vector_dims = set(engine["vector_dimensions"])
+        for dim in VECTOR_DAL_MADLUL_DIMENSIONS:
+            self.assertIn(dim, vector_dims, f"vector_dimensions must contain {dim!r}")
+
+    def test_graph_contract_declares_coupling_edges(self):
+        """graph_contract must declare coupling edge types that permit
+        Dal↔Madlul binding without conflating them into the same node.
+        Required edges: RELATES_TO, SUPPORTED_BY, DEPENDS_ON, REQUIRES, BLOCKED_BY.
+        """
+        graph_edges = set(self.spec["answer_analysis_engine"]["graph_contract"]["edges"])
+        for edge in GRAPH_CONTRACT_COUPLING_EDGES:
+            self.assertIn(edge, graph_edges, f"graph_contract.edges must contain {edge!r}")
+
+    def test_amil_rules_declare_complete_dal_madlul_coupling(self):
+        """Every amil_rule must couple its surface form (dal) to its semantic
+        consequence (madlul) by declaring surface, semantic_effect,
+        evidence_required, and at least one zero for invalid coupling.
+        """
+        for rule in self.spec["grammar_engine"]["amil_rules"]:
+            for field in REQUIRED_AMIL_COUPLING_FIELDS:
+                self.assertIn(field, rule, f"{rule.get('id', '?')} must declare {field!r}")
+            self.assertIsInstance(rule["semantic_effect"], list)
+            self.assertGreater(
+                len(rule["semantic_effect"]), 0,
+                f"{rule['id']} semantic_effect (madlul) must be non-empty",
+            )
+            self.assertIsInstance(rule["evidence_required"], list)
+            self.assertGreater(
+                len(rule["evidence_required"]), 0,
+                f"{rule['id']} evidence_required must be non-empty",
+            )
+            self.assertGreater(
+                len(rule["zeros"]), 0,
+                f"{rule['id']} must declare zeros for invalid dal/madlul coupling",
+            )
+
+    def test_reference_rules_form_complete_dal_to_result_chain(self):
+        """Every reference_rule must complete the full coupling chain:
+        surface (dal) → selected_antecedent (madlul) → constraints → confidence → result_type.
+        selected_antecedent must be one of candidate_antecedents.
+        Certificate result_type requires confidence > 0.5.
+        """
+        for rule in self.spec["grammar_engine"]["reference_rules"]:
+            for field in ("surface", "selected_antecedent", "candidate_antecedents",
+                          "constraints", "confidence", "result_type"):
+                self.assertIn(field, rule, f"{rule['id']} must declare {field!r}")
+
+            self.assertIn(
+                rule["selected_antecedent"],
+                rule["candidate_antecedents"],
+                f"{rule['id']}: selected_antecedent must be one of candidate_antecedents",
+            )
+            self.assertGreater(rule["confidence"], 0, f"{rule['id']} confidence must be > 0")
+            self.assertLessEqual(rule["confidence"], 1, f"{rule['id']} confidence must be ≤ 1")
+            if rule["result_type"] == "Certificate":
+                self.assertGreater(
+                    rule["confidence"],
+                    0.5,
+                    f"{rule['id']}: Certificate requires confidence > 0.5",
+                )
+
+    def test_ambiguous_dal_without_resolution_remains_hypothesis(self):
+        """A dal token with multiple competing madlul interpretations must
+        remain Hypothesis until a qarina or evidence resolves the ambiguity.
+        Every vocalization_conflict must have result_type=Hypothesis and
+        status indicating managed (not open-ended) ambiguity.
+        """
+        conflicts = self.spec["reasoning_engine"]["conflicts"]
+        vocalization_conflicts = [c for c in conflicts if c.get("conflict_type") == "vocalization_conflict"]
+        self.assertGreater(
+            len(vocalization_conflicts), 0,
+            "At least one vocalization_conflict (ambiguous dal) must be declared",
+        )
+        for conflict in vocalization_conflicts:
+            self.assertEqual(
+                conflict["result_type"],
+                "Hypothesis",
+                f"{conflict['id']}: ambiguous dal must yield Hypothesis, not {conflict['result_type']!r}",
+            )
+            self.assertIn(
+                "ambiguity",
+                conflict["status"],
+                f"{conflict['id']}: unresolved multi-madlul conflict must have 'ambiguity' in status",
+            )
+
+    def test_concept_examples_bind_dal_to_madlul_through_roles(self):
+        """Every concept_example must form the chain:
+        concept (dal) → ontological_type (madlul class) → roles (madlul binding).
+        Required roles (required=True) must declare a role_name.
+        """
+        valid_type_labels = {t["label"] for t in self.spec["ontology"]["top_types"]}
+        for example in self.spec["ontology"]["concept_examples"]:
+            self.assertIn("concept", example)
+            self.assertIn("ontological_type", example)
+            self.assertIn("roles", example)
+            self.assertIn(
+                example["ontological_type"],
+                valid_type_labels,
+                f"concept {example['concept']!r}: ontological_type must match a known top_type label",
+            )
+            self.assertIsInstance(example["roles"], dict)
+            self.assertGreater(
+                len(example["roles"]), 0,
+                f"concept {example['concept']!r} must declare at least one role",
+            )
+            for role_name, role_data in example["roles"].items():
+                self.assertIsInstance(role_data, dict, f"role {role_name!r} data must be a dict")
+                self.assertIn("required", role_data, f"role {role_name!r} must declare 'required'")
+                if role_data["required"]:
+                    self.assertIn(
+                        "role_name",
+                        role_data,
+                        f"required role {role_name!r} must declare 'role_name' (madlul binding)",
+                    )
 
 
 if __name__ == "__main__":
