@@ -1062,6 +1062,889 @@
       ]
     }
   },
+  "malakah_methodology": {
+    "definition": "منهج قياس الملكة بوصفها قدرة استعمال القاعدة في محلها، لا مجرد معرفة القاعدة أو حفظها.",
+    "central_principle": "الملكة ليست أن يعرف النظام القاعدة، بل أن يعرف متى يستعملها، ومتى يمنعها، ومتى يعلقها، ومتى يرجحها، ومتى يتوقف.",
+    "rule_applicability_machine": {
+      "purpose": "تحديد قابلية تطبيق كل قاعدة قبل استعمالها حتى لا يتحول النظام إلى فقه قاعدة بلا مناط.",
+      "inputs": [
+        "KnowledgeUnit",
+        "Rule",
+        "CandidateCase",
+        "EvidenceTrace",
+        "Qarina",
+        "Context"
+      ],
+      "checks": [
+        "domain_match",
+        "entry_conditions",
+        "blocking_conditions",
+        "required_qarina",
+        "suspicion_cases",
+        "misapplication_zeros"
+      ],
+      "outputs": [
+        "ApplicabilityDecision",
+        "RequiredEvidence",
+        "SuspensionReason",
+        "MisapplicationZero"
+      ],
+      "rules": [
+        "لا تستعمل قاعدة بلا مجال تطبيق محدد.",
+        "لا تستعمل قاعدة قبل تحقق شروط الدخول.",
+        "كل مانع تطبيق يوقف الترقية إلى Certificate.",
+        "كل حالة اشتباه تبقى Hypothesis حتى يرد دليل مميز."
+      ],
+      "zero_types": [
+        "RuleOutsideDomain",
+        "MissingEntryCondition",
+        "BlockedByMisapplicationZero"
+      ]
+    },
+    "rule_manat_detector": {
+      "purpose": "تحقيق محل القاعدة لكل حكم قبل تنزيلها على الحالة.",
+      "inputs": [
+        "Rule",
+        "SubjectCandidate",
+        "SurfaceEvidence",
+        "SourceBinding",
+        "ExceptionRegistry"
+      ],
+      "checks": [
+        "subject_type_match",
+        "manat_evidence",
+        "quote_or_teaching_context",
+        "special_reading_or_poetic_necessity",
+        "case_is_rule_subject"
+      ],
+      "outputs": [
+        "ManatDecision",
+        "SubjectMatchScore",
+        "NonSubjectReason"
+      ],
+      "rules": [
+        "لا حكم بلا تحقيق مناط.",
+        "إذا لم تكن الحالة محل القاعدة فلا تطبق القاعدة ولو كانت صحيحة.",
+        "كل مناط يحتاج أثرًا أو مصدرًا أو قرينة."
+      ],
+      "zero_types": [
+        "NoManatEvidence",
+        "WrongRuleSubject",
+        "ManatLeap"
+      ]
+    },
+    "malakah_taxonomy": {
+      "rule": "لا يعطى overall malakah score قبل حساب الملكات الفرعية وفحص الأصفار المانعة.",
+      "sub_skills": [
+        {
+          "id": "MAL-01",
+          "name": "ملكة إدخال",
+          "measures": [
+            "input_normalization",
+            "prompt_decomposition",
+            "missing_information_detection"
+          ],
+          "blocking_failures": [
+            "UnanswerablePromptAccepted"
+          ]
+        },
+        {
+          "id": "MAL-02",
+          "name": "ملكة دال",
+          "measures": [
+            "surface_detection",
+            "root_pattern_binding",
+            "haraka_interpretation"
+          ],
+          "blocking_failures": [
+            "DalMisread"
+          ]
+        },
+        {
+          "id": "MAL-03",
+          "name": "ملكة مدلول",
+          "measures": [
+            "concept_realization",
+            "ontology_binding",
+            "semantic_scope_control"
+          ],
+          "blocking_failures": [
+            "MadlulOverreach"
+          ]
+        },
+        {
+          "id": "MAL-04",
+          "name": "ملكة ربط",
+          "measures": [
+            "dal_madlul_binding",
+            "evidence_alignment",
+            "relation_validity"
+          ],
+          "blocking_failures": [
+            "EvidenceForDifferentClaim"
+          ]
+        },
+        {
+          "id": "MAL-05",
+          "name": "ملكة منطوق",
+          "measures": [
+            "mantuq_detection",
+            "surface_commitment",
+            "explicit_meaning_boundary"
+          ],
+          "blocking_failures": [
+            "MantuqMissing"
+          ]
+        },
+        {
+          "id": "MAL-06",
+          "name": "ملكة مفهوم",
+          "measures": [
+            "mafhum_validity",
+            "lazim_filtering",
+            "implicit_meaning_proof"
+          ],
+          "blocking_failures": [
+            "MafhumWithoutMantuq"
+          ]
+        },
+        {
+          "id": "MAL-07",
+          "name": "ملكة مناط",
+          "measures": [
+            "rule_subject_matching",
+            "applicability_decision",
+            "exception_awareness"
+          ],
+          "blocking_failures": [
+            "WrongManat"
+          ]
+        },
+        {
+          "id": "MAL-08",
+          "name": "ملكة ترجيح",
+          "measures": [
+            "conflict_detection",
+            "rule_priority",
+            "evidence_weighting"
+          ],
+          "blocking_failures": [
+            "TarjihWithoutConflict"
+          ]
+        },
+        {
+          "id": "MAL-09",
+          "name": "ملكة برهان",
+          "measures": [
+            "proof_rank",
+            "invariant_pass_rate",
+            "reverse_trace_integrity"
+          ],
+          "blocking_failures": [
+            "CertificateWithoutProof"
+          ]
+        },
+        {
+          "id": "MAL-10",
+          "name": "ملكة تعلم",
+          "measures": [
+            "regression_test_addition",
+            "rule_update_quality",
+            "post_learning_score_growth"
+          ],
+          "blocking_failures": [
+            "LearningWithoutTest"
+          ]
+        },
+        {
+          "id": "MAL-11",
+          "name": "ملكة أمان معرفي",
+          "measures": [
+            "prior_opinion_filtering",
+            "zero_guarding",
+            "source_binding"
+          ],
+          "blocking_failures": [
+            "PriorOpinionAsEvidence"
+          ]
+        }
+      ],
+      "overall_score_policy": "overall_score يحسب من الملكات الفرعية بعد تطبيق ZeroGuard وProofGate ولا يسمح وحده بإصدار شهادة."
+    },
+    "rule_priority_engine": {
+      "purpose": "إدارة تزاحم القواعد التشغيلية قبل الترجيح بين الدعاوى.",
+      "inputs": [
+        "ApplicableRules",
+        "RuleType",
+        "Domain",
+        "Context",
+        "ExceptionRegistry"
+      ],
+      "checks": [
+        "foundational_rule",
+        "operational_rule",
+        "domain_rule",
+        "context_rule",
+        "exception_rule",
+        "override_rule"
+      ],
+      "outputs": [
+        "RulePriorityOrder",
+        "OverrideDecision",
+        "SuspendedRule"
+      ],
+      "rules": [
+        "القاعدة التأسيسية لا تكسرها قاعدة سياقية.",
+        "الاستثناء لا يعمل بلا دليل استثناء.",
+        "لا ترجيح بين قواعد بلا بيان رتبتها ونطاقها."
+      ],
+      "zero_types": [
+        "ContextBreaksFoundation",
+        "OverrideWithoutProof",
+        "PriorityCycle"
+      ]
+    },
+    "exception_registry": {
+      "purpose": "تمييز الاستثناء المنضبط عن الصفر المانع حتى لا تعامل كل حالة خاصة كفشل معرفي.",
+      "inputs": [
+        "Rule",
+        "Case",
+        "ExceptionEvidence",
+        "ProofRank"
+      ],
+      "checks": [
+        "normal_case",
+        "exception_case",
+        "exception_evidence",
+        "exception_limits",
+        "exception_proof_rank"
+      ],
+      "outputs": [
+        "ExceptionDecision",
+        "ExceptionEvidenceTrace",
+        "ExceptionLimit"
+      ],
+      "rules": [
+        "Exception ليس Zero إذا كانت له قاعدة ودليل وحدود.",
+        "كل استثناء بلا دليل يبقى Hypothesis.",
+        "لا يعمم الاستثناء خارج حدوده."
+      ],
+      "zero_types": [
+        "ExceptionWithoutEvidence",
+        "ExceptionOvergeneralization"
+      ],
+      "exception_types": [
+        "poetic_necessity",
+        "special_reading",
+        "quotation_context",
+        "teaching_notation",
+        "recording_error"
+      ]
+    },
+    "malakah_growth_model": {
+      "purpose": "تحويل LearningEvent من سجل أخطاء إلى نمو قابل للقياس في الملكة.",
+      "stages": [
+        "before_learning",
+        "after_correction",
+        "after_regression_test",
+        "after_repeated_cases",
+        "after_conflict_exposure"
+      ],
+      "example": {
+        "skill": "Unvocalized Arabic Handling",
+        "before": 0.42,
+        "after_rule_update": 0.68,
+        "after_20_tests": 0.81,
+        "after_regression": 0.87
+      },
+      "rules": [
+        "لا نمو ملكة بلا قياس قبل/بعد.",
+        "لا LearningEvent يرفع الملكة بلا regression test.",
+        "التكرار بلا تنوع حالات لا يكفي لإثبات الملكة."
+      ]
+    },
+    "prompt_malakah_layer": {
+      "purpose": "قياس جودة فهم السؤال قبل إنتاج الجواب.",
+      "inputs": [
+        "Prompt",
+        "UserIntent",
+        "KnownContext"
+      ],
+      "checks": [
+        "prompt_decomposition_accuracy",
+        "false_presupposition_detection",
+        "request_type_classification",
+        "ambiguity_detection",
+        "needed_information_detection"
+      ],
+      "outputs": [
+        "PromptAnalysis",
+        "ClarificationNeed",
+        "AnswerabilityDecision"
+      ],
+      "rules": [
+        "السؤال المركب يفكك قبل الجواب.",
+        "الافتراض الخاطئ يصرح به ولا يبنى عليه.",
+        "لا جواب شهادة لسؤال غير قابل للإجابة."
+      ],
+      "zero_types": [
+        "FalsePresuppositionAccepted",
+        "AmbiguousPromptCertified"
+      ]
+    },
+    "prior_opinion_filter": {
+      "purpose": "منع تحويل الرأي السابق أو الانحياز أو التوقع الإحصائي إلى دليل مؤهل.",
+      "inputs": [
+        "PriorSignal",
+        "DocumentedSource",
+        "FrequencySignal",
+        "ContextPreference"
+      ],
+      "checks": [
+        "qualified_prior_knowledge",
+        "prior_opinion",
+        "bias",
+        "statistical_prior",
+        "linguistic_habit",
+        "contextual_preference"
+      ],
+      "outputs": [
+        "AdmissibilityDecision",
+        "CandidateOnlySignal",
+        "RejectedPriorOpinion"
+      ],
+      "rules": [
+        "statistical prior يرفع ترتيب المرشح ولا يصدر شهادة.",
+        "qualified prior knowledge وحده يصلح Evidence بعد source_binding.",
+        "الرأي السابق لا يدخل ProofObject."
+      ],
+      "zero_types": [
+        "PriorOpinionAsEvidence",
+        "StatisticalPriorCertified"
+      ]
+    },
+    "epistemic_candidate_generation_machine": {
+      "purpose": "فصل الاقتراح المعرفي عن الشهادة ومسار ترقيته أو خفضه.",
+      "inputs": [
+        "RawAnswer",
+        "FrequencySignal",
+        "Context",
+        "KnowledgeFoundation"
+      ],
+      "checks": [
+        "candidate_source",
+        "candidate_rank",
+        "candidate_evidence_need",
+        "candidate_disqualifiers",
+        "candidate_upgrade_path",
+        "candidate_downgrade_path"
+      ],
+      "outputs": [
+        "EpistemicCandidate",
+        "CandidateRank",
+        "UpgradeRequirements",
+        "DowngradeReason"
+      ],
+      "rules": [
+        "كل Claim معتمد يبدأ Candidate محفوظ الأصل.",
+        "Candidate لا يصبح Certificate بلا EvidenceBinding وProofGate.",
+        "كل مرشح ناقص يبقى Hypothesis أو يرفض."
+      ],
+      "zero_types": [
+        "CandidatePromotedWithoutEvidence",
+        "CandidateOriginLost"
+      ]
+    },
+    "error_typology": {
+      "purpose": "تمييز نوع الخطأ ووزنه لأن خطأ الدال ليس كإصدار شهادة بلا دليل.",
+      "error_types": [
+        {
+          "id": "ERR-DAL",
+          "name": "خطأ دال",
+          "weight": 0.35,
+          "effect": "يخفض ملكة الدال وقد يمنع الربط."
+        },
+        {
+          "id": "ERR-MADLUL",
+          "name": "خطأ مدلول",
+          "weight": 0.4,
+          "effect": "يخفض ملكة المدلول والأنطولوجيا."
+        },
+        {
+          "id": "ERR-BIND",
+          "name": "خطأ ربط",
+          "weight": 0.65,
+          "effect": "يمنع الشهادة إذا كان الدليل لا يدعم الدعوى."
+        },
+        {
+          "id": "ERR-QARINA",
+          "name": "خطأ قرينة",
+          "weight": 0.5,
+          "effect": "يحول الحكم إلى Hypothesis عند غياب قرينة مميزة."
+        },
+        {
+          "id": "ERR-EVIDENCE",
+          "name": "خطأ دليل",
+          "weight": 0.8,
+          "effect": "يمنع Certificate."
+        },
+        {
+          "id": "ERR-PROOF",
+          "name": "خطأ ProofRank",
+          "weight": 0.9,
+          "effect": "يمنع الترقية إلى OperationalProof أو FoundationalProof."
+        },
+        {
+          "id": "ERR-GEN",
+          "name": "خطأ تعميم",
+          "weight": 0.7,
+          "effect": "ينتج Zero أو Hypothesis بحسب الخطر."
+        },
+        {
+          "id": "ERR-LEAP",
+          "name": "خطأ قفز",
+          "weight": 0.85,
+          "effect": "يمنع الشهادة ويطلب reverse_trace."
+        },
+        {
+          "id": "ERR-SOURCE",
+          "name": "خطأ مصدر",
+          "weight": 0.8,
+          "effect": "يمنع claim external من الشهادة."
+        },
+        {
+          "id": "ERR-SAFETY",
+          "name": "خطأ أمان معرفي",
+          "weight": 1.0,
+          "effect": "صفر مانع إذا تحولت فرضية أو رأي إلى شهادة."
+        }
+      ],
+      "severity_policy": [
+        "الأخطاء البنيوية أعلى وزنًا من أخطاء القراءة الجزئية.",
+        "إصدار Certificate بلا دليل أو Proof يساوي Zero معرفي.",
+        "الوزن يخفض score لكنه لا يلغي عمل ZeroGuard."
+      ]
+    },
+    "malakah_threshold_policy": {
+      "ranges": [
+        {
+          "min": 0.0,
+          "max": 0.4,
+          "status": "غير مؤهل",
+          "allowed_result": "Rejected أو Zero"
+        },
+        {
+          "min": 0.41,
+          "max": 0.6,
+          "status": "مرشح ضعيف",
+          "allowed_result": "Candidate فقط"
+        },
+        {
+          "min": 0.61,
+          "max": 0.75,
+          "status": "فرضية",
+          "allowed_result": "Hypothesis"
+        },
+        {
+          "min": 0.76,
+          "max": 0.89,
+          "status": "شهادة تشغيلية بحذر",
+          "allowed_result": "OperationalProof إذا اجتاز ProofGate"
+        },
+        {
+          "min": 0.9,
+          "max": 1.0,
+          "status": "شهادة قوية داخل النطاق",
+          "allowed_result": "FoundationalProof داخل المجال"
+        }
+      ],
+      "non_numeric_gates": [
+        "لا تسمح الدرجة وحدها بالشهادة.",
+        "Certificate يحتاج ProofObject valid وغياب blocking_zero.",
+        "أي source_binding مفقود في دعوى خارجية يمنع الشهادة مهما ارتفع score."
+      ]
+    },
+    "progressive_malakah_test_suite": {
+      "purpose": "اختبار الملكة تدريجيًا من الحالات الواضحة إلى الحالات الخادعة.",
+      "levels": [
+        {
+          "level": 1,
+          "name": "حالة مفردة واضحة",
+          "target": "basic_rule_application"
+        },
+        {
+          "level": 2,
+          "name": "حالة ناقصة",
+          "target": "hypothesis_when_missing_evidence"
+        },
+        {
+          "level": 3,
+          "name": "حالة متعارضة",
+          "target": "conflict_detection"
+        },
+        {
+          "level": 4,
+          "name": "حالة تحتاج قرينة",
+          "target": "qarina_requirement"
+        },
+        {
+          "level": 5,
+          "name": "حالة فيها حذف",
+          "target": "ellipsis_control"
+        },
+        {
+          "level": 6,
+          "name": "حالة فيها إحالة",
+          "target": "reference_resolution"
+        },
+        {
+          "level": 7,
+          "name": "حالة فيها مفهوم",
+          "target": "mafhum_validation"
+        },
+        {
+          "level": 8,
+          "name": "حالة فيها تحقيق مناط",
+          "target": "manat_detection"
+        },
+        {
+          "level": 9,
+          "name": "حالة فيها ترجيح",
+          "target": "tarjih_and_priority"
+        },
+        {
+          "level": 10,
+          "name": "حالة تخدع النظام",
+          "target": "adversarial_epistemic_safety"
+        }
+      ],
+      "rules": [
+        "لا تعتمد الملكة على الحالات السهلة فقط.",
+        "كل مستوى يحتاج Certificate/Hypothesis/Zero examples.",
+        "كل فشل تدريبي ينتج LearningEvent واختبار regression."
+      ]
+    },
+    "adversarial_epistemic_cases": [
+      {
+        "id": "ADV-01",
+        "case_type": "نص جميل بلا دليل",
+        "expected_detection": "EvidenceMissing",
+        "blocked_result": "Certificate"
+      },
+      {
+        "id": "ADV-02",
+        "case_type": "دعوى صحيحة بدليل خاطئ",
+        "expected_detection": "EvidenceForDifferentClaim",
+        "blocked_result": "Certificate"
+      },
+      {
+        "id": "ADV-03",
+        "case_type": "دليل صحيح لدعوى أخرى",
+        "expected_detection": "BindingMismatch",
+        "blocked_result": "Certificate"
+      },
+      {
+        "id": "ADV-04",
+        "case_type": "فرضية معروضة كشهادة",
+        "expected_detection": "HypothesisOvercertified",
+        "blocked_result": "Certificate"
+      },
+      {
+        "id": "ADV-05",
+        "case_type": "تعارض مخفي",
+        "expected_detection": "HiddenConflict",
+        "blocked_result": "Certificate"
+      },
+      {
+        "id": "ADV-06",
+        "case_type": "مفهوم بلا منطوق",
+        "expected_detection": "MafhumWithoutMantuq",
+        "blocked_result": "Certificate"
+      },
+      {
+        "id": "ADV-07",
+        "case_type": "مجاز بلا صارف",
+        "expected_detection": "MajazWithoutQarina",
+        "blocked_result": "Certificate"
+      },
+      {
+        "id": "ADV-08",
+        "case_type": "ترجيح بلا تعارض",
+        "expected_detection": "TarjihWithoutConflict",
+        "blocked_result": "Certificate"
+      },
+      {
+        "id": "ADV-09",
+        "case_type": "حكم بلا مناط",
+        "expected_detection": "JudgmentWithoutManat",
+        "blocked_result": "Certificate"
+      },
+      {
+        "id": "ADV-10",
+        "case_type": "مصدر بلا صلة",
+        "expected_detection": "UnrelatedSource",
+        "blocked_result": "Certificate"
+      }
+    ],
+    "mujmal_bayan_mubayyan_skill": {
+      "purpose": "إدخال المجمل والبيان والمبين في قياس الملكة لا في تحليل GPT فقط.",
+      "inputs": [
+        "AnswerSegment",
+        "BayanEvidence",
+        "MubayyanCandidate"
+      ],
+      "checks": [
+        "mujmal_detection",
+        "bayan_request",
+        "bayan_resolves_ambiguity",
+        "mubayyan_certification"
+      ],
+      "outputs": [
+        "MujmalRecord",
+        "BayanRequirement",
+        "MubayyanDecision"
+      ],
+      "rules": [
+        "كل مجمل لا يدخل Certificate.",
+        "لا يقبل البيان إلا إذا أزال الإشكال بدليل.",
+        "المبين فقط يدخل ProofGate."
+      ],
+      "zero_types": [
+        "MujmalCertified",
+        "BayanWithoutResolution"
+      ]
+    },
+    "malakah_memory_loop": {
+      "purpose": "ضبط أثر الذاكرة في الملكة ومنع استدعاء معرفة قديمة في غير محلها.",
+      "inputs": [
+        "Case",
+        "ExtractedPattern",
+        "StoredKnowledge",
+        "OntologyIndex",
+        "SimilarCase"
+      ],
+      "checks": [
+        "pattern_extraction",
+        "ontology_indexing",
+        "similarity_scope",
+        "memory_applicability_check",
+        "confidence_adjustment"
+      ],
+      "outputs": [
+        "ReusablePattern",
+        "MemoryApplicabilityDecision",
+        "AdjustedConfidence"
+      ],
+      "rules": [
+        "لا استدعاء ذاكرة بلا تحقق محل.",
+        "كل معرفة مستدعاة تحتاج source_binding أو trace.",
+        "الثقة تنخفض عند فشل تطبيق ذاكرة مشابهة."
+      ],
+      "zero_types": [
+        "MemoryOutsideDomain",
+        "OldKnowledgeMisapplied"
+      ]
+    },
+    "layer_integrity_score": {
+      "purpose": "قياس عدم كسر طبقة معرفية لطبقة أخرى.",
+      "inputs": [
+        "LayerDecision",
+        "ContextSignal",
+        "EvidenceTrace",
+        "LearningUpdate",
+        "ProofObject"
+      ],
+      "checks": [
+        "context_breaks_dal",
+        "tarjih_breaks_evidence",
+        "learning_breaks_proof",
+        "memory_skips_contract",
+        "statistical_model_overrides_proof"
+      ],
+      "outputs": [
+        "LayerIntegrityScore",
+        "LayerViolation",
+        "RepairRequirement"
+      ],
+      "rules": [
+        "السياق لا يكسر الدال.",
+        "الترجيح لا يكسر الدليل.",
+        "التعلم لا يكسر Proof.",
+        "النموذج الإحصائي لا يتجاوز البرهان."
+      ],
+      "zero_types": [
+        "LayerBreak",
+        "ContractSkipped",
+        "ProofOverriddenByStatistics"
+      ],
+      "score_fields": [
+        "dal_integrity",
+        "evidence_integrity",
+        "proof_integrity",
+        "contract_integrity",
+        "statistical_containment"
+      ]
+    },
+    "executable_invariant_coverage": {
+      "purpose": "ربط النظرية الرياضية بالتنفيذ البرمجي والاختبار.",
+      "inputs": [
+        "ProofInvariant",
+        "ImplementationArtifact",
+        "TestCase",
+        "FailureHistory"
+      ],
+      "checks": [
+        "specified_invariant_count",
+        "implemented_invariant_count",
+        "tested_invariant_count",
+        "fixed_failed_invariant_count"
+      ],
+      "outputs": [
+        "InvariantCoverageReport",
+        "UntestedInvariant",
+        "UnimplementedInvariant"
+      ],
+      "rules": [
+        "الملكة البرمجية لا تثبت بالنص فقط.",
+        "كل invariant حاكم يحتاج تنفيذًا أو خطة تنفيذ واختبارًا.",
+        "الفشل السابق لا يعد تعلمًا حتى يثبت regression."
+      ],
+      "zero_types": [
+        "InvariantNotExecutable",
+        "InvariantWithoutTest"
+      ],
+      "score_fields": [
+        "specified",
+        "implemented",
+        "tested",
+        "regressed"
+      ]
+    },
+    "failure_predictor_binding": {
+      "purpose": "ربط FailurePredictor بقياس الملكة قبل إصدار الشهادة.",
+      "inputs": [
+        "ClaimRisk",
+        "SourceCompleteness",
+        "QarinaConflict",
+        "ProofRank",
+        "ZeroSignals"
+      ],
+      "checks": [
+        "missing_external_source",
+        "high_risk_claim",
+        "qarina_conflict",
+        "low_proof_rank",
+        "blocking_zero_likelihood"
+      ],
+      "outputs": [
+        "FailureRisk",
+        "PreCertificateWarning",
+        "RequiredMitigation"
+      ],
+      "rules": [
+        "الملكة العالية تتوقع الفشل قبل الشهادة.",
+        "High failure risk يمنع Certificate حتى تكتمل المعالجة.",
+        "كل تحذير فشل يحتاج mitigation trace."
+      ],
+      "zero_types": [
+        "PredictedFailureIgnored",
+        "HighRiskCertificate"
+      ]
+    },
+    "expansion_discipline_machine": {
+      "purpose": "منع التوسع غير المنضبط في الإجابات الواسعة.",
+      "inputs": [
+        "AnswerExpansion",
+        "EvidenceTrace",
+        "OntologyRelation",
+        "Analogy",
+        "ProbabilisticSignal"
+      ],
+      "checks": [
+        "evidence_based_expansion",
+        "context_based_expansion",
+        "ontology_based_expansion",
+        "analogy_based_expansion",
+        "probabilistic_nonbinding_expansion",
+        "filler_or_leap"
+      ],
+      "outputs": [
+        "ExpansionDecision",
+        "ExpansionBoundary",
+        "NonBindingExpansionMark"
+      ],
+      "rules": [
+        "الجواب الواسع يعني أوسع معمارًا لا أطول نصًا.",
+        "كل توسع بلا دليل يوسم Hypothesis أو يحذف.",
+        "التشبيه والاحتمال لا يساويان Proof."
+      ],
+      "zero_types": [
+        "UnboundedExpansion",
+        "FillerAsKnowledge",
+        "AnalogyAsProof"
+      ]
+    },
+    "mustadil_competence_score": {
+      "purpose": "قياس أهلية المستدل/البرنامج الذاتية ومعرفته بحدود علمه.",
+      "inputs": [
+        "Domain",
+        "AvailableEvidence",
+        "Unknowns",
+        "RequiredExpertise",
+        "RiskLevel"
+      ],
+      "checks": [
+        "domain_awareness",
+        "ignorance_awareness",
+        "source_requesting",
+        "manat_vs_ijtihad_distinction",
+        "certificate_refusal_when_unqualified",
+        "expert_escalation_need"
+      ],
+      "outputs": [
+        "MustadilCompetenceScore",
+        "RefusalReason",
+        "ExpertEscalation"
+      ],
+      "rules": [
+        "المستدل المؤهل يعرف مجاله وجهله.",
+        "نقص الأهلية يمنع Certificate.",
+        "طلب المصدر أو الخبير علامة ملكة لا ضعف."
+      ],
+      "zero_types": [
+        "UnqualifiedCertificate",
+        "IgnoranceDenied"
+      ],
+      "score_fields": [
+        "domain_awareness",
+        "ignorance_awareness",
+        "source_discipline",
+        "manat_discipline",
+        "refusal_discipline",
+        "escalation_discipline"
+      ]
+    },
+    "acceptance_criteria": [
+      "Every rule declares applicability domain, entry conditions, blocking conditions, required qarain, suspicion cases, and misapplication zeros.",
+      "No rule application can become Certificate without Rule Manat Detector approval.",
+      "No overall malakah score is emitted before sub-skill scores.",
+      "No operational rule can override a foundational rule without an explicit priority contract.",
+      "Exceptions require evidence, proof rank, and limits; otherwise they remain Hypothesis.",
+      "Every LearningEvent that claims malakah growth includes before/after measurement and regression test.",
+      "Every prompt is classified for answerability, ambiguity, false presupposition, and missing information.",
+      "Prior opinions and statistical priors can rank candidates but cannot serve as admissible evidence.",
+      "Every candidate records source, rank, evidence need, disqualifiers, upgrade path, and downgrade path.",
+      "Every malakah error is typed and weighted.",
+      "Scores cannot issue Certificate without ProofObject valid and no blocking_zero.",
+      "Progressive and adversarial test cases cover easy, incomplete, conflicting, qarina, ellipsis, reference, mafhum, manat, tarjih, and deceptive cases.",
+      "Memory reuse requires Memory Applicability Check.",
+      "Layer Integrity Score detects context, tarjih, learning, memory, or statistics breaking lower proof layers.",
+      "Executable Invariant Coverage reports specified, implemented, tested, and regression-protected invariants.",
+      "Failure risk is predicted before certificate issuance.",
+      "Wide answers must distinguish evidence-based expansion from context, analogy, probability, filler, and leap.",
+      "Mustadil competence can refuse certification when domain, source, manat, or expertise is insufficient."
+    ]
+  },
   "schema_artifacts": {
     "upper_entities": [
       "EpistemicUnit",
@@ -1094,7 +1977,27 @@
       "LearningEvent",
       "TestCase",
       "ProofInvariant",
-      "MalakahScore"
+      "MalakahScore",
+      "RuleApplicabilityDecision",
+      "RuleManatDetection",
+      "MalakahSubSkill",
+      "RulePriorityDecision",
+      "ExceptionRecord",
+      "MalakahGrowthRecord",
+      "PromptMalakahAnalysis",
+      "PriorOpinionFilterRecord",
+      "EpistemicCandidateUpgradePath",
+      "MalakahErrorRecord",
+      "MalakahThresholdPolicy",
+      "ProgressiveMalakahTest",
+      "AdversarialEpistemicCase",
+      "MujmalBayanSkillRecord",
+      "MalakahMemoryRecord",
+      "LayerIntegrityScore",
+      "ExecutableInvariantCoverage",
+      "FailurePredictionRecord",
+      "ExpansionDisciplineRecord",
+      "MustadilCompetenceScore"
     ],
     "epistemic_unit_schema_excerpt": {
       "type": "object",
@@ -1181,7 +2084,27 @@
       "LearningEvent",
       "TestCase",
       "ProofInvariant",
-      "MalakahScore"
+      "MalakahScore",
+      "RuleApplicabilityDecision",
+      "RuleManatDetection",
+      "MalakahSubSkill",
+      "RulePriorityDecision",
+      "ExceptionRecord",
+      "MalakahGrowthRecord",
+      "PromptMalakahAnalysis",
+      "PriorOpinionFilterRecord",
+      "EpistemicCandidateUpgradePath",
+      "MalakahErrorRecord",
+      "MalakahThresholdPolicy",
+      "ProgressiveMalakahTest",
+      "AdversarialEpistemicCase",
+      "MujmalBayanSkillRecord",
+      "MalakahMemoryRecord",
+      "LayerIntegrityScore",
+      "ExecutableInvariantCoverage",
+      "FailurePredictionRecord",
+      "ExpansionDisciplineRecord",
+      "MustadilCompetenceScore"
     ],
     "neo4j_graph": [
       "(:KnowledgeUnit)-[:DEFINES]->(:Rule)",
@@ -1210,7 +2133,23 @@
       "(:Sentence)-[:BUILT_FROM]->(:Phrase)",
       "(:Mantuq)-[:BASED_ON]->(:Sentence)",
       "(:Mafhum)-[:BASED_ON]->(:Mantuq)",
-      "(:Judgment)-[:BASED_ON]->(:Mafhum)"
+      "(:Judgment)-[:BASED_ON]->(:Mafhum)",
+      "(:Rule)-[:DECLARES_APPLICABILITY]->(:RuleApplicabilityDecision)",
+      "(:Rule)-[:HAS_MANAT]->(:RuleManatDetection)",
+      "(:MalakahScore)-[:COMPOSED_OF]->(:MalakahSubSkill)",
+      "(:Rule)-[:PRIORITIZED_BY]->(:RulePriorityDecision)",
+      "(:Rule)-[:HAS_EXCEPTION]->(:ExceptionRecord)",
+      "(:LearningEvent)-[:GROWS]->(:MalakahGrowthRecord)",
+      "(:Prompt)-[:ANALYZED_BY]->(:PromptMalakahAnalysis)",
+      "(:PriorSignal)-[:FILTERED_BY]->(:PriorOpinionFilterRecord)",
+      "(:EpistemicCandidate)-[:HAS_UPGRADE_PATH]->(:EpistemicCandidateUpgradePath)",
+      "(:Answer)-[:TESTED_BY]->(:AdversarialEpistemicCase)",
+      "(:Memory)-[:CHECKED_BY]->(:MalakahMemoryRecord)",
+      "(:LayerDecision)-[:SCORED_BY]->(:LayerIntegrityScore)",
+      "(:ProofInvariant)-[:COVERED_BY]->(:ExecutableInvariantCoverage)",
+      "(:Certificate)-[:PRECEDED_BY]->(:FailurePredictionRecord)",
+      "(:AnswerExpansion)-[:DISCIPLINED_BY]->(:ExpansionDisciplineRecord)",
+      "(:Mustadil)-[:MEASURED_BY]->(:MustadilCompetenceScore)"
     ],
     "execution_phases": [
       {
@@ -1304,6 +2243,31 @@
           "Proof",
           "Malakah",
           "Audit"
+        ]
+      },
+      {
+        "name": "Malakah Methodology Engine",
+        "components": [
+          "RuleApplicabilityMachine",
+          "RuleManatDetector",
+          "MalakahTaxonomy",
+          "RulePriorityEngine",
+          "ExceptionRegistry",
+          "MalakahGrowthModel",
+          "PromptMalakahLayer",
+          "PriorOpinionFilter",
+          "EpistemicCandidateGenerationMachine",
+          "ErrorTypology",
+          "MalakahThresholdPolicy",
+          "ProgressiveMalakahTestSuite",
+          "AdversarialEpistemicCases",
+          "MujmalBayanMubayyanSkill",
+          "MalakahMemoryLoop",
+          "LayerIntegrityScore",
+          "ExecutableInvariantCoverage",
+          "FailurePredictor",
+          "ExpansionDisciplineMachine",
+          "MustadilCompetenceScore"
         ]
       }
     ]
