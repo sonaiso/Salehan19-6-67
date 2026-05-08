@@ -948,7 +948,7 @@ class BayaniRepositoryVerification(unittest.TestCase):
         mpc = self.spec["mustadil_prompt_classifier"]
         malakah_layer = mpc["layers"]["malakah_building_layer"]
         self.assertIn("modes", malakah_layer)
-        for mode in ("final_answer", "method_teaching", "malakah_building" if False else "checklist"):
+        for mode in ("final_answer", "method_teaching", "checklist"):
             self.assertIn(mode, malakah_layer["modes"], f"malakah_building_layer missing mode: {mode}")
 
 
