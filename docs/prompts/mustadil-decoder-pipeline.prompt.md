@@ -382,7 +382,7 @@ LAYER 19 — TAHQEEQ AL-MANAT
 
 Verify that the specific external case actually falls under the ruling.
 
-This step is USUALLY زن (probabilistic), not قطعي.
+This step is USUALLY ظني (probabilistic), not قطعي.
 Do NOT claim certainty unless evidence supports it.
 
 Zero: ManatUnverified | CertaintyClaimedForManat
