@@ -63,18 +63,35 @@
 
 > لا حكم بلا محل، ولا محل بلا تمييز، ولا تمييز بلا تعيين، ولا تعيين بلا نسب، ولا نسب بلا عوامل، ولا ربط بلا معلومات، ولا مفهوم بلا واقع، ولا تنزيل بلا تحقيق مناط.
 
-### خط الأنابيب — 21 طبقة مرتبة
+### خط الأنابيب — 21 طبقة مرتبة في 5 مجموعات
+
+الطبقات الـ21 مصنّفة في 5 مجموعات وظيفية. كل مجموعة يجب أن تكتمل قبل أن تبدأ المجموعة التالية.
+
+#### المجموعة 1: Epistemic Existence (طبقات 1–2)
+تؤسس ما يوجد حقًا وتفصل المعلومة الموثقة عن الرأي السابق.
 
 | الرتبة | المفتاح | الاسم |
 |-------|---------|-------|
 | 1 | `reality_grounding_layer` | Reality Grounding |
 | 2 | `prior_opinion_filter_layer` | Prior Opinion Filter |
+
+#### المجموعة 2: Semantic-Relational (طبقات 3–8)
+تبني البنية الدلالية العلائقية. **شرط لازم:** يجب إتمامها قبل بدء أي طبقة بيانية لغوية ولا سيما قبل تشكيل الحكم.
+
+| الرتبة | المفتاح | الاسم |
+|-------|---------|-------|
 | 3 | `differentiation_layer` | Differentiation |
-| 4 | `essence_assignment_layer` | Essence Assignment |
-| 5 | `domain_assignment_layer` | Domain Assignment |
-| 6 | `relational_mapping_layer` | Relational Mapping (13 أنواع نسب) |
+| 4 | `essence_assignment_layer` | Essence Assignment ← مطلوب قبل تشكيل الحكم |
+| 5 | `domain_assignment_layer` | Domain Assignment ← مطلوب قبل تشكيل الحكم |
+| 6 | `relational_mapping_layer` | Relational Mapping (13 أنواع نسب) ← مطلوب قبل تشكيل الحكم |
 | 7 | `arabic_operator_layer` | Arabic Operator Parsing (17 فئة) |
 | 8 | `binding_layer` | Binding |
+
+#### المجموعة 3: Bayani-Linguistic (طبقات 9–15)
+تبني الاستدلال البياني اللغوي. لا تبدأ إلا بعد إتمام المجموعة 2.
+
+| الرتبة | المفتاح | الاسم |
+|-------|---------|-------|
 | 9 | `concept_formation_layer` | Concept Formation |
 | 10 | `judgment_formation_layer` | Judgment Formation |
 | 11 | `signifier_analysis_layer` | Signifier Analysis |
@@ -82,17 +99,31 @@
 | 13 | `signifier_signified_relation_layer` | Signifier-Signified Relation |
 | 14 | `mantuq_layer` | Mantuq Analysis |
 | 15 | `mafhoom_layer` | Mafhoom Analysis |
+
+#### المجموعة 4: Usuli-Application (طبقات 16–20)
+تطبق قواعد أصول الفقه وتنزّل الحكم. **شرط لازم:** لا تنزيل قبل تحقيق المناط.
+
+| الرتبة | المفتاح | الاسم |
+|-------|---------|-------|
 | 16 | `general_specific_layer` | General/Specific |
 | 17 | `absolute_restricted_layer` | Absolute/Restricted |
 | 18 | `causal_juridical_relations_layer` | Causal-Juridical Relations |
-| 19 | `tahqeeq_manat_layer` | Tahqeeq al-Manat |
+| 19 | `tahqeeq_manat_layer` | Tahqeeq al-Manat ← مطلوب قبل التنزيل |
 | 20 | `application_layer` | Application |
+
+#### المجموعة 5: Audit (طبقة 21)
+المراجعة النهائية وإنتاج خريطة اليقين.
+
+| الرتبة | المفتاح | الاسم |
+|-------|---------|-------|
 | 21 | `epistemic_audit_layer` | Epistemic Audit |
 
 ### ثوابت خط الأنابيب
 
 - `NoLevelSkipInPipeline` — لا تجاوز طبقة قبل اكتمال مخرجاتها
 - `NoJudgmentBeforeEssenceAssignment` — لا حكم قبل تعيين الذات
+- `NoBayaniLinguisticBeforeSemanticRelationalComplete` — لا تبدأ المجموعة البيانية قبل اكتمال المجموعة الدلالية
+- `NoJudgmentFormationBeforeEssenceDomainRelationsResolved` — لا تشكيل حكم (طبقة 10) قبل إتمام طبقات 4 و5 و6
 - `NoApplicationWithoutTahqeqManat` — لا تنزيل قبل تحقيق المناط
 - `NoPriorOpinionAsEvidence` — لا رأي سابق في مقام الدليل
 - `NoMafhumStrongerThanMantuq` — لا يتجاوز المفهوم قوة المنطوق

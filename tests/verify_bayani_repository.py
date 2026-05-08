@@ -143,6 +143,8 @@ REQUIRED_PIPELINE_INVARIANT_NAMES = [
     "NoPriorOpinionAsEvidence",
     "NoMafhumStrongerThanMantuq",
     "NoIllahWithoutValidation",
+    "NoBayaniLinguisticBeforeSemanticRelationalComplete",
+    "NoJudgmentFormationBeforeEssenceDomainRelationsResolved",
 ]
 EPISTEMIC_AUDIT_CERTAINTY_MAP_FIELDS = [
     "text_existence",
@@ -157,7 +159,44 @@ REQUIRED_DECODER_PROMPT_SECTIONS = [
     "Layer 21",
     "Pipeline Invariants",
     "Epistemic Audit",
+    "Group Structure",
 ]
+
+# Layer-group membership map (used by group tests)
+PIPELINE_LAYER_GROUPS = {
+    "epistemic_existence": [
+        "reality_grounding_layer",
+        "prior_opinion_filter_layer",
+    ],
+    "semantic_relational": [
+        "differentiation_layer",
+        "essence_assignment_layer",
+        "domain_assignment_layer",
+        "relational_mapping_layer",
+        "arabic_operator_layer",
+        "binding_layer",
+    ],
+    "bayani_linguistic": [
+        "concept_formation_layer",
+        "judgment_formation_layer",
+        "signifier_analysis_layer",
+        "signified_analysis_layer",
+        "signifier_signified_relation_layer",
+        "mantuq_layer",
+        "mafhoom_layer",
+    ],
+    "usuli_application": [
+        "general_specific_layer",
+        "absolute_restricted_layer",
+        "causal_juridical_relations_layer",
+        "tahqeeq_manat_layer",
+        "application_layer",
+    ],
+    "audit": [
+        "epistemic_audit_layer",
+    ],
+}
+REQUIRED_GROUP_IDS = list(PIPELINE_LAYER_GROUPS.keys())
 
 
 def load_json(path):
@@ -549,6 +588,91 @@ class BayaniRepositoryVerification(unittest.TestCase):
     def test_decoder_prompt_references_allowed_outputs(self):
         for output in ALLOWED_OUTPUTS:
             self.assertIn(output, self.decoder_prompt)
+
+    # ------------------------------------------------------------------
+    # Layer Groups — spec structure and assignment
+    # ------------------------------------------------------------------
+
+    def test_pipeline_has_five_layer_groups(self):
+        pipeline = self.spec["mustadil_decoder_pipeline"]
+        self.assertIn("layer_groups", pipeline)
+        group_ids = [g["id"] for g in pipeline["layer_groups"]]
+        for required_id in REQUIRED_GROUP_IDS:
+            self.assertIn(required_id, group_ids, f"Missing layer group: {required_id}")
+        self.assertEqual(len(group_ids), 5)
+
+    def test_layer_groups_cover_all_21_layers(self):
+        pipeline = self.spec["mustadil_decoder_pipeline"]
+        covered = set()
+        for group in pipeline["layer_groups"]:
+            for layer_key in group["layers"]:
+                self.assertNotIn(layer_key, covered, f"Layer {layer_key} appears in more than one group")
+                covered.add(layer_key)
+        self.assertEqual(covered, set(REQUIRED_PIPELINE_LAYERS))
+
+    def test_each_layer_has_layer_group_field(self):
+        pipeline = self.spec["mustadil_decoder_pipeline"]
+        for layer_key in REQUIRED_PIPELINE_LAYERS:
+            layer = pipeline[layer_key]
+            self.assertIn("layer_group", layer, f"Layer {layer_key} missing layer_group field")
+            self.assertIn(
+                layer["layer_group"],
+                REQUIRED_GROUP_IDS,
+                f"Layer {layer_key} has unknown layer_group: {layer['layer_group']}",
+            )
+
+    def test_layer_group_assignments_match_expected(self):
+        pipeline = self.spec["mustadil_decoder_pipeline"]
+        for group_id, expected_layers in PIPELINE_LAYER_GROUPS.items():
+            for layer_key in expected_layers:
+                actual_group = pipeline[layer_key]["layer_group"]
+                self.assertEqual(
+                    actual_group,
+                    group_id,
+                    f"Layer {layer_key}: expected group={group_id}, got {actual_group}",
+                )
+
+    def test_semantic_relational_group_completes_before_bayani_linguistic(self):
+        """All semantic_relational layers must have lower layer_order than all bayani_linguistic layers."""
+        pipeline = self.spec["mustadil_decoder_pipeline"]
+        sr_orders = [pipeline[lk]["layer_order"] for lk in PIPELINE_LAYER_GROUPS["semantic_relational"]]
+        bl_orders = [pipeline[lk]["layer_order"] for lk in PIPELINE_LAYER_GROUPS["bayani_linguistic"]]
+        self.assertLess(
+            max(sr_orders),
+            min(bl_orders),
+            "All semantic_relational layers must finish before any bayani_linguistic layer starts",
+        )
+
+    def test_essence_domain_relations_precede_judgment_formation(self):
+        """essence_assignment, domain_assignment, relational_mapping must all precede judgment_formation_layer."""
+        pipeline = self.spec["mustadil_decoder_pipeline"]
+        prerequisite_layers = ["essence_assignment_layer", "domain_assignment_layer", "relational_mapping_layer"]
+        judgment_order = pipeline["judgment_formation_layer"]["layer_order"]
+        for prereq in prerequisite_layers:
+            prereq_order = pipeline[prereq]["layer_order"]
+            self.assertLess(
+                prereq_order,
+                judgment_order,
+                f"{prereq} (order {prereq_order}) must precede judgment_formation_layer (order {judgment_order})",
+            )
+
+    def test_application_layer_follows_tahqeeq_manat(self):
+        pipeline = self.spec["mustadil_decoder_pipeline"]
+        tahqeeq_order = pipeline["tahqeeq_manat_layer"]["layer_order"]
+        application_order = pipeline["application_layer"]["layer_order"]
+        self.assertLess(
+            tahqeeq_order,
+            application_order,
+            "tahqeeq_manat_layer must precede application_layer",
+        )
+
+    def test_layer_groups_have_required_fields(self):
+        pipeline = self.spec["mustadil_decoder_pipeline"]
+        for group in pipeline["layer_groups"]:
+            for field in ("id", "name", "description", "layers", "constraint"):
+                self.assertIn(field, group, f"Group {group.get('id','?')} missing field: {field}")
+            self.assertGreater(len(group["layers"]), 0)
+            self.assertGreater(len(group["constraint"]), 10)
 
 
 if __name__ == "__main__":

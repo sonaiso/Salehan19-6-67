@@ -62,6 +62,58 @@ Layer 20 → Application
 Layer 21 → Epistemic Audit
 
 ━━━━━━━━━━━━━━━━━━
+GROUP STRUCTURE
+━━━━━━━━━━━━━━━━━━
+
+The 21 layers are organized into 5 functional groups.
+Groups must complete in order. No group may begin before the preceding group is resolved.
+
+GROUP 1 — EPISTEMIC EXISTENCE (Layers 1–2)
+  Establish what actually exists vs. what is prior opinion.
+  • Layer 1: Reality Grounding
+  • Layer 2: Prior Opinion Filter
+  Gate: Nothing proceeds until reality is anchored and priors are filtered.
+
+GROUP 2 — SEMANTIC-RELATIONAL (Layers 3–8)
+  Build the semantic-relational structure: differentiation, essence, domain,
+  relations, operators, and binding to documented knowledge.
+  • Layer 3: Differentiation
+  • Layer 4: Essence Assignment       ← REQUIRED before Judgment Formation
+  • Layer 5: Domain Assignment        ← REQUIRED before Judgment Formation
+  • Layer 6: Relational Mapping       ← REQUIRED before Judgment Formation
+  • Layer 7: Arabic Operator Parsing
+  • Layer 8: Binding
+  Gate: Judgment Formation (Layer 10) may NOT activate before this group completes.
+
+GROUP 3 — BAYANI-LINGUISTIC (Layers 9–15)
+  Build concepts, form initial judgments, analyze signifier/signified, extract
+  mantuq and mafhoom.
+  • Layer 9:  Concept Formation
+  • Layer 10: Judgment Formation
+  • Layer 11: Signifier Analysis
+  • Layer 12: Signified Analysis
+  • Layer 13: Signifier-Signified Relation
+  • Layer 14: Mantuq Analysis
+  • Layer 15: Mafhoom Analysis
+  Gate: No bayani-linguistic layer may begin before the Semantic-Relational group
+        is fully resolved (Invariant: NoBayaniLinguisticBeforeSemanticRelationalComplete).
+
+GROUP 4 — USULI-APPLICATION (Layers 16–20)
+  Apply usul al-fiqh principles to derive and apply the ruling.
+  • Layer 16: General/Specific
+  • Layer 17: Absolute/Restricted
+  • Layer 18: Causal-Juridical Relations (Illah/Sabab/Shart/Mani)
+  • Layer 19: Tahqeeq al-Manat        ← REQUIRED before Application
+  • Layer 20: Application
+  Gate: Application (Layer 20) may NOT activate before Tahqeeq al-Manat (Layer 19)
+        completes (Invariant: NoApplicationWithoutTahqeqManat).
+
+GROUP 5 — AUDIT (Layer 21)
+  Produce the final certainty map, list prevented jumps, declare final rank.
+  • Layer 21: Epistemic Audit
+  Gate: Activates only after all 20 preceding layers have completed.
+
+━━━━━━━━━━━━━━━━━━
 LAYER 1 — REALITY GROUNDING
 ━━━━━━━━━━━━━━━━━━
 
@@ -403,6 +455,15 @@ PIPELINE INVARIANTS
 
 7. NoDomainTransferWithoutBridge
    No concept may move from its domain to another without a documented epistemic bridge.
+
+8. NoBayaniLinguisticBeforeSemanticRelationalComplete
+   No layer in the Bayani-Linguistic group (Layers 9–15) may begin before ALL layers
+   in the Semantic-Relational group (Layers 3–8) have completed.
+
+9. NoJudgmentFormationBeforeEssenceDomainRelationsResolved
+   Layer 10 (Judgment Formation) may NOT produce any judgment before Layers 4, 5, and 6
+   (Essence Assignment, Domain Assignment, Relational Mapping) have all produced their
+   required outputs.
 
 ━━━━━━━━━━━━━━━━━━
 ALLOWED OUTPUTS

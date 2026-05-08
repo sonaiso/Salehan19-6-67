@@ -2437,7 +2437,8 @@
         "unknown": [],
         "requires_verification": true,
         "risk_of_jump": []
-      }
+      },
+      "layer_group": "epistemic_existence"
     },
     "prior_opinion_filter_layer": {
       "layer_order": 2,
@@ -2461,7 +2462,8 @@
         "prior_opinions": "رأي مشهور أو موقف مدرسي",
         "assumptions": "افتراض لم يثبت",
         "must_not_use_as_fact": "كل ما لم يثبت بدليل مؤهل"
-      }
+      },
+      "layer_group": "epistemic_existence"
     },
     "differentiation_layer": {
       "layer_order": 3,
@@ -2485,7 +2487,8 @@
         "التخصيص ≠ النسخ",
         "احتمال التخصيص ≠ وجود التخصيص",
         "دخول الفرد ≠ دلالة اللفظ"
-      ]
+      ],
+      "layer_group": "semantic_relational"
     },
     "essence_assignment_layer": {
       "layer_order": 4,
@@ -2510,7 +2513,8 @@
         "واقع خارجي",
         "علة",
         "سبب"
-      ]
+      ],
+      "layer_group": "semantic_relational"
     },
     "domain_assignment_layer": {
       "layer_order": 5,
@@ -2532,7 +2536,8 @@
         "لا انتقال من دلالة لفظية إلى حكم فرد خارجي مباشرة",
         "لا انتقال من العام إلى التنزيل بلا تحقيق مناط",
         "لا انتقال من المفهوم إلى الحكم بلا منطوق"
-      ]
+      ],
+      "layer_group": "semantic_relational"
     },
     "relational_mapping_layer": {
       "layer_order": 6,
@@ -2564,7 +2569,8 @@
         "مكانية",
         "حالية",
         "استثنائية"
-      ]
+      ],
+      "layer_group": "semantic_relational"
     },
     "arabic_operator_layer": {
       "layer_order": 7,
@@ -2600,7 +2606,8 @@
         "صفة",
         "إضافة",
         "جار ومجرور"
-      ]
+      ],
+      "layer_group": "semantic_relational"
     },
     "binding_layer": {
       "layer_order": 8,
@@ -2620,7 +2627,8 @@
         "BindingToPriorOpinion",
         "UnboundConcept"
       ],
-      "binding_rule": "محل معين + نسبة معينة + معلومة موثقة = مفهوم صالح للبناء عليه"
+      "binding_rule": "محل معين + نسبة معينة + معلومة موثقة = مفهوم صالح للبناء عليه",
+      "layer_group": "semantic_relational"
     },
     "concept_formation_layer": {
       "layer_order": 9,
@@ -2644,7 +2652,8 @@
         "قطعي إذا ثبت الوضع",
         "ظني محتاج ترجيح",
         "احتمالي يُعلن فرضية"
-      ]
+      ],
+      "layer_group": "bayani_linguistic"
     },
     "judgment_formation_layer": {
       "layer_order": 10,
@@ -2668,7 +2677,8 @@
         "rank": "",
         "not_rank": "",
         "conditions": []
-      }
+      },
+      "layer_group": "bayani_linguistic"
     },
     "signifier_analysis_layer": {
       "layer_order": 11,
@@ -2693,7 +2703,8 @@
         "نقل",
         "عرف",
         "قرينة"
-      ]
+      ],
+      "layer_group": "bayani_linguistic"
     },
     "signified_analysis_layer": {
       "layer_order": 12,
@@ -2715,7 +2726,8 @@
         "لا ينقل حكم الحقيقة إلى المجاز",
         "لا ينقل حكم الوضع إلى العرف",
         "لا ينقل معنى مشترك بلا قرينة"
-      ]
+      ],
+      "layer_group": "bayani_linguistic"
     },
     "signifier_signified_relation_layer": {
       "layer_order": 13,
@@ -2739,7 +2751,8 @@
         "التزام",
         "دلالة حقيقية",
         "دلالة مجازية"
-      ]
+      ],
+      "layer_group": "bayani_linguistic"
     },
     "mantuq_layer": {
       "layer_order": 14,
@@ -2761,7 +2774,8 @@
         "mantuq": "",
         "strength": "أقوى من المفهوم",
         "requires_external_check": ""
-      }
+      },
+      "layer_group": "bayani_linguistic"
     },
     "mafhoom_layer": {
       "layer_order": 15,
@@ -2792,7 +2806,8 @@
         "هل خرج مخرج الغالب؟",
         "هل توجد قرينة مانعة؟",
         "هل يعارضه منطوق؟"
-      ]
+      ],
+      "layer_group": "bayani_linguistic"
     },
     "general_specific_layer": {
       "layer_order": 16,
@@ -2817,7 +2832,8 @@
         "المخصص إذا ورد يعمل في محله.",
         "يبقى العام في غير محل التخصيص.",
         "دخول الفرد الخارجي تحقيق مناط."
-      ]
+      ],
+      "layer_group": "usuli_application"
     },
     "absolute_restricted_layer": {
       "layer_order": 17,
@@ -2841,7 +2857,8 @@
         "هل القيد متحد الحكم والسبب؟",
         "هل يحمل المطلق على المقيد؟",
         "هل القيد وصفي أم شرطي أم غائي؟"
-      ]
+      ],
+      "layer_group": "usuli_application"
     },
     "causal_juridical_relations_layer": {
       "layer_order": 18,
@@ -2878,7 +2895,8 @@
         "هل يتعدى؟",
         "هل يصلح كليًا؟",
         "هل يدور الحكم معه وجودًا وعدمًا؟"
-      ]
+      ],
+      "layer_group": "usuli_application"
     },
     "tahqeeq_manat_layer": {
       "layer_order": 19,
@@ -2902,7 +2920,8 @@
         "هل الواقعة الخارجية المعينة تنطبق عليها الأوصاف المعتبرة في الحكم؟",
         "هل تحقق المناط في هذه الواقعة بعينها؟",
         "ما رتبة يقين هذا التحقق؟"
-      ]
+      ],
+      "layer_group": "usuli_application"
     },
     "application_layer": {
       "layer_order": 20,
@@ -2929,7 +2948,8 @@
         "انتفاء المانع",
         "تحقق الشرط",
         "عدم وجود مخصص أو قيد مانع"
-      ]
+      ],
+      "layer_group": "usuli_application"
     },
     "epistemic_audit_layer": {
       "layer_order": 21,
@@ -2981,7 +3001,8 @@
         "هل جعلنا العام شاملًا لفرد لم يتحقق مناطه؟",
         "هل جعلنا المفهوم أقوى من المنطوق؟",
         "هل جعلنا الرأي السابق معلومة؟"
-      ]
+      ],
+      "layer_group": "audit"
     },
     "pipeline_invariants": [
       {
@@ -3018,6 +3039,79 @@
         "id": "PI-07",
         "name": "NoLevelSkipInPipeline",
         "rule": "لا تُتجاوز طبقة في الخط الأنبوبي قبل اجتيازها وإنتاج مخرجاتها المطلوبة."
+      },
+      {
+        "id": "PI-08",
+        "name": "NoBayaniLinguisticBeforeSemanticRelationalComplete",
+        "rule": "لا تبدأ أي طبقة في المجموعة البيانية اللغوية قبل استكمال جميع طبقات المجموعة الدلالية العلائقية (التمييز، تعيين الذات، تعيين المجال، النسب، العوامل، الربط)."
+      },
+      {
+        "id": "PI-09",
+        "name": "NoJudgmentFormationBeforeEssenceDomainRelationsResolved",
+        "rule": "لا تُنتج طبقة تشكيل الحكم (judgment_formation_layer) أي حكم قبل أن تُكمل طبقات تعيين الذات (4)، تعيين المجال (5)، والنسب (6) مخرجاتها جميعًا."
+      }
+    ],
+    "layer_groups": [
+      {
+        "id": "epistemic_existence",
+        "name": "Epistemic Existence Group",
+        "description": "يؤسس الوجود المعرفي: تحديد الواقع، تصفية المعرفة السابقة من الآراء. هذه المجموعة تجيب على: ما الذي يوجد حقًا؟ وما الذي هو رأي سابق؟",
+        "layers": [
+          "reality_grounding_layer",
+          "prior_opinion_filter_layer"
+        ],
+        "constraint": "يجب إتمام هذه المجموعة قبل بدء أي مجموعة أخرى."
+      },
+      {
+        "id": "semantic_relational",
+        "name": "Semantic-Relational Group",
+        "description": "يبني البنية الدلالية العلائقية: التمييز بين المفاهيم، تعيين الذات والمجال، استخراج النسب والعوامل، وربط الواقع بالمعلومات الموثقة. هذه المجموعة تجيب على: ما هو الشيء؟ أين مجاله؟ ما علاقاته؟",
+        "layers": [
+          "differentiation_layer",
+          "essence_assignment_layer",
+          "domain_assignment_layer",
+          "relational_mapping_layer",
+          "arabic_operator_layer",
+          "binding_layer"
+        ],
+        "constraint": "يجب إتمام هذه المجموعة قبل بدء المجموعة البيانية اللغوية. لا يجوز تشكيل أي حكم قبل تعيين الذات والمجال والنسب."
+      },
+      {
+        "id": "bayani_linguistic",
+        "name": "Bayani-Linguistic Group",
+        "description": "يبني الاستدلال البياني اللغوي: تشكيل المفهوم والحكم الأوّلي، تحليل الدال والمدلول وعلاقتهما، استخراج المنطوق والمفهوم. هذه المجموعة تجيب على: ماذا يعني اللفظ؟ ما دلالاته الصريحة والضمنية؟",
+        "layers": [
+          "concept_formation_layer",
+          "judgment_formation_layer",
+          "signifier_analysis_layer",
+          "signified_analysis_layer",
+          "signifier_signified_relation_layer",
+          "mantuq_layer",
+          "mafhoom_layer"
+        ],
+        "constraint": "لا تبدأ إلا بعد إتمام المجموعة الدلالية العلائقية. لا حكم بلا تعيين ذات ومجال ونسب."
+      },
+      {
+        "id": "usuli_application",
+        "name": "Usuli-Application Group",
+        "description": "يطبق قواعد أصول الفقه: ضبط العام والخاص والمطلق والمقيد، التمييز بين العلة والسبب والشرط والمانع، تحقيق المناط في الواقعة الخارجية، وتنزيل الحكم بشروطه الستة. هذه المجموعة تجيب على: كيف يُطبَّق الحكم على هذه الواقعة تحديدًا؟",
+        "layers": [
+          "general_specific_layer",
+          "absolute_restricted_layer",
+          "causal_juridical_relations_layer",
+          "tahqeeq_manat_layer",
+          "application_layer"
+        ],
+        "constraint": "لا تنزيل قبل تحقيق المناط. لا تطبيق قبل اجتياز طبقة tahqeeq_manat_layer."
+      },
+      {
+        "id": "audit",
+        "name": "Epistemic Audit Group",
+        "description": "يراجع جميع القفزات المنعية ويخرطت خريطة اليقين النهائية. هذه المجموعة تجيب على: أين القطع؟ أين الظن؟ ما القفزات التي مُنعت؟ وما الرتبة النهائية للجواب؟",
+        "layers": [
+          "epistemic_audit_layer"
+        ],
+        "constraint": "لا تعمل إلا بعد إتمام جميع المجموعات الأربع السابقة."
       }
     ]
   },
