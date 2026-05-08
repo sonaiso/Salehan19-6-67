@@ -520,6 +520,174 @@
       ]
     }
   },
+  "answer_analysis_engine": {
+    "purpose": "إعادة ضبط إجابات GPT معرفيًا بتحويل النص الواسع إلى دعاوى وعلاقات وأدلة وانتقالات ومفاهيم وأحكام وبراهين قبل إصدار Certificate أو Hypothesis أو Zero.",
+    "pipeline": [
+      "Answer Segmentation",
+      "Claim Extraction",
+      "Concept Extraction",
+      "Relation Extraction",
+      "Evidence Detection",
+      "Judgment Classification",
+      "Mujmal Detection",
+      "Bayan Requirement",
+      "Proof Check",
+      "Status Assignment"
+    ],
+    "decomposition_targets": [
+      "Claim",
+      "Relation",
+      "Evidence",
+      "Transition",
+      "Concept",
+      "Judgment",
+      "Proof"
+    ],
+    "status_policy": {
+      "certificate": "لا تصدر الشهادة إلا إذا كان الجزء مبينًا، مربوطًا بدليل، محفوظ الانتقال، وخاليًا من Zero مانع.",
+      "hypothesis": "كل دعوى واسعة أو ناقصة الدليل أو محتاجة بيانًا تبقى Hypothesis ولا تعرض كشهادة.",
+      "zero": "كل دعوى تخالف invariant أو تعتمد على السياق وحده أو تعجز عن reverse_trace تنتج Zero."
+    },
+    "mujmal_bayan_layer": {
+      "definition": "كل جزء غامض أو عام في جواب GPT يعامل كمجمل حتى يرد بيان موثق يحوله إلى مبين قابل للفحص.",
+      "rules": [
+        "كل جواب GPT إذا كان مجملًا لا يدخل في Certificate.",
+        "كل جزء غامض يحتاج بيانًا محددًا.",
+        "كل بيان يجب أن يتحول إلى Evidence.",
+        "كل مبين فقط يمكن أن يدخل في Certificate.",
+        "لا بيان بلا أثر أو مصدر أو قرينة أو Proof Object."
+      ],
+      "transitions": [
+        "GPT Answer → Mujmal Detection",
+        "Mujmal Segment → Bayan Requirement",
+        "Bayan → Evidence Trace",
+        "Mubayyan Segment → Proof Object",
+        "Proof Object → Certificate | Hypothesis | Zero"
+      ],
+      "zero_types": [
+        "MujmalWithoutBayan",
+        "BayanWithoutEvidence",
+        "ContextOverreach",
+        "UntraceableAnswerClaim",
+        "ProoflessMubayyan"
+      ]
+    },
+    "graph_contract": {
+      "nodes": [
+        "Answer",
+        "Claim",
+        "Concept",
+        "Relation",
+        "Dal",
+        "Madlul",
+        "Evidence",
+        "Qarina",
+        "Proof",
+        "Zero",
+        "Hypothesis",
+        "Certificate",
+        "LearningSignal"
+      ],
+      "edges": [
+        "SEGMENTS_TO",
+        "ASSERTS",
+        "USES_CONCEPT",
+        "RELATES_TO",
+        "SUPPORTED_BY",
+        "DEPENDS_ON",
+        "CONFLICTS_WITH",
+        "TRANSITIONS_TO",
+        "REQUIRES",
+        "BLOCKED_BY",
+        "CERTIFIES",
+        "TRIGGERS_LEARNING"
+      ],
+      "invariants": [
+        "لا Claim بلا Evidence أو إعلان Hypothesis.",
+        "لا Certificate بلا Proof.",
+        "لا Mubayyan بلا Bayan Evidence إذا كان أصله مجملًا.",
+        "لا Graph بلا reverse_trace من Certificate إلى الأثر الجزئي."
+      ]
+    },
+    "vector_dimensions": [
+      "DalScore",
+      "MadlulScore",
+      "MantuqScore",
+      "MafhumScore",
+      "EvidenceScore",
+      "QarinaScore",
+      "ProofScore",
+      "ConflictScore"
+    ],
+    "dimensional_score_fields": [
+      "claim_clarity",
+      "evidence_binding",
+      "concept_realization",
+      "relation_validity",
+      "proof_integrity",
+      "zero_control"
+    ],
+    "learning_signal_rules": [
+      "كل missing_source_for_claim يسجل في EvidenceBinding.",
+      "كل MujmalWithoutBayan ينتج اختبارًا لفشل البيان.",
+      "كل ContextOverreach يضيف قاعدة تمنع جعل السياق مصدرًا مستقلًا للمعنى.",
+      "لا LearningSignal بلا failed_layer وaction وtest_required."
+    ],
+    "example_analyses": [
+      {
+        "id": "ANS-0001",
+        "answer": "العربية نظام معرفي يبني الدلالة من الجذر والوزن والسياق.",
+        "claims": [
+          "العربية نظام معرفي",
+          "الدلالة تبنى من الجذر",
+          "الدلالة تبنى من الوزن",
+          "الدلالة تتأثر بالسياق"
+        ],
+        "relations": [
+          "root -> dalalah",
+          "pattern -> dalalah",
+          "context -> disambiguation"
+        ],
+        "needed_evidence": [
+          "root-pattern rules",
+          "examples",
+          "qarina system"
+        ],
+        "dimensional_scores": {
+          "claim_clarity": 0.92,
+          "evidence_binding": 0.88,
+          "concept_realization": 0.9,
+          "relation_validity": 0.86,
+          "proof_integrity": 0.94,
+          "zero_control": 1.0
+        },
+        "result_type": "Certificate",
+        "reverse_trace": [
+          "Certificate",
+          "Judgment",
+          "Mantuq",
+          "Binding",
+          "Dal/Madlul",
+          "Evidence",
+          "Source"
+        ]
+      },
+      {
+        "id": "ANS-0002",
+        "answer": "كل دلالة يمكن استخراجها من السياق وحده.",
+        "claims": [
+          "السياق وحده يكفي لاستخراج كل دلالة"
+        ],
+        "zeros": [
+          {
+            "zero_type": "ContextOverreach",
+            "reason": "السياق لا يكفي وحده بلا دال ومدلول ووضع وقرينة."
+          }
+        ],
+        "result_type": "Zero"
+      }
+    ]
+  },
   "governance_engine": {
     "source_rules": [
       "لا claim بلا source_binding.",
@@ -604,6 +772,22 @@
           "result_type": "Zero",
           "zero_type": "UnexpectedFinalHarakaAfterJazm"
         }
+      },
+      {
+        "id": "TEST-0004",
+        "input": "العقل يفهم اللغة بالسياق.",
+        "expected": {
+          "result_type": "Hypothesis",
+          "reason": "دعوى مجملة تحتاج بيان نوع العقل والسياق والطبقة والدليل"
+        }
+      },
+      {
+        "id": "TEST-0005",
+        "input": "كل دلالة يمكن استخراجها من السياق وحده.",
+        "expected": {
+          "result_type": "Zero",
+          "zero_type": "ContextOverreach"
+        }
       }
     ],
     "proof_layer": {
@@ -663,6 +847,21 @@
           "id": "I11",
           "name": "NoPriorKnowledgeWithoutDocumentedSource",
           "rule": "لا معلومة سابقة بلا مصدر موثق ومؤهل."
+        },
+        {
+          "id": "I12",
+          "name": "NoCertificateForMujmalAnswer",
+          "rule": "لا شهادة لجزء مجمل من جواب GPT حتى يرد بيانه."
+        },
+        {
+          "id": "I13",
+          "name": "NoBayanWithoutEvidence",
+          "rule": "لا بيان معتبر بلا دليل يتحول إلى Evidence Trace."
+        },
+        {
+          "id": "I14",
+          "name": "NoAnswerCertificateWithoutGraphTrace",
+          "rule": "لا شهادة لجواب GPT بلا Knowledge Graph وreverse_trace."
         }
       ],
       "proof_objects": [
@@ -689,6 +888,13 @@
       "ZeroRecord",
       "HypothesisRecord",
       "CertificateRecord",
+      "AnswerAnalysis",
+      "AnswerSegment",
+      "MujmalRecord",
+      "BayanRecord",
+      "MubayyanRecord",
+      "KnowledgeGraph",
+      "DimensionalScore",
       "OntologyNode",
       "KnowledgeUnit",
       "DocumentedSource",
@@ -769,6 +975,13 @@
       "ZeroRecord",
       "HypothesisRecord",
       "CertificateRecord",
+      "AnswerAnalysis",
+      "AnswerSegment",
+      "MujmalRecord",
+      "BayanRecord",
+      "MubayyanRecord",
+      "KnowledgeGraph",
+      "DimensionalScore",
       "AmilRule",
       "QarinaRule",
       "EllipsisRule",
@@ -785,6 +998,15 @@
       "(:KnowledgeUnit)-[:DEFINES]->(:Rule)",
       "(:KnowledgeUnit)-[:SUPPORTED_BY]->(:DocumentedSource)",
       "(:DocumentedSource)-[:QUALIFIED_BY]->(:SourceQualification)",
+      "(:Answer)-[:SEGMENTS_TO]->(:AnswerSegment)",
+      "(:AnswerSegment)-[:ASSERTS]->(:Claim)",
+      "(:Claim)-[:USES_CONCEPT]->(:Concept)",
+      "(:Claim)-[:SUPPORTED_BY]->(:Evidence)",
+      "(:Claim)-[:CHECKED_BY]->(:Proof)",
+      "(:Claim)-[:BLOCKED_BY]->(:Zero)",
+      "(:MujmalRecord)-[:REQUIRES]->(:BayanRecord)",
+      "(:BayanRecord)-[:PRODUCES]->(:MubayyanRecord)",
+      "(:MubayyanRecord)-[:CERTIFIES]->(:Certificate)",
       "(:EpistemicUnit)-[:HAS_DIMENSION]->(:Dimension)",
       "(:Dimension)-[:PRODUCES]->(:Claim)",
       "(:Claim)-[:SUPPORTED_BY]->(:Evidence)",
@@ -798,6 +1020,22 @@
       "(:Judgment)-[:BASED_ON]->(:Mafhum)"
     ],
     "execution_phases": [
+      {
+        "name": "Answer Analysis Engine",
+        "components": [
+          "AnswerSegmentation",
+          "ClaimExtractor",
+          "ConceptExtractor",
+          "RelationExtractor",
+          "EvidenceDetector",
+          "MujmalDetector",
+          "BayanRequirement",
+          "KnowledgeGraphBuilder",
+          "ProofChecker",
+          "ZeroGuard",
+          "LearningSignalEngine"
+        ]
+      },
       {
         "name": "Core Engine",
         "components": [

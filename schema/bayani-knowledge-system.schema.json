@@ -40,6 +40,9 @@
     "reasoning_engine": {
       "$ref": "#/$defs/reasoningEngine"
     },
+    "answer_analysis_engine": {
+      "$ref": "#/$defs/answerAnalysisEngine"
+    },
     "governance_engine": {
       "$ref": "#/$defs/governanceEngine"
     },
@@ -579,6 +582,62 @@
         "conflicts": {"type": "array", "items": {"$ref": "#/$defs/conflictRecord"}},
         "tarjih_rules": {"type": "array", "items": {"type": "string"}},
         "recursive_relation": {"$ref": "#/$defs/recursiveRelation"}
+      },
+      "additionalProperties": false
+    },
+    "answerAnalysisEngine": {
+      "type": "object",
+      "required": [
+        "purpose",
+        "pipeline",
+        "decomposition_targets",
+        "status_policy",
+        "mujmal_bayan_layer",
+        "graph_contract",
+        "vector_dimensions",
+        "dimensional_score_fields",
+        "learning_signal_rules",
+        "example_analyses"
+      ],
+      "properties": {
+        "purpose": {"type": "string"},
+        "pipeline": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "decomposition_targets": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "status_policy": {
+          "type": "object",
+          "required": ["certificate", "hypothesis", "zero"],
+          "properties": {
+            "certificate": {"type": "string"},
+            "hypothesis": {"type": "string"},
+            "zero": {"type": "string"}
+          },
+          "additionalProperties": false
+        },
+        "mujmal_bayan_layer": {
+          "type": "object",
+          "required": ["definition", "rules", "transitions", "zero_types"],
+          "properties": {
+            "definition": {"type": "string"},
+            "rules": {"type": "array", "items": {"type": "string"}},
+            "transitions": {"type": "array", "items": {"type": "string"}},
+            "zero_types": {"type": "array", "items": {"type": "string"}}
+          },
+          "additionalProperties": false
+        },
+        "graph_contract": {
+          "type": "object",
+          "required": ["nodes", "edges", "invariants"],
+          "properties": {
+            "nodes": {"type": "array", "items": {"type": "string"}},
+            "edges": {"type": "array", "items": {"type": "string"}},
+            "invariants": {"type": "array", "items": {"type": "string"}}
+          },
+          "additionalProperties": false
+        },
+        "vector_dimensions": {"type": "array", "items": {"type": "string"}},
+        "dimensional_score_fields": {"type": "array", "items": {"type": "string"}},
+        "learning_signal_rules": {"type": "array", "items": {"type": "string"}},
+        "example_analyses": {"type": "array", "items": {"type": "object"}}
       },
       "additionalProperties": false
     },
