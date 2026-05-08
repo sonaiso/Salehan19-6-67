@@ -76,6 +76,7 @@ REQUIRED_PROMPT_SECTIONS = [
     "GPT-style Answers Policy",
     "Final Governing Rule",
 ]
+PROMPT_DISALLOWED_OUTPUTS_LABEL = "Never Output:"
 
 
 def load_json(path):
@@ -87,6 +88,11 @@ def load_json(path):
 def normalized(text):
     """Normalize text for case-insensitive comparison."""
     return text.casefold()
+
+
+def is_prompt_separator(line):
+    """Return whether a prompt line is only the visual section separator."""
+    return set(line.strip()) == {"━"}
 
 
 def markdown_slug(heading):
@@ -192,11 +198,14 @@ class BayaniRepositoryVerification(unittest.TestCase):
         section_end = prompt.find(normalized("Required Output Structure"))
         self.assertGreaterEqual(section_start, 0)
         self.assertGreater(section_end, section_start)
-        allowed_outputs_section = prompt[section_start:section_end].split("never output:", 1)[0]
+        allowed_outputs_section = prompt[section_start:section_end].split(
+            normalized(PROMPT_DISALLOWED_OUTPUTS_LABEL),
+            1,
+        )[0]
         declared_outputs = [
             line.strip(" -")
             for line in allowed_outputs_section.splitlines()[1:]
-            if line.strip(" -") and set(line.strip()) != {"━"}
+            if line.strip(" -") and not is_prompt_separator(line)
         ]
         self.assertEqual(declared_outputs, [normalized(output) for output in ALLOWED_OUTPUTS])
 
