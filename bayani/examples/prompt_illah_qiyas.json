@@ -1,0 +1,46 @@
+{
+  "description": "PT-09 — Illah/Qiyas prompt: is intoxication (al-iskar) the illah (juridical cause) of prohibition?",
+  "input": {
+    "prompt": "هل الإسكار علة التحريم؟",
+    "mode": "analysis"
+  },
+  "expected_output": {
+    "prompt_type": "PT-09",
+    "intent": {
+      "primary_purpose": "hukm_knowledge",
+      "thinking_level": "deep",
+      "malakah_mode": false
+    },
+    "required_layers": [
+      "reality_grounding_layer",
+      "prior_opinion_filter_layer",
+      "differentiation_layer",
+      "essence_assignment_layer",
+      "domain_assignment_layer",
+      "relational_mapping_layer",
+      "causal_juridical_relations_layer",
+      "tahqeeq_manat_layer",
+      "epistemic_audit_layer"
+    ],
+    "certainty_map": {
+      "text_existence": "qat'i_if_established",
+      "word_meaning": "qat'i_in_definition",
+      "scope": "undetermined",
+      "external_application": "pending_tahqeeq",
+      "mantuq_rank": "not_analysed",
+      "mafhoom_rank": "not_analysed",
+      "illah_validation": "performed"
+    },
+    "forbidden_jumps_prevented": [
+      "NoIllahWithoutValidation",
+      "NoManatAsIllah"
+    ],
+    "final_rank": "structured_answer_allowed"
+  },
+  "notes": [
+    "الإسكار وصف — يحتاج إلى اختبار مسالك العلة قبل ترقيته إلى علة.",
+    "الصفة ليست علة بمجرد ورودها في النص.",
+    "لا يجوز القياس قبل إثبات العلة بمسلك صحيح.",
+    "الوصف لا يصير علة إلا بعد اجتياز طبقة causal_juridical_relations."
+  ]
+}
