@@ -12,6 +12,7 @@
 
 - `/schema/bayani-knowledge-system.schema.json`: مخطط JSON Schema للنظام.
 - `/spec/bayani-knowledge-system.json`: المثال المرجعي الذي يجمع النواة الرسمية، قاعدة المعرفة السابقة، الأنطولوجيا، طبقات النحو والاستدلال، الاختبارات، وطبقة البرهان.
+- `/docs/prompts/nabhani-mustadil-readiness.prompt.md`: برومبت جاهزية المستدل الذي يضبط المخرجات على `Certificate | Hypothesis | Zero` دون تعديل المواصفة أو المخطط.
 
 ## الملامح التي تغطيها المواصفة
 
