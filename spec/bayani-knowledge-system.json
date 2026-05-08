@@ -20,7 +20,7 @@
     "كل صفر مانع يوقف الشهادة.",
     "كل فرضية معلنة كفرضية.",
     "كل مستوى لا يقفز فوق الذي قبله.",
-    "كل معلومة سابقة مرتبطة بمصدر موثق ومؤهل."
+    "المعلومات السابقة مرتبطة بمصادر موثقة ومؤهلة."
   ],
   "knowledge_foundation": {
     "definition": "المخزون المنظم من القواعد والمعاجم والموازين والأدلة الذي يمكّن النظام من تفسير الأثر وربطه بالواقع أو المعنى.",
@@ -68,7 +68,7 @@
         "qualification": {
           "status": "Qualified",
           "method": "Source Qualification Machine: Retrieve → Qualify → Evidence Bind → Conflict Check → Proof Check → Integrate",
-          "notes": "مصدر مقيّد بنطاق الصرف ولا يُستعمل خارج مجال pattern_alignment."
+          "notes": "مصدر مقيّد بنطاق الصرف ولا يُستعمل خارج مجال pattern_alignment. Retrieve يحدد النص أو القاعدة، Qualify يفحص المجال والاعتماد، Evidence Bind يربطه بأثر قابل للتتبع، Conflict Check يمنع التعارض غير المحلول، Proof Check يفحص invariants، وIntegrate لا يتم إلا إذا بقي المصدر Qualified."
         },
         "citation": {
           "label": "Arabic morphology prior rule reference",
@@ -627,6 +627,14 @@
       "proof_integrity",
       "zero_control"
     ],
+    "score_methodology": {
+      "calculation": "كل درجة بعدية تنتج من نسبة الأدلة المحققة إلى الأدلة المطلوبة في طبقتها، ثم تمنع الأصفار المانعة إصدار الشهادة مهما ارتفعت الدرجة.",
+      "thresholds": {
+        "certificate": "جميع الحقول الأساسية ≥ 0.85 مع zero_control = 1.0 وProof Object valid.",
+        "hypothesis": "أي حقل أساسي بين 0.50 و0.85 أو وجود دليل ناقص قابل للاستدراك بلا صفر مانع.",
+        "zero": "أي صفر مانع، أو proof_integrity < 0.50، أو zero_control < 1.0 في دعوى مرشحة للشهادة."
+      }
+    },
     "learning_signal_rules": [
       "كل missing_source_for_claim يسجل في EvidenceBinding.",
       "كل MujmalWithoutBayan ينتج اختبارًا لفشل البيان.",
@@ -846,7 +854,7 @@
         {
           "id": "I11",
           "name": "NoPriorKnowledgeWithoutDocumentedSource",
-          "rule": "لا معلومة سابقة بلا مصدر موثق ومؤهل."
+          "rule": "لا معلومات سابقة بلا مصادر موثقة ومؤهلة."
         },
         {
           "id": "I12",
