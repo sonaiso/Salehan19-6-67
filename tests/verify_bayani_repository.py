@@ -14,6 +14,10 @@ PROMPT_PATH = ROOT / "docs/prompts/nabhani-mustadil-readiness.prompt.md"
 README_PATH = ROOT / "README.md"
 
 ALLOWED_OUTPUTS = ["Certificate", "Hypothesis", "Zero"]
+EXPECTED_READINESS_CHECK_COUNT = 12
+EXPECTED_PROGRESSIVE_LEVELS = 10
+MIN_ADVERSARIAL_CASES = 10
+MIN_INVARIANTS = 15
 EXPECTED_EVALUATION_GATES = {
     "GapDetector",
     "LeapDetector",
@@ -47,6 +51,7 @@ def load_json(path):
 
 def markdown_slug(heading):
     """Build a GitHub-style heading anchor, preserving Arabic letters."""
+    # Strip inline HTML so headings with tags resolve to the same anchor text.
     slug = re.sub(r"<[^>]+>", "", heading.strip().lower())
     slug = re.sub(r"[^\w\u0600-\u06ff\s-]", "", slug)
     slug = re.sub(r"\s+", "-", slug)
@@ -90,6 +95,7 @@ class BayaniRepositoryVerification(unittest.TestCase):
         for markdown_path in ROOT.rglob("*.md"):
             markdown = markdown_path.read_text(encoding="utf-8")
             anchors = heading_anchors(markdown)
+            # Match regular Markdown links while excluding image links.
             for label, target in re.findall(r"(?<!\!)\[([^\]]+)\]\(([^)]+)\)", markdown):
                 parsed = urlparse(target)
                 if parsed.scheme in {"http", "https", "mailto"}:
@@ -133,7 +139,7 @@ class BayaniRepositoryVerification(unittest.TestCase):
 
     def test_mustadil_readiness_gates_are_complete(self):
         layer = self.spec["mustadil_readiness_layer"]
-        self.assertEqual(len(layer["readiness_checks"]), 12)
+        self.assertEqual(len(layer["readiness_checks"]), EXPECTED_READINESS_CHECK_COUNT)
         self.assertEqual({gate["name"] for gate in layer["mathematical_evaluation_layer"]}, EXPECTED_EVALUATION_GATES)
         for gate in EXPECTED_EVALUATION_GATES:
             self.assertIn(gate, self.prompt)
@@ -157,10 +163,10 @@ class BayaniRepositoryVerification(unittest.TestCase):
     def test_progressive_and_adversarial_coverage(self):
         methodology = self.spec["malakah_methodology"]
         levels = methodology["progressive_malakah_test_suite"]["levels"]
-        self.assertEqual([level["level"] for level in levels], list(range(1, 11)))
+        self.assertEqual([level["level"] for level in levels], list(range(1, EXPECTED_PROGRESSIVE_LEVELS + 1)))
 
         adversarial_cases = methodology["adversarial_epistemic_cases"]
-        self.assertGreaterEqual(len(adversarial_cases), 10)
+        self.assertGreaterEqual(len(adversarial_cases), MIN_ADVERSARIAL_CASES)
         self.assertTrue(all(case["blocked_result"] == "Certificate" for case in adversarial_cases))
         self.assertEqual(len({case["id"] for case in adversarial_cases}), len(adversarial_cases))
 
@@ -172,7 +178,7 @@ class BayaniRepositoryVerification(unittest.TestCase):
         self.assertIn("InvariantWithoutTest", coverage["zero_types"])
 
         invariants = self.spec["governance_engine"]["proof_layer"]["invariants"]
-        self.assertGreaterEqual(len(invariants), 15)
+        self.assertGreaterEqual(len(invariants), MIN_INVARIANTS)
         self.assertEqual(len({invariant["id"] for invariant in invariants}), len(invariants))
         self.assertEqual(len({invariant["name"] for invariant in invariants}), len(invariants))
 
