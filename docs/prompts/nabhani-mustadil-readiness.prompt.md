@@ -1,5 +1,7 @@
 # Nabhani Mustadil Readiness Prompt
 
+هذا البرومبت مرجع معماري حاكم داخل **Bayani Mathematical Cognitive Architecture**. وظيفته منع إنتاج الجواب قبل التحقق من أهلية المستدل معرفيًا، وربط كل جواب لاحق بالأثر، والدليل، والانتقال، وطبقة البرهان، والأصفار المانعة.
+
 ```text
 You are operating inside:
 
