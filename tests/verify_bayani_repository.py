@@ -11,11 +11,13 @@ ROOT = Path(__file__).resolve().parents[1]
 SPEC_PATH = ROOT / "spec/bayani-knowledge-system.json"
 SCHEMA_PATH = ROOT / "schema/bayani-knowledge-system.schema.json"
 PROMPT_PATH = ROOT / "docs/prompts/nabhani-mustadil-readiness.prompt.md"
+DECODER_PROMPT_PATH = ROOT / "docs/prompts/mustadil-decoder-pipeline.prompt.md"
 README_PATH = ROOT / "README.md"
 
 ALLOWED_OUTPUTS = ["Certificate", "Hypothesis", "Zero"]
 README_REQUIRED_REFERENCES = [
     "docs/prompts/nabhani-mustadil-readiness.prompt.md",
+    "docs/prompts/mustadil-decoder-pipeline.prompt.md",
     "spec/bayani-knowledge-system.json",
     "schema/bayani-knowledge-system.schema.json",
     "tests/verify_bayani_repository.py",
@@ -29,6 +31,7 @@ REQUIRED_SPEC_KEYS = [
     "answer_analysis_engine",
     "governance_engine",
     "malakah_methodology",
+    "mustadil_decoder_pipeline",
 ]
 REQUIRED_PROOF_INVARIANTS = [
     "NoCertificateWithBlockingZero",
@@ -110,6 +113,52 @@ PROOF_RANK_POLICY_REQUIRED_KEYS = {"ranks", "rules"}
 # PR #7 — README scope declaration
 README_NO_RUNTIME_PHRASE = "دون تنفيذ runtime في هذا المستودع"
 
+# Mustadil Decoder Pipeline constants
+REQUIRED_PIPELINE_LAYERS = [
+    "reality_grounding_layer",
+    "prior_opinion_filter_layer",
+    "differentiation_layer",
+    "essence_assignment_layer",
+    "domain_assignment_layer",
+    "relational_mapping_layer",
+    "arabic_operator_layer",
+    "binding_layer",
+    "concept_formation_layer",
+    "judgment_formation_layer",
+    "signifier_analysis_layer",
+    "signified_analysis_layer",
+    "signifier_signified_relation_layer",
+    "mantooq_layer",
+    "mafhoom_layer",
+    "general_specific_layer",
+    "absolute_restricted_layer",
+    "causal_juridical_relations_layer",
+    "tahqeeq_manat_layer",
+    "application_layer",
+    "epistemic_audit_layer",
+]
+REQUIRED_PIPELINE_INVARIANT_NAMES = [
+    "NoJudgmentBeforeEssenceAssignment",
+    "NoApplicationWithoutTahqeqManat",
+    "NoPriorOpinionAsEvidence",
+    "NoMafhumStrongerThanMantuq",
+    "NoIllahWithoutValidation",
+]
+EPISTEMIC_AUDIT_CERTAINTY_MAP_FIELDS = [
+    "text_existence",
+    "word_meaning",
+    "scope",
+    "external_application",
+]
+REQUIRED_DECODER_PROMPT_SECTIONS = [
+    "Pipeline Order",
+    "Golden Rule",
+    "Layer 1",
+    "Layer 21",
+    "Pipeline Invariants",
+    "Epistemic Audit",
+]
+
 
 def load_json(path):
     """Load and parse a UTF-8 JSON file."""
@@ -162,6 +211,7 @@ class BayaniRepositoryVerification(unittest.TestCase):
         cls.schema = load_json(SCHEMA_PATH)
         cls.spec = load_json(SPEC_PATH)
         cls.prompt = PROMPT_PATH.read_text(encoding="utf-8")
+        cls.decoder_prompt = DECODER_PROMPT_PATH.read_text(encoding="utf-8")
         cls.readme = README_PATH.read_text(encoding="utf-8")
 
     def test_schema_is_valid_draft_2020_12(self):
@@ -409,6 +459,96 @@ class BayaniRepositoryVerification(unittest.TestCase):
 
     def test_readme_declares_no_runtime_implementation(self):
         self.assertIn(README_NO_RUNTIME_PHRASE, self.readme)
+
+    # ------------------------------------------------------------------
+    # Mustadil Decoder Pipeline — spec structure
+    # ------------------------------------------------------------------
+
+    def test_decoder_pipeline_present_in_spec(self):
+        self.assertIn("mustadil_decoder_pipeline", self.spec)
+
+    def test_decoder_pipeline_has_all_21_layers(self):
+        pipeline = self.spec["mustadil_decoder_pipeline"]
+        for layer_key in REQUIRED_PIPELINE_LAYERS:
+            self.assertIn(layer_key, pipeline, f"Missing pipeline layer: {layer_key}")
+
+    def test_decoder_pipeline_order_matches_required_layers(self):
+        pipeline = self.spec["mustadil_decoder_pipeline"]
+        self.assertEqual(pipeline["pipeline_order"], REQUIRED_PIPELINE_LAYERS)
+
+    def test_decoder_pipeline_layers_have_ascending_order(self):
+        pipeline = self.spec["mustadil_decoder_pipeline"]
+        for expected_order, layer_key in enumerate(REQUIRED_PIPELINE_LAYERS, start=1):
+            layer = pipeline[layer_key]
+            self.assertEqual(
+                layer["layer_order"],
+                expected_order,
+                f"Layer {layer_key} must have layer_order={expected_order}",
+            )
+
+    def test_decoder_pipeline_layer_required_fields(self):
+        pipeline = self.spec["mustadil_decoder_pipeline"]
+        for layer_key in REQUIRED_PIPELINE_LAYERS:
+            layer = pipeline[layer_key]
+            for field in ("layer_order", "name", "purpose", "inputs", "outputs", "zero_types"):
+                self.assertIn(field, layer, f"Layer {layer_key} missing field: {field}")
+            self.assertGreater(len(layer["inputs"]), 0, f"Layer {layer_key} inputs must not be empty")
+            self.assertGreater(len(layer["outputs"]), 0, f"Layer {layer_key} outputs must not be empty")
+
+    def test_decoder_pipeline_has_golden_rule(self):
+        pipeline = self.spec["mustadil_decoder_pipeline"]
+        self.assertIn("golden_rule", pipeline)
+        self.assertGreater(len(pipeline["golden_rule"]), 10)
+
+    def test_decoder_pipeline_invariants_are_complete(self):
+        pipeline = self.spec["mustadil_decoder_pipeline"]
+        invariants = pipeline["pipeline_invariants"]
+        invariant_names = {inv["name"] for inv in invariants}
+        for required_name in REQUIRED_PIPELINE_INVARIANT_NAMES:
+            self.assertIn(required_name, invariant_names, f"Missing pipeline invariant: {required_name}")
+        ids = [inv["id"] for inv in invariants]
+        self.assertEqual(len(ids), len(set(ids)), "Pipeline invariant IDs must be unique")
+
+    def test_epistemic_audit_layer_has_certainty_map_fields(self):
+        audit = self.spec["mustadil_decoder_pipeline"]["epistemic_audit_layer"]
+        self.assertIn("certainty_map_fields", audit)
+        for field in EPISTEMIC_AUDIT_CERTAINTY_MAP_FIELDS:
+            self.assertIn(
+                field,
+                audit["certainty_map_fields"],
+                f"epistemic_audit_layer.certainty_map_fields missing: {field}",
+            )
+
+    def test_epistemic_audit_layer_output_template_has_certainty_map(self):
+        audit = self.spec["mustadil_decoder_pipeline"]["epistemic_audit_layer"]
+        self.assertIn("output_template", audit)
+        template = audit["output_template"]
+        self.assertIn("certainty_map", template)
+        for field in EPISTEMIC_AUDIT_CERTAINTY_MAP_FIELDS:
+            self.assertIn(field, template["certainty_map"])
+
+    # ------------------------------------------------------------------
+    # Mustadil Decoder Pipeline — decoder prompt file
+    # ------------------------------------------------------------------
+
+    def test_decoder_prompt_file_exists(self):
+        self.assertTrue(DECODER_PROMPT_PATH.exists())
+
+    def test_decoder_prompt_has_required_sections(self):
+        prompt = normalize_case(self.decoder_prompt)
+        for section in REQUIRED_DECODER_PROMPT_SECTIONS:
+            self.assertIn(
+                normalize_case(section),
+                prompt,
+                f"Decoder prompt missing section: {section}",
+            )
+
+    def test_decoder_prompt_references_golden_rule(self):
+        self.assertIn(normalize_case("Golden Rule"), normalize_case(self.decoder_prompt))
+
+    def test_decoder_prompt_references_allowed_outputs(self):
+        for output in ALLOWED_OUTPUTS:
+            self.assertIn(output, self.decoder_prompt)
 
 
 if __name__ == "__main__":

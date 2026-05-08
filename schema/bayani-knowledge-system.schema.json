@@ -14,6 +14,7 @@
     "governance_engine",
     "malakah_methodology",
     "mustadil_readiness_layer",
+    "mustadil_decoder_pipeline",
     "schema_artifacts"
   ],
   "properties": {
@@ -56,6 +57,9 @@
     },
     "mustadil_readiness_layer": {
       "$ref": "#/$defs/mustadilReadinessLayer"
+    },
+    "mustadil_decoder_pipeline": {
+      "$ref": "#/$defs/mustadilDecoderPipeline"
     }
   },
   "$defs": {
@@ -2163,6 +2167,243 @@
           "minItems": 1,
           "items": {
             "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "decoderPipelineLayer": {
+      "type": "object",
+      "required": [
+        "layer_order",
+        "name",
+        "purpose",
+        "inputs",
+        "outputs",
+        "zero_types"
+      ],
+      "properties": {
+        "layer_order": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 21
+        },
+        "name": {
+          "type": "string"
+        },
+        "purpose": {
+          "type": "string"
+        },
+        "inputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "zero_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "epistemicAuditLayer": {
+      "type": "object",
+      "required": [
+        "layer_order",
+        "name",
+        "purpose",
+        "inputs",
+        "outputs",
+        "zero_types",
+        "certainty_map_fields",
+        "output_template"
+      ],
+      "properties": {
+        "layer_order": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 21
+        },
+        "name": {
+          "type": "string"
+        },
+        "purpose": {
+          "type": "string"
+        },
+        "inputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "zero_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "certainty_map_fields": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string"
+          }
+        },
+        "output_template": {
+          "type": "object"
+        }
+      }
+    },
+    "pipelineInvariant": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "rule"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/idField"
+        },
+        "name": {
+          "type": "string"
+        },
+        "rule": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "mustadilDecoderPipeline": {
+      "type": "object",
+      "required": [
+        "purpose",
+        "golden_rule",
+        "pipeline_order",
+        "reality_grounding_layer",
+        "prior_opinion_filter_layer",
+        "differentiation_layer",
+        "essence_assignment_layer",
+        "domain_assignment_layer",
+        "relational_mapping_layer",
+        "arabic_operator_layer",
+        "binding_layer",
+        "concept_formation_layer",
+        "judgment_formation_layer",
+        "signifier_analysis_layer",
+        "signified_analysis_layer",
+        "signifier_signified_relation_layer",
+        "mantooq_layer",
+        "mafhoom_layer",
+        "general_specific_layer",
+        "absolute_restricted_layer",
+        "causal_juridical_relations_layer",
+        "tahqeeq_manat_layer",
+        "application_layer",
+        "epistemic_audit_layer",
+        "pipeline_invariants"
+      ],
+      "properties": {
+        "purpose": {
+          "type": "string"
+        },
+        "golden_rule": {
+          "type": "string"
+        },
+        "pipeline_order": {
+          "type": "array",
+          "minItems": 21,
+          "maxItems": 21,
+          "items": {
+            "type": "string"
+          }
+        },
+        "reality_grounding_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "prior_opinion_filter_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "differentiation_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "essence_assignment_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "domain_assignment_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "relational_mapping_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "arabic_operator_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "binding_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "concept_formation_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "judgment_formation_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "signifier_analysis_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "signified_analysis_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "signifier_signified_relation_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "mantooq_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "mafhoom_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "general_specific_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "absolute_restricted_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "causal_juridical_relations_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "tahqeeq_manat_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "application_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "epistemic_audit_layer": {
+          "$ref": "#/$defs/epistemicAuditLayer"
+        },
+        "pipeline_invariants": {
+          "type": "array",
+          "minItems": 5,
+          "items": {
+            "$ref": "#/$defs/pipelineInvariant"
           }
         }
       },
