@@ -176,6 +176,19 @@
               "description": "Qualified إذا اكتمل التأهيل والدليل والتعارض والبرهان، Hypothesis إذا نقص شرط قابل للاستدراك، Rejected إذا وُجد صفر مانع أو تعارض غير محلول."
             },
             "method": {"type": "string"},
+            "steps": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["name", "output", "failure_mode"],
+                "properties": {
+                  "name": {"type": "string"},
+                  "output": {"type": "string"},
+                  "failure_mode": {"type": "string"}
+                },
+                "additionalProperties": false
+              }
+            },
             "notes": {"type": "string"}
           },
           "additionalProperties": false
@@ -593,6 +606,7 @@
       "required": [
         "purpose",
         "pipeline",
+        "candidate_generation",
         "decomposition_targets",
         "status_policy",
         "mujmal_bayan_layer",
@@ -600,12 +614,27 @@
         "vector_dimensions",
         "dimensional_score_fields",
         "score_methodology",
+        "reverse_trace_contract",
+        "learning_rule_contract",
         "learning_signal_rules",
         "example_analyses"
       ],
       "properties": {
         "purpose": {"type": "string"},
         "pipeline": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "candidate_generation": {
+          "type": "object",
+          "required": ["definition", "pipeline", "rules", "ranking_policy", "evidence_binding", "proof_gate"],
+          "properties": {
+            "definition": {"type": "string"},
+            "pipeline": {"type": "array", "items": {"type": "string"}},
+            "rules": {"type": "array", "items": {"type": "string"}},
+            "ranking_policy": {"type": "string"},
+            "evidence_binding": {"type": "string"},
+            "proof_gate": {"type": "string"}
+          },
+          "additionalProperties": false
+        },
         "decomposition_targets": {"type": "array", "minItems": 1, "items": {"type": "string"}},
         "status_policy": {
           "type": "object",
@@ -642,10 +671,30 @@
         "dimensional_score_fields": {"type": "array", "items": {"type": "string"}},
         "score_methodology": {
           "type": "object",
-          "required": ["calculation", "thresholds"],
+          "required": ["calculation", "basic_fields", "thresholds"],
           "properties": {
             "calculation": {"type": "string"},
+            "basic_fields": {"type": "array", "items": {"type": "string"}},
             "thresholds": {"type": "object"}
+          },
+          "additionalProperties": false
+        },
+        "reverse_trace_contract": {
+          "type": "object",
+          "required": ["levels", "semantics"],
+          "properties": {
+            "levels": {"type": "array", "items": {"type": "string"}},
+            "semantics": {"type": "array", "items": {"type": "string"}}
+          },
+          "additionalProperties": false
+        },
+        "learning_rule_contract": {
+          "type": "object",
+          "required": ["storage", "required_fields", "integration"],
+          "properties": {
+            "storage": {"type": "string"},
+            "required_fields": {"type": "array", "items": {"type": "string"}},
+            "integration": {"type": "string"}
           },
           "additionalProperties": false
         },

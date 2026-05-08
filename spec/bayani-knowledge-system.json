@@ -57,7 +57,7 @@
       "لا قاعدة بلا دليل مطلوب.",
       "لا قاعدة بلا أصفار محتملة.",
       "لا استعمال لقاعدة خارج مجالها.",
-      "لا معلومة سابقة بلا مصدر موثق.",
+      "لا معلومات سابقة بلا مصادر موثقة.",
       "لا مصدر للمعلومات السابقة بلا تأهيل."
     ],
     "documented_sources": [
@@ -68,6 +68,38 @@
         "qualification": {
           "status": "Qualified",
           "method": "Source Qualification Machine: Retrieve → Qualify → Evidence Bind → Conflict Check → Proof Check → Integrate",
+          "steps": [
+            {
+              "name": "Retrieve",
+              "output": "نص أو قاعدة مرشحة مع locator قابل للتتبع",
+              "failure_mode": "MissingSourceLocator → Hypothesis"
+            },
+            {
+              "name": "Qualify",
+              "output": "حكم تأهيل يحدد المجال والاعتماد",
+              "failure_mode": "UnqualifiedSource → Hypothesis أو Rejected"
+            },
+            {
+              "name": "Evidence Bind",
+              "output": "Evidence Trace يربط المصدر بأثر أو قاعدة",
+              "failure_mode": "SourceWithoutEvidenceTrace → Hypothesis"
+            },
+            {
+              "name": "Conflict Check",
+              "output": "ConflictRecord أو تقرير عدم التعارض",
+              "failure_mode": "UnresolvedSourceConflict → Zero"
+            },
+            {
+              "name": "Proof Check",
+              "output": "Proof Object يفحص invariants",
+              "failure_mode": "ProofFailure → Zero"
+            },
+            {
+              "name": "Integrate",
+              "output": "DocumentedSource مؤهل ومتاح لوحدات المعرفة",
+              "failure_mode": "IntegrationWithoutQualification → Rejected"
+            }
+          ],
           "notes": "مصدر مقيّد بنطاق الصرف ولا يُستعمل خارج مجال pattern_alignment. Retrieve يحدد النص أو القاعدة، Qualify يفحص المجال والاعتماد، Evidence Bind يربطه بأثر قابل للتتبع، Conflict Check يمنع التعارض غير المحلول، Proof Check يفحص invariants، وIntegrate لا يتم إلا إذا بقي المصدر Qualified."
         },
         "citation": {
@@ -524,6 +556,8 @@
     "purpose": "إعادة ضبط إجابات GPT معرفيًا بتحويل النص الواسع إلى دعاوى وعلاقات وأدلة وانتقالات ومفاهيم وأحكام وبراهين قبل إصدار Certificate أو Hypothesis أو Zero.",
     "pipeline": [
       "Answer Segmentation",
+      "Epistemic Candidate Generation",
+      "Candidate Ranking",
       "Claim Extraction",
       "Concept Extraction",
       "Relation Extraction",
@@ -534,7 +568,31 @@
       "Proof Check",
       "Status Assignment"
     ],
+    "candidate_generation": {
+      "definition": "GPT أو الإحصاء أو التكرار لا يعطي شهادة؛ بل ينتج مرشحات معرفية تحتاج فحصًا قبل تحويلها إلى Claims معتمدة.",
+      "pipeline": [
+        "Raw GPT Answer → Candidate Claims",
+        "Candidate → Prior Knowledge Check",
+        "Candidate → Ontology Check",
+        "Candidate → Qarina Check",
+        "Candidate → Evidence Binding",
+        "Candidate → Conflict / Tarjih",
+        "Candidate → Proof Gate",
+        "Candidate → Certificate | Hypothesis | Zero"
+      ],
+      "rules": [
+        "الإحصاء لا يشهد بل يقترح.",
+        "لا Claim معتمد بلا Candidate سابق.",
+        "لا Candidate يدخل Certificate بلا Evidence Binding.",
+        "كل Candidate يحتفظ بأصله النصي وبسبب ترشيحه.",
+        "كل Candidate ناقص الدليل يبقى Hypothesis."
+      ],
+      "ranking_policy": "يرتب المرشح بحسب وضوح النص، توافقه مع المعرفة السابقة، سلامة الأنطولوجيا، قوة القرينة، قابلية ربط الدليل، وغياب التعارض.",
+      "evidence_binding": "كل Candidate-to-Evidence Binding ينتج Evidence Trace مستقلًا قبل Proof Gate.",
+      "proof_gate": "Proof Gate هو الحد الفاصل بين المرشح والشهادة؛ لا تصدر Certificate من Candidate بلا Proof Object valid."
+    },
     "decomposition_targets": [
+      "Candidate",
       "Claim",
       "Relation",
       "Evidence",
@@ -575,6 +633,7 @@
     "graph_contract": {
       "nodes": [
         "Answer",
+        "Candidate",
         "Claim",
         "Concept",
         "Relation",
@@ -590,6 +649,10 @@
       ],
       "edges": [
         "SEGMENTS_TO",
+        "PROPOSES_CANDIDATE",
+        "RANKS_AS",
+        "BINDS_TO_EVIDENCE",
+        "PROMOTES_TO",
         "ASSERTS",
         "USES_CONCEPT",
         "RELATES_TO",
@@ -629,16 +692,57 @@
     ],
     "score_methodology": {
       "calculation": "كل درجة بعدية تنتج من نسبة الأدلة المحققة إلى الأدلة المطلوبة في طبقتها، ثم تمنع الأصفار المانعة إصدار الشهادة مهما ارتفعت الدرجة.",
+      "basic_fields": [
+        "claim_clarity",
+        "evidence_binding",
+        "concept_realization",
+        "relation_validity",
+        "proof_integrity",
+        "zero_control"
+      ],
       "thresholds": {
-        "certificate": "جميع الحقول الأساسية ≥ 0.85 مع zero_control = 1.0 وProof Object valid.",
-        "hypothesis": "أي حقل أساسي بين 0.50 و0.85 أو وجود دليل ناقص قابل للاستدراك بلا صفر مانع.",
+        "certificate": "جميع basic_fields ≥ 0.85 مع zero_control = 1.0 وProof Object valid.",
+        "hypothesis": "أي حقل من basic_fields بين 0.50 و0.85 أو وجود دليل ناقص قابل للاستدراك بلا صفر مانع.",
         "zero": "أي صفر مانع، أو proof_integrity < 0.50، أو zero_control < 1.0 في دعوى مرشحة للشهادة."
       }
+    },
+    "reverse_trace_contract": {
+      "levels": [
+        "Certificate",
+        "Judgment",
+        "Mantuq",
+        "Binding",
+        "Dal",
+        "Madlul",
+        "Evidence",
+        "Source"
+      ],
+      "semantics": [
+        "Certificate: نتيجة صالحة بعد Proof Gate.",
+        "Judgment: التصنيف المنطقي أو الإبستمولوجي للدعوى.",
+        "Mantuq: محل الظهور اللفظي الذي بني عليه الحكم.",
+        "Binding: علاقة Dal-Madlul الموثقة بنوع دلالة وقرينة.",
+        "Dal: البنية الرياضية للدال كالرمز والجذر والوزن والحركة.",
+        "Madlul: البنية الأنطولوجية والمفهومية القابلة للربط.",
+        "Evidence: أثر أو قاعدة أو مصدر مؤهل يدعم الانتقال.",
+        "Source: أصل موثق ومؤهل أو أثر جزئي قابل للنزول إليه."
+      ]
+    },
+    "learning_rule_contract": {
+      "storage": "تضاف القاعدة المتولدة من LearningSignal إلى knowledge_foundation.knowledge_units أو governance_engine.learning_events بحسب نوعها.",
+      "required_fields": [
+        "failed_layer",
+        "failed_claim",
+        "rule_update",
+        "test_required",
+        "proof_revalidation"
+      ],
+      "integration": "لا تندمج القاعدة الجديدة حتى يضاف اختبار regression وتنجح Proof Revalidation."
     },
     "learning_signal_rules": [
       "كل missing_source_for_claim يسجل في EvidenceBinding.",
       "كل MujmalWithoutBayan ينتج اختبارًا لفشل البيان.",
-      "كل ContextOverreach يضيف قاعدة تمنع جعل السياق مصدرًا مستقلًا للمعنى.",
+      "كل ContextOverreach ينتج rule_update مخزنًا وفق learning_rule_contract يمنع جعل السياق مصدرًا مستقلًا للمعنى.",
       "لا LearningSignal بلا failed_layer وaction وtest_required."
     ],
     "example_analyses": [
@@ -675,7 +779,8 @@
           "Judgment",
           "Mantuq",
           "Binding",
-          "Dal/Madlul",
+          "Dal",
+          "Madlul",
           "Evidence",
           "Source"
         ]
@@ -693,6 +798,57 @@
           }
         ],
         "result_type": "Zero"
+      },
+      {
+        "id": "ANS-0003",
+        "answer": "النظام لا يقلد GPT احتماليًا بل يبني طبقة معرفية فوق مخرجاته ويحولها إلى دعاوى وأدلة وبراهين، لكن القدرة على محاكاة GPT بالكامل تحتاج تحديدًا.",
+        "candidate_claims": [
+          {
+            "text": "النظام لا يقلد GPT احتماليًا",
+            "status": "Certificate",
+            "reason": "منسجم مع المعمار البياني غير الاحتمالي"
+          },
+          {
+            "text": "النظام يبني طبقة معرفية فوق مخرجات GPT",
+            "status": "Certificate",
+            "reason": "قابل للتنفيذ كطبقة epistemic post-processing"
+          },
+          {
+            "text": "النظام يحول الجواب إلى Claim/Relation/Evidence/Transition/Concept/Judgment/Proof",
+            "status": "Certificate",
+            "reason": "واضح وقابل للنمذجة في graph_contract"
+          },
+          {
+            "text": "النظام يقرر Certificate/Hypothesis/Zero",
+            "status": "Certificate",
+            "reason": "مطابق للنواة S + D + T + E + Z + C"
+          },
+          {
+            "text": "النظام يحتاج Graph/Vector/Scores/Trace/Proof/Learning",
+            "status": "Certificate",
+            "reason": "مكونات تنفيذية ممثلة في answer_analysis_engine"
+          },
+          {
+            "text": "البرهان يسمح بالشهادة",
+            "status": "Certificate",
+            "reason": "قاعدة حاكمة في Proof Gate"
+          },
+          {
+            "text": "النظام يحاكي GPT-5.5 بالكامل",
+            "status": "Hypothesis",
+            "reason": "تحتاج تحديد معنى المحاكاة: مخرجات أم قدرات داخلية"
+          }
+        ],
+        "gap": "missing_epistemic_candidate_generation",
+        "needed_to_certify": [
+          "Epistemic Candidate Generation",
+          "Candidate Ranking",
+          "Candidate-to-Evidence Binding",
+          "Proof Gate before Certificate"
+        ],
+        "blocking_zeros": [],
+        "result_type": "Hypothesis",
+        "final_decision": "قابل للشهادة بعد إضافة طبقة المرشحات"
       }
     ]
   },
@@ -796,6 +952,15 @@
           "result_type": "Zero",
           "zero_type": "ContextOverreach"
         }
+      },
+      {
+        "id": "TEST-0006",
+        "input": "النظام يحاكي GPT-5.5 بالكامل.",
+        "expected": {
+          "result_type": "Hypothesis",
+          "reason": "المرشح يحتاج تحديد معنى المحاكاة وربطه بدليل قبل الشهادة",
+          "required_layer": "Epistemic Candidate Generation"
+        }
       }
     ],
     "proof_layer": {
@@ -870,6 +1035,16 @@
           "id": "I14",
           "name": "NoAnswerCertificateWithoutGraphTrace",
           "rule": "لا شهادة لجواب GPT بلا Knowledge Graph وreverse_trace."
+        },
+        {
+          "id": "I15",
+          "name": "NoClaimWithoutCandidate",
+          "rule": "لا دعوى معتمدة من جواب GPT بلا Candidate سابق محفوظ الأصل."
+        },
+        {
+          "id": "I16",
+          "name": "NoCandidateCertificateWithoutProofGate",
+          "rule": "لا يتحول المرشح إلى Certificate قبل Evidence Binding وProof Gate."
         }
       ],
       "proof_objects": [
@@ -898,6 +1073,9 @@
       "CertificateRecord",
       "AnswerAnalysis",
       "AnswerSegment",
+      "EpistemicCandidate",
+      "CandidateRanking",
+      "CandidateEvidenceBinding",
       "MujmalRecord",
       "BayanRecord",
       "MubayyanRecord",
@@ -985,6 +1163,9 @@
       "CertificateRecord",
       "AnswerAnalysis",
       "AnswerSegment",
+      "EpistemicCandidate",
+      "CandidateRanking",
+      "CandidateEvidenceBinding",
       "MujmalRecord",
       "BayanRecord",
       "MubayyanRecord",
@@ -1007,6 +1188,10 @@
       "(:KnowledgeUnit)-[:SUPPORTED_BY]->(:DocumentedSource)",
       "(:DocumentedSource)-[:QUALIFIED_BY]->(:SourceQualification)",
       "(:Answer)-[:SEGMENTS_TO]->(:AnswerSegment)",
+      "(:AnswerSegment)-[:PROPOSES_CANDIDATE]->(:EpistemicCandidate)",
+      "(:EpistemicCandidate)-[:RANKS_AS]->(:CandidateRanking)",
+      "(:EpistemicCandidate)-[:BINDS_TO_EVIDENCE]->(:Evidence)",
+      "(:EpistemicCandidate)-[:PROMOTES_TO]->(:Claim)",
       "(:AnswerSegment)-[:ASSERTS]->(:Claim)",
       "(:Claim)-[:USES_CONCEPT]->(:Concept)",
       "(:Claim)-[:SUPPORTED_BY]->(:Evidence)",
@@ -1032,6 +1217,9 @@
         "name": "Answer Analysis Engine",
         "components": [
           "AnswerSegmentation",
+          "EpistemicCandidateGeneration",
+          "CandidateRanking",
+          "CandidateEvidenceBinding",
           "ClaimExtractor",
           "ConceptExtractor",
           "RelationExtractor",
