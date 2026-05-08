@@ -33,6 +33,7 @@ REQUIRED_SPEC_KEYS = [
     "malakah_methodology",
     "mustadil_decoder_pipeline",
     "prompt_type_classifier",
+    "mustadil_prompt_classifier",
 ]
 REQUIRED_PROOF_INVARIANTS = [
     "NoCertificateWithBlockingZero",
@@ -162,6 +163,7 @@ REQUIRED_DECODER_PROMPT_SECTIONS = [
     "Epistemic Audit",
     "Group Structure",
     "Prompt Type Classification",
+    "Mustadil Prompt Classifier",
 ]
 
 # Layer-group membership map (used by group tests)
@@ -238,6 +240,46 @@ PROMPT_TYPE_LAYER_MAP = {
 }
 # PT-10 (Application) must reference tahqeeq al-manat in its processing_flow
 PROMPT_TYPES_REQUIRING_TAHQEEQ_IN_FLOW = {"PT-10"}
+
+# Mustadil Prompt Classifier constants
+REQUIRED_MPC_LAYER_KEYS = [
+    "purpose_layer",
+    "thinking_level_layer",
+    "hukm_knowledge_vs_istinbat_layer",
+    "taqlid_tarjih_layer",
+    "evidence_authentication_layer",
+    "usul_vs_furu_evidence_rank_layer",
+    "evidence_type_classification_layer",
+    "conflict_and_tarjih_layer",
+    "manat_vs_illah_layer",
+    "construction_intent_layer",
+    "malakah_building_layer",
+]
+MPC_LAYER_ID_PREFIX = "MPC-"
+REQUIRED_MPC_FORBIDDEN_JUMPS = [
+    "NoIstinbatWhenKnownHukmRequested",
+    "NoHukmBeforeEvidenceAuthentication",
+    "NoTarjihBeforeValidJam",
+    "NoManatAsIllah",
+    "NoAssumedEvidenceAsValidEvidence",
+    "IfMalakahRequestedDoNotOnlyAnswer",
+]
+REQUIRED_MPC_OUTPUT_FIELDS = [
+    "prompt_type",
+    "required_layers",
+    "forbidden_jumps",
+    "required_output_form",
+    "answer_strategy",
+    "certainty_rank",
+]
+MPC_LAYERS_WITH_INVARIANTS = [
+    "hukm_knowledge_vs_istinbat_layer",
+    "evidence_authentication_layer",
+    "evidence_type_classification_layer",
+    "conflict_and_tarjih_layer",
+    "manat_vs_illah_layer",
+    "malakah_building_layer",
+]
 
 
 def load_json(path):
@@ -802,6 +844,112 @@ class BayaniRepositoryVerification(unittest.TestCase):
         ptc = self.spec["prompt_type_classifier"]
         flow = ptc["pre_answer_classification_flow"]
         self.assertGreaterEqual(len(flow), 10, "pre_answer_classification_flow must have at least 10 steps")
+
+    # ------------------------------------------------------------------
+    # Mustadil Prompt Classifier — spec structure and coverage
+    # ------------------------------------------------------------------
+
+    def test_mustadil_prompt_classifier_present_in_spec(self):
+        self.assertIn("mustadil_prompt_classifier", self.spec)
+        mpc = self.spec["mustadil_prompt_classifier"]
+        for field in ("purpose", "golden_rule", "forbidden_jumps", "required_output_fields", "layers"):
+            self.assertIn(field, mpc, f"mustadil_prompt_classifier missing field: {field}")
+
+    def test_mustadil_prompt_classifier_has_eleven_layers(self):
+        mpc = self.spec["mustadil_prompt_classifier"]
+        layers = mpc["layers"]
+        for required_key in REQUIRED_MPC_LAYER_KEYS:
+            self.assertIn(required_key, layers, f"mustadil_prompt_classifier missing layer: {required_key}")
+        self.assertEqual(len(layers), 11, "Exactly 11 MPC layers are required")
+
+    def test_mustadil_prompt_classifier_layers_have_required_fields(self):
+        mpc = self.spec["mustadil_prompt_classifier"]
+        for key, layer in mpc["layers"].items():
+            for field in ("id", "name", "question", "constraint"):
+                self.assertIn(field, layer, f"MPC layer '{key}' missing field: {field}")
+            self.assertTrue(
+                layer["id"].startswith(MPC_LAYER_ID_PREFIX),
+                f"MPC layer '{key}' id must start with '{MPC_LAYER_ID_PREFIX}'",
+            )
+            self.assertGreater(len(layer["constraint"]), 10, f"MPC layer '{key}' constraint must be non-trivial")
+
+    def test_mustadil_prompt_classifier_layer_ids_are_sequential(self):
+        mpc = self.spec["mustadil_prompt_classifier"]
+        ids = [layer["id"] for layer in mpc["layers"].values()]
+        self.assertEqual(len(ids), len(set(ids)), "MPC layer IDs must be unique")
+        for idx, key in enumerate(REQUIRED_MPC_LAYER_KEYS, start=1):
+            expected_id = f"MPC-{idx:02d}"
+            actual_id = mpc["layers"][key]["id"]
+            self.assertEqual(
+                actual_id,
+                expected_id,
+                f"Layer '{key}' expected id={expected_id}, got {actual_id}",
+            )
+
+    def test_mustadil_prompt_classifier_forbidden_jumps_coverage(self):
+        mpc = self.spec["mustadil_prompt_classifier"]
+        jumps = mpc["forbidden_jumps"]
+        for required_jump in REQUIRED_MPC_FORBIDDEN_JUMPS:
+            self.assertIn(required_jump, jumps, f"mustadil_prompt_classifier missing forbidden_jump: {required_jump}")
+
+    def test_mustadil_prompt_classifier_required_output_fields_coverage(self):
+        mpc = self.spec["mustadil_prompt_classifier"]
+        output_fields = mpc["required_output_fields"]
+        for required_field in REQUIRED_MPC_OUTPUT_FIELDS:
+            self.assertIn(required_field, output_fields, f"mustadil_prompt_classifier missing output field: {required_field}")
+
+    def test_mustadil_prompt_classifier_key_layers_have_invariants(self):
+        mpc = self.spec["mustadil_prompt_classifier"]
+        for key in MPC_LAYERS_WITH_INVARIANTS:
+            layer = mpc["layers"][key]
+            self.assertIn("invariant", layer, f"MPC layer '{key}' must declare an invariant")
+            self.assertGreater(len(layer["invariant"]), 3, f"MPC layer '{key}' invariant must be non-trivial")
+
+    def test_mustadil_prompt_classifier_golden_rule_non_trivial(self):
+        mpc = self.spec["mustadil_prompt_classifier"]
+        self.assertGreater(len(mpc["golden_rule"]), 20)
+
+    def test_mustadil_prompt_classifier_purpose_layer_has_allowed_purposes(self):
+        mpc = self.spec["mustadil_prompt_classifier"]
+        purpose_layer = mpc["layers"]["purpose_layer"]
+        self.assertIn("allowed_purposes", purpose_layer)
+        expected_purposes = {
+            "direct_answer", "explanation", "hukm_knowledge", "hukm_istinbat",
+            "evidence_validation", "tarjih", "conflict_resolution", "tahqeeq_manat",
+            "schema_construction", "prompt_construction", "malakah_building",
+        }
+        actual_purposes = set(purpose_layer["allowed_purposes"])
+        for purpose in expected_purposes:
+            self.assertIn(purpose, actual_purposes, f"purpose_layer missing allowed_purpose: {purpose}")
+
+    def test_mustadil_prompt_classifier_evidence_type_layer_separates_valid_and_assumed(self):
+        mpc = self.spec["mustadil_prompt_classifier"]
+        et_layer = mpc["layers"]["evidence_type_classification_layer"]
+        self.assertIn("valid_evidence", et_layer, "evidence_type_classification_layer must list valid_evidence")
+        self.assertIn("assumed_evidence", et_layer, "evidence_type_classification_layer must list assumed_evidence")
+        self.assertGreater(len(et_layer["valid_evidence"]), 3)
+        self.assertGreater(len(et_layer["assumed_evidence"]), 3)
+
+    def test_mustadil_prompt_classifier_conflict_layer_has_operations(self):
+        mpc = self.spec["mustadil_prompt_classifier"]
+        conflict_layer = mpc["layers"]["conflict_and_tarjih_layer"]
+        self.assertIn("operations", conflict_layer)
+        for op in ("jam", "takhsis", "tarjih"):
+            self.assertIn(op, conflict_layer["operations"], f"conflict_and_tarjih_layer missing operation: {op}")
+
+    def test_mustadil_prompt_classifier_manat_vs_illah_layer_has_types(self):
+        mpc = self.spec["mustadil_prompt_classifier"]
+        manat_layer = mpc["layers"]["manat_vs_illah_layer"]
+        self.assertIn("types", manat_layer)
+        for t in ("tahqeeq_manat", "tahqeeq_illah"):
+            self.assertIn(t, manat_layer["types"], f"manat_vs_illah_layer missing type: {t}")
+
+    def test_mustadil_prompt_classifier_malakah_layer_has_modes(self):
+        mpc = self.spec["mustadil_prompt_classifier"]
+        malakah_layer = mpc["layers"]["malakah_building_layer"]
+        self.assertIn("modes", malakah_layer)
+        for mode in ("final_answer", "method_teaching", "malakah_building" if False else "checklist"):
+            self.assertIn(mode, malakah_layer["modes"], f"malakah_building_layer missing mode: {mode}")
 
 
 if __name__ == "__main__":

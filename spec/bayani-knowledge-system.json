@@ -3660,5 +3660,258 @@
         "constraint": "التطبيق آخر رتبة لا أولها. لا يجوز للديكودر أن يطبّق قبل تحقيق المناط."
       }
     ]
+  },
+  "mustadil_prompt_classifier": {
+    "purpose": "يصنّف الديكودر المستدل البرومبت بوصفه واقعة معرفية قبل أي معالجة. لا يُعامل البرومبت كنص يطلب جوابًا فحسب، بل كطلب معرفي له غاية، ورتبة تفكير، وحال سائل، ونوع دليل، ونوع مناط، ونوع بناء. يجب اجتياز هذه الطبقات الأحد عشر قبل توليد أي جواب.",
+    "golden_rule": "لا تُجب عن البرومبت قبل أن تعرف: هل هو طلب حكم، أم طلب استنباط، أم طلب ترجيح، أم طلب تحقيق مناط، أم طلب بناء نظام، أم طلب بناء ملكة. لأن كل نوع له طريق مختلف.",
+    "forbidden_jumps": [
+      "NoIstinbatWhenKnownHukmRequested",
+      "NoHukmBeforeEvidenceAuthentication",
+      "NoTarjihBeforeValidJam",
+      "NoManatAsIllah",
+      "NoAssumedEvidenceAsValidEvidence",
+      "IfMalakahRequestedDoNotOnlyAnswer",
+      "NoFinalAnswerBeforeClassificationComplete"
+    ],
+    "required_output_fields": [
+      "prompt_type",
+      "required_layers",
+      "forbidden_jumps",
+      "required_output_form",
+      "answer_strategy",
+      "certainty_rank"
+    ],
+    "layers": {
+      "purpose_layer": {
+        "id": "MPC-01",
+        "name": "Prompt Purpose Layer",
+        "question": "ماذا يريد السائل حقيقة؟",
+        "allowed_purposes": [
+          "direct_answer",
+          "explanation",
+          "hukm_knowledge",
+          "hukm_istinbat",
+          "evidence_validation",
+          "tarjih",
+          "conflict_resolution",
+          "tahqeeq_manat",
+          "schema_construction",
+          "prompt_construction",
+          "malakah_building"
+        ],
+        "output_fields": [
+          "primary_purpose",
+          "secondary_purposes",
+          "not_the_purpose"
+        ],
+        "constraint": "يجب تحديد الغرض الأساسي للبرومبت قبل اختيار طريقة المعالجة. الغرض الخاطئ ينتج جوابًا خاطئًا حتى لو كان لغويًا صحيحًا."
+      },
+      "thinking_level_layer": {
+        "id": "MPC-02",
+        "name": "Thinking-Level Layer",
+        "question": "ما مستوى التفكير المطلوب؟",
+        "levels": [
+          "superficial",
+          "deep",
+          "enlightened_mustaneer"
+        ],
+        "level_descriptions": {
+          "superficial": "تسمية، سرد، استدعاء أساسي",
+          "deep": "تمييز، ربط علاقات، شرح منظم",
+          "enlightened_mustaneer": "مرتكز على الواقع، واعٍ بالسياق والنتائج، قادر على بناء أنظمة"
+        },
+        "output_fields": [
+          "required_level",
+          "reason"
+        ],
+        "constraint": "لا يُعالج السؤال المستنير بمنهج السطحي. ولا يُقتصر في السؤال البنائي على الإجابة الفردية."
+      },
+      "hukm_knowledge_vs_istinbat_layer": {
+        "id": "MPC-03",
+        "name": "Hukm-Knowledge vs Istinbat Layer",
+        "question": "هل يريد المستخدم معرفة حكم موجود أم استنباط حكم؟",
+        "types": [
+          "known_hukm",
+          "istinbat_hukm",
+          "istinbat_method",
+          "istinbat_critique",
+          "istinbat_engine"
+        ],
+        "invariant": "NoIstinbatWhenKnownHukmRequested",
+        "invariant_description": "لا يجوز تقديم استنباط جديد حين يطلب المستخدم معرفة حكم موجود. ولا يُقدَّم الحكم المعروف كأنه مستنبط حديثًا.",
+        "constraint": "التمييز بين معرفة الحكم والاستنباط من أهم الفروق. الخلط بينهما يوهم المستخدم أن الحكم المعروف مجتهد فيه أو أن المستنبط متفق عليه."
+      },
+      "taqlid_tarjih_layer": {
+        "id": "MPC-04",
+        "name": "Taqlid-Tarjih Layer",
+        "question": "ما حال السائل من الناحية المعرفية؟",
+        "questioner_states": [
+          "aami",
+          "mutaallim",
+          "malakah_seeker",
+          "mujtahid_researcher"
+        ],
+        "state_handling": {
+          "aami": "جواب قابل للتطبيق مع نسبة موثوقة",
+          "mutaallim": "دليل مع شرح منظم",
+          "malakah_seeker": "منهج وتمييزات ومنع أخطاء",
+          "mujtahid_researcher": "تحرير محل النزاع، هرمية الأدلة، الاعتراضات، الترجيح"
+        },
+        "output_fields": [
+          "state",
+          "answer_depth"
+        ],
+        "constraint": "جواب العامي للمجتهد مهين لملكته. وجواب المجتهد للعامي مُربك له. تحديد الحال شرط لصياغة الجواب الصحيح."
+      },
+      "evidence_authentication_layer": {
+        "id": "MPC-05",
+        "name": "Evidence-Authentication Layer",
+        "question": "هل النص أو الرواية التي يعتمد عليها البرومبت ثابتة؟",
+        "checks": [
+          "text_established",
+          "wording_fixed",
+          "source_reliable",
+          "thubut_rank",
+          "dalalah_rank"
+        ],
+        "invariant": "NoHukmBeforeEvidenceAuthentication",
+        "invariant_description": "لا يجوز الانتقال من الدليل إلى الحكم قبل التحقق من ثبوت الدليل.",
+        "constraint": "إذا كان البرومبت يعتمد على نص أو رواية، يجب التحقق منها أولًا. الثبوت والدلالة قضيتان مستقلتان ولا تُخلطان."
+      },
+      "usul_vs_furu_evidence_rank_layer": {
+        "id": "MPC-06",
+        "name": "Usul-vs-Furu Evidence Rank Layer",
+        "question": "هل المسألة أصل أم فرع؟ وما رتبة الدليل المطلوبة؟",
+        "issue_types": [
+          "asl",
+          "far",
+          "bayani_linguistic",
+          "manat_reality",
+          "system_architecture"
+        ],
+        "evidence_requirements": {
+          "asl": "يشترط دليل قطعي أو تأسيس أصلي معتبر",
+          "far": "يقبل الدليل الظني المعتبر",
+          "bayani_linguistic": "يشترط تحليل الدال والمدلول",
+          "manat_reality": "يشترط التحقق من الواقع الخارجي",
+          "system_architecture": "يشترط تصميم المخطط مع الثوابت والاختبارات"
+        },
+        "output_fields": [
+          "issue_type",
+          "required_evidence_rank"
+        ],
+        "constraint": "لا يُبنى الأصل على ظني، ولا يُشترط في الفرع ما يُشترط في الأصل."
+      },
+      "evidence_type_classification_layer": {
+        "id": "MPC-07",
+        "name": "Evidence-Type Classification Layer",
+        "question": "ما نوع الدليل المستخدم أو المستشهد به؟",
+        "valid_evidence": [
+          "quran",
+          "sunnah",
+          "ijma_sahabah",
+          "qiyas_validated_illah",
+          "language_dalalah",
+          "reality_manat"
+        ],
+        "assumed_evidence": [
+          "maslahah_mursalah",
+          "istihsan",
+          "custom_as_independent_source",
+          "maqasid_as_independent_illah",
+          "pure_reason_preference",
+          "prior_opinion"
+        ],
+        "invariant": "NoAssumedEvidenceAsValidEvidence",
+        "invariant_description": "ما ظُن دليلًا لا يُعامل كدليل معتبر. يجب الفصل بين الدليل المعتبر وما افترض أنه دليل.",
+        "constraint": "تصنيف الدليل يحدد مسار المعالجة اللاحقة. الخلط بين الدليل المعتبر والمفترض خطأ منهجي فادح."
+      },
+      "conflict_and_tarjih_layer": {
+        "id": "MPC-08",
+        "name": "Conflict-and-Tarjih Layer",
+        "question": "هل ثمة تعارض بين الأدلة أو المعاني؟ وهل هو حقيقي أم ظاهري؟",
+        "operations": [
+          "jam",
+          "takhsis",
+          "taqyid",
+          "bayan",
+          "naskh",
+          "tarjih"
+        ],
+        "resolution_hierarchy": [
+          "jam (combination if valid)",
+          "takhsis",
+          "taqyid",
+          "bayan",
+          "naskh",
+          "tarjih (only when jam impossible)"
+        ],
+        "distinction_checks": [
+          "is_conflict_real_or_apparent",
+          "is_one_mantuq_other_mafhoom",
+          "is_one_general_other_specific",
+          "is_one_qati_other_zanni"
+        ],
+        "invariant": "NoTarjihBeforeValidJam",
+        "invariant_description": "لا يُلجأ إلى الترجيح قبل استيفاء محاولة الجمع الصحيح.",
+        "constraint": "كثير من التعارضات الظاهرة تنحل بالجمع أو التخصيص. القفز إلى الترجيح بلا محاولة الجمع خطأ منهجي."
+      },
+      "manat_vs_illah_layer": {
+        "id": "MPC-09",
+        "name": "Manat-vs-Illah Layer",
+        "question": "هل المهمة تحقيق مناط أم تحقيق علة؟",
+        "types": [
+          "tahqeeq_manat",
+          "tanqeeh_manat",
+          "takhreej_manat",
+          "tahqeeq_illah"
+        ],
+        "type_descriptions": {
+          "tahqeeq_manat": "هل تندرج هذه الواقعة الخارجية تحت الحكم؟",
+          "tanqeeh_manat": "إزالة الأوصاف غير المؤثرة",
+          "takhreej_manat": "استخراج وصف عملي مرشح",
+          "tahqeeq_illah": "التحقق من العلة ذاتها بشروطها السبعة"
+        },
+        "invariant": "NoManatAsIllah",
+        "invariant_description": "لا يُعامل تحقيق المناط كإثبات علة. المناط واقع خارجي، والعلة وصف شرعي.",
+        "constraint": "الخلط بين المناط والعلة من أشد الأخطاء في التطبيق. تحقيق المناط يثبت دخول الفرد تحت الحكم، لا يثبت العلة."
+      },
+      "construction_intent_layer": {
+        "id": "MPC-10",
+        "name": "Construction Intent Layer",
+        "question": "هل البرومبت يبني نظامًا أو مخططًا أو برومبتًا؟",
+        "targets": [
+          "schema",
+          "prompt",
+          "pipeline",
+          "test_suite",
+          "repository_architecture"
+        ],
+        "required_checks": [
+          "target_artifact",
+          "required_layers",
+          "invariants",
+          "validation_tests",
+          "backward_compatibility"
+        ],
+        "constraint": "إذا كان البرومبت بنائيًا، لا يُجاب عنه كمسألة فقهية أو لغوية. يجب تحديد المنتج المستهدف والثوابت والاختبارات قبل البناء."
+      },
+      "malakah_building_layer": {
+        "id": "MPC-11",
+        "name": "Malakah-Building Layer",
+        "question": "هل يريد المستخدم ملكة أم جوابًا نهائيًا؟",
+        "modes": [
+          "final_answer",
+          "method_teaching",
+          "mistake_exposure",
+          "checklist",
+          "training_examples",
+          "reasoning_schema"
+        ],
+        "invariant": "IfMalakahRequestedDoNotOnlyAnswer",
+        "invariant_description": "إذا كان المستخدم يطلب ملكة، لا يُكتفى بالجواب النهائي. يجب بناء المنهج الداخلي للإجابة.",
+        "constraint": "الجواب النهائي وحده لا يبني ملكة. بناء الملكة يستلزم تعليم المنهج وكشف الأخطاء وبناء قوائم مرجعية وتوليد نماذج تدريبية."
+      }
+    }
   }
 }

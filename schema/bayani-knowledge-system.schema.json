@@ -16,6 +16,7 @@
     "mustadil_readiness_layer",
     "mustadil_decoder_pipeline",
     "prompt_type_classifier",
+    "mustadil_prompt_classifier",
     "schema_artifacts"
   ],
   "properties": {
@@ -64,6 +65,9 @@
     },
     "prompt_type_classifier": {
       "$ref": "#/$defs/promptTypeClassifier"
+    },
+    "mustadil_prompt_classifier": {
+      "$ref": "#/$defs/mustadilPromptClassifier"
     }
   },
   "$defs": {
@@ -2551,6 +2555,100 @@
           "items": {
             "type": "string"
           }
+        }
+      },
+      "additionalProperties": false
+    },
+    "mpcLayer": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "question",
+        "constraint"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^MPC-[0-9]{2}$"
+        },
+        "name": {
+          "type": "string"
+        },
+        "question": {
+          "type": "string"
+        },
+        "invariant": {
+          "type": "string"
+        },
+        "invariant_description": {
+          "type": "string"
+        },
+        "constraint": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "mustadilPromptClassifier": {
+      "type": "object",
+      "required": [
+        "purpose",
+        "golden_rule",
+        "forbidden_jumps",
+        "required_output_fields",
+        "layers"
+      ],
+      "properties": {
+        "purpose": {
+          "type": "string"
+        },
+        "golden_rule": {
+          "type": "string"
+        },
+        "forbidden_jumps": {
+          "type": "array",
+          "minItems": 5,
+          "items": {
+            "type": "string"
+          }
+        },
+        "required_output_fields": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "string"
+          }
+        },
+        "layers": {
+          "type": "object",
+          "required": [
+            "purpose_layer",
+            "thinking_level_layer",
+            "hukm_knowledge_vs_istinbat_layer",
+            "taqlid_tarjih_layer",
+            "evidence_authentication_layer",
+            "usul_vs_furu_evidence_rank_layer",
+            "evidence_type_classification_layer",
+            "conflict_and_tarjih_layer",
+            "manat_vs_illah_layer",
+            "construction_intent_layer",
+            "malakah_building_layer"
+          ],
+          "properties": {
+            "purpose_layer": { "$ref": "#/$defs/mpcLayer" },
+            "thinking_level_layer": { "$ref": "#/$defs/mpcLayer" },
+            "hukm_knowledge_vs_istinbat_layer": { "$ref": "#/$defs/mpcLayer" },
+            "taqlid_tarjih_layer": { "$ref": "#/$defs/mpcLayer" },
+            "evidence_authentication_layer": { "$ref": "#/$defs/mpcLayer" },
+            "usul_vs_furu_evidence_rank_layer": { "$ref": "#/$defs/mpcLayer" },
+            "evidence_type_classification_layer": { "$ref": "#/$defs/mpcLayer" },
+            "conflict_and_tarjih_layer": { "$ref": "#/$defs/mpcLayer" },
+            "manat_vs_illah_layer": { "$ref": "#/$defs/mpcLayer" },
+            "construction_intent_layer": { "$ref": "#/$defs/mpcLayer" },
+            "malakah_building_layer": { "$ref": "#/$defs/mpcLayer" }
+          },
+          "additionalProperties": false
         }
       },
       "additionalProperties": false
