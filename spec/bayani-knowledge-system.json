@@ -19,7 +19,8 @@
     "كل دعوى مربوطة بدليل.",
     "كل صفر مانع يوقف الشهادة.",
     "كل فرضية معلنة كفرضية.",
-    "كل مستوى لا يقفز فوق الذي قبله."
+    "كل مستوى لا يقفز فوق الذي قبله.",
+    "كل معلومة سابقة مرتبطة بمصدر موثق ومؤهل."
   ],
   "knowledge_foundation": {
     "definition": "المخزون المنظم من القواعد والمعاجم والموازين والأدلة الذي يمكّن النظام من تفسير الأثر وربطه بالواقع أو المعنى.",
@@ -55,7 +56,31 @@
       "لا قاعدة بلا مخرجات.",
       "لا قاعدة بلا دليل مطلوب.",
       "لا قاعدة بلا أصفار محتملة.",
-      "لا استعمال لقاعدة خارج مجالها."
+      "لا استعمال لقاعدة خارج مجالها.",
+      "لا معلومة سابقة بلا مصدر موثق.",
+      "لا مصدر للمعلومات السابقة بلا Qualification."
+    ],
+    "documented_sources": [
+      {
+        "id": "SRC-0001",
+        "title": "قاعدة الميزان الصرفي لصيغة فَعَلَ",
+        "source_type": "documented_prior_knowledge",
+        "qualification": {
+          "status": "Qualified",
+          "method": "Source Qualification Machine: Retrieve → Qualify → Evidence Bind → Conflict Check → Proof Check → Integrate",
+          "notes": "مصدر مقيّد بنطاق الصرف ولا يُستعمل خارج مجال pattern_alignment."
+        },
+        "citation": {
+          "label": "Arabic morphology prior rule reference",
+          "locator": "باب الفعل الثلاثي المجرد / صيغة فَعَلَ"
+        },
+        "evidence_scope": [
+          "morphology",
+          "root_pattern_alignment",
+          "past_verb_pattern"
+        ],
+        "traceable": true
+      }
     ],
     "knowledge_units": [
       {
@@ -64,6 +89,9 @@
         "type": "rule",
         "domain": "morphology",
         "claim": "صيغة فَعَلَ تدل غالبًا على فعل ماض مجرد معلوم",
+        "source_refs": [
+          "SRC-0001"
+        ],
         "inputs_required": [
           "root_candidate",
           "haraka_sequence",
@@ -496,7 +524,9 @@
     "source_rules": [
       "لا claim بلا source_binding.",
       "لا source_binding بلا نوع.",
-      "لا شهادة بلا evidence_trace."
+      "لا شهادة بلا evidence_trace.",
+      "المعلومات السابقة لا تدخل النظام إلا عبر documented_source مؤهل.",
+      "أي مصدر سابق غير traceable ينتج Hypothesis أو Zero لا Certificate."
     ],
     "source_bindings": [
       {
@@ -628,6 +658,11 @@
           "id": "I10",
           "name": "NoSourceFreeExternalClaim",
           "rule": "لا دعوى خارجية بلا مصدر."
+        },
+        {
+          "id": "I11",
+          "name": "NoPriorKnowledgeWithoutDocumentedSource",
+          "rule": "لا معلومة سابقة بلا مصدر موثق ومؤهل."
         }
       ],
       "proof_objects": [
@@ -656,6 +691,7 @@
       "CertificateRecord",
       "OntologyNode",
       "KnowledgeUnit",
+      "DocumentedSource",
       "AmilRule",
       "QarinaRule",
       "EllipsisRule",
@@ -724,6 +760,7 @@
     },
     "laravel_models": [
       "KnowledgeUnit",
+      "DocumentedSource",
       "OntologyNode",
       "EpistemicUnit",
       "DimensionContract",
@@ -746,6 +783,8 @@
     ],
     "neo4j_graph": [
       "(:KnowledgeUnit)-[:DEFINES]->(:Rule)",
+      "(:KnowledgeUnit)-[:SUPPORTED_BY]->(:DocumentedSource)",
+      "(:DocumentedSource)-[:QUALIFIED_BY]->(:SourceQualification)",
       "(:EpistemicUnit)-[:HAS_DIMENSION]->(:Dimension)",
       "(:Dimension)-[:PRODUCES]->(:Claim)",
       "(:Claim)-[:SUPPORTED_BY]->(:Evidence)",
