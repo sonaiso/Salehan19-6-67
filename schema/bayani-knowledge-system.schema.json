@@ -140,7 +140,7 @@
         "type": {"type": "string"},
         "domain": {"type": "string"},
         "claim": {"type": "string"},
-        "source_refs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/idField"}},
+        "source_refs": {"type": "array", "items": {"$ref": "#/$defs/idField"}},
         "inputs_required": {"type": "array", "items": {"type": "string"}},
         "outputs": {"type": "array", "items": {"type": "string"}},
         "evidence_required": {"type": "array", "items": {"type": "string"}},
@@ -197,7 +197,6 @@
         "components",
         "knowledge_unit_types",
         "operating_rules",
-        "documented_sources",
         "knowledge_units"
       ],
       "properties": {
@@ -207,7 +206,6 @@
         "operating_rules": {"type": "array", "items": {"type": "string"}},
         "documented_sources": {
           "type": "array",
-          "minItems": 1,
           "items": {"$ref": "#/$defs/documentedSource"}
         },
         "knowledge_units": {
