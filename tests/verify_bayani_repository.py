@@ -187,10 +187,11 @@ class BayaniRepositoryVerification(unittest.TestCase):
         self.assertEqual(layer["output_contract"]["state_enum"], ALLOWED_OUTPUTS)
         for output in ALLOWED_OUTPUTS:
             self.assertIn(output, self.prompt)
+        prompt = normalized(self.prompt)
         allowed_outputs_section = re.search(
-            r"Allowed Outputs(?: Only)?\s+━+\s+(.*?)\n\nNever Output:",
-            self.prompt,
-            re.DOTALL | re.IGNORECASE,
+            r"allowed outputs(?: only)?\s+━+\s+(.*?)\n\nnever output:",
+            prompt,
+            re.DOTALL,
         )
         self.assertIsNotNone(allowed_outputs_section)
         declared_outputs = [
@@ -198,7 +199,7 @@ class BayaniRepositoryVerification(unittest.TestCase):
             for line in allowed_outputs_section.group(1).splitlines()
             if line.strip()
         ]
-        self.assertEqual(declared_outputs, ALLOWED_OUTPUTS)
+        self.assertEqual(declared_outputs, [normalized(output) for output in ALLOWED_OUTPUTS])
 
     def test_mustadil_readiness_gates_are_complete(self):
         layer = self.spec["mustadil_readiness_layer"]
