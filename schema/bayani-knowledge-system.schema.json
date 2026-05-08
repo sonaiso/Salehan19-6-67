@@ -12,6 +12,7 @@
     "grammar_engine",
     "reasoning_engine",
     "governance_engine",
+    "malakah_methodology",
     "schema_artifacts"
   ],
   "properties": {
@@ -45,6 +46,9 @@
     },
     "governance_engine": {
       "$ref": "#/$defs/governanceEngine"
+    },
+    "malakah_methodology": {
+      "$ref": "#/$defs/malakahMethodology"
     },
     "schema_artifacts": {
       "$ref": "#/$defs/schemaArtifacts"
@@ -109,14 +113,30 @@
             "P"
           ],
           "properties": {
-            "S": {"const": "States"},
-            "D": {"const": "Dimensions"},
-            "T": {"const": "Transitions"},
-            "E": {"const": "Evidence"},
-            "Z": {"const": "Zeros"},
-            "C": {"const": "Certificates"},
-            "R": {"const": "Recursive Relation"},
-            "P": {"const": "Proof Layer"}
+            "S": {
+              "const": "States"
+            },
+            "D": {
+              "const": "Dimensions"
+            },
+            "T": {
+              "const": "Transitions"
+            },
+            "E": {
+              "const": "Evidence"
+            },
+            "Z": {
+              "const": "Zeros"
+            },
+            "C": {
+              "const": "Certificates"
+            },
+            "R": {
+              "const": "Recursive Relation"
+            },
+            "P": {
+              "const": "Proof Layer"
+            }
           },
           "additionalProperties": false
         }
@@ -138,17 +158,54 @@
         "confidence_policy"
       ],
       "properties": {
-        "id": {"$ref": "#/$defs/idField"},
-        "name": {"type": "string"},
-        "type": {"type": "string"},
-        "domain": {"type": "string"},
-        "claim": {"type": "string"},
-        "source_refs": {"type": "array", "items": {"$ref": "#/$defs/idField"}},
-        "inputs_required": {"type": "array", "items": {"type": "string"}},
-        "outputs": {"type": "array", "items": {"type": "string"}},
-        "evidence_required": {"type": "array", "items": {"type": "string"}},
-        "zeros": {"type": "array", "items": {"type": "string"}},
-        "confidence_policy": {"type": "string"}
+        "id": {
+          "$ref": "#/$defs/idField"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "claim": {
+          "type": "string"
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/idField"
+          }
+        },
+        "inputs_required": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "evidence_required": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "zeros": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "confidence_policy": {
+          "type": "string"
+        }
       },
       "additionalProperties": false
     },
@@ -164,48 +221,93 @@
         "traceable"
       ],
       "properties": {
-        "id": {"$ref": "#/$defs/idField"},
-        "title": {"type": "string"},
-        "source_type": {"type": "string"},
+        "id": {
+          "$ref": "#/$defs/idField"
+        },
+        "title": {
+          "type": "string"
+        },
+        "source_type": {
+          "type": "string"
+        },
         "qualification": {
           "type": "object",
-          "required": ["status", "method"],
+          "required": [
+            "status",
+            "method"
+          ],
           "properties": {
             "status": {
-              "enum": ["Qualified", "Hypothesis", "Rejected"],
+              "enum": [
+                "Qualified",
+                "Hypothesis",
+                "Rejected"
+              ],
               "description": "Qualified إذا اكتمل التأهيل والدليل والتعارض والبرهان، Hypothesis إذا نقص شرط قابل للاستدراك، Rejected إذا وُجد صفر مانع أو تعارض غير محلول."
             },
-            "method": {"type": "string"},
+            "method": {
+              "type": "string"
+            },
             "steps": {
               "type": "array",
               "items": {
                 "type": "object",
-                "required": ["name", "output", "failure_mode"],
+                "required": [
+                  "name",
+                  "output",
+                  "failure_mode"
+                ],
                 "properties": {
-                  "name": {"type": "string"},
-                  "output": {"type": "string"},
-                  "failure_mode": {"type": "string"}
+                  "name": {
+                    "type": "string"
+                  },
+                  "output": {
+                    "type": "string"
+                  },
+                  "failure_mode": {
+                    "type": "string"
+                  }
                 },
                 "additionalProperties": false
               }
             },
-            "notes": {"type": "string"}
+            "notes": {
+              "type": "string"
+            }
           },
           "additionalProperties": false
         },
         "citation": {
           "type": "object",
-          "required": ["label"],
+          "required": [
+            "label"
+          ],
           "properties": {
-            "label": {"type": "string"},
-            "author": {"type": "string"},
-            "locator": {"type": "string"},
-            "url": {"type": "string"}
+            "label": {
+              "type": "string"
+            },
+            "author": {
+              "type": "string"
+            },
+            "locator": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
           },
           "additionalProperties": false
         },
-        "evidence_scope": {"type": "array", "minItems": 1, "items": {"type": "string"}},
-        "traceable": {"type": "boolean"}
+        "evidence_scope": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "traceable": {
+          "type": "boolean"
+        }
       },
       "additionalProperties": false
     },
@@ -219,18 +321,39 @@
         "knowledge_units"
       ],
       "properties": {
-        "definition": {"type": "string"},
-        "components": {"type": "array", "items": {"type": "string"}},
-        "knowledge_unit_types": {"type": "array", "items": {"type": "string"}},
-        "operating_rules": {"type": "array", "items": {"type": "string"}},
+        "definition": {
+          "type": "string"
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "knowledge_unit_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "operating_rules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "documented_sources": {
           "type": "array",
-          "items": {"$ref": "#/$defs/documentedSource"}
+          "items": {
+            "$ref": "#/$defs/documentedSource"
+          }
         },
         "knowledge_units": {
           "type": "array",
           "minItems": 1,
-          "items": {"$ref": "#/$defs/knowledgeUnit"}
+          "items": {
+            "$ref": "#/$defs/knowledgeUnit"
+          }
         }
       },
       "additionalProperties": false
@@ -244,13 +367,36 @@
         "definition"
       ],
       "properties": {
-        "id": {"$ref": "#/$defs/idField"},
-        "label": {"type": "string"},
-        "arabic_label": {"type": "string"},
-        "definition": {"type": "string"},
-        "requires": {"type": "array", "items": {"type": "string"}},
-        "may_have": {"type": "array", "items": {"type": "string"}},
-        "zeros": {"type": "array", "items": {"type": "string"}}
+        "id": {
+          "$ref": "#/$defs/idField"
+        },
+        "label": {
+          "type": "string"
+        },
+        "arabic_label": {
+          "type": "string"
+        },
+        "definition": {
+          "type": "string"
+        },
+        "requires": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "may_have": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "zeros": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       },
       "additionalProperties": false
     },
@@ -265,18 +411,35 @@
         "top_types": {
           "type": "array",
           "minItems": 1,
-          "items": {"$ref": "#/$defs/ontologyNode"}
+          "items": {
+            "$ref": "#/$defs/ontologyNode"
+          }
         },
-        "rules": {"type": "array", "items": {"type": "string"}},
+        "rules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "concept_examples": {
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["concept", "ontological_type", "roles"],
+            "required": [
+              "concept",
+              "ontological_type",
+              "roles"
+            ],
             "properties": {
-              "concept": {"type": "string"},
-              "ontological_type": {"type": "string"},
-              "roles": {"type": "object"}
+              "concept": {
+                "type": "string"
+              },
+              "ontological_type": {
+                "type": "string"
+              },
+              "roles": {
+                "type": "object"
+              }
             },
             "additionalProperties": true
           }
@@ -298,31 +461,65 @@
         "evidence_required"
       ],
       "properties": {
-        "id": {"$ref": "#/$defs/idField"},
-        "surface": {"type": "string"},
-        "category": {"type": "string"},
-        "input_contract": {"type": "object"},
-        "effects": {"type": "object"},
-        "expected_marks": {"type": "array", "items": {"type": "string"}},
-        "semantic_effect": {"type": "array", "items": {"type": "string"}},
+        "id": {
+          "$ref": "#/$defs/idField"
+        },
+        "surface": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "input_contract": {
+          "type": "object"
+        },
+        "effects": {
+          "type": "object"
+        },
+        "expected_marks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "semantic_effect": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "zeros": {
           "type": "array",
           "items": {
             "oneOf": [
-              {"type": "string"},
+              {
+                "type": "string"
+              },
               {
                 "type": "object",
-                "required": ["type", "severity"],
+                "required": [
+                  "type",
+                  "severity"
+                ],
                 "properties": {
-                  "type": {"type": "string"},
-                  "severity": {"type": "string"}
+                  "type": {
+                    "type": "string"
+                  },
+                  "severity": {
+                    "type": "string"
+                  }
                 },
                 "additionalProperties": false
               }
             ]
           }
         },
-        "evidence_required": {"type": "array", "items": {"type": "string"}}
+        "evidence_required": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       },
       "additionalProperties": false
     },
@@ -339,14 +536,38 @@
         "result_effect"
       ],
       "properties": {
-        "id": {"$ref": "#/$defs/idField"},
-        "type": {"type": "string"},
-        "surface_evidence": {"type": "string"},
-        "supports_claim": {"type": "string"},
-        "strength": {"type": "number", "minimum": 0, "maximum": 1},
-        "requires": {"type": "array", "items": {"type": "string"}},
-        "blocks": {"type": "array", "items": {"type": "string"}},
-        "result_effect": {"type": "string"}
+        "id": {
+          "$ref": "#/$defs/idField"
+        },
+        "type": {
+          "type": "string"
+        },
+        "surface_evidence": {
+          "type": "string"
+        },
+        "supports_claim": {
+          "type": "string"
+        },
+        "strength": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "requires": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "blocks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "result_effect": {
+          "type": "string"
+        }
       },
       "additionalProperties": false
     },
@@ -362,15 +583,33 @@
         "result_type"
       ],
       "properties": {
-        "id": {"$ref": "#/$defs/idField"},
-        "surface": {"type": "string"},
-        "missing_element": {"type": "string"},
-        "necessity": {"type": "string"},
-        "can_estimate": {"type": "boolean"},
-        "qarina_available": {"type": "boolean"},
-        "result_type": {"type": "string"},
-        "zero_type": {"type": "string"},
-        "blocks": {"type": "string"}
+        "id": {
+          "$ref": "#/$defs/idField"
+        },
+        "surface": {
+          "type": "string"
+        },
+        "missing_element": {
+          "type": "string"
+        },
+        "necessity": {
+          "type": "string"
+        },
+        "can_estimate": {
+          "type": "boolean"
+        },
+        "qarina_available": {
+          "type": "boolean"
+        },
+        "result_type": {
+          "type": "string"
+        },
+        "zero_type": {
+          "type": "string"
+        },
+        "blocks": {
+          "type": "string"
+        }
       },
       "additionalProperties": false
     },
@@ -387,14 +626,38 @@
         "result_type"
       ],
       "properties": {
-        "id": {"$ref": "#/$defs/idField"},
-        "surface": {"type": "string"},
-        "type": {"type": "string"},
-        "candidate_antecedents": {"type": "array", "items": {"type": "string"}},
-        "constraints": {"type": "array", "items": {"type": "string"}},
-        "selected_antecedent": {"type": "string"},
-        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
-        "result_type": {"type": "string"}
+        "id": {
+          "$ref": "#/$defs/idField"
+        },
+        "surface": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "candidate_antecedents": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "selected_antecedent": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "result_type": {
+          "type": "string"
+        }
       },
       "additionalProperties": false
     },
@@ -410,13 +673,27 @@
         "result_type"
       ],
       "properties": {
-        "id": {"$ref": "#/$defs/idField"},
-        "claim_a": {"type": "string"},
-        "claim_b": {"type": "string"},
-        "conflict_type": {"type": "string"},
-        "reason": {"type": "string"},
-        "status": {"type": "string"},
-        "result_type": {"type": "string"}
+        "id": {
+          "$ref": "#/$defs/idField"
+        },
+        "claim_a": {
+          "type": "string"
+        },
+        "claim_b": {
+          "type": "string"
+        },
+        "conflict_type": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "result_type": {
+          "type": "string"
+        }
       },
       "additionalProperties": false
     },
@@ -430,22 +707,37 @@
         "traceable"
       ],
       "properties": {
-        "claim_id": {"$ref": "#/$defs/idField"},
-        "claim": {"type": "string"},
-        "source_type": {"type": "string"},
+        "claim_id": {
+          "$ref": "#/$defs/idField"
+        },
+        "claim": {
+          "type": "string"
+        },
+        "source_type": {
+          "type": "string"
+        },
         "evidence": {
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["type", "value"],
+            "required": [
+              "type",
+              "value"
+            ],
             "properties": {
-              "type": {"type": "string"},
-              "value": {"type": "string"}
+              "type": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
             },
             "additionalProperties": false
           }
         },
-        "traceable": {"type": "boolean"}
+        "traceable": {
+          "type": "boolean"
+        }
       },
       "additionalProperties": false
     },
@@ -461,21 +753,43 @@
         "tests_added"
       ],
       "properties": {
-        "id": {"$ref": "#/$defs/idField"},
-        "failed_claim": {"type": "string"},
-        "error_type": {"type": "string"},
-        "failed_layer": {"type": "string"},
-        "correction": {"type": "string"},
+        "id": {
+          "$ref": "#/$defs/idField"
+        },
+        "failed_claim": {
+          "type": "string"
+        },
+        "error_type": {
+          "type": "string"
+        },
+        "failed_layer": {
+          "type": "string"
+        },
+        "correction": {
+          "type": "string"
+        },
         "rule_update": {
           "type": "object",
-          "required": ["rule", "new_behavior"],
+          "required": [
+            "rule",
+            "new_behavior"
+          ],
           "properties": {
-            "rule": {"type": "string"},
-            "new_behavior": {"type": "string"}
+            "rule": {
+              "type": "string"
+            },
+            "new_behavior": {
+              "type": "string"
+            }
           },
           "additionalProperties": false
         },
-        "tests_added": {"type": "array", "items": {"type": "string"}}
+        "tests_added": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       },
       "additionalProperties": false
     },
@@ -487,9 +801,15 @@
         "expected"
       ],
       "properties": {
-        "id": {"$ref": "#/$defs/idField"},
-        "input": {"type": "string"},
-        "expected": {"type": "object"}
+        "id": {
+          "$ref": "#/$defs/idField"
+        },
+        "input": {
+          "type": "string"
+        },
+        "expected": {
+          "type": "object"
+        }
       },
       "additionalProperties": false
     },
@@ -501,9 +821,15 @@
         "rule"
       ],
       "properties": {
-        "id": {"$ref": "#/$defs/idField"},
-        "name": {"type": "string"},
-        "rule": {"type": "string"}
+        "id": {
+          "$ref": "#/$defs/idField"
+        },
+        "name": {
+          "type": "string"
+        },
+        "rule": {
+          "type": "string"
+        }
       },
       "additionalProperties": false
     },
@@ -516,10 +842,21 @@
         "status"
       ],
       "properties": {
-        "unit_id": {"$ref": "#/$defs/idField"},
-        "certificate": {"type": "string"},
-        "checked_invariants": {"type": "array", "items": {"type": "string"}},
-        "status": {"type": "string"}
+        "unit_id": {
+          "$ref": "#/$defs/idField"
+        },
+        "certificate": {
+          "type": "string"
+        },
+        "checked_invariants": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "type": "string"
+        }
       },
       "additionalProperties": false
     },
@@ -532,10 +869,24 @@
         "invariant"
       ],
       "properties": {
-        "signature": {"const": "R(level_n, level_n+1)"},
-        "description": {"type": "string"},
-        "examples": {"type": "array", "items": {"type": "string"}},
-        "invariant": {"type": "array", "items": {"type": "string"}}
+        "signature": {
+          "const": "R(level_n, level_n+1)"
+        },
+        "description": {
+          "type": "string"
+        },
+        "examples": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "invariant": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       },
       "additionalProperties": false
     },
@@ -547,9 +898,18 @@
         "properties"
       ],
       "properties": {
-        "type": {"const": "object"},
-        "required": {"type": "array", "items": {"type": "string"}},
-        "properties": {"type": "object"}
+        "type": {
+          "const": "object"
+        },
+        "required": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "properties": {
+          "type": "object"
+        }
       },
       "additionalProperties": false
     },
@@ -570,18 +930,78 @@
         "reference_zero_types"
       ],
       "properties": {
-        "amil_categories": {"type": "array", "items": {"type": "string"}},
-        "amil_rules": {"type": "array", "items": {"$ref": "#/$defs/amilRule"}},
-        "amil_ruleset_rules": {"type": "array", "items": {"type": "string"}},
-        "qarina_types": {"type": "array", "items": {"type": "string"}},
-        "qarina_rules": {"type": "array", "items": {"$ref": "#/$defs/qarinaRule"}},
-        "qarina_ruleset_rules": {"type": "array", "items": {"type": "string"}},
-        "ellipsis_types": {"type": "array", "items": {"type": "string"}},
-        "ellipsis_rules": {"type": "array", "items": {"$ref": "#/$defs/ellipsisRule"}},
-        "ellipsis_ruleset_rules": {"type": "array", "items": {"type": "string"}},
-        "reference_units": {"type": "array", "items": {"type": "string"}},
-        "reference_rules": {"type": "array", "items": {"$ref": "#/$defs/referenceRule"}},
-        "reference_zero_types": {"type": "array", "items": {"type": "string"}}
+        "amil_categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "amil_rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/amilRule"
+          }
+        },
+        "amil_ruleset_rules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "qarina_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "qarina_rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/qarinaRule"
+          }
+        },
+        "qarina_ruleset_rules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ellipsis_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ellipsis_rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ellipsisRule"
+          }
+        },
+        "ellipsis_ruleset_rules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reference_units": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reference_rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/referenceRule"
+          }
+        },
+        "reference_zero_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       },
       "additionalProperties": false
     },
@@ -594,10 +1014,27 @@
         "recursive_relation"
       ],
       "properties": {
-        "conflict_types": {"type": "array", "items": {"type": "string"}},
-        "conflicts": {"type": "array", "items": {"$ref": "#/$defs/conflictRecord"}},
-        "tarjih_rules": {"type": "array", "items": {"type": "string"}},
-        "recursive_relation": {"$ref": "#/$defs/recursiveRelation"}
+        "conflict_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "conflicts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/conflictRecord"
+          }
+        },
+        "tarjih_rules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "recursive_relation": {
+          "$ref": "#/$defs/recursiveRelation"
+        }
       },
       "additionalProperties": false
     },
@@ -620,86 +1057,235 @@
         "example_analyses"
       ],
       "properties": {
-        "purpose": {"type": "string"},
-        "pipeline": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "purpose": {
+          "type": "string"
+        },
+        "pipeline": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
         "candidate_generation": {
           "type": "object",
-          "required": ["definition", "pipeline", "rules", "ranking_policy", "evidence_binding", "proof_gate"],
+          "required": [
+            "definition",
+            "pipeline",
+            "rules",
+            "ranking_policy",
+            "evidence_binding",
+            "proof_gate"
+          ],
           "properties": {
-            "definition": {"type": "string"},
-            "pipeline": {"type": "array", "items": {"type": "string"}},
-            "rules": {"type": "array", "items": {"type": "string"}},
-            "ranking_policy": {"type": "string"},
-            "evidence_binding": {"type": "string"},
-            "proof_gate": {"type": "string"}
+            "definition": {
+              "type": "string"
+            },
+            "pipeline": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "rules": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "ranking_policy": {
+              "type": "string"
+            },
+            "evidence_binding": {
+              "type": "string"
+            },
+            "proof_gate": {
+              "type": "string"
+            }
           },
           "additionalProperties": false
         },
-        "decomposition_targets": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "decomposition_targets": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
         "status_policy": {
           "type": "object",
-          "required": ["certificate", "hypothesis", "zero"],
+          "required": [
+            "certificate",
+            "hypothesis",
+            "zero"
+          ],
           "properties": {
-            "certificate": {"type": "string"},
-            "hypothesis": {"type": "string"},
-            "zero": {"type": "string"}
+            "certificate": {
+              "type": "string"
+            },
+            "hypothesis": {
+              "type": "string"
+            },
+            "zero": {
+              "type": "string"
+            }
           },
           "additionalProperties": false
         },
         "mujmal_bayan_layer": {
           "type": "object",
-          "required": ["definition", "rules", "transitions", "zero_types"],
+          "required": [
+            "definition",
+            "rules",
+            "transitions",
+            "zero_types"
+          ],
           "properties": {
-            "definition": {"type": "string"},
-            "rules": {"type": "array", "items": {"type": "string"}},
-            "transitions": {"type": "array", "items": {"type": "string"}},
-            "zero_types": {"type": "array", "items": {"type": "string"}}
+            "definition": {
+              "type": "string"
+            },
+            "rules": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "transitions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "zero_types": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           },
           "additionalProperties": false
         },
         "graph_contract": {
           "type": "object",
-          "required": ["nodes", "edges", "invariants"],
+          "required": [
+            "nodes",
+            "edges",
+            "invariants"
+          ],
           "properties": {
-            "nodes": {"type": "array", "items": {"type": "string"}},
-            "edges": {"type": "array", "items": {"type": "string"}},
-            "invariants": {"type": "array", "items": {"type": "string"}}
+            "nodes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "edges": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "invariants": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           },
           "additionalProperties": false
         },
-        "vector_dimensions": {"type": "array", "items": {"type": "string"}},
-        "dimensional_score_fields": {"type": "array", "items": {"type": "string"}},
+        "vector_dimensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dimensional_score_fields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "score_methodology": {
           "type": "object",
-          "required": ["calculation", "basic_fields", "thresholds"],
+          "required": [
+            "calculation",
+            "basic_fields",
+            "thresholds"
+          ],
           "properties": {
-            "calculation": {"type": "string"},
-            "basic_fields": {"type": "array", "items": {"type": "string"}},
-            "thresholds": {"type": "object"}
+            "calculation": {
+              "type": "string"
+            },
+            "basic_fields": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "thresholds": {
+              "type": "object"
+            }
           },
           "additionalProperties": false
         },
         "reverse_trace_contract": {
           "type": "object",
-          "required": ["levels", "semantics"],
+          "required": [
+            "levels",
+            "semantics"
+          ],
           "properties": {
-            "levels": {"type": "array", "items": {"type": "string"}},
-            "semantics": {"type": "array", "items": {"type": "string"}}
+            "levels": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "semantics": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           },
           "additionalProperties": false
         },
         "learning_rule_contract": {
           "type": "object",
-          "required": ["storage", "required_fields", "integration"],
+          "required": [
+            "storage",
+            "required_fields",
+            "integration"
+          ],
           "properties": {
-            "storage": {"type": "string"},
-            "required_fields": {"type": "array", "items": {"type": "string"}},
-            "integration": {"type": "string"}
+            "storage": {
+              "type": "string"
+            },
+            "required_fields": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "integration": {
+              "type": "string"
+            }
           },
           "additionalProperties": false
         },
-        "learning_signal_rules": {"type": "array", "items": {"type": "string"}},
-        "example_analyses": {"type": "array", "items": {"type": "object"}}
+        "learning_signal_rules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "example_analyses": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
       },
       "additionalProperties": false
     },
@@ -715,19 +1301,65 @@
         "proof_layer"
       ],
       "properties": {
-        "source_rules": {"type": "array", "items": {"type": "string"}},
-        "source_bindings": {"type": "array", "items": {"$ref": "#/$defs/sourceBinding"}},
-        "learning_rules": {"type": "array", "items": {"type": "string"}},
-        "learning_events": {"type": "array", "items": {"$ref": "#/$defs/learningEvent"}},
-        "test_case_rules": {"type": "array", "items": {"type": "string"}},
-        "test_cases": {"type": "array", "items": {"$ref": "#/$defs/testCase"}},
+        "source_rules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "source_bindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          }
+        },
+        "learning_rules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "learning_events": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/learningEvent"
+          }
+        },
+        "test_case_rules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "test_cases": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/testCase"
+          }
+        },
         "proof_layer": {
           "type": "object",
-          "required": ["definition", "invariants", "proof_objects"],
+          "required": [
+            "definition",
+            "invariants",
+            "proof_objects"
+          ],
           "properties": {
-            "definition": {"type": "string"},
-            "invariants": {"type": "array", "items": {"$ref": "#/$defs/proofInvariant"}},
-            "proof_objects": {"type": "array", "items": {"$ref": "#/$defs/proofObject"}}
+            "definition": {
+              "type": "string"
+            },
+            "invariants": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/proofInvariant"
+              }
+            },
+            "proof_objects": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/proofObject"
+              }
+            }
           },
           "additionalProperties": false
         }
@@ -736,10 +1368,20 @@
     },
     "executionPhase": {
       "type": "object",
-      "required": ["name", "components"],
+      "required": [
+        "name",
+        "components"
+      ],
       "properties": {
-        "name": {"type": "string"},
-        "components": {"type": "array", "items": {"type": "string"}}
+        "name": {
+          "type": "string"
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       },
       "additionalProperties": false
     },
@@ -753,11 +1395,432 @@
         "execution_phases"
       ],
       "properties": {
-        "upper_entities": {"type": "array", "items": {"type": "string"}},
-        "epistemic_unit_schema_excerpt": {"$ref": "#/$defs/epistemicUnitSchema"},
-        "laravel_models": {"type": "array", "items": {"type": "string"}},
-        "neo4j_graph": {"type": "array", "items": {"type": "string"}},
-        "execution_phases": {"type": "array", "items": {"$ref": "#/$defs/executionPhase"}}
+        "upper_entities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "epistemic_unit_schema_excerpt": {
+          "$ref": "#/$defs/epistemicUnitSchema"
+        },
+        "laravel_models": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "neo4j_graph": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "execution_phases": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/executionPhase"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "malakahMethodology": {
+      "type": "object",
+      "required": [
+        "definition",
+        "central_principle",
+        "rule_applicability_machine",
+        "rule_manat_detector",
+        "malakah_taxonomy",
+        "rule_priority_engine",
+        "exception_registry",
+        "malakah_growth_model",
+        "prompt_malakah_layer",
+        "prior_opinion_filter",
+        "epistemic_candidate_generation_machine",
+        "error_typology",
+        "malakah_threshold_policy",
+        "progressive_malakah_test_suite",
+        "adversarial_epistemic_cases",
+        "mujmal_bayan_mubayyan_skill",
+        "malakah_memory_loop",
+        "layer_integrity_score",
+        "executable_invariant_coverage",
+        "failure_predictor_binding",
+        "expansion_discipline_machine",
+        "mustadil_competence_score",
+        "acceptance_criteria"
+      ],
+      "properties": {
+        "definition": {
+          "type": "string"
+        },
+        "central_principle": {
+          "type": "string"
+        },
+        "rule_applicability_machine": {
+          "$ref": "#/$defs/malakahOperationalLayer"
+        },
+        "rule_manat_detector": {
+          "$ref": "#/$defs/malakahOperationalLayer"
+        },
+        "malakah_taxonomy": {
+          "type": "object",
+          "required": [
+            "rule",
+            "sub_skills",
+            "overall_score_policy"
+          ],
+          "properties": {
+            "rule": {
+              "type": "string"
+            },
+            "sub_skills": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/malakahSubSkill"
+              }
+            },
+            "overall_score_policy": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "rule_priority_engine": {
+          "$ref": "#/$defs/malakahOperationalLayer"
+        },
+        "exception_registry": {
+          "$ref": "#/$defs/malakahOperationalLayer"
+        },
+        "malakah_growth_model": {
+          "type": "object",
+          "required": [
+            "purpose",
+            "stages",
+            "example",
+            "rules"
+          ],
+          "properties": {
+            "purpose": {
+              "type": "string"
+            },
+            "stages": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string"
+              }
+            },
+            "example": {
+              "type": "object"
+            },
+            "rules": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "prompt_malakah_layer": {
+          "$ref": "#/$defs/malakahOperationalLayer"
+        },
+        "prior_opinion_filter": {
+          "$ref": "#/$defs/malakahOperationalLayer"
+        },
+        "epistemic_candidate_generation_machine": {
+          "$ref": "#/$defs/malakahOperationalLayer"
+        },
+        "error_typology": {
+          "type": "object",
+          "required": [
+            "purpose",
+            "error_types",
+            "severity_policy"
+          ],
+          "properties": {
+            "purpose": {
+              "type": "string"
+            },
+            "error_types": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/errorType"
+              }
+            },
+            "severity_policy": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "malakah_threshold_policy": {
+          "type": "object",
+          "required": [
+            "ranges",
+            "non_numeric_gates"
+          ],
+          "properties": {
+            "ranges": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/thresholdRange"
+              }
+            },
+            "non_numeric_gates": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "progressive_malakah_test_suite": {
+          "$ref": "#/$defs/progressiveMalakahTestSuite"
+        },
+        "adversarial_epistemic_cases": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/adversarialCase"
+          }
+        },
+        "mujmal_bayan_mubayyan_skill": {
+          "$ref": "#/$defs/malakahOperationalLayer"
+        },
+        "malakah_memory_loop": {
+          "$ref": "#/$defs/malakahOperationalLayer"
+        },
+        "layer_integrity_score": {
+          "$ref": "#/$defs/malakahOperationalLayer"
+        },
+        "executable_invariant_coverage": {
+          "$ref": "#/$defs/malakahOperationalLayer"
+        },
+        "failure_predictor_binding": {
+          "$ref": "#/$defs/malakahOperationalLayer"
+        },
+        "expansion_discipline_machine": {
+          "$ref": "#/$defs/malakahOperationalLayer"
+        },
+        "mustadil_competence_score": {
+          "$ref": "#/$defs/malakahOperationalLayer"
+        },
+        "acceptance_criteria": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "malakahOperationalLayer": {
+      "type": "object",
+      "required": [
+        "purpose",
+        "inputs",
+        "checks",
+        "outputs",
+        "rules"
+      ],
+      "properties": {
+        "purpose": {
+          "type": "string"
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "checks": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "rules": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "zero_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "exception_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "score_fields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "malakahSubSkill": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "measures"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "measures": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "blocking_failures": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "errorType": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "weight",
+        "effect"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "weight": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "effect": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "thresholdRange": {
+      "type": "object",
+      "required": [
+        "min",
+        "max",
+        "status"
+      ],
+      "properties": {
+        "min": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "max": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "status": {
+          "type": "string"
+        },
+        "allowed_result": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "progressiveMalakahTestSuite": {
+      "type": "object",
+      "required": [
+        "purpose",
+        "levels",
+        "rules"
+      ],
+      "properties": {
+        "purpose": {
+          "type": "string"
+        },
+        "levels": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object"
+          }
+        },
+        "rules": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "adversarialCase": {
+      "type": "object",
+      "required": [
+        "id",
+        "case_type",
+        "expected_detection"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "case_type": {
+          "type": "string"
+        },
+        "expected_detection": {
+          "type": "string"
+        },
+        "blocked_result": {
+          "type": "string"
+        }
       },
       "additionalProperties": false
     }
