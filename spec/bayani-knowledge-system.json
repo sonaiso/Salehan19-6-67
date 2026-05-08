@@ -1945,6 +1945,441 @@
       "Mustadil competence can refuse certification when domain, source, manat, or expertise is insufficient."
     ]
   },
+  "mustadil_readiness_layer": {
+    "purpose": "طبقة جامعة تمنع أي جواب أو استدلال قبل تحقق أهلية المستدل وربط الواقع والأثر والمعرفة السابقة والدلالة والبرهان والأصفار والرد العكسي.",
+    "formal_function": {
+      "name": "NMF",
+      "signature": "Input → {Certificate, Hypothesis, Zero}",
+      "result_terms": [
+        "Reality",
+        "Trace",
+        "QualifiedPriorKnowledge",
+        "NoPriorOpinion",
+        "Binding",
+        "Dalalah",
+        "RuleApplicability",
+        "Evidence",
+        "ProofRank",
+        "ConflictTarjih",
+        "NoBlockingZero",
+        "ReverseTrace"
+      ]
+    },
+    "inputs": [
+      "InputTrace",
+      "RealityObject",
+      "PriorKnowledgeUnit",
+      "OntologyMapping",
+      "DalMadlulRelation",
+      "ApplicableRule",
+      "EvidenceTrace",
+      "ProofObject",
+      "ConflictRecord",
+      "ZeroRecord",
+      "ReverseTrace"
+    ],
+    "readiness_checks": [
+      {
+        "id": "MR-01",
+        "name": "Reality Check",
+        "question": "هل يوجد واقع أو نص أو أثر قابل للفحص؟",
+        "required_evidence": [
+          "RealityObject",
+          "InputTrace"
+        ],
+        "failure_zero": "MissingReality"
+      },
+      {
+        "id": "MR-02",
+        "name": "Trace Check",
+        "question": "هل يوجد أثر مدخل قابل للملاحظة؟",
+        "required_evidence": [
+          "InputTrace"
+        ],
+        "failure_zero": "MissingInputTrace"
+      },
+      {
+        "id": "MR-03",
+        "name": "Qualified Prior Knowledge Check",
+        "question": "هل المعرفة السابقة مؤهلة ومصدّرة ومحدودة وقابلة للاختبار؟",
+        "required_evidence": [
+          "DocumentedSource",
+          "KnowledgeUnitScope",
+          "TestCase"
+        ],
+        "failure_zero": "UnqualifiedPriorKnowledge"
+      },
+      {
+        "id": "MR-04",
+        "name": "Prior Opinion Filter",
+        "question": "هل أزيل الرأي السابق والتحيز والاحتمال غير الملزم من مقام الدليل؟",
+        "required_evidence": [
+          "PriorOpinionFilterRecord"
+        ],
+        "failure_zero": "PriorOpinionAsEvidence"
+      },
+      {
+        "id": "MR-05",
+        "name": "Binding Check",
+        "question": "هل يصح ربط الواقع بالمعرفة السابقة؟",
+        "required_evidence": [
+          "SourceBinding",
+          "OntologyMapping"
+        ],
+        "failure_zero": "BindingWithoutMapping"
+      },
+      {
+        "id": "MR-06",
+        "name": "Dalalah Qualification",
+        "question": "هل تأهل الدال والمدلول ونوع العلاقة والقرينة؟",
+        "required_evidence": [
+          "Dal",
+          "Madlul",
+          "Qarina",
+          "RelationType"
+        ],
+        "failure_zero": "UnqualifiedDalalah"
+      },
+      {
+        "id": "MR-07",
+        "name": "Rule Applicability",
+        "question": "هل القاعدة منطبقة على هذه الحالة تحديدًا؟",
+        "required_evidence": [
+          "RuleApplicabilityDecision",
+          "RuleManatDetection"
+        ],
+        "failure_zero": "RuleWithoutApplicability"
+      },
+      {
+        "id": "MR-08",
+        "name": "Evidence Binding",
+        "question": "هل كل دعوى مربوطة بدليل؟",
+        "required_evidence": [
+          "EvidenceTrace"
+        ],
+        "failure_zero": "ClaimWithoutEvidence"
+      },
+      {
+        "id": "MR-09",
+        "name": "Proof Rank Check",
+        "question": "هل رتبة كل دليل معلنة ولا تبنى قاعدة تأسيسية على ظن؟",
+        "required_evidence": [
+          "ProofRank",
+          "ProofObject"
+        ],
+        "failure_zero": "UnrankedEvidence"
+      },
+      {
+        "id": "MR-10",
+        "name": "Conflict/Tarjih Check",
+        "question": "هل كُشف التعارض ورتب وبرر الترجيح عند وجوده؟",
+        "required_evidence": [
+          "ConflictRecord",
+          "TarjihRule"
+        ],
+        "failure_zero": "UnresolvedConflict"
+      },
+      {
+        "id": "MR-11",
+        "name": "Zero Control",
+        "question": "هل غابت الأصفار المانعة والفجوات والقفزات؟",
+        "required_evidence": [
+          "ZeroGuardReport"
+        ],
+        "failure_zero": "BlockingZeroPresent"
+      },
+      {
+        "id": "MR-12",
+        "name": "Reverse Trace Validation",
+        "question": "هل يرجع القرار النهائي إلى الدعاوى والأدلة والانتقالات والقواعد والدال والمدلول والأثر؟",
+        "required_evidence": [
+          "ReverseTrace"
+        ],
+        "failure_zero": "MissingReverseTrace"
+      }
+    ],
+    "allowed_outputs": [
+      "Certificate",
+      "Hypothesis",
+      "Zero"
+    ],
+    "output_contract": {
+      "required_fields": [
+        "state",
+        "claim",
+        "mustadil_readiness",
+        "evidence",
+        "hypotheses",
+        "zeros",
+        "proof_objects",
+        "audit",
+        "learning_signals",
+        "final_decision"
+      ],
+      "state_enum": [
+        "Certificate",
+        "Hypothesis",
+        "Zero"
+      ],
+      "certificate_gate": "Certificate لا يصدر إلا مع ProofObject valid وblocking_zeros فارغة وReverseTrace مكتمل.",
+      "hypothesis_gate": "Hypothesis يستعمل عند نقص قابل للاستدراك أو ProofRank غير كاف للشهادة.",
+      "zero_gate": "Zero يستعمل عند وجود صفر مانع أو قفزة أو دعوى بلا دليل أو فقد trace."
+    },
+    "proof_rank_policy": {
+      "ranks": [
+        "Candidate",
+        "QarinaCandidate",
+        "Zann",
+        "ZannRajih",
+        "OperationalProof",
+        "QatiProof",
+        "FoundationalProof"
+      ],
+      "rules": [
+        "Candidate وQarinaCandidate لا يصدران Certificate.",
+        "لا قاعدة تأسيسية من Zann.",
+        "Certificate يحتاج رتبة Proof مناسبة لمجال الدعوى ومحلها.",
+        "كل ProofRank يحتفظ بسبب الرتبة ومرجعها وأثرها في القرار."
+      ]
+    },
+    "mathematical_evaluation_layer": [
+      {
+        "name": "GapDetector",
+        "inputs": [
+          "Claim",
+          "EvidenceTrace",
+          "TransitionLog"
+        ],
+        "outputs": [
+          "GapReport"
+        ],
+        "zero_types": [
+          "MissingEvidenceGap",
+          "MissingTransitionGap"
+        ]
+      },
+      {
+        "name": "LeapDetector",
+        "inputs": [
+          "LevelPath",
+          "TransitionContract"
+        ],
+        "outputs": [
+          "LeapReport"
+        ],
+        "zero_types": [
+          "LevelSkip",
+          "TransitionWithoutContract"
+        ]
+      },
+      {
+        "name": "TraceValidator",
+        "inputs": [
+          "InputTrace",
+          "EvidenceTrace",
+          "ReverseTrace"
+        ],
+        "outputs": [
+          "TraceValidity"
+        ],
+        "zero_types": [
+          "UntraceableClaim",
+          "BrokenReverseTrace"
+        ]
+      },
+      {
+        "name": "ProofRankChecker",
+        "inputs": [
+          "Evidence",
+          "ProofObject",
+          "ClaimRisk"
+        ],
+        "outputs": [
+          "ProofRankDecision"
+        ],
+        "zero_types": [
+          "UnrankedEvidence",
+          "InsufficientProofRank"
+        ]
+      },
+      {
+        "name": "ZeroGuard",
+        "inputs": [
+          "ZeroRecord",
+          "ProofObject",
+          "Claim"
+        ],
+        "outputs": [
+          "BlockingZeroDecision"
+        ],
+        "zero_types": [
+          "BlockingZeroPresent"
+        ]
+      },
+      {
+        "name": "FailurePredictor",
+        "inputs": [
+          "ClaimRisk",
+          "SourceCompleteness",
+          "ProofRank",
+          "ZeroSignals"
+        ],
+        "outputs": [
+          "FailureRisk"
+        ],
+        "zero_types": [
+          "PredictedFailureIgnored"
+        ]
+      },
+      {
+        "name": "ReliabilityScorer",
+        "inputs": [
+          "ReadinessCheckResults",
+          "ProofRankDecision",
+          "TraceValidity"
+        ],
+        "outputs": [
+          "ReliabilityScore"
+        ],
+        "zero_types": [
+          "ScoreUsedAsCertificate"
+        ]
+      }
+    ],
+    "knowledge_storage_architecture": {
+      "storage_forms": [
+        "relations",
+        "evidence",
+        "proofs",
+        "certificates",
+        "hypotheses",
+        "conflicts",
+        "ontologies",
+        "mappings",
+        "reverse_traces",
+        "learning_events"
+      ],
+      "memory_types": [
+        "Surface Memory",
+        "Dal Memory",
+        "Madlul Memory",
+        "Rule Memory",
+        "Ontology Memory",
+        "Evidence Memory",
+        "Conflict Memory",
+        "Proof Memory",
+        "Learning Memory",
+        "Long-Term Epistemic Memory"
+      ],
+      "reuse_rule": "لا تستعمل الذاكرة إلا بعد Memory Applicability Check وربط source_binding أو trace."
+    },
+    "learning_policy": {
+      "pipeline": [
+        "Error",
+        "Failed Layer",
+        "Cause Detection",
+        "Rule Update",
+        "Test Creation",
+        "Regression Validation",
+        "Confidence Adjustment"
+      ],
+      "rules": [
+        "لا تعلم بلا اختبار.",
+        "لا تحديث قاعدة بلا proof validation.",
+        "لا اعتماد تعلم يكسر reverse_trace compatibility."
+      ],
+      "failure_zero": "LearningWithoutTest"
+    },
+    "blocking_zeros": [
+      "MissingReality",
+      "MissingInputTrace",
+      "UnqualifiedPriorKnowledge",
+      "PriorOpinionAsEvidence",
+      "BindingWithoutMapping",
+      "UnqualifiedDalalah",
+      "RuleWithoutApplicability",
+      "ClaimWithoutEvidence",
+      "UnrankedEvidence",
+      "UnresolvedConflict",
+      "BlockingZeroPresent",
+      "MissingReverseTrace",
+      "StatisticalCandidateAsCertificate",
+      "CertificateWithoutProof",
+      "CertificateWithBlockingZero",
+      "LearningWithoutTest",
+      "ExternalClaimWithoutSourceQualification"
+    ],
+    "integration_points": [
+      "answer_analysis_engine.candidate_generation.proof_gate",
+      "answer_analysis_engine.status_policy",
+      "malakah_methodology.prior_opinion_filter",
+      "malakah_methodology.rule_applicability_machine",
+      "malakah_methodology.rule_manat_detector",
+      "malakah_methodology.layer_integrity_score",
+      "malakah_methodology.failure_predictor_binding",
+      "malakah_methodology.mustadil_competence_score",
+      "schema_artifacts.epistemic_unit_schema_excerpt.properties.state"
+    ],
+    "spec_tests": [
+      {
+        "id": "MRT-01",
+        "case": "جواب بلا دليل",
+        "input": "Claim without EvidenceTrace",
+        "expected_state": "Zero",
+        "expected_zero": "ClaimWithoutEvidence"
+      },
+      {
+        "id": "MRT-02",
+        "case": "شهادة مع Zero مانع",
+        "input": "Certificate request with blocking_zero",
+        "expected_state": "Zero",
+        "expected_zero": "CertificateWithBlockingZero"
+      },
+      {
+        "id": "MRT-03",
+        "case": "قفز بين المستويات",
+        "input": "Mafhum inferred without Mantuq transition",
+        "expected_state": "Zero",
+        "expected_zero": "LevelSkip"
+      },
+      {
+        "id": "MRT-04",
+        "case": "رأي سابق مستخدم كدليل",
+        "input": "Prior opinion promoted as evidence",
+        "expected_state": "Zero",
+        "expected_zero": "PriorOpinionAsEvidence"
+      },
+      {
+        "id": "MRT-05",
+        "case": "Candidate إحصائي يحاول التحول إلى Certificate",
+        "input": "Statistical candidate without ProofObject",
+        "expected_state": "Hypothesis",
+        "expected_zero": "StatisticalCandidateAsCertificate"
+      },
+      {
+        "id": "MRT-06",
+        "case": "غياب ReverseTrace",
+        "input": "Final answer without reverse trace",
+        "expected_state": "Zero",
+        "expected_zero": "MissingReverseTrace"
+      },
+      {
+        "id": "MRT-07",
+        "case": "نقص أهلية المستدل",
+        "input": "Domain expertise insufficient for certificate",
+        "expected_state": "Hypothesis",
+        "expected_zero": "UnqualifiedCertificate"
+      }
+    ],
+    "acceptance_criteria": [
+      "كل نتيجة نهائية محصورة في Certificate أو Hypothesis أو Zero.",
+      "لا Certificate بلا ProofObject valid.",
+      "لا Certificate مع blocking_zero.",
+      "كل Claim مربوط EvidenceTrace أو يوسم Hypothesis/Zero.",
+      "كل قرار نهائي يملك ReverseTrace إلى input traces والقواعد والانتقالات والدليل.",
+      "Statistical prediction يولد candidates فقط ولا يصدر certificates."
+    ]
+  },
   "schema_artifacts": {
     "upper_entities": [
       "EpistemicUnit",
@@ -1997,7 +2432,12 @@
       "ExecutableInvariantCoverage",
       "FailurePredictionRecord",
       "ExpansionDisciplineRecord",
-      "MustadilCompetenceScore"
+      "MustadilCompetenceScore",
+      "MustadilReadinessLayer",
+      "MustadilReadinessCheck",
+      "MathematicalEvaluationGate",
+      "KnowledgeMemoryStore",
+      "ReadinessSpecTest"
     ],
     "epistemic_unit_schema_excerpt": {
       "type": "object",
@@ -2104,7 +2544,12 @@
       "ExecutableInvariantCoverage",
       "FailurePredictionRecord",
       "ExpansionDisciplineRecord",
-      "MustadilCompetenceScore"
+      "MustadilCompetenceScore",
+      "MustadilReadinessLayer",
+      "MustadilReadinessCheck",
+      "MathematicalEvaluationGate",
+      "KnowledgeMemoryStore",
+      "ReadinessSpecTest"
     ],
     "neo4j_graph": [
       "(:KnowledgeUnit)-[:DEFINES]->(:Rule)",
@@ -2149,7 +2594,12 @@
       "(:ProofInvariant)-[:COVERED_BY]->(:ExecutableInvariantCoverage)",
       "(:Certificate)-[:PRECEDED_BY]->(:FailurePredictionRecord)",
       "(:AnswerExpansion)-[:DISCIPLINED_BY]->(:ExpansionDisciplineRecord)",
-      "(:Mustadil)-[:MEASURED_BY]->(:MustadilCompetenceScore)"
+      "(:Mustadil)-[:MEASURED_BY]->(:MustadilCompetenceScore)",
+      "(:Answer)-[:REQUIRES]->(:MustadilReadinessLayer)",
+      "(:MustadilReadinessLayer)-[:RUNS_CHECK]->(:MustadilReadinessCheck)",
+      "(:MustadilReadinessCheck)-[:VALIDATED_BY]->(:MathematicalEvaluationGate)",
+      "(:MustadilReadinessLayer)-[:USES_MEMORY]->(:KnowledgeMemoryStore)",
+      "(:Certificate)-[:REQUIRES]->(:ReverseTrace)"
     ],
     "execution_phases": [
       {
@@ -2268,6 +2718,30 @@
           "FailurePredictor",
           "ExpansionDisciplineMachine",
           "MustadilCompetenceScore"
+        ]
+      },
+      {
+        "name": "Mustadil Readiness Engine",
+        "components": [
+          "RealityCheck",
+          "TraceCheck",
+          "QualifiedPriorKnowledgeCheck",
+          "PriorOpinionFilter",
+          "BindingCheck",
+          "DalalahQualification",
+          "RuleApplicability",
+          "EvidenceBinding",
+          "ProofRankCheck",
+          "ConflictTarjihCheck",
+          "ZeroControl",
+          "ReverseTraceValidation",
+          "GapDetector",
+          "LeapDetector",
+          "TraceValidator",
+          "ProofRankChecker",
+          "ZeroGuard",
+          "FailurePredictor",
+          "ReliabilityScorer"
         ]
       }
     ]
