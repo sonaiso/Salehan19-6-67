@@ -40,11 +40,13 @@ REQUIRED_PROMPT_SECTIONS = [
 
 
 def load_json(path):
+    """Load and parse a UTF-8 JSON file."""
     with path.open(encoding="utf-8") as handle:
         return json.load(handle)
 
 
 def markdown_slug(heading):
+    """Build a GitHub-style heading anchor, preserving Arabic letters."""
     slug = re.sub(r"<[^>]+>", "", heading.strip().lower())
     slug = re.sub(r"[^\w\u0600-\u06ff\s-]", "", slug)
     slug = re.sub(r"\s+", "-", slug)
@@ -52,10 +54,18 @@ def markdown_slug(heading):
 
 
 def heading_anchors(markdown):
+    """Extract Markdown heading anchors for same-page and cross-file link checks."""
     anchors = set()
     for match in re.finditer(r"^#{1,6}\s+(.+)$", markdown, re.MULTILINE):
         anchors.add(markdown_slug(match.group(1)))
     return anchors
+
+
+def resolve_markdown_link(markdown_path, link_path):
+    """Resolve root-absolute and document-relative Markdown link targets."""
+    if link_path.startswith("/"):
+        return ROOT / link_path.lstrip("/")
+    return markdown_path.parent / link_path
 
 
 class BayaniRepositoryVerification(unittest.TestCase):
@@ -93,7 +103,7 @@ class BayaniRepositoryVerification(unittest.TestCase):
                         f"{markdown_path}: broken same-page anchor link {anchor!r} in {target}",
                     )
                     continue
-                resolved = ROOT / link_path.lstrip("/") if link_path.startswith("/") else markdown_path.parent / link_path
+                resolved = resolve_markdown_link(markdown_path, link_path)
                 self.assertTrue(resolved.exists(), f"{markdown_path}: broken markdown link {label!r} -> {target}")
                 if anchor and resolved.suffix == ".md":
                     linked_anchors = heading_anchors(resolved.read_text(encoding="utf-8"))
