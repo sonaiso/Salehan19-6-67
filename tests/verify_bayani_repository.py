@@ -272,6 +272,30 @@ class BayaniRepositoryVerification(unittest.TestCase):
         for machine in REQUIRED_MALAKAH_MACHINES:
             self.assertIn(machine, methodology)
 
+    def test_con_0001_is_managed_as_hypothesis(self):
+        """CON-0001 (vocalization_conflict on كتب) must be managed_ambiguity/Hypothesis.
+
+        Rationale (from existing repo rules):
+        - LEARN-0001: unvocalized Arabic token must be HypothesisUntilHarakaOrContext.
+        - TEST-0001: كتب without tashkil must yield Hypothesis.
+        - tarjih_rules: unresolved conflict blocks Certificate, not produces one.
+        Therefore the conflict is not open-ended; it is deterministically managed as
+        managed_ambiguity with result_type Hypothesis.
+        """
+        conflicts = self.spec["reasoning_engine"]["conflicts"]
+        con_0001 = next((c for c in conflicts if c["id"] == "CON-0001"), None)
+        self.assertIsNotNone(con_0001, "CON-0001 must be present in reasoning_engine.conflicts")
+        self.assertEqual(
+            con_0001["status"],
+            "managed_ambiguity",
+            "CON-0001 must have status='managed_ambiguity' (governed by LEARN-0001 and TEST-0001)",
+        )
+        self.assertEqual(
+            con_0001["result_type"],
+            "Hypothesis",
+            "CON-0001 must yield result_type='Hypothesis' (unvocalized token, per repo rules)",
+        )
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
