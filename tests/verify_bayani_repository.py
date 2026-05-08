@@ -32,6 +32,7 @@ REQUIRED_SPEC_KEYS = [
     "governance_engine",
     "malakah_methodology",
     "mustadil_decoder_pipeline",
+    "prompt_type_classifier",
 ]
 REQUIRED_PROOF_INVARIANTS = [
     "NoCertificateWithBlockingZero",
@@ -160,6 +161,7 @@ REQUIRED_DECODER_PROMPT_SECTIONS = [
     "Pipeline Invariants",
     "Epistemic Audit",
     "Group Structure",
+    "Prompt Type Classification",
 ]
 
 # Layer-group membership map (used by group tests)
@@ -197,6 +199,41 @@ PIPELINE_LAYER_GROUPS = {
     ],
 }
 REQUIRED_GROUP_IDS = list(PIPELINE_LAYER_GROUPS.keys())
+
+# Prompt Type Classifier constants
+REQUIRED_PROMPT_TYPE_IDS = [
+    "PT-01",
+    "PT-02",
+    "PT-03",
+    "PT-04",
+    "PT-05",
+    "PT-06",
+    "PT-07",
+    "PT-08",
+    "PT-09",
+    "PT-10",
+]
+PROMPT_TYPE_REQUIRED_FIELDS = [
+    "id",
+    "name",
+    "arabic_name",
+    "example",
+    "jump_risk",
+    "processing_layer",
+    "processing_flow",
+    "constraint",
+]
+# Each of these prompt types must route through a specific pipeline layer
+PROMPT_TYPE_LAYER_MAP = {
+    "PT-01": "reality_grounding_layer",
+    "PT-05": "arabic_operator_layer",
+    "PT-06": "mantuq_layer",
+    "PT-07": "mafhoom_layer",
+    "PT-08": "general_specific_layer",
+    "PT-10": "application_layer",
+}
+# These types must carry a jump_risk mentioning takhqeeq or application/tahqeeq for PT-10
+PROMPT_TYPES_REQUIRING_TAHQEEQ_CONSTRAINT = {"PT-10"}
 
 
 def load_json(path):
@@ -673,6 +710,94 @@ class BayaniRepositoryVerification(unittest.TestCase):
                 self.assertIn(field, group, f"Group {group.get('id','?')} missing field: {field}")
             self.assertGreater(len(group["layers"]), 0)
             self.assertGreater(len(group["constraint"]), 10)
+
+    # ------------------------------------------------------------------
+    # Prompt Type Classifier — spec structure and coverage
+    # ------------------------------------------------------------------
+
+    def test_prompt_type_classifier_present_in_spec(self):
+        self.assertIn("prompt_type_classifier", self.spec)
+        ptc = self.spec["prompt_type_classifier"]
+        for field in ("purpose", "governing_rule", "types", "pre_answer_classification_flow"):
+            self.assertIn(field, ptc, f"prompt_type_classifier missing field: {field}")
+
+    def test_prompt_type_classifier_has_ten_types(self):
+        ptc = self.spec["prompt_type_classifier"]
+        type_ids = [t["id"] for t in ptc["types"]]
+        for required_id in REQUIRED_PROMPT_TYPE_IDS:
+            self.assertIn(required_id, type_ids, f"Missing prompt type: {required_id}")
+        self.assertEqual(len(type_ids), 10, "Exactly 10 prompt types are required")
+        self.assertEqual(len(type_ids), len(set(type_ids)), "Prompt type IDs must be unique")
+
+    def test_prompt_types_have_required_fields(self):
+        ptc = self.spec["prompt_type_classifier"]
+        for pt in ptc["types"]:
+            for field in PROMPT_TYPE_REQUIRED_FIELDS:
+                self.assertIn(field, pt, f"Prompt type {pt.get('id','?')} missing field: {field}")
+            self.assertGreater(
+                len(pt["processing_flow"]),
+                1,
+                f"Prompt type {pt['id']} processing_flow must have at least 2 steps",
+            )
+            self.assertGreater(
+                len(pt["jump_risk"]),
+                5,
+                f"Prompt type {pt['id']} jump_risk must be non-trivial",
+            )
+
+    def test_prompt_type_layer_assignments_are_valid_pipeline_layers(self):
+        """Each prompt type's processing_layer must be a known pipeline layer key."""
+        ptc = self.spec["prompt_type_classifier"]
+        for pt in ptc["types"]:
+            self.assertIn(
+                pt["processing_layer"],
+                REQUIRED_PIPELINE_LAYERS,
+                f"Prompt type {pt['id']} references unknown processing_layer: {pt['processing_layer']}",
+            )
+
+    def test_prompt_type_layer_assignments_match_expected(self):
+        """Spot-check that specific prompt types map to the correct pipeline layers."""
+        ptc = self.spec["prompt_type_classifier"]
+        by_id = {t["id"]: t for t in ptc["types"]}
+        for type_id, expected_layer in PROMPT_TYPE_LAYER_MAP.items():
+            self.assertEqual(
+                by_id[type_id]["processing_layer"],
+                expected_layer,
+                f"Prompt type {type_id}: expected processing_layer={expected_layer}",
+            )
+
+    def test_application_prompt_type_requires_tahqeeq_constraint(self):
+        """PT-10 (Application) must mention tahqeeq al-manat in its processing_flow."""
+        ptc = self.spec["prompt_type_classifier"]
+        by_id = {t["id"]: t for t in ptc["types"]}
+        pt10 = by_id["PT-10"]
+        flow_text = " ".join(pt10["processing_flow"]).casefold()
+        self.assertIn(
+            "tahqeeq",
+            flow_text,
+            "PT-10 (Application) processing_flow must reference tahqeeq al-manat",
+        )
+
+    def test_mafhoom_prompt_type_references_mantuq(self):
+        """PT-07 (Mafhoom) processing_flow must reference mantuq as a prerequisite."""
+        ptc = self.spec["prompt_type_classifier"]
+        by_id = {t["id"]: t for t in ptc["types"]}
+        pt07 = by_id["PT-07"]
+        flow_text = " ".join(pt07["processing_flow"]).casefold()
+        self.assertIn(
+            "منطوق",
+            flow_text,
+            "PT-07 (Mafhoom) processing_flow must reference mantuq",
+        )
+
+    def test_prompt_type_governing_rule_is_non_trivial(self):
+        ptc = self.spec["prompt_type_classifier"]
+        self.assertGreater(len(ptc["governing_rule"]), 20)
+
+    def test_pre_answer_classification_flow_has_all_ten_types(self):
+        ptc = self.spec["prompt_type_classifier"]
+        flow = ptc["pre_answer_classification_flow"]
+        self.assertGreaterEqual(len(flow), 10, "pre_answer_classification_flow must have at least 10 steps")
 
 
 if __name__ == "__main__":

@@ -15,6 +15,7 @@
     "malakah_methodology",
     "mustadil_readiness_layer",
     "mustadil_decoder_pipeline",
+    "prompt_type_classifier",
     "schema_artifacts"
   ],
   "properties": {
@@ -60,6 +61,9 @@
     },
     "mustadil_decoder_pipeline": {
       "$ref": "#/$defs/mustadilDecoderPipeline"
+    },
+    "prompt_type_classifier": {
+      "$ref": "#/$defs/promptTypeClassifier"
     }
   },
   "$defs": {
@@ -2468,6 +2472,84 @@
           "minItems": 7,
           "items": {
             "$ref": "#/$defs/pipelineInvariant"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "promptTypeEntry": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "arabic_name",
+        "example",
+        "jump_risk",
+        "processing_layer",
+        "processing_flow",
+        "constraint"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^PT-[0-9]{2}$"
+        },
+        "name": {
+          "type": "string"
+        },
+        "arabic_name": {
+          "type": "string"
+        },
+        "example": {
+          "type": "string"
+        },
+        "jump_risk": {
+          "type": "string"
+        },
+        "processing_layer": {
+          "type": "string"
+        },
+        "processing_flow": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "string"
+          }
+        },
+        "constraint": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "promptTypeClassifier": {
+      "type": "object",
+      "required": [
+        "purpose",
+        "governing_rule",
+        "types",
+        "pre_answer_classification_flow"
+      ],
+      "properties": {
+        "purpose": {
+          "type": "string"
+        },
+        "governing_rule": {
+          "type": "string"
+        },
+        "types": {
+          "type": "array",
+          "minItems": 10,
+          "maxItems": 10,
+          "items": {
+            "$ref": "#/$defs/promptTypeEntry"
+          }
+        },
+        "pre_answer_classification_flow": {
+          "type": "array",
+          "minItems": 5,
+          "items": {
+            "type": "string"
           }
         }
       },

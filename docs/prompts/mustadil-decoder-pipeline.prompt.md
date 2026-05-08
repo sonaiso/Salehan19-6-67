@@ -432,6 +432,101 @@ Required Output:
 }
 
 ━━━━━━━━━━━━━━━━━━
+PROMPT TYPE CLASSIFICATION
+━━━━━━━━━━━━━━━━━━
+
+Before any processing, the decoder MUST classify the incoming prompt into one of 10 epistemic types.
+No answer may be generated before the type is determined and the correct pipeline entry point is activated.
+
+Governing Rule:
+لا يُعامل برومبت الصفة كبرومبت وجود، ولا برومبت المفهوم كبرومبت منطوق،
+ولا برومبت التطبيق كبرومبت دلالة، ولا برومبت العلة كبرومبت وصف.
+
+Pre-Answer Classification Flow:
+  1. هل هو سؤال وجود؟
+  2. أم حقيقة/تعريف؟
+  3. أم صفة؟
+  4. أم نسبة/علاقة؟
+  5. أم دلالة لفظية/نحو؟
+  6. أم منطوق؟
+  7. أم مفهوم؟
+  8. أم تعليل/قياس؟
+  9. أم تعميم/تخصيص؟
+  10. أم تنزيل/تطبيق؟
+
+The 10 Prompt Types:
+
+PT-01 — Existence Prompt (برومبت الوجود)
+  Example: هل هذا النص موجود؟ هل ورد هذا اللفظ؟
+  Entry Layer: reality_grounding_layer
+  Jump Risk: تفسير اللفظ قبل إثبات وجوده
+  Flow: Input → Reality Grounding → Text/Token Existence Check → Certainty Rank
+  Constraint: لا يجوز القفز إلى تفسير اللفظ. فقط يثبت: هل اللفظ موجود؟
+
+PT-02 — Definition Prompt (برومبت الحقيقة/التعريف)
+  Example: ما العام؟ ما المفهوم؟ ما العلة؟
+  Entry Layer: essence_assignment_layer
+  Jump Risk: تحويل التعريف إلى حكم على واقعة معينة
+  Flow: تمييز → تعيين الذات → تعيين المجال → تعريف مضبوط
+  Constraint: تعريف العلة لا يعني ثبوت العلة في واقعة معينة.
+
+PT-03 — Attribute Prompt (برومبت الصفة)
+  Example: هل هذا الوصف ظاهر؟ منضبط؟ متعدٍّ؟
+  Entry Layer: causal_juridical_relations_layer
+  Jump Risk: جعل الصفة علة بلا اختبار
+  Flow: تعيين الذات → تعيين الصفة → اختبار الصفة → رتبة ظنية غالبًا
+  Constraint: لا يُقال هذه علة لمجرد أنها صفة. يجب: هل ظاهر؟ منضبط؟ مناسب؟ دل الشرع عليه؟ يتعدى؟
+
+PT-04 — Relational Prompt (برومبت العلاقة/النسبة)
+  Example: ما علاقة العام بالخاص؟ ما علاقة الدال بالمدلول؟
+  Entry Layer: relational_mapping_layer
+  Jump Risk: خلط أنواع النسب أو إغفال العامل الحامل للنسبة
+  Flow: تعيين الأطراف → تعيين نوع النسبة → تحديد العامل الحامل
+  Constraint: النسبة لا تظهر عارية، بل عبر عامل أو أداة أو صيغة أو تركيب.
+
+PT-05 — Linguistic-Syntactic Prompt (برومبت لغوي/نحوي)
+  Example: حلل هذه الجملة: أكرم الطلاب المجتهدين.
+  Entry Layer: arabic_operator_layer
+  Jump Risk: استخراج حكم قبل تحليل النحو والدلالة
+  Flow: ما العامل؟ → ما المعمول؟ → ما الصفة؟ → هل قيد؟ → هل مفهوم مخالفة؟ → احتراز أم غالب؟
+  Constraint: ممنوع استخراج حكم قبل تحليل النحو والدلالة الكاملة.
+
+PT-06 — Mantuq Prompt (برومبت منطوق)
+  Example: ماذا دل عليه النص منطوقًا؟
+  Entry Layer: mantuq_layer
+  Jump Risk: توسيع الدلالة خارج محل النطق
+  Flow: ثبوت النص → ثبوت اللفظ → دلالة في محل النطق → رتبة أقوى من المفهوم
+  Constraint: المنطوق يحتاج تحديد مجال الدلالة، لا بناء حكم من خارج اللفظ.
+
+PT-07 — Mafhoom Prompt (برومبت مفهوم)
+  Example: هل يدل القيد على نفي الحكم عما عداه؟
+  Entry Layer: mafhoom_layer
+  Jump Risk: بناء حكم من قيد غير معتبر أو جعل المفهوم أقوى من المنطوق
+  Flow: منطوق → قيد/صفة/شرط/غاية/عدد → هل للاحتراز؟ → هل مخرج الغالب؟ → قرينة مانعة؟ → معتبر أو لا
+  Constraint: لا مفهوم بلا منطوق. المفهوم لا يتجاوز قوة المنطوق أبدًا.
+
+PT-08 — General-Specific Prompt (برومبت عام/خاص)
+  Example: هل العام قطعي؟ هل يخصصه الخاص؟
+  Entry Layer: general_specific_layer
+  Jump Risk: خلط الدلالة اللفظية للعام بدخول الفرد الخارجي
+  Flow: ثبوت النص → وجود اللفظ → وضع للعموم → دلالة العموم → احتمال تخصيص → ورود مخصص → دخول فرد خارجي
+  Constraint: العام قطعي من جهة وضعه إذا ثبت، لكن دخول فرد خارجي تحته = تحقيق المناط (ظني غالبًا).
+
+PT-09 — Illah-Qiyas Prompt (برومبت قياس/علة)
+  Example: هل الإسكار علة التحريم؟
+  Entry Layer: causal_juridical_relations_layer
+  Jump Risk: التعدية بلا علة معتبرة أو خلط العلة بالسبب والشرط والحكمة
+  Flow: أصل → حكم الأصل → وصف مرشح → اختبار العلة (7 شروط) → تحقق في الفرع → إلحاق أو منع
+  Constraint: نتائج التطبيق لا تدخل في العلل الشرعية. التمييز بين العلة والسبب والشرط والمانع والحكمة إلزامي.
+
+PT-10 — Application Prompt (برومبت تطبيق/تنزيل)
+  Example: طبّق الحكم على هذه الواقعة.
+  Entry Layer: application_layer
+  Jump Risk: تنزيل بلا تحقيق مناط
+  Flow: ثبوت الحكم → ثبوت المجال → tahqeeq_manat_layer → تحقق الشرط → انتفاء المانع → عدم مخصص/قيد مانع → تنزيل الحكم
+  Constraint: التطبيق آخر رتبة لا أولها. لا تنزيل قبل تحقيق المناط. (Invariant: NoApplicationWithoutTahqeqManat)
+
+━━━━━━━━━━━━━━━━━━
 PIPELINE INVARIANTS
 ━━━━━━━━━━━━━━━━━━
 
