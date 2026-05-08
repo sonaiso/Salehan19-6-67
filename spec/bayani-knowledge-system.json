@@ -2404,7 +2404,7 @@
       "signifier_analysis_layer",
       "signified_analysis_layer",
       "signifier_signified_relation_layer",
-      "mantooq_layer",
+      "mantuq_layer",
       "mafhoom_layer",
       "general_specific_layer",
       "absolute_restricted_layer",
@@ -2741,9 +2741,9 @@
         "دلالة مجازية"
       ]
     },
-    "mantooq_layer": {
+    "mantuq_layer": {
       "layer_order": 14,
-      "name": "Mantooq Layer",
+      "name": "Mantuq Layer",
       "purpose": "تعيين ما دل عليه اللفظ في محل النطق وإعطاؤه رتبة أقوى من المفهوم.",
       "inputs": [
         "DalMadlulRelationRecord",
@@ -2758,7 +2758,7 @@
         "ExternalCheckIgnored"
       ],
       "mantooq_template": {
-        "mantooq": "",
+        "mantuq": "",
         "strength": "أقوى من المفهوم",
         "requires_external_check": ""
       }

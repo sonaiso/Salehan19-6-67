@@ -2311,7 +2311,7 @@
         "signifier_analysis_layer",
         "signified_analysis_layer",
         "signifier_signified_relation_layer",
-        "mantooq_layer",
+        "mantuq_layer",
         "mafhoom_layer",
         "general_specific_layer",
         "absolute_restricted_layer",
@@ -2375,7 +2375,7 @@
         "signifier_signified_relation_layer": {
           "$ref": "#/$defs/decoderPipelineLayer"
         },
-        "mantooq_layer": {
+        "mantuq_layer": {
           "$ref": "#/$defs/decoderPipelineLayer"
         },
         "mafhoom_layer": {

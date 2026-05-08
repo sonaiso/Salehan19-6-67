@@ -128,7 +128,7 @@ REQUIRED_PIPELINE_LAYERS = [
     "signifier_analysis_layer",
     "signified_analysis_layer",
     "signifier_signified_relation_layer",
-    "mantooq_layer",
+    "mantuq_layer",
     "mafhoom_layer",
     "general_specific_layer",
     "absolute_restricted_layer",

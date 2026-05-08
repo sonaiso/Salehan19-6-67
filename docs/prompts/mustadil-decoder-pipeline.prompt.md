@@ -52,7 +52,7 @@ Layer 10 → Judgment Formation
 Layer 11 → Signifier Analysis
 Layer 12 → Signified Analysis
 Layer 13 → Signifier-Signified Relation
-Layer 14 → Mantooq Analysis
+Layer 14 → Mantuq Analysis
 Layer 15 → Mafhoom Analysis
 Layer 16 → General/Specific
 Layer 17 → Absolute/Restricted
@@ -247,16 +247,16 @@ Establish the Dal-Madlul relation type:
 Zero: UnestablishedDalMadlulRelation | QarinaAbsentForNonLiteral
 
 ━━━━━━━━━━━━━━━━━━
-LAYER 14 — MANTOOQ ANALYSIS
+LAYER 14 — MANTUQ ANALYSIS
 ━━━━━━━━━━━━━━━━━━
 
 Determine what the text means IN the place of utterance.
 
-Mantooq is STRONGER than Mafhoom.
+Mantuq is STRONGER than Mafhoom.
 
 Output:
 {
-  "mantooq": "...",
+  "mantuq": "...",
   "strength": "أقوى من المفهوم",
   "requires_external_check": "..."
 }

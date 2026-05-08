@@ -80,7 +80,7 @@
 | 11 | `signifier_analysis_layer` | Signifier Analysis |
 | 12 | `signified_analysis_layer` | Signified Analysis |
 | 13 | `signifier_signified_relation_layer` | Signifier-Signified Relation |
-| 14 | `mantooq_layer` | Mantooq Analysis |
+| 14 | `mantuq_layer` | Mantuq Analysis |
 | 15 | `mafhoom_layer` | Mafhoom Analysis |
 | 16 | `general_specific_layer` | General/Specific |
 | 17 | `absolute_restricted_layer` | Absolute/Restricted |
