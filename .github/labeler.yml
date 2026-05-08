@@ -1,0 +1,22 @@
+tests:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "tests/**"
+          - "**/*test*.py"
+          - "**/test_*.py"
+
+github:
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".github/**"
+
+documentation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*.md"
+          - "docs/**"
+
+python:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*.py"
