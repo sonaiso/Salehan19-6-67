@@ -86,12 +86,12 @@ def load_json(path):
 
 
 def normalize_case(text):
-    """Use Unicode case folding for locale-independent comparisons."""
+    """Use Unicode case folding for locale-independent comparisons instead of lower()."""
     return text.casefold()
 
 
 def normalize_prompt_output_line(line):
-    """Normalize one prompt output declaration line."""
+    """Strip optional Markdown list markers and spaces from one prompt output line."""
     return line.strip(" -")
 
 
@@ -208,6 +208,7 @@ class BayaniRepositoryVerification(unittest.TestCase):
             1,
         )[0]
         declared_outputs = []
+        # Skip the section heading; the remaining non-separator lines must be the output triad.
         for line in allowed_outputs_section.splitlines()[1:]:
             output_line = normalize_prompt_output_line(line)
             if output_line and not is_prompt_separator(line):
