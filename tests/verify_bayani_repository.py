@@ -85,9 +85,14 @@ def load_json(path):
         return json.load(handle)
 
 
-def normalized(text):
+def normalize_case(text):
     """Normalize text for case-insensitive comparison."""
     return text.casefold()
+
+
+def normalize_prompt_output_line(line):
+    """Normalize one prompt output declaration line."""
+    return line.strip(" -")
 
 
 def is_prompt_separator(line):
@@ -177,9 +182,9 @@ class BayaniRepositoryVerification(unittest.TestCase):
 
     def test_prompt_has_required_sections_in_order(self):
         previous_position = -1
-        prompt = normalized(self.prompt)
+        prompt = normalize_case(self.prompt)
         for section in REQUIRED_PROMPT_SECTIONS:
-            position = prompt.find(normalized(section))
+            position = prompt.find(normalize_case(section))
             self.assertGreater(position, previous_position, f"Missing or out-of-order prompt section: {section}")
             previous_position = position
 
@@ -193,21 +198,22 @@ class BayaniRepositoryVerification(unittest.TestCase):
         self.assertEqual(layer["output_contract"]["state_enum"], ALLOWED_OUTPUTS)
         for output in ALLOWED_OUTPUTS:
             self.assertIn(output, self.prompt)
-        prompt = normalized(self.prompt)
-        section_start = prompt.find(normalized("Allowed Outputs"))
-        section_end = prompt.find(normalized("Required Output Structure"))
+        prompt = normalize_case(self.prompt)
+        section_start = prompt.find(normalize_case("Allowed Outputs"))
+        section_end = prompt.find(normalize_case("Required Output Structure"))
         self.assertGreaterEqual(section_start, 0)
         self.assertGreater(section_end, section_start)
         allowed_outputs_section = prompt[section_start:section_end].split(
-            normalized(PROMPT_DISALLOWED_OUTPUTS_LABEL),
+            normalize_case(PROMPT_DISALLOWED_OUTPUTS_LABEL),
             1,
         )[0]
         declared_outputs = [
-            line.strip(" -")
+            output_line
             for line in allowed_outputs_section.splitlines()[1:]
-            if line.strip(" -") and not is_prompt_separator(line)
+            for output_line in [normalize_prompt_output_line(line)]
+            if output_line and not is_prompt_separator(line)
         ]
-        self.assertEqual(declared_outputs, [normalized(output) for output in ALLOWED_OUTPUTS])
+        self.assertEqual(declared_outputs, [normalize_case(output) for output in ALLOWED_OUTPUTS])
 
     def test_mustadil_readiness_gates_are_complete(self):
         layer = self.spec["mustadil_readiness_layer"]
