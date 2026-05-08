@@ -516,7 +516,7 @@
         "claim_b": "كتب = كُتُب جمع كتاب",
         "conflict_type": "vocalization_conflict",
         "reason": "غياب الحركات",
-        "status": "unresolved",
+        "status": "managed_ambiguity",
         "result_type": "Hypothesis"
       }
     ],
