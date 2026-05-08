@@ -188,16 +188,15 @@ class BayaniRepositoryVerification(unittest.TestCase):
         for output in ALLOWED_OUTPUTS:
             self.assertIn(output, self.prompt)
         prompt = normalized(self.prompt)
-        allowed_outputs_section = re.search(
-            r"allowed outputs(?: only)?\s+━+\s+(.*?)\n\nnever output:",
-            prompt,
-            re.DOTALL,
-        )
-        self.assertIsNotNone(allowed_outputs_section)
+        section_start = prompt.find(normalized("Allowed Outputs"))
+        section_end = prompt.find(normalized("Required Output Structure"))
+        self.assertGreaterEqual(section_start, 0)
+        self.assertGreater(section_end, section_start)
+        allowed_outputs_section = prompt[section_start:section_end].split("never output:", 1)[0]
         declared_outputs = [
-            line.strip()
-            for line in allowed_outputs_section.group(1).splitlines()
-            if line.strip()
+            line.strip(" -")
+            for line in allowed_outputs_section.splitlines()[1:]
+            if line.strip(" -") and set(line.strip()) != {"━"}
         ]
         self.assertEqual(declared_outputs, [normalized(output) for output in ALLOWED_OUTPUTS])
 
