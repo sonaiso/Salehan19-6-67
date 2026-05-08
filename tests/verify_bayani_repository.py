@@ -86,7 +86,7 @@ def load_json(path):
 
 
 def normalize_case(text):
-    """Normalize text for case-insensitive comparison."""
+    """Use Unicode case folding for locale-independent comparisons."""
     return text.casefold()
 
 
@@ -207,12 +207,11 @@ class BayaniRepositoryVerification(unittest.TestCase):
             normalize_case(PROMPT_DISALLOWED_OUTPUTS_LABEL),
             1,
         )[0]
-        declared_outputs = [
-            output_line
-            for line in allowed_outputs_section.splitlines()[1:]
-            for output_line in [normalize_prompt_output_line(line)]
-            if output_line and not is_prompt_separator(line)
-        ]
+        declared_outputs = []
+        for line in allowed_outputs_section.splitlines()[1:]:
+            output_line = normalize_prompt_output_line(line)
+            if output_line and not is_prompt_separator(line):
+                declared_outputs.append(output_line)
         self.assertEqual(declared_outputs, [normalize_case(output) for output in ALLOWED_OUTPUTS])
 
     def test_mustadil_readiness_gates_are_complete(self):
