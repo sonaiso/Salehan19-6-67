@@ -128,7 +128,6 @@
         "type",
         "domain",
         "claim",
-        "source_refs",
         "inputs_required",
         "outputs",
         "evidence_required",
