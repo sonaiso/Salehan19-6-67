@@ -85,7 +85,7 @@ def load_json(path):
 
 
 def normalized(text):
-    """Normalize text for case-insensitive architectural label checks."""
+    """Normalize text for case-insensitive comparison."""
     return text.casefold()
 
 
@@ -188,9 +188,9 @@ class BayaniRepositoryVerification(unittest.TestCase):
         for output in ALLOWED_OUTPUTS:
             self.assertIn(output, self.prompt)
         allowed_outputs_section = re.search(
-            r"ALLOWED OUTPUTS ONLY\s+━+\s+(.*?)\n\nNEVER OUTPUT:",
+            r"Allowed Outputs(?: Only)?\s+━+\s+(.*?)\n\nNever Output:",
             self.prompt,
-            re.DOTALL,
+            re.DOTALL | re.IGNORECASE,
         )
         self.assertIsNotNone(allowed_outputs_section)
         declared_outputs = [
