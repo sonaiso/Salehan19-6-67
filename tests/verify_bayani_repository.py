@@ -78,6 +78,38 @@ REQUIRED_PROMPT_SECTIONS = [
 ]
 PROMPT_DISALLOWED_OUTPUTS_LABEL = "Never Output:"
 
+# PR #1 — formal kernel, reasoning engine, grammar engine, ontology, schema artifacts
+FORMAL_KERNEL_EQUATION = "S + D + T + E + Z + C + R + P"
+FORMAL_KERNEL_SYMBOLS = {"S", "D", "T", "E", "Z", "C", "R", "P"}
+REASONING_ENGINE_CONFLICT_TYPES_COUNT = 10
+REASONING_ENGINE_TARJIH_RULES_COUNT = 10
+MIN_ONTOLOGY_TOP_TYPES = 5
+RECURSIVE_RELATION_SIGNATURE = "R(level_n, level_n+1)"
+
+# PR #2 — answer analysis engine
+ANSWER_ANALYSIS_PIPELINE = [
+    "Answer Segmentation",
+    "Epistemic Candidate Generation",
+    "Candidate Ranking",
+    "Claim Extraction",
+    "Concept Extraction",
+    "Relation Extraction",
+    "Evidence Detection",
+    "Judgment Classification",
+    "Mujmal Detection",
+    "Bayan Requirement",
+    "Proof Check",
+    "Status Assignment",
+]
+ANSWER_ANALYSIS_STATUS_POLICY_KEYS = {"certificate", "hypothesis", "zero"}
+
+# PR #4 — mustadil readiness layer
+MIN_BLOCKING_ZEROS = 5
+PROOF_RANK_POLICY_REQUIRED_KEYS = {"ranks", "rules"}
+
+# PR #7 — README scope declaration
+README_NO_RUNTIME_PHRASE = "دون تنفيذ runtime في هذا المستودع"
+
 
 def load_json(path):
     """Load and parse a UTF-8 JSON file."""
@@ -295,6 +327,88 @@ class BayaniRepositoryVerification(unittest.TestCase):
             "Hypothesis",
             "CON-0001 must yield result_type='Hypothesis' (unvocalized token, per repo rules)",
         )
+
+    # ------------------------------------------------------------------
+    # PR #1 — formal kernel, reasoning engine, grammar engine, ontology,
+    #          schema artifacts
+    # ------------------------------------------------------------------
+
+    def test_formal_kernel_equation_and_components(self):
+        kernel = self.spec["formal_kernel"]
+        self.assertEqual(kernel["equation"], FORMAL_KERNEL_EQUATION)
+        self.assertEqual(set(kernel["components"].keys()), FORMAL_KERNEL_SYMBOLS)
+
+    def test_reasoning_engine_has_conflict_types_and_tarjih_rules(self):
+        engine = self.spec["reasoning_engine"]
+        self.assertEqual(len(engine["conflict_types"]), REASONING_ENGINE_CONFLICT_TYPES_COUNT)
+        self.assertEqual(len(engine["tarjih_rules"]), REASONING_ENGINE_TARJIH_RULES_COUNT)
+
+    def test_grammar_engine_declares_amil_categories(self):
+        engine = self.spec["grammar_engine"]
+        self.assertIsInstance(engine["amil_categories"], list)
+        self.assertGreater(len(engine["amil_categories"]), 0)
+
+    def test_ontology_declares_top_types(self):
+        ontology = self.spec["ontology"]
+        top_types = ontology["top_types"]
+        self.assertGreaterEqual(len(top_types), MIN_ONTOLOGY_TOP_TYPES)
+        for top_type in top_types:
+            self.assertIn("id", top_type)
+            self.assertIn("label", top_type)
+
+    def test_schema_artifacts_declare_upper_entities_laravel_models_and_neo4j_graph(self):
+        artifacts = self.spec["schema_artifacts"]
+        self.assertGreater(len(artifacts["upper_entities"]), 0)
+        self.assertGreater(len(artifacts["laravel_models"]), 0)
+        self.assertGreater(len(artifacts["neo4j_graph"]), 0)
+
+    def test_reasoning_engine_recursive_relation_signature(self):
+        engine = self.spec["reasoning_engine"]
+        self.assertEqual(engine["recursive_relation"]["signature"], RECURSIVE_RELATION_SIGNATURE)
+
+    # ------------------------------------------------------------------
+    # PR #2 — answer analysis engine
+    # ------------------------------------------------------------------
+
+    def test_answer_analysis_pipeline_is_complete(self):
+        engine = self.spec["answer_analysis_engine"]
+        self.assertEqual(engine["pipeline"], ANSWER_ANALYSIS_PIPELINE)
+
+    def test_answer_analysis_status_policy_covers_all_outputs(self):
+        engine = self.spec["answer_analysis_engine"]
+        self.assertEqual(set(engine["status_policy"].keys()), ANSWER_ANALYSIS_STATUS_POLICY_KEYS)
+
+    def test_answer_analysis_examples_cover_all_output_states(self):
+        engine = self.spec["answer_analysis_engine"]
+        result_types = {ex["result_type"] for ex in engine["example_analyses"]}
+        self.assertEqual(result_types, set(ALLOWED_OUTPUTS))
+
+    # ------------------------------------------------------------------
+    # PR #4 — mustadil readiness layer (blocking zeros + proof rank)
+    # ------------------------------------------------------------------
+
+    def test_mustadil_blocking_zeros_are_declared(self):
+        layer = self.spec["mustadil_readiness_layer"]
+        blocking_zeros = layer["blocking_zeros"]
+        self.assertGreaterEqual(len(blocking_zeros), MIN_BLOCKING_ZEROS)
+        for zero in blocking_zeros:
+            self.assertIsInstance(zero, str)
+            self.assertTrue(zero, "Every blocking zero must be a non-empty string")
+
+    def test_mustadil_proof_rank_policy_has_ranks_and_rules(self):
+        layer = self.spec["mustadil_readiness_layer"]
+        policy = layer["proof_rank_policy"]
+        for key in PROOF_RANK_POLICY_REQUIRED_KEYS:
+            self.assertIn(key, policy)
+        self.assertGreater(len(policy["ranks"]), 0)
+        self.assertGreater(len(policy["rules"]), 0)
+
+    # ------------------------------------------------------------------
+    # PR #7 — README scope clarity (no runtime implementation)
+    # ------------------------------------------------------------------
+
+    def test_readme_declares_no_runtime_implementation(self):
+        self.assertIn(README_NO_RUNTIME_PHRASE, self.readme)
 
 
 if __name__ == "__main__":
