@@ -2369,6 +2369,13 @@
         "input": "Domain expertise insufficient for certificate",
         "expected_state": "Hypothesis",
         "expected_zero": "UnqualifiedCertificate"
+      },
+      {
+        "id": "MRT-08",
+        "case": "شهادة مكتملة بشروط البرهان",
+        "input": "Qualified answer with valid ProofObject, no blocking_zero, and complete reverse trace",
+        "expected_state": "Certificate",
+        "expected_zero": "None"
       }
     ],
     "acceptance_criteria": [

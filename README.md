@@ -42,4 +42,11 @@
 
 ## التحقق
 
-يتحقق مسار CI من صلاحية JSON Schema، ومطابقة `spec/bayani-knowledge-system.json` للمخطط، ووجود ملف البرومبت، وحصر مخرجات طبقة أهلية المستدل في الثلاثية المعتمدة.
+يتحقق مسار CI من صلاحية JSON Schema، ومطابقة `spec/bayani-knowledge-system.json` للمخطط، وسلامة روابط Markdown، ووجود أقسام البرومبت الحاكمة، وحصر مخرجات طبقة أهلية المستدل في الثلاثية المعتمدة، وتغطية اختبارات المواصفة لحالات `Certificate` و`Hypothesis` و`Zero`.
+
+يمكن تشغيل بوابات التحقق محليًا عبر:
+
+```bash
+python -m pip install jsonschema==4.25.1
+python tests/verify_bayani_repository.py
+```
