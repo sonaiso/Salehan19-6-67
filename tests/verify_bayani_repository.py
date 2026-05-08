@@ -110,6 +110,16 @@ PROOF_RANK_POLICY_REQUIRED_KEYS = {"ranks", "rules"}
 # PR #7 — README scope declaration
 README_NO_RUNTIME_PHRASE = "دون تنفيذ runtime في هذا المستودع"
 
+# Deep system-correctness tests
+RECURSIVE_RELATION_EXAMPLE_COUNT = 7
+RECURSIVE_RELATION_INVARIANT_COUNT = 4
+DAL_INTEGRITY_RULE = "السياق لا يكسر الدال."
+EXCEPTION_REGISTRY_ZERO_TYPES = {"ExceptionWithoutEvidence", "ExceptionOvergeneralization"}
+MIN_ELLIPSIS_TYPES = 5
+REFERENCE_ZERO_TYPE_REQUIRED = "NoAntecedent"
+REQUIRED_TOP_TYPE_FIELDS = {"id", "label", "arabic_label", "definition"}
+REQUIRED_CONCEPT_EXAMPLE_FIELDS = {"concept", "ontological_type", "roles"}
+
 
 def load_json(path):
     """Load and parse a UTF-8 JSON file."""
@@ -409,6 +419,160 @@ class BayaniRepositoryVerification(unittest.TestCase):
 
     def test_readme_declares_no_runtime_implementation(self):
         self.assertIn(README_NO_RUNTIME_PHRASE, self.readme)
+
+    # ------------------------------------------------------------------
+    # Deep system-correctness tests
+    # ------------------------------------------------------------------
+
+    def test_ontology_relation_type_declares_binary_binding(self):
+        """ONT-RELATION must exist and its definition must assert it binds two or more parties.
+        Every reference_rule must declare a non-empty, typed constraints list.
+        """
+        ont = self.spec["ontology"]
+        top_type_ids = {t["id"] for t in ont["top_types"]}
+        self.assertIn("ONT-RELATION", top_type_ids)
+        relation_type = next(t for t in ont["top_types"] if t["id"] == "ONT-RELATION")
+        self.assertIn("طرفين", relation_type["definition"])
+
+        for rule in self.spec["grammar_engine"]["reference_rules"]:
+            self.assertIn("constraints", rule, f"{rule['id']} must declare constraints")
+            self.assertGreater(len(rule["constraints"]), 0, f"{rule['id']} constraints must be non-empty")
+            for constraint in rule["constraints"]:
+                self.assertIsInstance(constraint, str)
+
+    def test_recursive_relation_closure_covers_all_levels(self):
+        """The recursive relation must document seven level-transitions and four invariants.
+        Every example must follow the 'X Certificate → Y Evidence' arrow pattern.
+        """
+        rr = self.spec["reasoning_engine"]["recursive_relation"]
+        self.assertEqual(len(rr["examples"]), RECURSIVE_RELATION_EXAMPLE_COUNT)
+        self.assertEqual(len(rr["invariant"]), RECURSIVE_RELATION_INVARIANT_COUNT)
+        for example in rr["examples"]:
+            self.assertIn("Certificate", example, f"example {example!r} must contain 'Certificate'")
+            self.assertIn("Evidence", example, f"example {example!r} must contain 'Evidence'")
+
+    def test_dal_madlool_separation_is_enforced_in_layer_integrity(self):
+        """The layer integrity score must guard dal (signifier) from context override.
+        amil_rules must distinguish surface effects (dal) from semantic meaning (madlool).
+        """
+        lis = self.spec["malakah_methodology"]["layer_integrity_score"]
+        self.assertIn("context_breaks_dal", lis["checks"])
+        self.assertIn(DAL_INTEGRITY_RULE, lis["rules"])
+        self.assertIn("dal_integrity", lis["score_fields"])
+        self.assertIn("LayerBreak", lis["zero_types"])
+
+        for rule in self.spec["grammar_engine"]["amil_rules"]:
+            self.assertIn("input_contract", rule, f"{rule['id']} must have input_contract (dal layer)")
+            self.assertIn("effects", rule, f"{rule['id']} must have effects")
+            self.assertIn("semantic_effect", rule, f"{rule['id']} must declare semantic_effect (madlool)")
+
+    def test_amil_and_reference_rules_declare_blocking_constraints(self):
+        """Every amil_rule must have at least one BLOCKING zero with type and severity.
+        Every reference_rule must list constraints; reference_zero_types must be non-empty.
+        """
+        ge = self.spec["grammar_engine"]
+        for rule in ge["amil_rules"]:
+            self.assertIn("zeros", rule, f"{rule['id']} must declare zeros")
+            for zero in rule["zeros"]:
+                self.assertIn("type", zero, f"{rule['id']} zero missing 'type'")
+                self.assertIn("severity", zero, f"{rule['id']} zero missing 'severity'")
+            blocking = [z for z in rule["zeros"] if z.get("severity") == "BLOCKING"]
+            self.assertGreater(len(blocking), 0, f"{rule['id']} must have at least one BLOCKING zero")
+
+        for rule in ge["reference_rules"]:
+            self.assertGreater(len(rule.get("constraints", [])), 0, f"{rule['id']} must declare constraints")
+
+        self.assertGreater(len(ge["reference_zero_types"]), 0)
+
+    def test_probabilistic_signals_are_bounded_and_outcome_consistent(self):
+        """Confidence and strength values must be in (0, 1]; Certificate requires confidence > 0.5.
+        expansion_discipline_machine must accept ProbabilisticSignal as an input.
+        """
+        ge = self.spec["grammar_engine"]
+        for rule in ge["reference_rules"]:
+            if "confidence" in rule:
+                self.assertGreater(rule["confidence"], 0, f"{rule['id']} confidence must be > 0")
+                self.assertLessEqual(rule["confidence"], 1, f"{rule['id']} confidence must be ≤ 1")
+                if rule.get("result_type") == "Certificate":
+                    self.assertGreater(
+                        rule["confidence"],
+                        0.5,
+                        f"{rule['id']} Certificate result_type requires confidence > 0.5",
+                    )
+
+        for rule in ge["qarina_rules"]:
+            if "strength" in rule:
+                self.assertGreater(rule["strength"], 0, f"{rule['id']} strength must be > 0")
+                self.assertLessEqual(rule["strength"], 1, f"{rule['id']} strength must be ≤ 1")
+
+        edm = self.spec["malakah_methodology"]["expansion_discipline_machine"]
+        self.assertIn("ProbabilisticSignal", edm["inputs"])
+
+    def test_exception_registry_distinguishes_exceptions_from_zeros(self):
+        """Exceptions licensed with rule+evidence+limits are not Zeros.
+        Unlicensed exceptions stay Hypothesis; over-generalization is a declared zero_type.
+        """
+        er = self.spec["malakah_methodology"]["exception_registry"]
+        self.assertGreater(len(er["exception_types"]), 0)
+        self.assertEqual(set(er["zero_types"]), EXCEPTION_REGISTRY_ZERO_TYPES)
+        self.assertTrue(
+            any("Exception ليس Zero" in rule for rule in er["rules"]),
+            "exception_registry.rules must assert that Exception ≠ Zero when licensed",
+        )
+        self.assertTrue(
+            any("Hypothesis" in rule for rule in er["rules"]),
+            "exception_registry.rules must route unlicensed exceptions to Hypothesis",
+        )
+
+    def test_ellipsis_rules_require_qarina_for_estimation_and_yield_zero_otherwise(self):
+        """Ellipsis without qarina and without estimation capability must produce Zero.
+        ellipsis_types must cover at least MIN_ELLIPSIS_TYPES distinct deletion patterns.
+        """
+        ge = self.spec["grammar_engine"]
+        self.assertGreaterEqual(len(ge["ellipsis_types"]), MIN_ELLIPSIS_TYPES)
+
+        for rule in ge["ellipsis_rules"]:
+            for field in ("id", "surface", "missing_element", "can_estimate", "result_type"):
+                self.assertIn(field, rule, f"{rule.get('id', '?')} must have field {field!r}")
+            if not rule["can_estimate"] and not rule.get("qarina_available", False):
+                self.assertEqual(
+                    rule["result_type"],
+                    "Zero",
+                    f"{rule['id']}: can_estimate=False + no qarina must yield Zero",
+                )
+
+        self.assertGreater(len(ge["ellipsis_ruleset_rules"]), 0)
+        self.assertIn(REFERENCE_ZERO_TYPE_REQUIRED, ge["reference_zero_types"])
+
+    def test_ontology_daal_madlool_tree_is_fully_computable(self):
+        """Every node in the ontology tree must carry id, label, arabic_label, and definition.
+        Every concept_example must reference a valid top_type and declare computable roles.
+        """
+        ont = self.spec["ontology"]
+        valid_ontological_type_labels = {t["label"] for t in ont["top_types"]}
+
+        # Every top_type has all required fields
+        for top_type in ont["top_types"]:
+            for field in REQUIRED_TOP_TYPE_FIELDS:
+                self.assertIn(field, top_type, f"top_type {top_type.get('id', '?')} missing {field!r}")
+
+        for example in ont["concept_examples"]:
+            for field in REQUIRED_CONCEPT_EXAMPLE_FIELDS:
+                self.assertIn(field, example, f"concept_example {example.get('concept', '?')} missing {field!r}")
+            self.assertIn(
+                example["ontological_type"],
+                valid_ontological_type_labels,
+                f"concept {example['concept']!r} references unknown type {example['ontological_type']!r}",
+            )
+            for role_name, role_data in example["roles"].items():
+                self.assertIsInstance(role_data, dict, f"role {role_name!r} must be a dict")
+                self.assertIn("required", role_data, f"role {role_name!r} must declare 'required'")
+                self.assertIsInstance(role_data["required"], bool)
+
+        self.assertGreater(len(ont["rules"]), 0)
+        for rule in ont["rules"]:
+            self.assertIsInstance(rule, str)
+            self.assertTrue(rule)
 
 
 if __name__ == "__main__":
