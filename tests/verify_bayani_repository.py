@@ -80,14 +80,18 @@ class BayaniRepositoryVerification(unittest.TestCase):
         for markdown_path in ROOT.rglob("*.md"):
             markdown = markdown_path.read_text(encoding="utf-8")
             anchors = heading_anchors(markdown)
-            for label, target in re.findall(r"(?<!!)\[([^\]]+)\]\(([^)]+)\)", markdown):
+            for label, target in re.findall(r"(?<!\!)\[([^\]]+)\]\(([^)]+)\)", markdown):
                 parsed = urlparse(target)
                 if parsed.scheme in {"http", "https", "mailto"}:
                     continue
                 link_path = unquote(parsed.path)
                 anchor = unquote(parsed.fragment)
                 if not link_path:
-                    self.assertIn(markdown_slug(anchor), anchors, f"{markdown_path}: broken anchor link {target}")
+                    self.assertIn(
+                        markdown_slug(anchor),
+                        anchors,
+                        f"{markdown_path}: broken same-page anchor link {anchor!r} in {target}",
+                    )
                     continue
                 resolved = ROOT / link_path.lstrip("/") if link_path.startswith("/") else markdown_path.parent / link_path
                 self.assertTrue(resolved.exists(), f"{markdown_path}: broken markdown link {label!r} -> {target}")

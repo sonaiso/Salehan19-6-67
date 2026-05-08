@@ -2375,7 +2375,7 @@
         "case": "شهادة مكتملة بشروط البرهان",
         "input": "Qualified answer with valid ProofObject, no blocking_zero, and complete reverse trace",
         "expected_state": "Certificate",
-        "expected_zero": "None"
+        "expected_zero": ""
       }
     ],
     "acceptance_criteria": [
