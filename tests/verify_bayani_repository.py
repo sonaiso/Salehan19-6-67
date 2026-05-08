@@ -14,6 +14,41 @@ PROMPT_PATH = ROOT / "docs/prompts/nabhani-mustadil-readiness.prompt.md"
 README_PATH = ROOT / "README.md"
 
 ALLOWED_OUTPUTS = ["Certificate", "Hypothesis", "Zero"]
+README_REQUIRED_REFERENCES = [
+    "docs/prompts/nabhani-mustadil-readiness.prompt.md",
+    "spec/bayani-knowledge-system.json",
+    "schema/bayani-knowledge-system.schema.json",
+    "tests/verify_bayani_repository.py",
+]
+REQUIRED_SPEC_KEYS = [
+    "formal_kernel",
+    "knowledge_foundation",
+    "ontology",
+    "grammar_engine",
+    "reasoning_engine",
+    "answer_analysis_engine",
+    "governance_engine",
+    "malakah_methodology",
+]
+REQUIRED_PROOF_INVARIANTS = [
+    "NoCertificateWithBlockingZero",
+    "NoClaimWithoutEvidence",
+    "NoTransitionWithoutContract",
+    "NoLevelSkip",
+    "HypothesisMustBeDeclared",
+    "NoIrabWithoutAmil",
+    "NoMafhumWithoutMantuq",
+    "NoLearningWithoutTest",
+    "NoSourceFreeExternalClaim",
+]
+REQUIRED_MALAKAH_MACHINES = [
+    "rule_applicability_machine",
+    "rule_manat_detector",
+    "prior_opinion_filter",
+    "epistemic_candidate_generation_machine",
+    "failure_predictor_binding",
+    "mustadil_competence_score",
+]
 EXPECTED_READINESS_CHECK_COUNT = 12
 EXPECTED_PROGRESSIVE_LEVELS = 10
 MIN_ADVERSARIAL_CASES = 10
@@ -28,18 +63,18 @@ EXPECTED_EVALUATION_GATES = {
     "ReliabilityScorer",
 }
 REQUIRED_PROMPT_SECTIONS = [
-    "CORE AXIOM",
-    "FORMAL FUNCTION",
-    "FORMAL KERNEL",
-    "NON-NEGOTIABLE INVARIANTS",
-    "MUSTADIL READINESS CHECK",
-    "ALLOWED OUTPUTS ONLY",
-    "REQUIRED OUTPUT STRUCTURE",
-    "MATHEMATICAL EVALUATION LAYER",
-    "KNOWLEDGE STORAGE ARCHITECTURE",
-    "LEARNING ARCHITECTURE",
-    "GPT-STYLE ANSWERS POLICY",
-    "FINAL GOVERNING RULE",
+    "Core Axiom",
+    "Formal Function",
+    "Formal Kernel",
+    "Non-Negotiable Invariants",
+    "Mustadil Readiness Check",
+    "Allowed Outputs",
+    "Required Output Structure",
+    "Mathematical Evaluation Layer",
+    "Knowledge Storage Architecture",
+    "Learning Architecture",
+    "GPT-style Answers Policy",
+    "Final Governing Rule",
 ]
 
 
@@ -47,6 +82,11 @@ def load_json(path):
     """Load and parse a UTF-8 JSON file."""
     with path.open(encoding="utf-8") as handle:
         return json.load(handle)
+
+
+def normalized(text):
+    """Normalize text for case-insensitive architectural label checks."""
+    return text.casefold()
 
 
 def markdown_slug(heading):
@@ -88,6 +128,12 @@ class BayaniRepositoryVerification(unittest.TestCase):
         )
         jsonschema.Draft202012Validator.check_schema(self.schema)
 
+    def test_spec_json_parses(self):
+        self.assertIsInstance(load_json(SPEC_PATH), dict)
+
+    def test_schema_json_parses(self):
+        self.assertIsInstance(load_json(SCHEMA_PATH), dict)
+
     def test_spec_matches_schema(self):
         jsonschema.validate(self.spec, self.schema)
 
@@ -115,20 +161,25 @@ class BayaniRepositoryVerification(unittest.TestCase):
                     linked_anchors = heading_anchors(resolved.read_text(encoding="utf-8"))
                     self.assertIn(markdown_slug(anchor), linked_anchors, f"{markdown_path}: broken anchor {target}")
 
-    def test_readme_references_existing_spec_and_schema(self):
-        for documented_path in [
-            "/schema/bayani-knowledge-system.schema.json",
-            "/spec/bayani-knowledge-system.json",
-        ]:
+    def test_readme_references_required_repository_files(self):
+        for documented_path in README_REQUIRED_REFERENCES:
             self.assertIn(documented_path, self.readme)
-            self.assertTrue((ROOT / documented_path.lstrip("/")).exists())
+            self.assertTrue((ROOT / documented_path).exists())
+
+    def test_prompt_file_exists(self):
+        self.assertTrue(PROMPT_PATH.exists())
 
     def test_prompt_has_required_sections_in_order(self):
         previous_position = -1
+        prompt = normalized(self.prompt)
         for section in REQUIRED_PROMPT_SECTIONS:
-            position = self.prompt.find(section)
+            position = prompt.find(normalized(section))
             self.assertGreater(position, previous_position, f"Missing or out-of-order prompt section: {section}")
             previous_position = position
+
+    def test_spec_includes_required_architectural_layers(self):
+        for key in REQUIRED_SPEC_KEYS:
+            self.assertIn(key, self.spec)
 
     def test_prompt_and_spec_share_output_contract(self):
         layer = self.spec["mustadil_readiness_layer"]
@@ -136,6 +187,18 @@ class BayaniRepositoryVerification(unittest.TestCase):
         self.assertEqual(layer["output_contract"]["state_enum"], ALLOWED_OUTPUTS)
         for output in ALLOWED_OUTPUTS:
             self.assertIn(output, self.prompt)
+        allowed_outputs_section = re.search(
+            r"ALLOWED OUTPUTS ONLY\s+━+\s+(.*?)\n\nNEVER OUTPUT:",
+            self.prompt,
+            re.DOTALL,
+        )
+        self.assertIsNotNone(allowed_outputs_section)
+        declared_outputs = [
+            line.strip()
+            for line in allowed_outputs_section.group(1).splitlines()
+            if line.strip()
+        ]
+        self.assertEqual(declared_outputs, ALLOWED_OUTPUTS)
 
     def test_mustadil_readiness_gates_are_complete(self):
         layer = self.spec["mustadil_readiness_layer"]
@@ -181,6 +244,18 @@ class BayaniRepositoryVerification(unittest.TestCase):
         self.assertGreaterEqual(len(invariants), MIN_INVARIANTS)
         self.assertEqual(len({invariant["id"] for invariant in invariants}), len(invariants))
         self.assertEqual(len({invariant["name"] for invariant in invariants}), len(invariants))
+
+    def test_governance_proof_layer_includes_required_invariants(self):
+        invariant_names = {
+            invariant["name"] for invariant in self.spec["governance_engine"]["proof_layer"]["invariants"]
+        }
+        for invariant in REQUIRED_PROOF_INVARIANTS:
+            self.assertIn(invariant, invariant_names)
+
+    def test_malakah_methodology_includes_required_machines(self):
+        methodology = self.spec["malakah_methodology"]
+        for machine in REQUIRED_MALAKAH_MACHINES:
+            self.assertIn(machine, methodology)
 
 
 if __name__ == "__main__":
