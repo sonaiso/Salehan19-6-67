@@ -54,6 +54,11 @@ _KNOWLEDGE_THRESHOLD = 0.60    # minimum score to accept as knowledge
 _LEARNING_THRESHOLD = 0.75     # minimum score to store as verified relation
 _WEAK_THRESHOLD = 0.40         # below this → mark as weak / suspend
 
+# Maximum number of word-level nodes appended to higher-level candidates.
+# Prevents the candidate list from growing unboundedly on long sentences while
+# still surfacing the most important morphological claims.
+_MAX_WORD_CANDIDATES = 6
+
 
 # ---------------------------------------------------------------------------
 # Output dataclass
@@ -283,7 +288,7 @@ class CognitiveReasoningMind:
                 # Also include word-level morphological claims
                 claims = list(nodes)
                 if level_key != "words":
-                    claims = list(nodes) + levels.get("words", [])[:6]
+                    claims = list(nodes) + levels.get("words", [])[:_MAX_WORD_CANDIDATES]
                 return claims
         return []
 

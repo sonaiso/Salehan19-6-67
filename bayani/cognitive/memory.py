@@ -293,7 +293,7 @@ class ThreeLayerMemory:
     # ------------------------------------------------------------------
 
     def snapshot(self) -> Dict[str, Any]:
-        """Return a JSON-serialisable snapshot of all three memory layers."""
+        """Return a JSON-serializable snapshot of all three memory layers."""
         return {
             "atomic": {
                 sym: {

@@ -180,7 +180,7 @@ class KnowledgeNode:
         return self.certainty.score >= threshold
 
     def to_dict(self) -> Dict[str, Any]:
-        """Serialise to a plain dict (JSON-compatible)."""
+        """Serialize to a plain dict (JSON-compatible)."""
         return {
             "node_id": self.node_id,
             "level": self.level.value,

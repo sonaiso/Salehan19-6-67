@@ -134,7 +134,7 @@ class CertaintyResult:
         return self.final_certainty >= threshold
 
     def to_dict(self) -> Dict[str, object]:
-        """Serialise to a JSON-compatible dict."""
+        """Serialize to a JSON-compatible dict."""
         return {
             "claim": self.claim,
             "scores": {

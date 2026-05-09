@@ -240,13 +240,13 @@ class TestMultiDimensionalCertaintyScorer:
             semantic_fit=0.80,
             contradiction_penalty=0.0,
         )
-        penalised = self.scorer.score(
+        penalized = self.scorer.score(
             "test_claim",
             morphological_fit=0.80,
             semantic_fit=0.80,
             contradiction_penalty=1.0,
         )
-        assert penalised.final_certainty < base.final_certainty
+        assert penalized.final_certainty < base.final_certainty
 
     def test_score_clamped_to_unit_interval(self) -> None:
         result = self.scorer.score(
