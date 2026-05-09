@@ -174,6 +174,9 @@ _TADMIN_MARKERS: frozenset[str] = frozenset({
     "يتضمن", "تتضمن", "يشتمل", "تشتمل",
 })
 
+# Adjective ending suffixes for taqyidiyyah detection (indefinite pair heuristic)
+_ADJ_ENDINGS: tuple[str, ...] = ("ة", "ون", "ين", "ان", "ات", "اء")
+
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -304,9 +307,14 @@ def _extract_ghaiyyah(
 
 
 def _extract_sababiyyah(
-    text: str, tokens: List[str],  # noqa: ARG001 — tokens kept for API symmetry
+    text: str,
+    tokens: List[str],
 ) -> List[BayaniRelation]:
-    """Detect cause/reason (بسبب، لأجل، لأن …) patterns."""
+    """Detect cause/reason (بسبب، لأجل، لأن …) patterns.
+
+    ``tokens`` is accepted for API symmetry with other extraction functions;
+    cause detection uses substring search on ``text`` directly.
+    """
     relations: List[BayaniRelation] = []
     for marker in _SABAB_TOOLS:
         if marker in text:
@@ -409,8 +417,7 @@ def _extract_taqyidiyyah(
     ):
         # Adjective heuristic: second word ends with typical Arabic adj suffixes
         # (ة، ون، ين، ان، ات) — avoids treating idafa (كتاب زيد) as taqyid
-        _adj_endings = ("ة", "ون", "ين", "ان", "ات", "اء")
-        if any(second.endswith(sfx) for sfx in _adj_endings):
+        if any(second.endswith(sfx) for sfx in _ADJ_ENDINGS):
             return _make_relation(
                 TAQYIDIYYAH, text,
                 subject=first,

@@ -133,7 +133,7 @@ class TestFaIliyyahMafUliyyah(unittest.TestCase):
         self.assertIsNotNone(rel)
         self.assertEqual(rel.subject, "أكرم")
 
-    def test_fa_iliyyah_target_is_fail(self):
+    def test_fa_iliyyah_predicate_is_faaил(self):
         result = parse_relations("أكرم المعلم الطلاب")
         rel = _get_relation(result, FA_ILIYYAH)
         self.assertIsNotNone(rel)
@@ -302,26 +302,25 @@ class TestGhaiyyah(unittest.TestCase):
 
 class TestHaliyyah(unittest.TestCase):
 
+    def setUp(self):
+        self._result = parse_relations("جاء زيد راكبا")
+
     def test_jaa_zayd_rakiban_extracts_haliyyah(self):
         """'جاء زيد راكبا' must produce haliyyah."""
-        result = parse_relations("جاء زيد راكبا")
-        self.assertIn(HALIYYAH, _relation_types(result))
+        self.assertIn(HALIYYAH, _relation_types(self._result))
 
     def test_haliyyah_carrier_is_hal(self):
-        result = parse_relations("جاء زيد راكبا")
-        rel = _get_relation(result, HALIYYAH)
+        rel = _get_relation(self._result, HALIYYAH)
         self.assertIsNotNone(rel)
         self.assertEqual(rel.carrier_operator, "hal")
 
     def test_haliyyah_subject_is_zayd(self):
-        result = parse_relations("جاء زيد راكبا")
-        rel = _get_relation(result, HALIYYAH)
+        rel = _get_relation(self._result, HALIYYAH)
         self.assertIsNotNone(rel)
         self.assertEqual(rel.subject, "زيد")
 
     def test_haliyyah_predicate_is_rakiban(self):
-        result = parse_relations("جاء زيد راكبا")
-        rel = _get_relation(result, HALIYYAH)
+        rel = _get_relation(self._result, HALIYYAH)
         self.assertIsNotNone(rel)
         self.assertEqual(rel.predicate_or_target, "راكبا")
 
