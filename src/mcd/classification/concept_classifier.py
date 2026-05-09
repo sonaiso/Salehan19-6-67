@@ -39,7 +39,7 @@ _ROOT_DOMAIN_LEXICON: dict[str, dict[str, float]] = {
     # human
     "عقل": {RootDomain.HUMAN: 0.95},
     "ادراك": {RootDomain.HUMAN: 0.90},
-    "لغه": {RootDomain.HUMAN: 0.85, RootDomain.HUMAN: 0.85},
+    "لغه": {RootDomain.HUMAN: 0.85},
     "لغة": {RootDomain.HUMAN: 0.85},
     "تفكير": {RootDomain.HUMAN: 0.90},
     "كذب": {RootDomain.HUMAN: 0.80, RootDomain.LIFE: 0.60},
