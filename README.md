@@ -174,3 +174,73 @@ python -m pytest tests/test_mustadil_runtime.py tests/test_bayani_relational_par
 python tests/verify_bayani_repository.py
 ```
 
+## Epistemic Cognitive Decoder v0.3
+
+يضيف إصدار v0.3 **الديكودر المعرفي** — طبقة محاكاة قرار معرفية مبنية فوق النموذج اللغوي تفرض عليه سلسلة التحقق:
+
+```text
+واقع → حس/مصدر → معلومات → ربط → فكر → مطابقة → دليل → درجة يقين → جواب
+```
+
+### ملفات MVP (5 ملفات)
+
+| الملف | المحتوى |
+|-------|---------|
+| `bayani/epistemic_decoder/ontology.yaml` | واقع، حس، معلومات، ربط، فكر، مفهوم، يقين |
+| `bayani/epistemic_decoder/semiotics.yaml` | دال، مدلول، مطابقة، تضمن، التزام، كلي، جزئي |
+| `bayani/epistemic_decoder/relations.yaml` | إسناد، تقييد، تضمين، سبب، مسبب، علة، قياس |
+| `bayani/epistemic_decoder/decoder_policy.md` | قواعد السماح والمنع المعرفي |
+| `run_decoder.py` | يشغّل الديكودر المعرفي + التحقق + إخراج الجواب |
+
+### معمارية الوحدات السبع
+
+| الوحدة | الاسم | الوظيفة |
+|--------|-------|---------|
+| 1 | `InputAnalyzer` | تصنيف نوع المهمة، المجال، خطر الهلوسة |
+| 2 | `RealityExtractor` | استخراج الواقع موضوع السؤال |
+| 3 | `SemioticParser` | تفكيك الدال والمدلول |
+| 4 | `RelationGraphBuilder` | بناء شبكة العلاقات الدلالية |
+| 5 | `EvidenceRetriever` | استرجاع الأدلة والمصادر |
+| 6 | `CertaintyScorer` | حساب درجة اليقين المعرفي |
+| 7 | `AnswerDecoder` | تأليف الجواب المضبوط |
+
+### معادلة اختيار الجواب
+
+```text
+AnswerScore =
+  0.20 x LinguisticCoherence
++ 0.25 x RealityMatch
++ 0.20 x EvidenceStrength
++ 0.15 x SemanticValidity
++ 0.10 x InferenceValidity
++ 0.10 x CertaintyClarity
+- 0.30 x HallucinationRisk
+```
+
+الحد الأدنى للسماح بالجواب: `AnswerScore >= 0.60`.
+
+### استخدام سريع
+
+```python
+from bayani.epistemic_decoder import EpistemicCognitiveDecoder
+
+decoder = EpistemicCognitiveDecoder()
+output = decoder.decode("ما الفرق بين العلم والثقافة؟", reasoning_effort="high")
+print(output.final_answer)
+print(output.certainty_level)
+print(output.answer_score)
+```
+
+أو عبر سطر الأوامر:
+
+```bash
+python run_decoder.py "ما الفرق بين العلم والثقافة؟" --verbose
+python run_decoder.py "هل المفاهيم مرتبطة بالواقع؟" --effort xhigh --json
+```
+
+### تشغيل اختبارات الديكودر المعرفي
+
+```bash
+python -m pytest tests/test_epistemic_decoder.py -v
+```
+

@@ -1,0 +1,186 @@
+# Epistemic Cognitive Decoder — Ontology
+# Based on al-Nabhani's model of the mind:
+#   واقع (reality) + حس (sense) + دماغ (brain) + معلومات سابقة (prior knowledge)
+# ───────────────────────────────────────────────────────────────────────────────
+
+version: "1.0"
+author: "Epistemic Cognitive Decoder"
+description: >
+  الأنطولوجيا الأساسية للديكودر المعرفي.
+  تعرّف المفاهيم الجوهرية التي يمر عبرها كل سؤال قبل إنتاج الجواب.
+
+# ── المستويات الوجودية ──────────────────────────────────────────────────────
+
+ontology_levels:
+
+  - id: reality
+    arabic: واقع
+    english: Reality
+    definition: >
+      ما يوجد خارج الذهن؛ مصدر كل إدراك. لا فكر بلا واقع.
+    subtypes:
+      - id: material_reality
+        arabic: واقع مادي محسوس
+        description: أجسام وأحداث تُدرك بالحواس الخمس
+      - id: textual_reality
+        arabic: واقع نصي
+        description: نصوص ووثائق وخطاب لغوي
+      - id: conceptual_reality
+        arabic: واقع مفاهيمي
+        description: منظومات المعاني والعلاقات الذهنية
+      - id: relational_reality
+        arabic: واقع علائقي
+        description: علاقات وأنظمة وشبكات
+      - id: normative_reality
+        arabic: واقع حكمي
+        description: أحكام ودعاوى تحتاج دليلاً
+    requires: []
+
+  - id: sense
+    arabic: حس
+    english: Sense / Sensory Access
+    definition: >
+      القناة التي ينتقل عبرها الواقع إلى الدماغ؛ مباشر أو غير مباشر.
+    subtypes:
+      - id: direct_sense
+        arabic: حس مباشر
+        description: ملاحظة أو تجربة مباشرة
+      - id: indirect_sense
+        arabic: حس غير مباشر
+        description: رواية وثيقة أو نص موثوق
+      - id: no_sensory_access
+        arabic: بلا حس
+        description: لفظ بلا واقع — مستوى صفر
+    requires:
+      - reality
+
+  - id: information
+    arabic: معلومات
+    english: Prior Information / Knowledge Base
+    definition: >
+      المعلومات السابقة المخزّنة في الذاكرة؛ تُفسّر الواقع المحسوس.
+    subtypes:
+      - id: verified_information
+        arabic: معلومة محققة
+        description: معلومة ربطت بواقع وثُبّت صدقها
+      - id: unverified_information
+        arabic: معلومة غير محققة
+        description: معلومة لم تُختبر بعد
+      - id: prior_opinion
+        arabic: رأي سابق
+        description: ميل قبلي لا يُعدّ دليلاً
+    requires:
+      - reality
+      - sense
+
+  - id: linking
+    arabic: ربط
+    english: Linking / Binding
+    definition: >
+      العملية التي تجمع الواقع بالمعلومات السابقة لتكوين الفكر.
+    subtypes:
+      - id: correct_linking
+        arabic: ربط صحيح
+        description: ربط مطابق للواقع بدليل
+      - id: incorrect_linking
+        arabic: ربط خاطئ
+        description: ربط لا يطابق الواقع
+    requires:
+      - reality
+      - sense
+      - information
+
+  - id: thought
+    arabic: فكر
+    english: Thought / Candidate Reasoning
+    definition: >
+      ناتج الربط؛ فكرة مرشّحة تحتاج اختبار المطابقة.
+    subtypes:
+      - id: probable_thought
+        arabic: فكر محتمل
+        description: ربط أولي بلا تحقق
+      - id: preponderant_thought
+        arabic: فكر راجح
+        description: ربط بعد مقارنة وتمحيص
+    requires:
+      - linking
+
+  - id: concept
+    arabic: مفهوم
+    english: Concept
+    definition: >
+      معنى أُدرك له واقع في الذهن؛ يتكون من ربط الواقع بالمعلومات.
+    subtypes:
+      - id: clear_concept
+        arabic: مفهوم واضح
+        description: مفهوم محدد الحدود والواقع
+      - id: vague_concept
+        arabic: مفهوم مبهم
+        description: مفهوم ناقص التحديد يحتاج مزيداً من التمييز
+    requires:
+      - thought
+
+  - id: certainty
+    arabic: يقين
+    english: Certainty
+    definition: >
+      مطابقة الفكر للواقع مطابقةً مدعومةً بدليل قطعي.
+    levels:
+      - level: 0
+        label: لفظ بلا واقع
+        description: مجرد صوت بلا مدلول
+      - level: 1
+        label: إحساس بلا تفسير
+        description: إدراك حسي خام
+      - level: 2
+        label: معلومة بلا تحقق
+        description: خبر لم يُختبر
+      - level: 3
+        label: ربط أولي
+        description: تجميع أولي بلا اختبار
+      - level: 4
+        label: فكر محتمل
+        description: فرضية قابلة للاختبار
+      - level: 5
+        label: معرفة راجحة
+        description: ترجيح مدعوم بأدلة
+      - level: 6
+        label: معرفة صحيحة
+        description: فكر مطابق للواقع بدليل
+      - level: 7
+        label: يقين
+        description: يقين تام بدليل قطعي
+      - level: 8
+        label: يقين صار مقياسًا
+        description: يقين يُستخدم معياراً للحكم
+      - level: 9
+        label: مقياس صار سلوكًا
+        description: يقين انعكس على الشخصية والسلوك
+    requires:
+      - concept
+      - thought
+      - linking
+
+# ── تسلسل العملية العقلية ────────────────────────────────────────────────────
+
+cognitive_pipeline:
+  description: >
+    التسلسل الإلزامي للعملية العقلية حسب النموذج الرباعي للنبهاني.
+  order:
+    - reality
+    - sense
+    - information
+    - linking
+    - thought
+    - concept
+    - certainty
+
+invariants:
+  - id: NoThoughtWithoutReality
+    rule: لا فكر بلا واقع
+  - id: NoConceptWithoutLinking
+    rule: لا مفهوم بلا ربط
+  - id: NoCertaintyWithoutEvidence
+    rule: لا يقين بلا دليل قطعي
+  - id: NoKnowledgeWithoutRealityGrounding
+    rule: لا تصير المعلومة معرفةً إلا إذا ارتبطت بواقع
