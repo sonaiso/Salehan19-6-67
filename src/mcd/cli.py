@@ -29,6 +29,15 @@ def main() -> None:
     ground_parser.add_argument("--output", choices=["text", "json"], default="json")
     ground_parser.add_argument("--debug", action="store_true", default=False)
 
+    eval_parser = subparsers.add_parser("evaluate-project", help="Run full EIRL project audit")
+    eval_parser.add_argument("--output", choices=["markdown", "json"], default="markdown")
+
+    bench_parser = subparsers.add_parser("benchmark-simulation", help="Run benchmark evaluation on 10 Arabic examples")
+    bench_parser.add_argument("--output", choices=["markdown", "json"], default="json")
+
+    readiness_parser = subparsers.add_parser("readiness-score", help="Print production readiness scorecard")
+    readiness_parser.add_argument("--output", choices=["markdown", "json"], default="json")
+
     args = parser.parse_args()
 
     if args.command == "classify":
@@ -108,6 +117,73 @@ def main() -> None:
             print(grounded_frame_to_json(frame))
         else:
             print(generate_report(frame))
+    elif args.command == "evaluate-project":
+        from mcd.evaluation.repository_audit import RepositoryAudit
+        from mcd.evaluation.architecture_audit import ArchitectureAudit
+        from mcd.evaluation.test_audit import TestAudit
+        from mcd.evaluation.cli_audit import CLIAudit
+        from mcd.evaluation.code_quality_audit import CodeQualityAudit
+        from mcd.evaluation.production_readiness import ProductionReadinessReport
+        from mcd.evaluation.report_builder import build_markdown_report
+        from mcd.evaluation.serializers import (
+            repo_audit_to_json, arch_audit_to_json, test_audit_to_json,
+            cli_audit_to_json, code_quality_to_json, readiness_to_json,
+        )
+
+        repo = RepositoryAudit().run()
+        arch = ArchitectureAudit().run()
+        test = TestAudit().run()
+        cli = CLIAudit().run()
+        code = CodeQualityAudit().run()
+        readiness = ProductionReadinessReport.build_default()
+
+        if args.output == "markdown":
+            print(build_markdown_report(repo, arch, test, cli, code, readiness))
+        else:
+            import json as _json
+            print(_json.dumps({
+                "repository": _json.loads(repo_audit_to_json(repo)),
+                "architecture": _json.loads(arch_audit_to_json(arch)),
+                "tests": _json.loads(test_audit_to_json(test)),
+                "cli": _json.loads(cli_audit_to_json(cli)),
+                "code_quality": _json.loads(code_quality_to_json(code)),
+                "readiness": _json.loads(readiness_to_json(readiness)),
+            }, ensure_ascii=False, indent=2))
+    elif args.command == "benchmark-simulation":
+        from mcd.evaluation.evaluation_runner import EvaluationRunner
+        from mcd.evaluation.serializers import eval_report_to_json
+
+        runner = EvaluationRunner()
+        report = runner.run()
+
+        if args.output == "json":
+            print(eval_report_to_json(report))
+        else:
+            print(f"# Benchmark Simulation Results\n")
+            print(f"- Examples: {report.total_examples}")
+            print(f"- Passed:   {report.passed}")
+            print(f"- Failed:   {report.failed}")
+            print(f"- Average:  {report.average_score:.3f}")
+            if report.failures:
+                print(f"\n## Failures\n")
+                for f in report.failures:
+                    print(f"- {f}")
+    elif args.command == "readiness-score":
+        from mcd.evaluation.production_readiness import ProductionReadinessReport
+        from mcd.evaluation.serializers import readiness_to_json
+
+        readiness = ProductionReadinessReport.build_default()
+
+        if args.output == "json":
+            print(readiness_to_json(readiness))
+        else:
+            print(f"# Production Readiness Scorecard\n")
+            print(f"**Maturity Level:** {readiness.maturity_level}")
+            print(f"**Average Score:** {readiness.average_score}/5\n")
+            print(f"| Dimension | Score |")
+            print(f"|-----------|-------|")
+            for dim in readiness.dimensions:
+                print(f"| {dim.name} | {dim.score}/5 |")
     else:
         parser.print_help()
 
