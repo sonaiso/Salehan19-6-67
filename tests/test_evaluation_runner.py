@@ -12,7 +12,7 @@ def test_evaluation_runner_runs():
 def test_evaluation_runner_total_examples():
     runner = EvaluationRunner()
     report = runner.run()
-    assert report.total_examples == 10
+    assert report.total_examples == 50
 
 
 def test_evaluation_runner_scores_all():

@@ -2,9 +2,9 @@
 from mcd.evaluation.benchmark_dataset import load_benchmark_examples, BenchmarkExample
 
 
-def test_benchmark_has_10_examples():
+def test_benchmark_has_50_examples():
     examples = load_benchmark_examples()
-    assert len(examples) == 10
+    assert len(examples) == 50
 
 
 def test_benchmark_has_fire_example():
