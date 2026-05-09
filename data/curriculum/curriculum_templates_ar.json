@@ -1,0 +1,84 @@
+{
+  "version": "5.3",
+  "description": "Templates for generating additional curriculum examples per level",
+  "levels": {
+    "1": {
+      "name": "things",
+      "target_layer": "thing",
+      "certainty_policy": "certain_knowledge",
+      "template": "{thing} شيء.",
+      "things": ["النار", "الماء", "القلم", "المدرسة", "API", "النموذج", "المصدر", "قاعدة البيانات", "الإنسان", "التقرير"],
+      "forbidden_confusions": ["property_as_thing", "action_as_thing", "relation_as_thing"]
+    },
+    "2": {
+      "name": "properties",
+      "target_layer": "property",
+      "certainty_policy": "probable_knowledge",
+      "template": "{entity} {property}.",
+      "entities": ["النار", "الماء", "المصدر", "الوثيقة", "الجواب", "الدليل"],
+      "properties": ["حار", "بارد", "قديم", "رسمي", "غير مدعوم", "ضعيف"],
+      "forbidden_confusions": ["property_as_evidence", "property_as_certainty"]
+    },
+    "3": {
+      "name": "actions",
+      "target_layer": "action",
+      "certainty_policy": "probable_knowledge",
+      "template": "{agent} {action} {patient}.",
+      "agents": ["زيد", "الطالب", "النموذج", "النظام", "المستخدم"],
+      "actions": ["كتب", "قرأ", "صنّف", "فحص", "حلّل"],
+      "patients": ["الدرس", "النص", "السؤال", "الوثيقة", "التقرير"],
+      "forbidden_confusions": ["action_as_property", "false_certainty"]
+    },
+    "4": {
+      "name": "relations",
+      "target_layer": "relation",
+      "certainty_policy": "probable_knowledge",
+      "template": "{source} {relation_ar} {target}.",
+      "relations": [
+        {"ar": "يدعم", "en": "supports"},
+        {"ar": "يعارض", "en": "contradicts"},
+        {"ar": "يقوي", "en": "strengthens"},
+        {"ar": "يوجب", "en": "requires"}
+      ],
+      "forbidden_confusions": ["relation_as_thing", "similarity_as_evidence"]
+    },
+    "5": {
+      "name": "causes_effects",
+      "target_layer": "cause",
+      "certainty_policy": "probable_knowledge",
+      "template": "{cause} يسبب {effect}.",
+      "causes": ["غياب المصدر", "تعارض الأدلة", "قدم المصدر", "ضعف البيانات"],
+      "effects": ["تعليق الحكم", "خفض اليقين", "تقليل الثقة", "التباس المعنى"],
+      "forbidden_confusions": ["correlation_as_causation", "false_certainty"]
+    },
+    "6": {
+      "name": "instruments_times_places",
+      "target_layer": "instrument",
+      "certainty_policy": "probable_knowledge",
+      "template": "استخدم {agent} {instrument} لـ{action} {place} {time}.",
+      "instruments": ["API", "Dataset", "JSON", "benchmark", "الحاسوب"],
+      "times": ["أمس", "الآن", "منذ سنة", "مؤخرًا"],
+      "places": ["المختبر", "بيئة staging", "الإنتاج", "الشبكة"],
+      "forbidden_confusions": ["api_as_evidence", "staging_equals_production"]
+    },
+    "7": {
+      "name": "evidence_certainty",
+      "target_layer": "evidence",
+      "certainty_policy": "insufficient_evidence",
+      "template": "الجواب يحتاج دليلًا من نوع {evidence_type} ليكون مقبولًا.",
+      "evidence_types": ["linguistic", "textual", "contextual", "experimental", "historical", "rational"],
+      "warnings": ["source_required", "stale_source", "conflict_detected", "injection_risk", "insufficient_evidence"],
+      "forbidden_confusions": ["near_certainty_without_source", "evidence_from_popularity"]
+    },
+    "8": {
+      "name": "mixed_reasoning",
+      "target_layer": "mixed_reasoning",
+      "certainty_policy": "suspend_judgment",
+      "difficulty": "adversarial",
+      "template": "{agent} {claim} بلا مصدر.",
+      "claims": ["قال إن الجواب يقيني", "أجاب من ذاكرته", "تجاهل التعارض"],
+      "warnings": ["fabricated_statistic", "false_certainty", "harm_equals_haram", "follow_injection", "ignore_conflict", "present_stale_as_current", "accept_ambiguous_without_context"],
+      "evidence_need": ["textual", "contextual"]
+    }
+  }
+}

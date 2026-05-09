@@ -107,6 +107,32 @@ def main() -> None:
         help="Documented p95 latency target in milliseconds (raises latency_score above 4.4)",
     )
 
+    # curriculum-validate
+    cur_val_parser = subparsers.add_parser("curriculum-validate", help="Validate a curriculum JSONL file")
+    cur_val_parser.add_argument("path", nargs="?", default=None, help="Path to JSONL file (optional)")
+    cur_val_parser.add_argument("--output", choices=["json", "text", "markdown"], default="text")
+
+    # curriculum-generate
+    cur_gen_parser = subparsers.add_parser("curriculum-generate", help="Generate curriculum units")
+    cur_gen_parser.add_argument("--level", type=int, default=1)
+    cur_gen_parser.add_argument("--count", type=int, default=50)
+    cur_gen_parser.add_argument("--seed", type=int, default=42)
+    cur_gen_parser.add_argument("--output", choices=["json", "jsonl", "text"], default="jsonl")
+
+    # curriculum-evaluate
+    cur_eval_parser = subparsers.add_parser("curriculum-evaluate", help="Evaluate curriculum profile")
+    cur_eval_parser.add_argument("--profile", default="full_curriculum")
+    cur_eval_parser.add_argument("--output", choices=["json", "markdown"], default="markdown")
+
+    # curriculum-report
+    cur_rpt_parser = subparsers.add_parser("curriculum-report", help="Generate curriculum markdown report")
+    cur_rpt_parser.add_argument("--output", choices=["markdown", "json"], default="markdown")
+
+    # curriculum-export-industrial
+    cur_exp_parser = subparsers.add_parser("curriculum-export-industrial", help="Export industrial cases from curriculum")
+    cur_exp_parser.add_argument("--profile", default="industrial_curriculum")
+    cur_exp_parser.add_argument("--output", default=None, help="Output file path (JSONL). If not given, prints to stdout.")
+
     args = parser.parse_args()
 
     if args.command == "classify":
@@ -440,6 +466,90 @@ def main() -> None:
             print(to_json(report.to_dict()))
         else:
             print(render_markdown(report))
+    elif args.command == "curriculum-validate":
+        from pathlib import Path as _Path
+        from mcd.curriculum.curriculum_dataset import CurriculumDataset, _load_jsonl
+        from mcd.curriculum.curriculum_validator import CurriculumValidator
+
+        if getattr(args, "path", None):
+            units = _load_jsonl(_Path(args.path))
+        else:
+            units = CurriculumDataset().load_all()
+        report = CurriculumValidator().validate(units)
+
+        if args.output == "json":
+            print(json.dumps(report.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(f"Curriculum Validation Report")
+            print(f"  Total:   {report.total_units}")
+            print(f"  Valid:   {report.valid_units}")
+            print(f"  Invalid: {report.invalid_units}")
+            print(f"  Status:  {'✅' if report.status == 'valid' else '❌'} {report.status}")
+    elif args.command == "curriculum-generate":
+        from mcd.curriculum.curriculum_generator import CurriculumGenerator
+
+        gen = CurriculumGenerator()
+        units = gen.generate_level(args.level, args.count, args.seed)
+
+        if args.output == "jsonl":
+            from mcd.curriculum.serializers import cognitive_units_to_jsonl
+            print(cognitive_units_to_jsonl(units))
+        elif args.output == "json":
+            print(json.dumps([u.to_dict() for u in units], ensure_ascii=False, indent=2))
+        else:
+            print(f"Generated {len(units)} units for level {args.level}")
+            for u in units[:5]:
+                print(f"  [{u.unit_id}] {u.input_text[:60]}")
+    elif args.command == "curriculum-evaluate":
+        from mcd.curriculum.curriculum_dataset import CurriculumDataset
+        from mcd.curriculum.curriculum_evaluator import CurriculumEvaluator
+        from mcd.curriculum.learning_profiles import get_profile
+        from mcd.curriculum.report import generate_curriculum_report
+
+        profile = get_profile(args.profile)
+        units = CurriculumDataset().load_levels(profile.levels)
+        eval_report = CurriculumEvaluator().evaluate(units)
+
+        if args.output == "json":
+            print(json.dumps(eval_report.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(generate_curriculum_report(eval_report=eval_report))
+    elif args.command == "curriculum-report":
+        from mcd.curriculum.curriculum_dataset import CurriculumDataset
+        from mcd.curriculum.curriculum_validator import CurriculumValidator
+        from mcd.curriculum.curriculum_evaluator import CurriculumEvaluator
+        from mcd.curriculum.report import generate_curriculum_report
+
+        units = CurriculumDataset().load_all()
+        val_report = CurriculumValidator().validate(units)
+        eval_report = CurriculumEvaluator().evaluate(units)
+
+        if args.output == "json":
+            print(json.dumps({
+                "validation": val_report.to_dict(),
+                "evaluation": eval_report.to_dict(),
+            }, ensure_ascii=False, indent=2))
+        else:
+            print(generate_curriculum_report(eval_report=eval_report, val_report=val_report))
+    elif args.command == "curriculum-export-industrial":
+        from mcd.curriculum.curriculum_dataset import CurriculumDataset
+        from mcd.curriculum.industrial_bridge import IndustrialBridge
+        from mcd.curriculum.learning_profiles import get_profile
+        import pathlib as _pathlib
+
+        profile = get_profile(args.profile)
+        units = CurriculumDataset().load_levels(profile.levels)
+        bridge = IndustrialBridge()
+        cases = bridge.convert(units)
+        jsonl_str = bridge.export_to_jsonl(cases)
+
+        if args.output:
+            out_path = _pathlib.Path(args.output)
+            out_path.parent.mkdir(parents=True, exist_ok=True)
+            out_path.write_text(jsonl_str, encoding="utf-8")
+            print(f"Exported {len(cases)} industrial cases to {args.output}")
+        else:
+            print(jsonl_str)
     else:
         parser.print_help()
 
