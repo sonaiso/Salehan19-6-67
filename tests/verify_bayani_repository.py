@@ -115,171 +115,21 @@ PROOF_RANK_POLICY_REQUIRED_KEYS = {"ranks", "rules"}
 # PR #7 — README scope declaration
 README_NO_RUNTIME_PHRASE = "دون تنفيذ runtime في هذا المستودع"
 
-# Mustadil Decoder Pipeline constants
-REQUIRED_PIPELINE_LAYERS = [
-    "reality_grounding_layer",
-    "prior_opinion_filter_layer",
-    "differentiation_layer",
-    "essence_assignment_layer",
-    "domain_assignment_layer",
-    "relational_mapping_layer",
-    "arabic_operator_layer",
-    "binding_layer",
-    "concept_formation_layer",
-    "judgment_formation_layer",
-    "signifier_analysis_layer",
-    "signified_analysis_layer",
-    "signifier_signified_relation_layer",
-    "mantuq_layer",
-    "mafhoom_layer",
-    "general_specific_layer",
-    "absolute_restricted_layer",
-    "causal_juridical_relations_layer",
-    "tahqeeq_manat_layer",
-    "application_layer",
-    "epistemic_audit_layer",
-]
-REQUIRED_PIPELINE_INVARIANT_NAMES = [
-    "NoJudgmentBeforeEssenceAssignment",
-    "NoApplicationWithoutTahqeqManat",
-    "NoPriorOpinionAsEvidence",
-    "NoMafhumStrongerThanMantuq",
-    "NoIllahWithoutValidation",
-    "NoBayaniLinguisticBeforeSemanticRelationalComplete",
-    "NoJudgmentFormationBeforeEssenceDomainRelationsResolved",
-]
-EPISTEMIC_AUDIT_CERTAINTY_MAP_FIELDS = [
-    "text_existence",
-    "word_meaning",
-    "scope",
-    "external_application",
-]
-REQUIRED_DECODER_PROMPT_SECTIONS = [
-    "Pipeline Order",
-    "Golden Rule",
-    "Layer 1",
-    "Layer 21",
-    "Pipeline Invariants",
-    "Epistemic Audit",
-    "Group Structure",
-    "Prompt Type Classification",
-    "Mustadil Prompt Classifier",
-]
+# Deep system-correctness tests
+RECURSIVE_RELATION_EXAMPLE_COUNT = 7
+RECURSIVE_RELATION_INVARIANT_COUNT = 4
+DAL_INTEGRITY_RULE = "السياق لا يكسر الدال."
+EXCEPTION_REGISTRY_ZERO_TYPES = {"ExceptionWithoutEvidence", "ExceptionOvergeneralization"}
+MIN_ELLIPSIS_TYPES = 5
+REFERENCE_ZERO_TYPE_REQUIRED = "NoAntecedent"
+REQUIRED_TOP_TYPE_FIELDS = {"id", "label", "arabic_label", "definition"}
+REQUIRED_CONCEPT_EXAMPLE_FIELDS = {"concept", "ontological_type", "roles"}
 
-# Layer-group membership map (used by group tests)
-PIPELINE_LAYER_GROUPS = {
-    "epistemic_existence": [
-        "reality_grounding_layer",
-        "prior_opinion_filter_layer",
-    ],
-    "semantic_relational": [
-        "differentiation_layer",
-        "essence_assignment_layer",
-        "domain_assignment_layer",
-        "relational_mapping_layer",
-        "arabic_operator_layer",
-        "binding_layer",
-    ],
-    "bayani_linguistic": [
-        "concept_formation_layer",
-        "judgment_formation_layer",
-        "signifier_analysis_layer",
-        "signified_analysis_layer",
-        "signifier_signified_relation_layer",
-        "mantuq_layer",
-        "mafhoom_layer",
-    ],
-    "usuli_application": [
-        "general_specific_layer",
-        "absolute_restricted_layer",
-        "causal_juridical_relations_layer",
-        "tahqeeq_manat_layer",
-        "application_layer",
-    ],
-    "audit": [
-        "epistemic_audit_layer",
-    ],
-}
-REQUIRED_GROUP_IDS = list(PIPELINE_LAYER_GROUPS.keys())
-
-# Prompt Type Classifier constants
-REQUIRED_PROMPT_TYPE_IDS = [
-    "PT-01",
-    "PT-02",
-    "PT-03",
-    "PT-04",
-    "PT-05",
-    "PT-06",
-    "PT-07",
-    "PT-08",
-    "PT-09",
-    "PT-10",
-]
-PROMPT_TYPE_REQUIRED_FIELDS = [
-    "id",
-    "name",
-    "arabic_name",
-    "example",
-    "jump_risk",
-    "processing_layer",
-    "processing_flow",
-    "constraint",
-]
-# Each of these prompt types must route through a specific pipeline layer
-PROMPT_TYPE_LAYER_MAP = {
-    "PT-01": "reality_grounding_layer",
-    "PT-02": "essence_assignment_layer",
-    "PT-03": "causal_juridical_relations_layer",
-    "PT-04": "relational_mapping_layer",
-    "PT-05": "arabic_operator_layer",
-    "PT-06": "mantuq_layer",
-    "PT-07": "mantuq_layer",   # mafhoom analysis begins from mantuq as prerequisite
-    "PT-08": "general_specific_layer",
-    "PT-09": "causal_juridical_relations_layer",
-    "PT-10": "application_layer",
-}
-# PT-10 (Application) must reference tahqeeq al-manat in its processing_flow
-PROMPT_TYPES_REQUIRING_TAHQEEQ_IN_FLOW = {"PT-10"}
-
-# Mustadil Prompt Classifier constants
-REQUIRED_MPC_LAYER_KEYS = [
-    "purpose_layer",
-    "thinking_level_layer",
-    "hukm_knowledge_vs_istinbat_layer",
-    "taqlid_tarjih_layer",
-    "evidence_authentication_layer",
-    "usul_vs_furu_evidence_rank_layer",
-    "evidence_type_classification_layer",
-    "conflict_and_tarjih_layer",
-    "manat_vs_illah_layer",
-    "construction_intent_layer",
-    "malakah_building_layer",
-]
-MPC_LAYER_ID_PREFIX = "MPC-"
-REQUIRED_MPC_FORBIDDEN_JUMPS = [
-    "NoIstinbatWhenKnownHukmRequested",
-    "NoHukmBeforeEvidenceAuthentication",
-    "NoTarjihBeforeValidJam",
-    "NoManatAsIllah",
-    "NoAssumedEvidenceAsValidEvidence",
-    "IfMalakahRequestedDoNotOnlyAnswer",
-]
-REQUIRED_MPC_OUTPUT_FIELDS = [
-    "prompt_type",
-    "required_layers",
-    "forbidden_jumps",
-    "required_output_form",
-    "answer_strategy",
-    "certainty_rank",
-]
-MPC_LAYERS_WITH_INVARIANTS = [
-    "hukm_knowledge_vs_istinbat_layer",
-    "evidence_authentication_layer",
-    "evidence_type_classification_layer",
-    "conflict_and_tarjih_layer",
-    "manat_vs_illah_layer",
-    "malakah_building_layer",
-]
+# Dal/Madlul coupling tests
+GRAPH_CONTRACT_COUPLING_NODES = {"Dal", "Madlul"}
+GRAPH_CONTRACT_COUPLING_EDGES = {"RELATES_TO", "SUPPORTED_BY", "DEPENDS_ON", "REQUIRES", "BLOCKED_BY"}
+VECTOR_DAL_MADLUL_DIMENSIONS = {"DalScore", "MadlulScore"}
+REQUIRED_AMIL_COUPLING_FIELDS = ("surface", "semantic_effect", "evidence_required", "zeros")
 
 
 def load_json(path):
@@ -583,373 +433,287 @@ class BayaniRepositoryVerification(unittest.TestCase):
         self.assertIn(README_NO_RUNTIME_PHRASE, self.readme)
 
     # ------------------------------------------------------------------
-    # Mustadil Decoder Pipeline — spec structure
+    # Deep system-correctness tests
     # ------------------------------------------------------------------
 
-    def test_decoder_pipeline_present_in_spec(self):
-        self.assertIn("mustadil_decoder_pipeline", self.spec)
+    def test_ontology_relation_type_declares_binary_binding(self):
+        """ONT-RELATION must exist and its definition must assert it binds two or more parties.
+        Every reference_rule must declare a non-empty, typed constraints list.
+        """
+        ont = self.spec["ontology"]
+        top_type_ids = {t["id"] for t in ont["top_types"]}
+        self.assertIn("ONT-RELATION", top_type_ids)
+        relation_type = next(t for t in ont["top_types"] if t["id"] == "ONT-RELATION")
+        self.assertIn("طرفين", relation_type["definition"])
 
-    def test_decoder_pipeline_has_all_21_layers(self):
-        pipeline = self.spec["mustadil_decoder_pipeline"]
-        for layer_key in REQUIRED_PIPELINE_LAYERS:
-            self.assertIn(layer_key, pipeline, f"Missing pipeline layer: {layer_key}")
+        for rule in self.spec["grammar_engine"]["reference_rules"]:
+            self.assertIn("constraints", rule, f"{rule['id']} must declare constraints")
+            self.assertGreater(len(rule["constraints"]), 0, f"{rule['id']} constraints must be non-empty")
+            for constraint in rule["constraints"]:
+                self.assertIsInstance(constraint, str)
 
-    def test_decoder_pipeline_order_matches_required_layers(self):
-        pipeline = self.spec["mustadil_decoder_pipeline"]
-        self.assertEqual(pipeline["pipeline_order"], REQUIRED_PIPELINE_LAYERS)
+    def test_recursive_relation_closure_covers_all_levels(self):
+        """The recursive relation must document seven level-transitions and four invariants.
+        Every example must follow the 'X Certificate → Y Evidence' arrow pattern.
+        """
+        rr = self.spec["reasoning_engine"]["recursive_relation"]
+        self.assertEqual(len(rr["examples"]), RECURSIVE_RELATION_EXAMPLE_COUNT)
+        self.assertEqual(len(rr["invariant"]), RECURSIVE_RELATION_INVARIANT_COUNT)
+        for example in rr["examples"]:
+            self.assertIn("Certificate", example, f"example {example!r} must contain 'Certificate'")
+            self.assertIn("Evidence", example, f"example {example!r} must contain 'Evidence'")
 
-    def test_decoder_pipeline_layers_have_ascending_order(self):
-        pipeline = self.spec["mustadil_decoder_pipeline"]
-        for expected_order, layer_key in enumerate(REQUIRED_PIPELINE_LAYERS, start=1):
-            layer = pipeline[layer_key]
-            self.assertEqual(
-                layer["layer_order"],
-                expected_order,
-                f"Layer {layer_key} must have layer_order={expected_order}",
-            )
+    def test_dal_madlool_separation_is_enforced_in_layer_integrity(self):
+        """The layer integrity score must guard dal (signifier) from context override.
+        amil_rules must distinguish surface effects (dal) from semantic meaning (madlool).
+        """
+        lis = self.spec["malakah_methodology"]["layer_integrity_score"]
+        self.assertIn("context_breaks_dal", lis["checks"])
+        self.assertIn(DAL_INTEGRITY_RULE, lis["rules"])
+        self.assertIn("dal_integrity", lis["score_fields"])
+        self.assertIn("LayerBreak", lis["zero_types"])
 
-    def test_decoder_pipeline_layer_required_fields(self):
-        pipeline = self.spec["mustadil_decoder_pipeline"]
-        for layer_key in REQUIRED_PIPELINE_LAYERS:
-            layer = pipeline[layer_key]
-            for field in ("layer_order", "name", "purpose", "inputs", "outputs", "zero_types"):
-                self.assertIn(field, layer, f"Layer {layer_key} missing field: {field}")
-            self.assertGreater(len(layer["inputs"]), 0, f"Layer {layer_key} inputs must not be empty")
-            self.assertGreater(len(layer["outputs"]), 0, f"Layer {layer_key} outputs must not be empty")
+        for rule in self.spec["grammar_engine"]["amil_rules"]:
+            self.assertIn("input_contract", rule, f"{rule['id']} must have input_contract (dal layer)")
+            self.assertIn("effects", rule, f"{rule['id']} must have effects")
+            self.assertIn("semantic_effect", rule, f"{rule['id']} must declare semantic_effect (madlool)")
 
-    def test_decoder_pipeline_has_golden_rule(self):
-        pipeline = self.spec["mustadil_decoder_pipeline"]
-        self.assertIn("golden_rule", pipeline)
-        self.assertGreater(len(pipeline["golden_rule"]), 10)
+    def test_amil_and_reference_rules_declare_blocking_constraints(self):
+        """Every amil_rule must have at least one BLOCKING zero with type and severity.
+        Every reference_rule must list constraints; reference_zero_types must be non-empty.
+        """
+        ge = self.spec["grammar_engine"]
+        for rule in ge["amil_rules"]:
+            self.assertIn("zeros", rule, f"{rule['id']} must declare zeros")
+            for zero in rule["zeros"]:
+                self.assertIn("type", zero, f"{rule['id']} zero missing 'type'")
+                self.assertIn("severity", zero, f"{rule['id']} zero missing 'severity'")
+            blocking = [z for z in rule["zeros"] if z.get("severity") == "BLOCKING"]
+            self.assertGreater(len(blocking), 0, f"{rule['id']} must have at least one BLOCKING zero")
 
-    def test_decoder_pipeline_invariants_are_complete(self):
-        pipeline = self.spec["mustadil_decoder_pipeline"]
-        invariants = pipeline["pipeline_invariants"]
-        invariant_names = {inv["name"] for inv in invariants}
-        for required_name in REQUIRED_PIPELINE_INVARIANT_NAMES:
-            self.assertIn(required_name, invariant_names, f"Missing pipeline invariant: {required_name}")
-        ids = [inv["id"] for inv in invariants]
-        self.assertEqual(len(ids), len(set(ids)), "Pipeline invariant IDs must be unique")
+        for rule in ge["reference_rules"]:
+            self.assertGreater(len(rule.get("constraints", [])), 0, f"{rule['id']} must declare constraints")
 
-    def test_epistemic_audit_layer_has_certainty_map_fields(self):
-        audit = self.spec["mustadil_decoder_pipeline"]["epistemic_audit_layer"]
-        self.assertIn("certainty_map_fields", audit)
-        for field in EPISTEMIC_AUDIT_CERTAINTY_MAP_FIELDS:
-            self.assertIn(
-                field,
-                audit["certainty_map_fields"],
-                f"epistemic_audit_layer.certainty_map_fields missing: {field}",
-            )
+        self.assertGreater(len(ge["reference_zero_types"]), 0)
 
-    def test_epistemic_audit_layer_output_template_has_certainty_map(self):
-        audit = self.spec["mustadil_decoder_pipeline"]["epistemic_audit_layer"]
-        self.assertIn("output_template", audit)
-        template = audit["output_template"]
-        self.assertIn("certainty_map", template)
-        for field in EPISTEMIC_AUDIT_CERTAINTY_MAP_FIELDS:
-            self.assertIn(field, template["certainty_map"])
+    def test_probabilistic_signals_are_bounded_and_outcome_consistent(self):
+        """Confidence and strength values must be in (0, 1]; Certificate requires confidence > 0.5.
+        expansion_discipline_machine must accept ProbabilisticSignal as an input.
+        """
+        ge = self.spec["grammar_engine"]
+        for rule in ge["reference_rules"]:
+            if "confidence" in rule:
+                self.assertGreater(rule["confidence"], 0, f"{rule['id']} confidence must be > 0")
+                self.assertLessEqual(rule["confidence"], 1, f"{rule['id']} confidence must be ≤ 1")
+                if rule.get("result_type") == "Certificate":
+                    self.assertGreater(
+                        rule["confidence"],
+                        0.5,
+                        f"{rule['id']} Certificate result_type requires confidence > 0.5",
+                    )
 
-    # ------------------------------------------------------------------
-    # Mustadil Decoder Pipeline — decoder prompt file
-    # ------------------------------------------------------------------
+        for rule in ge["qarina_rules"]:
+            if "strength" in rule:
+                self.assertGreater(rule["strength"], 0, f"{rule['id']} strength must be > 0")
+                self.assertLessEqual(rule["strength"], 1, f"{rule['id']} strength must be ≤ 1")
 
-    def test_decoder_prompt_file_exists(self):
-        self.assertTrue(DECODER_PROMPT_PATH.exists())
+        edm = self.spec["malakah_methodology"]["expansion_discipline_machine"]
+        self.assertIn("ProbabilisticSignal", edm["inputs"])
 
-    def test_decoder_prompt_has_required_sections(self):
-        prompt = normalize_case(self.decoder_prompt)
-        for section in REQUIRED_DECODER_PROMPT_SECTIONS:
-            self.assertIn(
-                normalize_case(section),
-                prompt,
-                f"Decoder prompt missing section: {section}",
-            )
+    def test_exception_registry_distinguishes_exceptions_from_zeros(self):
+        """Exceptions licensed with rule+evidence+limits are not Zeros.
+        Unlicensed exceptions stay Hypothesis; over-generalization is a declared zero_type.
+        """
+        er = self.spec["malakah_methodology"]["exception_registry"]
+        self.assertGreater(len(er["exception_types"]), 0)
+        self.assertEqual(set(er["zero_types"]), EXCEPTION_REGISTRY_ZERO_TYPES)
+        self.assertTrue(
+            any("Exception ليس Zero" in rule for rule in er["rules"]),
+            "exception_registry.rules must assert that Exception ≠ Zero when licensed",
+        )
+        self.assertTrue(
+            any("Hypothesis" in rule for rule in er["rules"]),
+            "exception_registry.rules must route unlicensed exceptions to Hypothesis",
+        )
 
-    def test_decoder_prompt_references_golden_rule(self):
-        self.assertIn(normalize_case("Golden Rule"), normalize_case(self.decoder_prompt))
+    def test_ellipsis_rules_require_qarina_for_estimation_and_yield_zero_otherwise(self):
+        """Ellipsis without qarina and without estimation capability must produce Zero.
+        ellipsis_types must cover at least MIN_ELLIPSIS_TYPES distinct deletion patterns.
+        """
+        ge = self.spec["grammar_engine"]
+        self.assertGreaterEqual(len(ge["ellipsis_types"]), MIN_ELLIPSIS_TYPES)
 
-    def test_decoder_prompt_references_allowed_outputs(self):
-        for output in ALLOWED_OUTPUTS:
-            self.assertIn(output, self.decoder_prompt)
-
-    # ------------------------------------------------------------------
-    # Layer Groups — spec structure and assignment
-    # ------------------------------------------------------------------
-
-    def test_pipeline_has_five_layer_groups(self):
-        pipeline = self.spec["mustadil_decoder_pipeline"]
-        self.assertIn("layer_groups", pipeline)
-        group_ids = [g["id"] for g in pipeline["layer_groups"]]
-        for required_id in REQUIRED_GROUP_IDS:
-            self.assertIn(required_id, group_ids, f"Missing layer group: {required_id}")
-        self.assertEqual(len(group_ids), 5)
-
-    def test_layer_groups_cover_all_21_layers(self):
-        pipeline = self.spec["mustadil_decoder_pipeline"]
-        covered = set()
-        for group in pipeline["layer_groups"]:
-            for layer_key in group["layers"]:
-                self.assertNotIn(layer_key, covered, f"Layer {layer_key} appears in more than one group")
-                covered.add(layer_key)
-        self.assertEqual(covered, set(REQUIRED_PIPELINE_LAYERS))
-
-    def test_each_layer_has_layer_group_field(self):
-        pipeline = self.spec["mustadil_decoder_pipeline"]
-        for layer_key in REQUIRED_PIPELINE_LAYERS:
-            layer = pipeline[layer_key]
-            self.assertIn("layer_group", layer, f"Layer {layer_key} missing layer_group field")
-            self.assertIn(
-                layer["layer_group"],
-                REQUIRED_GROUP_IDS,
-                f"Layer {layer_key} has unknown layer_group: {layer['layer_group']}",
-            )
-
-    def test_layer_group_assignments_match_expected(self):
-        pipeline = self.spec["mustadil_decoder_pipeline"]
-        for group_id, expected_layers in PIPELINE_LAYER_GROUPS.items():
-            for layer_key in expected_layers:
-                actual_group = pipeline[layer_key]["layer_group"]
+        for rule in ge["ellipsis_rules"]:
+            for field in ("id", "surface", "missing_element", "can_estimate", "result_type"):
+                self.assertIn(field, rule, f"{rule.get('id', '?')} must have field {field!r}")
+            if not rule["can_estimate"] and not rule.get("qarina_available", False):
                 self.assertEqual(
-                    actual_group,
-                    group_id,
-                    f"Layer {layer_key}: expected group={group_id}, got {actual_group}",
+                    rule["result_type"],
+                    "Zero",
+                    f"{rule['id']}: can_estimate=False + no qarina must yield Zero",
                 )
 
-    def test_semantic_relational_group_completes_before_bayani_linguistic(self):
-        """All semantic_relational layers must have lower layer_order than all bayani_linguistic layers."""
-        pipeline = self.spec["mustadil_decoder_pipeline"]
-        sr_orders = [pipeline[lk]["layer_order"] for lk in PIPELINE_LAYER_GROUPS["semantic_relational"]]
-        bl_orders = [pipeline[lk]["layer_order"] for lk in PIPELINE_LAYER_GROUPS["bayani_linguistic"]]
-        self.assertLess(
-            max(sr_orders),
-            min(bl_orders),
-            "All semantic_relational layers must finish before any bayani_linguistic layer starts",
-        )
+        self.assertGreater(len(ge["ellipsis_ruleset_rules"]), 0)
+        self.assertIn(REFERENCE_ZERO_TYPE_REQUIRED, ge["reference_zero_types"])
 
-    def test_essence_domain_relations_precede_judgment_formation(self):
-        """essence_assignment, domain_assignment, relational_mapping must all precede judgment_formation_layer."""
-        pipeline = self.spec["mustadil_decoder_pipeline"]
-        prerequisite_layers = ["essence_assignment_layer", "domain_assignment_layer", "relational_mapping_layer"]
-        judgment_order = pipeline["judgment_formation_layer"]["layer_order"]
-        for prereq in prerequisite_layers:
-            prereq_order = pipeline[prereq]["layer_order"]
-            self.assertLess(
-                prereq_order,
-                judgment_order,
-                f"{prereq} (order {prereq_order}) must precede judgment_formation_layer (order {judgment_order})",
-            )
+    def test_ontology_daal_madlool_tree_is_fully_computable(self):
+        """Every node in the ontology tree must carry id, label, arabic_label, and definition.
+        Every concept_example must reference a valid top_type and declare computable roles.
+        """
+        ont = self.spec["ontology"]
+        valid_ontological_type_labels = {t["label"] for t in ont["top_types"]}
 
-    def test_application_layer_follows_tahqeeq_manat(self):
-        pipeline = self.spec["mustadil_decoder_pipeline"]
-        tahqeeq_order = pipeline["tahqeeq_manat_layer"]["layer_order"]
-        application_order = pipeline["application_layer"]["layer_order"]
-        self.assertLess(
-            tahqeeq_order,
-            application_order,
-            "tahqeeq_manat_layer must precede application_layer",
-        )
+        # Every top_type has all required fields
+        for top_type in ont["top_types"]:
+            for field in REQUIRED_TOP_TYPE_FIELDS:
+                self.assertIn(field, top_type, f"top_type {top_type.get('id', '?')} missing {field!r}")
 
-    def test_layer_groups_have_required_fields(self):
-        pipeline = self.spec["mustadil_decoder_pipeline"]
-        for group in pipeline["layer_groups"]:
-            for field in ("id", "name", "description", "layers", "constraint"):
-                self.assertIn(field, group, f"Group {group.get('id','?')} missing field: {field}")
-            self.assertGreater(len(group["layers"]), 0)
-            self.assertGreater(len(group["constraint"]), 10)
-
-    # ------------------------------------------------------------------
-    # Prompt Type Classifier — spec structure and coverage
-    # ------------------------------------------------------------------
-
-    def test_prompt_type_classifier_present_in_spec(self):
-        self.assertIn("prompt_type_classifier", self.spec)
-        ptc = self.spec["prompt_type_classifier"]
-        for field in ("purpose", "governing_rule", "types", "pre_answer_classification_flow"):
-            self.assertIn(field, ptc, f"prompt_type_classifier missing field: {field}")
-
-    def test_prompt_type_classifier_has_ten_types(self):
-        ptc = self.spec["prompt_type_classifier"]
-        type_ids = [t["id"] for t in ptc["types"]]
-        for required_id in REQUIRED_PROMPT_TYPE_IDS:
-            self.assertIn(required_id, type_ids, f"Missing prompt type: {required_id}")
-        self.assertEqual(len(type_ids), 10, "Exactly 10 prompt types are required")
-        self.assertEqual(len(type_ids), len(set(type_ids)), "Prompt type IDs must be unique")
-
-    def test_prompt_types_have_required_fields(self):
-        ptc = self.spec["prompt_type_classifier"]
-        for pt in ptc["types"]:
-            for field in PROMPT_TYPE_REQUIRED_FIELDS:
-                self.assertIn(field, pt, f"Prompt type {pt.get('id','?')} missing field: {field}")
-            self.assertGreater(
-                len(pt["processing_flow"]),
-                1,
-                f"Prompt type {pt['id']} processing_flow must have at least 2 steps",
-            )
-            self.assertGreater(
-                len(pt["jump_risk"]),
-                5,
-                f"Prompt type {pt['id']} jump_risk must be non-trivial",
-            )
-
-    def test_prompt_type_layer_assignments_are_valid_pipeline_layers(self):
-        """Each prompt type's processing_layer must be a known pipeline layer key."""
-        ptc = self.spec["prompt_type_classifier"]
-        for pt in ptc["types"]:
+        for example in ont["concept_examples"]:
+            for field in REQUIRED_CONCEPT_EXAMPLE_FIELDS:
+                self.assertIn(field, example, f"concept_example {example.get('concept', '?')} missing {field!r}")
             self.assertIn(
-                pt["processing_layer"],
-                REQUIRED_PIPELINE_LAYERS,
-                f"Prompt type {pt['id']} references unknown processing_layer: {pt['processing_layer']}",
+                example["ontological_type"],
+                valid_ontological_type_labels,
+                f"concept {example['concept']!r} references unknown type {example['ontological_type']!r}",
             )
+            for role_name, role_data in example["roles"].items():
+                self.assertIsInstance(role_data, dict, f"role {role_name!r} must be a dict")
+                self.assertIn("required", role_data, f"role {role_name!r} must declare 'required'")
+                self.assertIsInstance(role_data["required"], bool)
 
-    def test_prompt_type_layer_assignments_match_expected(self):
-        """Spot-check that specific prompt types map to the correct pipeline layers."""
-        ptc = self.spec["prompt_type_classifier"]
-        by_id = {t["id"]: t for t in ptc["types"]}
-        for type_id, expected_layer in PROMPT_TYPE_LAYER_MAP.items():
-            self.assertEqual(
-                by_id[type_id]["processing_layer"],
-                expected_layer,
-                f"Prompt type {type_id}: expected processing_layer={expected_layer}",
-            )
-
-    def test_application_prompt_type_requires_tahqeeq_constraint(self):
-        """PT-10 (Application) must mention tahqeeq al-manat in its processing_flow."""
-        ptc = self.spec["prompt_type_classifier"]
-        by_id = {t["id"]: t for t in ptc["types"]}
-        pt10 = by_id["PT-10"]
-        flow_text = " ".join(pt10["processing_flow"]).casefold()
-        self.assertIn(
-            "tahqeeq",
-            flow_text,
-            "PT-10 (Application) processing_flow must reference tahqeeq al-manat",
-        )
-
-    def test_mafhoom_prompt_type_references_mantuq(self):
-        """PT-07 (Mafhoom) processing_flow must reference mantuq as a prerequisite."""
-        ptc = self.spec["prompt_type_classifier"]
-        by_id = {t["id"]: t for t in ptc["types"]}
-        pt07 = by_id["PT-07"]
-        flow_text = " ".join(pt07["processing_flow"]).casefold()
-        self.assertIn(
-            "منطوق",
-            flow_text,
-            "PT-07 (Mafhoom) processing_flow must reference mantuq",
-        )
-
-    def test_prompt_type_governing_rule_is_non_trivial(self):
-        ptc = self.spec["prompt_type_classifier"]
-        self.assertGreater(len(ptc["governing_rule"]), 20)
-
-    def test_pre_answer_classification_flow_has_all_ten_types(self):
-        ptc = self.spec["prompt_type_classifier"]
-        flow = ptc["pre_answer_classification_flow"]
-        self.assertGreaterEqual(len(flow), 10, "pre_answer_classification_flow must have at least 10 steps")
+        self.assertGreater(len(ont["rules"]), 0)
+        for rule in ont["rules"]:
+            self.assertIsInstance(rule, str)
+            self.assertTrue(rule)
 
     # ------------------------------------------------------------------
-    # Mustadil Prompt Classifier — spec structure and coverage
+    # Dal/Madlul coupling tests
     # ------------------------------------------------------------------
 
-    def test_mustadil_prompt_classifier_present_in_spec(self):
-        self.assertIn("mustadil_prompt_classifier", self.spec)
-        mpc = self.spec["mustadil_prompt_classifier"]
-        for field in ("purpose", "golden_rule", "forbidden_jumps", "required_output_fields", "layers"):
-            self.assertIn(field, mpc, f"mustadil_prompt_classifier missing field: {field}")
+    def test_graph_contract_contains_dal_and_madlul_nodes(self):
+        """graph_contract must expose Dal and Madlul as named graph nodes.
+        vector_dimensions must include DalScore and MadlulScore so that
+        the signifier–signified coupling is measurable at inference time.
+        """
+        engine = self.spec["answer_analysis_engine"]
+        graph_nodes = set(engine["graph_contract"]["nodes"])
+        for node in GRAPH_CONTRACT_COUPLING_NODES:
+            self.assertIn(node, graph_nodes, f"graph_contract.nodes must contain {node!r}")
 
-    def test_mustadil_prompt_classifier_has_eleven_layers(self):
-        mpc = self.spec["mustadil_prompt_classifier"]
-        layers = mpc["layers"]
-        for required_key in REQUIRED_MPC_LAYER_KEYS:
-            self.assertIn(required_key, layers, f"mustadil_prompt_classifier missing layer: {required_key}")
-        self.assertEqual(len(layers), 11, "Exactly 11 MPC layers are required")
+        vector_dims = set(engine["vector_dimensions"])
+        for dim in VECTOR_DAL_MADLUL_DIMENSIONS:
+            self.assertIn(dim, vector_dims, f"vector_dimensions must contain {dim!r}")
 
-    def test_mustadil_prompt_classifier_layers_have_required_fields(self):
-        mpc = self.spec["mustadil_prompt_classifier"]
-        for key, layer in mpc["layers"].items():
-            for field in ("id", "name", "question", "constraint"):
-                self.assertIn(field, layer, f"MPC layer '{key}' missing field: {field}")
-            self.assertTrue(
-                layer["id"].startswith(MPC_LAYER_ID_PREFIX),
-                f"MPC layer '{key}' id must start with '{MPC_LAYER_ID_PREFIX}'",
+    def test_graph_contract_declares_coupling_edges(self):
+        """graph_contract must declare coupling edge types that permit
+        Dal↔Madlul binding without conflating them into the same node.
+        Required edges: RELATES_TO, SUPPORTED_BY, DEPENDS_ON, REQUIRES, BLOCKED_BY.
+        """
+        graph_edges = set(self.spec["answer_analysis_engine"]["graph_contract"]["edges"])
+        for edge in GRAPH_CONTRACT_COUPLING_EDGES:
+            self.assertIn(edge, graph_edges, f"graph_contract.edges must contain {edge!r}")
+
+    def test_amil_rules_declare_complete_dal_madlul_coupling(self):
+        """Every amil_rule must couple its surface form (dal) to its semantic
+        consequence (madlul) by declaring surface, semantic_effect,
+        evidence_required, and at least one zero for invalid coupling.
+        """
+        for rule in self.spec["grammar_engine"]["amil_rules"]:
+            for field in REQUIRED_AMIL_COUPLING_FIELDS:
+                self.assertIn(field, rule, f"{rule.get('id', '?')} must declare {field!r}")
+            self.assertIsInstance(rule["semantic_effect"], list)
+            self.assertGreater(
+                len(rule["semantic_effect"]), 0,
+                f"{rule['id']} semantic_effect (madlul) must be non-empty",
             )
-            self.assertGreater(len(layer["constraint"]), 10, f"MPC layer '{key}' constraint must be non-trivial")
+            self.assertIsInstance(rule["evidence_required"], list)
+            self.assertGreater(
+                len(rule["evidence_required"]), 0,
+                f"{rule['id']} evidence_required must be non-empty",
+            )
+            self.assertGreater(
+                len(rule["zeros"]), 0,
+                f"{rule['id']} must declare zeros for invalid dal/madlul coupling",
+            )
 
-    def test_mustadil_prompt_classifier_layer_ids_are_sequential(self):
-        mpc = self.spec["mustadil_prompt_classifier"]
-        ids = [layer["id"] for layer in mpc["layers"].values()]
-        self.assertEqual(len(ids), len(set(ids)), "MPC layer IDs must be unique")
-        for idx, key in enumerate(REQUIRED_MPC_LAYER_KEYS, start=1):
-            expected_id = f"MPC-{idx:02d}"
-            actual_id = mpc["layers"][key]["id"]
+    def test_reference_rules_form_complete_dal_to_result_chain(self):
+        """Every reference_rule must complete the full coupling chain:
+        surface (dal) → selected_antecedent (madlul) → constraints → confidence → result_type.
+        selected_antecedent must be one of candidate_antecedents.
+        Certificate result_type requires confidence > 0.5.
+        """
+        for rule in self.spec["grammar_engine"]["reference_rules"]:
+            for field in ("surface", "selected_antecedent", "candidate_antecedents",
+                          "constraints", "confidence", "result_type"):
+                self.assertIn(field, rule, f"{rule['id']} must declare {field!r}")
+
+            self.assertIn(
+                rule["selected_antecedent"],
+                rule["candidate_antecedents"],
+                f"{rule['id']}: selected_antecedent must be one of candidate_antecedents",
+            )
+            self.assertGreater(rule["confidence"], 0, f"{rule['id']} confidence must be > 0")
+            self.assertLessEqual(rule["confidence"], 1, f"{rule['id']} confidence must be ≤ 1")
+            if rule["result_type"] == "Certificate":
+                self.assertGreater(
+                    rule["confidence"],
+                    0.5,
+                    f"{rule['id']}: Certificate requires confidence > 0.5",
+                )
+
+    def test_ambiguous_dal_without_resolution_remains_hypothesis(self):
+        """A dal token with multiple competing madlul interpretations must
+        remain Hypothesis until a qarina or evidence resolves the ambiguity.
+        Every vocalization_conflict must have result_type=Hypothesis and
+        status indicating managed (not open-ended) ambiguity.
+        """
+        conflicts = self.spec["reasoning_engine"]["conflicts"]
+        vocalization_conflicts = [c for c in conflicts if c.get("conflict_type") == "vocalization_conflict"]
+        self.assertGreater(
+            len(vocalization_conflicts), 0,
+            "At least one vocalization_conflict (ambiguous dal) must be declared",
+        )
+        for conflict in vocalization_conflicts:
             self.assertEqual(
-                actual_id,
-                expected_id,
-                f"Layer '{key}' expected id={expected_id}, got {actual_id}",
+                conflict["result_type"],
+                "Hypothesis",
+                f"{conflict['id']}: ambiguous dal must yield Hypothesis, not {conflict['result_type']!r}",
+            )
+            self.assertIn(
+                "ambiguity",
+                conflict["status"],
+                f"{conflict['id']}: unresolved multi-madlul conflict must have 'ambiguity' in status",
             )
 
-    def test_mustadil_prompt_classifier_forbidden_jumps_coverage(self):
-        mpc = self.spec["mustadil_prompt_classifier"]
-        jumps = mpc["forbidden_jumps"]
-        for required_jump in REQUIRED_MPC_FORBIDDEN_JUMPS:
-            self.assertIn(required_jump, jumps, f"mustadil_prompt_classifier missing forbidden_jump: {required_jump}")
-
-    def test_mustadil_prompt_classifier_required_output_fields_coverage(self):
-        mpc = self.spec["mustadil_prompt_classifier"]
-        output_fields = mpc["required_output_fields"]
-        for required_field in REQUIRED_MPC_OUTPUT_FIELDS:
-            self.assertIn(required_field, output_fields, f"mustadil_prompt_classifier missing output field: {required_field}")
-
-    def test_mustadil_prompt_classifier_key_layers_have_invariants(self):
-        mpc = self.spec["mustadil_prompt_classifier"]
-        for key in MPC_LAYERS_WITH_INVARIANTS:
-            layer = mpc["layers"][key]
-            self.assertIn("invariant", layer, f"MPC layer '{key}' must declare an invariant")
-            self.assertGreater(len(layer["invariant"]), 3, f"MPC layer '{key}' invariant must be non-trivial")
-
-    def test_mustadil_prompt_classifier_golden_rule_non_trivial(self):
-        mpc = self.spec["mustadil_prompt_classifier"]
-        self.assertGreater(len(mpc["golden_rule"]), 20)
-
-    def test_mustadil_prompt_classifier_purpose_layer_has_allowed_purposes(self):
-        mpc = self.spec["mustadil_prompt_classifier"]
-        purpose_layer = mpc["layers"]["purpose_layer"]
-        self.assertIn("allowed_purposes", purpose_layer)
-        expected_purposes = {
-            "direct_answer", "explanation", "hukm_knowledge", "hukm_istinbat",
-            "evidence_validation", "tarjih", "conflict_resolution", "tahqeeq_manat",
-            "schema_construction", "prompt_construction", "malakah_building",
-        }
-        actual_purposes = set(purpose_layer["allowed_purposes"])
-        for purpose in expected_purposes:
-            self.assertIn(purpose, actual_purposes, f"purpose_layer missing allowed_purpose: {purpose}")
-
-    def test_mustadil_prompt_classifier_evidence_type_layer_separates_valid_and_assumed(self):
-        mpc = self.spec["mustadil_prompt_classifier"]
-        et_layer = mpc["layers"]["evidence_type_classification_layer"]
-        self.assertIn("valid_evidence", et_layer, "evidence_type_classification_layer must list valid_evidence")
-        self.assertIn("assumed_evidence", et_layer, "evidence_type_classification_layer must list assumed_evidence")
-        self.assertGreater(len(et_layer["valid_evidence"]), 3)
-        self.assertGreater(len(et_layer["assumed_evidence"]), 3)
-
-    def test_mustadil_prompt_classifier_conflict_layer_has_operations(self):
-        mpc = self.spec["mustadil_prompt_classifier"]
-        conflict_layer = mpc["layers"]["conflict_and_tarjih_layer"]
-        self.assertIn("operations", conflict_layer)
-        for op in ("jam", "takhsis", "tarjih"):
-            self.assertIn(op, conflict_layer["operations"], f"conflict_and_tarjih_layer missing operation: {op}")
-
-    def test_mustadil_prompt_classifier_manat_vs_illah_layer_has_types(self):
-        mpc = self.spec["mustadil_prompt_classifier"]
-        manat_layer = mpc["layers"]["manat_vs_illah_layer"]
-        self.assertIn("types", manat_layer)
-        for t in ("tahqeeq_manat", "tahqeeq_illah"):
-            self.assertIn(t, manat_layer["types"], f"manat_vs_illah_layer missing type: {t}")
-
-    def test_mustadil_prompt_classifier_malakah_layer_has_modes(self):
-        mpc = self.spec["mustadil_prompt_classifier"]
-        malakah_layer = mpc["layers"]["malakah_building_layer"]
-        self.assertIn("modes", malakah_layer)
-        for mode in ("final_answer", "method_teaching", "checklist"):
-            self.assertIn(mode, malakah_layer["modes"], f"malakah_building_layer missing mode: {mode}")
+    def test_concept_examples_bind_dal_to_madlul_through_roles(self):
+        """Every concept_example must form the chain:
+        concept (dal) → ontological_type (madlul class) → roles (madlul binding).
+        Required roles (required=True) must declare a role_name.
+        """
+        valid_type_labels = {t["label"] for t in self.spec["ontology"]["top_types"]}
+        for example in self.spec["ontology"]["concept_examples"]:
+            self.assertIn("concept", example)
+            self.assertIn("ontological_type", example)
+            self.assertIn("roles", example)
+            self.assertIn(
+                example["ontological_type"],
+                valid_type_labels,
+                f"concept {example['concept']!r}: ontological_type must match a known top_type label",
+            )
+            self.assertIsInstance(example["roles"], dict)
+            self.assertGreater(
+                len(example["roles"]), 0,
+                f"concept {example['concept']!r} must declare at least one role",
+            )
+            for role_name, role_data in example["roles"].items():
+                self.assertIsInstance(role_data, dict, f"role {role_name!r} data must be a dict")
+                self.assertIn("required", role_data, f"role {role_name!r} must declare 'required'")
+                if role_data["required"]:
+                    self.assertIn(
+                        "role_name",
+                        role_data,
+                        f"required role {role_name!r} must declare 'role_name' (madlul binding)",
+                    )
 
 
 if __name__ == "__main__":
