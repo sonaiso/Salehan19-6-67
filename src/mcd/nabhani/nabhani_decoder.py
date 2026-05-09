@@ -227,3 +227,27 @@ class NabhaniDecoder:
             return "suspended"
 
         return "rejected"
+
+    def decode_with_classification(self, text: str) -> Dict[str, Any]:
+        """Classify the prompt first via FPCL, then run the NERL pipeline.
+
+        If the PromptFrame indicates a shari judgment without evidence, the
+        NERL certainty is capped and epistemic_status is forced to 'suspended'.
+        """
+        from mcd.classification.fractal_prompt_classifier import FractalPromptClassifier
+        from mcd.classification.serializers import prompt_frame_to_dict
+        from mcd.classification.taxonomy import CertaintyPolicy, JudgmentType
+
+        fpc = FractalPromptClassifier()
+        prompt_frame = fpc.classify(text)
+
+        # Run normal NERL decode
+        result = self.decode(text)
+
+        # Respect PromptFrame certainty policy
+        shari_dominant = prompt_frame.judgment_types.get(JudgmentType.SHARI, 0.0) >= 0.70
+        if prompt_frame.certainty_policy == CertaintyPolicy.SUSPEND or shari_dominant:
+            result["epistemic_status"] = "suspended"
+
+        result["prompt_frame"] = prompt_frame_to_dict(prompt_frame)
+        return result
