@@ -173,6 +173,80 @@ def main() -> None:
     )
     api_schema_parser.add_argument("--output", choices=["json", "text"], default="json")
 
+    # ── Phase 7: Cognitive Residual Learning ──────────────────────────────
+    # residual-analyze
+    res_analyze_parser = subparsers.add_parser(
+        "residual-analyze",
+        help="Phase 7: Analyze GPT proposals and compute cognitive residuals",
+    )
+    res_analyze_parser.add_argument(
+        "--input",
+        default="data/residual_learning/mock_gpt_proposals_ar.jsonl",
+        help="Path to JSONL file with GPT proposals",
+    )
+    res_analyze_parser.add_argument("--output", choices=["json", "markdown", "text"], default="json")
+
+    # residual-report
+    res_report_parser = subparsers.add_parser(
+        "residual-report",
+        help="Phase 7: Generate residual learning summary report",
+    )
+    res_report_parser.add_argument(
+        "--input",
+        default="data/residual_learning/mock_gpt_proposals_ar.jsonl",
+        help="Path to JSONL file with GPT proposals",
+    )
+    res_report_parser.add_argument("--output", choices=["json", "markdown"], default="markdown")
+
+    # residual-build-dataset
+    res_build_parser = subparsers.add_parser(
+        "residual-build-dataset",
+        help="Phase 7: Build dataset from residuals (adversarial / curriculum / calibration)",
+    )
+    res_build_parser.add_argument(
+        "--target",
+        choices=["adversarial", "curriculum", "calibration", "regression"],
+        default="adversarial",
+    )
+    res_build_parser.add_argument(
+        "--input",
+        default="data/residual_learning/mock_gpt_proposals_ar.jsonl",
+        help="Path to JSONL file with GPT proposals",
+    )
+    res_build_parser.add_argument(
+        "--output",
+        default=None,
+        help="Output JSONL file path. Defaults to data/residual_learning/generated_<target>.jsonl",
+    )
+
+    # residual-calibrate
+    res_cal_parser = subparsers.add_parser(
+        "residual-calibrate",
+        help="Phase 7: Generate calibration recommendations from residuals",
+    )
+    res_cal_parser.add_argument(
+        "--input",
+        default="data/residual_learning/mock_gpt_proposals_ar.jsonl",
+        help="Path to JSONL file with GPT proposals",
+    )
+    res_cal_parser.add_argument("--output", choices=["json", "markdown"], default="markdown")
+
+    # residual-test-specs
+    res_specs_parser = subparsers.add_parser(
+        "residual-test-specs",
+        help="Phase 7: Generate test specs from residuals",
+    )
+    res_specs_parser.add_argument(
+        "--input",
+        default="data/residual_learning/mock_gpt_proposals_ar.jsonl",
+        help="Path to JSONL file with GPT proposals",
+    )
+    res_specs_parser.add_argument(
+        "--output",
+        default="data/residual_learning/generated_test_specs.jsonl",
+        help="Output JSONL file path",
+    )
+
     args = parser.parse_args()
 
     if args.command == "classify":
@@ -796,6 +870,11 @@ def main() -> None:
                 for c in result.checks:
                     if not c["passed"]:
                         print(f"  ❌ {c['check']}")
+    elif args.command in (
+        "residual-analyze", "residual-report",
+        "residual-build-dataset", "residual-calibrate", "residual-test-specs",
+    ):
+        _handle_residual_command(args)
     else:
         parser.print_help()
 
@@ -806,6 +885,111 @@ def _top_labels(d: dict, n: int = 3) -> str:
         return "-"
     top = sorted(d.items(), key=lambda x: x[1], reverse=True)[:n]
     return ", ".join(f"{k}({v:.2f})" for k, v in top)
+
+
+def _handle_residual_command(args) -> None:  # noqa: ANN001
+    """Phase 7 — Cognitive Residual Learning CLI handlers."""
+    import json as _json
+    from pathlib import Path as _Path
+    from mcd.residual_learning.proposal_schema import GPTProposal
+    from mcd.residual_learning.engine import CognitiveResidualLearningEngine
+    from mcd.residual_learning.residual_report import ResidualReport
+    from mcd.residual_learning.residual_calibration import ResidualCalibrationEngine
+    from mcd.residual_learning.residual_dataset_builder import ResidualDatasetBuilder
+    from mcd.residual_learning.residual_test_generator import ResidualTestGenerator
+
+    def _load_proposals(path: str) -> list[GPTProposal]:
+        proposals = []
+        with open(path, encoding="utf-8") as fh:
+            for line in fh:
+                line = line.strip()
+                if line:
+                    proposals.append(GPTProposal.from_dict(_json.loads(line)))
+        return proposals
+
+    engine = CognitiveResidualLearningEngine()
+
+    if args.command == "residual-analyze":
+        proposals = _load_proposals(args.input)
+        results = engine.analyze_batch(proposals)
+
+        if args.output == "json":
+            out = [r.to_dict() for r in results]
+            print(_json.dumps(out, ensure_ascii=False, indent=2))
+        elif args.output == "markdown":
+            report = engine.generate_report(results)
+            print(report.to_markdown())
+        else:
+            report = engine.generate_report(results)
+            print(f"Total proposals: {len(proposals)}")
+            print(f"Total residuals: {report.total}")
+            print(f"Blocking:        {report.blocking_count}")
+            print(f"High:            {report.high_count}")
+            print(f"Adversarial:     {report.adversarial_candidates}")
+            print(f"GPT as evidence: {'YES ❌' if report.gpt_used_as_evidence else 'No ✅'}")
+
+    elif args.command == "residual-report":
+        proposals = _load_proposals(args.input)
+        results = engine.analyze_batch(proposals)
+        report = engine.generate_report(results)
+
+        if args.output == "json":
+            print(_json.dumps(report.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(report.to_markdown())
+
+    elif args.command == "residual-build-dataset":
+        proposals = _load_proposals(args.input)
+        results = engine.analyze_batch(proposals)
+        builder = ResidualDatasetBuilder()
+        target = args.target
+        out_path = args.output or f"data/residual_learning/generated_{target}.jsonl"
+
+        records = []
+        for r in results:
+            if target == "adversarial" and r.residual.severity in ("blocking", "high"):
+                records.append(builder.residual_to_adversarial_case(r.residual, r.proposal).to_dict())
+            elif target == "curriculum":
+                records.append(builder.residual_to_curriculum_unit(r.residual, r.proposal).to_dict())
+            elif target == "calibration":
+                records.append(builder.residual_to_calibration_case(r.residual, r.proposal).to_dict())
+            elif target == "regression" and r.residual.severity in ("blocking", "high"):
+                records.append(builder.residual_to_regression_test_spec(r.residual, r.proposal).to_dict())
+
+        _Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+        with open(out_path, "w", encoding="utf-8") as fh:
+            for rec in records:
+                fh.write(_json.dumps(rec, ensure_ascii=False) + "\n")
+        print(f"Written {len(records)} {target} records to {out_path}")
+
+    elif args.command == "residual-calibrate":
+        proposals = _load_proposals(args.input)
+        results = engine.analyze_batch(proposals)
+        residuals = [r.residual for r in results]
+        cal_engine = ResidualCalibrationEngine()
+        cal_report = cal_engine.generate_report(residuals)
+
+        if args.output == "json":
+            print(_json.dumps(cal_report.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(cal_report.to_markdown())
+
+    elif args.command == "residual-test-specs":
+        proposals = _load_proposals(args.input)
+        results = engine.analyze_batch(proposals)
+        gen = ResidualTestGenerator()
+        proposal_map = {r.proposal.proposal_id: r.proposal.input_text for r in results}
+        specs = gen.generate_batch(
+            [r.residual for r in results],
+            proposals=proposal_map,
+        )
+        out_path = args.output
+        _Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+        with open(out_path, "w", encoding="utf-8") as fh:
+            for spec in specs:
+                fh.write(_json.dumps(spec.to_dict(), ensure_ascii=False) + "\n")
+        print(f"Written {len(specs)} test specs to {out_path}")
+
 
 
 if __name__ == "__main__":
