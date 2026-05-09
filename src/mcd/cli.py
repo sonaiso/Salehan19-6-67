@@ -60,6 +60,25 @@ def main() -> None:
     report_parser = subparsers.add_parser("dataset-report", help="Generate dataset Markdown report")
     report_parser.add_argument("--output", choices=["markdown", "json"], default="markdown")
 
+    # industrial-test
+    ind_test_parser = subparsers.add_parser("industrial-test", help="Run industrial test suite")
+    ind_test_parser.add_argument("--profile", choices=["quick", "full"], default="quick")
+    ind_test_parser.add_argument("--output", choices=["markdown", "json"], default="markdown")
+
+    # source-api-smoke
+    smoke_parser = subparsers.add_parser("source-api-smoke", help="Smoke test source API scenarios")
+    smoke_parser.add_argument("--scenario", default="ok_with_relevant_docs")
+    smoke_parser.add_argument("--output", choices=["markdown", "json"], default="json")
+
+    # pilot-readiness
+    pilot_parser = subparsers.add_parser("pilot-readiness", help="Evaluate pilot readiness gate")
+    pilot_parser.add_argument("--output", choices=["markdown", "json"], default="json")
+
+    # latency-benchmark
+    latency_parser = subparsers.add_parser("latency-benchmark", help="Run latency benchmark")
+    latency_parser.add_argument("--cases", type=int, default=20)
+    latency_parser.add_argument("--output", choices=["markdown", "json"], default="markdown")
+
     args = parser.parse_args()
 
     if args.command == "classify":
@@ -293,6 +312,76 @@ def main() -> None:
             print(json.dumps(coverage.to_dict(), ensure_ascii=False, indent=2))
         else:
             print(rpt.generate_markdown())
+    elif args.command == "industrial-test":
+        from mcd.industrial.industrial_test_runner import IndustrialTestRunner
+        from mcd.industrial.industrial_test_case import get_default_test_cases
+        from mcd.industrial.industrial_report import generate_industrial_report
+        from mcd.industrial.serializers import industrial_result_to_dict, to_json
+
+        cases = get_default_test_cases()
+        if args.profile == "quick":
+            cases = cases[:10]
+        runner = IndustrialTestRunner()
+        results = runner.run_all(cases)
+        summary = runner.summary(results)
+
+        if args.output == "json":
+            print(to_json({"summary": summary, "results": [industrial_result_to_dict(r) for r in results]}))
+        else:
+            print(generate_industrial_report())
+    elif args.command == "source-api-smoke":
+        from mcd.industrial.mock_source_api import MockSourceAPI
+        from mcd.industrial.api_contract import SourceQuery
+        from mcd.industrial.serializers import source_response_to_dict, to_json
+
+        api = MockSourceAPI(scenario=args.scenario)
+        q = SourceQuery(query_id="smoke-001", text="اختبار سريع للمصدر", timeout_ms=3000)
+        response = api.search(q)
+
+        if args.output == "json":
+            print(to_json(source_response_to_dict(response)))
+        else:
+            print(f"Scenario: {args.scenario}")
+            print(f"Status: {response.status}")
+            print(f"Documents: {len(response.documents)}")
+            print(f"Latency: {response.latency_ms}ms")
+    elif args.command == "pilot-readiness":
+        from mcd.industrial.pilot_readiness import PilotReadinessGate
+        from mcd.industrial.serializers import pilot_readiness_to_dict, to_json
+
+        gate = PilotReadinessGate()
+        result = gate.evaluate_from_runner()
+
+        if args.output == "json":
+            print(to_json(pilot_readiness_to_dict(result)))
+        else:
+            print(f"# Pilot Readiness Gate\n")
+            print(f"**Ready for Pilot:** {'✅ YES' if result.ready_for_pilot else '❌ NO'}")
+            if result.conditional:
+                print(f"**Status:** Conditional")
+            print(f"**Score:** {result.score:.2%}")
+            if result.blockers:
+                print(f"\n## Blockers")
+                for b in result.blockers:
+                    print(f"- {b}")
+    elif args.command == "latency-benchmark":
+        from mcd.industrial.latency_benchmark import LatencyBenchmark
+        from mcd.industrial.industrial_test_case import get_default_test_cases
+        from mcd.industrial.serializers import latency_result_to_dict, to_json
+
+        cases = get_default_test_cases()[:args.cases]
+        bench = LatencyBenchmark()
+        result = bench.run(cases)
+
+        if args.output == "json":
+            print(to_json(latency_result_to_dict(result)))
+        else:
+            print(f"# Latency Benchmark Results\n")
+            print(f"- Total cases: {result.total_cases}")
+            print(f"- Avg latency: {result.avg_latency_ms:.1f}ms")
+            print(f"- P50 latency: {result.p50_latency_ms:.1f}ms")
+            print(f"- P95 latency: {result.p95_latency_ms:.1f}ms")
+            print(f"- Max latency: {result.max_latency_ms:.1f}ms")
     else:
         parser.print_help()
 
