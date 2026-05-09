@@ -141,7 +141,7 @@ def main() -> None:
     # curriculum-qualification
     cur_qual_parser = subparsers.add_parser("curriculum-qualification", help="Compute curriculum qualification metrics")
     cur_qual_parser.add_argument("--profile", default="full_curriculum_extended")
-    cur_qual_parser.add_argument("--output", choices=["json", "text"], default="text")
+    cur_qual_parser.add_argument("--output", choices=["json", "text", "markdown"], default="markdown")
 
     args = parser.parse_args()
 
@@ -615,7 +615,12 @@ def main() -> None:
                     print(f"    - {v}")
     elif args.command == "curriculum-qualification":
         from mcd.curriculum.curriculum_dataset import CurriculumDataset
-        from mcd.curriculum.qualification_bridge import compute_qualification_metrics
+        from mcd.curriculum.qualification_bridge import (
+            compute_qualification_metrics,
+            DATASET_THRESHOLD, CALIBRATION_THRESHOLD, INDUSTRIAL_THRESHOLD,
+            SOURCE_TRUST_THRESHOLD, GRAPH_CONTRACT_THRESHOLD,
+            VECTOR_CONTRACT_THRESHOLD, INVARIANT_THRESHOLD, ADVERSARIAL_THRESHOLD,
+        )
         from mcd.curriculum.learning_profiles import get_profile
 
         profile = get_profile(args.profile)
@@ -624,16 +629,50 @@ def main() -> None:
 
         if args.output == "json":
             print(json.dumps(metrics.to_dict(), ensure_ascii=False, indent=2))
+        elif args.output == "markdown":
+            is_qual = metrics.is_qualified()
+            status = "✅ QUALIFIED FOR API PHASE" if is_qual else "❌ NOT YET QUALIFIED"
+            print(f"# Curriculum Qualification Report — Phase 5.3.1\n")
+            print(f"**Status:** {status}  ")
+            print(f"**Profile:** {args.profile}  ")
+            print(f"**Recommendation:** {metrics.recommendation}\n")
+            print(f"## Dataset Coverage\n")
+            print(f"| Metric | Value |")
+            print(f"|--------|-------|")
+            print(f"| Total examples | {metrics.total_examples} |")
+            print(f"| Golden examples | {metrics.golden_examples} |")
+            print(f"| Adversarial examples | {metrics.adversarial_examples} |")
+            print(f"| Coverage score | {metrics.curriculum_coverage_score:.4f} |")
+            print(f"\n## Score Estimates vs Thresholds\n")
+            print(f"| Metric | Score | Threshold | Status |")
+            print(f"|--------|-------|-----------|--------|")
+            rows = [
+                ("dataset_score_estimate", metrics.dataset_score_estimate, DATASET_THRESHOLD),
+                ("calibration_score_estimate", metrics.calibration_score_estimate, CALIBRATION_THRESHOLD),
+                ("industrial_testing_score_estimate", metrics.industrial_testing_score_estimate, INDUSTRIAL_THRESHOLD),
+                ("source_trust_score_estimate", metrics.source_trust_score_estimate, SOURCE_TRUST_THRESHOLD),
+                ("graph_contract_score", metrics.graph_contract_score, GRAPH_CONTRACT_THRESHOLD),
+                ("vector_contract_score", metrics.vector_contract_score, VECTOR_CONTRACT_THRESHOLD),
+                ("invariant_pass_rate", metrics.invariant_pass_rate, INVARIANT_THRESHOLD),
+                ("adversarial_pass_rate", metrics.adversarial_pass_rate, ADVERSARIAL_THRESHOLD),
+            ]
+            for name, score, threshold in rows:
+                st = "✅" if score >= threshold else "❌"
+                print(f"| {name} | {score:.4f} | {threshold} | {st} |")
+            print(f"\n## API Gate Decision\n")
+            print(f"API implementation: **NOT implemented (Phase 5.3.1)**  ")
+            print(f"Next phase: {'Phase 5.4 REST API (after qualification)' if is_qual else 'Phase 5.3.1 hardening continues'}")
         else:
             is_qualified = metrics.is_qualified()
-            status = "✅ QUALIFIED" if is_qualified else "❌ NOT QUALIFIED"
-            print(f"Curriculum Qualification Metrics — {status}")
-            print(f"  Profile:              {args.profile}")
+            status = "QUALIFIED" if is_qualified else "NOT QUALIFIED"
+            print(f"Curriculum Qualification: {status}")
             print(f"  Total units:          {metrics.total_examples}")
             print(f"  Golden examples:      {metrics.golden_examples}")
             print(f"  Adversarial examples: {metrics.adversarial_examples}")
-            print(f"  Coverage score:       {metrics.curriculum_coverage_score:.4f}")
-            print(f"  Qualification score:  {metrics.qualification_score if hasattr(metrics, 'qualification_score') else metrics.dataset_score_estimate:.4f}")
+            print(f"  dataset_score:        {metrics.dataset_score_estimate:.4f} (>={DATASET_THRESHOLD})")
+            print(f"  calibration_score:    {metrics.calibration_score_estimate:.4f} (>={CALIBRATION_THRESHOLD})")
+            print(f"  industrial_score:     {metrics.industrial_testing_score_estimate:.4f} (>={INDUSTRIAL_THRESHOLD})")
+            print(f"  source_trust_score:   {metrics.source_trust_score_estimate:.4f} (>={SOURCE_TRUST_THRESHOLD})")
             print(f"  Recommendation:       {metrics.recommendation}")
     else:
         parser.print_help()
