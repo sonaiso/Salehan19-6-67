@@ -40,15 +40,18 @@ def main() -> None:
     readiness_parser.add_argument("--output", choices=["markdown", "json"], default="json")
 
     validate_parser = subparsers.add_parser("validate-dataset", help="Validate the evaluation dataset")
-    validate_parser.add_argument("--output", choices=["json", "text"], default="text")
+    validate_parser.add_argument("path", nargs="?", default=None, help="Path to JSONL file (optional)")
+    validate_parser.add_argument("--output", choices=["json", "text", "markdown"], default="text")
 
     gen_parser = subparsers.add_parser("generate-dataset", help="Generate dynamic dataset from templates")
     gen_parser.add_argument("--profile", default="standard", help="Profile name")
     gen_parser.add_argument("--count", type=int, default=100, help="Number of examples to generate")
-    gen_parser.add_argument("--output", choices=["json", "text"], default="text")
+    gen_parser.add_argument("--output-file", default=None, help="Output file path")
+    gen_parser.add_argument("--output", choices=["json", "text", "markdown"], default="text")
 
     coverage_parser = subparsers.add_parser("dataset-coverage", help="Compute dataset coverage matrix")
-    coverage_parser.add_argument("--output", choices=["json", "text"], default="text")
+    coverage_parser.add_argument("path", nargs="?", default=None, help="Path to JSONL file (optional)")
+    coverage_parser.add_argument("--output", choices=["json", "text", "markdown"], default="text")
 
     calibrate_parser = subparsers.add_parser("calibrate-certainty", help="Calibrate certainty on dataset profile")
     calibrate_parser.add_argument("--profile", default="quick", help="Profile name")
@@ -204,10 +207,14 @@ def main() -> None:
             for dim in readiness.dimensions:
                 print(f"| {dim.name} | {dim.score}/5 |")
     elif args.command == "validate-dataset":
-        from mcd.evaluation.dataset_loader import load_all
+        from pathlib import Path
+        from mcd.evaluation.dataset_loader import load_all, load_jsonl
         from mcd.evaluation.dataset_validator import validate_dataset
 
-        examples = load_all()
+        if getattr(args, "path", None):
+            examples = load_jsonl(Path(args.path))
+        else:
+            examples = load_all()
         report = validate_dataset(examples)
 
         if args.output == "json":
@@ -235,10 +242,14 @@ def main() -> None:
             for ex in examples[:5]:
                 print(f"  [{ex.example_id}] {ex.input_text[:60]}")
     elif args.command == "dataset-coverage":
-        from mcd.evaluation.dataset_loader import load_all
+        from pathlib import Path
+        from mcd.evaluation.dataset_loader import load_all, load_jsonl
         from mcd.evaluation.coverage_matrix import CoverageMatrix
 
-        examples = load_all()
+        if getattr(args, "path", None):
+            examples = load_jsonl(Path(args.path))
+        else:
+            examples = load_all()
         matrix = CoverageMatrix(examples)
         cov_report = matrix.compute()
 
