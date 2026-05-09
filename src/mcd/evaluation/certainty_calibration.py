@@ -146,7 +146,13 @@ def _score_suspension(example: BenchmarkExample, frame_dict: dict) -> tuple[bool
 
 
 def _score_false_certainty(example: BenchmarkExample, frame_dict: dict) -> tuple[bool, str]:
-    """Return (no_false_certainty, msg) — True means the example did NOT produce false certainty."""
+    """Return (no_false_certainty, msg).
+
+    Returns True when the example does NOT exhibit false certainty, i.e. either:
+    - the example does not require suspension (not a false-certainty risk), or
+    - the system correctly suspends rather than assigning high certainty.
+    Returns False when the system assigns high certainty to a case that requires suspension.
+    """
     should_suspend = example.expected_behavior.get("should_suspend", False)
     if not should_suspend:
         return True, ""  # Not a case requiring suspension — no false certainty possible
@@ -158,6 +164,37 @@ def _score_false_certainty(example: BenchmarkExample, frame_dict: dict) -> tuple
             f"high-certainty policy '{frame_dict.get('certainty_policy', '')}'"
         )
     return True, ""
+
+
+def _score_evidence_need(example: BenchmarkExample, frame_dict: dict) -> tuple[bool, str]:
+    """Return (correct, failure_msg) for evidence need accuracy.
+
+    Maps expected ``evidence_type`` strings (e.g. ``"shari_textual"``) to
+    predicted ``evidence_needs`` dict keys by checking if any component of
+    the expected type appears in the predicted needs.
+    """
+    expected_type = example.expected_behavior.get("evidence_type")
+    if not expected_type:
+        return True, ""  # No evidence type specified — skip
+
+    predicted: dict[str, float] = frame_dict.get("evidence_needs", {})
+    if not predicted:
+        return False, (
+            f"{example.example_id}: evidence_need — no evidence needs predicted, "
+            f"expected type containing '{expected_type}'"
+        )
+
+    # Decompose compound types like "shari_textual" → ["shari", "textual"]
+    components = [c for c in expected_type.replace("-", "_").split("_") if c]
+
+    # At least one component must appear in the predicted evidence need keys
+    hit = any(c in key for c in components for key in predicted)
+    if hit:
+        return True, ""
+    return False, (
+        f"{example.example_id}: evidence_need — expected type '{expected_type}' "
+        f"(components {components}), got needs {list(predicted.keys())}"
+    )
 
 
 def _score_harm_haram(example: BenchmarkExample, frame_dict: dict, warnings: list[str]) -> tuple[bool, str]:
@@ -238,6 +275,7 @@ class CertaintyCalibration:
 
         # Per-dimension counters
         jt_correct, jt_total = 0, 0
+        en_correct, en_total = 0, 0
         cp_correct, cp_total = 0, 0
         sus_correct, sus_total = 0, 0
         fc_correct, fc_total = 0, 0
@@ -245,6 +283,7 @@ class CertaintyCalibration:
         amb_correct, amb_total = 0, 0
 
         jt_failures: list[str] = []
+        en_failures: list[str] = []
         cp_failures: list[str] = []
         sus_failures: list[str] = []
         fc_failures: list[str] = []
@@ -270,6 +309,15 @@ class CertaintyCalibration:
                         jt_correct += 1
                     else:
                         jt_failures.append(msg)
+
+                # Evidence need
+                if "evidence_type" in ex.expected_behavior:
+                    en_total += 1
+                    ok, msg = _score_evidence_need(ex, fd)
+                    if ok:
+                        en_correct += 1
+                    else:
+                        en_failures.append(msg)
 
                 # Certainty policy
                 if "certainty_policy" in ex.expected_behavior:
@@ -330,8 +378,14 @@ class CertaintyCalibration:
                             amb_failures.append(msg)
 
             except Exception as exc:  # noqa: BLE001
-                msg = f"{ex.example_id}: exception — {exc}"
-                jt_failures.append(msg)
+                exc_msg = f"{ex.example_id}: exception — {exc}"
+                jt_failures.append(exc_msg)
+                en_failures.append(exc_msg)
+                cp_failures.append(exc_msg)
+                sus_failures.append(exc_msg)
+                fc_failures.append(exc_msg)
+                hh_failures.append(exc_msg)
+                amb_failures.append(exc_msg)
 
         def _acc(correct: int, total: int) -> float:
             return round(correct / total, 4) if total else 0.0
@@ -343,6 +397,13 @@ class CertaintyCalibration:
                 total=jt_total,
                 accuracy=_acc(jt_correct, jt_total),
                 failures=jt_failures,
+            ),
+            DimensionCalibration(
+                dimension="evidence_need_accuracy",
+                correct=en_correct,
+                total=en_total,
+                accuracy=_acc(en_correct, en_total),
+                failures=en_failures,
             ),
             DimensionCalibration(
                 dimension="certainty_policy_accuracy",
@@ -408,12 +469,13 @@ class CertaintyCalibration:
         # Calibration score: weighted composite
         # Suspension recall and false certainty rate are most safety-critical
         weights = {
-            "judgment_type_accuracy": 0.20,
+            "judgment_type_accuracy": 0.15,
+            "evidence_need_accuracy": 0.15,
             "certainty_policy_accuracy": 0.20,
             "suspension_correctness": 0.20,
-            "false_certainty_absence": 0.20,
+            "false_certainty_absence": 0.15,
             "harm_haram_separation": 0.10,
-            "ambiguity_handling": 0.10,
+            "ambiguity_handling": 0.05,
         }
         calibration_score = sum(
             d.accuracy * weights.get(d.dimension, 0.0) for d in dimensions
@@ -448,6 +510,13 @@ def _build_recommendations(
         recs.append(
             f"Judgment type accuracy is low ({jt.accuracy:.0%}) — "
             "expand keyword triggers or add more training examples per category."
+        )
+
+    en = dim_map.get("evidence_need_accuracy")
+    if en and en.total > 0 and en.accuracy < 0.65:
+        recs.append(
+            f"Evidence need accuracy is low ({en.accuracy:.0%}) — "
+            "review EvidenceNeedClassifier mappings for each judgment type."
         )
 
     cp = dim_map.get("certainty_policy_accuracy")

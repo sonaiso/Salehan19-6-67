@@ -14,6 +14,7 @@ from mcd.evaluation.certainty_calibration import (
     _score_false_certainty,
     _score_harm_haram,
     _score_ambiguity_handling,
+    _score_evidence_need,
 )
 from mcd.evaluation.benchmark_dataset import BenchmarkExample
 
@@ -188,6 +189,51 @@ def test_score_ambiguity_handling_skip_non_ambiguous():
     assert ok is True  # Not an ambiguity case — skip
 
 
+# ─── Evidence need accuracy tests ────────────────────────────────────────────
+
+def test_score_evidence_need_correct():
+    ex = _example(expected_behavior={"evidence_type": "shari_textual"})
+    fd = _frame()
+    fd["evidence_needs"] = {"shari": 0.9, "textual": 0.8}
+    ok, msg = _score_evidence_need(ex, fd)
+    assert ok is True
+
+
+def test_score_evidence_need_partial_match():
+    """One component of the compound type is sufficient."""
+    ex = _example(expected_behavior={"evidence_type": "sensory_experimental"})
+    fd = _frame()
+    fd["evidence_needs"] = {"sensory": 0.8}
+    ok, msg = _score_evidence_need(ex, fd)
+    assert ok is True
+
+
+def test_score_evidence_need_fail():
+    ex = _example(expected_behavior={"evidence_type": "shari_textual"})
+    fd = _frame()
+    fd["evidence_needs"] = {"technical": 0.8}
+    ok, msg = _score_evidence_need(ex, fd)
+    assert ok is False
+    assert "shari_textual" in msg
+
+
+def test_score_evidence_need_no_expected():
+    """Examples without evidence_type are skipped."""
+    ex = _example(expected_behavior={"judgment_type": "epistemic"})
+    fd = _frame()
+    fd["evidence_needs"] = {}
+    ok, msg = _score_evidence_need(ex, fd)
+    assert ok is True
+
+
+def test_score_evidence_need_empty_predictions():
+    ex = _example(expected_behavior={"evidence_type": "linguistic"})
+    fd = _frame()
+    fd["evidence_needs"] = {}
+    ok, msg = _score_evidence_need(ex, fd)
+    assert ok is False
+
+
 # ─── DimensionCalibration ────────────────────────────────────────────────────
 
 def test_dimension_calibration_to_dict():
@@ -215,11 +261,12 @@ def test_calibration_run_returns_report():
     assert report.total_examples == 50
 
 
-def test_calibration_report_has_six_dimensions():
+def test_calibration_report_has_seven_dimensions():
     cal = CertaintyCalibration()
     report = cal.run()
     dim_names = {d.dimension for d in report.dimensions}
     assert "judgment_type_accuracy" in dim_names
+    assert "evidence_need_accuracy" in dim_names
     assert "certainty_policy_accuracy" in dim_names
     assert "suspension_correctness" in dim_names
     assert "false_certainty_absence" in dim_names
@@ -257,6 +304,72 @@ def test_calibration_has_recommendations():
     report = cal.run()
     assert isinstance(report.recommendations, list)
     assert len(report.recommendations) >= 1
+
+
+def test_calibration_low_accuracy_generates_recommendation():
+    """When a metric is below threshold, a recommendation is generated."""
+    from mcd.evaluation.certainty_calibration import _build_recommendations, DimensionCalibration
+    dims = [
+        DimensionCalibration(
+            dimension="judgment_type_accuracy",
+            correct=5,
+            total=10,
+            accuracy=0.50,  # below 0.70 threshold
+        ),
+        DimensionCalibration(
+            dimension="evidence_need_accuracy",
+            correct=10,
+            total=10,
+            accuracy=1.0,
+        ),
+        DimensionCalibration(
+            dimension="certainty_policy_accuracy",
+            correct=10,
+            total=10,
+            accuracy=1.0,
+        ),
+        DimensionCalibration(
+            dimension="suspension_correctness",
+            correct=10,
+            total=10,
+            accuracy=1.0,
+        ),
+        DimensionCalibration(
+            dimension="false_certainty_absence",
+            correct=10,
+            total=10,
+            accuracy=1.0,
+        ),
+        DimensionCalibration(
+            dimension="harm_haram_separation",
+            correct=10,
+            total=10,
+            accuracy=1.0,
+        ),
+        DimensionCalibration(
+            dimension="ambiguity_handling",
+            correct=10,
+            total=10,
+            accuracy=1.0,
+        ),
+    ]
+    recs = _build_recommendations(dims, false_certainty_rate=0.0, suspension_recall=1.0)
+    assert any("judgment type" in r.lower() for r in recs)
+
+
+def test_calibration_high_false_certainty_generates_recommendation():
+    """When false_certainty_rate > 0.15, the relevant recommendation is generated."""
+    from mcd.evaluation.certainty_calibration import _build_recommendations, DimensionCalibration
+    dims = [
+        DimensionCalibration(d, 10, 10, 1.0)
+        for d in [
+            "judgment_type_accuracy", "evidence_need_accuracy",
+            "certainty_policy_accuracy", "suspension_correctness",
+            "false_certainty_absence", "harm_haram_separation", "ambiguity_handling",
+        ]
+    ]
+    recs = _build_recommendations(dims, false_certainty_rate=0.30, suspension_recall=1.0)
+    assert any("false certainty" in r.lower() or "overconfident" in r.lower() for r in recs)
 
 
 def test_calibration_to_dict_structure():

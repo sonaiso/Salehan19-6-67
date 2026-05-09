@@ -146,9 +146,12 @@ class JudgmentClassifier:
 
         # Analogy without explicit illah (علة) → flag ambiguous unless illah is stated
         if scores[JudgmentType.ANALOGY] >= 0.35:
-            illah_markers = {"العلة", "لأن", "بسبب", "للعلة", "المناط"}
-            text_lower = text.lower()
-            if not any(m in text_lower for m in illah_markers):
+            # Include common diacritical variations of illah-stating markers
+            illah_markers = {
+                "العلة", "العله", "لأن", "لان", "بسبب", "للعلة", "للعله",
+                "المناط", "لأنه", "لانه", "لأنها", "لانها",
+            }
+            if not any(m in text for m in illah_markers):
                 # Analogy with no stated illah → boost ambiguous slightly
                 scores[JudgmentType.AMBIGUOUS] = max(
                     scores[JudgmentType.AMBIGUOUS], 0.35
