@@ -10,12 +10,18 @@ from mcd.industrial.industrial_test_case import IndustrialTestCase, get_default_
 
 
 def percentile(values: list[float], p: float) -> float:
-    """Compute p-th percentile using nearest-rank method."""
+    """Compute p-th percentile using nearest-rank method.
+
+    Formula: rank = ceil(p/100 * n), index = rank - 1 (0-based), clamped to [0, n-1].
+    For example, p95 of 20 values: ceil(0.95 * 20) - 1 = 19 - 1 = 18 (value at index 18).
+    """
     if not values:
         return 0.0
     sorted_v = sorted(values)
     n = len(sorted_v)
-    idx = max(0, min(math.ceil(p / 100.0 * n) - 1, n - 1))
+    # Nearest-rank: rank = ceil(p/100 * n), convert to 0-based index
+    rank = math.ceil(p / 100.0 * n)
+    idx = max(0, min(rank - 1, n - 1))
     return sorted_v[idx]
 
 
