@@ -62,7 +62,7 @@ def check_mathematical_contract(graph: CognitiveGraph) -> MathematicalContractRe
                 violations.append(f"Contract[3]: node '{node.node_id}' role_vector: {v}")
 
         if not node.domain_vector:
-            warnings.append(f"Contract[2]: node '{node.node_id}' missing domain_vector")
+            violations.append(f"Contract[2]: node '{node.node_id}' missing domain_vector")
         else:
             dv_violations = validate_domain_vector(node.domain_vector).violations
             for v in dv_violations:
@@ -76,14 +76,22 @@ def check_mathematical_contract(graph: CognitiveGraph) -> MathematicalContractRe
         if edge.target not in node_ids:
             violations.append(f"Contract[4]: edge '{edge.edge_id}' target '{edge.target}' not in graph")
 
-    # 5. cause has effect — verify cause target is typed as effect or has caused_by edge
+    # 5. cause has effect — cause target must be typed as effect OR have a caused_by edge tied to same source/target
     cause_edges = [e for e in graph.edges if e.relation == "causes"]
     effect_node_ids = {n.node_id for n in graph.nodes if n.node_type == "effect"}
-    caused_by_targets = {e.source for e in graph.edges if e.relation == "caused_by"}
     for ce in cause_edges:
-        target_has_effect = ce.target in effect_node_ids or ce.target in caused_by_targets
-        if not target_has_effect:
-            warnings.append(f"Contract[5]: cause node '{ce.source}' target '{ce.target}' not typed as effect")
+        # The target of the causes edge must either be an effect-type node
+        # OR there must be a caused_by edge where source==ce.target (proving ce.target is an effect)
+        target_is_effect = ce.target in effect_node_ids
+        target_has_caused_by = any(
+            e for e in graph.edges
+            if e.relation == "caused_by" and e.source == ce.target
+        )
+        if not target_is_effect and not target_has_caused_by:
+            violations.append(
+                f"Contract[5]: cause node '{ce.source}' → target '{ce.target}' "
+                f"has no effect type or caused_by edge — cause_has_effect invariant violated"
+            )
 
     # 7. certainty has evidence or warning
     if graph.certainty_policy == "near_certainty":
@@ -102,12 +110,20 @@ def check_mathematical_contract(graph: CognitiveGraph) -> MathematicalContractRe
         if edge.relation == "entails" and edge.source in harm_ids and edge.target in haram_ids:
             violations.append("Contract[9]: harm does not entail haram — distinct domains")
 
-    # 10. tool/API not evidence by itself
+    # 10. tool/API not evidence by itself — requires evidence_refs OR trust_policy=trusted OR source_trust_score
     tool_ids = {n.node_id for n in graph.nodes if n.node_type in ("tool", "source")}
+    evidence_relations = {"supports", "sourced_from", "requires_evidence"}
     for edge in graph.edges:
-        if edge.relation == "supports" and edge.source in tool_ids:
-            if not edge.evidence_refs and not edge.metadata.get("trust_policy"):
-                violations.append(f"Contract[10]: tool/source '{edge.source}' cannot support without trust policy")
+        if edge.relation in evidence_relations and edge.source in tool_ids:
+            has_evidence = bool(edge.evidence_refs)
+            trust_policy = edge.metadata.get("trust_policy")
+            trust_ok = isinstance(trust_policy, dict) and trust_policy.get("trusted") is True
+            trust_score_ok = isinstance(trust_policy, dict) and trust_policy.get("source_trust_score", 0.0) >= 0.7
+            if not has_evidence and not trust_ok and not trust_score_ok:
+                violations.append(
+                    f"Contract[10]: tool/source '{edge.source}' used in '{edge.relation}' "
+                    f"without evidence_refs or trust_policy — not valid standalone evidence"
+                )
 
     # 12. source trust
     for edge in graph.edges:

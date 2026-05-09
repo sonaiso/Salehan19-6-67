@@ -31,6 +31,14 @@ _DATA_DIR = Path(__file__).parent.parent.parent.parent / "data" / "curriculum"
 _CONTRACTS_DIR = Path(__file__).parent.parent.parent.parent / "data" / "contracts"
 
 
+# Additional quality lock thresholds
+GOLDEN_PASS_RATE_THRESHOLD = 0.98
+ADVERSARIAL_FAILURE_DETECTION_THRESHOLD = 0.95
+LEVEL9_CONTRACT_THRESHOLD = 0.95
+LEVEL10_CONTRACT_THRESHOLD = 0.95
+MUTATION_TEST_THRESHOLD = 0.95
+
+
 @dataclass
 class CurriculumQualificationMetrics:
     dataset_score_estimate: float = 0.0
@@ -46,10 +54,29 @@ class CurriculumQualificationMetrics:
     total_examples: int = 0
     golden_examples: int = 0
     adversarial_examples: int = 0
+    # Phase 5.3.2 quality lock gates
+    contract_quality_lock_passed: bool = False
+    golden_examples_pass_rate: float = 0.0
+    adversarial_failure_detection: float = 0.0
+    level9_domain_contract_score: float = 0.0
+    level10_graph_vector_contract_score: float = 0.0
+    mutation_tests_passed: bool = False
+
+    def _quality_lock_gates_pass(self) -> bool:
+        """All Phase 5.3.2 quality lock gates must pass before qualification is granted."""
+        return (
+            self.contract_quality_lock_passed
+            and self.golden_examples_pass_rate >= GOLDEN_PASS_RATE_THRESHOLD
+            and self.adversarial_failure_detection >= ADVERSARIAL_FAILURE_DETECTION_THRESHOLD
+            and self.level9_domain_contract_score >= LEVEL9_CONTRACT_THRESHOLD
+            and self.level10_graph_vector_contract_score >= LEVEL10_CONTRACT_THRESHOLD
+            and self.mutation_tests_passed
+        )
 
     def is_qualified(self) -> bool:
         return (
-            self.dataset_score_estimate >= DATASET_THRESHOLD
+            self._quality_lock_gates_pass()
+            and self.dataset_score_estimate >= DATASET_THRESHOLD
             and self.calibration_score_estimate >= CALIBRATION_THRESHOLD
             and self.industrial_testing_score_estimate >= INDUSTRIAL_THRESHOLD
             and self.source_trust_score_estimate >= SOURCE_TRUST_THRESHOLD
@@ -74,6 +101,12 @@ class CurriculumQualificationMetrics:
             "total_examples": self.total_examples,
             "golden_examples": self.golden_examples,
             "adversarial_examples": self.adversarial_examples,
+            "contract_quality_lock_passed": self.contract_quality_lock_passed,
+            "golden_examples_pass_rate": round(self.golden_examples_pass_rate, 4),
+            "adversarial_failure_detection": round(self.adversarial_failure_detection, 4),
+            "level9_domain_contract_score": round(self.level9_domain_contract_score, 4),
+            "level10_graph_vector_contract_score": round(self.level10_graph_vector_contract_score, 4),
+            "mutation_tests_passed": self.mutation_tests_passed,
             "qualified_for_api_phase": self.is_qualified(),
         }
 
@@ -322,11 +355,46 @@ def compute_qualification_metrics(units: list[CognitiveUnit]) -> CurriculumQuali
         + 0.04 * min(1.0, metrics.golden_examples / 50)
     ))
 
+    # --- Phase 5.3.2 Quality Lock Gates ---
+    # Run quality lock to populate gate metrics
+    from .quality_lock import run_quality_lock, MUTATION_PASS_RATE_THRESHOLD
+    ql_report = run_quality_lock()
+    metrics.golden_examples_pass_rate = ql_report.golden_pass_rate
+    metrics.adversarial_failure_detection = ql_report.adversarial_detection_rate
+    metrics.mutation_tests_passed = ql_report.mutation_test_pass_rate >= MUTATION_PASS_RATE_THRESHOLD
+    metrics.level9_domain_contract_score = ql_report.level9_score
+    metrics.level10_graph_vector_contract_score = ql_report.level10_score
+    metrics.contract_quality_lock_passed = ql_report.is_locked()
+
     # Set recommendation
     if metrics.is_qualified():
         metrics.recommendation = "qualified_for_api_phase"
     else:
         blockers = []
+        if not metrics.contract_quality_lock_passed:
+            blockers.append("contract_quality_lock_passed = False — run curriculum-quality-lock first")
+        if metrics.golden_examples_pass_rate < GOLDEN_PASS_RATE_THRESHOLD:
+            blockers.append(
+                f"golden_examples_pass_rate {metrics.golden_examples_pass_rate:.4f} "
+                f"< {GOLDEN_PASS_RATE_THRESHOLD}"
+            )
+        if metrics.adversarial_failure_detection < ADVERSARIAL_FAILURE_DETECTION_THRESHOLD:
+            blockers.append(
+                f"adversarial_failure_detection {metrics.adversarial_failure_detection:.4f} "
+                f"< {ADVERSARIAL_FAILURE_DETECTION_THRESHOLD}"
+            )
+        if not metrics.mutation_tests_passed:
+            blockers.append("mutation_tests_passed = False")
+        if metrics.level9_domain_contract_score < LEVEL9_CONTRACT_THRESHOLD:
+            blockers.append(
+                f"level9_domain_contract_score {metrics.level9_domain_contract_score:.4f} "
+                f"< {LEVEL9_CONTRACT_THRESHOLD}"
+            )
+        if metrics.level10_graph_vector_contract_score < LEVEL10_CONTRACT_THRESHOLD:
+            blockers.append(
+                f"level10_graph_vector_contract_score {metrics.level10_graph_vector_contract_score:.4f} "
+                f"< {LEVEL10_CONTRACT_THRESHOLD}"
+            )
         if metrics.dataset_score_estimate < DATASET_THRESHOLD:
             blockers.append(f"dataset_score {metrics.dataset_score_estimate:.2f} < {DATASET_THRESHOLD}")
         if metrics.calibration_score_estimate < CALIBRATION_THRESHOLD:
