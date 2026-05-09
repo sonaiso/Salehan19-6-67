@@ -7,7 +7,11 @@ name = "minimal-cognitive-decoder"
 version = "0.1.0"
 description = "Minimal Cognitive Decoder — Arabic epistemic reasoning layer"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "fastapi>=0.100.0",
+    "uvicorn>=0.22.0",
+    "httpx>=0.24.0",
+]
 
 [project.scripts]
 mcd = "mcd.cli:main"

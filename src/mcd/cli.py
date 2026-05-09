@@ -157,6 +157,15 @@ def main() -> None:
     )
     cur_mut_parser.add_argument("--output", choices=["json", "text"], default="json")
 
+    # api — Phase 6 minimal REST API server
+    api_parser = subparsers.add_parser(
+        "api",
+        help="Phase 6: Start the MCD minimal REST API server (requires uvicorn)",
+    )
+    api_parser.add_argument("--host", default="127.0.0.1", help="Bind host (default: 127.0.0.1)")
+    api_parser.add_argument("--port", type=int, default=8000, help="Bind port (default: 8000)")
+    api_parser.add_argument("--reload", action="store_true", default=False, help="Enable auto-reload")
+
     args = parser.parse_args()
 
     if args.command == "classify":
@@ -739,6 +748,28 @@ def main() -> None:
             for r in mut_report.results:
                 icon = "✅" if r.passed else "❌"
                 print(f"  {icon} {r.mutation_name}: {r.explanation}")
+    elif args.command == "api":
+        try:
+            import uvicorn  # type: ignore[import]
+        except ImportError:
+            print(
+                "ERROR: uvicorn is not installed.\n"
+                "Install it with:  pip install uvicorn\n"
+                "Then run:         python -m mcd.cli api --host 127.0.0.1 --port 8000",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
+        from mcd.api.app import build_app
+
+        print(f"Starting MCD API on http://{args.host}:{args.port}")
+        print("Phase 6 — Minimal REST API (pilot-ready candidate, not production-ready)")
+        uvicorn.run(
+            build_app(),
+            host=args.host,
+            port=args.port,
+            reload=args.reload,
+        )
     else:
         parser.print_help()
 
