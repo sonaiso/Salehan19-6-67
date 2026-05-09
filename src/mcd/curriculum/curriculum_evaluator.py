@@ -147,10 +147,24 @@ class CurriculumEvaluator:
         return report
 
     def _score_unit(self, unit: CognitiveUnit) -> float:
-        """Heuristic score: checks frame completeness against expected layer."""
+        """Level-aware heuristic score: checks frame completeness against expected layer."""
+        from .curriculum_schema import VALID_CERTAINTY_POLICIES
+
         frame = unit.expected_frame
         layer = unit.target_layer
-        score = 0.5  # base
+        level = unit.level
+
+        # Level-aware base score: higher levels are harder
+        base_scores = {1: 0.7, 2: 0.65, 3: 0.6, 4: 0.55, 5: 0.5, 6: 0.5, 7: 0.45, 8: 0.3, 9: 0.4, 10: 0.35}
+        score = base_scores.get(level, 0.5)
+
+        # Penalize level 7-8 units that lack evidence_need
+        if level in (7, 8) and not frame.evidence_need:
+            return 0.0
+
+        # Penalize level 4 units with empty relations
+        if level == 4 and not frame.relations:
+            score -= 0.2
 
         checks = {
             "thing": bool(frame.things),
@@ -165,12 +179,13 @@ class CurriculumEvaluator:
             "evidence": bool(frame.evidence_need),
             "certainty": bool(frame.certainty_policy),
             "mixed_reasoning": bool(frame.evidence_need) and bool(frame.warnings),
+            "domain_reasoning": bool(getattr(frame, "evidence_need", [])),
+            "graph_vector_composition": bool(getattr(frame, "evidence_need", [])),
         }
 
         if layer in checks and checks[layer]:
             score += 0.3
 
-        from .curriculum_schema import VALID_CERTAINTY_POLICIES
         if unit.certainty_policy in VALID_CERTAINTY_POLICIES:
             score += 0.1
 
@@ -180,4 +195,4 @@ class CurriculumEvaluator:
         if unit.unit_id.startswith("CURR-"):
             score += 0.05
 
-        return min(score, 1.0)
+        return min(max(score, 0.0), 1.0)

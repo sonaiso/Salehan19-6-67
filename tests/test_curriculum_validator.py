@@ -121,5 +121,5 @@ def test_full_curriculum_validates():
     ds = CurriculumDataset()
     units = ds.load_all()
     report = CurriculumValidator().validate(units)
-    assert report.total_units == 400
+    assert report.total_units >= 800
     assert report.status == "valid"

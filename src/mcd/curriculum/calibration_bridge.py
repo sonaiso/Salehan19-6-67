@@ -81,7 +81,7 @@ class CalibrationBridge:
         report.levels_covered = levels
         report.layers_covered = layers
 
-        report.coverage_ratio = (len(levels) / 8) * 0.5 + (len(layers) / 12) * 0.5
+        report.coverage_ratio = (len(levels) / 10) * 0.5 + (len(layers) / 14) * 0.5
 
         base_improvement = 0.2 * report.coverage_ratio
         report.dataset_score_estimate = min(

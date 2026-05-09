@@ -1,0 +1,203 @@
+{
+  "level_09_domain_reasoning": {
+    "description": "Templates for multi-domain classification and reasoning",
+    "target_layer": "domain_reasoning",
+    "required_fields": [
+      "domains",
+      "evidence_need",
+      "certainty_policy"
+    ],
+    "templates": [
+      {
+        "name": "single_domain",
+        "frame_keys": [
+          "things",
+          "properties",
+          "domains",
+          "certainty_policy"
+        ],
+        "example": {
+          "things": [
+            "<entity>"
+          ],
+          "domains": [
+            "<domain>"
+          ],
+          "certainty_policy": "certain_knowledge"
+        }
+      },
+      {
+        "name": "multi_domain",
+        "frame_keys": [
+          "things",
+          "relations",
+          "domains",
+          "evidence_need",
+          "certainty_policy"
+        ],
+        "example": {
+          "things": [
+            "<entity>"
+          ],
+          "domains": [
+            "<domain1>",
+            "<domain2>"
+          ],
+          "evidence_need": [
+            "domain_classification"
+          ],
+          "certainty_policy": "probable_knowledge"
+        }
+      },
+      {
+        "name": "cross_domain_conflict",
+        "frame_keys": [
+          "things",
+          "domains",
+          "warnings",
+          "certainty_policy"
+        ],
+        "example": {
+          "things": [
+            "<entity>"
+          ],
+          "domains": [
+            "<domain1>",
+            "<domain2>"
+          ],
+          "warnings": [
+            "domain_conflict"
+          ],
+          "certainty_policy": "suspend_judgment"
+        }
+      }
+    ]
+  },
+  "level_10_graph_vector_composition": {
+    "description": "Templates for graph-vector composition tasks",
+    "target_layer": "graph_vector_composition",
+    "required_fields": [
+      "nodes",
+      "edges",
+      "vectors"
+    ],
+    "templates": [
+      {
+        "name": "simple_graph",
+        "frame_keys": [
+          "nodes",
+          "edges",
+          "certainty_policy"
+        ],
+        "example": {
+          "nodes": [
+            {
+              "id": "<node>",
+              "type": "<type>"
+            }
+          ],
+          "edges": [
+            {
+              "source": "<n1>",
+              "relation": "<rel>",
+              "target": "<n2>"
+            }
+          ],
+          "certainty_policy": "certain_knowledge"
+        }
+      },
+      {
+        "name": "graph_with_vectors",
+        "frame_keys": [
+          "nodes",
+          "edges",
+          "vectors",
+          "certainty_policy"
+        ],
+        "example": {
+          "nodes": [
+            {
+              "id": "<node>",
+              "type": "<type>"
+            }
+          ],
+          "edges": [
+            {
+              "source": "<n1>",
+              "relation": "<rel>",
+              "target": "<n2>"
+            }
+          ],
+          "vectors": [
+            {
+              "node": "<node>",
+              "role": "<role>",
+              "weight": 1.0
+            }
+          ],
+          "certainty_policy": "certain_knowledge"
+        }
+      },
+      {
+        "name": "composition_task",
+        "frame_keys": [
+          "nodes",
+          "edges",
+          "vectors",
+          "relations",
+          "certainty_policy",
+          "evidence_need"
+        ],
+        "example": {
+          "nodes": [
+            {
+              "id": "<n1>"
+            },
+            {
+              "id": "<n2>"
+            }
+          ],
+          "edges": [
+            {
+              "source": "<n1>",
+              "relation": "<rel>",
+              "target": "<n2>"
+            }
+          ],
+          "vectors": [
+            {
+              "node": "<n1>",
+              "role": "agent",
+              "weight": 0.8
+            }
+          ],
+          "relations": [
+            "<rel>"
+          ],
+          "evidence_need": [
+            "graph_traversal"
+          ],
+          "certainty_policy": "probable_knowledge"
+        }
+      }
+    ]
+  },
+  "certainty_policies_extended": {
+    "policies": {
+      "strong_knowledge": {
+        "description": "Very high confidence based on robust experimental or textual evidence",
+        "level_range": [
+          8,
+          10
+        ]
+      },
+      "hypothesis": {
+        "description": "Tentative claim requiring validation",
+        "level_range": [
+          5,
+          9
+        ]
+      }
+    }
+  }
+}

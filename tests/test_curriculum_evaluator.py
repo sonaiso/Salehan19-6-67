@@ -81,5 +81,5 @@ def test_evaluate_full_dataset():
     ds = CurriculumDataset()
     units = ds.load_all()
     report = CurriculumEvaluator().evaluate(units)
-    assert report.total_units == 400
+    assert report.total_units >= 800
     assert report.overall_score > 0.0

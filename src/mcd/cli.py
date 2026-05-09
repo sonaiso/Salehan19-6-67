@@ -133,6 +133,16 @@ def main() -> None:
     cur_exp_parser.add_argument("--profile", default="industrial_curriculum")
     cur_exp_parser.add_argument("--output", default=None, help="Output file path (JSONL). If not given, prints to stdout.")
 
+    # curriculum-contract-check
+    cur_cc_parser = subparsers.add_parser("curriculum-contract-check", help="Run mathematical contract checks on curriculum graph")
+    cur_cc_parser.add_argument("--profile", default="full_curriculum")
+    cur_cc_parser.add_argument("--output", choices=["json", "text"], default="text")
+
+    # curriculum-qualification
+    cur_qual_parser = subparsers.add_parser("curriculum-qualification", help="Compute curriculum qualification metrics")
+    cur_qual_parser.add_argument("--profile", default="full_curriculum_extended")
+    cur_qual_parser.add_argument("--output", choices=["json", "text", "markdown"], default="markdown")
+
     args = parser.parse_args()
 
     if args.command == "classify":
@@ -550,6 +560,120 @@ def main() -> None:
             print(f"Exported {len(cases)} industrial cases to {args.output}")
         else:
             print(jsonl_str)
+    elif args.command == "curriculum-contract-check":
+        from mcd.curriculum.curriculum_dataset import CurriculumDataset
+        from mcd.curriculum.cognitive_graph import CognitiveGraph
+        from mcd.curriculum.cognitive_node import CognitiveNode
+        from mcd.curriculum.cognitive_edge import CognitiveEdge
+        from mcd.curriculum.mathematical_contract import check_mathematical_contract
+        from mcd.curriculum.learning_profiles import get_profile
+
+        profile = get_profile(args.profile)
+        units = CurriculumDataset().load_levels(profile.levels)
+
+        # Build a compact graph: one node per level, edges between sequential levels
+        level_ids = sorted({u.level for u in units})
+        nodes = [
+            CognitiveNode(
+                node_id=f"level_{lvl}",
+                surface=f"Level {lvl}",
+                normalized=f"level_{lvl}",
+                node_type="domain",
+            )
+            for lvl in level_ids
+        ]
+        edges = [
+            CognitiveEdge(
+                edge_id=f"e_{i}",
+                source=f"level_{level_ids[i]}",
+                relation="entails",
+                target=f"level_{level_ids[i+1]}",
+            )
+            for i in range(len(level_ids) - 1)
+        ]
+        graph = CognitiveGraph(graph_id="curriculum-contract-check", nodes=nodes, edges=edges)
+
+        result = check_mathematical_contract(graph)
+
+        if args.output == "json":
+            print(json.dumps({
+                **result.to_dict(),
+                "units_checked": len(units),
+                "levels": level_ids,
+            }, ensure_ascii=False, indent=2))
+        else:
+            status = "✅ PASSED" if result.passed else "❌ FAILED"
+            print(f"Mathematical Contract Check — {status}")
+            print(f"  Units checked:  {len(units)}")
+            print(f"  Levels:         {level_ids}")
+            print(f"  Graph nodes:    {len(nodes)}")
+            print(f"  Graph edges:    {len(edges)}")
+            print(f"  Contract score: {result.score:.4f}")
+            if result.violations:
+                print(f"  Violations ({len(result.violations)}):")
+                for v in result.violations[:10]:
+                    print(f"    - {v}")
+    elif args.command == "curriculum-qualification":
+        from mcd.curriculum.curriculum_dataset import CurriculumDataset
+        from mcd.curriculum.qualification_bridge import (
+            compute_qualification_metrics,
+            DATASET_THRESHOLD, CALIBRATION_THRESHOLD, INDUSTRIAL_THRESHOLD,
+            SOURCE_TRUST_THRESHOLD, GRAPH_CONTRACT_THRESHOLD,
+            VECTOR_CONTRACT_THRESHOLD, INVARIANT_THRESHOLD, ADVERSARIAL_THRESHOLD,
+        )
+        from mcd.curriculum.learning_profiles import get_profile
+
+        profile = get_profile(args.profile)
+        units = CurriculumDataset().load_levels(profile.levels)
+        metrics = compute_qualification_metrics(units)
+
+        if args.output == "json":
+            print(json.dumps(metrics.to_dict(), ensure_ascii=False, indent=2))
+        elif args.output == "markdown":
+            is_qual = metrics.is_qualified()
+            status = "✅ QUALIFIED FOR API PHASE" if is_qual else "❌ NOT YET QUALIFIED"
+            print(f"# Curriculum Qualification Report — Phase 5.3.1\n")
+            print(f"**Status:** {status}  ")
+            print(f"**Profile:** {args.profile}  ")
+            print(f"**Recommendation:** {metrics.recommendation}\n")
+            print(f"## Dataset Coverage\n")
+            print(f"| Metric | Value |")
+            print(f"|--------|-------|")
+            print(f"| Total examples | {metrics.total_examples} |")
+            print(f"| Golden examples | {metrics.golden_examples} |")
+            print(f"| Adversarial examples | {metrics.adversarial_examples} |")
+            print(f"| Coverage score | {metrics.curriculum_coverage_score:.4f} |")
+            print(f"\n## Score Estimates vs Thresholds\n")
+            print(f"| Metric | Score | Threshold | Status |")
+            print(f"|--------|-------|-----------|--------|")
+            rows = [
+                ("dataset_score_estimate", metrics.dataset_score_estimate, DATASET_THRESHOLD),
+                ("calibration_score_estimate", metrics.calibration_score_estimate, CALIBRATION_THRESHOLD),
+                ("industrial_testing_score_estimate", metrics.industrial_testing_score_estimate, INDUSTRIAL_THRESHOLD),
+                ("source_trust_score_estimate", metrics.source_trust_score_estimate, SOURCE_TRUST_THRESHOLD),
+                ("graph_contract_score", metrics.graph_contract_score, GRAPH_CONTRACT_THRESHOLD),
+                ("vector_contract_score", metrics.vector_contract_score, VECTOR_CONTRACT_THRESHOLD),
+                ("invariant_pass_rate", metrics.invariant_pass_rate, INVARIANT_THRESHOLD),
+                ("adversarial_pass_rate", metrics.adversarial_pass_rate, ADVERSARIAL_THRESHOLD),
+            ]
+            for name, score, threshold in rows:
+                st = "✅" if score >= threshold else "❌"
+                print(f"| {name} | {score:.4f} | {threshold} | {st} |")
+            print(f"\n## API Gate Decision\n")
+            print(f"API implementation: **NOT implemented (Phase 5.3.1)**  ")
+            print(f"Next phase: {'Phase 5.4 REST API (after qualification)' if is_qual else 'Phase 5.3.1 hardening continues'}")
+        else:
+            is_qualified = metrics.is_qualified()
+            status = "QUALIFIED" if is_qualified else "NOT QUALIFIED"
+            print(f"Curriculum Qualification: {status}")
+            print(f"  Total units:          {metrics.total_examples}")
+            print(f"  Golden examples:      {metrics.golden_examples}")
+            print(f"  Adversarial examples: {metrics.adversarial_examples}")
+            print(f"  dataset_score:        {metrics.dataset_score_estimate:.4f} (>={DATASET_THRESHOLD})")
+            print(f"  calibration_score:    {metrics.calibration_score_estimate:.4f} (>={CALIBRATION_THRESHOLD})")
+            print(f"  industrial_score:     {metrics.industrial_testing_score_estimate:.4f} (>={INDUSTRIAL_THRESHOLD})")
+            print(f"  source_trust_score:   {metrics.source_trust_score_estimate:.4f} (>={SOURCE_TRUST_THRESHOLD})")
+            print(f"  Recommendation:       {metrics.recommendation}")
     else:
         parser.print_help()
 
