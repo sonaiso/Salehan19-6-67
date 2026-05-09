@@ -45,6 +45,12 @@ def test_judgment_type_members():
     assert "value" in members
     assert "shari" in members
     assert "practical" in members
+    # Phase 3 additions
+    assert "ambiguous" in members
+    assert "linguistic" in members
+    assert "analogy" in members
+    assert "metaphor" in members
+    assert "usuli_reasoning" in members
 
 
 def test_evidence_need_members():

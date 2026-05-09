@@ -72,3 +72,55 @@ def test_value_and_epistemic_not_shari_for_nar():
     result = clf.classify("النار تحرق")
     shari = result.get(JudgmentType.SHARI, 0.0)
     assert shari < 0.70
+
+
+# ─── New judgment type tests (Phase 3) ───────────────────────────────────────
+
+def test_linguistic_question_is_linguistic():
+    clf = JudgmentClassifier()
+    result = clf.classify("ما معنى كلمة العقل؟")
+    assert result.get(JudgmentType.LINGUISTIC, 0.0) >= 0.35
+
+
+def test_analogy_detection():
+    clf = JudgmentClassifier()
+    result = clf.classify("هذا مثل ذاك إذن له نفس الحكم")
+    assert result.get(JudgmentType.ANALOGY, 0.0) >= 0.35
+
+
+def test_analogy_without_illah_boosts_ambiguous():
+    clf = JudgmentClassifier()
+    result = clf.classify("هذا مثل ذاك إذن له نفس الحكم")
+    analogy = result.get(JudgmentType.ANALOGY, 0.0)
+    ambiguous = result.get(JudgmentType.AMBIGUOUS, 0.0)
+    assert analogy >= 0.35
+    assert ambiguous >= 0.30
+
+
+def test_metaphor_detection():
+    clf = JudgmentClassifier()
+    result = clf.classify("العلم نور لا يطفأ — هذا مجاز واضح")
+    assert result.get(JudgmentType.METAPHOR, 0.0) >= 0.35
+
+
+def test_usuli_reasoning_detection():
+    clf = JudgmentClassifier()
+    result = clf.classify("ما ضوابط الاجتهاد في أصول الفقه؟")
+    assert result.get(JudgmentType.USULI, 0.0) >= 0.35
+
+
+def test_new_types_are_str_subclass():
+    """New JudgmentType members must be str subclass for JSON compatibility."""
+    assert isinstance(JudgmentType.AMBIGUOUS, str)
+    assert isinstance(JudgmentType.LINGUISTIC, str)
+    assert isinstance(JudgmentType.ANALOGY, str)
+    assert isinstance(JudgmentType.METAPHOR, str)
+    assert isinstance(JudgmentType.USULI, str)
+
+
+def test_new_types_have_correct_values():
+    assert JudgmentType.AMBIGUOUS.value == "ambiguous"
+    assert JudgmentType.LINGUISTIC.value == "linguistic"
+    assert JudgmentType.ANALOGY.value == "analogy"
+    assert JudgmentType.METAPHOR.value == "metaphor"
+    assert JudgmentType.USULI.value == "usuli_reasoning"

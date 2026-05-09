@@ -38,11 +38,16 @@ class KnowledgeCategory(str, Enum):
 class JudgmentType(str, Enum):
     """The type of judgment the prompt is asking for."""
 
-    EPISTEMIC = "epistemic"     # معرفي — what is it? is it true? what is the evidence?
-    TECHNICAL = "technical"     # تقني — how to build/code/design?
-    VALUE = "value"             # قيمي — is it beneficial/harmful/good/bad?
-    SHARI = "shari"             # شرعي — is it obligatory/forbidden/permissible?
-    PRACTICAL = "practical"     # عملي — what steps? what plan? what should we do?
+    EPISTEMIC = "epistemic"         # معرفي — what is it? is it true? what is the evidence?
+    TECHNICAL = "technical"         # تقني — how to build/code/design?
+    VALUE = "value"                 # قيمي — is it beneficial/harmful/good/bad?
+    SHARI = "shari"                 # شرعي — is it obligatory/forbidden/permissible?
+    PRACTICAL = "practical"         # عملي — what steps? what plan? what should we do?
+    AMBIGUOUS = "ambiguous"         # ملتبس — unclear intent, requires disambiguation before judgment
+    LINGUISTIC = "linguistic"       # لغوي — about word meaning, semantics, etymology, grammar
+    ANALOGY = "analogy"             # قياس — reasoning by analogy/comparison (may lack illah)
+    METAPHOR = "metaphor"           # مجاز — figurative, symbolic, or non-literal language
+    USULI = "usuli_reasoning"       # أصولي — usul al-fiqh methodology and reasoning principles
 
 
 class EvidenceNeed(str, Enum):

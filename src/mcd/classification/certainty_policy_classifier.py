@@ -52,6 +52,11 @@ class CertaintyPolicyClassifier:
         practical_score = judgment_types.get(JudgmentType.PRACTICAL, 0.0)
         epistemic_score = judgment_types.get(JudgmentType.EPISTEMIC, 0.0)
         value_score = judgment_types.get(JudgmentType.VALUE, 0.0)
+        ambiguous_score = judgment_types.get(JudgmentType.AMBIGUOUS, 0.0)
+        linguistic_score = judgment_types.get(JudgmentType.LINGUISTIC, 0.0)
+        analogy_score = judgment_types.get(JudgmentType.ANALOGY, 0.0)
+        metaphor_score = judgment_types.get(JudgmentType.METAPHOR, 0.0)
+        usuli_score = judgment_types.get(JudgmentType.USULI, 0.0)
 
         has_sensory = evidence_needs.get(EvidenceNeed.SENSORY, 0.0) >= 0.35
         has_experimental = evidence_needs.get(EvidenceNeed.EXPERIMENTAL, 0.0) >= 0.35
@@ -65,6 +70,30 @@ class CertaintyPolicyClassifier:
                     reason=_SHARI_SUSPEND_REASON,
                     required_before_upgrade=[EvidenceNeed.SHARI, EvidenceNeed.TEXTUAL],
                 )
+
+        # 1b. Explicit ambiguous judgment → suspend
+        if ambiguous_score >= 0.35:
+            return CertaintyPolicyDecision(
+                policy=CertaintyPolicy.SUSPEND,
+                reason="الحكم ملتبس أو غير محدد المعنى: يُعلَّق حتى يُوضَح السياق أو المقصود.",
+                required_before_upgrade=["context", "disambiguation"],
+            )
+
+        # 1c. Analogy without stated illah → suspend (weak reasoning)
+        if analogy_score >= 0.35 and ambiguous_score >= 0.30:
+            return CertaintyPolicyDecision(
+                policy=CertaintyPolicy.SUSPEND,
+                reason="القياس بلا علة مصرَّح بها: يُعلَّق الحكم حتى تُبيَّن العلة الجامعة.",
+                required_before_upgrade=["illah_evidence", "analogical_justification"],
+            )
+
+        # 1d. Usuli reasoning → hypothesis (methodological, not settled)
+        if usuli_score >= 0.35 and shari_score < 0.70:
+            return CertaintyPolicyDecision(
+                policy=CertaintyPolicy.HYPOTHESIS,
+                reason="الاستدلال أصولي منهجي: يبقى في مرتبة الفرضية حتى يُحسم الدليل.",
+                required_before_upgrade=["usuli_proof", "scholarly_consensus"],
+            )
 
         # 2. Ambiguous / no context
         if not context_provided:
@@ -117,7 +146,7 @@ class CertaintyPolicyClassifier:
             )
 
         # 6. Short language queries without sufficient context → suspend
-        if lang_score >= 0.50 and context_provided:
+        if lang_score >= 0.50 or linguistic_score >= 0.35:
             # e.g. "ما معنى علم؟" — single ambiguous word with no specifier
             # Suspend when the intent is "define" and concept count is very low
             return CertaintyPolicyDecision(
@@ -126,7 +155,15 @@ class CertaintyPolicyClassifier:
                 required_before_upgrade=["context", "linguistic_evidence"],
             )
 
-        # 7. Epistemic / value → strong_knowledge
+        # 7. Metaphorical / figurative language → hypothesis
+        if metaphor_score >= 0.35:
+            return CertaintyPolicyDecision(
+                policy=CertaintyPolicy.HYPOTHESIS,
+                reason="اللغة مجازية أو رمزية: الحكم احتمالي حتى يُفسَّر المعنى الحرفي.",
+                required_before_upgrade=["literal_interpretation"],
+            )
+
+        # 8. Epistemic / value → strong_knowledge
         if epistemic_score >= 0.30 or value_score >= 0.30:
             return CertaintyPolicyDecision(
                 policy=CertaintyPolicy.STRONG_KNOWLEDGE,

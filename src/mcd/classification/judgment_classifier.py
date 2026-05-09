@@ -40,6 +40,39 @@ _EPISTEMIC_TRIGGERS = frozenset({
     "منهج", "مقياس", "واقع",
 })
 
+# New judgment type triggers
+
+_LINGUISTIC_TRIGGERS = frozenset({
+    "ما معنى", "معنى", "مدلول", "دلالة", "دلاله", "لغة", "لغه",
+    "كلمة", "كلمه", "مصطلح", "اشتقاق", "جذر", "نحو", "صرف",
+    "بلاغة", "بلاغه", "لفظ", "ألفاظ", "سيمانتيك", "تعريف لغوي",
+    "ما دلالة", "ما اللفظ", "ما الكلمة",
+})
+
+_ANALOGY_TRIGGERS = frozenset({
+    "مثل", "كمثل", "إذن له نفس الحكم", "له نفس الحكم", "بالمثل",
+    "قياسًا", "قياسا", "على القياس", "شبيه", "مشابه", "يشبه",
+    "كذلك", "كما أن", "نظير", "مقارنة", "مقاربة",
+})
+
+_METAPHOR_TRIGGERS = frozenset({
+    "مجاز", "مجازًا", "مجازا", "استعارة", "تشبيه", "كناية",
+    "رمز", "رمزي", "رمزية", "مجازية", "غير حرفي", "لا يقصد حرفيًا",
+    "يرمز", "يدل مجازًا", "في المعنى المجازي",
+})
+
+_USULI_TRIGGERS = frozenset({
+    "أصول الفقه", "اصول الفقه", "قاعدة أصولية", "قاعدة اصولية",
+    "الدليل الشرعي", "العلة", "المناط", "التعليل", "الاستنباط",
+    "الاجتهاد", "الإجماع", "القياس الفقهي", "الأصولي",
+    "استدلال أصولي", "منهج أصولي", "طريقة الاستدلال الشرعي",
+})
+
+_AMBIGUOUS_TRIGGERS = frozenset({
+    "غير واضح", "غامض", "ملتبس", "محتمل", "يحتمل أكثر من",
+    "له أكثر من معنى", "تعدد المعاني", "لا أعرف المقصود",
+})
+
 
 def _score_text(text: str, trigger_set: frozenset[str], weight: float = 0.35) -> float:
     """Scan text for triggers; return normalised hit fraction."""
@@ -59,6 +92,11 @@ class JudgmentClassifier:
             JudgmentType.PRACTICAL: 0.0,
             JudgmentType.VALUE: 0.0,
             JudgmentType.EPISTEMIC: 0.0,
+            JudgmentType.AMBIGUOUS: 0.0,
+            JudgmentType.LINGUISTIC: 0.0,
+            JudgmentType.ANALOGY: 0.0,
+            JudgmentType.METAPHOR: 0.0,
+            JudgmentType.USULI: 0.0,
         }
 
         # Text-level triggers
@@ -78,6 +116,21 @@ class JudgmentClassifier:
         scores[JudgmentType.EPISTEMIC] = max(
             scores[JudgmentType.EPISTEMIC], _score_text(text, _EPISTEMIC_TRIGGERS)
         )
+        scores[JudgmentType.LINGUISTIC] = max(
+            scores[JudgmentType.LINGUISTIC], _score_text(text, _LINGUISTIC_TRIGGERS, weight=0.50)
+        )
+        scores[JudgmentType.ANALOGY] = max(
+            scores[JudgmentType.ANALOGY], _score_text(text, _ANALOGY_TRIGGERS, weight=0.50)
+        )
+        scores[JudgmentType.METAPHOR] = max(
+            scores[JudgmentType.METAPHOR], _score_text(text, _METAPHOR_TRIGGERS, weight=0.50)
+        )
+        scores[JudgmentType.USULI] = max(
+            scores[JudgmentType.USULI], _score_text(text, _USULI_TRIGGERS, weight=0.50)
+        )
+        scores[JudgmentType.AMBIGUOUS] = max(
+            scores[JudgmentType.AMBIGUOUS], _score_text(text, _AMBIGUOUS_TRIGGERS, weight=0.50)
+        )
 
         # Boost from concept hints
         if concept_judgment_hints:
@@ -90,6 +143,19 @@ class JudgmentClassifier:
         if scores[JudgmentType.SHARI] >= 0.70:
             # VALUE stays independent — do not reduce it
             pass
+
+        # Analogy without explicit illah (علة) → flag ambiguous unless illah is stated
+        if scores[JudgmentType.ANALOGY] >= 0.35:
+            # Include common diacritical variations of illah-stating markers
+            illah_markers = {
+                "العلة", "العله", "لأن", "لان", "بسبب", "للعلة", "للعله",
+                "المناط", "لأنه", "لانه", "لأنها", "لانها",
+            }
+            if not any(m in text for m in illah_markers):
+                # Analogy with no stated illah → boost ambiguous slightly
+                scores[JudgmentType.AMBIGUOUS] = max(
+                    scores[JudgmentType.AMBIGUOUS], 0.35
+                )
 
         # Ensure at least one category is non-zero
         if all(v == 0.0 for v in scores.values()):
