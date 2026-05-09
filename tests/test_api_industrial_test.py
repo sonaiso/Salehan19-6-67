@@ -29,7 +29,7 @@ def test_industrial_test_has_execution_time_ms():
 
 def test_industrial_test_status_ok():
     resp = client.post("/industrial/test", json={"profile": "quick"})
-    assert resp.json()["status"] == "ok"
+    assert resp.json()["status"] == "success"
 
 
 def test_industrial_test_data_has_summary():

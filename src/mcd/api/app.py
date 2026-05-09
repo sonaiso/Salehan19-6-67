@@ -1,5 +1,6 @@
 """FastAPI application factory for the MCD REST API.
 
+Phase 6.1 — API Hardening & Pilot Verification.
 Phase 6 — Minimal REST API.
 No LLM calls. No external network calls. No GraphRAG.
 Not production-ready. Pilot-ready candidate only.
@@ -16,6 +17,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from mcd.api.health import router as health_router
 from mcd.api.middleware import RequestTracingMiddleware
 from mcd.api.routes import router as main_router
+from mcd.api.v1_routes import v1_router
 from mcd.api.version import API_VERSION, PHASE, SERVICE_NAME
 
 
@@ -26,6 +28,8 @@ def build_app() -> FastAPI:
         description=(
             f"{PHASE}\n\n"
             "Minimal Cognitive Decoder — Arabic epistemic reasoning via REST API.\n\n"
+            "**Phase 6.1 additions:** /v1 versioned routes, unified response envelope, "
+            "schema stability checker, pilot readiness endpoint, API observability.\n\n"
             "**Limitations:**\n"
             "- No authentication (TODO before production)\n"
             "- No rate limiting (TODO before production)\n"
@@ -99,6 +103,9 @@ def build_app() -> FastAPI:
     # -----------------------------------------------------------------------
     # Routers
     # -----------------------------------------------------------------------
+    # V1 versioned routes (canonical, documented)
+    app.include_router(v1_router)
+    # Legacy unversioned routes (backward-compatible aliases)
     app.include_router(health_router)
     app.include_router(main_router)
 

@@ -34,7 +34,7 @@ def test_classify_has_execution_time_ms():
 
 def test_classify_status_ok():
     resp = client.post("/classify", json={"text": _ARABIC_TEXT})
-    assert resp.json()["status"] == "ok"
+    assert resp.json()["status"] == "success"
 
 
 def test_classify_data_has_intent():
@@ -69,7 +69,7 @@ def test_classify_json_roundtrip():
     resp = client.post("/classify", json={"text": _ARABIC_TEXT})
     raw_text = resp.text
     parsed = json.loads(raw_text)
-    assert parsed["status"] == "ok"
+    assert parsed["status"] == "success"
 
 
 def test_classify_no_enum_leakage():
