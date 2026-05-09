@@ -1,0 +1,161 @@
+# Epistemic Cognitive Decoder — Semiotics
+# Based on al-Nabhani's classification of the lafz (word/sign):
+#   دال وحده | دال ومدلول | مدلول وحده
+#   مطابقة | تضمن | التزام
+# ───────────────────────────────────────────────────────────────────────────────
+
+version: "1.0"
+description: >
+  طبقة الدال والمدلول للديكودر المعرفي.
+  تُفكّك اللغة إلى بنيتها الدلالية قبل أي حكم.
+
+# ── ثلاثة أقسام الدلالة ──────────────────────────────────────────────────────
+
+signifier_modes:
+
+  - id: dal_only
+    arabic: الدال وحده
+    english: Signifier-only
+    description: >
+      دراسة اللفظ من حيث شكله وبنيته الصرفية،
+      بصرف النظر عن المعنى.
+    semantic_relations:
+      - id: mutabaqa
+        arabic: مطابقة
+        english: Full Correspondence
+        description: >
+          دلالة اللفظ على تمام ما وُضع له؛
+          اللفظ يدل بكامله على المعنى بكامله.
+        certainty_rank: high
+        example: "الإنسان → الحيوان الناطق بأسره"
+
+      - id: tadammun
+        arabic: تضمن
+        english: Containment / Inclusion
+        description: >
+          دلالة اللفظ على جزء من معناه الموضوع له؛
+          تُستخدم لتحليل المفاهيم المركّبة.
+        certainty_rank: medium
+        example: "الإنسان → الحيوان فقط (جزء من المعنى)"
+
+      - id: iltizam
+        arabic: التزام
+        english: Implication / Entailment
+        description: >
+          دلالة اللفظ على معنى خارج عن موضوعه لكنه لازم له؛
+          لا يُنطق به لكن العقل يلزمه.
+        certainty_rank: low
+        example: "الإنسان → اللازم: أنه يموت"
+
+  - id: madlul_only
+    arabic: المدلول وحده
+    english: Signified-only (Ontological categories)
+    description: >
+      تصنيف المفاهيم من حيث وجودها الذهني والخارجي.
+    ontological_types:
+      - id: kulli
+        arabic: كلي
+        english: Universal
+        description: ينطبق على أفراد كثيرة — الجنس، النوع، الفصل، الخاصة، العرض العام
+        examples:
+          - الإنسان (نوع)
+          - الحيوان (جنس)
+      - id: juz'i
+        arabic: جزئي
+        english: Particular
+        description: يختص بفرد واحد أو مجموعة محدودة
+        examples:
+          - زيد
+          - هذا الكتاب
+      - id: jins
+        arabic: جنس
+        english: Genus
+        description: المشترك بين أنواع متعددة
+      - id: naw'
+        arabic: نوع
+        english: Species
+        description: ما تحت الجنس وفوق الفرد
+      - id: dhat
+        arabic: ذات
+        english: Substance / Essence
+        description: ما يقوم بنفسه
+      - id: sifa
+        arabic: صفة
+        english: Attribute / Quality
+        description: ما يقوم بغيره
+      - id: jamid
+        arabic: جامد
+        english: Non-derived (nominal)
+        description: لفظ لا مشتق له من حدث
+      - id: mushtaq
+        arabic: مشتق
+        english: Derived
+        description: لفظ مشتق من مادة دالة على حدث
+      - id: fa'il
+        arabic: فاعل
+        english: Agent / Subject
+        description: من يصدر عنه الفعل
+      - id: maf'ul
+        arabic: مفعول
+        english: Patient / Object
+        description: من يقع عليه الفعل
+      - id: sabab
+        arabic: سبب
+        english: Cause
+        description: ما يكون الشيء عنده لا به
+      - id: musabbab
+        arabic: مسبَّب
+        english: Effect / Result
+        description: ما يترتب على السبب
+
+  - id: dal_and_madlul
+    arabic: الدال والمدلول معًا
+    english: Signifier + Signified (Lexical-Semantic)
+    description: >
+      دراسة العلاقة بين اللفظ ومعناه الموضوع له.
+    lexical_categories:
+      - id: haqiqa
+        arabic: حقيقة
+        english: Literal usage
+        description: اللفظ مستعمل في موضوعه الأصلي
+        priority: high
+
+      - id: majaz
+        arabic: مجاز
+        english: Figurative / Metaphorical usage
+        description: اللفظ مستعمل في غير موضوعه بعلاقة وقرينة
+        priority: lower_than_haqiqa
+        guard: NoHaqiqaToMajazWithoutEvidence
+
+      - id: ishtiraq
+        arabic: اشتراك
+        english: Polysemy / Homonymy
+        description: لفظ واحد له معانٍ متعددة وضعًا
+        requires_disambiguation: true
+
+      - id: taraduf
+        arabic: ترادف
+        english: Synonymy
+        description: ألفاظ متعددة لمعنى واحد
+
+      - id: naql
+        arabic: نقل
+        english: Semantic shift / Transferred meaning
+        description: لفظ نُقل من معناه اللغوي إلى معنى شرعي أو اصطلاحي
+
+      - id: istilah
+        arabic: اصطلاح
+        english: Technical term
+        description: لفظ خُصص بمعنى في علم أو حقل معين
+
+# ── قواعد حاكمة ──────────────────────────────────────────────────────────────
+
+invariants:
+  - id: NoMajazWithoutQarina
+    rule: لا مجاز إلا بقرينة صارفة عن الحقيقة
+  - id: NoIshtiraqWithoutDisambiguation
+    rule: لا يُحكم على المشترك حتى يُميَّز المقصود بالقرينة
+  - id: NoSignifierWithoutSignified
+    rule: لا دال بلا مدلول في الكلام المفيد
+  - id: PriorityOfLiteralOverFigurative
+    rule: الأصل في الاستعمال الحقيقة لا المجاز

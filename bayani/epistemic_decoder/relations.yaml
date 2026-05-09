@@ -1,0 +1,196 @@
+# Epistemic Cognitive Decoder — Relations
+# Covers the full set of semantic-relational structures used by the
+# Relation Graph Builder (Unit 4) of the EpistemicCognitiveDecoder.
+# ───────────────────────────────────────────────────────────────────────────────
+
+version: "1.0"
+description: >
+  طبقة الربط والعلاقات للديكودر المعرفي.
+  تبني شبكة العلاقات الدلالية بين مكونات الجملة أو القضية
+  قبل تشكيل أي حكم.
+
+# ── أنواع العلاقات الثلاثة عشر ───────────────────────────────────────────────
+
+relation_types:
+
+  - id: isnad
+    arabic: إسناد
+    english: Predication / Attribution
+    description: نسبة المحمول إلى الموضوع؛ أساس تركيب الجملة
+    template: "موضوع ← محمول"
+    example: "العقل [موضوع] ← يحتاج واقعًا [محمول]"
+    carrier_operators:
+      - nominal_sentence
+      - verb_sentence
+
+  - id: tadmin
+    arabic: تضمين
+    english: Implicit inclusion
+    description: إدراج معنى ضمني داخل اللفظ دون تصريح
+    template: "لفظ ← معنى مُدرج ضمنًا"
+    carrier_operators:
+      - particle_of_inclusion
+
+  - id: taqyid
+    arabic: تقييد
+    english: Restriction / Qualification
+    description: تخصيص المعنى بقيد يضيّق نطاقه
+    template: "مطلق ← قيد"
+    carrier_operators:
+      - sifa
+      - hal
+      - tamyiz
+      - conditional_tool
+
+  - id: fa'iliyya
+    arabic: فاعلية
+    english: Agency
+    description: علاقة الفاعل بفعله
+    template: "فاعل ← فعل"
+    carrier_operators:
+      - verb_sentence
+
+  - id: maf'uliyya
+    arabic: مفعولية
+    english: Patient-Action Relation
+    description: علاقة المفعول بالفعل الواقع عليه
+    template: "فعل ← مفعول"
+    carrier_operators:
+      - verb_sentence
+
+  - id: sababiyya
+    arabic: سببية
+    english: Causation
+    description: علاقة السبب بمسبَّبه؛ الشيء يكون عند السبب لا به
+    template: "سبب → مسبَّب"
+    carrier_operators:
+      - cause_tool
+      - lam_ta'lil
+      - fa_sababiyya
+
+  - id: musabbabiyya
+    arabic: مسببية
+    english: Effect Relation
+    description: علاقة المسبَّب بسببه (اتجاه عكسي)
+    template: "مسبَّب ← سبب"
+    carrier_operators:
+      - cause_tool
+
+  - id: shartiyya
+    arabic: شرطية
+    english: Conditionality
+    description: علاقة الشرط بجزائه؛ الشرط ليس علة
+    template: "شرط → جواب الشرط"
+    carrier_operators:
+      - conditional_tool
+      - in
+      - idha
+      - law
+
+  - id: gha'iyya
+    arabic: غائية
+    english: Teleological / Purpose Relation
+    description: علاقة الغاية التي لأجلها يقع الفعل
+    template: "فعل → غاية"
+    carrier_operators:
+      - ghayah_tool
+      - li_ta'lil
+      - hatta_ghayah
+
+  - id: zamaniyya
+    arabic: زمانية
+    english: Temporal Relation
+    description: تحديد الزمن الذي يقع فيه الفعل أو الحدث
+    template: "حدث ← زمان"
+    carrier_operators:
+      - zaman_tool
+      - lamma
+      - idh
+
+  - id: makaniyya
+    arabic: مكانية
+    english: Spatial Relation
+    description: تحديد المكان الذي يقع فيه الفعل أو الكيان
+    template: "حدث ← مكان"
+    carrier_operators:
+      - makan_tool
+      - fi_zarf
+
+  - id: haliyya
+    arabic: حالية
+    english: Circumstantial / State Relation
+    description: الحال التي يكون عليها الفاعل أو المفعول أثناء الفعل
+    template: "فاعل/مفعول ← حال"
+    carrier_operators:
+      - hal
+
+  - id: istithna'
+    arabic: استثنائية
+    english: Exception Relation
+    description: إخراج فرد أو أفراد من حكم عام
+    template: "عام − مستثنى"
+    carrier_operators:
+      - exception_tool
+      - illa
+
+# ── علاقات منطقية إضافية ─────────────────────────────────────────────────────
+
+logical_relations:
+
+  - id: amm_khas
+    arabic: عام ← خاص
+    english: General–Specific
+    description: علاقة الشمول بين العام وأفراده الخاصة
+    usul_impact: takhsis
+
+  - id: kulli_juzii
+    arabic: كلي ← جزئي
+    english: Universal–Particular
+    description: علاقة الكلي بجزئياته في المنطق
+    usul_impact: tatbiq
+
+  - id: asl_far'
+    arabic: أصل ← فرع
+    english: Source–Branch (Qiyas)
+    description: علاقة الأصل بفرعه في القياس
+    usul_impact: qiyas
+
+  - id: illa_hukm
+    arabic: علة ← حكم
+    english: Cause–Ruling
+    description: العلة التي يدور معها الحكم وجودًا وعدمًا
+    usul_impact: tallil
+    guard: NoIllahWithoutValidation
+
+  - id: shart_mashroot
+    arabic: شرط ← مشروط
+    english: Condition–Conditioned
+    description: الشرط الذي لا يتم المشروط إلا به
+    usul_impact: ishtarat
+
+  - id: qayd_muqayyad
+    arabic: قيد ← مقيّد
+    english: Restriction–Restricted
+    description: القيد الذي يحدد نطاق تطبيق الحكم
+    usul_impact: itlaq_taqyid
+
+  - id: mantuq_mafhoom
+    arabic: منطوق ← مفهوم
+    english: Explicit–Implicit Meaning
+    description: علاقة ما يُنطق به وما يُفهم منه
+    usul_impact: dalalat_nass
+    guard: NoMafhumStrongerThanMantuq
+
+# ── قواعد حاكمة ──────────────────────────────────────────────────────────────
+
+invariants:
+  - id: NoRelationWithoutCarrier
+    rule: لا نسبة بلا عامل حامل
+  - id: NoIllahWithoutValidation
+    rule: لا علة قبل اختبارات العلة السبعة
+  - id: NoDomainTransferWithoutBridge
+    rule: لا انتقال مجالي بلا جسر
+  - id: NoMafhumStrongerThanMantuq
+    rule: لا يتجاوز المفهوم قوة المنطوق
+  - id: NoQiyasWithoutSharedIllah
+    rule: لا قياس بلا علة مشتركة مثبتة
