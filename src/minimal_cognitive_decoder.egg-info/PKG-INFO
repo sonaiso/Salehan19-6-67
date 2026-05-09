@@ -3,3 +3,6 @@ Name: minimal-cognitive-decoder
 Version: 0.1.0
 Summary: Minimal Cognitive Decoder — Arabic epistemic reasoning layer
 Requires-Python: >=3.11
+Requires-Dist: fastapi>=0.100.0
+Requires-Dist: uvicorn>=0.22.0
+Requires-Dist: httpx>=0.24.0
