@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "minimal-cognitive-decoder"
+version = "0.1.0"
+description = "Minimal Cognitive Decoder — Arabic epistemic reasoning layer"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+mcd = "mcd.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]

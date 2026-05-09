@@ -1,0 +1,2 @@
+[console_scripts]
+mcd = mcd.cli:main
