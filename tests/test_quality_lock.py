@@ -42,11 +42,13 @@ def _graph(nodes=None, edges=None, certainty="probable_knowledge",
 def test_curriculum_contract_check_cli_builds_valid_vectors():
     """CLI must build nodes with valid role_vector and domain_vector."""
     import subprocess, sys, json, os
+    from pathlib import Path
+    repo_root = str(Path(__file__).parent.parent)
     env = {**os.environ, "PYTHONPATH": "src"}
     result = subprocess.run(
         [sys.executable, "-m", "mcd.cli", "curriculum-contract-check", "--output", "json"],
         capture_output=True, text=True, env=env,
-        cwd="/home/runner/work/Salehan19-6-67/Salehan19-6-67",
+        cwd=repo_root,
     )
     assert result.returncode == 0, f"stderr: {result.stderr}"
     data = json.loads(result.stdout)
@@ -634,11 +636,13 @@ def test_qualification_metrics_to_dict_has_quality_lock_fields():
 
 def _run_cli(cmd: list[str]):
     import subprocess, sys, os
+    from pathlib import Path
+    repo_root = str(Path(__file__).parent.parent)
     env = {**os.environ, "PYTHONPATH": "src"}
     return subprocess.run(
         [sys.executable, "-m", "mcd.cli"] + cmd,
         capture_output=True, text=True, env=env,
-        cwd="/home/runner/work/Salehan19-6-67/Salehan19-6-67",
+        cwd=repo_root,
     )
 
 

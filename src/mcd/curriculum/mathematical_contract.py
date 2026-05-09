@@ -62,7 +62,7 @@ def check_mathematical_contract(graph: CognitiveGraph) -> MathematicalContractRe
                 violations.append(f"Contract[3]: node '{node.node_id}' role_vector: {v}")
 
         if not node.domain_vector:
-            violations.append(f"Contract[2]: node '{node.node_id}' missing domain_vector — domain_vector is mandatory")
+            violations.append(f"Contract[2]: node '{node.node_id}' missing domain_vector")
         else:
             dv_violations = validate_domain_vector(node.domain_vector).violations
             for v in dv_violations:

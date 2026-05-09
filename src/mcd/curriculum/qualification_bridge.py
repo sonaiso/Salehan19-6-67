@@ -357,19 +357,11 @@ def compute_qualification_metrics(units: list[CognitiveUnit]) -> CurriculumQuali
 
     # --- Phase 5.3.2 Quality Lock Gates ---
     # Run quality lock to populate gate metrics
-    from .quality_lock import (
-        run_quality_lock,
-        GOLDEN_PASS_RATE_THRESHOLD as QL_GOLDEN,
-        ADVERSARIAL_DETECTION_THRESHOLD as QL_ADV,
-        MUTATION_PASS_RATE_THRESHOLD as QL_MUT,
-        LEVEL9_SCORE_THRESHOLD as QL_L9,
-        LEVEL10_SCORE_THRESHOLD as QL_L10,
-        INVARIANT_PASS_RATE_THRESHOLD as QL_INV,
-    )
+    from .quality_lock import run_quality_lock, MUTATION_PASS_RATE_THRESHOLD
     ql_report = run_quality_lock()
     metrics.golden_examples_pass_rate = ql_report.golden_pass_rate
     metrics.adversarial_failure_detection = ql_report.adversarial_detection_rate
-    metrics.mutation_tests_passed = ql_report.mutation_test_pass_rate >= QL_MUT
+    metrics.mutation_tests_passed = ql_report.mutation_test_pass_rate >= MUTATION_PASS_RATE_THRESHOLD
     metrics.level9_domain_contract_score = ql_report.level9_score
     metrics.level10_graph_vector_contract_score = ql_report.level10_score
     metrics.contract_quality_lock_passed = ql_report.is_locked()

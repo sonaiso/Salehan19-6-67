@@ -441,7 +441,7 @@ def run_mutation_tests() -> MutationTestReport:
             failed = _graph_fails_contract(mutated)
         except Exception as exc:
             failed = True  # unexpected exception counts as failure
-            explanation = f"Exception during mutation: {exc}"
+            explanation = f"Exception during mutation '{mutation_name}': {exc}"
         else:
             explanation = (
                 "mutation correctly detected — validators failed"
