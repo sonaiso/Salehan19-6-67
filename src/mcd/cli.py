@@ -79,6 +79,34 @@ def main() -> None:
     latency_parser.add_argument("--cases", type=int, default=20)
     latency_parser.add_argument("--output", choices=["markdown", "json"], default="markdown")
 
+    # pre-api-qualification
+    paq_parser = subparsers.add_parser(
+        "pre-api-qualification",
+        help="Phase 5.2: Pre-API Qualification Gate — verify all non-API dimensions ≥ 4.5",
+    )
+    paq_parser.add_argument("--output", choices=["json", "markdown"], default="markdown")
+    paq_parser.add_argument(
+        "--tests-pass",
+        dest="tests_pass",
+        choices=["true", "false"],
+        default=None,
+        help="Set to 'true' if CI confirms all tests pass (raises test_score above 4.3)",
+    )
+    paq_parser.add_argument(
+        "--readiness-report-exists",
+        dest="readiness_report_exists",
+        choices=["true", "false"],
+        default=None,
+        help="Set to 'true' if a pilot readiness report already exists",
+    )
+    paq_parser.add_argument(
+        "--latency-target-ms",
+        dest="latency_target_ms",
+        type=float,
+        default=None,
+        help="Documented p95 latency target in milliseconds (raises latency_score above 4.4)",
+    )
+
     args = parser.parse_args()
 
     if args.command == "classify":
@@ -387,6 +415,31 @@ def main() -> None:
             print(f"- P50 latency: {result.p50_latency_ms:.1f}ms")
             print(f"- P95 latency: {result.p95_latency_ms:.1f}ms")
             print(f"- Max latency: {result.max_latency_ms:.1f}ms")
+    elif args.command == "pre-api-qualification":
+        from mcd.industrial.pre_api_qualification import PreAPIQualificationGate, render_markdown
+        from mcd.industrial.serializers import to_json
+
+        tests_pass = None
+        if getattr(args, "tests_pass", None) is not None:
+            tests_pass = args.tests_pass.lower() == "true"
+
+        readiness_report_exists = None
+        if getattr(args, "readiness_report_exists", None) is not None:
+            readiness_report_exists = args.readiness_report_exists.lower() == "true"
+
+        latency_target_ms = getattr(args, "latency_target_ms", None)
+
+        gate = PreAPIQualificationGate()
+        report = gate.evaluate(
+            tests_pass=tests_pass,
+            readiness_report_exists=readiness_report_exists,
+            latency_target_ms=latency_target_ms,
+        )
+
+        if args.output == "json":
+            print(to_json(report.to_dict()))
+        else:
+            print(render_markdown(report))
     else:
         parser.print_help()
 
