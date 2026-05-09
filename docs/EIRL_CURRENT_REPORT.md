@@ -302,3 +302,9 @@ This will be the baseline for future calibration.
 The project has reached a clean, well-tested **working prototype** state with a genuine multi-layer epistemic reasoning architecture. The immediate priority is **not** adding new layers — it is **measuring what exists** through a calibrated evaluation dataset, then fixing the known gaps (enum serialization, missing taxonomy labels), then building the API.
 
 **Freeze ✅ | Audit ✅ | Report ✅ | Next Step: Evaluation Dataset Expansion**
+
+---
+
+## Phase 4 Dataset Expansion
+
+Phase 4 adds comprehensive dynamic dataset expansion: 461 total benchmark examples across 4 JSONL files, 10 dynamic template families, 5 benchmark profiles, full coverage matrix (≥0.80 score), and 13 new source files. See docs/DATASET_EXPANSION_STRATEGY.md and docs/DYNAMIC_BENCHMARKING.md.

@@ -54,6 +54,21 @@ class CalibrationReport:
     false_certainty_rate: float
     suspension_precision: float       # of suspensions, how many were correct
     suspension_recall: float          # of required suspensions, how many were caught
+    # Phase 4 extended fields — all have defaults for backward compatibility
+    root_domain_accuracy: float = 0.0
+    knowledge_category_accuracy: float = 0.0
+    ambiguity_suspension_rate: float = 0.0
+    analogy_missing_illah_detection: float = 0.0
+    metaphor_literalization_error_rate: float = 0.0
+    shari_evidence_requirement_rate: float = 0.0
+    tool_civilization_separation_accuracy: float = 0.0
+    society_individual_separation_accuracy: float = 0.0
+    linguistic_grounding_suspension_accuracy: float = 0.0
+    structured_schema_completeness: float = 0.0
+    scores_by_judgment_type: dict = field(default_factory=dict)
+    scores_by_difficulty: dict = field(default_factory=dict)
+    worst_10_examples: list = field(default_factory=list)
+    top_recommendations: list = field(default_factory=list)
 
     def to_dict(self) -> dict:
         return {
@@ -65,6 +80,20 @@ class CalibrationReport:
             "suspension_recall": round(self.suspension_recall, 4),
             "dimensions": [d.to_dict() for d in self.dimensions],
             "recommendations": self.recommendations,
+            "root_domain_accuracy": round(self.root_domain_accuracy, 4),
+            "knowledge_category_accuracy": round(self.knowledge_category_accuracy, 4),
+            "ambiguity_suspension_rate": round(self.ambiguity_suspension_rate, 4),
+            "analogy_missing_illah_detection": round(self.analogy_missing_illah_detection, 4),
+            "metaphor_literalization_error_rate": round(self.metaphor_literalization_error_rate, 4),
+            "shari_evidence_requirement_rate": round(self.shari_evidence_requirement_rate, 4),
+            "tool_civilization_separation_accuracy": round(self.tool_civilization_separation_accuracy, 4),
+            "society_individual_separation_accuracy": round(self.society_individual_separation_accuracy, 4),
+            "linguistic_grounding_suspension_accuracy": round(self.linguistic_grounding_suspension_accuracy, 4),
+            "structured_schema_completeness": round(self.structured_schema_completeness, 4),
+            "scores_by_judgment_type": self.scores_by_judgment_type,
+            "scores_by_difficulty": self.scores_by_difficulty,
+            "worst_10_examples": self.worst_10_examples,
+            "top_recommendations": self.top_recommendations,
         }
 
 
