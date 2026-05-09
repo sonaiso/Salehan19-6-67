@@ -69,7 +69,8 @@ def _case(expected_behavior="suspend", expected_minimum_warnings=None, expected_
 
 def test_percentile_p95_not_max():
     values = list(range(1, 21))  # [1..20]
-    assert percentile(values, 95) == 19  # nearest-rank: ceil(0.95*20)-1 = 18th idx → value 19
+    # nearest-rank: ceil(0.95*20)-1 = index 18 → value 19 (not max=20)
+    assert percentile(values, 95) == 19
 
 def test_percentile_p50_median():
     values = list(range(1, 11))  # [1..10]
@@ -264,7 +265,7 @@ def test_pass_ok_if_expected_warning_present():
 
 def test_pass_warning_post_check_only_when_base_passes():
     case = _case(expected_behavior="detect_injection", expected_minimum_warnings=["source_required"])
-    # base fails because no injection in warnings; source_required post-check should not be reached
+    # Base fails (no injection warning) → post-checks are skipped (they only run when base passes)
     passed, explanation = _evaluate_pass(case, "insufficient_evidence", "missing", [], False)
     assert not passed
     assert "injection" in explanation
