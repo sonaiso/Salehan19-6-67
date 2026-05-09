@@ -56,3 +56,70 @@ class BenchmarkExample:
     @classmethod
     def from_dict(cls, d: dict) -> "BenchmarkExample":
         return cls(**{k: v for k, v in d.items() if k in cls.__dataclass_fields__})
+
+
+# ---------------------------------------------------------------------------
+# Web Evaluator Example — schema for web_evaluator_prompts_ar_dataset.jsonl
+# ---------------------------------------------------------------------------
+
+@dataclass
+class WebEvaluatorExample:
+    """A single entry in the Web Evaluator Arabic Prompt Dataset.
+
+    This schema captures the richer grounding fields produced by the
+    web-evaluator generation script (Categories A–I):
+    reality description, lists of taxonomy labels, required behavior,
+    scoring focus areas, and adversarial metadata.
+    """
+
+    id: str
+    prompt: str
+    what_is_reality: str
+    root_domain: list[str] = field(default_factory=list)
+    concept_type: list[str] = field(default_factory=list)
+    knowledge_category: list[str] = field(default_factory=list)
+    judgment_type: list[str] = field(default_factory=list)
+    evidence_need: list[str] = field(default_factory=list)
+    certainty_policy: str = "suspend"
+    expected_status: str = "suspended"
+    required_behavior: str = ""
+    required_warnings: list[str] = field(default_factory=list)
+    forbidden_outputs: list[str] = field(default_factory=list)
+    scoring_focus: list[str] = field(default_factory=list)
+    difficulty: str = "medium"
+    tags: list[str] = field(default_factory=list)
+
+    def to_dict(self) -> dict:
+        return {
+            "id": self.id,
+            "prompt": self.prompt,
+            "what_is_reality": self.what_is_reality,
+            "root_domain": self.root_domain,
+            "concept_type": self.concept_type,
+            "knowledge_category": self.knowledge_category,
+            "judgment_type": self.judgment_type,
+            "evidence_need": self.evidence_need,
+            "certainty_policy": self.certainty_policy,
+            "expected_status": self.expected_status,
+            "required_behavior": self.required_behavior,
+            "required_warnings": self.required_warnings,
+            "forbidden_outputs": self.forbidden_outputs,
+            "scoring_focus": self.scoring_focus,
+            "difficulty": self.difficulty,
+            "tags": self.tags,
+        }
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "WebEvaluatorExample":
+        known = {k for k in cls.__dataclass_fields__}
+        return cls(**{k: v for k, v in d.items() if k in known})
+
+    @property
+    def should_suspend(self) -> bool:
+        return self.certainty_policy == "suspend" or self.expected_status in (
+            "suspended", "requires_context"
+        )
+
+    @property
+    def is_adversarial(self) -> bool:
+        return self.difficulty == "adversarial"

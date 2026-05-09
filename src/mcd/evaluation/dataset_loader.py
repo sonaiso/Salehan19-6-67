@@ -2,7 +2,7 @@
 from __future__ import annotations
 import json
 from pathlib import Path
-from mcd.evaluation.dataset_schema import BenchmarkExample
+from mcd.evaluation.dataset_schema import BenchmarkExample, WebEvaluatorExample
 
 DEFAULT_DATA_DIR = Path(__file__).parent.parent.parent.parent / "data" / "evaluation"
 
@@ -40,3 +40,19 @@ def load_all(data_dir: Path = DEFAULT_DATA_DIR) -> list[BenchmarkExample]:
         if p.exists():
             examples.extend(load_jsonl(p))
     return examples
+
+
+def load_web_evaluator_jsonl(path: Path) -> list[WebEvaluatorExample]:
+    """Load the web evaluator prompt dataset (WEB-001 … WEB-085+)."""
+    examples = []
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                examples.append(WebEvaluatorExample.from_dict(json.loads(line)))
+    return examples
+
+
+def load_web_evaluator(data_dir: Path = DEFAULT_DATA_DIR) -> list[WebEvaluatorExample]:
+    """Load data/evaluation/web_evaluator_prompts_ar_dataset.jsonl."""
+    return load_web_evaluator_jsonl(data_dir / "web_evaluator_prompts_ar_dataset.jsonl")
