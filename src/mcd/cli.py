@@ -15,9 +15,30 @@ def main() -> None:
     decode_parser.add_argument("--mode", choices=["knower", "learner"], default="knower")
     decode_parser.add_argument("--output", choices=["text", "json"], default="text")
 
+    nabhani_parser = subparsers.add_parser("nabhani", help="Nabhani epistemic reasoning (NERL)")
+    nabhani_parser.add_argument("text", help="Arabic text to analyse epistemically")
+    nabhani_parser.add_argument("--output", choices=["text", "json"], default="text")
+
     args = parser.parse_args()
 
-    if args.command == "decode":
+    if args.command == "nabhani":
+        from mcd.nabhani.nabhani_decoder import NabhaniDecoder
+
+        decoder = NabhaniDecoder()
+        result = decoder.decode(args.text)
+
+        if args.output == "json":
+            print(json.dumps(result, ensure_ascii=False, indent=2))
+        else:
+            print(f"المدخل:          {result['input']}")
+            print(f"نوع الحكم:       {result['domain']['judgment_type']}")
+            print(f"حالة النطاق:     {result['domain']['status']}")
+            print(f"الحكم العقلي:    {result['rational_judgment']['status']}")
+            print(f"المطابقة:        {result['correspondence']['match_score']:.3f} ({result['correspondence']['match_type']})")
+            print(f"اليقين:          {result['certainty']['score']:.3f} ({result['certainty']['level']})")
+            print(f"الحالة المعرفية: {result['epistemic_status']}")
+            print(f"الإجابة:         {result['final_answer']}")
+    elif args.command == "decode":
         from mcd.engines.decoder import MinimalCognitiveDecoder
         from mcd.knowledge.prior_store import PriorKnowledgeStore
         from mcd.knowledge.seed_data import load_seed_data
