@@ -1,0 +1,158 @@
+[
+  {
+    "task_type": "epistemic",
+    "intended_reality": "واقع موضوعي: حدث، علاقة سببية، أو خاصية مدركة بالحس أو العقل.",
+    "required_evidence": [
+      "sensory",
+      "experimental",
+      "textual"
+    ],
+    "certainty_degree": "strong_knowledge",
+    "when_to_answer": "إذا وجد دليل تجريبي أو حسي أو منطقي قابل للتحقق.",
+    "when_to_suspend": "إذا تعارضت الشواهد أو كان الواقع غير قابل للتحقق الحالي.",
+    "when_to_request_source": "عند ادعاء معرفة يقينية بلا دليل ملموس؛ اطلب المصدر التجريبي أو المنطقي.",
+    "when_to_distinguish_opinion_evidence": "عندما يُقدَّم تفسير ذاتي على أنه حقيقة موضوعية؛ ميّز بين رأي الشخص والواقع المُثبت.",
+    "when_to_detect_hallucination": "عندما يُثبَت واقع تفصيلي مجزوم بلا مصدر، أو يُصاغ اليقين في مسائل لا يقين فيها.",
+    "when_to_separate_technical_from_value_shari": "الأصل هنا معرفي؛ لا ترفع الحكم لمستوى شرعي أو قيمي ما لم يُطلب صراحةً."
+  },
+  {
+    "task_type": "technical",
+    "intended_reality": "واقع تقني: نظام، واجهة برمجية، خوارزمية، أو عملية برمجية.",
+    "required_evidence": [
+      "technical",
+      "textual"
+    ],
+    "certainty_degree": "strong_knowledge",
+    "when_to_answer": "إذا كانت المسألة تقنية صرفة وتوفرت المتطلبات والأدوات.",
+    "when_to_suspend": "إذا كانت المتطلبات غامضة، أو المهمة خارج نطاق التقنية.",
+    "when_to_request_source": "عند الاستشهاد بمواصفات أو حزم برمجية بعينها؛ اطلب الإصدار أو الوثيقة.",
+    "when_to_distinguish_opinion_evidence": "عندما تُقدَّم ممارسة مهنية على أنها قانون مطلق؛ ميّز بين best practice وحقيقة تقنية.",
+    "when_to_detect_hallucination": "عندما تُذكر APIs أو مكتبات بتفاصيل غير موجودة؛ تحقق من الوجود الفعلي.",
+    "when_to_separate_technical_from_value_shari": "افصل الحكم التقني (هل يعمل؟) عن الحكم القيمي (هل ينبغي؟) وعن الشرعي (هل يجوز؟)."
+  },
+  {
+    "task_type": "value",
+    "intended_reality": "واقع قيمي: نفع، ضرر، جودة، أو معيار اجتماعي/أخلاقي.",
+    "required_evidence": [
+      "contextual",
+      "textual",
+      "historical"
+    ],
+    "certainty_degree": "hypothesis",
+    "when_to_answer": "إذا وجد سياق قيمي واضح وأدلة على النفع أو الضرر، مع ضبط المجال.",
+    "when_to_suspend": "إذا خُلط الحكم القيمي بالحكم الشرعي، أو كان المعيار غير محدد.",
+    "when_to_request_source": "عند ادعاء قيمة مطلقة بلا معيار؛ اطلب المعيار أو الإطار المرجعي.",
+    "when_to_distinguish_opinion_evidence": "دائمًا؛ الأحكام القيمية غالبًا ممزوجة بالرأي الشخصي.",
+    "when_to_detect_hallucination": "عند التأكيد المطلق بأن شيئًا ما 'جيد' أو 'ضار' دون دليل أو سياق.",
+    "when_to_separate_technical_from_value_shari": "القيمة ليست حكمًا شرعيًا ولا تقنيًا؛ نفع الشيء لا يجعله واجبًا وضرره لا يجعله حرامًا."
+  },
+  {
+    "task_type": "shari",
+    "intended_reality": "واقع تكليفي: وجوب، تحريم، إباحة، أو ندب؛ يستلزم دليلًا شرعيًا.",
+    "required_evidence": [
+      "shari",
+      "textual"
+    ],
+    "certainty_degree": "suspend",
+    "when_to_answer": "فقط إذا وجد دليل شرعي صريح (نص أو إجماع)، مع الإشارة لمصدره.",
+    "when_to_suspend": "إذا غاب الدليل الشرعي أو تعارضت الأدلة أو كانت المسألة خلافية.",
+    "when_to_request_source": "دائمًا؛ الحكم الشرعي لا يصدر بلا نص أو مصدر معتبر.",
+    "when_to_distinguish_opinion_evidence": "دائمًا؛ آراء الفقهاء ليست حكمًا قاطعًا ما لم تستند لنص صريح.",
+    "when_to_detect_hallucination": "عندما يُقطع بحكم شرعي دون نص، أو تُنسب أقوال لعلماء بلا توثيق.",
+    "when_to_separate_technical_from_value_shari": "الحكم الشرعي منفصل عن الحكم التقني والقيمي؛ الضرر لا يساوي التحريم والنفع لا يساوي الوجوب."
+  },
+  {
+    "task_type": "practical",
+    "intended_reality": "واقع عملي: خطوات، إجراءات، أدوات، أو خطة تنفيذ.",
+    "required_evidence": [
+      "technical",
+      "contextual",
+      "textual"
+    ],
+    "certainty_degree": "strong_knowledge",
+    "when_to_answer": "إذا وجد سياق عملي كافٍ وكانت الخطوات قابلة للتنفيذ.",
+    "when_to_suspend": "إذا كانت المتطلبات غائبة أو المسألة تحتاج قرارًا قيميًا/شرعيًا أولًا.",
+    "when_to_request_source": "عند الاستناد لممارسة محددة أو حزمة أداء؛ اطلب السياق البيئي.",
+    "when_to_distinguish_opinion_evidence": "عندما تُقدَّم طريقة عمل كحقيقة مطلقة بدلًا من خيار عملي.",
+    "when_to_detect_hallucination": "عند تفصيل خطوات واقعية بادعاء الضمان بلا بيانات تجريبية.",
+    "when_to_separate_technical_from_value_shari": "المسألة العملية قد تتقاطع مع القيمة أو الشرع؛ ميّز الطبقات صراحةً."
+  },
+  {
+    "task_type": "ambiguous",
+    "intended_reality": "واقع ملتبس: اللفظ أو السؤال يحتمل معاني متعددة بلا سياق.",
+    "required_evidence": [
+      "linguistic",
+      "contextual"
+    ],
+    "certainty_degree": "suspend",
+    "when_to_answer": "بعد رفع الالتباس: تشكيل، سياق، أو جملة استعمال.",
+    "when_to_suspend": "دائمًا إذا ظل اللفظ ملتبسًا بلا سياق يحدد المعنى.",
+    "when_to_request_source": "اطلب سياقًا أو جملة استعمال قبل أي إجابة.",
+    "when_to_distinguish_opinion_evidence": "عندما يُفرض معنى بعينه على لفظ ملتبس؛ ميّز بين التأويل والدلالة اللغوية.",
+    "when_to_detect_hallucination": "عند الجزم بمعنى لفظ ملتبس كأنه الوحيد الممكن.",
+    "when_to_separate_technical_from_value_shari": "الغموض يمنع الحكم بأي نوع؛ لا حكم تقني ولا قيمي ولا شرعي قبل رفع الالتباس."
+  },
+  {
+    "task_type": "linguistic",
+    "intended_reality": "واقع دلالي: معنى لفظ، علاقة دال ومدلول، أو بنية لغوية.",
+    "required_evidence": [
+      "linguistic",
+      "contextual",
+      "textual"
+    ],
+    "certainty_degree": "strong_knowledge",
+    "when_to_answer": "إذا كان السؤال لغويًا بحتًا وتوفر سياق استعمال أو دلالة معجمية.",
+    "when_to_suspend": "إذا أدى الجواب اللغوي إلى استنتاج شرعي أو قيمي مباشر.",
+    "when_to_request_source": "عند الادعاء بأصل لغوي غير موثق؛ اطلب المعجم أو الشاهد.",
+    "when_to_distinguish_opinion_evidence": "عندما يُقدَّم تفسير لغوي واحد كأنه الحقيقة الوحيدة.",
+    "when_to_detect_hallucination": "عند اختراع اشتقاقات أو أصول لغوية بلا مرجع.",
+    "when_to_separate_technical_from_value_shari": "المعنى اللغوي لا يعني الحكم الشرعي ولا القيمي؛ المطابقة والتضمن والالتزام طبقات دلالية لا تكليفية."
+  },
+  {
+    "task_type": "analogy",
+    "intended_reality": "واقع قياسي: تشبيه بين شيئين بادعاء جامعية العلة.",
+    "required_evidence": [
+      "contextual",
+      "linguistic",
+      "textual"
+    ],
+    "certainty_degree": "suspend",
+    "when_to_answer": "فقط بعد تحقق العلة الجامعة وانتفاء الفارق المؤثر.",
+    "when_to_suspend": "إذا غابت العلة أو وُجد فارق مؤثر بين المقيس والمقيس عليه.",
+    "when_to_request_source": "اطلب العلة الجامعة والمناط قبل قبول القياس.",
+    "when_to_distinguish_opinion_evidence": "التشابه السطحي رأي؛ العلة المشتركة المُثبَتة هي الدليل.",
+    "when_to_detect_hallucination": "عند نقل حكم كامل بمجرد التشابه الظاهري دون علة.",
+    "when_to_separate_technical_from_value_shari": "القياس التقني (تقييس API مثلًا) يختلف عن القياس الشرعي أو القيمي؛ لا تخلط المجالين."
+  },
+  {
+    "task_type": "metaphor",
+    "intended_reality": "واقع مجازي: تعبير مجازي أو استعارة لا يدل على حقيقة حرفية.",
+    "required_evidence": [
+      "linguistic",
+      "contextual"
+    ],
+    "certainty_degree": "hypothesis",
+    "when_to_answer": "بعد كشف المجاز وبيان المعنى المقصود في سياقه.",
+    "when_to_suspend": "إذا كان المجاز يُوهم حكمًا واقعيًا حرفيًا مباشرًا.",
+    "when_to_request_source": "اطلب السياق لتحديد ما إذا كانت العبارة مجازًا أم وصفًا واقعيًا.",
+    "when_to_distinguish_opinion_evidence": "المجاز يعبر عن موقف أو صورة لا يثبت بها حكم واقعي.",
+    "when_to_detect_hallucination": "عند التعامل مع الاستعارة كحقيقة وصفية ثم بناء استنتاجات واقعية عليها.",
+    "when_to_separate_technical_from_value_shari": "المجاز لا يُفيد حكمًا شرعيًا ولا تقنيًا مباشرًا؛ نبّه إلى طبيعة العبارة أولًا."
+  },
+  {
+    "task_type": "usuli_reasoning",
+    "intended_reality": "واقع منهجي أصولي: قاعدة استدلالية أو مفهوم أصول الفقه.",
+    "required_evidence": [
+      "textual",
+      "linguistic",
+      "contextual"
+    ],
+    "certainty_degree": "hypothesis",
+    "when_to_answer": "إذا وجد تعريف أصولي واضح مع ضبط شروط تطبيقه.",
+    "when_to_suspend": "إذا أُطلقت القاعدة بلا ضبط مجالها أو شروطها.",
+    "when_to_request_source": "اطلب المصدر الأصولي أو الشاهد الفقهي قبل تطبيق القاعدة.",
+    "when_to_distinguish_opinion_evidence": "القاعدة الأصولية قابلة للاستثناء؛ ميّز بين القاعدة الكلية والتطبيق الجزئي.",
+    "when_to_detect_hallucination": "عند نسبة قاعدة أصولية بصياغة معينة لمذهب بلا توثيق.",
+    "when_to_separate_technical_from_value_shari": "الحكم الأصولي حكم منهجي؛ لا يُساوى بالحكم التقني ولا يُختزل في الحكم القيمي."
+  }
+]
