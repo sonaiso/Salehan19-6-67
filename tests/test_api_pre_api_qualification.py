@@ -30,7 +30,7 @@ def test_pre_api_qualification_has_execution_time_ms():
 
 def test_pre_api_qualification_status_ok():
     resp = client.post("/pre-api/qualification")
-    assert resp.json()["status"] == "ok"
+    assert resp.json()["status"] == "success"
 
 
 def test_pre_api_qualification_data_has_status():

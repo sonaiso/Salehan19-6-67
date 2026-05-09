@@ -166,6 +166,13 @@ def main() -> None:
     api_parser.add_argument("--port", type=int, default=8000, help="Bind port (default: 8000)")
     api_parser.add_argument("--reload", action="store_true", default=False, help="Enable auto-reload")
 
+    # api-schema-check — Phase 6.1 schema stability checker
+    api_schema_parser = subparsers.add_parser(
+        "api-schema-check",
+        help="Phase 6.1: Run API schema stability checks (no Enum/dataclass leakage, JSON roundtrip)",
+    )
+    api_schema_parser.add_argument("--output", choices=["json", "text"], default="json")
+
     args = parser.parse_args()
 
     if args.command == "classify":
@@ -763,13 +770,32 @@ def main() -> None:
         from mcd.api.app import build_app
 
         print(f"Starting MCD API on http://{args.host}:{args.port}")
-        print("Phase 6 — Minimal REST API (pilot-ready candidate, not production-ready)")
+        print("Phase 6.1 — API Hardening & Pilot Verification (pilot-ready candidate, not production-ready)")
         uvicorn.run(
             build_app(),
             host=args.host,
             port=args.port,
             reload=args.reload,
         )
+    elif args.command == "api-schema-check":
+        from mcd.api.app import build_app
+        from mcd.api.schema_stability import run_schema_checks
+        from fastapi.testclient import TestClient
+
+        test_client = TestClient(build_app())
+        result = run_schema_checks(test_client)
+
+        if args.output == "json":
+            print(json.dumps(result.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            status = "✅ PASSED" if result.passed else "❌ FAILED"
+            print(f"API Schema Stability Check — {status}")
+            print(f"  Total checks: {result.total}")
+            print(f"  Failed:       {result.failed}")
+            if not result.passed:
+                for c in result.checks:
+                    if not c["passed"]:
+                        print(f"  ❌ {c['check']}")
     else:
         parser.print_help()
 

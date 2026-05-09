@@ -33,7 +33,7 @@ def test_reasoning_evaluate_has_execution_time_ms():
 
 def test_reasoning_evaluate_status_ok():
     resp = client.post("/reasoning/evaluate", json={"text": _ARABIC_TEXT})
-    assert resp.json()["status"] == "ok"
+    assert resp.json()["status"] == "success"
 
 
 def test_reasoning_evaluate_data_has_classification():
@@ -78,4 +78,4 @@ def test_reasoning_evaluate_debug_includes_frame():
 def test_reasoning_evaluate_json_roundtrip():
     resp = client.post("/reasoning/evaluate", json={"text": _ARABIC_TEXT})
     parsed = json.loads(resp.text)
-    assert parsed["status"] == "ok"
+    assert parsed["status"] == "success"

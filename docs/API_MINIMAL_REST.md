@@ -1,8 +1,8 @@
-# API_MINIMAL_REST.md — Phase 6 MCD REST API
+# API_MINIMAL_REST.md — Phase 6.1 MCD REST API
 
 ## Overview
 
-Phase 6 introduces a minimal REST API exposing the existing MCD engine stack.
+Phase 6.1 hardens the Minimal REST API with versioned routes, a unified response envelope, schema stability, and a pilot readiness endpoint.
 
 - **No LLM calls**
 - **No external network calls**
@@ -27,12 +27,6 @@ pip install fastapi uvicorn httpx
 python -m mcd.cli api --host 127.0.0.1 --port 8000
 ```
 
-Or with auto-reload for development:
-
-```bash
-python -m mcd.cli api --host 127.0.0.1 --port 8000 --reload
-```
-
 ### Interactive docs
 
 Once running:
@@ -41,9 +35,60 @@ Once running:
 
 ---
 
+## API Versioning (Phase 6.1)
+
+All canonical routes are now under `/v1/`. Legacy unversioned routes remain as backward-compatible aliases.
+
+### Canonical (documented) routes:
+
+- `GET  /v1/health`
+- `GET  /v1/version`
+- `POST /v1/classify`
+- `POST /v1/curriculum/evaluate`
+- `POST /v1/curriculum/quality-lock`
+- `POST /v1/industrial/test`
+- `POST /v1/pre-api/qualification`
+- `POST /v1/reasoning/evaluate`
+- `GET  /v1/pilot/readiness`  ← new in Phase 6.1
+
+### Legacy aliases (backward-compatible):
+
+- `GET  /health`, `GET /version`
+- `POST /classify`, etc.
+
+---
+
+## Unified Response Envelope (Phase 6.1)
+
+All POST endpoints return a unified envelope:
+
+```json
+{
+  "request_id": "uuid-...",
+  "status": "success",
+  "data": { ... },
+  "warnings": [],
+  "errors": [],
+  "execution_time_ms": 12.3
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `request_id` | string (UUID) | Unique request identifier |
+| `status` | string | `"success"` on success, `"error"` on error |
+| `data` | dict | Endpoint-specific payload |
+| `warnings` | list[str] | Non-fatal warnings |
+| `errors` | list | Structured error list (empty on success) |
+| `execution_time_ms` | float | Processing time in milliseconds |
+
+**Note:** `status` is now `"success"` (not `"ok"` as in Phase 6.0).
+
+---
+
 ## Endpoints
 
-### GET /health
+### GET /v1/health
 
 Liveness probe.
 
@@ -51,20 +96,22 @@ Liveness probe.
 ```json
 {
   "status": "ok",
-  "service": "mcd-api"
+  "service": "mcd-api",
+  "version": "v1"
 }
 ```
 
 ---
 
-### GET /version
+### GET /v1/version
 
 Returns API version and active cognitive layers.
 
 **Response:**
 ```json
 {
-  "version": "6.0.0",
+  "version": "6.1.0",
+  "api_version": "v1",
   "service": "mcd-api",
   "layers": ["MCD", "NERL", "FPCL", "EIRL", "Industrial", "Curriculum"]
 }
@@ -72,7 +119,7 @@ Returns API version and active cognitive layers.
 
 ---
 
-### POST /classify
+### POST /v1/classify
 
 Runs FPCL classification on Arabic text.
 
@@ -88,13 +135,12 @@ Runs FPCL classification on Arabic text.
 ```json
 {
   "request_id": "uuid-...",
-  "status": "ok",
+  "status": "success",
   "data": {
     "intent": "define",
     "certainty_policy": "conditional",
     "routing_engine": "nabhani",
-    "sub_engines": [],
-    "warnings": []
+    "sub_engines": []
   },
   "warnings": [],
   "errors": [],
@@ -104,40 +150,35 @@ Runs FPCL classification on Arabic text.
 
 ---
 
-### POST /curriculum/evaluate
+### POST /v1/curriculum/evaluate
 
 Runs curriculum evaluation on a profile.
 
 **Request:**
 ```json
 {
-  "profile": "quick",
+  "profile": "full_curriculum",
   "output_detail": "summary"
 }
 ```
 
-Supported profiles: `quick`, `full_curriculum`, `full_curriculum_extended`, `industrial_curriculum`
-
-**Response:** APIResponse with `data` containing `CurriculumEvaluationReport.to_dict()`.
+Supported profiles: `full_curriculum`, `full_curriculum_extended`, `industrial_curriculum`, `basic_reality`, `relational_reasoning`, `evidence_certainty`, `mixed_reasoning`, `adversarial`
 
 ---
 
-### POST /curriculum/quality-lock
+### POST /v1/curriculum/quality-lock
 
 Returns the curriculum quality lock status.
-
-**Request:** (no body required)
 
 **Response:**
 ```json
 {
   "request_id": "uuid-...",
-  "status": "ok",
+  "status": "success",
   "data": {
     "status": "locked",
     "contract_score": 1.0,
-    "is_locked": true,
-    ...
+    "is_locked": true
   },
   "warnings": [],
   "errors": [],
@@ -147,110 +188,63 @@ Returns the curriculum quality lock status.
 
 ---
 
-### POST /industrial/test
+### POST /v1/industrial/test
 
 Runs the industrial test suite.
 
-**Request:**
-```json
-{
-  "profile": "quick"
-}
-```
-
 Supported profiles: `quick`, `full`
-
-**Response:** APIResponse with `data.summary` and `data.results`.
 
 ---
 
-### POST /pre-api/qualification
+### POST /v1/pre-api/qualification
 
 Returns the pre-API qualification gate result.
 
-**Request:** (no body required)
+---
+
+### POST /v1/reasoning/evaluate
+
+Full reasoning evaluation: classification + evidence need + certainty policy.
+
+---
+
+### GET /v1/pilot/readiness (new in Phase 6.1)
+
+Returns pilot readiness assessment.
 
 **Response:**
 ```json
 {
-  "request_id": "uuid-...",
-  "status": "ok",
-  "data": {
-    "status": "qualified_for_api_phase",
-    "dimensions": [...],
-    "api_score": 0.0,
-    "non_api_passed": true
-  },
-  "warnings": [],
-  "errors": [],
-  "execution_time_ms": 80.0
+  "status": "conditional_candidate",
+  "production_ready": false,
+  "blockers_before_production": ["No authentication implemented", "..."],
+  "api_implemented": true,
+  "quality_lock": "locked",
+  "tests_verified": false,
+  "warnings": [
+    "tests_pass must be verified by CI — cannot be hardcoded true"
+  ]
 }
 ```
 
----
-
-### POST /reasoning/evaluate
-
-Full reasoning evaluation: classification + evidence need + certainty policy + warnings.
-
-**Request:**
-```json
-{
-  "text": "هل يجوز الاجتهاد في وجود النص الصريح؟",
-  "include_debug": false
-}
-```
-
-**Response:**
-```json
-{
-  "request_id": "uuid-...",
-  "status": "ok",
-  "data": {
-    "classification": {
-      "intent": "judge",
-      "judgment_types": {"shari": 0.8},
-      "routing_engine": "nabhani",
-      "sub_engines": []
-    },
-    "evidence_need": {"textual_evidence": 0.9},
-    "certainty_policy": "conditional",
-    "certainty_reason": "...",
-    "warnings": []
-  },
-  "warnings": [],
-  "errors": [],
-  "execution_time_ms": 15.0
-}
-```
-
----
-
-## Response Schema
-
-All POST endpoints return `APIResponse`:
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `request_id` | string (UUID) | Unique request identifier |
-| `status` | string | `"ok"` on success |
-| `data` | dict | Endpoint-specific payload |
-| `warnings` | list[str] | Non-fatal warnings |
-| `errors` | list[str] | Error messages (empty on success) |
-| `execution_time_ms` | float | Processing time in milliseconds |
+**Important:**
+- `production_ready` is ALWAYS `false` in Phase 6.1
+- `tests_verified` is `false` — cannot be set to `true` without real CI artifact confirmation
 
 ---
 
 ## Error Schema
 
-All errors return `ErrorResponse`:
+All errors return a structured error response (no stack traces):
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `request_id` | string | Request identifier |
-| `error_code` | string | Machine-readable error code |
-| `message` | string | Human-readable message |
-| `details` | dict | Additional error context |
+```json
+{
+  "request_id": "uuid-...",
+  "error_code": "INVALID_INPUT",
+  "message": "...",
+  "details": {}
+}
+```
 
 ### Error Codes
 
@@ -273,6 +267,40 @@ Every response includes:
 
 ---
 
+## Schema Stability
+
+Run the schema stability checker:
+
+```bash
+python -m mcd.cli api-schema-check --output json
+```
+
+Verifies:
+- No Enum leakage
+- No dataclass leakage
+- JSON roundtrip
+- All required envelope keys
+- All numbers serializable
+- All warnings/errors lists
+
+---
+
+## Testing
+
+```bash
+PYTHONPATH=src python -m pytest tests/test_api_*.py -v
+```
+
+New Phase 6.1 test files:
+- `tests/test_api_v1_routes.py`
+- `tests/test_api_response_envelope.py`
+- `tests/test_api_error_hardening.py`
+- `tests/test_api_schema_stability.py` (extended)
+- `tests/test_api_observability.py`
+- `tests/test_api_pilot_readiness.py`
+
+---
+
 ## Limitations
 
 - No authentication
@@ -283,11 +311,3 @@ Every response includes:
 - No GraphRAG
 - No production deployment configuration
 - Not production-ready — **pilot-ready candidate only**
-
----
-
-## Testing
-
-```bash
-PYTHONPATH=src python -m pytest tests/test_api_*.py -v
-```

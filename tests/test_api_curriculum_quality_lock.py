@@ -30,7 +30,7 @@ def test_quality_lock_has_execution_time_ms():
 
 def test_quality_lock_status_ok():
     resp = client.post("/curriculum/quality-lock")
-    assert resp.json()["status"] == "ok"
+    assert resp.json()["status"] == "success"
 
 
 def test_quality_lock_data_has_status():
