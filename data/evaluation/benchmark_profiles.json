@@ -1,0 +1,39 @@
+{
+  "profiles": {
+    "quick": {
+      "name": "quick",
+      "description": "Quick smoke test",
+      "count": 50,
+      "sources": ["static_gold"],
+      "filters": {"difficulty": ["easy", "medium"]}
+    },
+    "standard": {
+      "name": "standard",
+      "description": "Standard benchmark",
+      "count": 300,
+      "sources": ["static_gold", "dynamic_generated"],
+      "filters": {}
+    },
+    "full": {
+      "name": "full",
+      "description": "Full benchmark",
+      "count": 1000,
+      "sources": ["static_gold", "dynamic_generated", "adversarial", "ambiguity", "calibration"],
+      "filters": {}
+    },
+    "adversarial": {
+      "name": "adversarial",
+      "description": "Adversarial benchmark",
+      "count": 200,
+      "sources": ["adversarial"],
+      "filters": {}
+    },
+    "gpt55_simulation": {
+      "name": "gpt55_simulation",
+      "description": "GPT-5.5 simulation benchmark",
+      "count": 50,
+      "sources": ["static_gold"],
+      "filters": {"tags": ["epistemic", "shari", "ambiguous"]}
+    }
+  }
+}

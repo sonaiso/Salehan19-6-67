@@ -125,3 +125,9 @@ scores = empty_dimension_scores()  # {dim: None for all dimensions}
 ```
 
 Fill `gpt55_output` in each `BaselineExample` and add scores manually after evaluation.
+
+---
+
+## Phase 4 Expansion Note
+
+Phase 4 introduces a comprehensive dynamic dataset expansion (350+ static gold + 50+ adversarial + 30+ ambiguity + 31 calibration examples). The `gpt55_simulation` benchmark profile provides 50 curated examples targeting epistemic, shari, and ambiguous categories for direct comparison.

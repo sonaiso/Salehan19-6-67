@@ -1,0 +1,155 @@
+{
+  "version": "1.0",
+  "templates": [
+    {
+      "template_id": "TMPL-HARM-HARAM-001",
+      "template": "هل {action} حرام؟",
+      "variables": {
+        "action": ["الكذب", "الغش", "السرقة", "الربا", "الخداع", "الغيبة", "النميمة", "الرشوة"]
+      },
+      "expected": {
+        "certainty_policy": "suspend",
+        "judgment_types": {"shari": 0.9},
+        "evidence_needs": {"shari_textual": 0.9},
+        "required_separations": ["harm_vs_haram"],
+        "required_warnings": ["shari_evidence_required"]
+      }
+    },
+    {
+      "template_id": "TMPL-AMBIG-001",
+      "template": "{word}",
+      "variables": {
+        "word": ["علم", "عين", "كتب", "سلم", "عرض", "حال", "درس", "أمر", "قصد", "وجه"]
+      },
+      "expected": {
+        "certainty_policy": "suspend",
+        "judgment_types": {"ambiguous": 0.9},
+        "evidence_needs": {"contextual_linguistic": 0.9},
+        "required_separations": [],
+        "required_warnings": ["ambiguity_detected"]
+      }
+    },
+    {
+      "template_id": "TMPL-ANALOGY-001",
+      "template": "{subject1} مثل {subject2} في {aspect}",
+      "variables": {
+        "subject1": ["الدولة", "الشركة", "الأسرة", "المجتمع", "العقل"],
+        "subject2": ["الجسم", "الشجرة", "السفينة", "البناء", "الحاسوب"],
+        "aspect": ["التنظيم", "النمو", "الاتزان", "البناء", "الوظيفة"]
+      },
+      "expected": {
+        "certainty_policy": "hypothesis",
+        "judgment_types": {"analogy": 0.9},
+        "evidence_needs": {"rational": 0.8},
+        "required_separations": [],
+        "required_warnings": []
+      }
+    },
+    {
+      "template_id": "TMPL-LINGUISTIC-001",
+      "template": "ما معنى {term} في {context}؟",
+      "variables": {
+        "term": ["الاستعارة", "الكناية", "الجناس", "الطباق", "السجع"],
+        "context": ["البلاغة العربية", "الأدب الكلاسيكي", "الشعر الجاهلي", "النثر العربي", "النقد الأدبي"]
+      },
+      "expected": {
+        "certainty_policy": "suspend",
+        "judgment_types": {"linguistic": 0.9},
+        "evidence_needs": {"textual_linguistic": 0.9},
+        "required_separations": [],
+        "required_warnings": []
+      }
+    },
+    {
+      "template_id": "TMPL-TECHNICAL-001",
+      "template": "كيف {verb} {object} في {context}؟",
+      "variables": {
+        "verb": ["تبني", "تصمم", "تطبق", "تختبر", "تنشر"],
+        "object": ["واجهة برمجية", "قاعدة بيانات", "نظام مصادقة", "خوارزمية بحث", "نموذج تعلم"],
+        "context": ["Python", "JavaScript", "السحابة", "الإنتاج", "البيئة الموزعة"]
+      },
+      "expected": {
+        "certainty_policy": "strong_knowledge",
+        "judgment_types": {"technical": 0.9},
+        "evidence_needs": {"technical_textual": 0.9},
+        "required_separations": [],
+        "required_warnings": []
+      }
+    },
+    {
+      "template_id": "TMPL-CIVILIZATION-001",
+      "template": "كيف أثّرت {civilization} في {domain}؟",
+      "variables": {
+        "civilization": ["الحضارة الإسلامية", "الحضارة الغربية", "الحضارة الصينية", "الحضارة اليونانية", "الحضارة الهندية"],
+        "domain": ["العلوم", "الفلسفة", "الفنون", "القانون", "الطب"]
+      },
+      "expected": {
+        "certainty_policy": "probable_knowledge",
+        "judgment_types": {"technical": 0.4, "value": 0.6},
+        "evidence_needs": {"historical": 0.8},
+        "required_separations": [],
+        "required_warnings": []
+      }
+    },
+    {
+      "template_id": "TMPL-SOCIETY-001",
+      "template": "ما تأثير {factor} على {social_aspect}؟",
+      "variables": {
+        "factor": ["التعليم", "الفقر", "التكنولوجيا", "الهجرة", "العولمة"],
+        "social_aspect": ["التماسك الاجتماعي", "الهوية الثقافية", "الفوارق الطبقية", "المشاركة السياسية", "القيم الأسرية"]
+      },
+      "expected": {
+        "certainty_policy": "probable_knowledge",
+        "judgment_types": {"value": 0.5, "practical": 0.5},
+        "evidence_needs": {"sociological": 0.8},
+        "required_separations": [],
+        "required_warnings": []
+      }
+    },
+    {
+      "template_id": "TMPL-EPISTEMIC-001",
+      "template": "{subject} {property}",
+      "variables": {
+        "subject": ["الحديد", "الذهب", "الماء", "الهواء", "النار"],
+        "property": ["يتمدد بالحرارة", "يوصل الكهرباء", "يذوب بالحرارة", "ضروري للحياة", "يتفاعل مع الأكسجين"]
+      },
+      "expected": {
+        "certainty_policy": "strong_knowledge",
+        "judgment_types": {"epistemic": 0.9},
+        "evidence_needs": {"sensory": 0.9},
+        "required_separations": [],
+        "required_warnings": []
+      }
+    },
+    {
+      "template_id": "TMPL-USULI-001",
+      "template": "ما حكم {action} بناءً على قاعدة {rule}؟",
+      "variables": {
+        "action": ["هذه المعاملة", "هذا العقد", "هذا الفعل", "هذه المسألة", "هذا التصرف"],
+        "rule": ["الأصل الإباحة", "درء الفساد", "جلب المصلحة", "سد الذرائع", "الاستصحاب"]
+      },
+      "expected": {
+        "certainty_policy": "strong_knowledge",
+        "judgment_types": {"usuli": 0.9},
+        "evidence_needs": {"shari_textual": 0.9},
+        "required_separations": [],
+        "required_warnings": []
+      }
+    },
+    {
+      "template_id": "TMPL-METAPHOR-001",
+      "template": "{subject} {metaphorical_action}",
+      "variables": {
+        "subject": ["البحر", "الليل", "الشمس", "الريح", "الجبل"],
+        "metaphorical_action": ["يبتسم", "يبكي", "تغضب", "تغني", "يفكر"]
+      },
+      "expected": {
+        "certainty_policy": "hypothesis",
+        "judgment_types": {"metaphor": 0.9},
+        "evidence_needs": {"contextual_linguistic": 0.8},
+        "required_separations": [],
+        "required_warnings": []
+      }
+    }
+  ]
+}

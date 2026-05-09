@@ -34,9 +34,31 @@ def main() -> None:
 
     bench_parser = subparsers.add_parser("benchmark-simulation", help="Run benchmark evaluation on 10 Arabic examples")
     bench_parser.add_argument("--output", choices=["markdown", "json"], default="json")
+    bench_parser.add_argument("--profile", default=None, help="Benchmark profile name (optional)")
 
     readiness_parser = subparsers.add_parser("readiness-score", help="Print production readiness scorecard")
     readiness_parser.add_argument("--output", choices=["markdown", "json"], default="json")
+
+    validate_parser = subparsers.add_parser("validate-dataset", help="Validate the evaluation dataset")
+    validate_parser.add_argument("path", nargs="?", default=None, help="Path to JSONL file (optional)")
+    validate_parser.add_argument("--output", choices=["json", "text", "markdown"], default="text")
+
+    gen_parser = subparsers.add_parser("generate-dataset", help="Generate dynamic dataset from templates")
+    gen_parser.add_argument("--profile", default="standard", help="Profile name")
+    gen_parser.add_argument("--count", type=int, default=100, help="Number of examples to generate")
+    gen_parser.add_argument("--output-file", default=None, help="Output file path")
+    gen_parser.add_argument("--output", choices=["json", "text", "markdown"], default="text")
+
+    coverage_parser = subparsers.add_parser("dataset-coverage", help="Compute dataset coverage matrix")
+    coverage_parser.add_argument("path", nargs="?", default=None, help="Path to JSONL file (optional)")
+    coverage_parser.add_argument("--output", choices=["json", "text", "markdown"], default="text")
+
+    calibrate_parser = subparsers.add_parser("calibrate-certainty", help="Calibrate certainty on dataset profile")
+    calibrate_parser.add_argument("--profile", default="quick", help="Profile name")
+    calibrate_parser.add_argument("--output", choices=["json", "text"], default="text")
+
+    report_parser = subparsers.add_parser("dataset-report", help="Generate dataset Markdown report")
+    report_parser.add_argument("--output", choices=["markdown", "json"], default="markdown")
 
     args = parser.parse_args()
 
@@ -184,6 +206,93 @@ def main() -> None:
             print(f"|-----------|-------|")
             for dim in readiness.dimensions:
                 print(f"| {dim.name} | {dim.score}/5 |")
+    elif args.command == "validate-dataset":
+        from pathlib import Path
+        from mcd.evaluation.dataset_loader import load_all, load_jsonl
+        from mcd.evaluation.dataset_validator import validate_dataset
+
+        if getattr(args, "path", None):
+            examples = load_jsonl(Path(args.path))
+        else:
+            examples = load_all()
+        report = validate_dataset(examples)
+
+        if args.output == "json":
+            print(json.dumps(report.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(f"Dataset Validation Report")
+            print(f"  Total:   {report.total}")
+            print(f"  Valid:   {report.valid}")
+            print(f"  Errors:  {report.error_count}")
+            print(f"  Status:  {'✅' if report.is_valid else '❌'}")
+            if report.errors:
+                print(f"\nErrors:")
+                for e in report.errors[:10]:
+                    print(f"  - [{e.example_id}] {e.field}: {e.message}")
+    elif args.command == "generate-dataset":
+        from mcd.evaluation.dynamic_dataset_generator import DynamicDatasetGenerator
+
+        gen = DynamicDatasetGenerator()
+        examples = gen.generate_profile(args.profile, args.count)
+
+        if args.output == "json":
+            print(json.dumps([ex.to_dict() for ex in examples], ensure_ascii=False, indent=2))
+        else:
+            print(f"Generated {len(examples)} examples (profile={args.profile})")
+            for ex in examples[:5]:
+                print(f"  [{ex.example_id}] {ex.input_text[:60]}")
+    elif args.command == "dataset-coverage":
+        from pathlib import Path
+        from mcd.evaluation.dataset_loader import load_all, load_jsonl
+        from mcd.evaluation.coverage_matrix import CoverageMatrix
+
+        if getattr(args, "path", None):
+            examples = load_jsonl(Path(args.path))
+        else:
+            examples = load_all()
+        matrix = CoverageMatrix(examples)
+        cov_report = matrix.compute()
+
+        if args.output == "json":
+            print(json.dumps(cov_report.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(f"Coverage Report ({cov_report.total_examples} examples)")
+            print(f"  Coverage Score: {cov_report.coverage_score:.2%}")
+            for dim in cov_report.dimension_coverages:
+                print(f"  {dim.dimension}: {dim.coverage_ratio:.2%}")
+    elif args.command == "calibrate-certainty":
+        from mcd.evaluation.benchmark_profiles import BenchmarkProfileManager
+        from mcd.evaluation.dataset_validator import validate_dataset
+
+        mgr = BenchmarkProfileManager()
+        examples = mgr.get_examples(args.profile)
+        cal_report = validate_dataset(examples)
+
+        if args.output == "json":
+            print(json.dumps({
+                "profile": args.profile,
+                "total": cal_report.total,
+                "valid": cal_report.valid,
+                "is_valid": cal_report.is_valid,
+            }, ensure_ascii=False, indent=2))
+        else:
+            print(f"Calibration Report (profile={args.profile})")
+            print(f"  Total:  {cal_report.total}")
+            print(f"  Valid:  {cal_report.valid}")
+            print(f"  Status: {'✅' if cal_report.is_valid else '❌'}")
+    elif args.command == "dataset-report":
+        from mcd.evaluation.dataset_loader import load_all
+        from mcd.evaluation.dataset_report import DatasetReport
+
+        examples = load_all()
+        rpt = DatasetReport(examples=examples)
+
+        if args.output == "json":
+            from mcd.evaluation.coverage_matrix import CoverageMatrix
+            coverage = CoverageMatrix(examples).compute()
+            print(json.dumps(coverage.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(rpt.generate_markdown())
     else:
         parser.print_help()
 
