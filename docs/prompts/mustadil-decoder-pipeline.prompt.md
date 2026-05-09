@@ -62,6 +62,52 @@ Layer 20 → Application
 Layer 21 → Epistemic Audit
 
 ━━━━━━━━━━━━━━━━━━
+RELATIONAL PARSER REQUIREMENT
+━━━━━━━━━━━━━━━━━━
+
+Before judgment formation, the runtime MUST resolve the following for every sentence in the input:
+
+1. RELATION TYPE
+   Identify which of the 13 epistemic relation types is present:
+   إسنادية | تضمينية | تقييدية | فاعلية | مفعولية
+   سببية | مسببية | شرطية | غائية | زمانية
+   مكانية | حالية | استثنائية
+
+2. RELATION CARRIER / OPERATOR
+   Every extracted relation MUST name its grammatical or lexical carrier:
+   - nominal_sentence    → isnadiyyah
+   - verb_sentence       → fa_iliyyah / maf_uliyyah / haliyyah
+   - conditional_tool    → shartiyyah (إن، إذا، متى …)
+   - exception_tool      → istithnaiyyah (إلا، غير، سوى …)
+   - ghayah_tool         → ghaiyyah (حتى، إلى)
+   - cause_tool          → sababiyyah (بسبب، لأجل، لأن …)
+   - sifah/adjective     → taqyidiyyah
+   - lexical_tadmin      → tadminiyyah (يتضمن، تتضمن …)
+   - zarf_zaman          → zamaniyyah
+   - zarf_makan          → makaniyyah
+   - hal                 → haliyyah
+
+   INVARIANT: NoRelationWithoutCarrier
+   No relation may be recorded without a carrier_operator.
+   A relation without a carrier is an epistemic zero.
+
+3. EPISTEMIC RANK
+   Declare whether the extracted relation is:
+   - قطعي   — if the carrier is unambiguous and the text is explicit
+   - ظني    — if the carrier requires interpretation or context disambiguation
+
+4. FORBIDDEN JUMPS CHECKED
+   Every relation extraction MUST verify:
+   - NoJudgmentFormationBeforeEssenceDomainRelationsResolved
+     (Layer 10 may not activate before Layer 6 has mapped all relations)
+   - NoDomainTransferWithoutBridge
+     (No domain crossing without a documented epistemic bridge)
+
+5. UNRESOLVED RELATIONS
+   If a structure is detected but cannot be resolved with certainty (e.g. ambiguous idafa),
+   it MUST be recorded in the unresolved list — not silently dropped and not treated as failure.
+
+━━━━━━━━━━━━━━━━━━
 GROUP STRUCTURE
 ━━━━━━━━━━━━━━━━━━
 
@@ -559,6 +605,11 @@ PIPELINE INVARIANTS
    Layer 10 (Judgment Formation) may NOT produce any judgment before Layers 4, 5, and 6
    (Essence Assignment, Domain Assignment, Relational Mapping) have all produced their
    required outputs.
+
+10. NoRelationWithoutCarrier (v0.2)
+    Every relation extracted in Layer 6 (Relational Mapping) MUST declare its
+    carrier_operator.  A relation without a carrier is epistemically invalid and
+    blocks the pipeline from proceeding to judgment formation.
 
 ━━━━━━━━━━━━━━━━━━
 ALLOWED OUTPUTS

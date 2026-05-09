@@ -143,3 +143,34 @@ python -m pip install jsonschema==4.25.1
 python tests/verify_bayani_repository.py
 ```
 
+## Bayani Relational Parser v0.2
+
+يضيف إصدار v0.2 محلل النسب البياني — طبقة تستخرج البنى الدلالية-العلائقية من نصوص اللغة العربية **قبل** تشكيل أي حكم.
+
+### الوظيفة الأساسية
+
+يحوّل المحلل النص المدخل إلى هيكل نسبي منظم يكشف عن:
+
+- **نوع النسبة** — واحدة من 13 نسبة: إسنادية، تضمينية، تقييدية، فاعلية، مفعولية، سببية، مسببية، شرطية، غائية، زمانية، مكانية، حالية، استثنائية.
+- **العامل الحامل** — الأداة النحوية أو اللغوية التي حملت النسبة (مثل `nominal_sentence`، `verb_sentence`، `conditional_tool`، `exception_tool`، `ghayah_tool`، `hal`، `cause_tool`).
+- **الرتبة المعرفية** — قطعي أو ظني.
+- **الأثر الأصولي المحتمل** — مثل `possible_mafhoom_sifah`، `takhsis_candidate`، `illah_candidate`.
+- **قفزات محظورة مُراجَعة** — مثل `NoJudgmentFormationBeforeEssenceDomainRelationsResolved`.
+
+### القاعدة الحاكمة
+
+> لا حكم قبل حل النسب. لا نسبة بلا عامل حامل.
+
+### التكامل مع خط الأنابيب
+
+- **الطبقة 6 — relational_mapping_layer**: تستدعي `parse_relations()` وتُرفق أنواع النسب وعواملها في `claims` الطبقة. تُسجَّل النسب غير المحلولة في `uncertainties`.
+- **الطبقة 7 — arabic_operator_layer**: تعرض قيم `carrier_operator` المستخرجة في `claims` لضمان توثيق علاقات العامل والمعمول.
+- **الثابت الجديد NoRelationWithoutCarrier**: يرفض المحقق (audit) أي نسبة لا يحملها عامل موثق.
+
+### تشغيل الاختبارات
+
+```bash
+python -m pytest tests/test_mustadil_runtime.py tests/test_bayani_relational_parser.py -v
+python tests/verify_bayani_repository.py
+```
+

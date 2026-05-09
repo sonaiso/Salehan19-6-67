@@ -16,6 +16,10 @@ Invariants implemented (v0.1):
 - ``NoManatAsIllah``
 - ``NoDomainTransferWithoutBridge``
 - ``NoLevelSkipInPipeline``
+
+Added in v0.2:
+
+- ``NoRelationWithoutCarrier``
 """
 
 from __future__ import annotations
@@ -191,6 +195,28 @@ def _check_no_domain_transfer_without_bridge(
     return None
 
 
+def _check_no_relation_without_carrier(
+    layer_results: List[PipelineLayerResult],
+) -> str | None:
+    """NoRelationWithoutCarrier.
+
+    If the relational_mapping_layer produced relations with a missing
+    carrier_operator, the audit records a violation.  The layer signals
+    this by including a claim that starts with
+    ``"warning:relation_without_carrier_detected:"``.
+    """
+    for result in layer_results:
+        if result.layer_name == "relational_mapping_layer":
+            for claim in result.claims:
+                if claim.startswith("warning:relation_without_carrier_detected:"):
+                    return (
+                        "NoRelationWithoutCarrier: relational_mapping_layer "
+                        "detected relations with missing carrier_operator — "
+                        + claim
+                    )
+    return None
+
+
 def _check_no_level_skip(
     executed_layers: List[str],
     required_layers: List[str],
@@ -230,6 +256,7 @@ def run_audit(
         _check_no_manat_as_illah(layer_results),
         _check_no_domain_transfer_without_bridge(layer_results),
         _check_no_level_skip(executed, required_layers),
+        _check_no_relation_without_carrier(layer_results),
     ]
 
     for violation in checks:

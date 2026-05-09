@@ -16,6 +16,7 @@ from __future__ import annotations
 from typing import Any, Dict
 
 from bayani.runtime.contracts import PipelineLayerResult, PromptInput
+from bayani.runtime.relational_parser import parse_relations
 
 
 # ---------------------------------------------------------------------------
@@ -128,12 +129,39 @@ def relational_mapping_layer(
     prompt_input: PromptInput,
     context: Dict[str, Any] | None = None,
 ) -> PipelineLayerResult:
-    """Layer 6 — map the full set of relations among sentence components."""
+    """Layer 6 — map the full set of relations among sentence components.
+
+    In v0.2 this layer calls the Bayani Relational Parser to extract the
+    semantic-relational structure of the prompt text before any judgment
+    layer activates.
+    """
+    parse_result = parse_relations(prompt_input.prompt)
+
+    claims = ["relations_mapped"]
+    claims += [f"relation:{r.relation_type}" for r in parse_result.relations]
+    # Expose carrier operators extracted by the parser
+    carriers = list({r.carrier_operator for r in parse_result.relations if r.carrier_operator})
+    claims += [f"carrier_operator:{op}" for op in sorted(carriers)]
+
+    # Relations without a carrier signal a possible violation
+    missing_carriers = [
+        r.relation_type for r in parse_result.relations if not r.carrier_operator
+    ]
+    if missing_carriers:
+        claims.append(f"warning:relation_without_carrier_detected:{','.join(missing_carriers)}")
+
+    uncertainties = ["relational_scope_may_need_narrowing"]
+    uncertainties += [f"unresolved:{u}" for u in parse_result.unresolved]
+
     return _layer_result(
         "relational_mapping_layer",
-        claims=["relations_mapped"],
-        uncertainties=["relational_scope_may_need_narrowing"],
-        forbidden_jumps_checked=["NoJudgmentFormationBeforeEssenceDomainRelationsResolved"],
+        claims=claims,
+        uncertainties=uncertainties,
+        forbidden_jumps_checked=[
+            "NoJudgmentFormationBeforeEssenceDomainRelationsResolved",
+            "NoDomainTransferWithoutBridge",
+            "NoRelationWithoutCarrier",
+        ],
     )
 
 
@@ -141,10 +169,32 @@ def arabic_operator_layer(
     prompt_input: PromptInput,
     context: Dict[str, Any] | None = None,
 ) -> PipelineLayerResult:
-    """Layer 7 — validate Arabic grammatical operators (amilaat)."""
+    """Layer 7 — validate Arabic grammatical operators (amilaat).
+
+    In v0.2 this layer re-uses the Bayani Relational Parser to enumerate
+    every carrier_operator that was detected in the prompt, making the
+    amil–ma'mul relationships explicit in the layer claims.
+    """
+    parse_result = parse_relations(prompt_input.prompt)
+
+    carrier_ops = sorted({
+        r.carrier_operator
+        for r in parse_result.relations
+        if r.carrier_operator
+    })
+
+    claims = ["arabic_operators_validated"]
+    claims += [f"carrier_operator:{op}" for op in carrier_ops]
+    # Also record relation types whose operators were validated
+    claims += [
+        f"operator_validated:{r.relation_type}:{r.carrier_operator}"
+        for r in parse_result.relations
+        if r.carrier_operator
+    ]
+
     return _layer_result(
         "arabic_operator_layer",
-        claims=["arabic_operators_validated"],
+        claims=claims,
         notes="Checks amil–ma'mul relationships that carry ruling-bearing relations.",
     )
 
