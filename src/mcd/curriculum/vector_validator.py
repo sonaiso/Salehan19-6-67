@@ -23,29 +23,23 @@ class VectorValidationResult:
         }
 
 
-def validate_role_vector(v: dict[str, float]) -> VectorValidationResult:
-    violations = validate_vector_dimensions(v, ROLE_DIMENSIONS)
+def _make_result(violations: list[str]) -> VectorValidationResult:
     passed = len(violations) == 0
     score = max(0.0, 1.0 - 0.1 * len(violations))
     return VectorValidationResult(passed=passed, violations=violations, score=score)
+
+
+def validate_role_vector(v: dict[str, float]) -> VectorValidationResult:
+    return _make_result(validate_vector_dimensions(v, ROLE_DIMENSIONS))
 
 
 def validate_domain_vector(v: dict[str, float]) -> VectorValidationResult:
-    violations = validate_vector_dimensions(v, DOMAIN_DIMENSIONS)
-    passed = len(violations) == 0
-    score = max(0.0, 1.0 - 0.1 * len(violations))
-    return VectorValidationResult(passed=passed, violations=violations, score=score)
+    return _make_result(validate_vector_dimensions(v, DOMAIN_DIMENSIONS))
 
 
 def validate_evidence_vector(v: dict[str, float]) -> VectorValidationResult:
-    violations = validate_vector_dimensions(v, EVIDENCE_DIMENSIONS)
-    passed = len(violations) == 0
-    score = max(0.0, 1.0 - 0.1 * len(violations))
-    return VectorValidationResult(passed=passed, violations=violations, score=score)
+    return _make_result(validate_vector_dimensions(v, EVIDENCE_DIMENSIONS))
 
 
 def validate_certainty_vector(v: dict[str, float]) -> VectorValidationResult:
-    violations = validate_vector_dimensions(v, CERTAINTY_DIMENSIONS)
-    passed = len(violations) == 0
-    score = max(0.0, 1.0 - 0.1 * len(violations))
-    return VectorValidationResult(passed=passed, violations=violations, score=score)
+    return _make_result(validate_vector_dimensions(v, CERTAINTY_DIMENSIONS))

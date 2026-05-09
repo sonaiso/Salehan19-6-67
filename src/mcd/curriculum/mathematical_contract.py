@@ -76,15 +76,14 @@ def check_mathematical_contract(graph: CognitiveGraph) -> MathematicalContractRe
         if edge.target not in node_ids:
             violations.append(f"Contract[4]: edge '{edge.edge_id}' target '{edge.target}' not in graph")
 
-    # 5. cause has effect
-    cause_sources = [e.source for e in graph.edges if e.relation == "causes"]
-    for cs in cause_sources:
-        has_effect = any(
-            e.source == cs and e.relation in ("causes", "entails")
-            for e in graph.edges
-        )
-        if not has_effect:
-            warnings.append(f"Contract[5]: cause node '{cs}' may lack effect edge")
+    # 5. cause has effect — verify cause target is typed as effect or has caused_by edge
+    cause_edges = [e for e in graph.edges if e.relation == "causes"]
+    effect_node_ids = {n.node_id for n in graph.nodes if n.node_type == "effect"}
+    caused_by_targets = {e.source for e in graph.edges if e.relation == "caused_by"}
+    for ce in cause_edges:
+        target_has_effect = ce.target in effect_node_ids or ce.target in caused_by_targets
+        if not target_has_effect:
+            warnings.append(f"Contract[5]: cause node '{ce.source}' target '{ce.target}' not typed as effect")
 
     # 7. certainty has evidence or warning
     if graph.certainty_policy == "near_certainty":
