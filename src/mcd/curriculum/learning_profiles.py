@@ -46,6 +46,16 @@ PROFILES: dict[str, LearningProfile] = {
         levels=[1, 2, 3, 4, 5, 6, 7, 8],
         description="Levels 1–8: complete cognitive curriculum.",
     ),
+    "adversarial": LearningProfile(
+        name="adversarial",
+        levels=[8],
+        description="Level 8: adversarial and mixed reasoning scenarios.",
+    ),
+    "full_curriculum_extended": LearningProfile(
+        name="full_curriculum_extended",
+        levels=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        description="Levels 1–10: complete extended curriculum including domain reasoning and graph-vector composition.",
+    ),
     "industrial_curriculum": LearningProfile(
         name="industrial_curriculum",
         levels=[7, 8],

@@ -1,12 +1,13 @@
 """Shared constants and schema definitions for the Curriculum package."""
 from __future__ import annotations
 
-VALID_LEVELS: list[int] = [1, 2, 3, 4, 5, 6, 7, 8]
+VALID_LEVELS: list[int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 VALID_TARGET_LAYERS: list[str] = [
     "thing", "property", "action", "relation",
     "cause", "effect", "instrument", "time", "place",
     "evidence", "certainty", "mixed_reasoning",
+    "domain_reasoning", "graph_vector_composition",
 ]
 
 VALID_CERTAINTY_POLICIES: list[str] = [
@@ -16,6 +17,8 @@ VALID_CERTAINTY_POLICIES: list[str] = [
     "insufficient_evidence",
     "near_certainty",
     "suspend_judgment",
+    "strong_knowledge",
+    "hypothesis",
 ]
 
 VALID_DIFFICULTIES: list[str] = ["easy", "medium", "hard", "adversarial"]
@@ -29,6 +32,8 @@ LEVEL_NAMES: dict[int, str] = {
     6: "instruments_times_places",
     7: "evidence_certainty",
     8: "mixed_reasoning",
+    9: "domain_reasoning",
+    10: "graph_vector_composition",
 }
 
 LEVEL_PRIMARY_LAYERS: dict[int, list[str]] = {
@@ -40,4 +45,6 @@ LEVEL_PRIMARY_LAYERS: dict[int, list[str]] = {
     6: ["instrument", "time", "place"],
     7: ["evidence", "certainty"],
     8: ["mixed_reasoning"],
+    9: ["domain_reasoning"],
+    10: ["graph_vector_composition"],
 }

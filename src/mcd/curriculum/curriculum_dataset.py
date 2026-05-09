@@ -86,7 +86,7 @@ class CurriculumDataset:
 
     def load_all(self) -> list[CognitiveUnit]:
         units = []
-        for level in range(1, 9):
+        for level in range(1, 11):
             units.extend(self.load_level(level))
         return units
 
@@ -97,4 +97,4 @@ class CurriculumDataset:
         return units
 
     def count_by_level(self) -> dict[int, int]:
-        return {level: len(self.load_level(level)) for level in range(1, 9)}
+        return {level: len(self.load_level(level)) for level in range(1, 11)}
