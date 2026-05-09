@@ -1,18 +1,24 @@
 """Tests for CLI ground command."""
 import json
+import os
 import subprocess
 import sys
+from pathlib import Path
 import pytest
+
+# Determine repo root dynamically
+_REPO_ROOT = str(Path(__file__).parent.parent)
 
 
 def _run_cli(*args: str) -> subprocess.CompletedProcess:
+    env = {**os.environ, "PYTHONPATH": str(Path(_REPO_ROOT) / "src")}
     return subprocess.run(
         [sys.executable, "-m", "mcd.cli", *args],
         capture_output=True,
         text=True,
         encoding="utf-8",
-        cwd="/home/runner/work/Salehan19-6-67/Salehan19-6-67",
-        env={"PYTHONPATH": "src", "PATH": __import__("os").environ.get("PATH", "")},
+        cwd=_REPO_ROOT,
+        env=env,
     )
 
 

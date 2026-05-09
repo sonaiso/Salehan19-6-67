@@ -24,6 +24,11 @@ class ManatResult:
     explanation: str
 
 
+# Threshold values for applicability scoring
+_APPLICABLE_THRESHOLD = 0.8
+_PARTIALLY_APPLICABLE_THRESHOLD = 0.4
+
+
 class ManatApplicabilityEngine:
     """Checks whether a rule's conditions match a given reality."""
 
@@ -59,10 +64,10 @@ class ManatApplicabilityEngine:
 
         score = len(matched) / len(conditions)
 
-        if score >= 0.8:
+        if score >= _APPLICABLE_THRESHOLD:
             status = ManatStatus.APPLICABLE
             explanation = f"تحققت {len(matched)} من {len(conditions)} شروط — الحكم منطبق"
-        elif score >= 0.4:
+        elif score >= _PARTIALLY_APPLICABLE_THRESHOLD:
             status = ManatStatus.PARTIALLY_APPLICABLE
             explanation = f"تحققت {len(matched)} من {len(conditions)} شروط — الانطباق جزئي"
         else:

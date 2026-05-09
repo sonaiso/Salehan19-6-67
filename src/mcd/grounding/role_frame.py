@@ -65,10 +65,6 @@ _VERB_ENDINGS = {
     "رفع", "وجد", "بحث", "طلب", "أرسل", "استقبل",
 }
 
-# Pattern: typically 3-letter root for perfect tense
-_VERB_PATTERN_RE = re.compile(r"^[\u0600-\u06FF]{2,6}$")
-
-
 def _looks_like_verb(word: str, is_first: bool) -> bool:
     """Heuristic to detect Arabic verb."""
     clean = strip_diacritics(word)

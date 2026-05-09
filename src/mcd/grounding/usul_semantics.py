@@ -49,6 +49,10 @@ class UsulSemanticFrame:
     warnings: list[str] = field(default_factory=list)
 
 
+# Named constants
+_INITIAL_CERTAINTY = 0.7
+
+
 class AdvancedArabicUsulSemantics:
     """Rule-based usul al-fiqh semantic analyzer."""
 
@@ -73,7 +77,7 @@ class AdvancedArabicUsulSemantics:
         mafhum: str = "",
     ) -> UsulSemanticFrame:
         warnings: list[str] = []
-        certainty = 0.7
+        certainty = _INITIAL_CERTAINTY
         effective_generality = generality
         effective_qiyas = qiyas_requested
 

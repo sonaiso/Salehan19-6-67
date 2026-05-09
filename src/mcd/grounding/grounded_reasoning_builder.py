@@ -41,6 +41,11 @@ _METHOD_KEYWORDS = {"طريقة", "أسلوب", "منهج", "وسيلة", "أد�
 _SYSTEM_KEYWORDS = {"نظام", "منظومة"}
 
 
+# Named constants for certainty thresholds
+_GROUNDED_THRESHOLD = 0.7
+_PARTIALLY_GROUNDED_THRESHOLD = 0.3
+
+
 def _words(text: str) -> set[str]:
     return set(text.split())
 
@@ -180,9 +185,9 @@ class GroundedReasoningBuilder:
             frame.certainty_summary = 0.0
 
         # 14. Determine final status
-        if frame.certainty_summary >= 0.7:
+        if frame.certainty_summary >= _GROUNDED_THRESHOLD:
             frame.final_status = "grounded"
-        elif frame.certainty_summary >= 0.3:
+        elif frame.certainty_summary >= _PARTIALLY_GROUNDED_THRESHOLD:
             frame.final_status = "partially_grounded"
         else:
             frame.final_status = "ungrounded"
