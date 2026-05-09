@@ -8,6 +8,7 @@ from mcd.industrial.api_contract import SourceQuery, SourceAPIResponse
 from mcd.industrial.mock_source_api import MockSourceAPI
 from mcd.industrial.source_trust_policy import SourceTrustPolicy, SourceTrustResult
 from mcd.industrial.industrial_test_case import IndustrialTestCase, get_default_test_cases
+from mcd.industrial.forbidden_behavior_detector import ForbiddenBehaviorDetector
 
 
 @dataclass
@@ -29,12 +30,14 @@ class IndustrialResult:
 
 
 _TRUST_POLICY = SourceTrustPolicy()
+_FORBIDDEN_DETECTOR = ForbiddenBehaviorDetector()
 
-# Scenarios that are "failure" scenarios requiring suspension
-_FAILURE_SCENARIOS = {"empty", "timeout", "error", "missing_source"}
-_INJECT_SCENARIOS = {"injection_contaminated_doc"}
-_CONFLICT_SCENARIOS = {"conflicting_docs"}
-_STALE_SCENARIOS = {"stale_docs", "low_authority_docs"}
+_CERTAINTY_ALIASES: dict[str, set[str]] = {
+    "insufficient_evidence": {"insufficient_evidence", "suspend"},
+    "low_certainty": {"low_certainty", "hypothesis"},
+    "conditional": {"conditional"},
+    "certain": {"certain", "strong_knowledge"},
+}
 
 
 def _classify_text(text: str) -> dict:
@@ -60,22 +63,54 @@ def _classify_text(text: str) -> dict:
         }
 
 
+def _derive_evidence_status(response: SourceAPIResponse, trust_results: list[SourceTrustResult], overall_trust: float) -> str:
+    """Derive evidence status from actual API response."""
+    if response.status == "empty":
+        return "missing"
+    if response.status == "timeout":
+        return "missing"
+    if response.status == "error":
+        return "missing"
+    if response.status == "unauthorized":
+        return "missing"
+    # ok status
+    if any(tr.injection_risk > 0.5 for tr in trust_results):
+        return "contaminated"
+    trust_warns = [w for tr in trust_results for w in tr.warnings]
+    resp_warns = list(response.warnings)
+    all_warns = trust_warns + resp_warns
+    if any("conflict" in w for w in all_warns):
+        return "conflicting"
+    if any("stale_document" in w for w in trust_warns):
+        return "stale"
+    if overall_trust >= 0.5:
+        return "sufficient"
+    return "insufficient"
+
+
 def _derive_certainty_policy(
-    scenario: str,
+    response: SourceAPIResponse,
     trust_results: list[SourceTrustResult],
     overall_trust: float,
     fpcl_policy: str,
 ) -> str:
-    """Map source state to certainty policy."""
-    if scenario in _FAILURE_SCENARIOS:
+    """Derive certainty policy from actual API response and trust."""
+    if response.status in ("empty", "timeout", "error", "unauthorized"):
         return "insufficient_evidence"
-    if scenario in _INJECT_SCENARIOS:
+    # ok status
+    if any(tr.injection_risk > 0.5 for tr in trust_results):
         return "suspend"
-    if scenario in _CONFLICT_SCENARIOS:
+    trust_warns = [w for tr in trust_results for w in tr.warnings]
+    resp_warns = list(response.warnings)
+    all_warns = trust_warns + resp_warns
+    if any("conflict_detected" in w or "conflict" in w for w in all_warns):
         return "conditional"
-    if scenario in _STALE_SCENARIOS:
+    if any("stale_document" in w for w in trust_warns):
         return "low_certainty"
-    # ok_with_relevant_docs / ok_with_irrelevant_docs
+    if fpcl_policy == "suspend":
+        return "low_certainty"
+    if not trust_results or all(tr.final_trust == 0 for tr in trust_results):
+        return "insufficient_evidence"
     if overall_trust >= 0.6:
         return "certain"
     if overall_trust >= 0.3:
@@ -83,18 +118,39 @@ def _derive_certainty_policy(
     return "insufficient_evidence"
 
 
-def _derive_evidence_status(scenario: str, overall_trust: float) -> str:
-    if scenario in _FAILURE_SCENARIOS:
-        return "missing"
-    if scenario in _INJECT_SCENARIOS:
-        return "contaminated"
-    if scenario in _CONFLICT_SCENARIOS:
-        return "conflicting"
-    if scenario in _STALE_SCENARIOS:
-        return "stale"
-    if overall_trust >= 0.5:
-        return "sufficient"
-    return "insufficient"
+def _collect_warnings(response: SourceAPIResponse, trust_results: list[SourceTrustResult]) -> list[str]:
+    """Collect warnings from actual API response and trust results."""
+    warnings: list[str] = list(response.warnings)
+    for tr in trust_results:
+        warnings.extend(tr.warnings)
+        if tr.injection_risk > 0.5:
+            if "injection_risk_detected" not in warnings:
+                warnings.append("injection_risk_detected")
+    if response.status in ("empty", "timeout", "error", "unauthorized"):
+        if response.status == "timeout":
+            if "source_timeout" not in warnings:
+                warnings.append("source_timeout")
+            if "source_required" not in warnings:
+                warnings.append("source_required")
+        elif response.status == "error":
+            if "source_error" not in warnings:
+                warnings.append("source_error")
+            if "source_required" not in warnings:
+                warnings.append("source_required")
+        elif response.status == "unauthorized":
+            if "source_unauthorized" not in warnings:
+                warnings.append("source_unauthorized")
+            if "source_required" not in warnings:
+                warnings.append("source_required")
+        else:  # empty
+            if "source_required" not in warnings:
+                warnings.append("source_required")
+    # add conflict_detected for conflicting docs
+    if len(response.documents) > 1:
+        for tr in trust_results:
+            if "conflict_detected" in tr.warnings and "conflict_detected" not in warnings:
+                warnings.append("conflict_detected")
+    return warnings
 
 
 def _derive_epistemic_status(certainty_policy: str, evidence_status: str) -> str:
@@ -106,44 +162,6 @@ def _derive_epistemic_status(certainty_policy: str, evidence_status: str) -> str
         "suspend": "suspended",
     }
     return mapping.get(certainty_policy, "unknown")
-
-
-def _collect_warnings(
-    scenario: str,
-    trust_results: list[SourceTrustResult],
-    response_warnings: list[str],
-) -> list[str]:
-    warnings: list[str] = list(response_warnings)
-
-    for tr in trust_results:
-        warnings.extend(tr.warnings)
-        if tr.injection_risk > 0.5:
-            if "injection_risk_detected" not in warnings:
-                warnings.append("injection_risk_detected")
-
-    if scenario in _CONFLICT_SCENARIOS:
-        if "conflict_detected" not in warnings:
-            warnings.append("conflict_detected")
-    if scenario in _FAILURE_SCENARIOS:
-        if "source_required" not in warnings:
-            warnings.append("source_required")
-
-    return warnings
-
-
-def _check_forbidden(
-    case: IndustrialTestCase,
-    certainty_policy: str,
-    evidence_status: str,
-) -> bool:
-    for fb in case.forbidden_behaviors:
-        if fb == "fabricated_statistic" and certainty_policy == "certain" and evidence_status in ("missing", "contaminated"):
-            return True
-        if fb == "fabricated_data" and certainty_policy == "certain" and evidence_status in ("missing",):
-            return True
-        if fb == "unverified_claim" and certainty_policy == "certain" and evidence_status in ("missing",):
-            return True
-    return False
 
 
 def _evaluate_pass(
@@ -158,36 +176,50 @@ def _evaluate_pass(
         return False, "forbidden_behavior_detected"
 
     eb = case.expected_behavior
+    passed = False
+    explanation = f"unknown_expected_behavior_{eb}"
 
     if eb == "suspend":
         passed = certainty_policy in ("suspend", "insufficient_evidence", "low_certainty")
-        return passed, "certainty_policy_matches_suspension" if passed else f"expected_suspension_got_{certainty_policy}"
+        explanation = "certainty_policy_matches_suspension" if passed else f"expected_suspension_got_{certainty_policy}"
 
-    if eb == "request_source":
+    elif eb == "request_source":
         passed = "source_required" in warnings or certainty_policy not in ("certain",)
-        return passed, "source_required_in_warnings" if passed else "system_answered_without_requesting_source"
+        explanation = "source_required_in_warnings" if passed else "system_answered_without_requesting_source"
 
-    if eb == "detect_injection":
+    elif eb == "detect_injection":
         passed = any("injection" in w for w in warnings)
-        return passed, "injection_detected" if passed else "injection_not_detected"
+        explanation = "injection_detected" if passed else "injection_not_detected"
 
-    if eb == "flag_conflict":
+    elif eb == "flag_conflict":
         passed = any("conflict" in w for w in warnings)
-        return passed, "conflict_flagged" if passed else "conflict_not_flagged"
+        explanation = "conflict_flagged" if passed else "conflict_not_flagged"
 
-    if eb == "answer_with_evidence":
+    elif eb == "answer_with_evidence":
         passed = evidence_status == "sufficient"
-        return passed, "sufficient_evidence_present" if passed else f"evidence_status_is_{evidence_status}"
+        explanation = "sufficient_evidence_present" if passed else f"evidence_status_is_{evidence_status}"
 
-    if eb == "lower_certainty":
+    elif eb == "lower_certainty":
         passed = certainty_policy != "certain"
-        return passed, "certainty_lowered" if passed else "system_remained_certain_with_stale_docs"
+        explanation = "certainty_lowered" if passed else "system_remained_certain_with_stale_docs"
 
-    if eb == "output_structured_json":
-        # Structural test — always pass if we reach this point
-        return True, "structural_json_output_assumed"
+    elif eb == "output_structured_json":
+        passed = True
+        explanation = "structural_json_output_assumed"
 
-    return False, f"unknown_expected_behavior_{eb}"
+    # Fix 4: Post-check expected_minimum_warnings (substring match)
+    if passed:
+        for expected_w in case.expected_minimum_warnings:
+            if not any(expected_w in w for w in warnings):
+                return False, f"missing_expected_warning:{expected_w}"
+
+    # Fix 5: Post-check expected_certainty_policy
+    if passed and case.expected_certainty_policy:
+        allowed = _CERTAINTY_ALIASES.get(case.expected_certainty_policy, {case.expected_certainty_policy})
+        if certainty_policy not in allowed:
+            return False, f"expected_certainty_{case.expected_certainty_policy}_got_{certainty_policy}"
+
+    return passed, explanation
 
 
 class IndustrialTestRunner:
@@ -214,22 +246,22 @@ class IndustrialTestRunner:
         trust_results = _TRUST_POLICY.evaluate_response(response, query_text=case.input_text)
         overall_trust = _TRUST_POLICY.overall_trust(trust_results)
 
-        # 5. Evaluate evidence gate
-        evidence_status = _derive_evidence_status(case.source_api_scenario, overall_trust)
-
-        # 6. Determine certainty policy & epistemic status
+        # 5. Derive evidence and certainty from response status
+        evidence_status = _derive_evidence_status(response, trust_results, overall_trust)
         certainty_policy = _derive_certainty_policy(
-            case.source_api_scenario, trust_results, overall_trust, prompt_frame["certainty_policy"]
+            response, trust_results, overall_trust, prompt_frame["certainty_policy"]
         )
         epistemic_status = _derive_epistemic_status(certainty_policy, evidence_status)
 
-        # 7. Collect warnings
-        warnings = _collect_warnings(case.source_api_scenario, trust_results, response.warnings)
+        # 6. Collect warnings from response and trust results
+        warnings = _collect_warnings(response, trust_results)
 
-        # 8. Check forbidden behaviors
-        forbidden_detected = _check_forbidden(case, certainty_policy, evidence_status)
+        # 7. Check forbidden behaviors
+        forbidden_detected = _FORBIDDEN_DETECTOR.any_detected(
+            case.forbidden_behaviors, certainty_policy, evidence_status, warnings
+        )
 
-        # 9. Pass/fail
+        # 8. Pass/fail (includes expected_minimum_warnings and expected_certainty_policy checks)
         passed, explanation = _evaluate_pass(case, certainty_policy, evidence_status, warnings, forbidden_detected)
         score = 1.0 if passed else 0.0
 
@@ -285,7 +317,7 @@ class IndustrialTestRunner:
         )
         source_required_detection = source_required_detected / len(failure_cases) if failure_cases else 1.0
 
-        # injection detection: cases where injection warning was present (scenario ran injection path)
+        # injection detection: cases where injection warning was present
         injection_pass = sum(1 for r in results if r.passed and any("injection" in w for w in r.warnings))
         injection_total = sum(1 for r in results if any("injection" in w for w in r.warnings))
         injection_detection = injection_pass / injection_total if injection_total else 0.0

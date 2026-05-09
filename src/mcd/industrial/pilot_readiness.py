@@ -27,6 +27,7 @@ class PilotReadinessResult:
     blockers: list[str]
     next_actions: list[str]
     conditional: bool = False
+    status: str = "not_ready"
 
 
 class PilotReadinessGate:
@@ -131,7 +132,15 @@ class PilotReadinessGate:
         hard_failures = [f for f in failed if f in hard_blocker_keys]
 
         conditional = not hard_failures and "rest_api_implemented" in failed
-        ready_for_pilot = len(hard_failures) == 0
+        if hard_failures:
+            status = "not_ready"
+            ready_for_pilot = False
+        elif "rest_api_implemented" in failed:
+            status = "conditional_candidate"
+            ready_for_pilot = False
+        else:
+            status = "ready_for_pilot"
+            ready_for_pilot = True
 
         return PilotReadinessResult(
             ready_for_pilot=ready_for_pilot,
@@ -141,13 +150,19 @@ class PilotReadinessGate:
             blockers=blockers,
             next_actions=next_actions,
             conditional=conditional,
+            status=status,
         )
 
-    def evaluate_from_runner(self) -> PilotReadinessResult:
+    def evaluate_from_runner(
+        self,
+        tests_pass: bool | None = None,
+        readiness_report_exists: bool | None = None,
+    ) -> PilotReadinessResult:
         """Run IndustrialTestRunner and derive criteria automatically."""
         from mcd.industrial.industrial_test_runner import IndustrialTestRunner
         from mcd.industrial.industrial_test_case import get_default_test_cases
         from mcd.industrial.latency_benchmark import LatencyBenchmark
+        from mcd.industrial.serializers import industrial_result_to_dict
 
         runner = IndustrialTestRunner()
         cases = get_default_test_cases()
@@ -157,16 +172,32 @@ class PilotReadinessGate:
         bench = LatencyBenchmark()
         bench_result = bench.run(cases[:10])
 
+        # Compute real schema stability from result dicts
+        result_dicts = [industrial_result_to_dict(r) for r in results]
+        schema_stability = check_schema_stability({"results": result_dicts})
+
         criteria = PilotReadinessCriteria(
-            tests_pass=True,
+            tests_pass=tests_pass if tests_pass is not None else False,
             industrial_test_pass_rate=summary.get("pass_rate", 0.0),
             false_certainty_rate=summary.get("false_certainty_rate", 1.0),
             source_required_detection=summary.get("source_required_detection", 0.0),
             injection_detection=summary.get("injection_detection", 0.0),
-            json_schema_stability=1.0,
+            json_schema_stability=schema_stability,
             p95_latency_ms=bench_result.p95_latency_ms,
-            readiness_report_exists=True,
+            readiness_report_exists=readiness_report_exists if readiness_report_exists is not None else False,
             api_contract_defined=True,
             rest_api_implemented=False,
         )
         return self.evaluate(criteria)
+
+
+def check_schema_stability(result_dict: dict) -> float:
+    """Compute schema stability score: fraction of results sharing the same key set."""
+    results = result_dict.get("results", [])
+    if not results:
+        return 0.0
+    key_sets = [frozenset(r.keys()) for r in results if isinstance(r, dict)]
+    if not key_sets:
+        return 0.0
+    most_common = max(key_sets, key=lambda ks: key_sets.count(ks))
+    return key_sets.count(most_common) / len(key_sets)
