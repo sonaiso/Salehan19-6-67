@@ -1,0 +1,30 @@
+{
+  "version": "5.3.1",
+  "role_vector": {
+    "dimensions": [
+      "thing", "property", "action", "relation", "cause", "effect",
+      "instrument", "time", "place", "evidence", "claim", "judgment",
+      "source", "tool"
+    ]
+  },
+  "domain_vector": {
+    "dimensions": [
+      "universe", "human", "life", "science", "culture", "civilization",
+      "technology", "language", "method", "industrial", "education",
+      "enterprise", "safety", "product"
+    ]
+  },
+  "evidence_vector": {
+    "dimensions": [
+      "sensory", "experimental", "linguistic", "textual", "historical",
+      "shari", "technical", "contextual", "source_api", "document",
+      "benchmark"
+    ]
+  },
+  "certainty_vector": {
+    "dimensions": [
+      "suspend", "hypothesis", "probable_knowledge", "strong_knowledge",
+      "near_certainty"
+    ]
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "version": "5.3.1",
+  "invariants": [
+    {
+      "id": "INV-001",
+      "name": "no_input_label_only",
+      "description": "No input-label-only examples. Every CognitiveUnit must have graph with nodes.",
+      "severity": "blocking",
+      "check": "has_graph_nodes"
+    },
+    {
+      "id": "INV-002",
+      "name": "relation_edge_requires_endpoints",
+      "description": "Every relation edge requires source and target nodes existing in graph.",
+      "severity": "blocking",
+      "check": "edge_endpoints_in_graph"
+    },
+    {
+      "id": "INV-003",
+      "name": "cause_requires_effect",
+      "description": "Every cause node must have a corresponding effect via causes edge.",
+      "severity": "blocking",
+      "check": "cause_has_effect"
+    },
+    {
+      "id": "INV-004",
+      "name": "near_certainty_requires_evidence",
+      "description": "Near certainty policy requires non-empty evidence_refs.",
+      "severity": "blocking",
+      "check": "near_certainty_has_evidence"
+    },
+    {
+      "id": "INV-005",
+      "name": "tool_api_not_evidence",
+      "description": "Tool or API nodes cannot be used as evidence by themselves without trust policy.",
+      "severity": "blocking",
+      "check": "tool_api_not_standalone_evidence"
+    },
+    {
+      "id": "INV-006",
+      "name": "harm_not_haram",
+      "description": "harm domain (value/practical) does not imply haram (shari). They are distinct.",
+      "severity": "blocking",
+      "check": "harm_haram_not_conflated"
+    },
+    {
+      "id": "INV-007",
+      "name": "ambiguity_caps_certainty",
+      "description": "Ambiguous input must not result in near_certainty policy.",
+      "severity": "blocking",
+      "check": "ambiguity_caps_certainty"
+    },
+    {
+      "id": "INV-008",
+      "name": "metaphor_not_literal",
+      "description": "Metaphor nodes are not literal by default. Require explicit grounding.",
+      "severity": "blocking",
+      "check": "metaphor_not_literal"
+    },
+    {
+      "id": "INV-009",
+      "name": "source_trust_before_evidence",
+      "description": "Source nodes must pass trust policy before being used as evidence.",
+      "severity": "blocking",
+      "check": "source_trust_required"
+    },
+    {
+      "id": "INV-010",
+      "name": "graph_json_serializable",
+      "description": "Every graph must be JSON serializable.",
+      "severity": "blocking",
+      "check": "graph_json_serializable"
+    },
+    {
+      "id": "INV-011",
+      "name": "vector_matches_registry",
+      "description": "Every vector must contain exactly the dimensions defined in registry.",
+      "severity": "blocking",
+      "check": "vector_matches_registry"
+    },
+    {
+      "id": "INV-012",
+      "name": "domain_judgment_has_domain_vector",
+      "description": "Every domain judgment must include domain_vector.",
+      "severity": "blocking",
+      "check": "domain_judgment_has_domain_vector"
+    }
+  ]
+}

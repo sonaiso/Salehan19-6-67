@@ -1,0 +1,61 @@
+{
+  "version": "5.3.1",
+  "domains": {
+    "universe": {
+      "description": "Physical universe, natural phenomena",
+      "examples": ["النار", "الماء", "الجاذبية"]
+    },
+    "human": {
+      "description": "Human individual psychology and behavior",
+      "examples": ["الإنسان", "التفكير", "القرار"]
+    },
+    "life": {
+      "description": "Living organisms and biological processes",
+      "examples": ["الحياة", "النمو", "التكيف"]
+    },
+    "science": {
+      "description": "Scientific methodology, empirical knowledge",
+      "examples": ["التجربة", "الفرضية", "الإثبات"]
+    },
+    "culture": {
+      "description": "Cultural practices, traditions, arts",
+      "examples": ["الثقافة", "التقاليد", "الفن"]
+    },
+    "civilization": {
+      "description": "Societal structures and civilizational progress",
+      "examples": ["الحضارة", "المجتمع", "التطور"]
+    },
+    "technology": {
+      "description": "Technical tools, AI, software systems",
+      "examples": ["الذكاء الاصطناعي", "البرمجيات", "الأدوات"]
+    },
+    "language": {
+      "description": "Linguistics, semantics, pragmatics",
+      "examples": ["اللغة", "المجاز", "الدلالة"]
+    },
+    "method": {
+      "description": "Methodological approaches, reasoning processes",
+      "examples": ["المنهج", "القياس", "الاستدلال"]
+    },
+    "industrial": {
+      "description": "Industrial processes, enterprise systems",
+      "examples": ["الإنتاج", "المصنع", "الجودة"]
+    },
+    "education": {
+      "description": "Learning, teaching, curriculum",
+      "examples": ["التعليم", "المنهج", "التقييم"]
+    },
+    "enterprise": {
+      "description": "Business, organizations, policy",
+      "examples": ["الشركة", "السياسة", "القرار"]
+    },
+    "safety": {
+      "description": "Safety, security, risk management",
+      "examples": ["الأمان", "الخطر", "الحماية"]
+    },
+    "product": {
+      "description": "Products, UX, user-facing systems",
+      "examples": ["المنتج", "المستخدم", "التجربة"]
+    }
+  }
+}
