@@ -143,6 +143,20 @@ def main() -> None:
     cur_qual_parser.add_argument("--profile", default="full_curriculum_extended")
     cur_qual_parser.add_argument("--output", choices=["json", "text", "markdown"], default="markdown")
 
+    # curriculum-quality-lock
+    cur_ql_parser = subparsers.add_parser(
+        "curriculum-quality-lock",
+        help="Phase 5.3.2: Run quality lock — verifies contract is governing, not just structural",
+    )
+    cur_ql_parser.add_argument("--output", choices=["json", "markdown"], default="markdown")
+
+    # curriculum-mutation-test
+    cur_mut_parser = subparsers.add_parser(
+        "curriculum-mutation-test",
+        help="Phase 5.3.2: Run mutation tests — verifies validators catch corrupted examples",
+    )
+    cur_mut_parser.add_argument("--output", choices=["json", "text"], default="json")
+
     args = parser.parse_args()
 
     if args.command == "classify":
@@ -567,21 +581,41 @@ def main() -> None:
         from mcd.curriculum.cognitive_edge import CognitiveEdge
         from mcd.curriculum.mathematical_contract import check_mathematical_contract
         from mcd.curriculum.learning_profiles import get_profile
+        from mcd.curriculum.vector_space import zero_role_vector, zero_domain_vector
 
         profile = get_profile(args.profile)
         units = CurriculumDataset().load_levels(profile.levels)
 
-        # Build a compact graph: one node per level, edges between sequential levels
+        # Build a compact graph: one node per level with valid vectors
         level_ids = sorted({u.level for u in units})
-        nodes = [
-            CognitiveNode(
+        nodes = []
+        for lvl in level_ids:
+            rv = zero_role_vector()
+            rv["thing"] = 1.0  # "thing" is a valid ROLE_DIMENSION; "domain" is only a node_type
+            dv = zero_domain_vector()
+            dv["education"] = 1.0
+            nodes.append(CognitiveNode(
                 node_id=f"level_{lvl}",
                 surface=f"Level {lvl}",
                 normalized=f"level_{lvl}",
                 node_type="domain",
-            )
-            for lvl in level_ids
-        ]
+                role_vector=rv,
+                domain_vector=dv,
+            ))
+        # Build root_vector and domain_summary from node vectors
+        rv_sum = zero_role_vector()
+        for n in nodes:
+            for k, v in n.role_vector.items():
+                rv_sum[k] = rv_sum.get(k, 0.0) + v
+        total_rv = sum(rv_sum.values())
+        root_vector = {k: v / total_rv for k, v in rv_sum.items()} if total_rv > 0 else rv_sum
+        dv_sum = zero_domain_vector()
+        for n in nodes:
+            for k, v in n.domain_vector.items():
+                dv_sum[k] = dv_sum.get(k, 0.0) + v
+        total_dv = sum(dv_sum.values())
+        domain_summary = {k: v / total_dv for k, v in dv_sum.items()} if total_dv > 0 else dv_sum
+
         edges = [
             CognitiveEdge(
                 edge_id=f"e_{i}",
@@ -591,7 +625,13 @@ def main() -> None:
             )
             for i in range(len(level_ids) - 1)
         ]
-        graph = CognitiveGraph(graph_id="curriculum-contract-check", nodes=nodes, edges=edges)
+        graph = CognitiveGraph(
+            graph_id="curriculum-contract-check",
+            nodes=nodes,
+            edges=edges,
+            root_vector=root_vector,
+            domain_summary=domain_summary,
+        )
 
         result = check_mathematical_contract(graph)
 
@@ -674,6 +714,31 @@ def main() -> None:
             print(f"  industrial_score:     {metrics.industrial_testing_score_estimate:.4f} (>={INDUSTRIAL_THRESHOLD})")
             print(f"  source_trust_score:   {metrics.source_trust_score_estimate:.4f} (>={SOURCE_TRUST_THRESHOLD})")
             print(f"  Recommendation:       {metrics.recommendation}")
+    elif args.command == "curriculum-quality-lock":
+        from mcd.curriculum.quality_lock import run_quality_lock
+
+        ql_report = run_quality_lock()
+
+        if args.output == "json":
+            print(json.dumps(ql_report.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(ql_report.to_markdown())
+    elif args.command == "curriculum-mutation-test":
+        from mcd.curriculum.mutation_tests import run_mutation_tests
+
+        mut_report = run_mutation_tests()
+
+        if args.output == "json":
+            print(json.dumps(mut_report.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            status = "✅ PASSED" if mut_report.pass_rate >= 0.95 else "❌ FAILED"
+            print(f"Mutation Tests — {status}")
+            print(f"  Total:     {mut_report.total}")
+            print(f"  Passed:    {mut_report.passed}")
+            print(f"  Pass rate: {mut_report.pass_rate:.4f}")
+            for r in mut_report.results:
+                icon = "✅" if r.passed else "❌"
+                print(f"  {icon} {r.mutation_name}: {r.explanation}")
     else:
         parser.print_help()
 

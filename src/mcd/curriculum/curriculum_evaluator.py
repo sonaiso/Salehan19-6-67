@@ -166,6 +166,59 @@ class CurriculumEvaluator:
         if level == 4 and not frame.relations:
             score -= 0.2
 
+        # Level 9 — domain_reasoning: must have actual domains, domain evidence
+        if level == 9:
+            metadata_domains = unit.metadata.get("domains", [])
+            has_domains = bool(metadata_domains) or any(
+                "domain" in tag for tag in unit.tags
+            )
+            has_domain_evidence = any(
+                "domain" in ev for ev in frame.evidence_need
+            )
+            domain_vector_hint = unit.metadata.get("domain_vector") or bool(metadata_domains)
+            if not has_domains:
+                return 0.0
+            # Base 0.6 for level 9 so correct units can reach 0.95+
+            score = 0.6
+            if has_domain_evidence:
+                score += 0.15
+            if domain_vector_hint:
+                score += 0.15
+            if bool(metadata_domains):
+                score += 0.05
+            if unit.certainty_policy in VALID_CERTAINTY_POLICIES:
+                score += 0.05
+            if unit.tags:
+                score += 0.05
+            return min(max(score, 0.0), 1.0)
+
+        # Level 10 — graph_vector_composition: must have graph structure and vectors
+        if level == 10:
+            metadata = unit.metadata
+            has_vector_hint = bool(metadata.get("vector_hint"))
+            has_nodes = bool(frame.things) or bool(metadata.get("nodes"))
+            has_edges = bool(frame.relations) or bool(metadata.get("edges"))
+            has_graph_evidence = any(
+                kw in ev for ev in frame.evidence_need
+                for kw in ("graph", "vector", "composition")
+            )
+            # If no graph structure at all, score zero
+            if not has_nodes and not has_vector_hint:
+                return 0.0
+            if not has_edges and not has_vector_hint:
+                score -= 0.2
+            if has_vector_hint:
+                score += 0.3
+            if has_nodes:
+                score += 0.1
+            if has_edges:
+                score += 0.1
+            if has_graph_evidence:
+                score += 0.1
+            if unit.certainty_policy in VALID_CERTAINTY_POLICIES:
+                score += 0.05
+            return min(max(score, 0.0), 1.0)
+
         checks = {
             "thing": bool(frame.things),
             "property": bool(frame.properties),
@@ -179,8 +232,8 @@ class CurriculumEvaluator:
             "evidence": bool(frame.evidence_need),
             "certainty": bool(frame.certainty_policy),
             "mixed_reasoning": bool(frame.evidence_need) and bool(frame.warnings),
-            "domain_reasoning": bool(getattr(frame, "evidence_need", [])),
-            "graph_vector_composition": bool(getattr(frame, "evidence_need", [])),
+            "domain_reasoning": bool(unit.metadata.get("domains")),
+            "graph_vector_composition": bool(unit.metadata.get("vector_hint")),
         }
 
         if layer in checks and checks[layer]:

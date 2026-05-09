@@ -79,10 +79,16 @@ def validate_invariants(graph: CognitiveGraph, has_graph_nodes: bool = True) -> 
 
         elif check == "cause_has_effect":
             cause_edges = [e for e in graph.edges if e.relation == "causes"]
+            effect_node_ids = {n.node_id for n in graph.nodes if n.node_type == "effect"}
             for ce in cause_edges:
-                effect_edges = [e for e in graph.edges if e.source == ce.target or e.relation == "caused_by"]
-                if not effect_edges:
-                    warnings.append(f"cause node '{ce.source}' may lack explicit effect (INV-003)")
+                target_is_effect = ce.target in effect_node_ids
+                target_has_caused_by = any(
+                    e for e in graph.edges
+                    if e.relation == "caused_by" and e.source == ce.target
+                )
+                if not target_is_effect and not target_has_caused_by:
+                    passed_check = False
+                    break
 
         elif check == "near_certainty_has_evidence":
             if graph.certainty_policy == "near_certainty":
@@ -91,11 +97,16 @@ def validate_invariants(graph: CognitiveGraph, has_graph_nodes: bool = True) -> 
 
         elif check == "tool_api_not_standalone_evidence":
             tool_nodes = {n.node_id for n in graph.nodes if n.node_type in ("tool", "source")}
+            evidence_relations = {"supports", "sourced_from", "requires_evidence"}
             for edge in graph.edges:
-                if edge.relation == "supports" and edge.source in tool_nodes and not edge.evidence_refs:
-                    passed_check = False
-                    warnings.append(f"tool/source node '{edge.source}' used as evidence without trust policy (INV-005)")
-                    break
+                if edge.relation in evidence_relations and edge.source in tool_nodes:
+                    has_evidence = bool(edge.evidence_refs)
+                    trust_policy = edge.metadata.get("trust_policy")
+                    trust_ok = isinstance(trust_policy, dict) and trust_policy.get("trusted") is True
+                    trust_score_ok = isinstance(trust_policy, dict) and trust_policy.get("source_trust_score", 0.0) >= 0.7
+                    if not has_evidence and not trust_ok and not trust_score_ok:
+                        passed_check = False
+                        break
 
         elif check == "harm_haram_not_conflated":
             harm_nodes = {n.node_id for n in graph.nodes if "harm" in n.surface.lower() or "ضار" in n.surface}
