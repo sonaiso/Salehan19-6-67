@@ -420,14 +420,14 @@ def main() -> None:
         from mcd.industrial.serializers import to_json
 
         tests_pass = None
-        if getattr(args, "tests_pass", None) is not None:
+        if args.tests_pass is not None:
             tests_pass = args.tests_pass.lower() == "true"
 
         readiness_report_exists = None
-        if getattr(args, "readiness_report_exists", None) is not None:
+        if args.readiness_report_exists is not None:
             readiness_report_exists = args.readiness_report_exists.lower() == "true"
 
-        latency_target_ms = getattr(args, "latency_target_ms", None)
+        latency_target_ms = args.latency_target_ms
 
         gate = PreAPIQualificationGate()
         report = gate.evaluate(

@@ -12,6 +12,38 @@ from typing import Optional
 
 
 # ---------------------------------------------------------------------------
+# Scoring thresholds (module-level constants)
+# ---------------------------------------------------------------------------
+
+# Dataset scoring thresholds
+DATASET_COVERAGE_HIGH: float = 0.90   # coverage_score → 4.6
+DATASET_COVERAGE_MID: float = 0.80    # coverage_score → 4.5
+DATASET_COVERAGE_LOW: float = 0.70    # coverage_score → 4.4
+
+# Industrial testing thresholds
+INDUSTRIAL_PASS_RATE_HIGH: float = 0.90   # → 4.6
+INDUSTRIAL_PASS_RATE_MED: float = 0.85    # → 4.5
+INDUSTRIAL_FALSE_CERT_MAX: float = 0.05   # max allowed false_certainty_rate
+
+# Source trust thresholds
+TRUST_DETECTION_HIGH: float = 0.90   # both injection + source_required → 4.6
+TRUST_DETECTION_MED: float = 0.80    # either above 80% → 4.4
+
+# Schema stability thresholds
+SCHEMA_STABILITY_HIGH: float = 0.98  # → 4.6
+SCHEMA_STABILITY_MED: float = 0.95   # → 4.5
+SCHEMA_STABILITY_LOW: float = 0.90   # → 4.3
+
+# Calibration thresholds (false certainty rate)
+CALIB_FCR_LOW: float = 0.02   # → 4.7
+CALIB_FCR_MED: float = 0.05   # → 4.5
+CALIB_FCR_HIGH: float = 0.10  # → 4.3
+
+# Qualification threshold for all non-API dimensions
+QUALIFICATION_THRESHOLD: float = 4.5
+
+
+# ---------------------------------------------------------------------------
 # Data Model
 # ---------------------------------------------------------------------------
 
@@ -118,7 +150,7 @@ def _score_architecture(audit_data: Optional[dict] = None) -> PreAPIQualificatio
     if audit_data and "architecture_score" in audit_data:
         score = float(audit_data["architecture_score"])
 
-    passed = score >= 4.5 and not blockers
+    passed = score >= QUALIFICATION_THRESHOLD and not blockers
     return PreAPIQualificationDimension(
         name="architecture_score",
         score=score,
@@ -147,7 +179,7 @@ def _score_tests(tests_pass: Optional[bool]) -> PreAPIQualificationDimension:
         )
         next_actions.append("Run: PYTHONPATH=src python -m pytest tests/ -v and pass --tests-pass true")
 
-    passed = score >= 4.5
+    passed = score >= QUALIFICATION_THRESHOLD
     return PreAPIQualificationDimension(
         name="test_score",
         score=score,
@@ -233,11 +265,11 @@ def _score_dataset(
     if coverage_report:
         coverage_score = coverage_report.get("coverage_score", 0.0)
         evidence.append(f"Coverage score: {coverage_score:.2%}")
-        if coverage_score >= 0.90 and not duplicate_count and not field_violations:
+        if coverage_score >= DATASET_COVERAGE_HIGH and not duplicate_count and not field_violations:
             score = 4.6
-        elif coverage_score >= 0.80 and not duplicate_count and not field_violations:
+        elif coverage_score >= DATASET_COVERAGE_MID and not duplicate_count and not field_violations:
             score = 4.5
-        elif coverage_score >= 0.70:
+        elif coverage_score >= DATASET_COVERAGE_LOW:
             score = 4.4
         next_actions.append("Run: python -m mcd.cli dataset-coverage --output json")
     else:
@@ -247,7 +279,7 @@ def _score_dataset(
         )
 
     hard_blockers = [b for b in blockers if "Duplicate" in b or "required fields" in b]
-    passed = score >= 4.5 and not hard_blockers
+    passed = score >= QUALIFICATION_THRESHOLD and not hard_blockers
     return PreAPIQualificationDimension(
         name="dataset_score",
         score=score,
@@ -275,15 +307,15 @@ def _score_calibration(calibration_result: Optional[dict] = None) -> PreAPIQuali
         fcr = calibration_result.get("false_certainty_rate", 1.0)
         evidence.append(f"false_certainty_rate: {fcr:.3f}")
 
-        if fcr <= 0.02:
+        if fcr <= CALIB_FCR_LOW:
             score = 4.7
-        elif fcr <= 0.05:
+        elif fcr <= CALIB_FCR_MED:
             score = 4.5
-        elif fcr <= 0.10:
+        elif fcr <= CALIB_FCR_HIGH:
             score = 4.3
         else:
             score = 3.5
-            blockers.append(f"false_certainty_rate={fcr:.3f} too high (must be ≤ 0.05)")
+            blockers.append(f"false_certainty_rate={fcr:.3f} too high (must be ≤ {CALIB_FCR_MED})")
 
         suspension_precision = calibration_result.get("suspension_precision", None)
         certainty_policy_accuracy = calibration_result.get("certainty_policy_accuracy", None)
@@ -292,7 +324,7 @@ def _score_calibration(calibration_result: Optional[dict] = None) -> PreAPIQuali
         if certainty_policy_accuracy is not None:
             evidence.append(f"certainty_policy_accuracy: {certainty_policy_accuracy:.3f}")
 
-    passed = score >= 4.5
+    passed = score >= QUALIFICATION_THRESHOLD
     return PreAPIQualificationDimension(
         name="calibration_score",
         score=score,
@@ -340,11 +372,11 @@ def _score_industrial_testing(industrial_result: Optional[dict] = None) -> PreAP
     evidence.append(f"false_certainty_rate: {false_certainty_rate:.3f}")
     evidence.append("python -m mcd.cli industrial-test --profile full --output json")
 
-    if pass_rate >= 0.90 and false_certainty_rate <= 0.05:
+    if pass_rate >= INDUSTRIAL_PASS_RATE_HIGH and false_certainty_rate <= INDUSTRIAL_FALSE_CERT_MAX:
         score = 4.6
-    elif pass_rate >= 0.85:
+    elif pass_rate >= INDUSTRIAL_PASS_RATE_MED:
         score = 4.5
-        if false_certainty_rate > 0.05:
+        if false_certainty_rate > INDUSTRIAL_FALSE_CERT_MAX:
             score = 4.3
             blockers.append(f"false_certainty_rate={false_certainty_rate:.3f} exceeds 0.05 threshold")
     else:
@@ -352,7 +384,7 @@ def _score_industrial_testing(industrial_result: Optional[dict] = None) -> PreAP
         blockers.append(f"Industrial pass_rate={pass_rate:.2%} < 85%")
         next_actions.append("Fix failing industrial test cases (failure_injection, forbidden_behavior)")
 
-    passed = score >= 4.5
+    passed = score >= QUALIFICATION_THRESHOLD
     return PreAPIQualificationDimension(
         name="industrial_testing_score",
         score=score,
@@ -384,11 +416,11 @@ def _score_source_trust(trust_result: Optional[dict] = None) -> PreAPIQualificat
             evidence.append(f"injection_detection: {injection_detection:.2%}")
             evidence.append(f"source_required_detection: {source_required:.2%}")
 
-            if injection_detection >= 0.90 and source_required >= 0.90:
+            if injection_detection >= TRUST_DETECTION_HIGH and source_required >= TRUST_DETECTION_HIGH:
                 score = 4.6
-            elif injection_detection >= 0.80 or source_required >= 0.80:
+            elif injection_detection >= TRUST_DETECTION_MED or source_required >= TRUST_DETECTION_MED:
                 score = 4.4
-                blockers.append("injection_detection or source_required_detection below 90%")
+                blockers.append(f"injection_detection or source_required_detection below {TRUST_DETECTION_HIGH:.0%}")
             else:
                 score = 3.8
                 blockers.append("Source trust checks failing — injection/relevance detection poor")
@@ -403,17 +435,17 @@ def _score_source_trust(trust_result: Optional[dict] = None) -> PreAPIQualificat
         evidence.append(f"injection_detection: {injection_detection:.2%}")
         evidence.append(f"source_required_detection: {source_required:.2%}")
 
-        if injection_detection >= 0.90 and source_required >= 0.90:
+        if injection_detection >= TRUST_DETECTION_HIGH and source_required >= TRUST_DETECTION_HIGH:
             score = 4.6
-        elif injection_detection >= 0.80 or source_required >= 0.80:
+        elif injection_detection >= TRUST_DETECTION_MED or source_required >= TRUST_DETECTION_MED:
             score = 4.4
-            blockers.append("injection_detection or source_required_detection below 90%")
+            blockers.append(f"injection_detection or source_required_detection below {TRUST_DETECTION_HIGH:.0%}")
         else:
             score = 3.8
             blockers.append("Source trust checks failing")
             next_actions.append("Improve source trust policy for injection and relevance")
 
-    passed = score >= 4.5
+    passed = score >= QUALIFICATION_THRESHOLD
     return PreAPIQualificationDimension(
         name="source_trust_score",
         score=score,
@@ -449,20 +481,20 @@ def _score_schema_stability(schema_stability: Optional[float] = None) -> PreAPIQ
 
     evidence.append(f"schema_stability: {schema_stability:.3f}")
 
-    if schema_stability >= 0.98:
+    if schema_stability >= SCHEMA_STABILITY_HIGH:
         score = 4.6
-    elif schema_stability >= 0.95:
+    elif schema_stability >= SCHEMA_STABILITY_MED:
         score = 4.5
-    elif schema_stability >= 0.90:
+    elif schema_stability >= SCHEMA_STABILITY_LOW:
         score = 4.3
-        blockers.append(f"schema_stability={schema_stability:.3f} below 0.95 threshold")
+        blockers.append(f"schema_stability={schema_stability:.3f} below {SCHEMA_STABILITY_MED} threshold")
         next_actions.append("Stabilize output JSON schema across all industrial cases")
     else:
         score = 3.5
         blockers.append(f"schema_stability={schema_stability:.3f} critically low")
         next_actions.append("Fix inconsistent keys/types in IndustrialResult serialization")
 
-    passed = score >= 4.5
+    passed = score >= QUALIFICATION_THRESHOLD
     return PreAPIQualificationDimension(
         name="schema_stability_score",
         score=score,
@@ -516,7 +548,7 @@ def _score_latency(latency_result: Optional[dict] = None, latency_target_ms: Opt
         blockers.append(f"p95 {p95:.1f}ms exceeds target {latency_target_ms:.1f}ms")
         next_actions.append("Profile and optimize slow pipeline components")
 
-    passed = score >= 4.5
+    passed = score >= QUALIFICATION_THRESHOLD
     return PreAPIQualificationDimension(
         name="latency_score",
         score=score,
@@ -569,7 +601,7 @@ def _score_report_truthfulness(
     else:
         score = 4.3
 
-    passed = score >= 4.5
+    passed = score >= QUALIFICATION_THRESHOLD
     return PreAPIQualificationDimension(
         name="report_truthfulness_score",
         score=score,
@@ -620,7 +652,7 @@ def _score_readiness_gate(readiness_report_exists: Optional[bool] = None) -> Pre
     else:
         score = 4.0
 
-    passed = score >= 4.5
+    passed = score >= QUALIFICATION_THRESHOLD
     return PreAPIQualificationDimension(
         name="readiness_gate_score",
         score=score,
