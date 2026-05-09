@@ -1,0 +1,48 @@
+{
+  "description": "PT-08 — General/Specific prompt about the certainty of 'aam (the general) in Usul al-Fiqh",
+  "input": {
+    "prompt": "هل العام قطعي؟",
+    "mode": "analysis"
+  },
+  "expected_output": {
+    "prompt_type": "PT-08",
+    "intent": {
+      "primary_purpose": "hukm_knowledge",
+      "thinking_level": "deep",
+      "malakah_mode": false
+    },
+    "required_layers": [
+      "reality_grounding_layer",
+      "prior_opinion_filter_layer",
+      "differentiation_layer",
+      "essence_assignment_layer",
+      "domain_assignment_layer",
+      "signifier_analysis_layer",
+      "mantuq_layer",
+      "general_specific_layer",
+      "absolute_restricted_layer",
+      "tahqeeq_manat_layer",
+      "epistemic_audit_layer"
+    ],
+    "certainty_map": {
+      "text_existence": "qat'i_if_established",
+      "word_meaning": "qat'i_in_definition",
+      "scope": "qat'i_in_origin",
+      "external_application": "pending_tahqeeq",
+      "mantuq_rank": "stronger",
+      "mafhoom_rank": "not_analysed",
+      "illah_validation": "not_performed"
+    },
+    "forbidden_jumps_prevented": [
+      "NoConflatingScopeWithApplication",
+      "NoApplicationWithoutTahqeeqManat"
+    ],
+    "final_rank": "structured_answer_allowed"
+  },
+  "notes": [
+    "العام قطعي الدلالة في أصله لكن قابل للتخصيص.",
+    "دلالة العام على الفرد الخارجي ظنية في الغالب.",
+    "التخصيص لا يهدم أصل الدلالة.",
+    "لا يجوز القفز من دلالة العام إلى تطبيق الحكم على فرد معين بلا تحقيق مناط."
+  ]
+}
