@@ -244,3 +244,21 @@ python run_decoder.py "هل المفاهيم مرتبطة بالواقع؟" --ef
 python -m pytest tests/test_epistemic_decoder.py -v
 ```
 
+## Fractal Prompt Classification Layer (FPCL) v0.5
+
+Before decoding or reasoning, MCD can classify a prompt into six dimensions:
+**Root Domain**, **Concept Type**, **Knowledge Category**, **Judgment Type**, **Evidence Need**, and **Certainty Policy**.
+
+This prevents the system from answering a shari question as an epistemic question, or a technical prompt as a purely linguistic prompt.
+
+```bash
+python -m mcd.cli classify "النار تحرق" --output json
+python -m mcd.cli classify "هل الكذب حرام؟" --output json
+python -m mcd.cli classify "كيف نبني API للديكودر؟" --output json
+python -m mcd.cli classify "ما معنى علم؟" --output json
+```
+
+Key rule: **ضار ≠ حرام**. A value judgment ("harmful") is not a shari judgment ("forbidden"). FPCL enforces this distinction before any reasoning begins.
+
+See full documentation: [`docs/FRACTAL_PROMPT_CLASSIFICATION.md`](docs/FRACTAL_PROMPT_CLASSIFICATION.md)
+
