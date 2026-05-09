@@ -262,3 +262,42 @@ Key rule: **ضار ≠ حرام**. A value judgment ("harmful") is not a shari j
 
 See full documentation: [`docs/FRACTAL_PROMPT_CLASSIFICATION.md`](docs/FRACTAL_PROMPT_CLASSIFICATION.md)
 
+
+## Grounded Lexical Cognitive Frame Layer (GLCFL) v1.0
+
+The GLCFL is the fourth major layer of MCD. It doesn't just classify prompts or check evidence — it builds a **grounded frame for every word**, every relation, every manat check, every civilization context, and every societal concept.
+
+An ungrounded word carries no knowledge. GLCFL asks: *what does this word refer to in reality?*
+
+### What GLCFL Does
+
+1. **Lexical Grounding** — grounds every word against the knowledge store (ThingStore, PropertyRegistry, RelationStore). Words like `نار` are fully grounded; `علم` without context is partially grounded; `حرام` without revelation evidence is partially grounded.
+2. **Role Frames** — builds semantic role frames from Arabic sentences (VSO order): `كتب زيد الدرس بالقلم في المدرسة أمس` → `action=كتب, agent=زيد, patient=الدرس, instrument=القلم, place=المدرسة, time=أمس`
+3. **Nisbah Frames** — extracts relational propositions (زيد `agent_of` كتب, القلم `instrument_of` كتب, ...)
+4. **Manat Engine** — checks whether a rule's conditions are actually present in the target reality
+5. **Usul Semantics** — applies Arabic usul al-fiqh semantic analysis (iltizam, qiyas, aam/khas, mutlaq/muqayyad)
+6. **Tarjih Engine** — resolves conflicts between claims (combine, specify, restrict, prefer, suspend)
+7. **Value System** — strictly separates epistemic (`صحيح/خطأ`), practical (`نافع/ضار`), aesthetic (`جميل/قبيح`), shari (`حرام/واجب`), and social (`مقبول/مرفوض`) values
+8. **Civilization/Civility Classifier** — distinguishes tools (`مدنية`) from civilizational concepts (`حضارة`); AI is a special case with value-transfer risk
+9. **Society Model** — requires ideas + feelings + systems; individual statements ≠ public opinion
+10. **Human/Individual Model** — distinguishes species-level truths from individual cases; never generalizes from one person to all humanity
+
+### Key Rules
+
+- `ضار` (harmful) ≠ `حرام` (haram) — they are different types of value judgments
+- `نافع` (beneficial) ≠ `واجب` (wajib)
+- A single individual's statement is never public opinion
+- Shari judgments always need revelation evidence; without it, certainty is capped
+- AI carries risk of civilizational value transfer (assumptions about humans, knowledge, authority)
+
+### CLI Usage
+
+```bash
+PYTHONPATH=src python -m mcd.cli ground "كتب زيد الدرس بالقلم في المدرسة أمس" --output json
+PYTHONPATH=src python -m mcd.cli ground "الكذب ضار أم حرام؟" --output json
+PYTHONPATH=src python -m mcd.cli ground "الذكاء الاصطناعي أداة مدنية أم مفهوم حضاري؟" --output json
+PYTHONPATH=src python -m mcd.cli ground "المجتمع يرفض الفساد" --output json
+PYTHONPATH=src python -m mcd.cli ground "النار ساخنة" --output text
+```
+
+See full documentation: [`docs/GROUNDED_LEXICAL_COGNITIVE_FRAME.md`](docs/GROUNDED_LEXICAL_COGNITIVE_FRAME.md)
