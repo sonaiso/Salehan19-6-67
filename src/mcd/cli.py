@@ -24,6 +24,11 @@ def main() -> None:
     classify_parser.add_argument("--output", choices=["text", "json"], default="json")
     classify_parser.add_argument("--debug", action="store_true", default=False)
 
+    ground_parser = subparsers.add_parser("ground", help="Grounded Lexical Cognitive Frame (GLCFL)")
+    ground_parser.add_argument("text", help="Arabic text to ground")
+    ground_parser.add_argument("--output", choices=["text", "json"], default="json")
+    ground_parser.add_argument("--debug", action="store_true", default=False)
+
     args = parser.parse_args()
 
     if args.command == "classify":
@@ -91,6 +96,18 @@ def main() -> None:
             print(f"Claims:     {len(result.claims)}")
             print(f"Relations:  {len(result.relations)}")
             print(f"Certainty:  {result.certainty['score']:.3f} ({result.certainty['level']})")
+    elif args.command == "ground":
+        from mcd.grounding.grounded_reasoning_builder import GroundedReasoningBuilder
+        from mcd.grounding.serializers import grounded_frame_to_json
+        from mcd.grounding.report import generate_report
+
+        builder = GroundedReasoningBuilder()
+        frame = builder.build(args.text, include_debug=args.debug)
+
+        if args.output == "json":
+            print(grounded_frame_to_json(frame))
+        else:
+            print(generate_report(frame))
     else:
         parser.print_help()
 
