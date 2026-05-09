@@ -33,17 +33,38 @@ class SourceTrustPolicy:
     }
     INJECTION_PHRASES = ["تجاهل تعليمات", "ignore system", "override instructions"]
 
+    def _compute_relevance(self, query_text: str, doc_content: str) -> float:
+        """Compute relevance score using lexical overlap."""
+        import re
+        if not query_text or not doc_content:
+            return 0.1 if doc_content else 0.0
+
+        _STOPWORDS = {
+            "في", "من", "على", "إلى", "عن", "ما", "هل", "هو", "هي", "و", "أو",
+            "the", "a", "an", "is", "in", "of", "to", "for", "and", "or", "with",
+        }
+
+        def tokenize(text: str) -> set[str]:
+            tokens = re.findall("[\u0600-\u06FF]+|[a-zA-Z]+", text.lower())
+            return {t for t in tokens if t not in _STOPWORDS and len(t) > 1}
+
+        query_tokens = tokenize(query_text)
+        doc_tokens = tokenize(doc_content)
+        if not query_tokens:
+            return 0.3
+        overlap = len(query_tokens & doc_tokens)
+        score = overlap / max(1, len(query_tokens))
+        if score == 0.0:
+            score = 0.3  # base: content present but no lexical overlap
+        if query_text.lower()[:20] in doc_content.lower():
+            score = min(1.0, score + 0.2)
+        return min(1.0, max(0.0, score))
+
     def evaluate(self, doc: SourceDocument, query_text: str = "") -> SourceTrustResult:
         authority_score = self.AUTHORITY_SCORES.get(doc.authority_level, 0.5)
         freshness_score = self.FRESHNESS_SCORES.get(doc.freshness, 0.4)
 
-        # Simple relevance: non-zero if doc has content and query is not empty
-        if query_text and doc.content:
-            relevance_score = 0.6
-        elif doc.content:
-            relevance_score = 0.5
-        else:
-            relevance_score = 0.1
+        relevance_score = self._compute_relevance(query_text, doc.content)
 
         # Injection risk
         injection_risk = 0.0

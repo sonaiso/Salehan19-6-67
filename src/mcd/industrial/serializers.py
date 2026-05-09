@@ -61,6 +61,7 @@ def pilot_readiness_to_dict(r: PilotReadinessResult) -> dict:
         "blockers": r.blockers,
         "next_actions": r.next_actions,
         "conditional": r.conditional,
+        "status": r.status,
     }
 
 

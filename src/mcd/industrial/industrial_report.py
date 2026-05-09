@@ -3,26 +3,38 @@ from __future__ import annotations
 
 from mcd.industrial.industrial_test_runner import IndustrialTestRunner, IndustrialResult
 from mcd.industrial.latency_benchmark import LatencyBenchmark, LatencyBenchmarkResult
-from mcd.industrial.pilot_readiness import PilotReadinessGate, PilotReadinessResult
+from mcd.industrial.pilot_readiness import PilotReadinessGate, PilotReadinessCriteria, PilotReadinessResult
 from mcd.industrial.failure_injection import FailureInjector
-from mcd.industrial.industrial_test_case import get_default_test_cases
+from mcd.industrial.industrial_test_case import IndustrialTestCase, get_default_test_cases
 
 
-def generate_industrial_report() -> str:
-    """Generate full Markdown industrial testing report."""
-    cases = get_default_test_cases()
-    runner = IndustrialTestRunner()
-    results = runner.run_all(cases)
-    summary = runner.summary(results)
-
-    bench = LatencyBenchmark()
-    bench_result = bench.run(cases[:10])
+def generate_industrial_report_from_results(
+    profile: str,
+    cases: list[IndustrialTestCase],
+    results: list[IndustrialResult],
+    summary: dict,
+    bench_result: LatencyBenchmarkResult | None = None,
+    readiness: PilotReadinessResult | None = None,
+) -> str:
+    """Generate Markdown report from pre-computed results (no re-execution)."""
+    if readiness is None:
+        gate = PilotReadinessGate()
+        criteria = PilotReadinessCriteria(
+            tests_pass=False,
+            industrial_test_pass_rate=summary.get("pass_rate", 0.0),
+            false_certainty_rate=summary.get("false_certainty_rate", 1.0),
+            source_required_detection=summary.get("source_required_detection", 0.0),
+            injection_detection=summary.get("injection_detection", 0.0),
+            json_schema_stability=0.0,
+            p95_latency_ms=bench_result.p95_latency_ms if bench_result else 0.0,
+            readiness_report_exists=False,
+            api_contract_defined=True,
+            rest_api_implemented=False,
+        )
+        readiness = gate.evaluate(criteria)
 
     fi = FailureInjector()
     fi_results = fi.run_all()
-
-    gate = PilotReadinessGate()
-    readiness = gate.evaluate_from_runner()
 
     lines: list[str] = []
 
@@ -32,6 +44,7 @@ def generate_industrial_report() -> str:
         "",
         "## 1. Executive Summary",
         "",
+        f"- **Profile:** {profile}",
         f"- **Total industrial test cases:** {summary['total']}",
         f"- **Passed:** {summary['passed']}",
         f"- **Failed:** {summary['failed']}",
@@ -107,18 +120,19 @@ def generate_industrial_report() -> str:
     lines.append("")
 
     # 6. Latency Results
-    lines += [
-        "## 6. Latency Results",
-        "",
-        f"- **Total cases benchmarked:** {bench_result.total_cases}",
-        f"- **Avg latency:** {bench_result.avg_latency_ms:.1f} ms",
-        f"- **P50 latency:** {bench_result.p50_latency_ms:.1f} ms",
-        f"- **P95 latency:** {bench_result.p95_latency_ms:.1f} ms",
-        f"- **Max latency:** {bench_result.max_latency_ms:.1f} ms",
-        "",
-        "> Note: Component-level breakdown not yet instrumented.",
-        "",
-    ]
+    if bench_result:
+        lines += [
+            "## 6. Latency Results",
+            "",
+            f"- **Total cases benchmarked:** {bench_result.total_cases}",
+            f"- **Avg latency:** {bench_result.avg_latency_ms:.1f} ms",
+            f"- **P50 latency:** {bench_result.p50_latency_ms:.1f} ms",
+            f"- **P95 latency:** {bench_result.p95_latency_ms:.1f} ms",
+            f"- **Max latency:** {bench_result.max_latency_ms:.1f} ms",
+            "",
+            "> Note: Component-level breakdown not yet instrumented.",
+            "",
+        ]
 
     # 7. Failure Injection Results
     lines += [
@@ -196,3 +210,40 @@ def generate_industrial_report() -> str:
     lines.append("")
 
     return "\n".join(lines)
+
+
+def generate_industrial_report(profile: str = "default") -> str:
+    """Generate full Markdown industrial testing report."""
+    cases = get_default_test_cases()
+    runner = IndustrialTestRunner()
+    results = runner.run_all(cases)
+    summary = runner.summary(results)
+
+    bench = LatencyBenchmark()
+    bench_result = bench.run(cases[:10])
+
+    # Compute readiness from summary directly — no evaluate_from_runner() re-execution
+    gate = PilotReadinessGate()
+    criteria = PilotReadinessCriteria(
+        tests_pass=False,
+        industrial_test_pass_rate=summary.get("pass_rate", 0.0),
+        false_certainty_rate=summary.get("false_certainty_rate", 1.0),
+        source_required_detection=summary.get("source_required_detection", 0.0),
+        injection_detection=summary.get("injection_detection", 0.0),
+        json_schema_stability=0.0,
+        p95_latency_ms=bench_result.p95_latency_ms,
+        readiness_report_exists=False,
+        api_contract_defined=True,
+        rest_api_implemented=False,
+    )
+    readiness = gate.evaluate(criteria)
+
+    return generate_industrial_report_from_results(
+        profile=profile,
+        cases=cases,
+        results=results,
+        summary=summary,
+        bench_result=bench_result,
+        readiness=readiness,
+    )
+

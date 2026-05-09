@@ -1,11 +1,22 @@
 """Latency Benchmark — measure pipeline component latencies."""
 from __future__ import annotations
 
+import math
 import statistics
 import time
 from dataclasses import dataclass, field
 
 from mcd.industrial.industrial_test_case import IndustrialTestCase, get_default_test_cases
+
+
+def percentile(values: list[float], p: float) -> float:
+    """Compute p-th percentile using nearest-rank method."""
+    if not values:
+        return 0.0
+    sorted_v = sorted(values)
+    n = len(sorted_v)
+    idx = max(0, min(math.ceil(p / 100.0 * n) - 1, n - 1))
+    return sorted_v[idx]
 
 
 @dataclass
@@ -50,9 +61,8 @@ class LatencyBenchmark:
             )
 
         sorted_l = sorted(latencies)
-        p50 = statistics.median(sorted_l)
-        idx95 = int(len(sorted_l) * 0.95)
-        p95 = sorted_l[min(idx95, len(sorted_l) - 1)]
+        p50 = percentile(sorted_l, 50)
+        p95 = percentile(sorted_l, 95)
 
         return LatencyBenchmarkResult(
             total_cases=len(latencies),

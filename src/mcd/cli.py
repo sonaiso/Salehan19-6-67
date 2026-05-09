@@ -315,7 +315,7 @@ def main() -> None:
     elif args.command == "industrial-test":
         from mcd.industrial.industrial_test_runner import IndustrialTestRunner
         from mcd.industrial.industrial_test_case import get_default_test_cases
-        from mcd.industrial.industrial_report import generate_industrial_report
+        from mcd.industrial.industrial_report import generate_industrial_report_from_results
         from mcd.industrial.serializers import industrial_result_to_dict, to_json
 
         cases = get_default_test_cases()
@@ -328,7 +328,12 @@ def main() -> None:
         if args.output == "json":
             print(to_json({"summary": summary, "results": [industrial_result_to_dict(r) for r in results]}))
         else:
-            print(generate_industrial_report())
+            print(generate_industrial_report_from_results(
+                profile=args.profile,
+                cases=cases,
+                results=results,
+                summary=summary,
+            ))
     elif args.command == "source-api-smoke":
         from mcd.industrial.mock_source_api import MockSourceAPI
         from mcd.industrial.api_contract import SourceQuery
