@@ -2387,6 +2387,734 @@
       "Statistical prediction يولد candidates فقط ولا يصدر certificates."
     ]
   },
+  "mustadil_decoder_pipeline": {
+    "purpose": "طبقة رقابية فوق الديكودر اللغوي تمنع النموذج من الانتقال من اللفظ إلى الحكم إلا بعد اجتياز خريطة تحقق معرفية مرتبة من 21 طبقة.",
+    "golden_rule": "لا حكم بلا محل، ولا محل بلا تمييز، ولا تمييز بلا تعيين، ولا تعيين بلا نسب، ولا نسب بلا عوامل، ولا ربط بلا معلومات، ولا مفهوم بلا واقع، ولا تنزيل بلا تحقيق مناط.",
+    "pipeline_order": [
+      "reality_grounding_layer",
+      "prior_opinion_filter_layer",
+      "differentiation_layer",
+      "essence_assignment_layer",
+      "domain_assignment_layer",
+      "relational_mapping_layer",
+      "arabic_operator_layer",
+      "binding_layer",
+      "concept_formation_layer",
+      "judgment_formation_layer",
+      "signifier_analysis_layer",
+      "signified_analysis_layer",
+      "signifier_signified_relation_layer",
+      "mantuq_layer",
+      "mafhoom_layer",
+      "general_specific_layer",
+      "absolute_restricted_layer",
+      "causal_juridical_relations_layer",
+      "tahqeeq_manat_layer",
+      "application_layer",
+      "epistemic_audit_layer"
+    ],
+    "reality_grounding_layer": {
+      "layer_order": 1,
+      "name": "Reality Grounding Layer",
+      "purpose": "تصنيف نوع الواقعة أو النص أو السؤال قبل أي استجابة وتحديد المعروف والمجهول ومواطن خطر القفز.",
+      "inputs": [
+        "InputText",
+        "RealityObject",
+        "Question"
+      ],
+      "outputs": [
+        "GroundingRecord"
+      ],
+      "zero_types": [
+        "MissingRealityObject",
+        "UntypedInput",
+        "UnknownRequiresVerificationIgnored"
+      ],
+      "output_template": {
+        "type": "textual_claim | real_world_case | conceptual_question | legal_usuli_issue",
+        "object": "",
+        "known": [],
+        "unknown": [],
+        "requires_verification": true,
+        "risk_of_jump": []
+      },
+      "layer_group": "epistemic_existence"
+    },
+    "prior_opinion_filter_layer": {
+      "layer_order": 2,
+      "name": "Prior Opinion Filter",
+      "purpose": "التمييز بين المعلومات السابقة الموثوقة والآراء السابقة والافتراضات والانحيازات السياقية ومنع استخدام الرأي كدليل.",
+      "inputs": [
+        "PriorKnowledgeSignal",
+        "PriorOpinionSignal",
+        "ContextualBias"
+      ],
+      "outputs": [
+        "PriorOpinionFilterRecord"
+      ],
+      "zero_types": [
+        "PriorOpinionAsEvidence",
+        "UnqualifiedOpinionPromoted",
+        "SchoolTermAsUniversalFact"
+      ],
+      "classification": {
+        "prior_knowledge": "معلومة موثقة بمصدر مؤهل",
+        "prior_opinions": "رأي مشهور أو موقف مدرسي",
+        "assumptions": "افتراض لم يثبت",
+        "must_not_use_as_fact": "كل ما لم يثبت بدليل مؤهل"
+      },
+      "layer_group": "epistemic_existence"
+    },
+    "differentiation_layer": {
+      "layer_order": 3,
+      "name": "Differentiation Layer",
+      "purpose": "فصل الشيء عما ليس هو لمنع الخلط الأول بين المفاهيم المتجاورة.",
+      "inputs": [
+        "Entity",
+        "CandidateEquivalents"
+      ],
+      "outputs": [
+        "DifferentiationRecord"
+      ],
+      "zero_types": [
+        "ConceptConfusion",
+        "FalseEquivalence",
+        "UndifferentiatedJump"
+      ],
+      "example_differentiations": [
+        "العام ≠ المطلق",
+        "العام ≠ الكلي",
+        "التخصيص ≠ النسخ",
+        "احتمال التخصيص ≠ وجود التخصيص",
+        "دخول الفرد ≠ دلالة اللفظ"
+      ],
+      "layer_group": "semantic_relational"
+    },
+    "essence_assignment_layer": {
+      "layer_order": 4,
+      "name": "Essence Assignment Layer",
+      "purpose": "تعيين ماهية الشيء في ذاته ورتبته الأنطولوجية وما ليس من رتبته.",
+      "inputs": [
+        "Entity",
+        "DifferentiationRecord"
+      ],
+      "outputs": [
+        "EssenceRecord"
+      ],
+      "zero_types": [
+        "EssenceWithoutOntologicalRank",
+        "RankMixup",
+        "JudgmentTreatedAsEssence"
+      ],
+      "rank_categories": [
+        "دلالة لفظية",
+        "معنى فكري",
+        "حكم شرعي",
+        "واقع خارجي",
+        "علة",
+        "سبب"
+      ],
+      "layer_group": "semantic_relational"
+    },
+    "domain_assignment_layer": {
+      "layer_order": 5,
+      "name": "Domain Assignment Layer",
+      "purpose": "تعيين الباب الذي يقع فيه الشيء ومنع الانتقال من مجال إلى مجال بلا جسر.",
+      "inputs": [
+        "EssenceRecord",
+        "DifferentiationRecord"
+      ],
+      "outputs": [
+        "DomainRecord"
+      ],
+      "zero_types": [
+        "DomainlessConcept",
+        "ForbiddenDomainTransfer",
+        "DirectJumpFromDalalahToHukm"
+      ],
+      "transfer_rules": [
+        "لا انتقال من دلالة لفظية إلى حكم فرد خارجي مباشرة",
+        "لا انتقال من العام إلى التنزيل بلا تحقيق مناط",
+        "لا انتقال من المفهوم إلى الحكم بلا منطوق"
+      ],
+      "layer_group": "semantic_relational"
+    },
+    "relational_mapping_layer": {
+      "layer_order": 6,
+      "name": "Relational Mapping Layer",
+      "purpose": "استخراج النسب الكاملة بين مكونات الجملة أو الدعوى لأن لا حكم بلا نسبة.",
+      "inputs": [
+        "ParsedText",
+        "DomainRecord"
+      ],
+      "outputs": [
+        "RelationalMap"
+      ],
+      "zero_types": [
+        "UnmappedRelation",
+        "AmbiguousNisbah",
+        "IllahAssumedWithoutValidation"
+      ],
+      "relation_types": [
+        "إسنادية",
+        "تضمينية",
+        "تقييدية",
+        "فاعلية",
+        "مفعولية",
+        "سببية",
+        "مسببية",
+        "شرطية",
+        "غائية",
+        "زمانية",
+        "مكانية",
+        "حالية",
+        "استثنائية"
+      ],
+      "layer_group": "semantic_relational"
+    },
+    "arabic_operator_layer": {
+      "layer_order": 7,
+      "name": "Arabic Operator Layer",
+      "purpose": "فحص العوامل النحوية الحاملة للنسب وضبطها لجعل العربية مرآة للعقل.",
+      "inputs": [
+        "ParsedText",
+        "RelationalMap"
+      ],
+      "outputs": [
+        "OperatorAnalysisRecord"
+      ],
+      "zero_types": [
+        "UnanalyzedAmil",
+        "MissingQarina",
+        "UnaccountedEllipsis"
+      ],
+      "operator_categories": [
+        "إعراب",
+        "عامل",
+        "أداة",
+        "صيغة",
+        "وزن",
+        "اشتقاق",
+        "تقديم وتأخير",
+        "حذف وتقدير",
+        "قرائن",
+        "نفي",
+        "توكيد",
+        "شرط",
+        "استثناء",
+        "حال",
+        "صفة",
+        "إضافة",
+        "جار ومجرور"
+      ],
+      "layer_group": "semantic_relational"
+    },
+    "binding_layer": {
+      "layer_order": 8,
+      "name": "Binding Layer",
+      "purpose": "وصل المتعين في الواقع بالمتعين المناسب في المعلومات الموثقة لا بالرأي السابق.",
+      "inputs": [
+        "RelationalMap",
+        "OperatorAnalysisRecord",
+        "PriorOpinionFilterRecord",
+        "DocumentedSource"
+      ],
+      "outputs": [
+        "BindingRecord"
+      ],
+      "zero_types": [
+        "BindingWithoutDocumentedSource",
+        "BindingToPriorOpinion",
+        "UnboundConcept"
+      ],
+      "binding_rule": "محل معين + نسبة معينة + معلومة موثقة = مفهوم صالح للبناء عليه",
+      "layer_group": "semantic_relational"
+    },
+    "concept_formation_layer": {
+      "layer_order": 9,
+      "name": "Concept Formation Layer",
+      "purpose": "بناء مفهوم فكري له واقع مشخص ورتبة يقينية محددة وحدود لما لا يشمله.",
+      "inputs": [
+        "BindingRecord",
+        "DomainRecord",
+        "EssenceRecord"
+      ],
+      "outputs": [
+        "ConceptRecord"
+      ],
+      "zero_types": [
+        "ConceptWithoutCertaintyRank",
+        "OverextendedConcept",
+        "ConceptWithoutBoundary"
+      ],
+      "certainty_levels": [
+        "قطعي من جهة الوضع",
+        "قطعي إذا ثبت الوضع",
+        "ظني محتاج ترجيح",
+        "احتمالي يُعلن فرضية"
+      ],
+      "layer_group": "bayani_linguistic"
+    },
+    "judgment_formation_layer": {
+      "layer_order": 10,
+      "name": "Judgment Formation Layer",
+      "purpose": "إنتاج الحكم مقيدًا بجهته ورتبته وشروطه لا مطلقًا.",
+      "inputs": [
+        "ConceptRecord",
+        "DomainRecord",
+        "RelationalMap"
+      ],
+      "outputs": [
+        "JudgmentRecord"
+      ],
+      "zero_types": [
+        "AbsoluteJudgmentWithoutRestriction",
+        "JudgmentWithoutRank",
+        "JudgmentWithoutConditions"
+      ],
+      "judgment_template": {
+        "judgment": "",
+        "rank": "",
+        "not_rank": "",
+        "conditions": []
+      },
+      "layer_group": "bayani_linguistic"
+    },
+    "signifier_analysis_layer": {
+      "layer_order": 11,
+      "name": "Signifier Analysis Layer",
+      "purpose": "تحليل الدال من حيث طبيعته ودرجة يقينيته منعًا لنقل الحكم بين المستويات.",
+      "inputs": [
+        "LexicalToken",
+        "BindingRecord"
+      ],
+      "outputs": [
+        "SignifierRecord"
+      ],
+      "zero_types": [
+        "UnanalyzedSignifier",
+        "SharedSignifierWithoutQarina",
+        "MetaphorTreatedAsLiteral"
+      ],
+      "signifier_types": [
+        "حقيقة",
+        "مجاز",
+        "اشتراك",
+        "نقل",
+        "عرف",
+        "قرينة"
+      ],
+      "layer_group": "bayani_linguistic"
+    },
+    "signified_analysis_layer": {
+      "layer_order": 12,
+      "name": "Signified Analysis Layer",
+      "purpose": "تحليل المدلول ومنع نقل حكم الحقيقة إلى المجاز أو حكم الوضع إلى العرف.",
+      "inputs": [
+        "SignifierRecord",
+        "ContextRecord"
+      ],
+      "outputs": [
+        "SignifiedRecord"
+      ],
+      "zero_types": [
+        "HukumOfLiteralAppliedToMetaphor",
+        "HukumOfWadTransferredToUrf",
+        "AmbiguousMadlulWithoutQarina"
+      ],
+      "transfer_prohibitions": [
+        "لا ينقل حكم الحقيقة إلى المجاز",
+        "لا ينقل حكم الوضع إلى العرف",
+        "لا ينقل معنى مشترك بلا قرينة"
+      ],
+      "layer_group": "bayani_linguistic"
+    },
+    "signifier_signified_relation_layer": {
+      "layer_order": 13,
+      "name": "Signifier-Signified Relation Layer",
+      "purpose": "تعيين نوع العلاقة بين الدال والمدلول وإثبات صحة هذا الربط.",
+      "inputs": [
+        "SignifierRecord",
+        "SignifiedRecord"
+      ],
+      "outputs": [
+        "DalMadlulRelationRecord"
+      ],
+      "zero_types": [
+        "UnestablishedDalMadlulRelation",
+        "RelationTypeUnspecified",
+        "QarinaAbsentForNonLiteral"
+      ],
+      "relation_types": [
+        "مطابقة",
+        "تضمن",
+        "التزام",
+        "دلالة حقيقية",
+        "دلالة مجازية"
+      ],
+      "layer_group": "bayani_linguistic"
+    },
+    "mantuq_layer": {
+      "layer_order": 14,
+      "name": "Mantuq Layer",
+      "purpose": "تعيين ما دل عليه اللفظ في محل النطق وإعطاؤه رتبة أقوى من المفهوم.",
+      "inputs": [
+        "DalMadlulRelationRecord",
+        "JudgmentRecord"
+      ],
+      "outputs": [
+        "MantuqRecord"
+      ],
+      "zero_types": [
+        "MantuqWithoutExplicitBasis",
+        "MantuqStrengthUndeclared",
+        "ExternalCheckIgnored"
+      ],
+      "mantooq_template": {
+        "mantuq": "",
+        "strength": "أقوى من المفهوم",
+        "requires_external_check": ""
+      },
+      "layer_group": "bayani_linguistic"
+    },
+    "mafhoom_layer": {
+      "layer_order": 15,
+      "name": "Mafhoom Layer",
+      "purpose": "تعيين ما دل عليه اللفظ لا في محل النطق مع اختبار شروط تفعيل كل نوع مفهوم.",
+      "inputs": [
+        "MantuqRecord",
+        "OperatorAnalysisRecord"
+      ],
+      "outputs": [
+        "MafhumRecord"
+      ],
+      "zero_types": [
+        "MafhumWithoutMantuq",
+        "MafhumStrongerThanMantuq",
+        "MafhumActivatedWithoutTest"
+      ],
+      "mafhoom_types": [
+        "مفهوم موافقة",
+        "مفهوم مخالفة",
+        "مفهوم صفة",
+        "مفهوم شرط",
+        "مفهوم غاية",
+        "مفهوم عدد"
+      ],
+      "activation_conditions": [
+        "هل القيد للاحتراز؟",
+        "هل خرج مخرج الغالب؟",
+        "هل توجد قرينة مانعة؟",
+        "هل يعارضه منطوق؟"
+      ],
+      "layer_group": "bayani_linguistic"
+    },
+    "general_specific_layer": {
+      "layer_order": 16,
+      "name": "General-Specific Layer",
+      "purpose": "ضبط أحكام العام والخاص منعًا للقفز من دلالة العام إلى الحكم على فرد خارجي مباشرة.",
+      "inputs": [
+        "MantuqRecord",
+        "MafhumRecord",
+        "DomainRecord"
+      ],
+      "outputs": [
+        "GeneralSpecificRecord"
+      ],
+      "zero_types": [
+        "GeneralAppliedToSpecificWithoutManat",
+        "TakhsisIgnored",
+        "ExternalIndividualEnteredWithoutCheck"
+      ],
+      "rules": [
+        "العام من جهة وضعه قطعي إذا ثبت الوضع.",
+        "احتمال التخصيص لا يهدم أصل الدلالة.",
+        "المخصص إذا ورد يعمل في محله.",
+        "يبقى العام في غير محل التخصيص.",
+        "دخول الفرد الخارجي تحقيق مناط."
+      ],
+      "layer_group": "usuli_application"
+    },
+    "absolute_restricted_layer": {
+      "layer_order": 17,
+      "name": "Absolute-Restricted Layer",
+      "purpose": "فحص المطلق والمقيد وتحديد شروط الحمل ومنع إلغاء القيد بلا دليل.",
+      "inputs": [
+        "GeneralSpecificRecord",
+        "OperatorAnalysisRecord"
+      ],
+      "outputs": [
+        "AbsoluteRestrictedRecord"
+      ],
+      "zero_types": [
+        "MutlaqTreatedAsQayyid",
+        "QayyidIgnoredWithoutEvidence",
+        "CaseUnityUnverified"
+      ],
+      "checks": [
+        "هل اللفظ مطلق؟",
+        "هل ورد قيد؟",
+        "هل القيد متحد الحكم والسبب؟",
+        "هل يحمل المطلق على المقيد؟",
+        "هل القيد وصفي أم شرطي أم غائي؟"
+      ],
+      "layer_group": "usuli_application"
+    },
+    "causal_juridical_relations_layer": {
+      "layer_order": 18,
+      "name": "Causal-Juridical Relations Layer",
+      "purpose": "التمييز بين العلة والسبب والشرط والمانع والحكمة والوصف والمناط ومنع الخلط بين هذه الأصناف.",
+      "inputs": [
+        "RelationalMap",
+        "GeneralSpecificRecord",
+        "AbsoluteRestrictedRecord"
+      ],
+      "outputs": [
+        "CausalJuridicalRecord"
+      ],
+      "zero_types": [
+        "HikmaAsIllah",
+        "SababConfusedWithIllah",
+        "IllahWithoutValidation",
+        "IllahTestFailed"
+      ],
+      "juridical_categories": [
+        "علة",
+        "سبب",
+        "شرط",
+        "مانع",
+        "حكمة",
+        "وصف",
+        "مناط"
+      ],
+      "illah_validation_tests": [
+        "هل الوصف ظاهر؟",
+        "هل منضبط؟",
+        "هل مناسب؟",
+        "هل دل الشرع على اعتباره؟",
+        "هل يتعدى؟",
+        "هل يصلح كليًا؟",
+        "هل يدور الحكم معه وجودًا وعدمًا؟"
+      ],
+      "layer_group": "usuli_application"
+    },
+    "tahqeeq_manat_layer": {
+      "layer_order": 19,
+      "name": "Tahqeeq al-Manat Layer",
+      "purpose": "التحقق من دخول الواقعة الخارجية تحت الحكم وهو غالبًا ظني لا قطعي.",
+      "inputs": [
+        "CausalJuridicalRecord",
+        "JudgmentRecord",
+        "RealityObject"
+      ],
+      "outputs": [
+        "ManatVerificationRecord"
+      ],
+      "zero_types": [
+        "ManatUnverified",
+        "ExternalCaseAssumedWithoutCheck",
+        "CertaintyClaimedForManat"
+      ],
+      "certainty_rule": "تحقيق المناط غالبًا ظني ولا يُدّعى فيه القطع إلا بدليل.",
+      "verification_steps": [
+        "هل الواقعة الخارجية المعينة تنطبق عليها الأوصاف المعتبرة في الحكم؟",
+        "هل تحقق المناط في هذه الواقعة بعينها؟",
+        "ما رتبة يقين هذا التحقق؟"
+      ],
+      "layer_group": "usuli_application"
+    },
+    "application_layer": {
+      "layer_order": 20,
+      "name": "Application Layer",
+      "purpose": "تنزيل الحكم على الواقعة بعد استيفاء جميع الشروط الستة.",
+      "inputs": [
+        "ManatVerificationRecord",
+        "JudgmentRecord",
+        "CausalJuridicalRecord",
+        "DomainRecord"
+      ],
+      "outputs": [
+        "ApplicationRecord"
+      ],
+      "zero_types": [
+        "ApplicationWithoutManatVerification",
+        "ApplicationWithBlockingZero",
+        "MissingApplicationCondition"
+      ],
+      "required_conditions": [
+        "ثبوت الحكم",
+        "ثبوت المجال",
+        "ثبوت دخول الواقعة",
+        "انتفاء المانع",
+        "تحقق الشرط",
+        "عدم وجود مخصص أو قيد مانع"
+      ],
+      "layer_group": "usuli_application"
+    },
+    "epistemic_audit_layer": {
+      "layer_order": 21,
+      "name": "Epistemic Audit Layer",
+      "purpose": "المراجعة النهائية لمنع الانتقالات غير الموثقة وإنتاج الجواب مصنفًا برتبة يقينية لكل جهة.",
+      "inputs": [
+        "ApplicationRecord",
+        "ManatVerificationRecord",
+        "JudgmentRecord",
+        "MafhumRecord",
+        "MantuqRecord",
+        "PriorOpinionFilterRecord"
+      ],
+      "outputs": [
+        "AuditedAnswer"
+      ],
+      "zero_types": [
+        "UndocumentedTransition",
+        "RankTransferAcrossDomains",
+        "AttributeTreatedAsIllah",
+        "GeneralAppliedToUnverifiedIndividual",
+        "MafhumOverrodeMantuq",
+        "PriorOpinionUsedAsEvidence"
+      ],
+      "certainty_map_fields": [
+        "text_existence",
+        "word_meaning",
+        "scope",
+        "external_application"
+      ],
+      "output_template": {
+        "answer": "",
+        "certainty_map": {
+          "text_existence": "قطعي/ظني بحسب الثبوت",
+          "word_meaning": "قطعي إذا ثبت الوضع",
+          "scope": "محتاج تحرير",
+          "external_application": "ظني غالبًا"
+        },
+        "jumps_prevented": []
+      },
+      "audit_questions": [
+        "أين القطع؟",
+        "أين الظن؟",
+        "أين الجهل؟",
+        "أين الاحتمال؟",
+        "هل وقع انتقال غير موثق؟",
+        "هل نقلنا رتبة من مجال إلى مجال؟",
+        "هل جعلنا الصفة علة؟",
+        "هل جعلنا العام شاملًا لفرد لم يتحقق مناطه؟",
+        "هل جعلنا المفهوم أقوى من المنطوق؟",
+        "هل جعلنا الرأي السابق معلومة؟"
+      ],
+      "layer_group": "audit"
+    },
+    "pipeline_invariants": [
+      {
+        "id": "PI-01",
+        "name": "NoJudgmentBeforeEssenceAssignment",
+        "rule": "لا يصدر حكم قبل تعيين ذات المحكوم عليه في طبقة تعيين الذات."
+      },
+      {
+        "id": "PI-02",
+        "name": "NoApplicationWithoutTahqeqManat",
+        "rule": "لا تنزيل حكم قبل تحقق المناط في طبقة تحقيق المناط."
+      },
+      {
+        "id": "PI-03",
+        "name": "NoPriorOpinionAsEvidence",
+        "rule": "لا يستعمل الرأي السابق دليلًا في أي طبقة من طبقات الخط الأنبوبي."
+      },
+      {
+        "id": "PI-04",
+        "name": "NoMafhumStrongerThanMantuq",
+        "rule": "لا يتجاوز المفهوم قوة المنطوق ولا يعارضه بلا دليل."
+      },
+      {
+        "id": "PI-05",
+        "name": "NoIllahWithoutValidation",
+        "rule": "لا تُعتمد علة قبل اجتياز اختبارات العلة السبعة في طبقة العلاقات السببية الأصولية."
+      },
+      {
+        "id": "PI-06",
+        "name": "NoDomainTransferWithoutBridge",
+        "rule": "لا ينتقل المفهوم من مجاله إلى مجال آخر بلا جسر استدلالي موثق."
+      },
+      {
+        "id": "PI-07",
+        "name": "NoLevelSkipInPipeline",
+        "rule": "لا تُتجاوز طبقة في الخط الأنبوبي قبل اجتيازها وإنتاج مخرجاتها المطلوبة."
+      },
+      {
+        "id": "PI-08",
+        "name": "NoBayaniLinguisticBeforeSemanticRelationalComplete",
+        "rule": "لا تبدأ أي طبقة في المجموعة البيانية اللغوية قبل استكمال جميع طبقات المجموعة الدلالية العلائقية (التمييز، تعيين الذات، تعيين المجال، النسب، العوامل، الربط)."
+      },
+      {
+        "id": "PI-09",
+        "name": "NoJudgmentFormationBeforeEssenceDomainRelationsResolved",
+        "rule": "لا تُنتج طبقة تشكيل الحكم (judgment_formation_layer) أي حكم قبل أن تُكمل طبقات تعيين الذات (4)، تعيين المجال (5)، والنسب (6) مخرجاتها جميعًا."
+      }
+    ],
+    "layer_groups": [
+      {
+        "id": "epistemic_existence",
+        "name": "Epistemic Existence Group",
+        "description": "يؤسس الوجود المعرفي: تحديد الواقع، تصفية المعرفة السابقة من الآراء. هذه المجموعة تجيب على: ما الذي يوجد حقًا؟ وما الذي هو رأي سابق؟",
+        "layers": [
+          "reality_grounding_layer",
+          "prior_opinion_filter_layer"
+        ],
+        "constraint": "يجب إتمام هذه المجموعة قبل بدء أي مجموعة أخرى."
+      },
+      {
+        "id": "semantic_relational",
+        "name": "Semantic-Relational Group",
+        "description": "يبني البنية الدلالية العلائقية: التمييز بين المفاهيم، تعيين الذات والمجال، استخراج النسب والعوامل، وربط الواقع بالمعلومات الموثقة. هذه المجموعة تجيب على: ما هو الشيء؟ أين مجاله؟ ما علاقاته؟",
+        "layers": [
+          "differentiation_layer",
+          "essence_assignment_layer",
+          "domain_assignment_layer",
+          "relational_mapping_layer",
+          "arabic_operator_layer",
+          "binding_layer"
+        ],
+        "constraint": "يجب إتمام هذه المجموعة قبل بدء المجموعة البيانية اللغوية. لا يجوز تشكيل أي حكم قبل تعيين الذات والمجال والنسب."
+      },
+      {
+        "id": "bayani_linguistic",
+        "name": "Bayani-Linguistic Group",
+        "description": "يبني الاستدلال البياني اللغوي: تشكيل المفهوم والحكم الأوّلي، تحليل الدال والمدلول وعلاقتهما، استخراج المنطوق والمفهوم. هذه المجموعة تجيب على: ماذا يعني اللفظ؟ ما دلالاته الصريحة والضمنية؟",
+        "layers": [
+          "concept_formation_layer",
+          "judgment_formation_layer",
+          "signifier_analysis_layer",
+          "signified_analysis_layer",
+          "signifier_signified_relation_layer",
+          "mantuq_layer",
+          "mafhoom_layer"
+        ],
+        "constraint": "لا تبدأ إلا بعد إتمام المجموعة الدلالية العلائقية. لا حكم بلا تعيين ذات ومجال ونسب."
+      },
+      {
+        "id": "usuli_application",
+        "name": "Usuli-Application Group",
+        "description": "يطبق قواعد أصول الفقه: ضبط العام والخاص والمطلق والمقيد، التمييز بين العلة والسبب والشرط والمانع، تحقيق المناط في الواقعة الخارجية، وتنزيل الحكم بشروطه الستة. هذه المجموعة تجيب على: كيف يُطبَّق الحكم على هذه الواقعة تحديدًا؟",
+        "layers": [
+          "general_specific_layer",
+          "absolute_restricted_layer",
+          "causal_juridical_relations_layer",
+          "tahqeeq_manat_layer",
+          "application_layer"
+        ],
+        "constraint": "لا تنزيل قبل تحقيق المناط. لا تطبيق قبل اجتياز طبقة tahqeeq_manat_layer."
+      },
+      {
+        "id": "audit",
+        "name": "Epistemic Audit Group",
+        "description": "يراجع جميع القفزات المنعية وتُخرج خريطة اليقين النهائية. هذه المجموعة تجيب على: أين القطع؟ أين الظن؟ ما القفزات التي مُنعت؟ وما الرتبة النهائية للجواب؟",
+        "layers": [
+          "epistemic_audit_layer"
+        ],
+        "constraint": "لا تعمل إلا بعد إتمام جميع المجموعات الأربع السابقة."
+      }
+    ]
+  },
   "schema_artifacts": {
     "upper_entities": [
       "EpistemicUnit",
@@ -2752,5 +3480,438 @@
         ]
       }
     ]
+  },
+  "prompt_type_classifier": {
+    "purpose": "يصنّف الديكودر البرومبتَ الوارد إليه قبل أي معالجة، ويحدد نوعه المعرفي الذي يحكم الطبقة المناسبة لمعالجته. لا يجوز توليد جواب قبل تصنيف البرومبت.",
+    "governing_rule": "لا يُعامل برومبت الصفة كبرومبت وجود، ولا برومبت المفهوم كبرومبت منطوق، ولا برومبت التطبيق كبرومبت دلالة، ولا برومبت العلة كبرومبت وصف.",
+    "pre_answer_classification_flow": [
+      "هل هو سؤال وجود؟",
+      "أم حقيقة/تعريف؟",
+      "أم صفة؟",
+      "أم نسبة/علاقة؟",
+      "أم دلالة لفظية/نحو؟",
+      "أم منطوق؟",
+      "أم مفهوم؟",
+      "أم تعليل/قياس؟",
+      "أم تعميم/تخصيص؟",
+      "أم تنزيل/تطبيق؟"
+    ],
+    "types": [
+      {
+        "id": "PT-01",
+        "name": "Existence Prompt",
+        "arabic_name": "برومبت الوجود",
+        "example": "هل هذا النص موجود؟ هل ورد هذا اللفظ؟",
+        "jump_risk": "تفسير اللفظ قبل إثبات وجوده",
+        "processing_layer": "reality_grounding_layer",
+        "processing_flow": [
+          "Input",
+          "Reality Grounding",
+          "Text/Token Existence Check",
+          "Certainty Rank"
+        ],
+        "constraint": "لا يجوز أن يقفز الديكودر إلى تفسير اللفظ. فقط يثبت: هل اللفظ أو النص موجود؟"
+      },
+      {
+        "id": "PT-02",
+        "name": "Definition Prompt",
+        "arabic_name": "برومبت الحقيقة/التعريف",
+        "example": "ما العام؟ ما المفهوم؟ ما العلة؟",
+        "jump_risk": "تحويل التعريف إلى حكم على واقعة معينة",
+        "processing_layer": "essence_assignment_layer",
+        "processing_flow": [
+          "تمييز",
+          "تعيين الذات",
+          "تعيين المجال",
+          "تعريف مضبوط"
+        ],
+        "constraint": "يجب منع القفز من التعريف إلى الحكم. فتعريف العلة لا يعني ثبوت العلة في واقعة معينة."
+      },
+      {
+        "id": "PT-03",
+        "name": "Attribute Prompt",
+        "arabic_name": "برومبت الصفة",
+        "example": "هل هذا الوصف ظاهر؟ منضبط؟ متعدٍّ؟",
+        "jump_risk": "جعل الصفة علة بلا اختبار",
+        "processing_layer": "causal_juridical_relations_layer",
+        "processing_flow": [
+          "تعيين الذات",
+          "تعيين الصفة",
+          "اختبار الصفة",
+          "رتبة ظنية غالبًا"
+        ],
+        "constraint": "الديكودر لا يقول هذه علة لمجرد أنها صفة. بل يسأل: هل الوصف ظاهر؟ منضبط؟ مناسب؟ دل الشرع على اعتباره؟ هل يتعدى؟"
+      },
+      {
+        "id": "PT-04",
+        "name": "Relational Prompt",
+        "arabic_name": "برومبت العلاقة/النسبة",
+        "example": "ما علاقة العام بالخاص؟ ما علاقة الدال بالمدلول؟",
+        "jump_risk": "خلط أنواع النسب أو إغفال العامل الحامل للنسبة",
+        "processing_layer": "relational_mapping_layer",
+        "processing_flow": [
+          "تعيين الأطراف",
+          "تعيين نوع النسبة",
+          "إسنادية / تضمينية / تقييدية / سببية / شرطية",
+          "ضبط العامل الحامل للنسبة"
+        ],
+        "constraint": "النسبة لا تظهر عارية، بل تظهر عبر عامل أو أداة أو صيغة أو تركيب. لا تعيين نسبة بلا عامل."
+      },
+      {
+        "id": "PT-05",
+        "name": "Linguistic-Syntactic Prompt",
+        "arabic_name": "برومبت لغوي/نحوي",
+        "example": "حلل هذه الجملة: أكرم الطلاب المجتهدين.",
+        "jump_risk": "استخراج حكم قبل تحليل النحو والدلالة",
+        "processing_layer": "arabic_operator_layer",
+        "processing_flow": [
+          "ما العامل؟",
+          "ما المعمول؟",
+          "ما الصفة؟",
+          "هل الصفة قيد؟",
+          "هل لها مفهوم مخالفة؟",
+          "هل خرجت للاحتراز أم للغالب؟"
+        ],
+        "constraint": "الديكودر ممنوع من استخراج حكم قبل تحليل النحو والدلالة الكاملة."
+      },
+      {
+        "id": "PT-06",
+        "name": "Mantuq Prompt",
+        "arabic_name": "برومبت منطوق",
+        "example": "ماذا دل عليه النص منطوقًا؟",
+        "jump_risk": "توسيع الدلالة خارج محل النطق",
+        "processing_layer": "mantuq_layer",
+        "processing_flow": [
+          "ثبوت النص",
+          "ثبوت اللفظ",
+          "دلالة في محل النطق",
+          "رتبة أقوى من المفهوم"
+        ],
+        "constraint": "المنطوق لا يحتاج إلى بناء حكم من خارج اللفظ، لكنه يحتاج تحديد مجال الدلالة."
+      },
+      {
+        "id": "PT-07",
+        "name": "Mafhoom Prompt",
+        "arabic_name": "برومبت مفهوم",
+        "example": "هل يدل القيد على نفي الحكم عما عداه؟",
+        "jump_risk": "بناء حكم من قيد غير معتبر أو جعل المفهوم أقوى من المنطوق",
+        "processing_layer": "mantuq_layer",
+        "processing_flow": [
+          "منطوق",
+          "قيد/صفة/شرط/غاية/عدد",
+          "هل القيد للاحتراز؟",
+          "هل خرج مخرج الغالب؟",
+          "هل توجد قرينة مانعة؟",
+          "مفهوم معتبر أو غير معتبر"
+        ],
+        "constraint": "المفهوم أخطر من المنطوق لأنه دلالة لا في محل النطق. لا مفهوم بلا منطوق. لا مفهوم يتجاوز قوة المنطوق."
+      },
+      {
+        "id": "PT-08",
+        "name": "General-Specific Prompt",
+        "arabic_name": "برومبت عام/خاص",
+        "example": "هل العام قطعي؟ هل يخصصه الخاص؟",
+        "jump_risk": "خلط الدلالة اللفظية للعام بدخول الفرد الخارجي",
+        "processing_layer": "general_specific_layer",
+        "processing_flow": [
+          "ثبوت النص",
+          "وجود اللفظ",
+          "وضع اللفظ للعموم",
+          "دلالة العموم",
+          "احتمال التخصيص",
+          "ورود المخصص",
+          "دخول الفرد الخارجي → تحقيق المناط"
+        ],
+        "constraint": "العام قطعي من جهة وضعه إذا ثبت الوضع، لكن دخول فرد خارجي تحته يرجع إلى تحقيق المناط وهو غالبًا ظني."
+      },
+      {
+        "id": "PT-09",
+        "name": "Illah-Qiyas Prompt",
+        "arabic_name": "برومبت قياس/علة",
+        "example": "هل الإسكار علة التحريم؟",
+        "jump_risk": "التعدية بلا علة معتبرة أو خلط العلة بالسبب والشرط والحكمة",
+        "processing_layer": "causal_juridical_relations_layer",
+        "processing_flow": [
+          "أصل",
+          "حكم الأصل",
+          "وصف مرشح",
+          "اختبار العلة (7 شروط)",
+          "تحقق الوصف في الفرع",
+          "إلحاق أو منع"
+        ],
+        "constraint": "يجب التمييز بين العلة والسبب والشرط والمانع والحكمة. نتائج التطبيق لا تدخل في العلل الشرعية."
+      },
+      {
+        "id": "PT-10",
+        "name": "Application Prompt",
+        "arabic_name": "برومبت تطبيق/تنزيل",
+        "example": "طبّق الحكم على هذه الواقعة.",
+        "jump_risk": "تنزيل بلا تحقيق مناط",
+        "processing_layer": "application_layer",
+        "processing_flow": [
+          "ثبوت الحكم",
+          "ثبوت المجال",
+          "تحقيق المناط (tahqeeq_manat_layer)",
+          "تحقق الشرط",
+          "انتفاء المانع",
+          "عدم المخصص أو القيد المانع",
+          "تنزيل الحكم"
+        ],
+        "constraint": "التطبيق آخر رتبة لا أولها. لا يجوز للديكودر أن يطبّق قبل تحقيق المناط."
+      }
+    ]
+  },
+  "mustadil_prompt_classifier": {
+    "purpose": "يصنّف الديكودر المستدل البرومبت بوصفه واقعة معرفية قبل أي معالجة. لا يُعامل البرومبت كنص يطلب جوابًا فحسب، بل كطلب معرفي له غاية، ورتبة تفكير، وحال سائل، ونوع دليل، ونوع مناط، ونوع بناء. يجب اجتياز هذه الطبقات الأحد عشر قبل توليد أي جواب.",
+    "golden_rule": "لا تُجب عن البرومبت قبل أن تعرف: هل هو طلب حكم، أم طلب استنباط، أم طلب ترجيح، أم طلب تحقيق مناط، أم طلب بناء نظام، أم طلب بناء ملكة. لأن كل نوع له طريق مختلف.",
+    "forbidden_jumps": [
+      "NoIstinbatWhenKnownHukmRequested",
+      "NoHukmBeforeEvidenceAuthentication",
+      "NoTarjihBeforeValidJam",
+      "NoManatAsIllah",
+      "NoAssumedEvidenceAsValidEvidence",
+      "IfMalakahRequestedDoNotOnlyAnswer",
+      "NoFinalAnswerBeforeClassificationComplete"
+    ],
+    "required_output_fields": [
+      "prompt_type",
+      "required_layers",
+      "forbidden_jumps",
+      "required_output_form",
+      "answer_strategy",
+      "certainty_rank"
+    ],
+    "layers": {
+      "purpose_layer": {
+        "id": "MPC-01",
+        "name": "Prompt Purpose Layer",
+        "question": "ماذا يريد السائل حقيقة؟",
+        "allowed_purposes": [
+          "direct_answer",
+          "explanation",
+          "hukm_knowledge",
+          "hukm_istinbat",
+          "evidence_validation",
+          "tarjih",
+          "conflict_resolution",
+          "tahqeeq_manat",
+          "schema_construction",
+          "prompt_construction",
+          "malakah_building"
+        ],
+        "output_fields": [
+          "primary_purpose",
+          "secondary_purposes",
+          "not_the_purpose"
+        ],
+        "constraint": "يجب تحديد الغرض الأساسي للبرومبت قبل اختيار طريقة المعالجة. الغرض الخاطئ ينتج جوابًا خاطئًا حتى لو كان لغويًا صحيحًا."
+      },
+      "thinking_level_layer": {
+        "id": "MPC-02",
+        "name": "Thinking-Level Layer",
+        "question": "ما مستوى التفكير المطلوب؟",
+        "levels": [
+          "superficial",
+          "deep",
+          "enlightened_mustaneer"
+        ],
+        "level_descriptions": {
+          "superficial": "تسمية، سرد، استدعاء أساسي",
+          "deep": "تمييز، ربط علاقات، شرح منظم",
+          "enlightened_mustaneer": "مرتكز على الواقع، واعٍ بالسياق والنتائج، قادر على بناء أنظمة"
+        },
+        "output_fields": [
+          "required_level",
+          "reason"
+        ],
+        "constraint": "لا يُعالج السؤال المستنير بمنهج السطحي. ولا يُقتصر في السؤال البنائي على الإجابة الفردية."
+      },
+      "hukm_knowledge_vs_istinbat_layer": {
+        "id": "MPC-03",
+        "name": "Hukm-Knowledge vs Istinbat Layer",
+        "question": "هل يريد المستخدم معرفة حكم موجود أم استنباط حكم؟",
+        "types": [
+          "known_hukm",
+          "istinbat_hukm",
+          "istinbat_method",
+          "istinbat_critique",
+          "istinbat_engine"
+        ],
+        "invariant": "NoIstinbatWhenKnownHukmRequested",
+        "invariant_description": "لا يجوز تقديم استنباط جديد حين يطلب المستخدم معرفة حكم موجود. ولا يُقدَّم الحكم المعروف كأنه مستنبط حديثًا.",
+        "constraint": "التمييز بين معرفة الحكم والاستنباط من أهم الفروق. الخلط بينهما يوهم المستخدم أن الحكم المعروف مجتهد فيه أو أن المستنبط متفق عليه."
+      },
+      "taqlid_tarjih_layer": {
+        "id": "MPC-04",
+        "name": "Taqlid-Tarjih Layer",
+        "question": "ما حال السائل من الناحية المعرفية؟",
+        "questioner_states": [
+          "aami",
+          "mutaallim",
+          "malakah_seeker",
+          "mujtahid_researcher"
+        ],
+        "state_handling": {
+          "aami": "جواب قابل للتطبيق مع نسبة موثوقة",
+          "mutaallim": "دليل مع شرح منظم",
+          "malakah_seeker": "منهج وتمييزات ومنع أخطاء",
+          "mujtahid_researcher": "تحرير محل النزاع، هرمية الأدلة، الاعتراضات، الترجيح"
+        },
+        "output_fields": [
+          "state",
+          "answer_depth"
+        ],
+        "constraint": "جواب العامي للمجتهد مهين لملكته. وجواب المجتهد للعامي مُربك له. تحديد الحال شرط لصياغة الجواب الصحيح."
+      },
+      "evidence_authentication_layer": {
+        "id": "MPC-05",
+        "name": "Evidence-Authentication Layer",
+        "question": "هل النص أو الرواية التي يعتمد عليها البرومبت ثابتة؟",
+        "checks": [
+          "text_established",
+          "wording_fixed",
+          "source_reliable",
+          "thubut_rank",
+          "dalalah_rank"
+        ],
+        "invariant": "NoHukmBeforeEvidenceAuthentication",
+        "invariant_description": "لا يجوز الانتقال من الدليل إلى الحكم قبل التحقق من ثبوت الدليل.",
+        "constraint": "إذا كان البرومبت يعتمد على نص أو رواية، يجب التحقق منها أولًا. الثبوت والدلالة قضيتان مستقلتان ولا تُخلطان."
+      },
+      "usul_vs_furu_evidence_rank_layer": {
+        "id": "MPC-06",
+        "name": "Usul-vs-Furu Evidence Rank Layer",
+        "question": "هل المسألة أصل أم فرع؟ وما رتبة الدليل المطلوبة؟",
+        "issue_types": [
+          "asl",
+          "far",
+          "bayani_linguistic",
+          "manat_reality",
+          "system_architecture"
+        ],
+        "evidence_requirements": {
+          "asl": "يشترط دليل قطعي أو تأسيس أصلي معتبر",
+          "far": "يقبل الدليل الظني المعتبر",
+          "bayani_linguistic": "يشترط تحليل الدال والمدلول",
+          "manat_reality": "يشترط التحقق من الواقع الخارجي",
+          "system_architecture": "يشترط تصميم المخطط مع الثوابت والاختبارات"
+        },
+        "output_fields": [
+          "issue_type",
+          "required_evidence_rank"
+        ],
+        "constraint": "لا يُبنى الأصل على ظني، ولا يُشترط في الفرع ما يُشترط في الأصل."
+      },
+      "evidence_type_classification_layer": {
+        "id": "MPC-07",
+        "name": "Evidence-Type Classification Layer",
+        "question": "ما نوع الدليل المستخدم أو المستشهد به؟",
+        "valid_evidence": [
+          "quran",
+          "sunnah",
+          "ijma_sahabah",
+          "qiyas_validated_illah",
+          "language_dalalah",
+          "reality_manat"
+        ],
+        "assumed_evidence": [
+          "maslahah_mursalah",
+          "istihsan",
+          "custom_as_independent_source",
+          "maqasid_as_independent_illah",
+          "pure_reason_preference",
+          "prior_opinion"
+        ],
+        "invariant": "NoAssumedEvidenceAsValidEvidence",
+        "invariant_description": "ما ظُن دليلًا لا يُعامل كدليل معتبر. يجب الفصل بين الدليل المعتبر وما افترض أنه دليل.",
+        "constraint": "تصنيف الدليل يحدد مسار المعالجة اللاحقة. الخلط بين الدليل المعتبر والمفترض خطأ منهجي فادح."
+      },
+      "conflict_and_tarjih_layer": {
+        "id": "MPC-08",
+        "name": "Conflict-and-Tarjih Layer",
+        "question": "هل ثمة تعارض بين الأدلة أو المعاني؟ وهل هو حقيقي أم ظاهري؟",
+        "operations": [
+          "jam",
+          "takhsis",
+          "taqyid",
+          "bayan",
+          "naskh",
+          "tarjih"
+        ],
+        "resolution_hierarchy": [
+          "jam (combination if valid)",
+          "takhsis",
+          "taqyid",
+          "bayan",
+          "naskh",
+          "tarjih (only when jam impossible)"
+        ],
+        "distinction_checks": [
+          "is_conflict_real_or_apparent",
+          "is_one_mantuq_other_mafhoom",
+          "is_one_general_other_specific",
+          "is_one_qati_other_zanni"
+        ],
+        "invariant": "NoTarjihBeforeValidJam",
+        "invariant_description": "لا يُلجأ إلى الترجيح قبل استيفاء محاولة الجمع الصحيح.",
+        "constraint": "كثير من التعارضات الظاهرة تنحل بالجمع أو التخصيص. القفز إلى الترجيح بلا محاولة الجمع خطأ منهجي."
+      },
+      "manat_vs_illah_layer": {
+        "id": "MPC-09",
+        "name": "Manat-vs-Illah Layer",
+        "question": "هل المهمة تحقيق مناط أم تحقيق علة؟",
+        "types": [
+          "tahqeeq_manat",
+          "tanqeeh_manat",
+          "takhreej_manat",
+          "tahqeeq_illah"
+        ],
+        "type_descriptions": {
+          "tahqeeq_manat": "هل تندرج هذه الواقعة الخارجية تحت الحكم؟",
+          "tanqeeh_manat": "إزالة الأوصاف غير المؤثرة",
+          "takhreej_manat": "استخراج وصف عملي مرشح",
+          "tahqeeq_illah": "التحقق من العلة ذاتها بشروطها السبعة"
+        },
+        "invariant": "NoManatAsIllah",
+        "invariant_description": "لا يُعامل تحقيق المناط كإثبات علة. المناط واقع خارجي، والعلة وصف شرعي.",
+        "constraint": "الخلط بين المناط والعلة من أشد الأخطاء في التطبيق. تحقيق المناط يثبت دخول الفرد تحت الحكم، لا يثبت العلة."
+      },
+      "construction_intent_layer": {
+        "id": "MPC-10",
+        "name": "Construction Intent Layer",
+        "question": "هل البرومبت يبني نظامًا أو مخططًا أو برومبتًا؟",
+        "targets": [
+          "schema",
+          "prompt",
+          "pipeline",
+          "test_suite",
+          "repository_architecture"
+        ],
+        "required_checks": [
+          "target_artifact",
+          "required_layers",
+          "invariants",
+          "validation_tests",
+          "backward_compatibility"
+        ],
+        "constraint": "إذا كان البرومبت بنائيًا، لا يُجاب عنه كمسألة فقهية أو لغوية. يجب تحديد المنتج المستهدف والثوابت والاختبارات قبل البناء."
+      },
+      "malakah_building_layer": {
+        "id": "MPC-11",
+        "name": "Malakah-Building Layer",
+        "question": "هل يريد المستخدم ملكة أم جوابًا نهائيًا؟",
+        "modes": [
+          "final_answer",
+          "method_teaching",
+          "mistake_exposure",
+          "checklist",
+          "training_examples",
+          "reasoning_schema"
+        ],
+        "invariant": "IfMalakahRequestedDoNotOnlyAnswer",
+        "invariant_description": "إذا كان المستخدم يطلب ملكة، لا يُكتفى بالجواب النهائي. يجب بناء المنهج الداخلي للإجابة.",
+        "constraint": "الجواب النهائي وحده لا يبني ملكة. بناء الملكة يستلزم تعليم المنهج وكشف الأخطاء وبناء قوائم مرجعية وتوليد نماذج تدريبية."
+      }
+    }
   }
 }

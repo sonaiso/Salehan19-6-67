@@ -1,0 +1,14 @@
+tests:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'tests/**'
+
+github:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.github/**'
+
+documentation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.md'

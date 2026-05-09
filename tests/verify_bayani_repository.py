@@ -11,11 +11,13 @@ ROOT = Path(__file__).resolve().parents[1]
 SPEC_PATH = ROOT / "spec/bayani-knowledge-system.json"
 SCHEMA_PATH = ROOT / "schema/bayani-knowledge-system.schema.json"
 PROMPT_PATH = ROOT / "docs/prompts/nabhani-mustadil-readiness.prompt.md"
+DECODER_PROMPT_PATH = ROOT / "docs/prompts/mustadil-decoder-pipeline.prompt.md"
 README_PATH = ROOT / "README.md"
 
 ALLOWED_OUTPUTS = ["Certificate", "Hypothesis", "Zero"]
 README_REQUIRED_REFERENCES = [
     "docs/prompts/nabhani-mustadil-readiness.prompt.md",
+    "docs/prompts/mustadil-decoder-pipeline.prompt.md",
     "spec/bayani-knowledge-system.json",
     "schema/bayani-knowledge-system.schema.json",
     "tests/verify_bayani_repository.py",
@@ -29,6 +31,9 @@ REQUIRED_SPEC_KEYS = [
     "answer_analysis_engine",
     "governance_engine",
     "malakah_methodology",
+    "mustadil_decoder_pipeline",
+    "prompt_type_classifier",
+    "mustadil_prompt_classifier",
 ]
 REQUIRED_PROOF_INVARIANTS = [
     "NoCertificateWithBlockingZero",
@@ -178,6 +183,7 @@ class BayaniRepositoryVerification(unittest.TestCase):
         cls.schema = load_json(SCHEMA_PATH)
         cls.spec = load_json(SPEC_PATH)
         cls.prompt = PROMPT_PATH.read_text(encoding="utf-8")
+        cls.decoder_prompt = DECODER_PROMPT_PATH.read_text(encoding="utf-8")
         cls.readme = README_PATH.read_text(encoding="utf-8")
 
     def test_schema_is_valid_draft_2020_12(self):

@@ -14,6 +14,9 @@
     "governance_engine",
     "malakah_methodology",
     "mustadil_readiness_layer",
+    "mustadil_decoder_pipeline",
+    "prompt_type_classifier",
+    "mustadil_prompt_classifier",
     "schema_artifacts"
   ],
   "properties": {
@@ -56,6 +59,15 @@
     },
     "mustadil_readiness_layer": {
       "$ref": "#/$defs/mustadilReadinessLayer"
+    },
+    "mustadil_decoder_pipeline": {
+      "$ref": "#/$defs/mustadilDecoderPipeline"
+    },
+    "prompt_type_classifier": {
+      "$ref": "#/$defs/promptTypeClassifier"
+    },
+    "mustadil_prompt_classifier": {
+      "$ref": "#/$defs/mustadilPromptClassifier"
     }
   },
   "$defs": {
@@ -2164,6 +2176,479 @@
           "items": {
             "type": "string"
           }
+        }
+      },
+      "additionalProperties": false
+    },
+    "decoderPipelineLayer": {
+      "type": "object",
+      "required": [
+        "layer_order",
+        "name",
+        "purpose",
+        "inputs",
+        "outputs",
+        "zero_types",
+        "layer_group"
+      ],
+      "properties": {
+        "layer_order": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 21
+        },
+        "name": {
+          "type": "string"
+        },
+        "layer_group": {
+          "type": "string",
+          "enum": [
+            "epistemic_existence",
+            "semantic_relational",
+            "bayani_linguistic",
+            "usuli_application",
+            "audit"
+          ]
+        },
+        "purpose": {
+          "type": "string"
+        },
+        "inputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "zero_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "epistemicAuditLayer": {
+      "type": "object",
+      "required": [
+        "layer_order",
+        "name",
+        "purpose",
+        "inputs",
+        "outputs",
+        "zero_types",
+        "layer_group",
+        "certainty_map_fields",
+        "output_template"
+      ],
+      "properties": {
+        "layer_order": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 21
+        },
+        "name": {
+          "type": "string"
+        },
+        "layer_group": {
+          "type": "string",
+          "const": "audit"
+        },
+        "purpose": {
+          "type": "string"
+        },
+        "inputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "zero_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "certainty_map_fields": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string"
+          }
+        },
+        "output_template": {
+          "type": "object"
+        }
+      }
+    },
+    "layerGroup": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "description",
+        "layers",
+        "constraint"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "enum": [
+            "epistemic_existence",
+            "semantic_relational",
+            "bayani_linguistic",
+            "usuli_application",
+            "audit"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "layers": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "constraint": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "pipelineInvariant": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "rule"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/idField"
+        },
+        "name": {
+          "type": "string"
+        },
+        "rule": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "mustadilDecoderPipeline": {
+      "type": "object",
+      "required": [
+        "purpose",
+        "golden_rule",
+        "pipeline_order",
+        "layer_groups",
+        "reality_grounding_layer",
+        "prior_opinion_filter_layer",
+        "differentiation_layer",
+        "essence_assignment_layer",
+        "domain_assignment_layer",
+        "relational_mapping_layer",
+        "arabic_operator_layer",
+        "binding_layer",
+        "concept_formation_layer",
+        "judgment_formation_layer",
+        "signifier_analysis_layer",
+        "signified_analysis_layer",
+        "signifier_signified_relation_layer",
+        "mantuq_layer",
+        "mafhoom_layer",
+        "general_specific_layer",
+        "absolute_restricted_layer",
+        "causal_juridical_relations_layer",
+        "tahqeeq_manat_layer",
+        "application_layer",
+        "epistemic_audit_layer",
+        "pipeline_invariants"
+      ],
+      "properties": {
+        "purpose": {
+          "type": "string"
+        },
+        "golden_rule": {
+          "type": "string"
+        },
+        "pipeline_order": {
+          "type": "array",
+          "minItems": 21,
+          "maxItems": 21,
+          "items": {
+            "type": "string"
+          }
+        },
+        "layer_groups": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": {
+            "$ref": "#/$defs/layerGroup"
+          }
+        },
+        "reality_grounding_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "prior_opinion_filter_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "differentiation_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "essence_assignment_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "domain_assignment_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "relational_mapping_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "arabic_operator_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "binding_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "concept_formation_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "judgment_formation_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "signifier_analysis_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "signified_analysis_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "signifier_signified_relation_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "mantuq_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "mafhoom_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "general_specific_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "absolute_restricted_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "causal_juridical_relations_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "tahqeeq_manat_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "application_layer": {
+          "$ref": "#/$defs/decoderPipelineLayer"
+        },
+        "epistemic_audit_layer": {
+          "$ref": "#/$defs/epistemicAuditLayer"
+        },
+        "pipeline_invariants": {
+          "type": "array",
+          "minItems": 7,
+          "items": {
+            "$ref": "#/$defs/pipelineInvariant"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "promptTypeEntry": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "arabic_name",
+        "example",
+        "jump_risk",
+        "processing_layer",
+        "processing_flow",
+        "constraint"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^PT-[0-9]{2}$"
+        },
+        "name": {
+          "type": "string"
+        },
+        "arabic_name": {
+          "type": "string"
+        },
+        "example": {
+          "type": "string"
+        },
+        "jump_risk": {
+          "type": "string"
+        },
+        "processing_layer": {
+          "type": "string"
+        },
+        "processing_flow": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "string"
+          }
+        },
+        "constraint": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "promptTypeClassifier": {
+      "type": "object",
+      "required": [
+        "purpose",
+        "governing_rule",
+        "types",
+        "pre_answer_classification_flow"
+      ],
+      "properties": {
+        "purpose": {
+          "type": "string"
+        },
+        "governing_rule": {
+          "type": "string"
+        },
+        "types": {
+          "type": "array",
+          "minItems": 10,
+          "maxItems": 10,
+          "items": {
+            "$ref": "#/$defs/promptTypeEntry"
+          }
+        },
+        "pre_answer_classification_flow": {
+          "type": "array",
+          "minItems": 5,
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "mpcLayer": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "question",
+        "constraint"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^MPC-[0-9]{2}$"
+        },
+        "name": {
+          "type": "string"
+        },
+        "question": {
+          "type": "string"
+        },
+        "invariant": {
+          "type": "string"
+        },
+        "invariant_description": {
+          "type": "string"
+        },
+        "constraint": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "mustadilPromptClassifier": {
+      "type": "object",
+      "required": [
+        "purpose",
+        "golden_rule",
+        "forbidden_jumps",
+        "required_output_fields",
+        "layers"
+      ],
+      "properties": {
+        "purpose": {
+          "type": "string"
+        },
+        "golden_rule": {
+          "type": "string"
+        },
+        "forbidden_jumps": {
+          "type": "array",
+          "minItems": 5,
+          "items": {
+            "type": "string"
+          }
+        },
+        "required_output_fields": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "string"
+          }
+        },
+        "layers": {
+          "type": "object",
+          "required": [
+            "purpose_layer",
+            "thinking_level_layer",
+            "hukm_knowledge_vs_istinbat_layer",
+            "taqlid_tarjih_layer",
+            "evidence_authentication_layer",
+            "usul_vs_furu_evidence_rank_layer",
+            "evidence_type_classification_layer",
+            "conflict_and_tarjih_layer",
+            "manat_vs_illah_layer",
+            "construction_intent_layer",
+            "malakah_building_layer"
+          ],
+          "properties": {
+            "purpose_layer": { "$ref": "#/$defs/mpcLayer" },
+            "thinking_level_layer": { "$ref": "#/$defs/mpcLayer" },
+            "hukm_knowledge_vs_istinbat_layer": { "$ref": "#/$defs/mpcLayer" },
+            "taqlid_tarjih_layer": { "$ref": "#/$defs/mpcLayer" },
+            "evidence_authentication_layer": { "$ref": "#/$defs/mpcLayer" },
+            "usul_vs_furu_evidence_rank_layer": { "$ref": "#/$defs/mpcLayer" },
+            "evidence_type_classification_layer": { "$ref": "#/$defs/mpcLayer" },
+            "conflict_and_tarjih_layer": { "$ref": "#/$defs/mpcLayer" },
+            "manat_vs_illah_layer": { "$ref": "#/$defs/mpcLayer" },
+            "construction_intent_layer": { "$ref": "#/$defs/mpcLayer" },
+            "malakah_building_layer": { "$ref": "#/$defs/mpcLayer" }
+          },
+          "additionalProperties": false
         }
       },
       "additionalProperties": false
