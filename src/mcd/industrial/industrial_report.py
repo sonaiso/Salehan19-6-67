@@ -99,9 +99,9 @@ def generate_industrial_report() -> str:
         "| Case ID | Behavior | Source Status | Certainty | Evidence | Passed |",
         "|---------|----------|---------------|-----------|----------|--------|",
     ]
-    for r in results:
+    for r, case in zip(results, cases):
         lines.append(
-            f"| {r.case_id} | - | {r.source_status} | {r.certainty_policy} "
+            f"| {r.case_id} | {case.expected_behavior} | {r.source_status} | {r.certainty_policy} "
             f"| {r.evidence_status} | {'✅' if r.passed else '❌'} |"
         )
     lines.append("")

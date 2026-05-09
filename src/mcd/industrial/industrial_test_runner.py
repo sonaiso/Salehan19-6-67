@@ -285,12 +285,7 @@ class IndustrialTestRunner:
         )
         source_required_detection = source_required_detected / len(failure_cases) if failure_cases else 1.0
 
-        # injection detection
-        injection_cases = [r for r in results if "injection_contaminated_doc" in r.input_text or
-                           any("injection" in w for w in r.warnings)]
-        # More reliable: check results that are supposed to detect injection (look at warnings)
-        all_injection_results = [r for r in results if any("injection" in w for w in r.warnings)]
-        # Count injection test cases that passed
+        # injection detection: cases where injection warning was present (scenario ran injection path)
         injection_pass = sum(1 for r in results if r.passed and any("injection" in w for w in r.warnings))
         injection_total = sum(1 for r in results if any("injection" in w for w in r.warnings))
         injection_detection = injection_pass / injection_total if injection_total else 0.0

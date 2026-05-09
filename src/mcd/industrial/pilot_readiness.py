@@ -131,10 +131,6 @@ class PilotReadinessGate:
         hard_failures = [f for f in failed if f in hard_blocker_keys]
 
         conditional = not hard_failures and "rest_api_implemented" in failed
-        ready_for_pilot = len(hard_failures) == 0 and not criteria.rest_api_implemented is True or (
-            len(hard_failures) == 0 and criteria.rest_api_implemented
-        )
-        # Simplify: ready if no hard failures
         ready_for_pilot = len(hard_failures) == 0
 
         return PilotReadinessResult(
