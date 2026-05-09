@@ -17,5 +17,5 @@ def new_request_id() -> str:
 
 
 def current_timestamp_ms() -> float:
-    """Return current epoch time in milliseconds."""
-    return time.monotonic() * 1000
+    """Return current Unix epoch time in milliseconds."""
+    return time.time() * 1000
