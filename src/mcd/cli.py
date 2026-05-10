@@ -333,6 +333,62 @@ def main() -> None:
     )
     trace_rpt_parser.add_argument("--output", choices=["markdown", "json"], default="markdown")
 
+    # ── Phase 7.3: Arabic Morphosemantic Fractal Engine ──────────────────────
+
+    # morph-analyze
+    morph_analyze_parser = subparsers.add_parser(
+        "morph-analyze",
+        help="Phase 7.3: Full morphosemantic analysis of an Arabic word",
+    )
+    morph_analyze_parser.add_argument("--word", required=True, help="Arabic word to analyse")
+    morph_analyze_parser.add_argument(
+        "--context", nargs="*", default=[], help="Optional context words for disambiguation"
+    )
+    morph_analyze_parser.add_argument("--output", choices=["json", "markdown", "text"], default="json")
+
+    # morph-unfold
+    morph_unfold_parser = subparsers.add_parser(
+        "morph-unfold",
+        help="Phase 7.3: Unfold a folded word graph to its semantic layers",
+    )
+    morph_unfold_parser.add_argument("--word", required=True, help="Arabic word to unfold")
+    morph_unfold_parser.add_argument(
+        "--context", nargs="*", default=[], help="Optional context words"
+    )
+    morph_unfold_parser.add_argument("--output", choices=["json", "markdown"], default="markdown")
+
+    # concept-center
+    concept_center_parser = subparsers.add_parser(
+        "concept-center",
+        help="Phase 7.3: Compute the 17-axis concept center for an Arabic word",
+    )
+    concept_center_parser.add_argument("--word", required=True, help="Arabic word")
+    concept_center_parser.add_argument(
+        "--context", nargs="*", default=[], help="Optional context words"
+    )
+    concept_center_parser.add_argument("--output", choices=["json", "text"], default="json")
+
+    # pattern-operator
+    pattern_op_parser = subparsers.add_parser(
+        "pattern-operator",
+        help="Phase 7.3: Look up a morphological pattern operator by ID or form",
+    )
+    pattern_op_parser.add_argument(
+        "--pattern-id", default=None, help="Pattern ID (e.g. faail)"
+    )
+    pattern_op_parser.add_argument(
+        "--pattern-form", default=None, help="Arabic pattern form (e.g. فاعِل)"
+    )
+    pattern_op_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
+    # root-family
+    root_family_parser = subparsers.add_parser(
+        "root-family",
+        help="Phase 7.3: Show the full morphosemantic family of an Arabic root",
+    )
+    root_family_parser.add_argument("--root-id", required=True, help="Root ID (e.g. ktb)")
+    root_family_parser.add_argument("--output", choices=["json", "text"], default="json")
+
     args = parser.parse_args()
 
     if args.command == "classify":
@@ -969,6 +1025,14 @@ def main() -> None:
         "trace-contribution", "trace-graph-consistency",
     ):
         _handle_epistemic_trace_command(args)
+    elif args.command in (
+        "morph-analyze",
+        "morph-unfold",
+        "concept-center",
+        "pattern-operator",
+        "root-family",
+    ):
+        _handle_morphosemantic_command(args)
     else:
         parser.print_help()
 
@@ -1266,6 +1330,118 @@ def _handle_epistemic_trace_command(args) -> None:  # noqa: ANN001
         else:
             print(rpt.to_markdown())
 
+    elif args.command in (
+        "morph-analyze",
+        "morph-unfold",
+        "concept-center",
+        "pattern-operator",
+        "root-family",
+    ):
+        _handle_morphosemantic_command(args)
 
-if __name__ == "__main__":
+
+def _handle_morphosemantic_command(args) -> None:  # noqa: ANN001
+    """Dispatch handler for Phase 7.3 morphosemantic CLI commands."""
+    import json as _json_ms
+
+    if args.command == "morph-analyze":
+        from mcd.morphosemantics.morphosemantic_trace_linker import MorphosemanticTraceLinker
+        from mcd.morphosemantics.serializers import folded_word_graph_to_json
+
+        linker = MorphosemanticTraceLinker()
+        bundle = linker.link(args.word)
+        graph = bundle.folded_word_graph
+
+        if args.output == "json":
+            print(folded_word_graph_to_json(graph))
+        elif args.output == "markdown":
+            from mcd.morphosemantics.folded_word_unfolder import FoldedWordUnfolder
+            unfolder = FoldedWordUnfolder()
+            unfolded = unfolder.unfold(graph)
+            print(unfolded.to_markdown())
+        else:
+            d = graph.to_dict()
+            print(f"Word:    {d['word']}")
+            print(f"Root:    {d.get('selected_root', '?')}")
+            print(f"Pattern: {d.get('selected_pattern', '?')}")
+            print(f"Edges:   {len(d.get('folded_edges', []))}")
+
+    elif args.command == "morph-unfold":
+        from mcd.morphosemantics.morphosemantic_trace_linker import MorphosemanticTraceLinker
+        from mcd.morphosemantics.folded_word_unfolder import FoldedWordUnfolder
+        from mcd.morphosemantics.serializers import folded_word_graph_to_json
+
+        linker = MorphosemanticTraceLinker()
+        bundle = linker.link(args.word)
+        graph = bundle.folded_word_graph
+        unfolder = FoldedWordUnfolder()
+        unfolded = unfolder.unfold(graph)
+
+        if args.output == "markdown":
+            print(unfolded.to_markdown())
+        else:
+            print(folded_word_graph_to_json(graph))
+
+    elif args.command == "concept-center":
+        from mcd.morphosemantics.morphosemantic_trace_linker import MorphosemanticTraceLinker
+        from mcd.morphosemantics.serializers import concept_center_to_json
+
+        linker = MorphosemanticTraceLinker()
+        bundle = linker.link(args.word)
+        cc = bundle.concept_center
+
+        if args.output == "json":
+            print(concept_center_to_json(cc))
+        else:
+            d = cc.to_dict()
+            print(f"Concept ID:      {d['concept_id']}")
+            print(f"Root family:     {d['root_family']}")
+            print(f"Surface forms:   {', '.join(d.get('surface_forms', []))}")
+            agency = d.get('agency_axis', {})
+            print(f"Agency:          {agency.get('agency', 0):.2f}")
+            certainty = d.get('certainty_axis', {})
+            print(f"Certainty:       {certainty.get('certainty_score', 0):.2f}")
+
+    elif args.command == "pattern-operator":
+        from mcd.morphosemantics.pattern_operator_registry import PatternOperatorRegistry
+        from mcd.morphosemantics.serializers import pattern_operator_to_markdown
+
+        registry = PatternOperatorRegistry()
+        op = None
+        if args.pattern_id:
+            op = registry.get(args.pattern_id)
+        elif args.pattern_form:
+            op = registry.find_by_form(args.pattern_form)
+
+        if op is None:
+            pid = getattr(args, "pattern_id", None) or getattr(args, "pattern_form", "?")
+            print(f"Pattern not found: {pid}")
+            return
+
+        if args.output == "markdown":
+            print(pattern_operator_to_markdown(op))
+        else:
+            import json as _j
+            print(_j.dumps(op.to_dict(), ensure_ascii=False, indent=2))
+
+    elif args.command == "root-family":
+        from mcd.morphosemantics.root_family_graph import RootFamilyGraphBuilder
+        from mcd.morphosemantics.serializers import root_family_to_json
+
+        builder = RootFamilyGraphBuilder()
+        graph = builder.build(args.root_id)
+
+        if args.output == "json":
+            print(root_family_to_json(graph))
+        else:
+            print(f"Root:    {graph.root_id}  ({graph.radicals_str})")
+            print(f"Members: {len(graph.members)}")
+            for m in graph.members:
+                print(f"  {m.word:20s}  pattern={m.pattern_id}  role={m.role}")
+            if graph.masdar_events:
+                print(f"Masdar events: {len(graph.masdar_events)}")
+                for ev in graph.masdar_events:
+                    print(f"  {ev.get('masdar', '?')}  ({ev.get('event_class', '?')})")
+
+if __name__ == '__main__':
     main()
