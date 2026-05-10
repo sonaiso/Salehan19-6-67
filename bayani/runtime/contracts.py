@@ -122,6 +122,22 @@ class AuditResult:
 
 
 # ---------------------------------------------------------------------------
+# ZeroGuard result
+# ---------------------------------------------------------------------------
+
+@dataclass(frozen=True)
+class ZeroResult:
+    """Blocking governance result for invalid product-equivalence claims."""
+    zero_type: str
+    severity: str
+    required_layer: str
+    claim: str
+    reason: str
+    allowed_reframe: str
+    blocks: List[str] = field(default_factory=list)
+
+
+# ---------------------------------------------------------------------------
 # Final output
 # ---------------------------------------------------------------------------
 
@@ -135,4 +151,5 @@ class MustadilOutput:
     trace: EpistemicTrace
     audit: AuditResult
     final_response: Optional[str] = None
+    governance_zero: Optional[ZeroResult] = None
     # None means the engine defers to a downstream decoder/LLM
