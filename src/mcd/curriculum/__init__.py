@@ -1,4 +1,4 @@
-"""Phase 5.3 — Cognitive Curriculum Learning for the Reasoning Mind."""
+"""Phase 5.3/7.1 — Cognitive Curriculum Learning for the Reasoning Mind."""
 from __future__ import annotations
 
 from .cognitive_unit import CognitiveUnit
@@ -31,6 +31,11 @@ from .invariant_validator import InvariantValidationResult, InvariantViolation, 
 from .golden_examples import GoldenExample, load_golden_examples
 from .adversarial_curriculum import AdversarialExample, load_adversarial_examples, ADVERSARIAL_CATEGORIES
 from .qualification_bridge import CurriculumQualificationMetrics, compute_qualification_metrics
+from .depth_metrics import DepthMetricsCalculator, DepthMetricsReport
+from .curriculum_coverage_matrix import CurriculumCoverageMatrix, CurriculumCoverageReport as CoverageCoverageReport
+from .residual_curriculum_builder import (
+    ResidualCurriculumBuilder, ResidualCurriculumUnit, ResidualBuildReport,
+)
 
 __all__ = [
     "CognitiveUnit", "CognitiveNode", "CognitiveEdge", "CognitiveGraph",
@@ -56,4 +61,7 @@ __all__ = [
     "GoldenExample", "load_golden_examples",
     "AdversarialExample", "load_adversarial_examples", "ADVERSARIAL_CATEGORIES",
     "CurriculumQualificationMetrics", "compute_qualification_metrics",
+    "DepthMetricsCalculator", "DepthMetricsReport",
+    "CurriculumCoverageMatrix", "CoverageCoverageReport",
+    "ResidualCurriculumBuilder", "ResidualCurriculumUnit", "ResidualBuildReport",
 ]

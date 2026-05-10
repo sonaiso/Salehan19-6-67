@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import Any
 
 from .reality_frame import RealityFrame
 
@@ -20,6 +21,11 @@ class CognitiveUnit:
     difficulty: str = "medium"
     tags: list[str] = field(default_factory=list)
     metadata: dict = field(default_factory=dict)
+    # Phase 7.1 — cognitive graph fields
+    expected_nodes: list[dict[str, Any]] = field(default_factory=list)
+    expected_edges: list[dict[str, Any]] = field(default_factory=list)
+    expected_vectors: list[dict[str, Any]] = field(default_factory=list)
+    expected_domains: list[str] = field(default_factory=list)
 
     def to_dict(self) -> dict:
         return {
@@ -35,4 +41,8 @@ class CognitiveUnit:
             "difficulty": self.difficulty,
             "tags": self.tags,
             "metadata": self.metadata,
+            "expected_nodes": self.expected_nodes,
+            "expected_edges": self.expected_edges,
+            "expected_vectors": self.expected_vectors,
+            "expected_domains": self.expected_domains,
         }
