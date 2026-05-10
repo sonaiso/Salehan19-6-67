@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "description": "Arabic I'rab Marker Registry",
+  "markers": [
+    {"marker_id": "damma", "name_ar": "الضمة", "name_en": "damma", "marker_type": "original", "cases_marked": ["nominative"], "visibility": "apparent", "unicode": "\u064F", "notes": "Default nominative marker for singular and broken plural"},
+    {"marker_id": "fatha", "name_ar": "الفتحة", "name_en": "fatha", "marker_type": "original", "cases_marked": ["accusative"], "visibility": "apparent", "unicode": "\u064E", "notes": "Default accusative marker; also used for genitive in diptotes (mamnu' min al-sarf)"},
+    {"marker_id": "kasra", "name_ar": "الكسرة", "name_en": "kasra", "marker_type": "original", "cases_marked": ["genitive"], "visibility": "apparent", "unicode": "\u0650", "notes": "Default genitive marker; also used as accusative marker for sound feminine plural"},
+    {"marker_id": "sukun", "name_ar": "السكون", "name_en": "sukun", "marker_type": "original", "cases_marked": ["jussive"], "visibility": "apparent", "unicode": "\u0652", "notes": "Jussive marker for sound verb forms"},
+    {"marker_id": "alif", "name_ar": "الألف", "name_en": "alif", "marker_type": "secondary", "cases_marked": ["nominative", "accusative"], "visibility": "apparent", "unicode": "\u0627", "notes": "Nominative marker for dual; accusative marker for the five nouns (asmaa' khamsa)"},
+    {"marker_id": "waw", "name_ar": "الواو", "name_en": "waw", "marker_type": "secondary", "cases_marked": ["nominative"], "visibility": "apparent", "unicode": "\u0648", "notes": "Nominative marker for sound masculine plural and the five nouns (abu, akhu, hamu, fu, dhu)"},
+    {"marker_id": "ya", "name_ar": "الياء", "name_en": "ya", "marker_type": "secondary", "cases_marked": ["accusative", "genitive"], "visibility": "apparent", "unicode": "\u064A", "notes": "Accusative and genitive marker for dual, sound masculine plural, and the five nouns"},
+    {"marker_id": "nun", "name_ar": "النون", "name_en": "nun", "marker_type": "secondary", "cases_marked": ["nominative"], "visibility": "apparent", "unicode": "\u0646", "notes": "Nominative marker for the five verbs (af'al khamsa) — nun is present in nominative"},
+    {"marker_id": "deleted_nun", "name_ar": "حذف النون", "name_en": "deleted nun", "marker_type": "secondary", "cases_marked": ["accusative", "jussive"], "visibility": "apparent", "unicode": "", "notes": "Accusative and jussive marker for the five verbs by deletion of nun"},
+    {"marker_id": "estimated", "name_ar": "مقدرة", "name_en": "estimated", "marker_type": "estimated", "cases_marked": ["nominative", "accusative", "genitive"], "visibility": "hidden", "unicode": "", "notes": "Used for maqsur, manqus, and nouns attached to ya al-mutakallim where diacritics cannot appear"},
+    {"marker_id": "local", "name_ar": "محلي", "name_en": "local", "marker_type": "local", "cases_marked": ["nominative", "accusative", "genitive"], "visibility": "none", "unicode": "", "notes": "Used for indeclinable words; case is assigned structurally, not phonetically"},
+    {"marker_id": "none", "name_ar": "لا إعراب", "name_en": "none", "marker_type": "none", "cases_marked": [], "visibility": "none", "unicode": "", "notes": "Used for particles (huruf), conjunctions, and other non-declinable words that have no syntactic case"}
+  ]
+}
