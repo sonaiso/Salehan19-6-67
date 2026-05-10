@@ -20,6 +20,7 @@ from bayani.runtime.contracts import MustadilOutput, PromptInput
 from bayani.runtime.layers import LAYER_REGISTRY
 from bayani.runtime.router import get_required_layers
 from bayani.runtime.trace import build_trace
+from bayani.runtime.zero_guard import detect_blocking_product_claim
 
 
 class MustadilRuntimeEngine:
@@ -35,6 +36,9 @@ class MustadilRuntimeEngine:
     6. Runs the runtime audit against all invariants.
     7. Returns a :class:`~bayani.runtime.contracts.MustadilOutput`.
     """
+
+    def __init__(self, enable_zero_guard: bool = True) -> None:
+        self.enable_zero_guard = enable_zero_guard
 
     def run(self, prompt: str, mode: str = "analysis") -> MustadilOutput:
         """Execute the full pipeline for *prompt* and return structured output.
@@ -53,6 +57,11 @@ class MustadilRuntimeEngine:
             Fully structured pipeline output including trace and audit.
         """
         prompt_input = PromptInput(prompt=prompt, mode=mode)
+        governance_zero = (
+            detect_blocking_product_claim(prompt_input.prompt)
+            if self.enable_zero_guard
+            else None
+        )
 
         # Step 1 — Prompt-Type Classification
         pt_result = prompt_type_classifier(prompt)
@@ -83,9 +92,23 @@ class MustadilRuntimeEngine:
         # Step 6 — Run audit
         audit_result = run_audit(pt_result, intent_result, required_layers, layer_results)
 
-        # Step 7 — Compose output
+        # Step 7 — Runtime ZeroGuard (blocking product-equivalence claims)
+        if governance_zero is not None:
+            audit_result.passed = False
+            audit_result.violations.append(
+                f"{governance_zero.zero_type}: blocked by {governance_zero.required_layer}"
+            )
+            if governance_zero.required_layer not in audit_result.jumps_prevented:
+                audit_result.jumps_prevented.append(governance_zero.required_layer)
+            audit_result.final_rank = "blocked_epistemic_violation"
+
+        # Step 8 — Compose output
         final_response: str | None
-        if audit_result.final_rank == "structured_answer_allowed":
+        if governance_zero is not None:
+            # ZeroGuard is a blocking governance gate and takes precedence
+            # over any non-blocking audit outcome.
+            final_response = governance_zero.format_blocking_message()
+        elif audit_result.final_rank == "structured_answer_allowed":
             final_response = None  # downstream decoder/LLM fills this
         elif audit_result.final_rank == "deferred_pending_classification":
             final_response = "لا يمكن الحكم قبل اكتمال التصنيف المعرفي."
@@ -103,4 +126,5 @@ class MustadilRuntimeEngine:
             trace=trace,
             audit=audit_result,
             final_response=final_response,
+            governance_zero=governance_zero,
         )

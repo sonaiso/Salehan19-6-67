@@ -22,6 +22,7 @@ from bayani.runtime.router import get_required_layers
 from bayani.runtime.layers import LAYER_REGISTRY
 from bayani.runtime.audit import run_audit
 from bayani.runtime.trace import build_trace
+from bayani.runtime.zero_guard import detect_blocking_product_claim
 
 
 # ---------------------------------------------------------------------------
@@ -457,6 +458,41 @@ class TestLayerRegistry(unittest.TestCase):
             result = layer_fn(pi)
             self.assertIn(result.status, ("passed", "failed", "deferred"),
                           f"Layer {layer_name} has invalid status: {result.status!r}")
+
+
+class TestZeroGuardRuntime(unittest.TestCase):
+
+    def test_detects_arabic_full_gpt_equivalence_claim(self):
+        zero = detect_blocking_product_claim("النظام يحاكي GPT-5.5 بالكامل.")
+        self.assertIsNotNone(zero)
+        self.assertEqual(zero.zero_type, "NoGeneralLLMEquivalenceClaim")
+        self.assertEqual(zero.severity, "BLOCKING")
+        self.assertEqual(zero.required_layer, "ZeroGuard")
+
+    def test_detects_english_full_equivalence_claim(self):
+        zero = detect_blocking_product_claim("Bayani is a full GPT-5.5 equivalent.")
+        self.assertIsNotNone(zero)
+        self.assertEqual(zero.zero_type, "NoGeneralLLMEquivalenceClaim")
+
+    def test_allows_verifier_positioning_statement(self):
+        zero = detect_blocking_product_claim(
+            "Bayani is an Arabic epistemic verifier over LLM outputs."
+        )
+        self.assertIsNone(zero)
+
+    def test_allows_arabic_verifier_statement(self):
+        zero = detect_blocking_product_claim("Bayani يساعد على فحص مخرجات النماذج.")
+        self.assertIsNone(zero)
+
+    def test_engine_blocks_claim_with_zero_guard(self):
+        output = _run("Bayani is a full GPT-5.5 equivalent.")
+        self.assertFalse(output.audit.passed)
+        self.assertEqual(output.audit.final_rank, "blocked_epistemic_violation")
+        self.assertIsNotNone(output.governance_zero)
+        self.assertEqual(
+            output.governance_zero.zero_type,
+            "NoGeneralLLMEquivalenceClaim",
+        )
 
 
 if __name__ == "__main__":
