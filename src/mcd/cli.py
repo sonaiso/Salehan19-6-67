@@ -333,6 +333,24 @@ def main() -> None:
     )
     trace_rpt_parser.add_argument("--output", choices=["markdown", "json"], default="markdown")
 
+    # Phase 7.2: Foldable Cognitive Residual Learning
+    fold_residuals_parser = subparsers.add_parser("fold-residuals", help="Phase 7.2: Run full foldable residual pipeline")
+    fold_residuals_parser.add_argument("--input", default="data/foldable_learning/mock_gpt_proposals_ar.jsonl")
+    fold_residuals_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
+    fold_memory_parser = subparsers.add_parser("fold-memory-report", help="Phase 7.2: Foldable memory report")
+    fold_memory_parser.add_argument("--output", choices=["json", "markdown"], default="markdown")
+
+    fold_recall_parser = subparsers.add_parser("fold-recall", help="Phase 7.2: Recall fold patterns for text")
+    fold_recall_parser.add_argument("--text", default="")
+    fold_recall_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
+    fold_cons_parser = subparsers.add_parser("fold-consistency", help="Phase 7.2: Fold-unfold consistency check")
+    fold_cons_parser.add_argument("--output", choices=["json", "markdown"], default="markdown")
+
+    pattern_mine_parser = subparsers.add_parser("pattern-mine", help="Phase 7.2: Mine patterns from residuals")
+    pattern_mine_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
     # ── Phase 7.3: Arabic Morphosemantic Fractal Engine ──────────────────────
 
     # morph-analyze
@@ -1022,6 +1040,8 @@ def main() -> None:
         "trace-contribution", "trace-graph-consistency",
     ):
         _handle_epistemic_trace_command(args)
+    elif args.command in ("fold-residuals", "fold-memory-report", "fold-recall", "fold-consistency", "pattern-mine"):
+        _handle_foldable_command(args)
     elif args.command in (
         "morph-analyze",
         "morph-unfold",
@@ -1335,6 +1355,115 @@ def _handle_epistemic_trace_command(args) -> None:  # noqa: ANN001
         "root-family",
     ):
         _handle_morphosemantic_command(args)
+
+
+def _handle_foldable_command(args) -> None:  # noqa: ANN001
+    """Phase 7.2 — Foldable Cognitive Residual Learning CLI handler."""
+    import json as _json
+    from mcd.foldable_learning.mock_gpt_outputs import generate_mock_proposals
+    from mcd.foldable_learning.proposal_parser import ProposalParser
+    from mcd.foldable_learning.residual_calculator import ResidualCalculator
+    from mcd.foldable_learning.residual_to_fold import ResidualToFoldConverter
+    from mcd.foldable_learning.pattern_memory import PatternMemory
+    from mcd.foldable_learning.recall_engine import RecallEngine
+    from mcd.foldable_learning.learning_action_router import LearningActionRouter
+    from mcd.foldable_learning.mathematical_pattern_miner import MathematicalPatternMiner
+    from mcd.foldable_learning.fold_unfold_consistency import FoldUnfoldConsistencyChecker
+    from mcd.foldable_learning.fold_signature import FoldSignatureRegistry
+    from mcd.foldable_learning.foldable_report import FoldableReport
+
+    proposals = generate_mock_proposals(100)
+    parser_fl = ProposalParser()
+    calc = ResidualCalculator()
+    converter = ResidualToFoldConverter()
+    router = LearningActionRouter()
+    miner = MathematicalPatternMiner()
+    reporter = FoldableReport()
+
+    graphs = [parser_fl.parse(p) for p in proposals]
+    residuals = [calc.calculate(p, g) for p, g in zip(proposals, graphs)]
+    folds = converter.batch_convert(residuals)
+    actions = router.batch_route(residuals)
+    patterns = miner.mine(residuals)
+
+    memory = PatternMemory()
+    for sig in FoldSignatureRegistry.all():
+        memory.add_fold_signature(sig)
+    for fold in folds:
+        memory.add_fold_signature(fold)
+
+    recall_eng = RecallEngine(memory)
+
+    if args.command == "fold-residuals":
+        result = {
+            "total_proposals": len(proposals),
+            "total_residuals": len(residuals),
+            "total_folds": len(folds),
+            "total_actions": len(actions),
+            "residuals": [r.to_dict() for r in residuals[:10]],
+            "folds": [f.to_dict() for f in folds[:10]],
+        }
+        if args.output == "json":
+            print(_json.dumps(result, ensure_ascii=False, indent=2))
+        else:
+            metrics = reporter.generate(proposals, residuals, folds, actions, patterns)
+            print(metrics.to_markdown())
+
+    elif args.command == "fold-memory-report":
+        metrics = reporter.generate(proposals, residuals, folds, actions, patterns)
+        if args.output == "json":
+            print(_json.dumps(metrics.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(metrics.to_markdown())
+
+    elif args.command == "fold-recall":
+        from mcd.residual_learning.proposal_schema import GPTProposal, ProposalType
+        text = getattr(args, "text", "") or ""
+        test_proposal = GPTProposal(
+            proposal_id="recall-test",
+            input_text=text,
+            gpt_output=text,
+            proposal_type=ProposalType.ANSWER,
+            claimed_evidence=[],
+        )
+        test_graph = parser_fl.parse(test_proposal)
+        result = recall_eng.recall(graph=test_graph, text=text)
+        if args.output == "json":
+            print(_json.dumps({
+                "recalled_count": len(result.recalled_fold_signatures),
+                "recalled_fold_ids": [f.fold_id for f in result.recalled_fold_signatures[:20]],
+                "recommended_warnings": result.recommended_warnings,
+                "recommended_certainty_policy": result.recommended_certainty_policy,
+                "recall_precision_estimate": result.recall_precision_estimate,
+                "explanation": result.explanation,
+            }, ensure_ascii=False, indent=2))
+        else:
+            lines = [
+                "# Recall Results",
+                f"Recalled: {len(result.recalled_fold_signatures)} fold signatures",
+                f"Certainty Policy: {result.recommended_certainty_policy}",
+                f"Precision: {result.recall_precision_estimate:.4f}",
+            ]
+            print("\n".join(lines))
+
+    elif args.command == "fold-consistency":
+        checker = FoldUnfoldConsistencyChecker()
+        registry_sigs = FoldSignatureRegistry.all()
+        report = checker.check(registry_sigs, residuals)
+        if args.output == "json":
+            print(_json.dumps(report.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(report.to_markdown())
+
+    elif args.command == "pattern-mine":
+        mined = miner.mine(residuals)
+        if args.output == "json":
+            print(_json.dumps([p.to_dict() for p in mined], ensure_ascii=False, indent=2))
+        else:
+            lines = ["# Mined Patterns", ""]
+            for p in mined:
+                lines.append(f"- {p.pattern_id}: {p.residual_type} (freq={p.frequency})")
+            print("\n".join(lines))
 
 
 def _handle_morphosemantic_command(args) -> None:  # noqa: ANN001
