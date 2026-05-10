@@ -349,6 +349,7 @@ src/minimal_cognitive_decoder.egg-info/entry_points.txt
 src/minimal_cognitive_decoder.egg-info/requires.txt
 src/minimal_cognitive_decoder.egg-info/top_level.txt
 tests/test_accusative_resolver.py
+tests/test_adapters.py
 tests/test_adversarial_curriculum.py
 tests/test_adversarial_examples.py
 tests/test_answer_particle_resolver.py
