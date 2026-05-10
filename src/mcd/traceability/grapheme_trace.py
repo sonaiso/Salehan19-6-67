@@ -4,7 +4,7 @@ from __future__ import annotations
 import unicodedata
 import uuid
 from dataclasses import dataclass, field
-from mcd.traceability.unicode_trace import UnicodeTraceUnit, _is_diacritic
+from mcd.traceability.unicode_trace import UnicodeTraceUnit
 
 
 @dataclass

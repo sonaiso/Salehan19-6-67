@@ -3,7 +3,10 @@ import json
 import subprocess
 import sys
 import os
+from pathlib import Path
 import pytest
+
+_REPO_ROOT = Path(__file__).parent.parent
 
 
 def run_cli(*args):
@@ -11,8 +14,8 @@ def run_cli(*args):
         [sys.executable, "-m", "mcd.cli"] + list(args),
         capture_output=True,
         text=True,
-        env={**os.environ, "PYTHONPATH": "src"},
-        cwd="/home/runner/work/Salehan19-6-67/Salehan19-6-67",
+        env={**os.environ, "PYTHONPATH": str(_REPO_ROOT / "src")},
+        cwd=str(_REPO_ROOT),
     )
     return result
 
