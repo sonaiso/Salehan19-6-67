@@ -56,8 +56,8 @@ class DatasetMathAnnotator:
         return {
             "level": "token",
             "pre_level": "unicode",
-            "post_level": "concept_candidates" if source == "ambiguity" else "claim",
-            "expected_morphism": "token_to_lexeme",
+            "post_level": "claim",
+            "expected_morphism": "unicode_to_token",
             "expected_operators": ["morphosemantic"],
             "expected_invariants": ["trace", "relation", "evidence_need", "certainty_cap", "residual"],
             "expected_evidence_need": "contextual_linguistic",
