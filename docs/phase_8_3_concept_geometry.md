@@ -2,7 +2,7 @@
 
 ## Overview
 
-Phase 8.3 introduces the **Concept Geometry Layer** — a CFK-compatible layer that models Arabic concept geometry through two complementary lens:
+Phase 8.3 introduces the **Concept Geometry Layer** — a CFK-compatible layer that models Arabic concept geometry through two complementary lenses:
 
 - **Jamid (الجامد)** — Essence Geometry: fixes the ontological center of a primitive noun (genus, species, differentia, intrinsic properties).
 - **Mushtaq (المشتق)** — Derivational Relation Geometry: unfolds the folded event/attribute relation encoded in a derived word (root + pattern → projected relation).
