@@ -1,47 +1,51 @@
-"""MurabCertaintyPolicy — computes certainty for I'rab analysis."""
+"""MurabCertaintyPolicy — evaluates syntactic vs. factual certainty.
+
+Key principle:
+    syntactic_certainty ≠ factual_certainty
+    I'rab raises syntactic confidence ONLY (evidence_effect = "syntactic_only")
+"""
 from __future__ import annotations
+
+from typing import Optional
+
 from mcd.murab.murab_schema import MurabUnit
+from mcd.murab.governing_factor import GoverningFactor
 
 
 class MurabCertaintyPolicy:
-    """
-    Certainty rules:
-    - apparent marker + clear governing factor → syntactic_certainty=0.9
-    - estimated marker + clear factor → syntactic_certainty=0.7
-    - unclear factor → syntactic_certainty=0.5, warning="hypothesis"
-    - multiple valid i'rab → syntactic_certainty=0.4, warning="ambiguous"
-    - evidence_effect = "syntactic_only" always
-    """
+    """Evaluates the certainty level of an I'rab analysis."""
 
-    def evaluate(self, unit: MurabUnit) -> dict:
-        """Evaluate certainty policy for a MurabUnit."""
-        warnings = list(unit.warnings)
+    def evaluate(
+        self,
+        murab_unit: MurabUnit,
+        governing_factor: Optional[GoverningFactor],
+    ) -> dict:
+        warnings: list[str] = []
 
-        apparent = unit.marker_visibility == "apparent"
-        has_factor = unit.governing_factor_id is not None
+        marker_visible = murab_unit.marker_visibility == "apparent"
+        gf_clear = governing_factor is not None and governing_factor.certainty >= 0.9
 
-        if unit.irab_case == "unknown":
-            syntactic_certainty = 0.4
-            if "ambiguous" not in warnings:
-                warnings.append("ambiguous")
-        elif apparent and has_factor:
-            syntactic_certainty = 0.9
-        elif apparent and not has_factor:
-            syntactic_certainty = 0.75
-        elif not apparent and has_factor:
-            syntactic_certainty = 0.7
-            if "hypothesis" not in warnings:
-                warnings.append("estimated_marker")
+        # Determine syntactic certainty
+        if marker_visible and gf_clear:
+            syntactic_certainty = "certain_syntactic"
+        elif murab_unit.marker_visibility in ("estimated", "local") and gf_clear:
+            syntactic_certainty = "probable_syntactic"
+        elif not gf_clear and marker_visible:
+            syntactic_certainty = "probable_syntactic"
+            warnings.append("governing_factor_unclear_or_missing")
         else:
-            syntactic_certainty = 0.5
-            if "hypothesis" not in warnings:
-                warnings.append("hypothesis")
+            syntactic_certainty = "hypothesis"
+            warnings.append("both_marker_and_governing_factor_uncertain")
 
-        semantic_certainty = syntactic_certainty * 0.8
+        # Check for multiple irab possibilities (ambiguity)
+        if murab_unit.irab_case == "unknown":
+            warnings.append("ambiguity_warning: irab_case_could_not_be_determined")
 
+        # I'rab raises syntactic certainty ONLY — not factual certainty
         return {
             "syntactic_certainty": syntactic_certainty,
-            "semantic_certainty": semantic_certainty,
+            "semantic_certainty": "not_evaluated",  # separate domain
             "evidence_effect": "syntactic_only",
+            "governing_factor_id": governing_factor.factor_id if governing_factor else None,
             "warnings": warnings,
         }

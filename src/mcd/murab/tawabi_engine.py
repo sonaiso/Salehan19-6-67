@@ -1,78 +1,54 @@
-"""TawabiEngine — handles Arabic توابع (followers that inherit I'rab)."""
+"""TawabiEngine — resolves تابع (following word) which inherits its antecedent's case.
+
+Rule: تابع يرث إعراب المتبوع
+"""
 from __future__ import annotations
-from dataclasses import dataclass
+
 from mcd.murab.murab_schema import MurabUnit
-from typing import Optional
-from enum import Enum
-
-
-class TabiType(str, Enum):
-    NAAT = "naat"        # نعت
-    ATF = "atf"          # عطف
-    TAWKID = "tawkid"    # توكيد
-    BADAL = "badal"      # بدل
-    ATF_BAYAN = "atf_bayan"  # عطف بيان
-
-
-@dataclass
-class TabiRelation:
-    matbu: str
-    tabi: str
-    tabi_type: TabiType
-    inherited_case: str
-    matbu_id: str
-    tabi_id: str
-    certainty: float
-
-    def to_dict(self) -> dict:
-        return {
-            "matbu": self.matbu,
-            "tabi": self.tabi,
-            "tabi_type": self.tabi_type.value,
-            "inherited_case": self.inherited_case,
-            "matbu_id": self.matbu_id,
-            "tabi_id": self.tabi_id,
-            "certainty": self.certainty,
-        }
-
-
-ATF_CONJUNCTIONS = {"وَ", "فَ", "ثُمَّ", "أو", "أم", "بَل", "لَكِن", "لا", "وَلَكِن"}
 
 
 class TawabiEngine:
-    """Handles تابع / متبوع relations. Tabi' inherits I'rab of matbu'."""
+    """Resolves the type of تابع and inherits I'rab from المتبوع.
 
-    def detect_tawabi(self, units: list) -> list:
-        """Detect tabi' relations from MurabUnit list."""
-        relations = []
+    tabi_types: naat | atf | tawkid | badal | atf_bayan
+    """
 
-        for i in range(len(units) - 1):
-            unit = units[i]
-            next_unit = units[i + 1]
+    _ATAF_PARTICLES = {"و", "ف", "ثم", "أو", "أم", "بل", "لكن", "لا"}
 
-            tabi_type = self._classify_tabi(unit, next_unit)
-            if tabi_type:
-                relations.append(TabiRelation(
-                    matbu=unit.surface,
-                    tabi=next_unit.surface,
-                    tabi_type=tabi_type,
-                    inherited_case=unit.irab_case,
-                    matbu_id=unit.unit_id,
-                    tabi_id=next_unit.unit_id,
-                    certainty=0.75,
-                ))
+    def resolve(
+        self,
+        matboo: MurabUnit,
+        tabi: MurabUnit,
+        context: list[str],
+    ) -> dict:
+        warnings: list[str] = []
+        tabi_type = self._classify_tabi(context)
 
-        return relations
+        inherited_case = matboo.irab_case
+        inherited_marker = matboo.irab_marker
 
-    def apply_inheritance(self, matbu: MurabUnit, tabi: MurabUnit) -> MurabUnit:
-        """Apply case inheritance from matbu' to tabi'."""
-        tabi.irab_case = matbu.irab_case
-        tabi.irab_marker = matbu.irab_marker
-        tabi.marker_visibility = matbu.marker_visibility
-        return tabi
+        if tabi.irab_case != inherited_case and tabi.irab_case != "unknown":
+            warnings.append(
+                f"tabi_case_mismatch: expected {inherited_case} "
+                f"got {tabi.irab_case}"
+            )
 
-    def _classify_tabi(self, unit: MurabUnit, next_unit: MurabUnit) -> Optional[TabiType]:
-        """Classify tabi type between adjacent units."""
-        if unit.irab_case == next_unit.irab_case and unit.irab_case != "unknown":
-            return TabiType.NAAT
-        return None
+        return {
+            "tabi_type": tabi_type,
+            "inherited_case": inherited_case,
+            "inherited_marker": inherited_marker,
+            "matboo_id": matboo.unit_id,
+            "tabi_id": tabi.unit_id,
+            "relation": f"tabi_{tabi_type}",
+            "warnings": warnings,
+        }
+
+    def _classify_tabi(self, context: list[str]) -> str:
+        import re
+        _H = re.compile(r"[\u064b-\u065f]")
+        for tok in context:
+            bare = _H.sub("", tok)
+            if bare in self._ATAF_PARTICLES:
+                return "atf"
+        # Default: naat (adjective following noun)
+        return "naat"

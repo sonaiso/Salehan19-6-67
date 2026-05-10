@@ -13,6 +13,9 @@ def test_murab_unit_creation():
         irab_case="nominative",
         irab_marker="damma",
         marker_visibility="apparent",
+        governing_factor_id=None,
+        syntactic_role="agent",
+        semantic_role="unknown",
     )
     assert unit.irab_case == "nominative"
     assert unit.irab_marker == "damma"
@@ -28,6 +31,9 @@ def test_murab_unit_defaults():
         irab_case="nominative",
         irab_marker="damma",
         marker_visibility="apparent",
+        governing_factor_id=None,
+        syntactic_role="agent",
+        semantic_role="unknown",
     )
     assert unit.governing_factor_id is None
     assert unit.warnings == []
@@ -44,6 +50,9 @@ def test_murab_unit_to_dict():
         irab_case="nominative",
         irab_marker="dammatan",
         marker_visibility="apparent",
+        governing_factor_id=None,
+        syntactic_role="subject",
+        semantic_role="unknown",
     )
     d = unit.to_dict()
     assert d["irab_case"] == "nominative"

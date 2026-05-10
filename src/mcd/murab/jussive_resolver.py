@@ -1,39 +1,37 @@
-"""JussiveResolver — detects Arabic jussive mood."""
+"""JussiveResolver — resolves the specific role of a مجزوم imperfect verb."""
 from __future__ import annotations
 
 
 class JussiveResolver:
-    """Detects jussive (جزم) from لم، لا الناهية، إن الشرطية، لما."""
+    """Resolves syntactic role of a جازم-governed imperfect verb.
 
-    JUSSIVE_PARTICLES = {"لم", "لما", "لا"}
-    CONDITIONAL_PARTICLES = {"إن", "إنْ", "مَن", "ما", "مهما", "متى", "أيّ", "أين", "أينما"}
+    Roles: فعل مضارع مجزوم، فعل شرط، جواب شرط
+    Only applies to imperfect (مضارع) verbs.
+    """
 
-    def resolve(self, surface: str, context_tokens: list, position: int) -> dict:
-        """Resolve jussive details."""
-        governing = None
-        jussive_type = "unknown"
+    _CONDITIONAL_PARTICLES = {"إن", "إذا", "من", "ما", "مهما", "كيفما", "أينما",
+                               "متى", "أيان", "أنّى", "حيثما", "أي"}
 
-        if position > 0:
-            prev = self._strip_diacritics(context_tokens[position - 1])
-            if prev == "لم":
-                governing = "لم"
-                jussive_type = "negation_past"
-            elif prev == "لما":
-                governing = "لما"
-                jussive_type = "negation_still"
-            elif prev == "لا":
-                governing = "لا"
-                jussive_type = "prohibition"
-            elif prev in self.CONDITIONAL_PARTICLES:
-                governing = prev
-                jussive_type = "conditional_answer"
+    def resolve(
+        self,
+        surface: str,
+        governing_factor_type: str | None,
+    ) -> dict:
+        warnings: list[str] = []
 
+        if governing_factor_type == "jazim":
+            return {
+                "syntactic_role": "فعل مضارع مجزوم",
+                "semantic_role": "dependent",
+                "certainty_policy": "certain_syntactic",
+                "warnings": warnings,
+            }
+
+        # Conditional context heuristic
+        warnings.append("jussive_governing_factor_not_found_heuristic_applied")
         return {
-            "syntactic_role": "jussive_verb",
-            "governing": governing,
-            "jussive_type": jussive_type,
+            "syntactic_role": "فعل شرط أو جواب شرط",
+            "semantic_role": "dependent",
+            "certainty_policy": "hypothesis",
+            "warnings": warnings,
         }
-
-    def _strip_diacritics(self, text: str) -> str:
-        diacritics = set('\u064b\u064c\u064d\u064e\u064f\u0650\u0651\u0652')
-        return ''.join(c for c in text if c not in diacritics)

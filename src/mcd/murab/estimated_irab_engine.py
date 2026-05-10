@@ -1,91 +1,66 @@
-"""EstimatedIrabEngine — handles Arabic إعراب تقديري (estimated I'rab)."""
+"""EstimatedIrabEngine — handles words whose I'rab marker is not visible.
+
+Cases:
+    - مقصور (الفتى): last letter ا or ى → marker estimated
+    - منقوص (القاضي): last letter ي in genitive/nominative → marker estimated
+    - مضاف إلى ياء المتكلم: ending in ي → marker estimated
+"""
 from __future__ import annotations
-from dataclasses import dataclass
-from enum import Enum
 
+import re
 
-class EstimatedType(str, Enum):
-    MAQSUR = "maqsur"      # مقصور - ends in alif (تعذر)
-    MANQUS = "manqus"      # منقوص - ends in ya' (ثقل)
-    MUDAF_TO_YA = "mudaf_to_ya"  # مضاف إلى ياء المتكلم
-
-
-@dataclass
-class EstimatedIrabResult:
-    surface: str
-    estimated_type: EstimatedType
-    reason: str  # تعذر|ثقل|اشتغال المحل
-    irab_case: str
-    irab_marker: str
-    marker_visibility: str  # always "estimated"
-    certainty: float
-
-    def to_dict(self) -> dict:
-        return {
-            "surface": self.surface,
-            "estimated_type": self.estimated_type.value,
-            "reason": self.reason,
-            "irab_case": self.irab_case,
-            "irab_marker": self.irab_marker,
-            "marker_visibility": self.marker_visibility,
-            "certainty": self.certainty,
-        }
+_HARAKAT = re.compile(r"[\u064b-\u065f]")
 
 
 class EstimatedIrabEngine:
-    """Handles estimated I'rab for مقصور، منقوص، مضاف إلى ياء المتكلم."""
+    """Detects whether a word carries an estimated (مقدّر) I'rab marker."""
 
-    ALIF_MAQSURA = '\u0649'  # ى
-    ALIF = '\u0627'          # ا
-    YA = '\u064a'            # ي
+    def resolve(
+        self,
+        surface: str,
+        irab_case: str,
+    ) -> dict:
+        bare = _HARAKAT.sub("", surface)
+        last = bare[-1] if bare else ""
 
-    def analyze(self, surface: str, irab_case: str) -> EstimatedIrabResult:
-        """Analyze if surface has estimated I'rab."""
-        stripped = self._strip_diacritics(surface)
+        # مقصور: ends in ا or ى
+        if last in ("ا", "ى"):
+            return {
+                "has_estimated_marker": True,
+                "reason": "maqsur_last_letter_alif_or_alif_maqsura",
+                "underlying_marker": self._expected_marker(irab_case),
+                "visibility": "estimated",
+            }
 
-        if stripped.endswith('ي') and len(stripped) > 2:
-            return EstimatedIrabResult(
-                surface=surface,
-                estimated_type=EstimatedType.MUDAF_TO_YA,
-                reason="اشتغال المحل بحركة المناسبة",
-                irab_case=irab_case,
-                irab_marker="estimated",
-                marker_visibility="estimated",
-                certainty=0.9,
-            )
+        # منقوص: ends in ي (in nom or gen — not accusative which shows fatha)
+        if last == "ي" and irab_case in ("nominative", "genitive"):
+            return {
+                "has_estimated_marker": True,
+                "reason": "manqus_last_letter_ya",
+                "underlying_marker": self._expected_marker(irab_case),
+                "visibility": "estimated",
+            }
 
-        if stripped.endswith('ى') or (stripped.endswith('ا') and len(stripped) > 2 and not stripped.endswith('ان')):
-            return EstimatedIrabResult(
-                surface=surface,
-                estimated_type=EstimatedType.MAQSUR,
-                reason="تعذر",
-                irab_case=irab_case,
-                irab_marker="estimated",
-                marker_visibility="estimated",
-                certainty=0.85,
-            )
+        # مضاف إلى ياء المتكلم: word ends in ي (possessive)
+        if bare.endswith("ي") and irab_case == "genitive":
+            return {
+                "has_estimated_marker": True,
+                "reason": "mudaf_ila_ya_mutakallim",
+                "underlying_marker": "kasra",
+                "visibility": "estimated",
+            }
 
-        if stripped.endswith('ي') and irab_case in {"nominative", "genitive"}:
-            return EstimatedIrabResult(
-                surface=surface,
-                estimated_type=EstimatedType.MANQUS,
-                reason="ثقل",
-                irab_case=irab_case,
-                irab_marker="estimated",
-                marker_visibility="estimated",
-                certainty=0.8,
-            )
+        return {
+            "has_estimated_marker": False,
+            "reason": "marker_visible",
+            "underlying_marker": self._expected_marker(irab_case),
+            "visibility": "apparent",
+        }
 
-        return EstimatedIrabResult(
-            surface=surface,
-            estimated_type=EstimatedType.MAQSUR,
-            reason="none",
-            irab_case=irab_case,
-            irab_marker="apparent",
-            marker_visibility="apparent",
-            certainty=1.0,
-        )
-
-    def _strip_diacritics(self, text: str) -> str:
-        diacritics = set('\u064b\u064c\u064d\u064e\u064f\u0650\u0651\u0652')
-        return ''.join(c for c in text if c not in diacritics)
+    def _expected_marker(self, irab_case: str) -> str:
+        return {
+            "nominative": "damma",
+            "accusative": "fatha",
+            "genitive": "kasra",
+            "jussive": "sukun",
+        }.get(irab_case, "none")

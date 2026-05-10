@@ -1,62 +1,44 @@
-"""Serializers for MurabUnit and MurabGraph."""
+"""Serializers — JSON and Markdown output for MurabUnit and MurabGraph."""
 from __future__ import annotations
+
 import json
+
 from mcd.murab.murab_schema import MurabUnit
+from mcd.murab.murab_report import MurabReport
 
 
-def murab_unit_to_json(unit: MurabUnit) -> str:
-    """Serialize a MurabUnit to JSON string."""
-    return json.dumps(unit.to_dict(), ensure_ascii=False, indent=2)
-
-
-def murab_units_to_json(units: list) -> str:
-    """Serialize list of MurabUnit to JSON string."""
+def murab_units_to_json(units: list[MurabUnit]) -> str:
     return json.dumps([u.to_dict() for u in units], ensure_ascii=False, indent=2)
 
 
-def murab_unit_to_markdown(unit: MurabUnit) -> str:
-    """Serialize a MurabUnit to markdown."""
-    lines = [
-        f"## {unit.surface}\n",
-        f"- **Unit ID**: {unit.unit_id}",
-        f"- **Surface**: {unit.surface}",
-        f"- **Normalized**: {unit.normalized}",
-        f"- **Word Type**: {unit.word_type}",
-        f"- **I'rab Case**: {unit.irab_case}",
-        f"- **I'rab Marker**: {unit.irab_marker}",
-        f"- **Marker Visibility**: {unit.marker_visibility}",
-        f"- **Governing Factor**: {unit.governing_factor_id or 'none'}",
-        f"- **Syntactic Role**: {unit.syntactic_role}",
-        f"- **Semantic Role**: {unit.semantic_role}",
-        f"- **Certainty Policy**: {unit.certainty_policy}",
-    ]
-    if unit.warnings:
-        lines.append(f"- **Warnings**: {', '.join(unit.warnings)}")
-    return "\n".join(lines)
+def murab_units_to_markdown(units: list[MurabUnit], sentence: str) -> str:
+    return MurabReport().to_markdown(units, sentence)
 
 
 def murab_graph_to_json(graph) -> str:
-    """Serialize a MurabGraph to JSON string."""
     return json.dumps(graph.to_dict(), ensure_ascii=False, indent=2)
 
 
 def murab_graph_to_markdown(graph) -> str:
-    """Serialize a MurabGraph to markdown summary."""
     lines = [
-        "# Mu'rab Graph\n",
-        f"**Nodes**: {len(graph.nodes)}",
-        f"**Edges**: {len(graph.edges)}\n",
-        "## Nodes\n",
+        f"# مخطط الإعراب (MurabGraph)",
+        f"",
+        f"**الجملة:** {graph.sentence}",
+        f"**معرّف المخطط:** {graph.graph_id}",
+        f"",
+        f"## العقد ({len(graph.nodes)})",
     ]
-    for node in graph.nodes:
-        if hasattr(node, 'node_type'):
-            lines.append(f"- [{node.node_type}] **{node.node_id}**: {node.label}")
-        else:
-            lines.append(f"- {node}")
-    lines.append("\n## Edges\n")
-    for edge in graph.edges:
-        if hasattr(edge, 'edge_type'):
-            lines.append(f"- {edge.source_id} --[{edge.edge_type}]--> {edge.target_id}")
-        else:
-            lines.append(f"- {edge}")
+    for n in graph.nodes:
+        d = n.to_dict() if hasattr(n, "to_dict") else n
+        lines.append(f"- `{d.get('node_id', '')}` [{d.get('node_type', '')}]")
+
+    lines.append(f"")
+    lines.append(f"## الحواف ({len(graph.edges)})")
+    for e in graph.edges:
+        d = e.to_dict() if hasattr(e, "to_dict") else e
+        lines.append(
+            f"- `{d.get('source_id', '')}` --[{d.get('edge_type', '')}]--> "
+            f"`{d.get('target_id', '')}`"
+        )
+
     return "\n".join(lines)

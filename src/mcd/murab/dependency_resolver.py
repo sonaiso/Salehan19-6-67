@@ -1,56 +1,58 @@
-"""DependencyResolver — resolves head-dependent relations in Arabic."""
+"""DependencyResolver — builds head-dependent edges from a list of MurabUnits."""
 from __future__ import annotations
+
 from mcd.murab.murab_schema import MurabUnit
-from dataclasses import dataclass
-
-
-@dataclass
-class DependencyRelation:
-    head_id: str
-    dependent_id: str
-    relation_type: str
-    certainty: float
-
-    def to_dict(self) -> dict:
-        return {
-            "head_id": self.head_id,
-            "dependent_id": self.dependent_id,
-            "relation_type": self.relation_type,
-            "certainty": self.certainty,
-        }
 
 
 class DependencyResolver:
-    """Resolves head-dependent syntactic relations."""
+    """Simple rule-based dependency edge builder.
 
-    def resolve(self, units: list) -> list:
-        """Resolve dependency relations for a list of MurabUnit objects."""
-        relations = []
+    Returns a list of dicts: {head_id, dependent_id, relation}
+    """
 
-        for i, unit in enumerate(units):
-            if unit.syntactic_role == "agent" and i > 0:
-                head = units[i - 1]
-                relations.append(DependencyRelation(
-                    head_id=head.unit_id,
-                    dependent_id=unit.unit_id,
-                    relation_type="nsubj",
-                    certainty=0.8,
-                ))
-            elif unit.syntactic_role == "object" and i > 0:
-                head = units[i - 1]
-                relations.append(DependencyRelation(
-                    head_id=head.unit_id,
-                    dependent_id=unit.unit_id,
-                    relation_type="obj",
-                    certainty=0.8,
-                ))
-            elif unit.syntactic_role == "object_of_preposition" and i > 1:
-                head = units[i - 2]
-                relations.append(DependencyRelation(
-                    head_id=head.unit_id,
-                    dependent_id=unit.unit_id,
-                    relation_type="obl",
-                    certainty=0.75,
-                ))
+    def resolve(self, units: list[MurabUnit]) -> list[dict]:
+        edges: list[dict] = []
+        verb_unit: MurabUnit | None = None
 
-        return relations
+        for unit in units:
+            if unit.word_type in ("verb", "imperfect_verb"):
+                verb_unit = unit
+                continue
+
+            if verb_unit is None:
+                continue
+
+            if unit.irab_case == "nominative" and unit.syntactic_role in ("فاعل", ""):
+                edges.append({
+                    "head_id": verb_unit.unit_id,
+                    "dependent_id": unit.unit_id,
+                    "relation": "nsubj",
+                })
+
+            elif unit.irab_case == "accusative":
+                edges.append({
+                    "head_id": verb_unit.unit_id,
+                    "dependent_id": unit.unit_id,
+                    "relation": "obj",
+                })
+
+            elif unit.irab_case == "genitive":
+                edges.append({
+                    "head_id": unit.unit_id,  # prep is the head
+                    "dependent_id": unit.unit_id,
+                    "relation": "obl",
+                })
+
+        # Idafa edges (consecutive noun pairs)
+        for i in range(len(units) - 1):
+            a, b = units[i], units[i + 1]
+            if (a.word_type in ("noun", "proper_noun", "masdar")
+                    and b.irab_case == "genitive"
+                    and b.syntactic_role in ("مضاف إليه", "")):
+                edges.append({
+                    "head_id": a.unit_id,
+                    "dependent_id": b.unit_id,
+                    "relation": "nmod:poss",
+                })
+
+        return edges

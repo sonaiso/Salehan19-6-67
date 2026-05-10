@@ -1679,34 +1679,42 @@ def _handle_morphosemantic_command(args) -> None:  # noqa: ANN001
                     print(f"  {ev.get('masdar', '?')}  ({ev.get('event_class', '?')})")
 
     elif args.command == "murab-analyze":
-        from mcd.murab.case_resolver import CaseResolver
+        import json as _json
+        from mcd.murab.murab_analyzer import MurabAnalyzer
         from mcd.murab.murab_report import MurabReport
+        from mcd.murab.serializers import murab_units_to_json, murab_units_to_markdown
 
-        tokens = args.text.split()
-        resolver = CaseResolver()
-        units = [resolver.resolve(tok, tok, tokens) for tok in tokens]
-        report = MurabReport(units)
+        analyzer = MurabAnalyzer()
+        units = analyzer.analyze(args.text)
+        report = MurabReport()
 
         if args.output == "json":
-            print(report.to_json())
+            print(murab_units_to_json(units))
         elif args.output == "markdown":
-            print(report.to_markdown())
+            print(murab_units_to_markdown(units, args.text))
         else:
-            print(report.to_text())
+            for u in units:
+                print(f"{u.surface}: {u.irab_case} ({u.syntactic_role})")
 
     elif args.command == "irab-resolve":
         import json as _json
-        from mcd.murab.case_resolver import CaseResolver
-        from mcd.murab.serializers import murab_unit_to_json, murab_unit_to_markdown
+        from mcd.murab.murab_analyzer import MurabAnalyzer
+        from mcd.murab.serializers import murab_units_to_json, murab_units_to_markdown
 
         ctx = args.context.split() if args.context else []
-        resolver = CaseResolver()
-        unit = resolver.resolve(args.token, args.token, ctx)
+        analyzer = MurabAnalyzer()
+        text = args.token + (" " + " ".join(ctx) if ctx else "")
+        units = analyzer.analyze(text)
+        unit = units[0] if units else None
+
+        if unit is None:
+            print("Could not resolve I'rab for token")
+            return
 
         if args.output == "json":
-            print(murab_unit_to_json(unit))
+            print(murab_units_to_json([unit]))
         elif args.output == "markdown":
-            print(murab_unit_to_markdown(unit))
+            print(murab_units_to_markdown([unit], args.token))
         else:
             print(f"Token: {unit.surface}")
             print(f"Case: {unit.irab_case}")
@@ -1715,15 +1723,14 @@ def _handle_morphosemantic_command(args) -> None:  # noqa: ANN001
             print(f"Semantic Role: {unit.semantic_role}")
 
     elif args.command == "murab-graph":
-        from mcd.murab.case_resolver import CaseResolver
+        from mcd.murab.murab_analyzer import MurabAnalyzer
         from mcd.murab.murab_graph_builder import MurabGraphBuilder
         from mcd.murab.serializers import murab_graph_to_json, murab_graph_to_markdown
 
-        tokens = args.text.split()
-        resolver = CaseResolver()
-        units = [resolver.resolve(tok, tok, tokens) for tok in tokens]
+        analyzer = MurabAnalyzer()
+        units = analyzer.analyze(args.text)
         builder = MurabGraphBuilder()
-        graph = builder.build(units)
+        graph = builder.build(units, args.text)
 
         if args.output == "json":
             print(murab_graph_to_json(graph))
@@ -1732,41 +1739,56 @@ def _handle_morphosemantic_command(args) -> None:  # noqa: ANN001
 
     elif args.command == "irab-certainty":
         import json as _json
-        from mcd.murab.case_resolver import CaseResolver
+        from mcd.murab.murab_analyzer import MurabAnalyzer
         from mcd.murab.murab_certainty_policy import MurabCertaintyPolicy
 
         ctx = args.context.split() if args.context else []
-        resolver = CaseResolver()
-        unit = resolver.resolve(args.token, args.token, ctx)
+        analyzer = MurabAnalyzer()
+        text = args.token + (" " + " ".join(ctx) if ctx else "")
+        units = analyzer.analyze(text)
+        unit = units[0] if units else None
+
+        if unit is None:
+            print("Could not analyze token")
+            return
+
         policy = MurabCertaintyPolicy()
-        result = policy.evaluate(unit)
+        result = policy.evaluate(unit, None)
 
         if args.output == "json":
             print(_json.dumps(result, ensure_ascii=False, indent=2))
         else:
             print(f"Syntactic certainty: {result['syntactic_certainty']}")
-            print(f"Semantic certainty:  {result['semantic_certainty']}")
             print(f"Evidence effect:     {result['evidence_effect']}")
-            if result['warnings']:
+            if result.get('warnings'):
                 print(f"Warnings: {', '.join(result['warnings'])}")
 
     elif args.command == "murab-trace":
         import json as _json
-        from mcd.murab.case_resolver import CaseResolver
+        from mcd.murab.murab_analyzer import MurabAnalyzer
         from mcd.murab.murab_trace_linker import MurabTraceLinker
 
         ctx = args.context.split() if args.context else []
-        resolver = CaseResolver()
-        unit = resolver.resolve(args.token, args.token, ctx)
+        analyzer = MurabAnalyzer()
+        text = args.token + (" " + " ".join(ctx) if ctx else "")
+        units = analyzer.analyze(text)
+        unit = units[0] if units else None
+
+        if unit is None:
+            print("Could not analyze token")
+            return
+
         linker = MurabTraceLinker()
-        trace = linker.link(unit)
+        trace = linker.link(unit, unit.token_id, 0, len(args.token))
 
         if args.output == "json":
             print(_json.dumps(trace, ensure_ascii=False, indent=2))
         else:
-            print(f"Token: {trace['surface']}")
-            print(f"Unicode trace: {' '.join(trace['unicode_trace'])}")
-            print(f"Trace chain: {' → '.join(trace['trace_chain'])}")
+            print(f"Unit: {trace['unit_id']}")
+            print(f"Token: {trace['token_id']}")
+            print(f"Char range: {trace['char_range']}")
+            print(f"Estimated: {trace['estimated']}")
+            print(f"Governing factor: {trace['governing_factor_id']}")
 
 
 def _handle_mabni_command(args) -> None:  # noqa: ANN001

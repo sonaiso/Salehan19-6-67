@@ -1,87 +1,66 @@
-"""HalTamyizEngine — distinguishes حال from تمييز (both accusative)."""
+"""HalTamyizEngine — classifies حال (circumstantial) vs تمييز (specification).
+
+Rule:
+    حال تصف هيئة صاحبها (describes the state of a definite referent)
+    تمييز يفسر إبهام نسبة أو ذات (disambiguates a vague noun or ratio)
+"""
 from __future__ import annotations
-from dataclasses import dataclass
 
+import re
 
-@dataclass
-class HalTamyizResult:
-    surface: str
-    result_type: str  # hal|tamyiz
-    syntactic_role: str
-    semantic_role: str
-    certainty: float
-    notes: str
+from mcd.murab.murab_schema import MurabUnit
 
-    def to_dict(self) -> dict:
-        return {
-            "surface": self.surface,
-            "result_type": self.result_type,
-            "syntactic_role": self.syntactic_role,
-            "semantic_role": self.semantic_role,
-            "certainty": self.certainty,
-            "notes": self.notes,
-        }
+_HARAKAT = re.compile(r"[\u064b-\u065f]")
+_QUANTITY_WORDS = {"كثير", "قليل", "مئة", "ألف", "عشرون", "ثلاثون", "كيلو",
+                   "متر", "طن", "أكثر", "أقل"}
 
 
 class HalTamyizEngine:
-    """Distinguishes حال (state) from تمييز (specification) — both are accusative."""
+    """Classifies accusative tokens as حال, تمييز, or unknown."""
 
-    TAMYIZ_WORDS = {"كيلوغراماً", "متراً", "عاماً", "رطلاً", "ليلةً", "ميلاً", "قدماً", "شبراً",
-                    "نفساً", "عقلاً", "ساعةً", "يوماً", "شهراً"}
+    def classify(
+        self,
+        surface: str,
+        governing_factor_type: str | None,
+        context: list[str],
+    ) -> dict:
+        warnings: list[str] = []
+        bare = _HARAKAT.sub("", surface)
+        context_bare = [_HARAKAT.sub("", t) for t in context]
 
-    HAL_PATTERNS = {"راكباً", "ماشياً", "فرحاً", "حزيناً", "ضاحكاً", "باكياً", "مسرعاً", "قائماً",
-                    "قاعداً", "نائماً", "جالساً"}
+        if self._suggests_tamyiz(bare, context_bare):
+            return {
+                "classification": "tamyiz",
+                "relation_type": "nmod:tmod",
+                "certainty_policy": "probable_syntactic",
+                "warnings": warnings,
+            }
 
-    def classify(self, surface: str, context_tokens: list, position: int) -> HalTamyizResult:
-        """Classify an accusative token as hal or tamyiz."""
-        stripped = self._strip_diacritics(surface)
+        if self._suggests_hal(bare, context_bare, governing_factor_type):
+            return {
+                "classification": "hal",
+                "relation_type": "advcl:manner",
+                "certainty_policy": "probable_syntactic",
+                "warnings": warnings,
+            }
 
-        if surface in self.TAMYIZ_WORDS or stripped in {self._strip_diacritics(w) for w in self.TAMYIZ_WORDS}:
-            return HalTamyizResult(
-                surface=surface,
-                result_type="tamyiz",
-                syntactic_role="tamyiz",
-                semantic_role="specification",
-                certainty=0.8,
-                notes="unit of measure or specification",
-            )
+        warnings.append("hal_tamyiz_ambiguous_needs_discourse_context")
+        return {
+            "classification": "unknown",
+            "relation_type": "dep",
+            "certainty_policy": "hypothesis",
+            "warnings": warnings,
+        }
 
-        if surface in self.HAL_PATTERNS or stripped in {self._strip_diacritics(w) for w in self.HAL_PATTERNS}:
-            return HalTamyizResult(
-                surface=surface,
-                result_type="hal",
-                syntactic_role="hal",
-                semantic_role="state_description",
-                certainty=0.8,
-                notes="state description (حال)",
-            )
+    def _suggests_tamyiz(self, bare: str, context: list[str]) -> bool:
+        # If preceded by a quantity word → tamyiz
+        return any(q in context for q in _QUANTITY_WORDS)
 
-        if position > 0:
-            prev = self._strip_diacritics(context_tokens[position - 1])
-            if self._is_number(prev):
-                return HalTamyizResult(
-                    surface=surface,
-                    result_type="tamyiz",
-                    syntactic_role="tamyiz",
-                    semantic_role="specification",
-                    certainty=0.85,
-                    notes="follows a number",
-                )
-
-        return HalTamyizResult(
-            surface=surface,
-            result_type="hal",
-            syntactic_role="hal",
-            semantic_role="state_description",
-            certainty=0.5,
-            notes="uncertain hal/tamyiz",
-        )
-
-    def _strip_diacritics(self, text: str) -> str:
-        diacritics = set('\u064b\u064c\u064d\u064e\u064f\u0650\u0651\u0652')
-        return ''.join(c for c in text if c not in diacritics)
-
-    def _is_number(self, text: str) -> bool:
-        arabic_numbers = {"واحد", "اثنان", "ثلاثة", "أربعة", "خمسة", "ستة", "سبعة", "ثمانية", "تسعة", "عشرة",
-                          "عشرون", "ثلاثون", "مائة", "ألف"}
-        return text.isdigit() or text in arabic_numbers
+    def _suggests_hal(
+        self,
+        bare: str,
+        context: list[str],
+        gf_type: str | None,
+    ) -> bool:
+        # Hal usually follows a definite noun or a verb (state of actor)
+        return gf_type == "verb"
