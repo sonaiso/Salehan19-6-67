@@ -603,7 +603,7 @@ class TestMurabAnalyzer:
         assert kataba.word_type == "verb"
         assert kataba.irab_case == "indeclinable_local"
 
-    def test_zayd_is_nominative_fail(self, example_units):
+    def test_zayd_is_nominative_fael(self, example_units):
         zayd = example_units[1]
         assert zayd.irab_case == "nominative"
         assert zayd.irab_marker == "damma"
