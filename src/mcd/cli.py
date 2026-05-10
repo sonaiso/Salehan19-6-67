@@ -509,6 +509,10 @@ def main() -> None:
 
     args = parser.parse_args()
 
+    if args.command in ("jamid-analyze", "mushtaq-analyze", "concept-geometry-graph", "concept-geometry-validate"):
+        _handle_concept_geometry_command(args)
+        return
+
     if args.command == "classify":
         from mcd.classification.fractal_prompt_classifier import FractalPromptClassifier
         from mcd.classification.serializers import prompt_frame_to_json
