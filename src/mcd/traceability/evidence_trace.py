@@ -10,6 +10,8 @@ EVIDENCE_STATUSES = [
     "fake",
     "unverified",
     "source_required",
+    "context_required",
+    "contaminated",
 ]
 
 
