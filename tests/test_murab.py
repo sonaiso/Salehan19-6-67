@@ -224,7 +224,7 @@ class TestNominativeResolver:
     def setup_method(self):
         self.r = NominativeResolver()
 
-    def test_after_verb_is_fail(self):
+    def test_nominative_after_verb_resolves_to_fael(self):
         result = self.r.resolve("زَيْدٌ", "verb", 1)
         assert result["syntactic_role"] == "فاعل"
         assert result["semantic_role"] == "agent"

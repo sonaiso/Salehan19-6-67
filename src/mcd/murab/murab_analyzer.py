@@ -26,7 +26,6 @@ from mcd.murab.irregular_irab_registry import IRREGULAR_IRAB_REGISTRY
 from mcd.murab.murab_certainty_policy import MurabCertaintyPolicy
 
 # Arabic diacritics
-_DAMMA = "\u064f"
 _DAMMA   = "\u064f"   # ُ
 _FATHA   = "\u064e"   # َ
 _KASRA   = "\u0650"   # ِ
