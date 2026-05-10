@@ -134,6 +134,7 @@ class ZeroResult:
     claim: str
     reason: str
     allowed_reframe: str
+    # Names of claim/certificate classes this zero invalidates in governance output.
     blocks: List[str] = field(default_factory=list)
 
     def format_blocking_message(self) -> str:

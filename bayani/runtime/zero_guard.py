@@ -8,6 +8,7 @@ from bayani.runtime.contracts import ZeroResult
 
 
 _BLOCKING_PATTERNS = (
+    # Patterns are lowercase because input text is normalized with casefold().
     r"يحاكي\s*gpt(?:[-\s]?\d+(?:\.\d+)*)?\s*بالكامل",
     r"بديل\s*gpt",
     r"(?:مكافئ|مكافي|مكافى)\s*(?:ل|لـ)\s*gpt(?:[-\s]?\d+(?:\.\d+)*)?",

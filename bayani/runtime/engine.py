@@ -57,6 +57,11 @@ class MustadilRuntimeEngine:
             Fully structured pipeline output including trace and audit.
         """
         prompt_input = PromptInput(prompt=prompt, mode=mode)
+        governance_zero = (
+            detect_blocking_product_claim(prompt_input.prompt)
+            if self.enable_zero_guard
+            else None
+        )
 
         # Step 1 — Prompt-Type Classification
         pt_result = prompt_type_classifier(prompt)
@@ -88,11 +93,6 @@ class MustadilRuntimeEngine:
         audit_result = run_audit(pt_result, intent_result, required_layers, layer_results)
 
         # Step 7 — Runtime ZeroGuard (blocking product-equivalence claims)
-        governance_zero = (
-            detect_blocking_product_claim(prompt)
-            if self.enable_zero_guard
-            else None
-        )
         if governance_zero is not None:
             audit_result.passed = False
             audit_result.violations.append(
