@@ -136,6 +136,12 @@ class ZeroResult:
     allowed_reframe: str
     blocks: List[str] = field(default_factory=list)
 
+    def format_blocking_message(self) -> str:
+        return (
+            f"Zero[{self.zero_type}] {self.reason} "
+            f"Allowed reframe: {self.allowed_reframe}"
+        )
+
 
 # ---------------------------------------------------------------------------
 # Final output

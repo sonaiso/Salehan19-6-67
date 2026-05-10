@@ -98,10 +98,7 @@ class MustadilRuntimeEngine:
         # Step 8 — Compose output
         final_response: str | None
         if governance_zero is not None:
-            final_response = (
-                f"Zero[{governance_zero.zero_type}] {governance_zero.reason} "
-                f"Allowed reframe: {governance_zero.allowed_reframe}"
-            )
+            final_response = governance_zero.format_blocking_message()
         elif audit_result.final_rank == "structured_answer_allowed":
             final_response = None  # downstream decoder/LLM fills this
         elif audit_result.final_rank == "deferred_pending_classification":

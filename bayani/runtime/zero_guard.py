@@ -20,7 +20,7 @@ _BLOCKING_PATTERNS = (
 def detect_blocking_product_claim(text: str) -> ZeroResult | None:
     """Return a blocking ZeroResult when text claims full GPT/LLM equivalence."""
     normalized = text.casefold()
-    if not any(re.search(pattern, normalized, re.IGNORECASE) for pattern in _BLOCKING_PATTERNS):
+    if not any(re.search(pattern, normalized) for pattern in _BLOCKING_PATTERNS):
         return None
 
     return ZeroResult(
@@ -29,7 +29,7 @@ def detect_blocking_product_claim(text: str) -> ZeroResult | None:
         required_layer="ZeroGuard",
         claim=text,
         reason=(
-            "دعوى مكافأة نموذج لغوي عام غير صحيحة في المرحلة الحالية؛ "
+            "دعوى مكافئة نموذج لغوي عام غير صحيحة في المرحلة الحالية؛ "
             "المشروع طبقة تحقق معرفية فوق النماذج وليس نموذجًا عامًا مكافئًا."
         ),
         allowed_reframe="Bayani is an Arabic epistemic verifier layer for LLM outputs.",
