@@ -1,0 +1,137 @@
+{
+  "damma": {
+    "marker_id": "damma",
+    "unicode_char": "ُ",
+    "name_ar": "الضمة",
+    "type": "original",
+    "associated_cases": [
+      "nominative"
+    ]
+  },
+  "dammatan": {
+    "marker_id": "dammatan",
+    "unicode_char": "ٌ",
+    "name_ar": "الضمة المنونة",
+    "type": "original",
+    "associated_cases": [
+      "nominative"
+    ]
+  },
+  "fatha": {
+    "marker_id": "fatha",
+    "unicode_char": "َ",
+    "name_ar": "الفتحة",
+    "type": "original",
+    "associated_cases": [
+      "accusative"
+    ]
+  },
+  "fathatan": {
+    "marker_id": "fathatan",
+    "unicode_char": "ً",
+    "name_ar": "الفتحة المنونة",
+    "type": "original",
+    "associated_cases": [
+      "accusative"
+    ]
+  },
+  "kasra": {
+    "marker_id": "kasra",
+    "unicode_char": "ِ",
+    "name_ar": "الكسرة",
+    "type": "original",
+    "associated_cases": [
+      "genitive"
+    ]
+  },
+  "kasratan": {
+    "marker_id": "kasratan",
+    "unicode_char": "ٍ",
+    "name_ar": "الكسرة المنونة",
+    "type": "original",
+    "associated_cases": [
+      "genitive"
+    ]
+  },
+  "sukun": {
+    "marker_id": "sukun",
+    "unicode_char": "ْ",
+    "name_ar": "السكون",
+    "type": "original",
+    "associated_cases": [
+      "jussive"
+    ]
+  },
+  "waw": {
+    "marker_id": "waw",
+    "unicode_char": "و",
+    "name_ar": "الواو",
+    "type": "original",
+    "associated_cases": [
+      "nominative"
+    ]
+  },
+  "alif": {
+    "marker_id": "alif",
+    "unicode_char": "ا",
+    "name_ar": "الألف",
+    "type": "original",
+    "associated_cases": [
+      "accusative"
+    ]
+  },
+  "ya": {
+    "marker_id": "ya",
+    "unicode_char": "ي",
+    "name_ar": "الياء",
+    "type": "original",
+    "associated_cases": [
+      "genitive"
+    ]
+  },
+  "nun": {
+    "marker_id": "nun",
+    "unicode_char": "ن",
+    "name_ar": "النون (ثبوت)",
+    "type": "original",
+    "associated_cases": [
+      "nominative"
+    ]
+  },
+  "deleted_nun": {
+    "marker_id": "deleted_nun",
+    "unicode_char": "",
+    "name_ar": "حذف النون",
+    "type": "original",
+    "associated_cases": [
+      "jussive_or_accusative"
+    ]
+  },
+  "deleted_weak_letter": {
+    "marker_id": "deleted_weak_letter",
+    "unicode_char": "",
+    "name_ar": "حذف حرف العلة",
+    "type": "original",
+    "associated_cases": [
+      "jussive"
+    ]
+  },
+  "estimated_damma": {
+    "marker_id": "estimated_damma",
+    "unicode_char": "",
+    "name_ar": "الضمة المقدرة",
+    "type": "estimated",
+    "associated_cases": [
+      "nominative"
+    ]
+  },
+  "estimated_kasra": {
+    "marker_id": "estimated_kasra",
+    "unicode_char": "",
+    "name_ar": "الكسرة المقدرة",
+    "type": "estimated",
+    "associated_cases": [
+      "genitive"
+    ]
+  }
+}

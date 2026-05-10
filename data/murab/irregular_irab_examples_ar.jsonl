@@ -1,0 +1,5 @@
+{"example_id": "irr_001", "text": "جاء أبوكَ", "tokens": [{"token": "أبوكَ", "role": "agent", "case": "nominative", "marker": "waw", "irregular": "five_nouns"}], "notes": "أب - من الأسماء الخمسة، مرفوع بالواو"}
+{"example_id": "irr_002", "text": "رأيتُ أخاكَ", "tokens": [{"token": "أخاكَ", "role": "object", "case": "accusative", "marker": "alif", "irregular": "five_nouns"}], "notes": "أخ - منصوب بالألف"}
+{"example_id": "irr_003", "text": "مررتُ بذي المعالي", "tokens": [{"token": "ذي", "role": "object_of_preposition", "case": "genitive", "marker": "ya", "irregular": "five_nouns"}], "notes": "ذو - مجرور بالياء"}
+{"example_id": "irr_004", "text": "حضر الطالبان", "tokens": [{"token": "الطالبان", "role": "agent", "case": "nominative", "marker": "alif", "irregular": "dual"}], "notes": "المثنى مرفوع بالألف"}
+{"example_id": "irr_005", "text": "جاء المعلمون", "tokens": [{"token": "المعلمون", "role": "agent", "case": "nominative", "marker": "waw", "irregular": "sound_masculine_plural"}], "notes": "جمع المذكر السالم مرفوع بالواو"}

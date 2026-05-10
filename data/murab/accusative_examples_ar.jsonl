@@ -1,0 +1,150 @@
+{"example_id": "acc_001", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_002", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_003", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_004", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_005", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_006", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_007", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_008", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_009", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_010", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_011", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_012", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_013", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_014", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_015", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_016", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_017", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_018", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_019", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_020", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_021", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_022", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_023", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_024", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_025", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_026", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_027", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_028", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_029", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_030", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_031", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_032", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_033", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_034", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_035", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_036", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_037", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_038", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_039", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_040", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_041", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_042", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_043", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_044", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_045", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_046", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_047", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_048", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_049", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_050", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_051", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_052", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_053", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_054", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_055", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_056", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_057", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_058", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_059", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_060", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_061", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_062", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_063", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_064", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_065", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_066", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_067", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_068", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_069", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_070", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_071", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_072", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_073", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_074", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_075", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_076", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_077", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_078", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_079", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_080", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_081", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_082", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_083", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_084", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_085", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_086", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_087", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_088", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_089", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_090", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_091", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_092", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_093", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_094", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_095", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_096", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_097", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_098", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_099", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_100", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_101", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_102", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_103", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_104", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_105", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_106", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_107", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_108", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_109", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_110", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_111", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_112", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_113", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_114", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_115", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_116", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_117", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_118", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_119", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_120", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_121", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_122", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_123", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_124", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_125", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_126", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_127", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_128", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_129", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_130", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_131", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_132", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_133", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_134", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_135", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_136", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_137", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_138", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_139", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_140", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_141", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_142", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_143", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_144", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_145", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}
+{"example_id": "acc_146", "text": "رأيتُ الكتابَ", "tokens": [{"token": "الكتابَ", "role": "object", "case": "accusative"}], "notes": "المفعول به منصوب"}
+{"example_id": "acc_147", "text": "إنَّ العلمَ نورٌ", "tokens": [{"token": "العلمَ", "role": "inna_name", "case": "accusative"}], "notes": "اسم إن منصوب"}
+{"example_id": "acc_148", "text": "جاء الطالبُ فرحاً", "tokens": [{"token": "فرحاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب"}
+{"example_id": "acc_149", "text": "اشتريتُ رطلاً تفاحاً", "tokens": [{"token": "تفاحاً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب"}
+{"example_id": "acc_150", "text": "أكرمتُ الضيوفَ إلا زيداً", "tokens": [{"token": "زيداً", "role": "exception", "case": "accusative"}], "notes": "المستثنى منصوب"}

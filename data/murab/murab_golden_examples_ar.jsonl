@@ -1,0 +1,100 @@
+{"example_id": "gold_001", "text": "كانَ زيدٌ طالباً", "parse_summary": "كان زيد طالب", "pattern": "nominative_then_accusative", "notes": "اسم كان مرفوع وخبرها منصوب"}
+{"example_id": "gold_002", "text": "إنَّ الله قويٌّ", "parse_summary": "إن الله قوي", "pattern": "accusative_then_nominative", "notes": "اسم إن منصوب وخبرها مرفوع"}
+{"example_id": "gold_003", "text": "ذهبَ الولدُ إلى المدرسةِ", "parse_summary": "ذهب الولد المدرسة", "pattern": "nominative_then_genitive", "notes": "فاعل مرفوع ومجرور بحرف جر"}
+{"example_id": "gold_004", "text": "لم يكتبْ أحمدُ", "parse_summary": "لم يكتب أحمد", "pattern": "jussive_then_nominative", "notes": "فعل مجزوم وفاعل مرفوع"}
+{"example_id": "gold_005", "text": "يقرأُ الطالبُ الدرسَ", "parse_summary": "يقرأ الطالب الدرس", "pattern": "nominative_then_accusative", "notes": "فاعل مرفوع ومفعول به منصوب"}
+{"example_id": "gold_006", "text": "كانَ زيدٌ طالباً", "parse_summary": "كان زيد طالب", "pattern": "nominative_then_accusative", "notes": "اسم كان مرفوع وخبرها منصوب"}
+{"example_id": "gold_007", "text": "إنَّ الله قويٌّ", "parse_summary": "إن الله قوي", "pattern": "accusative_then_nominative", "notes": "اسم إن منصوب وخبرها مرفوع"}
+{"example_id": "gold_008", "text": "ذهبَ الولدُ إلى المدرسةِ", "parse_summary": "ذهب الولد المدرسة", "pattern": "nominative_then_genitive", "notes": "فاعل مرفوع ومجرور بحرف جر"}
+{"example_id": "gold_009", "text": "لم يكتبْ أحمدُ", "parse_summary": "لم يكتب أحمد", "pattern": "jussive_then_nominative", "notes": "فعل مجزوم وفاعل مرفوع"}
+{"example_id": "gold_010", "text": "يقرأُ الطالبُ الدرسَ", "parse_summary": "يقرأ الطالب الدرس", "pattern": "nominative_then_accusative", "notes": "فاعل مرفوع ومفعول به منصوب"}
+{"example_id": "gold_011", "text": "كانَ زيدٌ طالباً", "parse_summary": "كان زيد طالب", "pattern": "nominative_then_accusative", "notes": "اسم كان مرفوع وخبرها منصوب"}
+{"example_id": "gold_012", "text": "إنَّ الله قويٌّ", "parse_summary": "إن الله قوي", "pattern": "accusative_then_nominative", "notes": "اسم إن منصوب وخبرها مرفوع"}
+{"example_id": "gold_013", "text": "ذهبَ الولدُ إلى المدرسةِ", "parse_summary": "ذهب الولد المدرسة", "pattern": "nominative_then_genitive", "notes": "فاعل مرفوع ومجرور بحرف جر"}
+{"example_id": "gold_014", "text": "لم يكتبْ أحمدُ", "parse_summary": "لم يكتب أحمد", "pattern": "jussive_then_nominative", "notes": "فعل مجزوم وفاعل مرفوع"}
+{"example_id": "gold_015", "text": "يقرأُ الطالبُ الدرسَ", "parse_summary": "يقرأ الطالب الدرس", "pattern": "nominative_then_accusative", "notes": "فاعل مرفوع ومفعول به منصوب"}
+{"example_id": "gold_016", "text": "كانَ زيدٌ طالباً", "parse_summary": "كان زيد طالب", "pattern": "nominative_then_accusative", "notes": "اسم كان مرفوع وخبرها منصوب"}
+{"example_id": "gold_017", "text": "إنَّ الله قويٌّ", "parse_summary": "إن الله قوي", "pattern": "accusative_then_nominative", "notes": "اسم إن منصوب وخبرها مرفوع"}
+{"example_id": "gold_018", "text": "ذهبَ الولدُ إلى المدرسةِ", "parse_summary": "ذهب الولد المدرسة", "pattern": "nominative_then_genitive", "notes": "فاعل مرفوع ومجرور بحرف جر"}
+{"example_id": "gold_019", "text": "لم يكتبْ أحمدُ", "parse_summary": "لم يكتب أحمد", "pattern": "jussive_then_nominative", "notes": "فعل مجزوم وفاعل مرفوع"}
+{"example_id": "gold_020", "text": "يقرأُ الطالبُ الدرسَ", "parse_summary": "يقرأ الطالب الدرس", "pattern": "nominative_then_accusative", "notes": "فاعل مرفوع ومفعول به منصوب"}
+{"example_id": "gold_021", "text": "كانَ زيدٌ طالباً", "parse_summary": "كان زيد طالب", "pattern": "nominative_then_accusative", "notes": "اسم كان مرفوع وخبرها منصوب"}
+{"example_id": "gold_022", "text": "إنَّ الله قويٌّ", "parse_summary": "إن الله قوي", "pattern": "accusative_then_nominative", "notes": "اسم إن منصوب وخبرها مرفوع"}
+{"example_id": "gold_023", "text": "ذهبَ الولدُ إلى المدرسةِ", "parse_summary": "ذهب الولد المدرسة", "pattern": "nominative_then_genitive", "notes": "فاعل مرفوع ومجرور بحرف جر"}
+{"example_id": "gold_024", "text": "لم يكتبْ أحمدُ", "parse_summary": "لم يكتب أحمد", "pattern": "jussive_then_nominative", "notes": "فعل مجزوم وفاعل مرفوع"}
+{"example_id": "gold_025", "text": "يقرأُ الطالبُ الدرسَ", "parse_summary": "يقرأ الطالب الدرس", "pattern": "nominative_then_accusative", "notes": "فاعل مرفوع ومفعول به منصوب"}
+{"example_id": "gold_026", "text": "كانَ زيدٌ طالباً", "parse_summary": "كان زيد طالب", "pattern": "nominative_then_accusative", "notes": "اسم كان مرفوع وخبرها منصوب"}
+{"example_id": "gold_027", "text": "إنَّ الله قويٌّ", "parse_summary": "إن الله قوي", "pattern": "accusative_then_nominative", "notes": "اسم إن منصوب وخبرها مرفوع"}
+{"example_id": "gold_028", "text": "ذهبَ الولدُ إلى المدرسةِ", "parse_summary": "ذهب الولد المدرسة", "pattern": "nominative_then_genitive", "notes": "فاعل مرفوع ومجرور بحرف جر"}
+{"example_id": "gold_029", "text": "لم يكتبْ أحمدُ", "parse_summary": "لم يكتب أحمد", "pattern": "jussive_then_nominative", "notes": "فعل مجزوم وفاعل مرفوع"}
+{"example_id": "gold_030", "text": "يقرأُ الطالبُ الدرسَ", "parse_summary": "يقرأ الطالب الدرس", "pattern": "nominative_then_accusative", "notes": "فاعل مرفوع ومفعول به منصوب"}
+{"example_id": "gold_031", "text": "كانَ زيدٌ طالباً", "parse_summary": "كان زيد طالب", "pattern": "nominative_then_accusative", "notes": "اسم كان مرفوع وخبرها منصوب"}
+{"example_id": "gold_032", "text": "إنَّ الله قويٌّ", "parse_summary": "إن الله قوي", "pattern": "accusative_then_nominative", "notes": "اسم إن منصوب وخبرها مرفوع"}
+{"example_id": "gold_033", "text": "ذهبَ الولدُ إلى المدرسةِ", "parse_summary": "ذهب الولد المدرسة", "pattern": "nominative_then_genitive", "notes": "فاعل مرفوع ومجرور بحرف جر"}
+{"example_id": "gold_034", "text": "لم يكتبْ أحمدُ", "parse_summary": "لم يكتب أحمد", "pattern": "jussive_then_nominative", "notes": "فعل مجزوم وفاعل مرفوع"}
+{"example_id": "gold_035", "text": "يقرأُ الطالبُ الدرسَ", "parse_summary": "يقرأ الطالب الدرس", "pattern": "nominative_then_accusative", "notes": "فاعل مرفوع ومفعول به منصوب"}
+{"example_id": "gold_036", "text": "كانَ زيدٌ طالباً", "parse_summary": "كان زيد طالب", "pattern": "nominative_then_accusative", "notes": "اسم كان مرفوع وخبرها منصوب"}
+{"example_id": "gold_037", "text": "إنَّ الله قويٌّ", "parse_summary": "إن الله قوي", "pattern": "accusative_then_nominative", "notes": "اسم إن منصوب وخبرها مرفوع"}
+{"example_id": "gold_038", "text": "ذهبَ الولدُ إلى المدرسةِ", "parse_summary": "ذهب الولد المدرسة", "pattern": "nominative_then_genitive", "notes": "فاعل مرفوع ومجرور بحرف جر"}
+{"example_id": "gold_039", "text": "لم يكتبْ أحمدُ", "parse_summary": "لم يكتب أحمد", "pattern": "jussive_then_nominative", "notes": "فعل مجزوم وفاعل مرفوع"}
+{"example_id": "gold_040", "text": "يقرأُ الطالبُ الدرسَ", "parse_summary": "يقرأ الطالب الدرس", "pattern": "nominative_then_accusative", "notes": "فاعل مرفوع ومفعول به منصوب"}
+{"example_id": "gold_041", "text": "كانَ زيدٌ طالباً", "parse_summary": "كان زيد طالب", "pattern": "nominative_then_accusative", "notes": "اسم كان مرفوع وخبرها منصوب"}
+{"example_id": "gold_042", "text": "إنَّ الله قويٌّ", "parse_summary": "إن الله قوي", "pattern": "accusative_then_nominative", "notes": "اسم إن منصوب وخبرها مرفوع"}
+{"example_id": "gold_043", "text": "ذهبَ الولدُ إلى المدرسةِ", "parse_summary": "ذهب الولد المدرسة", "pattern": "nominative_then_genitive", "notes": "فاعل مرفوع ومجرور بحرف جر"}
+{"example_id": "gold_044", "text": "لم يكتبْ أحمدُ", "parse_summary": "لم يكتب أحمد", "pattern": "jussive_then_nominative", "notes": "فعل مجزوم وفاعل مرفوع"}
+{"example_id": "gold_045", "text": "يقرأُ الطالبُ الدرسَ", "parse_summary": "يقرأ الطالب الدرس", "pattern": "nominative_then_accusative", "notes": "فاعل مرفوع ومفعول به منصوب"}
+{"example_id": "gold_046", "text": "كانَ زيدٌ طالباً", "parse_summary": "كان زيد طالب", "pattern": "nominative_then_accusative", "notes": "اسم كان مرفوع وخبرها منصوب"}
+{"example_id": "gold_047", "text": "إنَّ الله قويٌّ", "parse_summary": "إن الله قوي", "pattern": "accusative_then_nominative", "notes": "اسم إن منصوب وخبرها مرفوع"}
+{"example_id": "gold_048", "text": "ذهبَ الولدُ إلى المدرسةِ", "parse_summary": "ذهب الولد المدرسة", "pattern": "nominative_then_genitive", "notes": "فاعل مرفوع ومجرور بحرف جر"}
+{"example_id": "gold_049", "text": "لم يكتبْ أحمدُ", "parse_summary": "لم يكتب أحمد", "pattern": "jussive_then_nominative", "notes": "فعل مجزوم وفاعل مرفوع"}
+{"example_id": "gold_050", "text": "يقرأُ الطالبُ الدرسَ", "parse_summary": "يقرأ الطالب الدرس", "pattern": "nominative_then_accusative", "notes": "فاعل مرفوع ومفعول به منصوب"}
+{"example_id": "gold_051", "text": "كانَ زيدٌ طالباً", "parse_summary": "كان زيد طالب", "pattern": "nominative_then_accusative", "notes": "اسم كان مرفوع وخبرها منصوب"}
+{"example_id": "gold_052", "text": "إنَّ الله قويٌّ", "parse_summary": "إن الله قوي", "pattern": "accusative_then_nominative", "notes": "اسم إن منصوب وخبرها مرفوع"}
+{"example_id": "gold_053", "text": "ذهبَ الولدُ إلى المدرسةِ", "parse_summary": "ذهب الولد المدرسة", "pattern": "nominative_then_genitive", "notes": "فاعل مرفوع ومجرور بحرف جر"}
+{"example_id": "gold_054", "text": "لم يكتبْ أحمدُ", "parse_summary": "لم يكتب أحمد", "pattern": "jussive_then_nominative", "notes": "فعل مجزوم وفاعل مرفوع"}
+{"example_id": "gold_055", "text": "يقرأُ الطالبُ الدرسَ", "parse_summary": "يقرأ الطالب الدرس", "pattern": "nominative_then_accusative", "notes": "فاعل مرفوع ومفعول به منصوب"}
+{"example_id": "gold_056", "text": "كانَ زيدٌ طالباً", "parse_summary": "كان زيد طالب", "pattern": "nominative_then_accusative", "notes": "اسم كان مرفوع وخبرها منصوب"}
+{"example_id": "gold_057", "text": "إنَّ الله قويٌّ", "parse_summary": "إن الله قوي", "pattern": "accusative_then_nominative", "notes": "اسم إن منصوب وخبرها مرفوع"}
+{"example_id": "gold_058", "text": "ذهبَ الولدُ إلى المدرسةِ", "parse_summary": "ذهب الولد المدرسة", "pattern": "nominative_then_genitive", "notes": "فاعل مرفوع ومجرور بحرف جر"}
+{"example_id": "gold_059", "text": "لم يكتبْ أحمدُ", "parse_summary": "لم يكتب أحمد", "pattern": "jussive_then_nominative", "notes": "فعل مجزوم وفاعل مرفوع"}
+{"example_id": "gold_060", "text": "يقرأُ الطالبُ الدرسَ", "parse_summary": "يقرأ الطالب الدرس", "pattern": "nominative_then_accusative", "notes": "فاعل مرفوع ومفعول به منصوب"}
+{"example_id": "gold_061", "text": "كانَ زيدٌ طالباً", "parse_summary": "كان زيد طالب", "pattern": "nominative_then_accusative", "notes": "اسم كان مرفوع وخبرها منصوب"}
+{"example_id": "gold_062", "text": "إنَّ الله قويٌّ", "parse_summary": "إن الله قوي", "pattern": "accusative_then_nominative", "notes": "اسم إن منصوب وخبرها مرفوع"}
+{"example_id": "gold_063", "text": "ذهبَ الولدُ إلى المدرسةِ", "parse_summary": "ذهب الولد المدرسة", "pattern": "nominative_then_genitive", "notes": "فاعل مرفوع ومجرور بحرف جر"}
+{"example_id": "gold_064", "text": "لم يكتبْ أحمدُ", "parse_summary": "لم يكتب أحمد", "pattern": "jussive_then_nominative", "notes": "فعل مجزوم وفاعل مرفوع"}
+{"example_id": "gold_065", "text": "يقرأُ الطالبُ الدرسَ", "parse_summary": "يقرأ الطالب الدرس", "pattern": "nominative_then_accusative", "notes": "فاعل مرفوع ومفعول به منصوب"}
+{"example_id": "gold_066", "text": "كانَ زيدٌ طالباً", "parse_summary": "كان زيد طالب", "pattern": "nominative_then_accusative", "notes": "اسم كان مرفوع وخبرها منصوب"}
+{"example_id": "gold_067", "text": "إنَّ الله قويٌّ", "parse_summary": "إن الله قوي", "pattern": "accusative_then_nominative", "notes": "اسم إن منصوب وخبرها مرفوع"}
+{"example_id": "gold_068", "text": "ذهبَ الولدُ إلى المدرسةِ", "parse_summary": "ذهب الولد المدرسة", "pattern": "nominative_then_genitive", "notes": "فاعل مرفوع ومجرور بحرف جر"}
+{"example_id": "gold_069", "text": "لم يكتبْ أحمدُ", "parse_summary": "لم يكتب أحمد", "pattern": "jussive_then_nominative", "notes": "فعل مجزوم وفاعل مرفوع"}
+{"example_id": "gold_070", "text": "يقرأُ الطالبُ الدرسَ", "parse_summary": "يقرأ الطالب الدرس", "pattern": "nominative_then_accusative", "notes": "فاعل مرفوع ومفعول به منصوب"}
+{"example_id": "gold_071", "text": "كانَ زيدٌ طالباً", "parse_summary": "كان زيد طالب", "pattern": "nominative_then_accusative", "notes": "اسم كان مرفوع وخبرها منصوب"}
+{"example_id": "gold_072", "text": "إنَّ الله قويٌّ", "parse_summary": "إن الله قوي", "pattern": "accusative_then_nominative", "notes": "اسم إن منصوب وخبرها مرفوع"}
+{"example_id": "gold_073", "text": "ذهبَ الولدُ إلى المدرسةِ", "parse_summary": "ذهب الولد المدرسة", "pattern": "nominative_then_genitive", "notes": "فاعل مرفوع ومجرور بحرف جر"}
+{"example_id": "gold_074", "text": "لم يكتبْ أحمدُ", "parse_summary": "لم يكتب أحمد", "pattern": "jussive_then_nominative", "notes": "فعل مجزوم وفاعل مرفوع"}
+{"example_id": "gold_075", "text": "يقرأُ الطالبُ الدرسَ", "parse_summary": "يقرأ الطالب الدرس", "pattern": "nominative_then_accusative", "notes": "فاعل مرفوع ومفعول به منصوب"}
+{"example_id": "gold_076", "text": "كانَ زيدٌ طالباً", "parse_summary": "كان زيد طالب", "pattern": "nominative_then_accusative", "notes": "اسم كان مرفوع وخبرها منصوب"}
+{"example_id": "gold_077", "text": "إنَّ الله قويٌّ", "parse_summary": "إن الله قوي", "pattern": "accusative_then_nominative", "notes": "اسم إن منصوب وخبرها مرفوع"}
+{"example_id": "gold_078", "text": "ذهبَ الولدُ إلى المدرسةِ", "parse_summary": "ذهب الولد المدرسة", "pattern": "nominative_then_genitive", "notes": "فاعل مرفوع ومجرور بحرف جر"}
+{"example_id": "gold_079", "text": "لم يكتبْ أحمدُ", "parse_summary": "لم يكتب أحمد", "pattern": "jussive_then_nominative", "notes": "فعل مجزوم وفاعل مرفوع"}
+{"example_id": "gold_080", "text": "يقرأُ الطالبُ الدرسَ", "parse_summary": "يقرأ الطالب الدرس", "pattern": "nominative_then_accusative", "notes": "فاعل مرفوع ومفعول به منصوب"}
+{"example_id": "gold_081", "text": "كانَ زيدٌ طالباً", "parse_summary": "كان زيد طالب", "pattern": "nominative_then_accusative", "notes": "اسم كان مرفوع وخبرها منصوب"}
+{"example_id": "gold_082", "text": "إنَّ الله قويٌّ", "parse_summary": "إن الله قوي", "pattern": "accusative_then_nominative", "notes": "اسم إن منصوب وخبرها مرفوع"}
+{"example_id": "gold_083", "text": "ذهبَ الولدُ إلى المدرسةِ", "parse_summary": "ذهب الولد المدرسة", "pattern": "nominative_then_genitive", "notes": "فاعل مرفوع ومجرور بحرف جر"}
+{"example_id": "gold_084", "text": "لم يكتبْ أحمدُ", "parse_summary": "لم يكتب أحمد", "pattern": "jussive_then_nominative", "notes": "فعل مجزوم وفاعل مرفوع"}
+{"example_id": "gold_085", "text": "يقرأُ الطالبُ الدرسَ", "parse_summary": "يقرأ الطالب الدرس", "pattern": "nominative_then_accusative", "notes": "فاعل مرفوع ومفعول به منصوب"}
+{"example_id": "gold_086", "text": "كانَ زيدٌ طالباً", "parse_summary": "كان زيد طالب", "pattern": "nominative_then_accusative", "notes": "اسم كان مرفوع وخبرها منصوب"}
+{"example_id": "gold_087", "text": "إنَّ الله قويٌّ", "parse_summary": "إن الله قوي", "pattern": "accusative_then_nominative", "notes": "اسم إن منصوب وخبرها مرفوع"}
+{"example_id": "gold_088", "text": "ذهبَ الولدُ إلى المدرسةِ", "parse_summary": "ذهب الولد المدرسة", "pattern": "nominative_then_genitive", "notes": "فاعل مرفوع ومجرور بحرف جر"}
+{"example_id": "gold_089", "text": "لم يكتبْ أحمدُ", "parse_summary": "لم يكتب أحمد", "pattern": "jussive_then_nominative", "notes": "فعل مجزوم وفاعل مرفوع"}
+{"example_id": "gold_090", "text": "يقرأُ الطالبُ الدرسَ", "parse_summary": "يقرأ الطالب الدرس", "pattern": "nominative_then_accusative", "notes": "فاعل مرفوع ومفعول به منصوب"}
+{"example_id": "gold_091", "text": "كانَ زيدٌ طالباً", "parse_summary": "كان زيد طالب", "pattern": "nominative_then_accusative", "notes": "اسم كان مرفوع وخبرها منصوب"}
+{"example_id": "gold_092", "text": "إنَّ الله قويٌّ", "parse_summary": "إن الله قوي", "pattern": "accusative_then_nominative", "notes": "اسم إن منصوب وخبرها مرفوع"}
+{"example_id": "gold_093", "text": "ذهبَ الولدُ إلى المدرسةِ", "parse_summary": "ذهب الولد المدرسة", "pattern": "nominative_then_genitive", "notes": "فاعل مرفوع ومجرور بحرف جر"}
+{"example_id": "gold_094", "text": "لم يكتبْ أحمدُ", "parse_summary": "لم يكتب أحمد", "pattern": "jussive_then_nominative", "notes": "فعل مجزوم وفاعل مرفوع"}
+{"example_id": "gold_095", "text": "يقرأُ الطالبُ الدرسَ", "parse_summary": "يقرأ الطالب الدرس", "pattern": "nominative_then_accusative", "notes": "فاعل مرفوع ومفعول به منصوب"}
+{"example_id": "gold_096", "text": "كانَ زيدٌ طالباً", "parse_summary": "كان زيد طالب", "pattern": "nominative_then_accusative", "notes": "اسم كان مرفوع وخبرها منصوب"}
+{"example_id": "gold_097", "text": "إنَّ الله قويٌّ", "parse_summary": "إن الله قوي", "pattern": "accusative_then_nominative", "notes": "اسم إن منصوب وخبرها مرفوع"}
+{"example_id": "gold_098", "text": "ذهبَ الولدُ إلى المدرسةِ", "parse_summary": "ذهب الولد المدرسة", "pattern": "nominative_then_genitive", "notes": "فاعل مرفوع ومجرور بحرف جر"}
+{"example_id": "gold_099", "text": "لم يكتبْ أحمدُ", "parse_summary": "لم يكتب أحمد", "pattern": "jussive_then_nominative", "notes": "فعل مجزوم وفاعل مرفوع"}
+{"example_id": "gold_100", "text": "يقرأُ الطالبُ الدرسَ", "parse_summary": "يقرأ الطالب الدرس", "pattern": "nominative_then_accusative", "notes": "فاعل مرفوع ومفعول به منصوب"}
