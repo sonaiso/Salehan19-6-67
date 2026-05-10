@@ -1968,7 +1968,7 @@ def _handle_cfk_command(args) -> None:  # noqa: ANN001
         elif args.output == "markdown":
             print(table.to_markdown())
         else:
-            # text mode
+            # text mode; [:70] slices 70 Unicode code points — safe for Arabic in Python 3
             print(f"النص: {args.text[:70]}")
             print(f"{'البعد':<18} {'GPT (إحصائي)':<22} {'العربية':<22} {'العقل'}")
             print("-" * 85)

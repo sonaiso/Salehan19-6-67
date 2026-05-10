@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 from mcd.cfk.cfk_pipeline import CognitiveFractalResult
 
 
@@ -19,17 +20,37 @@ _JUDGMENT_AR = {
     "zero":        "خطأ بنيوي — باقٍ معرفي",
 }
 
+# Characters that have special meaning in Markdown
+_MD_SPECIAL = re.compile(r"([\\`*_{}[\]()#+\-.!|>])")
+
+
+def _escape_md(text: str) -> str:
+    """Escape Markdown special characters in user-supplied text."""
+    return _MD_SPECIAL.sub(r"\\\1", text)
+
+
+def _trunc(text: str, n: int) -> str:
+    """Return at most *n* Unicode code-point characters from text.
+
+    Python 3 strings are sequences of code points, so slicing is already
+    safe for multi-byte encodings like Arabic Unicode. This helper makes the
+    intent explicit and avoids reviewer confusion.
+    """
+    return text[:n]
+
 
 def generate_markdown_report(result: CognitiveFractalResult) -> str:
     proof = result.proof
     icon  = _JUDGMENT_ICONS.get(proof.judgment, "?")
     ar    = _JUDGMENT_AR.get(proof.judgment, proof.judgment)
+    # Escape user-supplied text before embedding in Markdown
+    safe_text = _escape_md(result.text)
 
     lines = [
         f"# تقرير النواة الفراكتالية المعرفية (CFK)",
         f"",
         f"## النص المُحلَّل",
-        f"> {result.text}",
+        f"> {safe_text}",
         f"",
         f"## الحكم النهائي",
         f"**{icon} {ar}**",
@@ -38,12 +59,12 @@ def generate_markdown_report(result: CognitiveFractalResult) -> str:
         f"| المقياس | القيمة |",
         f"|---------|--------|",
         f"| الثقة الإحصائية (GPT)       | {round(proof.statistical_confidence, 3)} |",
-        f"| القوة اللغوية (العربية)     | {proof.linguistic_force} |",
+        f"| القوة اللغوية (العربية)     | {_escape_md(proof.linguistic_force)} |",
         f"| اليقين المعرفي (العقل)      | {round(proof.epistemic_certainty, 3)} |",
-        f"| حالة الدليل                 | {proof.evidence_state} |",
+        f"| حالة الدليل                 | {_escape_md(proof.evidence_state)} |",
         f"| الباقي المعرفي              | {round(proof.cognitive_residual, 3)} |",
-        f"| نوع الباقي                  | {proof.residual_type} |",
-        f"| إشارة التعلم                | {proof.learning_signal} |",
+        f"| نوع الباقي                  | {_escape_md(proof.residual_type)} |",
+        f"| إشارة التعلم                | {_escape_md(proof.learning_signal)} |",
         f"",
     ]
 
@@ -57,14 +78,16 @@ def generate_markdown_report(result: CognitiveFractalResult) -> str:
     if cons.violations:
         lines.append("- **الانتهاكات:**")
         for v in cons.violations:
-            lines.append(f"  - [{v.law}] {v.description} (خطورة: {v.severity})")
+            lines.append(
+                f"  - [{_escape_md(v.law)}] {_escape_md(v.description)} (خطورة: {_escape_md(v.severity)})"
+            )
     lines.append("")
 
     # Notes from kernel
     if result.kernel.notes:
         lines.append("## ملاحظات النواة")
         for note in result.kernel.notes:
-            lines.append(f"- {note}")
+            lines.append(f"- {_escape_md(note)}")
         lines.append("")
 
     # Comparison table

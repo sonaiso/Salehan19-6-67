@@ -51,8 +51,10 @@ class CognitiveFractalResult:
         }
 
     def summary(self) -> str:
+        # text[:70] safely slices 70 Unicode code points (Arabic-safe in Python 3)
+        display_text = self.text[:70]
         lines = [
-            f"النص: {self.text[:70]}",
+            f"النص: {display_text}",
             f"الحكم: {self.proof.judgment}",
             f"الثقة الإحصائية: {round(self.proof.statistical_confidence, 3)}",
             f"القوة اللغوية: {self.proof.linguistic_force}",
