@@ -9,16 +9,16 @@ files are absent or malformed.  Data files **extend** the built-in data rather t
 
 | File | Format | Description |
 |------|--------|-------------|
-| `root_ontology_seed_ar.jsonl` | JSONL | 50 Arabic triconsonantal root entries with semantic metadata |
+| `root_ontology_seed_ar.jsonl` | JSONL | 102 Arabic triconsonantal root entries with semantic metadata |
 | `pattern_operator_registry.json` | JSON | 17 morphological pattern operators with semantic operator vectors |
 | `masdar_event_classes.json` | JSON | 10 masdar (verbal noun) event class definitions |
-| `jamid_essence_seed_ar.jsonl` | JSONL | 50 jamid (non-derived) essence terms |
+| `jamid_essence_seed_ar.jsonl` | JSONL | 101 jamid (non-derived) essence terms |
 | `nisba_patterns.json` | JSON | 8 nisba (relational adjective) derivation patterns |
 | `diminutive_patterns.json` | JSON | 8 diminutive (تصغير) form entries |
 | `broken_plural_patterns.json` | JSON | 30 broken plural (جمع التكسير) form pairs |
-| `qiyasi_samai_shadh_seed.jsonl` | JSONL | 50 entries classified as analogical (قياسي), heard (سَماعي), or exceptional (شاذّ) |
-| `contextual_pattern_examples_ar.jsonl` | JSONL | 50 contextual disambiguation examples |
-| `folded_word_golden_examples_ar.jsonl` | JSONL | 30 golden test examples for folded word graph validation |
+| `qiyasi_samai_shadh_seed.jsonl` | JSONL | 101 entries classified as analogical (قياسي), heard (سَماعي), or exceptional (شاذّ) |
+| `contextual_pattern_examples_ar.jsonl` | JSONL | 100 contextual disambiguation examples |
+| `folded_word_golden_examples_ar.jsonl` | JSONL | 60 golden test examples for folded word graph validation |
 
 ## Data Schema
 
