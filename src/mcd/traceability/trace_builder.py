@@ -14,8 +14,9 @@ from mcd.traceability.evidence_trace import EvidenceTrace
 from mcd.traceability.certainty_trace import CertaintyTrace
 from mcd.traceability.judgment_trace import JudgmentTrace
 
-# Keywords used to detect missing evidence (single tokens only — no bare "مصدر"/"دليل" 
-# to avoid false positives when text provides a source like "المصدر: صحيح البخاري")
+# Keywords used to detect missing evidence (single tokens only — excludes standalone
+# "مصدر"/"دليل" to avoid false positives when text provides a source like
+# "المصدر: صحيح البخاري")
 _MISSING_EVIDENCE_SIGNAL_WORDS = {
     'بلا', 'بدون',
 }
@@ -268,7 +269,15 @@ class TraceBuilder:
         tokens: list[TokenTrace],
         unicode_units: list[UnicodeTraceUnit],
     ) -> EvidenceTrace:
-        """Detect evidence status from tokens, including epistemic signals."""
+        """Detect evidence status from tokens.
+
+        Epistemic signals checked (word-boundary safe, no substring matching):
+        - Ambiguous terms (عين, علم, حق, عدل, نظام) → context_required
+        - Missing-evidence phrases (بلا مصدر, بدون دليل, ...) → missing
+        - API/model-as-source tokens (api, gpt, النموذج) → unverified
+        - Universal quantifiers without definitional context → source_required
+        - Prompt injection (تجاهل, ignore) → contaminated
+        """
         semantic_tokens = [t for t in tokens if t.token_type not in ("whitespace",)]
         # Use word-level sets for robust matching (no substring false positives)
         surfaces = {t.normalized.strip().lower() for t in tokens}
@@ -360,7 +369,15 @@ class TraceBuilder:
         evidence: EvidenceTrace,
         tokens: list[TokenTrace],
     ) -> CertaintyTrace:
-        """Derive certainty policy from evidence trace, including epistemic signals."""
+        """Derive certainty policy from evidence trace.
+
+        Epistemic signals checked (word-boundary safe):
+        - Contaminated/fake/missing/context_required/source_required/unverified evidence → suspend
+        - Known metaphor patterns (المجتمع/مريض, العلم/نور, ...) → hypothesis
+        - Universal quantifiers with missing evidence → suspend
+        - Partial evidence → probable_knowledge
+        - Present evidence with no flags → strong_knowledge
+        """
         word_set = {t.normalized.strip().lower() for t in tokens if t.normalized.strip()}
         word_list = [t.normalized.strip().lower() for t in tokens if t.normalized.strip()]
         text_joined_lower = ' '.join(word_list)

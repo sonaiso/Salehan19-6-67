@@ -14,6 +14,9 @@ from pathlib import Path
 
 from mcd.traceability.trace_builder import TraceBuilder, TraceBundle
 
+# Maximum length for text excerpt display in failed-example reports
+_MAX_EXAMPLE_TEXT_LENGTH = 60
+
 
 # Policies that require concrete evidence
 _HIGH_CERTAINTY_POLICIES = {"strong_knowledge", "near_certainty"}
@@ -104,7 +107,7 @@ class EpistemicTraceValidationReport:
         if self.failed_examples:
             lines.append(f"## Failed Examples ({len(self.failed_examples)})")
             for ex in self.failed_examples[:10]:
-                lines.append(f"- **[{ex.get('id', '?')}]** `{ex.get('text', '')[:60]}` "
+                lines.append(f"- **[{ex.get('id', '?')}]** `{ex.get('text', '')[:_MAX_EXAMPLE_TEXT_LENGTH]}` "
                               f"— {ex.get('reason', '')}")
             lines.append("")
         return "\n".join(lines)
