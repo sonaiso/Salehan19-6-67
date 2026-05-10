@@ -34,44 +34,20 @@ class TestArabicTransformFallbackRecording:
 
     def test_arabic_transform_records_murab_fallback(self):
         """When murab is unavailable, murab_fallback=True must be recorded."""
-        import unittest.mock as mock
-        with mock.patch(
-            "mcd.cfk.arabic_semantic_transform.ArabicSemanticTransform.transform",
-            wraps=self.transform.transform,
-        ):
-            # Simulate murab import failure by patching the import
-            original_transform = ArabicSemanticTransform.transform
+        t = ArabicSemanticTransform()
+        # If murab is not installed (common in CI), murab_fallback=True
+        try:
+            import mcd.murab.murab_analyzer as _m
+            murab_available = True
+        except Exception:
+            murab_available = False
 
-            def patched_transform(self_inner, text):
-                import sys
-                # Temporarily block mcd.murab from being imported
-                saved = sys.modules.get("mcd.murab.murab_analyzer")
-                sys.modules["mcd.murab.murab_analyzer"] = None  # type: ignore[assignment]
-                try:
-                    result = original_transform(self_inner, text)
-                finally:
-                    if saved is None:
-                        sys.modules.pop("mcd.murab.murab_analyzer", None)
-                    else:
-                        sys.modules["mcd.murab.murab_analyzer"] = saved
-                return result
-
-            # Direct approach: patch at the import level using a fresh transform
-            t = ArabicSemanticTransform()
-            import sys
-            # If murab is not installed (common in CI), murab_fallback=True
-            try:
-                import mcd.murab.murab_analyzer as _m
-                murab_available = True
-            except Exception:
-                murab_available = False
-
-            proj = t.transform("النار حارة")
-            if not murab_available:
-                assert proj.unit.metadata["murab_fallback"] is True
-            else:
-                # murab is installed — fallback should be False
-                assert isinstance(proj.unit.metadata["murab_fallback"], bool)
+        proj = t.transform("النار حارة")
+        if not murab_available:
+            assert proj.unit.metadata["murab_fallback"] is True
+        else:
+            # murab is installed — fallback should be False
+            assert isinstance(proj.unit.metadata["murab_fallback"], bool)
 
     def test_arabic_transform_records_mabni_fallback(self):
         """When mabni is unavailable, mabni_fallback=True must be recorded."""

@@ -103,7 +103,7 @@ class ReverseTraceBuilder:
         - evidence_refs must be non-empty for a Certificate.
         - No blocking conservation violation may exist.
         """
-        rid = f"RT-{uuid.uuid4().hex[:10]}"
+        rid = f"RT-{uuid.uuid4().hex[:16]}"
 
         evidence_refs = list(epistemic_projection.unit.E.evidence_refs)
 

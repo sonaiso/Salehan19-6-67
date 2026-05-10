@@ -1263,7 +1263,7 @@ def main() -> None:
     elif args.command in ("cfk-analyze", "cfk-compare", "cfk-proof", "cfk-table"):
         _handle_cfk_command(args)
     elif args.command in ("cfk-validate", "cfk-integration-report", "cfk-conservation", "cfk-reverse-trace"):
-        _handle_cfk_81_command(args)
+        _handle_cfk_hardening_command(args)
     else:
         parser.print_help()
 
@@ -2061,7 +2061,7 @@ def _handle_cfk_command(args) -> None:  # noqa: ANN001
             print(table.to_markdown())
 
 
-def _handle_cfk_81_command(args) -> None:  # noqa: ANN001
+def _handle_cfk_hardening_command(args) -> None:  # noqa: ANN001
     """Handle Phase 8.1 CFK hardening CLI commands."""
     import json as _json
 

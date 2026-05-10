@@ -270,19 +270,39 @@ class TestCFKHardeningCritical:
         assert result.proof.judgment != JudgmentStatus.CERTIFICATE.value
 
     def test_fake_evidence_forces_zero(self):
-        """Fake evidence detection should force judgment to zero."""
-        # We test this via the fractal kernel's zero detection path
+        """Fake evidence detection should force judgment to zero.
+
+        The FractalKernel forces judgment=zero when the epistemic projection
+        already carries judgment=zero (which is set when fake_evidence_detected=True
+        in EpistemicTransform). We simulate this by directly exercising the kernel rule.
+        """
         from mcd.cfk.cfk_schema import JudgmentStatus
+        from mcd.cfk.fractal_kernel import FractalKernel
+        from mcd.cfk.statistical_transform import StatisticalTransform
+        from mcd.cfk.arabic_semantic_transform import ArabicSemanticTransform
         from mcd.cfk.epistemic_transform import EpistemicTransform
-        transform = EpistemicTransform()
-        # A ZERO judgment is forced by fake_evidence_detected flag
-        # We verify: if judgment is zero, it can never be certificate
-        proj = transform.transform("test", statistical_confidence=0.5, evidence_refs=[])
-        assert proj.judgment in (
-            JudgmentStatus.SUSPEND.value,
-            JudgmentStatus.HYPOTHESIS.value,
-            JudgmentStatus.ZERO.value,
-        )
+
+        stat = StatisticalTransform()
+        arab = ArabicSemanticTransform()
+        epis_proj = EpistemicTransform().transform("test", statistical_confidence=0.5)
+
+        # Manually force zero judgment on the epistemic projection (simulates fake evidence)
+        epis_proj.judgment = JudgmentStatus.ZERO.value
+        epis_proj.unit.metadata["fake_evidence_detected"] = True
+
+        stat_proj = stat.transform({
+            "proposal_id": "P-fake",
+            "gpt_output": "test",
+            "input_text": "test",
+            "proposal_type": "answer",
+            "claimed_certainty": "near_certainty",
+            "claimed_evidence": [],
+        })
+        arab_proj = arab.transform("test")
+
+        kernel = FractalKernel()
+        result = kernel.apply("test", stat_proj, arab_proj, epis_proj)
+        assert result.kernel_judgment == JudgmentStatus.ZERO.value
 
     def test_cross_layer_conservation_score_above_095(self):
         """A well-formed run with evidence should score ≥ 0.95."""
