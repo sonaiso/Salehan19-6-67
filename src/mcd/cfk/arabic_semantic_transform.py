@@ -101,22 +101,28 @@ class ArabicSemanticTransform:
 
         # --- try murab analysis ---
         murab_units: list[Any] = []
+        murab_fallback = False
+        murab_fallback_reason = ""
         try:
             from mcd.murab.murab_analyzer import MurabAnalyzer
             analyzer = MurabAnalyzer()
             murab_units = analyzer.analyze(text)
-        except Exception:
-            pass
+        except Exception as exc:
+            murab_fallback = True
+            murab_fallback_reason = str(exc) or "murab_unavailable"
 
         # --- try mabni analysis ---
         mabni_result: dict[str, Any] = {}
+        mabni_fallback = False
+        mabni_fallback_reason = ""
         try:
             from mcd.mabni.mabni_unfolder import MabniUnfolder
             unfolder = MabniUnfolder()
             res = unfolder.unfold(text)
             mabni_result = res.to_dict() if hasattr(res, "to_dict") else {}
-        except Exception:
-            pass
+        except Exception as exc:
+            mabni_fallback = True
+            mabni_fallback_reason = str(exc) or "mabni_unavailable"
 
         # Build linguistic_force and operator info
         linguistic_force = _detect_linguistic_force(tokens)
@@ -153,6 +159,12 @@ class ArabicSemanticTransform:
             "neutral":     0.55,
         }
         ling_score = force_score_map.get(linguistic_force, 0.55)
+
+        # Cap comparable_score when fallback was used
+        _fallback_used = murab_fallback or mabni_fallback
+        _FALLBACK_SCORE_CAP = 0.55
+        if _fallback_used:
+            ling_score = min(ling_score, _FALLBACK_SCORE_CAP)
 
         # Syntactic certainty from murab
         syn_certainty = "probable_syntactic"
@@ -219,6 +231,8 @@ class ArabicSemanticTransform:
                 "syntactic_certainty": syn_certainty,
                 "murab_units_count": len(murab_units),
                 "mabni_speech_act": mabni_result.get("speech_act", {}).get("speech_act", ""),
+                "murab_fallback": murab_fallback,
+                "mabni_fallback": mabni_fallback,
             },
         )
 
@@ -229,6 +243,12 @@ class ArabicSemanticTransform:
         ]
         if murab_units:
             notes.append(f"murab_units={len(murab_units)}")
+        if murab_fallback:
+            notes.append(f"transform_note=murab_unavailable_fallback_used ({murab_fallback_reason})")
+        if mabni_fallback:
+            notes.append(f"transform_note=mabni_unavailable_fallback_used ({mabni_fallback_reason})")
+        if _fallback_used:
+            notes.append(f"comparable_score_capped_at={_FALLBACK_SCORE_CAP} (fallback active)")
 
         return KernelProjection(
             projection_id=f"KP-A-{uuid.uuid4().hex[:8]}",

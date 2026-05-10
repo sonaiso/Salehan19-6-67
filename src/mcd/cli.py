@@ -553,6 +553,60 @@ def main() -> None:
         "--output", choices=["json", "markdown"], default="markdown"
     )
 
+    # ---- Phase 8.1 CLI commands ----
+
+    # cfk-validate — validate all integration contracts for a claim
+    cfk_validate_parser = subparsers.add_parser(
+        "cfk-validate",
+        help="Phase 8.1: Validate CFK integration contracts for a claim",
+    )
+    cfk_validate_parser.add_argument("--text", default="النار حارة", help="Arabic claim / sentence")
+    cfk_validate_parser.add_argument(
+        "--evidence", default="", help="Comma-separated evidence references"
+    )
+    cfk_validate_parser.add_argument(
+        "--output", choices=["json", "text"], default="json"
+    )
+
+    # cfk-integration-report — full integration contract report
+    cfk_integration_report_parser = subparsers.add_parser(
+        "cfk-integration-report",
+        help="Phase 8.1: Generate a full CFK integration contract report",
+    )
+    cfk_integration_report_parser.add_argument("--text", default="النار حارة", help="Arabic claim / sentence")
+    cfk_integration_report_parser.add_argument(
+        "--evidence", default="", help="Comma-separated evidence references"
+    )
+    cfk_integration_report_parser.add_argument(
+        "--output", choices=["json", "markdown"], default="markdown"
+    )
+
+    # cfk-conservation — cross-layer conservation check
+    cfk_conservation_parser = subparsers.add_parser(
+        "cfk-conservation",
+        help="Phase 8.1: Run cross-layer conservation check on a claim",
+    )
+    cfk_conservation_parser.add_argument("--text", required=True, help="Arabic claim / sentence")
+    cfk_conservation_parser.add_argument(
+        "--evidence", default="", help="Comma-separated evidence references"
+    )
+    cfk_conservation_parser.add_argument(
+        "--output", choices=["json", "text"], default="json"
+    )
+
+    # cfk-reverse-trace — build and display a reverse trace for a claim
+    cfk_reverse_trace_parser = subparsers.add_parser(
+        "cfk-reverse-trace",
+        help="Phase 8.1: Build and display reverse trace for a claim",
+    )
+    cfk_reverse_trace_parser.add_argument("--text", required=True, help="Arabic claim / sentence")
+    cfk_reverse_trace_parser.add_argument(
+        "--evidence", default="", help="Comma-separated evidence references"
+    )
+    cfk_reverse_trace_parser.add_argument(
+        "--output", choices=["json", "markdown"], default="markdown"
+    )
+
     args = parser.parse_args()
 
     if args.command == "classify":
@@ -1208,6 +1262,8 @@ def main() -> None:
         _handle_mabni_command(args)
     elif args.command in ("cfk-analyze", "cfk-compare", "cfk-proof", "cfk-table"):
         _handle_cfk_command(args)
+    elif args.command in ("cfk-validate", "cfk-integration-report", "cfk-conservation", "cfk-reverse-trace"):
+        _handle_cfk_hardening_command(args)
     else:
         parser.print_help()
 
@@ -2003,6 +2059,207 @@ def _handle_cfk_command(args) -> None:  # noqa: ANN001
             print(_json.dumps(table.to_dict(), ensure_ascii=False, indent=2))
         else:
             print(table.to_markdown())
+
+
+def _handle_cfk_hardening_command(args) -> None:  # noqa: ANN001
+    """Handle Phase 8.1 CFK hardening CLI commands."""
+    import json as _json
+
+    from mcd.cfk.cfk_pipeline import CognitiveFractalPipeline
+    from mcd.cfk.cfk_integration_contract import (
+        ContractValidator,
+        ALL_CONTRACTS,
+        STATISTICAL_TRANSFORM_CONTRACT,
+        ARABIC_SEMANTIC_TRANSFORM_CONTRACT,
+        EPISTEMIC_TRANSFORM_CONTRACT,
+    )
+
+    evidence_refs = [e.strip() for e in args.evidence.split(",") if e.strip()] if args.evidence else []
+    text = args.text
+    cmd = args.command
+
+    pipeline = CognitiveFractalPipeline()
+    result = pipeline.run(text, evidence_refs=evidence_refs)
+
+    if cmd == "cfk-validate":
+        # Validate all three projections against their contracts
+        validator = ContractValidator()
+        stat_check = validator.validate_statistical_projection(result.kernel.statistical)
+        arab_check = validator.validate_arabic_projection(result.kernel.arabic)
+        epis_check = validator.validate_epistemic_projection(result.kernel.epistemic)
+
+        checks = [stat_check, arab_check, epis_check]
+        all_passed = all(c.passed for c in checks)
+        total_violations = sum(len(c.violations) for c in checks)
+        validation_score = max(0.0, 1.0 - total_violations * 0.1)
+
+        output = {
+            "text": text,
+            "cfk_validation_score": round(validation_score, 4),
+            "all_passed": all_passed,
+            "checks": [c.to_dict() for c in checks],
+            "proof_judgment": result.proof.judgment,
+        }
+
+        if args.output == "json":
+            print(_json.dumps(output, ensure_ascii=False, indent=2))
+        else:
+            print(f"CFK Validation Score: {round(validation_score, 4)}")
+            print(f"All Passed: {all_passed}")
+            for c in checks:
+                status = "✓" if c.passed else "✗"
+                print(f"  {status} {c.source_layer}")
+                for v in c.violations:
+                    print(f"    [{v.severity}] {v.rule}: {v.description}")
+
+    elif cmd == "cfk-integration-report":
+        # Full integration contract report in markdown or json
+        validator = ContractValidator()
+        stat_check = validator.validate_statistical_projection(result.kernel.statistical)
+        arab_check = validator.validate_arabic_projection(result.kernel.arabic)
+        epis_check = validator.validate_epistemic_projection(result.kernel.epistemic)
+
+        checks = [stat_check, arab_check, epis_check]
+        all_passed = all(c.passed for c in checks)
+        total_violations = sum(len(c.violations) for c in checks)
+        validation_score = max(0.0, 1.0 - total_violations * 0.1)
+
+        if args.output == "json":
+            output = {
+                "text": text,
+                "evidence_refs": evidence_refs,
+                "cfk_validation_score": round(validation_score, 4),
+                "all_passed": all_passed,
+                "checks": [c.to_dict() for c in checks],
+                "contracts": [c.to_dict() for c in ALL_CONTRACTS],
+                "proof_judgment": result.proof.judgment,
+                "cross_layer_conservation_score": (
+                    round(result.cross_layer_report.conservation_score, 4)
+                    if result.cross_layer_report else None
+                ),
+            }
+            print(_json.dumps(output, ensure_ascii=False, indent=2))
+        else:
+            lines = [
+                "# CFK Integration Contract Report — Phase 8.1",
+                "",
+                f"**النص:** {text[:80]}",
+                f"**الأدلة:** {evidence_refs or 'لا يوجد'}",
+                f"**الحكم النهائي:** {result.proof.judgment}",
+                "",
+                "## نتائج التحقق من العقود",
+                "",
+                f"| الطبقة | نجح | الانتهاكات |",
+                f"|--------|-----|------------|",
+            ]
+            for c in checks:
+                lines.append(f"| {c.source_layer} | {'✓' if c.passed else '✗'} | {len(c.violations)} |")
+
+            lines += [
+                "",
+                f"**CFK Validation Score:** {round(validation_score, 4)}",
+                "",
+            ]
+
+            if result.cross_layer_report:
+                clr = result.cross_layer_report
+                lines += [
+                    "## Cross-Layer Conservation",
+                    "",
+                    f"**Score:** {round(clr.conservation_score, 4)}",
+                    f"**Passed:** {'✓' if clr.passed else '✗'}",
+                    f"**Violations:** {len(clr.violations)}",
+                    "",
+                ]
+                for v in clr.violations:
+                    lines.append(f"- **[{v.severity}]** `{v.check_name}`: {v.description}")
+
+            lines += [
+                "",
+                "## قواعد العقود",
+                "",
+                "| الطبقة | يمكن إصدار شهادة؟ | يمكن رفع اليقين؟ | يمكن إنشاء دليل؟ |",
+                "|--------|------------------|-----------------|-----------------|",
+            ]
+            for c in ALL_CONTRACTS:
+                lines.append(
+                    f"| {c.source_layer} | {'نعم' if c.can_issue_certificate else 'لا'} "
+                    f"| {'نعم' if c.can_raise_epistemic_certainty else 'لا'} "
+                    f"| {'نعم' if c.can_create_evidence else 'لا'} |"
+                )
+            print("\n".join(lines))
+
+    elif cmd == "cfk-conservation":
+        # Cross-layer conservation report
+        clr = result.cross_layer_report
+        if clr is None:
+            print(_json.dumps({"error": "cross_layer_report not available"}, ensure_ascii=False))
+            return
+
+        output = clr.to_dict()
+        output["text"] = text
+        output["evidence_refs"] = evidence_refs
+        output["kernel_judgment"] = result.proof.judgment
+
+        if args.output == "json":
+            print(_json.dumps(output, ensure_ascii=False, indent=2))
+        else:
+            print(f"Cross-Layer Conservation Score: {round(clr.conservation_score, 4)}")
+            print(f"Passed: {clr.passed}")
+            print(f"Kernel Judgment: {result.proof.judgment}")
+            if clr.violations:
+                print("Violations:")
+                for v in clr.violations:
+                    print(f"  [{v.severity}] {v.check_name}: {v.description}")
+            if clr.warnings:
+                print("Warnings:")
+                for w in clr.warnings:
+                    print(f"  - {w}")
+
+    elif cmd == "cfk-reverse-trace":
+        # Reverse trace for this claim
+        rt = result.proof.reverse_trace_obj
+        if rt is None:
+            print(_json.dumps({"error": "reverse_trace not available"}, ensure_ascii=False))
+            return
+
+        if args.output == "json":
+            out = rt.to_dict()
+            out["text"] = text
+            print(_json.dumps(out, ensure_ascii=False, indent=2))
+        else:
+            lines = [
+                "# CFK Reverse Trace Report — Phase 8.1",
+                "",
+                f"**النص:** {text[:80]}",
+                f"**الحكم النهائي:** {rt.final_judgment}",
+                f"**Reverse Trace ID:** {rt.reverse_trace_id}",
+                f"**Proof ID:** {rt.proof_id}",
+                f"**Complete:** {'✓' if rt.complete else '✗'}",
+                "",
+                "## Projection IDs",
+                f"- Statistical: `{rt.statistical_projection_id}`",
+                f"- Arabic: `{rt.arabic_projection_id}`",
+                f"- Epistemic: `{rt.epistemic_projection_id}`",
+                "",
+                f"## Evidence Refs ({len(rt.evidence_refs)})",
+            ]
+            for ref in rt.evidence_refs:
+                lines.append(f"- {ref}")
+
+            lines += [
+                "",
+                f"## Residual Refs ({len(rt.residual_refs)})",
+            ]
+            for ref in rt.residual_refs:
+                lines.append(f"- {ref}")
+
+            if rt.blocking_violations:
+                lines += ["", "## Blocking Violations"]
+                for bv in rt.blocking_violations:
+                    lines.append(f"- {bv}")
+
+            print("\n".join(lines))
 
 
 if __name__ == "__main__":

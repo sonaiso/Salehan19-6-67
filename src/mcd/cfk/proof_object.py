@@ -11,7 +11,13 @@ The ProofObject carries:
   - the kernel judgment
   - conservation check results
   - the cognitive residual (learning signal)
-  - a full reverse trace
+  - a full reverse trace (Phase 8.1: ReverseTrace object)
+
+Phase 8.1 hardening:
+  Certificate requires ALL of:
+    1. evidence_refs non-empty
+    2. conservation passed (no blocking violation)
+    3. reverse_trace.complete = True
 """
 from __future__ import annotations
 
@@ -21,6 +27,7 @@ from dataclasses import dataclass, field
 from mcd.cfk.cfk_schema import JudgmentStatus
 from mcd.cfk.fractal_kernel import KernelResult
 from mcd.cfk.conservation_law import ConservationCheckResult
+from mcd.cfk.reverse_trace import ReverseTrace, ReverseTraceBuilder
 
 
 @dataclass
@@ -49,7 +56,8 @@ class ProofObject:
     residual_type: str
     learning_signal: str  # reinforce|correct|suspend|ignore
 
-    # Trace
+    # Trace — Phase 8.1: structured ReverseTrace replaces plain list
+    reverse_trace_obj: ReverseTrace | None = None
     reverse_trace: list[str] = field(default_factory=list)
 
     # Full kernel result (optional — for detailed output)
@@ -70,18 +78,30 @@ class ProofObject:
             "learning_signal": self.learning_signal,
             "reverse_trace": self.reverse_trace,
         }
+        if self.reverse_trace_obj is not None:
+            d["reverse_trace_obj"] = self.reverse_trace_obj.to_dict()
         if self.kernel_result is not None:
             d["kernel_result"] = self.kernel_result.to_dict()
         return d
 
 
 class ProofObjectBuilder:
-    """Builds a ProofObject from a KernelResult and ConservationCheckResults."""
+    """Builds a ProofObject from a KernelResult and ConservationCheckResults.
+
+    Phase 8.1 gate: Certificate is ONLY issued when:
+      - evidence_refs is non-empty
+      - no blocking conservation violation exists
+      - ReverseTrace.complete is True
+    """
+
+    def __init__(self) -> None:
+        self._rt_builder = ReverseTraceBuilder()
 
     def build(
         self,
         kernel_result: KernelResult,
         conservation_results: list[ConservationCheckResult],
+        cross_layer_report=None,  # CrossLayerConservationReport | None
     ) -> ProofObject:
 
         # Choose the primary conservation check (epistemic is most critical)
@@ -98,6 +118,27 @@ class ProofObjectBuilder:
         if blocking:
             judgment = JudgmentStatus.ZERO.value
 
+        # Generate a preliminary proof_id so ReverseTrace can reference it
+        proof_id = f"PO-{uuid.uuid4().hex[:10]}"
+
+        # Build ReverseTrace
+        rt = self._rt_builder.build(
+            proof_id=proof_id,
+            final_judgment=judgment,
+            statistical_projection=kernel_result.statistical,
+            arabic_projection=kernel_result.arabic,
+            epistemic_projection=kernel_result.epistemic,
+            conservation_results=conservation_results,
+            cross_layer_report=cross_layer_report,
+        )
+
+        # Phase 8.1 Certificate gate
+        if judgment == JudgmentStatus.CERTIFICATE.value:
+            if not rt.complete:
+                # Downgrade to Hypothesis if reverse trace is incomplete
+                judgment = JudgmentStatus.HYPOTHESIS.value
+                rt.final_judgment = judgment
+
         # Learning signal
         signal_map = {
             JudgmentStatus.CERTIFICATE.value: "reinforce",
@@ -107,7 +148,7 @@ class ProofObjectBuilder:
         }
         learning_signal = signal_map.get(judgment, "suspend")
 
-        # Reverse trace
+        # Reverse trace path (human-readable list, kept for backward compat)
         reverse_trace: list[str] = []
         for proj in (kernel_result.statistical, kernel_result.arabic, kernel_result.epistemic):
             reverse_trace.extend(proj.unit.T.reverse_path)
@@ -117,7 +158,7 @@ class ProofObjectBuilder:
         arabic_unit = kernel_result.arabic.unit
 
         return ProofObject(
-            proof_id=f"PO-{uuid.uuid4().hex[:10]}",
+            proof_id=proof_id,
             text=kernel_result.text,
             judgment=judgment,
             statistical_confidence=kernel_result.statistical.comparable_score,
@@ -128,6 +169,7 @@ class ProofObjectBuilder:
             cognitive_residual=kernel_result.cognitive_residual,
             residual_type=kernel_result.residual_type,
             learning_signal=learning_signal,
+            reverse_trace_obj=rt,
             reverse_trace=reverse_trace,
             kernel_result=kernel_result,
         )
@@ -153,3 +195,4 @@ class ProofObjectBuilder:
             violations=all_violations,
             conservation_score=score,
         )
+
