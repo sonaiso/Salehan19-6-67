@@ -607,7 +607,44 @@ def main() -> None:
         "--output", choices=["json", "markdown"], default="markdown"
     )
 
+    # ── Phase 8.3: Jamid/Mushtaq Concept Geometry Layer ──────────────────────
+
+    # jamid-analyze
+    jamid_analyze_parser = subparsers.add_parser(
+        "jamid-analyze",
+        help="Phase 8.3: Analyze an Arabic word as Jamid essence geometry",
+    )
+    jamid_analyze_parser.add_argument("--word", required=True, help="Arabic Jamid word")
+    jamid_analyze_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
+    # mushtaq-analyze
+    mushtaq_analyze_parser = subparsers.add_parser(
+        "mushtaq-analyze",
+        help="Phase 8.3: Analyze an Arabic word as Mushtaq derivational relation geometry",
+    )
+    mushtaq_analyze_parser.add_argument("--word", required=True, help="Arabic Mushtaq word")
+    mushtaq_analyze_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
+    # concept-geometry-graph
+    cgg_parser = subparsers.add_parser(
+        "concept-geometry-graph",
+        help="Phase 8.3: Build concept geometry graph for an Arabic word",
+    )
+    cgg_parser.add_argument("--word", required=True, help="Arabic word")
+    cgg_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
+    # concept-geometry-validate
+    cgv_parser = subparsers.add_parser(
+        "concept-geometry-validate",
+        help="Phase 8.3: Run concept geometry validation (target score >= 0.95)",
+    )
+    cgv_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
     args = parser.parse_args()
+
+    if args.command in ("jamid-analyze", "mushtaq-analyze", "concept-geometry-graph", "concept-geometry-validate"):
+        _handle_concept_geometry_command(args)
+        return
 
     if args.command == "classify":
         from mcd.classification.fractal_prompt_classifier import FractalPromptClassifier
@@ -2260,6 +2297,63 @@ def _handle_cfk_hardening_command(args) -> None:  # noqa: ANN001
                     lines.append(f"- {bv}")
 
             print("\n".join(lines))
+
+
+def _handle_concept_geometry_command(args) -> None:
+    """Handle Phase 8.3 concept geometry CLI subcommands."""
+    import json as _json
+    cmd = args.command
+
+    if cmd == "jamid-analyze":
+        from mcd.concept_geometry.jamid_essence_ontology import JamidEssenceOntology
+        from mcd.concept_geometry.concept_geometry_report import generate_jamid_report
+        ont = JamidEssenceOntology()
+        proj = ont.to_projection(args.word)
+        if args.output == "json":
+            print(_json.dumps(proj, ensure_ascii=False, indent=2))
+        else:
+            je = ont.get_by_surface(args.word)
+            if je:
+                print(generate_jamid_report(je, output="markdown"))
+            else:
+                print(f"# Jamid Essence: {args.word}\n\n**Not found in ontology.**")
+
+    elif cmd == "mushtaq-analyze":
+        from mcd.concept_geometry.mushtaq_derivation_engine import MushtaqDerivationEngine
+        from mcd.concept_geometry.concept_geometry_report import generate_mushtaq_report
+        engine = MushtaqDerivationEngine()
+        mu = engine.analyze(args.word)
+        if args.output == "json":
+            print(_json.dumps(mu.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(generate_mushtaq_report(mu, output="markdown"))
+
+    elif cmd == "concept-geometry-graph":
+        from mcd.concept_geometry.concept_geometry_graph import ConceptGeometryGraphBuilder
+        from mcd.concept_geometry.jamid_essence_ontology import JamidEssenceOntology
+        from mcd.concept_geometry.mushtaq_derivation_engine import MushtaqDerivationEngine
+        ont = JamidEssenceOntology()
+        engine = MushtaqDerivationEngine()
+        builder = ConceptGeometryGraphBuilder()
+        je = ont.get_by_surface(args.word)
+        if je:
+            g = builder.build_for_jamid(args.word, je)
+        else:
+            mu = engine.analyze(args.word)
+            g = builder.build_for_mushtaq(args.word, mu)
+        if args.output == "json":
+            print(_json.dumps(g.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(g.to_markdown())
+
+    elif cmd == "concept-geometry-validate":
+        from mcd.concept_geometry.concept_geometry_validator import ConceptGeometryValidator
+        validator = ConceptGeometryValidator()
+        report = validator.quick_validate()
+        if args.output == "json":
+            print(_json.dumps(report.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(report.to_markdown())
 
 
 if __name__ == "__main__":

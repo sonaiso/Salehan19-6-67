@@ -1,0 +1,5 @@
+{"surface": "كاتب", "root": "ك ت ب", "pattern": "فاعل", "derivation_type": "ism_faail", "folded_event": "كتابة", "projected_relation": "agent_of"}
+{"surface": "مكتوب", "root": "ك ت ب", "pattern": "مفعول", "derivation_type": "ism_mafool", "folded_event": "كتابة", "projected_relation": "patient_of"}
+{"surface": "زارع", "root": "ز ر ع", "pattern": "فاعل", "derivation_type": "ism_faail", "folded_event": "زراعة", "projected_relation": "agent_of"}
+{"surface": "مزروع", "root": "ز ر ع", "pattern": "مفعول", "derivation_type": "ism_mafool", "folded_event": "زراعة", "projected_relation": "patient_of"}
+{"surface": "عالم", "root": "ع ل م", "pattern": "فاعل", "derivation_type": "ism_faail", "folded_event": "علم", "projected_relation": "agent_of"}
