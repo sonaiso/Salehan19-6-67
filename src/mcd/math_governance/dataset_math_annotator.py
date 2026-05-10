@@ -95,8 +95,9 @@ class DatasetMathAnnotator:
             if missing_fields:
                 for fld in missing_fields:
                     report.missing_fields[fld] = report.missing_fields.get(fld, 0) + 1
-            # Compliance is measured after governance annotation pass.
-            report.compliant_examples += 1
+            # Count a record as compliant only if it already had all required fields.
+            if not missing_fields:
+                report.compliant_examples += 1
             updated_lines.append(json.dumps(annotated, ensure_ascii=False))
 
         if write:
