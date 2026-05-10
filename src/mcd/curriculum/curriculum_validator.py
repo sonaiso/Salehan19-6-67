@@ -113,6 +113,27 @@ class CurriculumValidator:
             if unit.difficulty == "adversarial" and not unit.forbidden_confusions:
                 err(uid, "forbidden_confusions", "adversarial unit must have forbidden_confusions")
 
+            # Phase 7.1 hardening: reject label-only examples (level >= 4)
+            if unit.level >= 4:
+                if not unit.expected_nodes:
+                    err(uid, "expected_nodes", f"Level {unit.level} unit must have expected_nodes (no label-only)")
+                if not unit.expected_edges:
+                    err(uid, "expected_edges", f"Level {unit.level} unit must have expected_edges")
+                if not unit.expected_vectors:
+                    err(uid, "expected_vectors", f"Level {unit.level} unit must have expected_vectors")
+                if not unit.expected_domains:
+                    err(uid, "expected_domains", f"Level {unit.level} unit must have expected_domains")
+
+            # All levels >= 1 must have nodes (even basic ones)
+            if unit.level >= 1 and not unit.expected_nodes:
+                report.warnings.append(
+                    f"{uid}: expected_nodes is empty for level {unit.level}"
+                )
+
+            # near_certainty requires evidence_need
+            if unit.certainty_policy == "near_certainty" and not unit.evidence_need:
+                err(uid, "evidence_need", "near_certainty policy requires evidence_need to be set")
+
             try:
                 json.dumps(unit.to_dict(), ensure_ascii=False)
             except (TypeError, ValueError) as ex:

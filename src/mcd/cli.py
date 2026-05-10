@@ -247,6 +247,37 @@ def main() -> None:
         help="Output JSONL file path",
     )
 
+    # ── Phase 7.1: Curriculum Deepening ──────────────────────────────────
+    # curriculum-depth-report
+    cur_depth_parser = subparsers.add_parser(
+        "curriculum-depth-report",
+        help="Phase 7.1: Compute depth metrics for the curriculum dataset",
+    )
+    cur_depth_parser.add_argument("--output", choices=["json", "markdown"], default="markdown")
+
+    # curriculum-coverage
+    cur_cov_parser = subparsers.add_parser(
+        "curriculum-coverage",
+        help="Phase 7.1: Compute coverage matrix across curriculum dimensions",
+    )
+    cur_cov_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
+    # curriculum-residual-build
+    cur_resb_parser = subparsers.add_parser(
+        "curriculum-residual-build",
+        help="Phase 7.1: Build Level 11 curriculum from mock GPT proposals",
+    )
+    cur_resb_parser.add_argument(
+        "--input",
+        default="data/residual_learning/mock_gpt_proposals_ar.jsonl",
+        help="Path to JSONL file with mock GPT proposals",
+    )
+    cur_resb_parser.add_argument(
+        "--output",
+        default="data/curriculum/level_11_cognitive_residual_learning_ar.jsonl",
+        help="Output JSONL path",
+    )
+
     args = parser.parse_args()
 
     if args.command == "classify":
@@ -989,6 +1020,42 @@ def _handle_residual_command(args) -> None:  # noqa: ANN001
             for spec in specs:
                 fh.write(_json.dumps(spec.to_dict(), ensure_ascii=False) + "\n")
         print(f"Written {len(specs)} test specs to {out_path}")
+
+    elif args.command == "curriculum-depth-report":
+        from mcd.curriculum.depth_metrics import DepthMetricsCalculator
+
+        calc = DepthMetricsCalculator()
+        depth_report = calc.calculate()
+
+        if args.output == "json":
+            print(_json.dumps(depth_report.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(depth_report.to_markdown())
+
+    elif args.command == "curriculum-coverage":
+        from mcd.curriculum.curriculum_coverage_matrix import CurriculumCoverageMatrix
+
+        matrix = CurriculumCoverageMatrix()
+        cov_report = matrix.compute()
+
+        if args.output == "json":
+            print(_json.dumps(cov_report.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(cov_report.to_markdown())
+
+    elif args.command == "curriculum-residual-build":
+        from mcd.curriculum.residual_curriculum_builder import ResidualCurriculumBuilder
+
+        builder = ResidualCurriculumBuilder()
+        proposals = builder.load_proposals(args.input)
+        units, build_report = builder.build_dataset(proposals)
+        out_path = args.output
+        _Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+        builder.save_units(units, out_path)
+        print(f"Built {build_report.built_units} units → {out_path}")
+        print(f"Residual types covered: {', '.join(build_report.residual_types_covered)}")
+        if build_report.errors:
+            print(f"Errors: {len(build_report.errors)}")
 
 
 
