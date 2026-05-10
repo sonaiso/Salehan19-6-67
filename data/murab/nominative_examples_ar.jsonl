@@ -1,0 +1,100 @@
+{"example_id": "nom_001", "text": "جاء المعلمُ", "tokens": [{"token": "جاء", "role": "verb"}, {"token": "المعلمُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_002", "text": "الكتابُ مفيدٌ", "tokens": [{"token": "الكتابُ", "role": "mubtada", "case": "nominative"}, {"token": "مفيدٌ", "role": "khabar", "case": "nominative"}], "notes": "المبتدأ والخبر مرفوعان"}
+{"example_id": "nom_003", "text": "كانَ الطالبُ مجتهداً", "tokens": [{"token": "كانَ", "role": "verb"}, {"token": "الطالبُ", "role": "kana_name", "case": "nominative"}], "notes": "اسم كان مرفوع"}
+{"example_id": "nom_004", "text": "يكتبُ المهندسُ التقريرَ", "tokens": [{"token": "المهندسُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_005", "text": "وُلِدَ الطفلُ", "tokens": [{"token": "الطفلُ", "role": "passive_agent", "case": "nominative"}], "notes": "نائب الفاعل مرفوع"}
+{"example_id": "nom_006", "text": "جاء المعلمُ", "tokens": [{"token": "جاء", "role": "verb"}, {"token": "المعلمُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_007", "text": "الكتابُ مفيدٌ", "tokens": [{"token": "الكتابُ", "role": "mubtada", "case": "nominative"}, {"token": "مفيدٌ", "role": "khabar", "case": "nominative"}], "notes": "المبتدأ والخبر مرفوعان"}
+{"example_id": "nom_008", "text": "كانَ الطالبُ مجتهداً", "tokens": [{"token": "كانَ", "role": "verb"}, {"token": "الطالبُ", "role": "kana_name", "case": "nominative"}], "notes": "اسم كان مرفوع"}
+{"example_id": "nom_009", "text": "يكتبُ المهندسُ التقريرَ", "tokens": [{"token": "المهندسُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_010", "text": "وُلِدَ الطفلُ", "tokens": [{"token": "الطفلُ", "role": "passive_agent", "case": "nominative"}], "notes": "نائب الفاعل مرفوع"}
+{"example_id": "nom_011", "text": "جاء المعلمُ", "tokens": [{"token": "جاء", "role": "verb"}, {"token": "المعلمُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_012", "text": "الكتابُ مفيدٌ", "tokens": [{"token": "الكتابُ", "role": "mubtada", "case": "nominative"}, {"token": "مفيدٌ", "role": "khabar", "case": "nominative"}], "notes": "المبتدأ والخبر مرفوعان"}
+{"example_id": "nom_013", "text": "كانَ الطالبُ مجتهداً", "tokens": [{"token": "كانَ", "role": "verb"}, {"token": "الطالبُ", "role": "kana_name", "case": "nominative"}], "notes": "اسم كان مرفوع"}
+{"example_id": "nom_014", "text": "يكتبُ المهندسُ التقريرَ", "tokens": [{"token": "المهندسُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_015", "text": "وُلِدَ الطفلُ", "tokens": [{"token": "الطفلُ", "role": "passive_agent", "case": "nominative"}], "notes": "نائب الفاعل مرفوع"}
+{"example_id": "nom_016", "text": "جاء المعلمُ", "tokens": [{"token": "جاء", "role": "verb"}, {"token": "المعلمُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_017", "text": "الكتابُ مفيدٌ", "tokens": [{"token": "الكتابُ", "role": "mubtada", "case": "nominative"}, {"token": "مفيدٌ", "role": "khabar", "case": "nominative"}], "notes": "المبتدأ والخبر مرفوعان"}
+{"example_id": "nom_018", "text": "كانَ الطالبُ مجتهداً", "tokens": [{"token": "كانَ", "role": "verb"}, {"token": "الطالبُ", "role": "kana_name", "case": "nominative"}], "notes": "اسم كان مرفوع"}
+{"example_id": "nom_019", "text": "يكتبُ المهندسُ التقريرَ", "tokens": [{"token": "المهندسُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_020", "text": "وُلِدَ الطفلُ", "tokens": [{"token": "الطفلُ", "role": "passive_agent", "case": "nominative"}], "notes": "نائب الفاعل مرفوع"}
+{"example_id": "nom_021", "text": "جاء المعلمُ", "tokens": [{"token": "جاء", "role": "verb"}, {"token": "المعلمُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_022", "text": "الكتابُ مفيدٌ", "tokens": [{"token": "الكتابُ", "role": "mubtada", "case": "nominative"}, {"token": "مفيدٌ", "role": "khabar", "case": "nominative"}], "notes": "المبتدأ والخبر مرفوعان"}
+{"example_id": "nom_023", "text": "كانَ الطالبُ مجتهداً", "tokens": [{"token": "كانَ", "role": "verb"}, {"token": "الطالبُ", "role": "kana_name", "case": "nominative"}], "notes": "اسم كان مرفوع"}
+{"example_id": "nom_024", "text": "يكتبُ المهندسُ التقريرَ", "tokens": [{"token": "المهندسُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_025", "text": "وُلِدَ الطفلُ", "tokens": [{"token": "الطفلُ", "role": "passive_agent", "case": "nominative"}], "notes": "نائب الفاعل مرفوع"}
+{"example_id": "nom_026", "text": "جاء المعلمُ", "tokens": [{"token": "جاء", "role": "verb"}, {"token": "المعلمُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_027", "text": "الكتابُ مفيدٌ", "tokens": [{"token": "الكتابُ", "role": "mubtada", "case": "nominative"}, {"token": "مفيدٌ", "role": "khabar", "case": "nominative"}], "notes": "المبتدأ والخبر مرفوعان"}
+{"example_id": "nom_028", "text": "كانَ الطالبُ مجتهداً", "tokens": [{"token": "كانَ", "role": "verb"}, {"token": "الطالبُ", "role": "kana_name", "case": "nominative"}], "notes": "اسم كان مرفوع"}
+{"example_id": "nom_029", "text": "يكتبُ المهندسُ التقريرَ", "tokens": [{"token": "المهندسُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_030", "text": "وُلِدَ الطفلُ", "tokens": [{"token": "الطفلُ", "role": "passive_agent", "case": "nominative"}], "notes": "نائب الفاعل مرفوع"}
+{"example_id": "nom_031", "text": "جاء المعلمُ", "tokens": [{"token": "جاء", "role": "verb"}, {"token": "المعلمُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_032", "text": "الكتابُ مفيدٌ", "tokens": [{"token": "الكتابُ", "role": "mubtada", "case": "nominative"}, {"token": "مفيدٌ", "role": "khabar", "case": "nominative"}], "notes": "المبتدأ والخبر مرفوعان"}
+{"example_id": "nom_033", "text": "كانَ الطالبُ مجتهداً", "tokens": [{"token": "كانَ", "role": "verb"}, {"token": "الطالبُ", "role": "kana_name", "case": "nominative"}], "notes": "اسم كان مرفوع"}
+{"example_id": "nom_034", "text": "يكتبُ المهندسُ التقريرَ", "tokens": [{"token": "المهندسُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_035", "text": "وُلِدَ الطفلُ", "tokens": [{"token": "الطفلُ", "role": "passive_agent", "case": "nominative"}], "notes": "نائب الفاعل مرفوع"}
+{"example_id": "nom_036", "text": "جاء المعلمُ", "tokens": [{"token": "جاء", "role": "verb"}, {"token": "المعلمُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_037", "text": "الكتابُ مفيدٌ", "tokens": [{"token": "الكتابُ", "role": "mubtada", "case": "nominative"}, {"token": "مفيدٌ", "role": "khabar", "case": "nominative"}], "notes": "المبتدأ والخبر مرفوعان"}
+{"example_id": "nom_038", "text": "كانَ الطالبُ مجتهداً", "tokens": [{"token": "كانَ", "role": "verb"}, {"token": "الطالبُ", "role": "kana_name", "case": "nominative"}], "notes": "اسم كان مرفوع"}
+{"example_id": "nom_039", "text": "يكتبُ المهندسُ التقريرَ", "tokens": [{"token": "المهندسُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_040", "text": "وُلِدَ الطفلُ", "tokens": [{"token": "الطفلُ", "role": "passive_agent", "case": "nominative"}], "notes": "نائب الفاعل مرفوع"}
+{"example_id": "nom_041", "text": "جاء المعلمُ", "tokens": [{"token": "جاء", "role": "verb"}, {"token": "المعلمُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_042", "text": "الكتابُ مفيدٌ", "tokens": [{"token": "الكتابُ", "role": "mubtada", "case": "nominative"}, {"token": "مفيدٌ", "role": "khabar", "case": "nominative"}], "notes": "المبتدأ والخبر مرفوعان"}
+{"example_id": "nom_043", "text": "كانَ الطالبُ مجتهداً", "tokens": [{"token": "كانَ", "role": "verb"}, {"token": "الطالبُ", "role": "kana_name", "case": "nominative"}], "notes": "اسم كان مرفوع"}
+{"example_id": "nom_044", "text": "يكتبُ المهندسُ التقريرَ", "tokens": [{"token": "المهندسُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_045", "text": "وُلِدَ الطفلُ", "tokens": [{"token": "الطفلُ", "role": "passive_agent", "case": "nominative"}], "notes": "نائب الفاعل مرفوع"}
+{"example_id": "nom_046", "text": "جاء المعلمُ", "tokens": [{"token": "جاء", "role": "verb"}, {"token": "المعلمُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_047", "text": "الكتابُ مفيدٌ", "tokens": [{"token": "الكتابُ", "role": "mubtada", "case": "nominative"}, {"token": "مفيدٌ", "role": "khabar", "case": "nominative"}], "notes": "المبتدأ والخبر مرفوعان"}
+{"example_id": "nom_048", "text": "كانَ الطالبُ مجتهداً", "tokens": [{"token": "كانَ", "role": "verb"}, {"token": "الطالبُ", "role": "kana_name", "case": "nominative"}], "notes": "اسم كان مرفوع"}
+{"example_id": "nom_049", "text": "يكتبُ المهندسُ التقريرَ", "tokens": [{"token": "المهندسُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_050", "text": "وُلِدَ الطفلُ", "tokens": [{"token": "الطفلُ", "role": "passive_agent", "case": "nominative"}], "notes": "نائب الفاعل مرفوع"}
+{"example_id": "nom_051", "text": "جاء المعلمُ", "tokens": [{"token": "جاء", "role": "verb"}, {"token": "المعلمُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_052", "text": "الكتابُ مفيدٌ", "tokens": [{"token": "الكتابُ", "role": "mubtada", "case": "nominative"}, {"token": "مفيدٌ", "role": "khabar", "case": "nominative"}], "notes": "المبتدأ والخبر مرفوعان"}
+{"example_id": "nom_053", "text": "كانَ الطالبُ مجتهداً", "tokens": [{"token": "كانَ", "role": "verb"}, {"token": "الطالبُ", "role": "kana_name", "case": "nominative"}], "notes": "اسم كان مرفوع"}
+{"example_id": "nom_054", "text": "يكتبُ المهندسُ التقريرَ", "tokens": [{"token": "المهندسُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_055", "text": "وُلِدَ الطفلُ", "tokens": [{"token": "الطفلُ", "role": "passive_agent", "case": "nominative"}], "notes": "نائب الفاعل مرفوع"}
+{"example_id": "nom_056", "text": "جاء المعلمُ", "tokens": [{"token": "جاء", "role": "verb"}, {"token": "المعلمُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_057", "text": "الكتابُ مفيدٌ", "tokens": [{"token": "الكتابُ", "role": "mubtada", "case": "nominative"}, {"token": "مفيدٌ", "role": "khabar", "case": "nominative"}], "notes": "المبتدأ والخبر مرفوعان"}
+{"example_id": "nom_058", "text": "كانَ الطالبُ مجتهداً", "tokens": [{"token": "كانَ", "role": "verb"}, {"token": "الطالبُ", "role": "kana_name", "case": "nominative"}], "notes": "اسم كان مرفوع"}
+{"example_id": "nom_059", "text": "يكتبُ المهندسُ التقريرَ", "tokens": [{"token": "المهندسُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_060", "text": "وُلِدَ الطفلُ", "tokens": [{"token": "الطفلُ", "role": "passive_agent", "case": "nominative"}], "notes": "نائب الفاعل مرفوع"}
+{"example_id": "nom_061", "text": "جاء المعلمُ", "tokens": [{"token": "جاء", "role": "verb"}, {"token": "المعلمُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_062", "text": "الكتابُ مفيدٌ", "tokens": [{"token": "الكتابُ", "role": "mubtada", "case": "nominative"}, {"token": "مفيدٌ", "role": "khabar", "case": "nominative"}], "notes": "المبتدأ والخبر مرفوعان"}
+{"example_id": "nom_063", "text": "كانَ الطالبُ مجتهداً", "tokens": [{"token": "كانَ", "role": "verb"}, {"token": "الطالبُ", "role": "kana_name", "case": "nominative"}], "notes": "اسم كان مرفوع"}
+{"example_id": "nom_064", "text": "يكتبُ المهندسُ التقريرَ", "tokens": [{"token": "المهندسُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_065", "text": "وُلِدَ الطفلُ", "tokens": [{"token": "الطفلُ", "role": "passive_agent", "case": "nominative"}], "notes": "نائب الفاعل مرفوع"}
+{"example_id": "nom_066", "text": "جاء المعلمُ", "tokens": [{"token": "جاء", "role": "verb"}, {"token": "المعلمُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_067", "text": "الكتابُ مفيدٌ", "tokens": [{"token": "الكتابُ", "role": "mubtada", "case": "nominative"}, {"token": "مفيدٌ", "role": "khabar", "case": "nominative"}], "notes": "المبتدأ والخبر مرفوعان"}
+{"example_id": "nom_068", "text": "كانَ الطالبُ مجتهداً", "tokens": [{"token": "كانَ", "role": "verb"}, {"token": "الطالبُ", "role": "kana_name", "case": "nominative"}], "notes": "اسم كان مرفوع"}
+{"example_id": "nom_069", "text": "يكتبُ المهندسُ التقريرَ", "tokens": [{"token": "المهندسُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_070", "text": "وُلِدَ الطفلُ", "tokens": [{"token": "الطفلُ", "role": "passive_agent", "case": "nominative"}], "notes": "نائب الفاعل مرفوع"}
+{"example_id": "nom_071", "text": "جاء المعلمُ", "tokens": [{"token": "جاء", "role": "verb"}, {"token": "المعلمُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_072", "text": "الكتابُ مفيدٌ", "tokens": [{"token": "الكتابُ", "role": "mubtada", "case": "nominative"}, {"token": "مفيدٌ", "role": "khabar", "case": "nominative"}], "notes": "المبتدأ والخبر مرفوعان"}
+{"example_id": "nom_073", "text": "كانَ الطالبُ مجتهداً", "tokens": [{"token": "كانَ", "role": "verb"}, {"token": "الطالبُ", "role": "kana_name", "case": "nominative"}], "notes": "اسم كان مرفوع"}
+{"example_id": "nom_074", "text": "يكتبُ المهندسُ التقريرَ", "tokens": [{"token": "المهندسُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_075", "text": "وُلِدَ الطفلُ", "tokens": [{"token": "الطفلُ", "role": "passive_agent", "case": "nominative"}], "notes": "نائب الفاعل مرفوع"}
+{"example_id": "nom_076", "text": "جاء المعلمُ", "tokens": [{"token": "جاء", "role": "verb"}, {"token": "المعلمُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_077", "text": "الكتابُ مفيدٌ", "tokens": [{"token": "الكتابُ", "role": "mubtada", "case": "nominative"}, {"token": "مفيدٌ", "role": "khabar", "case": "nominative"}], "notes": "المبتدأ والخبر مرفوعان"}
+{"example_id": "nom_078", "text": "كانَ الطالبُ مجتهداً", "tokens": [{"token": "كانَ", "role": "verb"}, {"token": "الطالبُ", "role": "kana_name", "case": "nominative"}], "notes": "اسم كان مرفوع"}
+{"example_id": "nom_079", "text": "يكتبُ المهندسُ التقريرَ", "tokens": [{"token": "المهندسُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_080", "text": "وُلِدَ الطفلُ", "tokens": [{"token": "الطفلُ", "role": "passive_agent", "case": "nominative"}], "notes": "نائب الفاعل مرفوع"}
+{"example_id": "nom_081", "text": "جاء المعلمُ", "tokens": [{"token": "جاء", "role": "verb"}, {"token": "المعلمُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_082", "text": "الكتابُ مفيدٌ", "tokens": [{"token": "الكتابُ", "role": "mubtada", "case": "nominative"}, {"token": "مفيدٌ", "role": "khabar", "case": "nominative"}], "notes": "المبتدأ والخبر مرفوعان"}
+{"example_id": "nom_083", "text": "كانَ الطالبُ مجتهداً", "tokens": [{"token": "كانَ", "role": "verb"}, {"token": "الطالبُ", "role": "kana_name", "case": "nominative"}], "notes": "اسم كان مرفوع"}
+{"example_id": "nom_084", "text": "يكتبُ المهندسُ التقريرَ", "tokens": [{"token": "المهندسُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_085", "text": "وُلِدَ الطفلُ", "tokens": [{"token": "الطفلُ", "role": "passive_agent", "case": "nominative"}], "notes": "نائب الفاعل مرفوع"}
+{"example_id": "nom_086", "text": "جاء المعلمُ", "tokens": [{"token": "جاء", "role": "verb"}, {"token": "المعلمُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_087", "text": "الكتابُ مفيدٌ", "tokens": [{"token": "الكتابُ", "role": "mubtada", "case": "nominative"}, {"token": "مفيدٌ", "role": "khabar", "case": "nominative"}], "notes": "المبتدأ والخبر مرفوعان"}
+{"example_id": "nom_088", "text": "كانَ الطالبُ مجتهداً", "tokens": [{"token": "كانَ", "role": "verb"}, {"token": "الطالبُ", "role": "kana_name", "case": "nominative"}], "notes": "اسم كان مرفوع"}
+{"example_id": "nom_089", "text": "يكتبُ المهندسُ التقريرَ", "tokens": [{"token": "المهندسُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_090", "text": "وُلِدَ الطفلُ", "tokens": [{"token": "الطفلُ", "role": "passive_agent", "case": "nominative"}], "notes": "نائب الفاعل مرفوع"}
+{"example_id": "nom_091", "text": "جاء المعلمُ", "tokens": [{"token": "جاء", "role": "verb"}, {"token": "المعلمُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_092", "text": "الكتابُ مفيدٌ", "tokens": [{"token": "الكتابُ", "role": "mubtada", "case": "nominative"}, {"token": "مفيدٌ", "role": "khabar", "case": "nominative"}], "notes": "المبتدأ والخبر مرفوعان"}
+{"example_id": "nom_093", "text": "كانَ الطالبُ مجتهداً", "tokens": [{"token": "كانَ", "role": "verb"}, {"token": "الطالبُ", "role": "kana_name", "case": "nominative"}], "notes": "اسم كان مرفوع"}
+{"example_id": "nom_094", "text": "يكتبُ المهندسُ التقريرَ", "tokens": [{"token": "المهندسُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_095", "text": "وُلِدَ الطفلُ", "tokens": [{"token": "الطفلُ", "role": "passive_agent", "case": "nominative"}], "notes": "نائب الفاعل مرفوع"}
+{"example_id": "nom_096", "text": "جاء المعلمُ", "tokens": [{"token": "جاء", "role": "verb"}, {"token": "المعلمُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_097", "text": "الكتابُ مفيدٌ", "tokens": [{"token": "الكتابُ", "role": "mubtada", "case": "nominative"}, {"token": "مفيدٌ", "role": "khabar", "case": "nominative"}], "notes": "المبتدأ والخبر مرفوعان"}
+{"example_id": "nom_098", "text": "كانَ الطالبُ مجتهداً", "tokens": [{"token": "كانَ", "role": "verb"}, {"token": "الطالبُ", "role": "kana_name", "case": "nominative"}], "notes": "اسم كان مرفوع"}
+{"example_id": "nom_099", "text": "يكتبُ المهندسُ التقريرَ", "tokens": [{"token": "المهندسُ", "role": "agent", "case": "nominative"}], "notes": "الفاعل مرفوع"}
+{"example_id": "nom_100", "text": "وُلِدَ الطفلُ", "tokens": [{"token": "الطفلُ", "role": "passive_agent", "case": "nominative"}], "notes": "نائب الفاعل مرفوع"}

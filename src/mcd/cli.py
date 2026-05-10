@@ -404,6 +404,49 @@ def main() -> None:
     root_family_parser.add_argument("--root", required=True, help="Root radicals space-separated (e.g. ك ت ب) or root ID (e.g. ktb)")
     root_family_parser.add_argument("--output", choices=["json", "text"], default="json")
 
+    # murab-analyze
+    murab_analyze_parser = subparsers.add_parser(
+        "murab-analyze",
+        help="Phase 7.5: Analyze Arabic I'rab (mu'rab) for a sentence",
+    )
+    murab_analyze_parser.add_argument("--text", required=True, help="Arabic text to analyze")
+    murab_analyze_parser.add_argument("--output", choices=["json", "text", "markdown"], default="json")
+
+    # irab-resolve
+    irab_resolve_parser = subparsers.add_parser(
+        "irab-resolve",
+        help="Phase 7.5: Resolve I'rab case for a single Arabic token with context",
+    )
+    irab_resolve_parser.add_argument("--token", required=True, help="Arabic surface token")
+    irab_resolve_parser.add_argument("--context", default="", help="Space-separated context tokens")
+    irab_resolve_parser.add_argument("--output", choices=["json", "text", "markdown"], default="json")
+
+    # murab-graph
+    murab_graph_parser = subparsers.add_parser(
+        "murab-graph",
+        help="Phase 7.5: Build relational I'rab graph for a sentence",
+    )
+    murab_graph_parser.add_argument("--text", required=True, help="Arabic text to graph")
+    murab_graph_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
+    # irab-certainty
+    irab_certainty_parser = subparsers.add_parser(
+        "irab-certainty",
+        help="Phase 7.5: Evaluate I'rab certainty for a token",
+    )
+    irab_certainty_parser.add_argument("--token", required=True, help="Arabic surface token")
+    irab_certainty_parser.add_argument("--context", default="", help="Space-separated context tokens")
+    irab_certainty_parser.add_argument("--output", choices=["json", "text"], default="json")
+
+    # murab-trace
+    murab_trace_parser = subparsers.add_parser(
+        "murab-trace",
+        help="Phase 7.5: Show I'rab trace chain for a token",
+    )
+    murab_trace_parser.add_argument("--token", required=True, help="Arabic surface token")
+    murab_trace_parser.add_argument("--context", default="", help="Space-separated context tokens")
+    murab_trace_parser.add_argument("--output", choices=["json", "text"], default="json")
+
     args = parser.parse_args()
 
     if args.command == "classify":
@@ -1048,6 +1091,11 @@ def main() -> None:
         "concept-center",
         "pattern-operator",
         "root-family",
+        "murab-analyze",
+        "irab-resolve",
+        "murab-graph",
+        "irab-certainty",
+        "murab-trace",
     ):
         _handle_morphosemantic_command(args)
     else:
@@ -1353,6 +1401,11 @@ def _handle_epistemic_trace_command(args) -> None:  # noqa: ANN001
         "concept-center",
         "pattern-operator",
         "root-family",
+        "murab-analyze",
+        "irab-resolve",
+        "murab-graph",
+        "irab-certainty",
+        "murab-trace",
     ):
         _handle_morphosemantic_command(args)
 
@@ -1577,6 +1630,97 @@ def _handle_morphosemantic_command(args) -> None:  # noqa: ANN001
                 print(f"Masdar events: {len(graph.masdar_events)}")
                 for ev in graph.masdar_events:
                     print(f"  {ev.get('masdar', '?')}  ({ev.get('event_class', '?')})")
+
+    elif args.command == "murab-analyze":
+        from mcd.murab.case_resolver import CaseResolver
+        from mcd.murab.murab_report import MurabReport
+
+        tokens = args.text.split()
+        resolver = CaseResolver()
+        units = [resolver.resolve(tok, tok, tokens) for tok in tokens]
+        report = MurabReport(units)
+
+        if args.output == "json":
+            print(report.to_json())
+        elif args.output == "markdown":
+            print(report.to_markdown())
+        else:
+            print(report.to_text())
+
+    elif args.command == "irab-resolve":
+        import json as _json
+        from mcd.murab.case_resolver import CaseResolver
+        from mcd.murab.serializers import murab_unit_to_json, murab_unit_to_markdown
+
+        ctx = args.context.split() if args.context else []
+        resolver = CaseResolver()
+        unit = resolver.resolve(args.token, args.token, ctx)
+
+        if args.output == "json":
+            print(murab_unit_to_json(unit))
+        elif args.output == "markdown":
+            print(murab_unit_to_markdown(unit))
+        else:
+            print(f"Token: {unit.surface}")
+            print(f"Case: {unit.irab_case}")
+            print(f"Marker: {unit.irab_marker} ({unit.marker_visibility})")
+            print(f"Syntactic Role: {unit.syntactic_role}")
+            print(f"Semantic Role: {unit.semantic_role}")
+
+    elif args.command == "murab-graph":
+        from mcd.murab.case_resolver import CaseResolver
+        from mcd.murab.murab_graph_builder import MurabGraphBuilder
+        from mcd.murab.serializers import murab_graph_to_json, murab_graph_to_markdown
+
+        tokens = args.text.split()
+        resolver = CaseResolver()
+        units = [resolver.resolve(tok, tok, tokens) for tok in tokens]
+        builder = MurabGraphBuilder()
+        graph = builder.build(units)
+
+        if args.output == "json":
+            print(murab_graph_to_json(graph))
+        else:
+            print(murab_graph_to_markdown(graph))
+
+    elif args.command == "irab-certainty":
+        import json as _json
+        from mcd.murab.case_resolver import CaseResolver
+        from mcd.murab.murab_certainty_policy import MurabCertaintyPolicy
+
+        ctx = args.context.split() if args.context else []
+        resolver = CaseResolver()
+        unit = resolver.resolve(args.token, args.token, ctx)
+        policy = MurabCertaintyPolicy()
+        result = policy.evaluate(unit)
+
+        if args.output == "json":
+            print(_json.dumps(result, ensure_ascii=False, indent=2))
+        else:
+            print(f"Syntactic certainty: {result['syntactic_certainty']}")
+            print(f"Semantic certainty:  {result['semantic_certainty']}")
+            print(f"Evidence effect:     {result['evidence_effect']}")
+            if result['warnings']:
+                print(f"Warnings: {', '.join(result['warnings'])}")
+
+    elif args.command == "murab-trace":
+        import json as _json
+        from mcd.murab.case_resolver import CaseResolver
+        from mcd.murab.murab_trace_linker import MurabTraceLinker
+
+        ctx = args.context.split() if args.context else []
+        resolver = CaseResolver()
+        unit = resolver.resolve(args.token, args.token, ctx)
+        linker = MurabTraceLinker()
+        trace = linker.link(unit)
+
+        if args.output == "json":
+            print(_json.dumps(trace, ensure_ascii=False, indent=2))
+        else:
+            print(f"Token: {trace['surface']}")
+            print(f"Unicode trace: {' '.join(trace['unicode_trace'])}")
+            print(f"Trace chain: {' → '.join(trace['trace_chain'])}")
+
 
 if __name__ == '__main__':
     main()

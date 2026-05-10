@@ -1,0 +1,100 @@
+{"example_id": "ida_001", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_002", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_003", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_004", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}
+{"example_id": "ida_005", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_006", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_007", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_008", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}
+{"example_id": "ida_009", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_010", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_011", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_012", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}
+{"example_id": "ida_013", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_014", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_015", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_016", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}
+{"example_id": "ida_017", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_018", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_019", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_020", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}
+{"example_id": "ida_021", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_022", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_023", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_024", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}
+{"example_id": "ida_025", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_026", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_027", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_028", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}
+{"example_id": "ida_029", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_030", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_031", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_032", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}
+{"example_id": "ida_033", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_034", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_035", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_036", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}
+{"example_id": "ida_037", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_038", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_039", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_040", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}
+{"example_id": "ida_041", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_042", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_043", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_044", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}
+{"example_id": "ida_045", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_046", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_047", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_048", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}
+{"example_id": "ida_049", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_050", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_051", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_052", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}
+{"example_id": "ida_053", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_054", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_055", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_056", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}
+{"example_id": "ida_057", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_058", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_059", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_060", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}
+{"example_id": "ida_061", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_062", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_063", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_064", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}
+{"example_id": "ida_065", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_066", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_067", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_068", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}
+{"example_id": "ida_069", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_070", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_071", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_072", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}
+{"example_id": "ida_073", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_074", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_075", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_076", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}
+{"example_id": "ida_077", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_078", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_079", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_080", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}
+{"example_id": "ida_081", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_082", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_083", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_084", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}
+{"example_id": "ida_085", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_086", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_087", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_088", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}
+{"example_id": "ida_089", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_090", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_091", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_092", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}
+{"example_id": "ida_093", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_094", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_095", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_096", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}
+{"example_id": "ida_097", "text": "كتابُ الطالبِ", "tokens": [{"token": "كتابُ", "role": "mudaf"}, {"token": "الطالبِ", "role": "mudaf_ilayh"}], "notes": "إضافة ملكية"}
+{"example_id": "ida_098", "text": "بناءُ المصنعِ", "tokens": [{"token": "بناءُ", "role": "mudaf"}, {"token": "المصنعِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية"}
+{"example_id": "ida_099", "text": "رأسُ الجبلِ", "tokens": [{"token": "رأسُ", "role": "mudaf"}, {"token": "الجبلِ", "role": "mudaf_ilayh"}], "notes": "إضافة جزء من كل"}
+{"example_id": "ida_100", "text": "نجاحُ العمالِ", "tokens": [{"token": "نجاحُ", "role": "mudaf"}, {"token": "العمالِ", "role": "mudaf_ilayh"}], "notes": "إضافة مصدرية إلى الفاعل"}

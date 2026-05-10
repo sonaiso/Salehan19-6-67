@@ -1,0 +1,80 @@
+{"example_id": "jus_001", "text": "لم يذهبْ أحمد", "tokens": [{"token": "يذهبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلم"}
+{"example_id": "jus_002", "text": "لا تكذبْ", "tokens": [{"token": "تكذبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلا الناهية"}
+{"example_id": "jus_003", "text": "لما يصلْ بعد", "tokens": [{"token": "يصلْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلما"}
+{"example_id": "jus_004", "text": "إن تجتهدْ تنجحْ", "tokens": [{"token": "تجتهدْ", "role": "conditional_verb", "case": "jussive"}], "notes": "مجزوم في جملة شرطية"}
+{"example_id": "jus_005", "text": "لم يذهبْ أحمد", "tokens": [{"token": "يذهبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلم"}
+{"example_id": "jus_006", "text": "لا تكذبْ", "tokens": [{"token": "تكذبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلا الناهية"}
+{"example_id": "jus_007", "text": "لما يصلْ بعد", "tokens": [{"token": "يصلْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلما"}
+{"example_id": "jus_008", "text": "إن تجتهدْ تنجحْ", "tokens": [{"token": "تجتهدْ", "role": "conditional_verb", "case": "jussive"}], "notes": "مجزوم في جملة شرطية"}
+{"example_id": "jus_009", "text": "لم يذهبْ أحمد", "tokens": [{"token": "يذهبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلم"}
+{"example_id": "jus_010", "text": "لا تكذبْ", "tokens": [{"token": "تكذبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلا الناهية"}
+{"example_id": "jus_011", "text": "لما يصلْ بعد", "tokens": [{"token": "يصلْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلما"}
+{"example_id": "jus_012", "text": "إن تجتهدْ تنجحْ", "tokens": [{"token": "تجتهدْ", "role": "conditional_verb", "case": "jussive"}], "notes": "مجزوم في جملة شرطية"}
+{"example_id": "jus_013", "text": "لم يذهبْ أحمد", "tokens": [{"token": "يذهبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلم"}
+{"example_id": "jus_014", "text": "لا تكذبْ", "tokens": [{"token": "تكذبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلا الناهية"}
+{"example_id": "jus_015", "text": "لما يصلْ بعد", "tokens": [{"token": "يصلْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلما"}
+{"example_id": "jus_016", "text": "إن تجتهدْ تنجحْ", "tokens": [{"token": "تجتهدْ", "role": "conditional_verb", "case": "jussive"}], "notes": "مجزوم في جملة شرطية"}
+{"example_id": "jus_017", "text": "لم يذهبْ أحمد", "tokens": [{"token": "يذهبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلم"}
+{"example_id": "jus_018", "text": "لا تكذبْ", "tokens": [{"token": "تكذبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلا الناهية"}
+{"example_id": "jus_019", "text": "لما يصلْ بعد", "tokens": [{"token": "يصلْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلما"}
+{"example_id": "jus_020", "text": "إن تجتهدْ تنجحْ", "tokens": [{"token": "تجتهدْ", "role": "conditional_verb", "case": "jussive"}], "notes": "مجزوم في جملة شرطية"}
+{"example_id": "jus_021", "text": "لم يذهبْ أحمد", "tokens": [{"token": "يذهبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلم"}
+{"example_id": "jus_022", "text": "لا تكذبْ", "tokens": [{"token": "تكذبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلا الناهية"}
+{"example_id": "jus_023", "text": "لما يصلْ بعد", "tokens": [{"token": "يصلْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلما"}
+{"example_id": "jus_024", "text": "إن تجتهدْ تنجحْ", "tokens": [{"token": "تجتهدْ", "role": "conditional_verb", "case": "jussive"}], "notes": "مجزوم في جملة شرطية"}
+{"example_id": "jus_025", "text": "لم يذهبْ أحمد", "tokens": [{"token": "يذهبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلم"}
+{"example_id": "jus_026", "text": "لا تكذبْ", "tokens": [{"token": "تكذبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلا الناهية"}
+{"example_id": "jus_027", "text": "لما يصلْ بعد", "tokens": [{"token": "يصلْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلما"}
+{"example_id": "jus_028", "text": "إن تجتهدْ تنجحْ", "tokens": [{"token": "تجتهدْ", "role": "conditional_verb", "case": "jussive"}], "notes": "مجزوم في جملة شرطية"}
+{"example_id": "jus_029", "text": "لم يذهبْ أحمد", "tokens": [{"token": "يذهبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلم"}
+{"example_id": "jus_030", "text": "لا تكذبْ", "tokens": [{"token": "تكذبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلا الناهية"}
+{"example_id": "jus_031", "text": "لما يصلْ بعد", "tokens": [{"token": "يصلْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلما"}
+{"example_id": "jus_032", "text": "إن تجتهدْ تنجحْ", "tokens": [{"token": "تجتهدْ", "role": "conditional_verb", "case": "jussive"}], "notes": "مجزوم في جملة شرطية"}
+{"example_id": "jus_033", "text": "لم يذهبْ أحمد", "tokens": [{"token": "يذهبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلم"}
+{"example_id": "jus_034", "text": "لا تكذبْ", "tokens": [{"token": "تكذبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلا الناهية"}
+{"example_id": "jus_035", "text": "لما يصلْ بعد", "tokens": [{"token": "يصلْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلما"}
+{"example_id": "jus_036", "text": "إن تجتهدْ تنجحْ", "tokens": [{"token": "تجتهدْ", "role": "conditional_verb", "case": "jussive"}], "notes": "مجزوم في جملة شرطية"}
+{"example_id": "jus_037", "text": "لم يذهبْ أحمد", "tokens": [{"token": "يذهبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلم"}
+{"example_id": "jus_038", "text": "لا تكذبْ", "tokens": [{"token": "تكذبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلا الناهية"}
+{"example_id": "jus_039", "text": "لما يصلْ بعد", "tokens": [{"token": "يصلْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلما"}
+{"example_id": "jus_040", "text": "إن تجتهدْ تنجحْ", "tokens": [{"token": "تجتهدْ", "role": "conditional_verb", "case": "jussive"}], "notes": "مجزوم في جملة شرطية"}
+{"example_id": "jus_041", "text": "لم يذهبْ أحمد", "tokens": [{"token": "يذهبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلم"}
+{"example_id": "jus_042", "text": "لا تكذبْ", "tokens": [{"token": "تكذبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلا الناهية"}
+{"example_id": "jus_043", "text": "لما يصلْ بعد", "tokens": [{"token": "يصلْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلما"}
+{"example_id": "jus_044", "text": "إن تجتهدْ تنجحْ", "tokens": [{"token": "تجتهدْ", "role": "conditional_verb", "case": "jussive"}], "notes": "مجزوم في جملة شرطية"}
+{"example_id": "jus_045", "text": "لم يذهبْ أحمد", "tokens": [{"token": "يذهبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلم"}
+{"example_id": "jus_046", "text": "لا تكذبْ", "tokens": [{"token": "تكذبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلا الناهية"}
+{"example_id": "jus_047", "text": "لما يصلْ بعد", "tokens": [{"token": "يصلْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلما"}
+{"example_id": "jus_048", "text": "إن تجتهدْ تنجحْ", "tokens": [{"token": "تجتهدْ", "role": "conditional_verb", "case": "jussive"}], "notes": "مجزوم في جملة شرطية"}
+{"example_id": "jus_049", "text": "لم يذهبْ أحمد", "tokens": [{"token": "يذهبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلم"}
+{"example_id": "jus_050", "text": "لا تكذبْ", "tokens": [{"token": "تكذبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلا الناهية"}
+{"example_id": "jus_051", "text": "لما يصلْ بعد", "tokens": [{"token": "يصلْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلما"}
+{"example_id": "jus_052", "text": "إن تجتهدْ تنجحْ", "tokens": [{"token": "تجتهدْ", "role": "conditional_verb", "case": "jussive"}], "notes": "مجزوم في جملة شرطية"}
+{"example_id": "jus_053", "text": "لم يذهبْ أحمد", "tokens": [{"token": "يذهبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلم"}
+{"example_id": "jus_054", "text": "لا تكذبْ", "tokens": [{"token": "تكذبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلا الناهية"}
+{"example_id": "jus_055", "text": "لما يصلْ بعد", "tokens": [{"token": "يصلْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلما"}
+{"example_id": "jus_056", "text": "إن تجتهدْ تنجحْ", "tokens": [{"token": "تجتهدْ", "role": "conditional_verb", "case": "jussive"}], "notes": "مجزوم في جملة شرطية"}
+{"example_id": "jus_057", "text": "لم يذهبْ أحمد", "tokens": [{"token": "يذهبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلم"}
+{"example_id": "jus_058", "text": "لا تكذبْ", "tokens": [{"token": "تكذبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلا الناهية"}
+{"example_id": "jus_059", "text": "لما يصلْ بعد", "tokens": [{"token": "يصلْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلما"}
+{"example_id": "jus_060", "text": "إن تجتهدْ تنجحْ", "tokens": [{"token": "تجتهدْ", "role": "conditional_verb", "case": "jussive"}], "notes": "مجزوم في جملة شرطية"}
+{"example_id": "jus_061", "text": "لم يذهبْ أحمد", "tokens": [{"token": "يذهبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلم"}
+{"example_id": "jus_062", "text": "لا تكذبْ", "tokens": [{"token": "تكذبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلا الناهية"}
+{"example_id": "jus_063", "text": "لما يصلْ بعد", "tokens": [{"token": "يصلْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلما"}
+{"example_id": "jus_064", "text": "إن تجتهدْ تنجحْ", "tokens": [{"token": "تجتهدْ", "role": "conditional_verb", "case": "jussive"}], "notes": "مجزوم في جملة شرطية"}
+{"example_id": "jus_065", "text": "لم يذهبْ أحمد", "tokens": [{"token": "يذهبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلم"}
+{"example_id": "jus_066", "text": "لا تكذبْ", "tokens": [{"token": "تكذبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلا الناهية"}
+{"example_id": "jus_067", "text": "لما يصلْ بعد", "tokens": [{"token": "يصلْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلما"}
+{"example_id": "jus_068", "text": "إن تجتهدْ تنجحْ", "tokens": [{"token": "تجتهدْ", "role": "conditional_verb", "case": "jussive"}], "notes": "مجزوم في جملة شرطية"}
+{"example_id": "jus_069", "text": "لم يذهبْ أحمد", "tokens": [{"token": "يذهبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلم"}
+{"example_id": "jus_070", "text": "لا تكذبْ", "tokens": [{"token": "تكذبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلا الناهية"}
+{"example_id": "jus_071", "text": "لما يصلْ بعد", "tokens": [{"token": "يصلْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلما"}
+{"example_id": "jus_072", "text": "إن تجتهدْ تنجحْ", "tokens": [{"token": "تجتهدْ", "role": "conditional_verb", "case": "jussive"}], "notes": "مجزوم في جملة شرطية"}
+{"example_id": "jus_073", "text": "لم يذهبْ أحمد", "tokens": [{"token": "يذهبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلم"}
+{"example_id": "jus_074", "text": "لا تكذبْ", "tokens": [{"token": "تكذبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلا الناهية"}
+{"example_id": "jus_075", "text": "لما يصلْ بعد", "tokens": [{"token": "يصلْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلما"}
+{"example_id": "jus_076", "text": "إن تجتهدْ تنجحْ", "tokens": [{"token": "تجتهدْ", "role": "conditional_verb", "case": "jussive"}], "notes": "مجزوم في جملة شرطية"}
+{"example_id": "jus_077", "text": "لم يذهبْ أحمد", "tokens": [{"token": "يذهبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلم"}
+{"example_id": "jus_078", "text": "لا تكذبْ", "tokens": [{"token": "تكذبْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلا الناهية"}
+{"example_id": "jus_079", "text": "لما يصلْ بعد", "tokens": [{"token": "يصلْ", "role": "jussive_verb", "case": "jussive"}], "notes": "مجزوم بلما"}
+{"example_id": "jus_080", "text": "إن تجتهدْ تنجحْ", "tokens": [{"token": "تجتهدْ", "role": "conditional_verb", "case": "jussive"}], "notes": "مجزوم في جملة شرطية"}

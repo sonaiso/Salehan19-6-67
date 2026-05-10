@@ -1,0 +1,62 @@
+{
+  "nominative": {
+    "case_id": "nominative",
+    "name_ar": "الرفع",
+    "name_en": "nominative",
+    "grammatical_function": "رفع",
+    "common_roles": ["agent", "subject", "predicate", "passive_agent", "kana_name", "inna_predicate"],
+    "possible_markers": ["damma", "dammatan", "alif", "waw", "nun"],
+    "semantic_projection": "actor_or_topic",
+    "certainty_effect": 0.9
+  },
+  "accusative": {
+    "case_id": "accusative",
+    "name_ar": "النصب",
+    "name_en": "accusative",
+    "grammatical_function": "نصب",
+    "common_roles": ["object", "absolute_object", "hal", "tamyiz", "exception", "kana_predicate", "inna_name"],
+    "possible_markers": ["fatha", "fathatan", "alif", "ya", "deleted_nun"],
+    "semantic_projection": "patient_or_circumstance",
+    "certainty_effect": 0.85
+  },
+  "genitive": {
+    "case_id": "genitive",
+    "name_ar": "الجر",
+    "name_en": "genitive",
+    "grammatical_function": "جر",
+    "common_roles": ["object_of_preposition", "mudaf_ilayh", "follower_gen"],
+    "possible_markers": ["kasra", "kasratan", "ya", "fatha"],
+    "semantic_projection": "relation_or_specification",
+    "certainty_effect": 0.85
+  },
+  "jussive": {
+    "case_id": "jussive",
+    "name_ar": "الجزم",
+    "name_en": "jussive",
+    "grammatical_function": "جزم",
+    "common_roles": ["jussive_verb", "conditional_verb", "negated_verb"],
+    "possible_markers": ["sukun", "deleted_nun", "deleted_weak_letter"],
+    "semantic_projection": "negation_or_condition",
+    "certainty_effect": 0.9
+  },
+  "indeclinable_local": {
+    "case_id": "indeclinable_local",
+    "name_ar": "البناء المحلي",
+    "name_en": "indeclinable_local",
+    "grammatical_function": "بناء",
+    "common_roles": ["pronoun", "demonstrative", "relative"],
+    "possible_markers": ["local"],
+    "semantic_projection": "reference",
+    "certainty_effect": 0.95
+  },
+  "unknown": {
+    "case_id": "unknown",
+    "name_ar": "مجهول",
+    "name_en": "unknown",
+    "grammatical_function": "غير محدد",
+    "common_roles": ["unknown"],
+    "possible_markers": ["none"],
+    "semantic_projection": "undetermined",
+    "certainty_effect": 0.3
+  }
+}
