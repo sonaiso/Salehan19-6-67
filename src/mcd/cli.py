@@ -492,6 +492,67 @@ def main() -> None:
     murab_trace_parser.add_argument("--context", default="", help="Space-separated context tokens")
     murab_trace_parser.add_argument("--output", choices=["json", "text"], default="json")
 
+    # ------------------------------------------------------------------ #
+    # Phase 8: Cognitive Fractal Kernel (CFK) commands
+    # ------------------------------------------------------------------ #
+
+    # cfk-analyze — run the full CFK pipeline on Arabic text
+    cfk_analyze_parser = subparsers.add_parser(
+        "cfk-analyze",
+        help="Phase 8: Run the full Cognitive Fractal Kernel pipeline on Arabic text",
+    )
+    cfk_analyze_parser.add_argument("--text", required=True, help="Arabic claim / sentence")
+    cfk_analyze_parser.add_argument(
+        "--evidence", default="", help="Comma-separated evidence references"
+    )
+    cfk_analyze_parser.add_argument(
+        "--output", choices=["json", "text", "markdown"], default="markdown"
+    )
+
+    # cfk-compare — compare GPT proposal against Arabic + Epistemic dimensions
+    cfk_compare_parser = subparsers.add_parser(
+        "cfk-compare",
+        help="Phase 8: Compare statistical, Arabic and epistemic projections for a claim",
+    )
+    cfk_compare_parser.add_argument("--text", required=True, help="Arabic claim / sentence")
+    cfk_compare_parser.add_argument(
+        "--evidence", default="", help="Comma-separated evidence references"
+    )
+    cfk_compare_parser.add_argument(
+        "--stat-confidence", type=float, default=None,
+        help="Override statistical confidence (0–1)",
+        dest="stat_confidence",
+    )
+    cfk_compare_parser.add_argument(
+        "--output", choices=["json", "text", "markdown"], default="text"
+    )
+
+    # cfk-proof — check if claim reaches Certificate / Hypothesis / Suspend / Zero
+    cfk_proof_parser = subparsers.add_parser(
+        "cfk-proof",
+        help="Phase 8: Check proof status of a claim (Certificate|Hypothesis|Suspend|Zero)",
+    )
+    cfk_proof_parser.add_argument("--text", required=True, help="Arabic claim / sentence")
+    cfk_proof_parser.add_argument(
+        "--evidence", default="", help="Comma-separated evidence references"
+    )
+    cfk_proof_parser.add_argument(
+        "--output", choices=["json", "text"], default="text"
+    )
+
+    # cfk-table — generate the Section-16 comparison table
+    cfk_table_parser = subparsers.add_parser(
+        "cfk-table",
+        help="Phase 8: Generate the cognitive comparison table for a claim",
+    )
+    cfk_table_parser.add_argument("--text", required=True, help="Arabic claim / sentence")
+    cfk_table_parser.add_argument(
+        "--evidence", default="", help="Comma-separated evidence references"
+    )
+    cfk_table_parser.add_argument(
+        "--output", choices=["json", "markdown"], default="markdown"
+    )
+
     args = parser.parse_args()
 
     if args.command == "classify":
@@ -1145,6 +1206,8 @@ def main() -> None:
         _handle_morphosemantic_command(args)
     elif args.command in ("mabni-analyze", "mabni-registry", "mabni-certainty", "mabni-graph", "mabni-trace"):
         _handle_mabni_command(args)
+    elif args.command in ("cfk-analyze", "cfk-compare", "cfk-proof", "cfk-table"):
+        _handle_cfk_command(args)
     else:
         parser.print_help()
 
@@ -1874,6 +1937,72 @@ def _handle_mabni_command(args) -> None:  # noqa: ANN001
                     f"certainty={lnk['certainty_effect']:20} "
                     f"judgment={lnk['judgment_status']}"
                 )
+
+
+def _handle_cfk_command(args) -> None:  # noqa: ANN001
+    """Handle all cfk-* CLI subcommands (Phase 8: Cognitive Fractal Kernel)."""
+    import json as _json
+
+    from mcd.cfk.cfk_pipeline import CognitiveFractalPipeline
+    from mcd.cfk.cfk_report import generate_markdown_report, generate_json_report
+
+    evidence_refs = [e.strip() for e in args.evidence.split(",") if e.strip()] if args.evidence else []
+
+    pipeline = CognitiveFractalPipeline()
+    result = pipeline.run(args.text, evidence_refs=evidence_refs)
+
+    cmd = args.command
+
+    if cmd == "cfk-analyze":
+        if args.output == "json":
+            print(generate_json_report(result))
+        elif args.output == "markdown":
+            print(generate_markdown_report(result))
+        else:
+            print(result.summary())
+
+    elif cmd == "cfk-compare":
+        table = result.table
+        if args.output == "json":
+            print(_json.dumps(table.to_dict(), ensure_ascii=False, indent=2))
+        elif args.output == "markdown":
+            print(table.to_markdown())
+        else:
+            # text mode
+            print(f"النص: {args.text[:70]}")
+            print(f"{'البعد':<18} {'GPT (إحصائي)':<22} {'العربية':<22} {'العقل'}")
+            print("-" * 85)
+            for row in table.rows:
+                print(
+                    f"{row.dimension:<18} {row.statistical_value:<22} "
+                    f"{row.arabic_value:<22} {row.epistemic_value}"
+                )
+            print(f"\nالحكم النهائي: {table.kernel_judgment}")
+
+    elif cmd == "cfk-proof":
+        proof = result.proof
+        if args.output == "json":
+            print(_json.dumps(proof.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(f"الحكم:               {proof.judgment}")
+            print(f"الثقة الإحصائية:     {round(proof.statistical_confidence, 3)}")
+            print(f"القوة اللغوية:       {proof.linguistic_force}")
+            print(f"اليقين المعرفي:      {round(proof.epistemic_certainty, 3)}")
+            print(f"حالة الدليل:         {proof.evidence_state}")
+            print(f"الباقي المعرفي:      {round(proof.cognitive_residual, 3)}")
+            print(f"نوع الباقي:          {proof.residual_type}")
+            print(f"إشارة التعلم:        {proof.learning_signal}")
+            if not proof.conservation.passed:
+                print(f"انتهاكات قوانين الحفظ: {len(proof.conservation.violations)}")
+                for v in proof.conservation.violations:
+                    print(f"  [{v.law}] {v.description}")
+
+    elif cmd == "cfk-table":
+        table = result.table
+        if args.output == "json":
+            print(_json.dumps(table.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(table.to_markdown())
 
 
 if __name__ == "__main__":
