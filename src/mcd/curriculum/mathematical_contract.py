@@ -4,12 +4,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 from .cognitive_graph import CognitiveGraph
-from .cognitive_node import CognitiveNode
-from .cognitive_edge import VALID_RELATIONS
-from .graph_validator import validate_graph
 from .vector_validator import validate_role_vector, validate_domain_vector
-from .invariant_validator import validate_invariants
-from .vector_space import ROLE_DIMENSIONS, DOMAIN_DIMENSIONS
 
 
 @dataclass
@@ -81,11 +76,14 @@ def check_mathematical_contract(graph: CognitiveGraph) -> MathematicalContractRe
     effect_node_ids = {n.node_id for n in graph.nodes if n.node_type == "effect"}
     for ce in cause_edges:
         # The target of the causes edge must either be an effect-type node
-        # OR there must be a caused_by edge where source==ce.target (proving ce.target is an effect)
+        # OR there must be a reciprocal caused_by edge tying the same node pair.
         target_is_effect = ce.target in effect_node_ids
         target_has_caused_by = any(
-            e for e in graph.edges
-            if e.relation == "caused_by" and e.source == ce.target
+            e
+            for e in graph.edges
+            if e.relation == "caused_by"
+            and e.source == ce.target
+            and e.target == ce.source
         )
         if not target_is_effect and not target_has_caused_by:
             violations.append(
