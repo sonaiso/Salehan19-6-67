@@ -492,153 +492,20 @@ def main() -> None:
     murab_trace_parser.add_argument("--context", default="", help="Space-separated context tokens")
     murab_trace_parser.add_argument("--output", choices=["json", "text"], default="json")
 
-    # ------------------------------------------------------------------ #
-    # Phase 8: Cognitive Fractal Kernel (CFK) commands
-    # ------------------------------------------------------------------ #
+    # ── Phase 7.0K: Fractal Geometry Kernel ──────────────────────────────
+    kernel_validate_parser = subparsers.add_parser("kernel-validate", help="Validate Fractal Geometry Kernel")
+    kernel_validate_parser.add_argument("--output", choices=["json", "markdown"], default="json")
 
-    # cfk-analyze — run the full CFK pipeline on Arabic text
-    cfk_analyze_parser = subparsers.add_parser(
-        "cfk-analyze",
-        help="Phase 8: Run the full Cognitive Fractal Kernel pipeline on Arabic text",
-    )
-    cfk_analyze_parser.add_argument("--text", required=True, help="Arabic claim / sentence")
-    cfk_analyze_parser.add_argument(
-        "--evidence", default="", help="Comma-separated evidence references"
-    )
-    cfk_analyze_parser.add_argument(
-        "--output", choices=["json", "text", "markdown"], default="markdown"
-    )
+    kernel_report_parser = subparsers.add_parser("kernel-report", help="Generate Fractal Geometry Kernel report")
+    kernel_report_parser.add_argument("--output", choices=["json", "markdown"], default="markdown")
 
-    # cfk-compare — compare GPT proposal against Arabic + Epistemic dimensions
-    cfk_compare_parser = subparsers.add_parser(
-        "cfk-compare",
-        help="Phase 8: Compare statistical, Arabic and epistemic projections for a claim",
-    )
-    cfk_compare_parser.add_argument("--text", required=True, help="Arabic claim / sentence")
-    cfk_compare_parser.add_argument(
-        "--evidence", default="", help="Comma-separated evidence references"
-    )
-    cfk_compare_parser.add_argument(
-        "--stat-confidence", type=float, default=None,
-        help="Override statistical confidence (0–1)",
-        dest="stat_confidence",
-    )
-    cfk_compare_parser.add_argument(
-        "--output", choices=["json", "text", "markdown"], default="text"
-    )
+    kernel_demo_fold_parser = subparsers.add_parser("kernel-demo-fold", help="Demo fold operation on text")
+    kernel_demo_fold_parser.add_argument("--text", required=True, help="Arabic text to fold")
+    kernel_demo_fold_parser.add_argument("--output", choices=["json", "markdown"], default="json")
 
-    # cfk-proof — check if claim reaches Certificate / Hypothesis / Suspend / Zero
-    cfk_proof_parser = subparsers.add_parser(
-        "cfk-proof",
-        help="Phase 8: Check proof status of a claim (Certificate|Hypothesis|Suspend|Zero)",
-    )
-    cfk_proof_parser.add_argument("--text", required=True, help="Arabic claim / sentence")
-    cfk_proof_parser.add_argument(
-        "--evidence", default="", help="Comma-separated evidence references"
-    )
-    cfk_proof_parser.add_argument(
-        "--output", choices=["json", "text"], default="text"
-    )
-
-    # cfk-table — generate the Section-16 comparison table
-    cfk_table_parser = subparsers.add_parser(
-        "cfk-table",
-        help="Phase 8: Generate the cognitive comparison table for a claim",
-    )
-    cfk_table_parser.add_argument("--text", required=True, help="Arabic claim / sentence")
-    cfk_table_parser.add_argument(
-        "--evidence", default="", help="Comma-separated evidence references"
-    )
-    cfk_table_parser.add_argument(
-        "--output", choices=["json", "markdown"], default="markdown"
-    )
-
-    # ---- Phase 8.1 CLI commands ----
-
-    # cfk-validate — validate all integration contracts for a claim
-    cfk_validate_parser = subparsers.add_parser(
-        "cfk-validate",
-        help="Phase 8.1: Validate CFK integration contracts for a claim",
-    )
-    cfk_validate_parser.add_argument("--text", default="النار حارة", help="Arabic claim / sentence")
-    cfk_validate_parser.add_argument(
-        "--evidence", default="", help="Comma-separated evidence references"
-    )
-    cfk_validate_parser.add_argument(
-        "--output", choices=["json", "text"], default="json"
-    )
-
-    # cfk-integration-report — full integration contract report
-    cfk_integration_report_parser = subparsers.add_parser(
-        "cfk-integration-report",
-        help="Phase 8.1: Generate a full CFK integration contract report",
-    )
-    cfk_integration_report_parser.add_argument("--text", default="النار حارة", help="Arabic claim / sentence")
-    cfk_integration_report_parser.add_argument(
-        "--evidence", default="", help="Comma-separated evidence references"
-    )
-    cfk_integration_report_parser.add_argument(
-        "--output", choices=["json", "markdown"], default="markdown"
-    )
-
-    # cfk-conservation — cross-layer conservation check
-    cfk_conservation_parser = subparsers.add_parser(
-        "cfk-conservation",
-        help="Phase 8.1: Run cross-layer conservation check on a claim",
-    )
-    cfk_conservation_parser.add_argument("--text", required=True, help="Arabic claim / sentence")
-    cfk_conservation_parser.add_argument(
-        "--evidence", default="", help="Comma-separated evidence references"
-    )
-    cfk_conservation_parser.add_argument(
-        "--output", choices=["json", "text"], default="json"
-    )
-
-    # cfk-reverse-trace — build and display a reverse trace for a claim
-    cfk_reverse_trace_parser = subparsers.add_parser(
-        "cfk-reverse-trace",
-        help="Phase 8.1: Build and display reverse trace for a claim",
-    )
-    cfk_reverse_trace_parser.add_argument("--text", required=True, help="Arabic claim / sentence")
-    cfk_reverse_trace_parser.add_argument(
-        "--evidence", default="", help="Comma-separated evidence references"
-    )
-    cfk_reverse_trace_parser.add_argument(
-        "--output", choices=["json", "markdown"], default="markdown"
-    )
-
-    # ── Phase 8.3: Jamid/Mushtaq Concept Geometry Layer ──────────────────────
-
-    # jamid-analyze
-    jamid_analyze_parser = subparsers.add_parser(
-        "jamid-analyze",
-        help="Phase 8.3: Analyze an Arabic word as Jamid essence geometry",
-    )
-    jamid_analyze_parser.add_argument("--word", required=True, help="Arabic Jamid word")
-    jamid_analyze_parser.add_argument("--output", choices=["json", "markdown"], default="json")
-
-    # mushtaq-analyze
-    mushtaq_analyze_parser = subparsers.add_parser(
-        "mushtaq-analyze",
-        help="Phase 8.3: Analyze an Arabic word as Mushtaq derivational relation geometry",
-    )
-    mushtaq_analyze_parser.add_argument("--word", required=True, help="Arabic Mushtaq word")
-    mushtaq_analyze_parser.add_argument("--output", choices=["json", "markdown"], default="json")
-
-    # concept-geometry-graph
-    cgg_parser = subparsers.add_parser(
-        "concept-geometry-graph",
-        help="Phase 8.3: Build concept geometry graph for an Arabic word",
-    )
-    cgg_parser.add_argument("--word", required=True, help="Arabic word")
-    cgg_parser.add_argument("--output", choices=["json", "markdown"], default="json")
-
-    # concept-geometry-validate
-    cgv_parser = subparsers.add_parser(
-        "concept-geometry-validate",
-        help="Phase 8.3: Run concept geometry validation (target score >= 0.95)",
-    )
-    cgv_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+    kernel_proof_demo_parser = subparsers.add_parser("kernel-proof-demo", help="Demo proof object on text")
+    kernel_proof_demo_parser.add_argument("--text", required=True, help="Arabic text to prove")
+    kernel_proof_demo_parser.add_argument("--output", choices=["json", "markdown"], default="json")
 
     args = parser.parse_args()
 
@@ -1297,10 +1164,8 @@ def main() -> None:
         _handle_morphosemantic_command(args)
     elif args.command in ("mabni-analyze", "mabni-registry", "mabni-certainty", "mabni-graph", "mabni-trace"):
         _handle_mabni_command(args)
-    elif args.command in ("cfk-analyze", "cfk-compare", "cfk-proof", "cfk-table"):
-        _handle_cfk_command(args)
-    elif args.command in ("cfk-validate", "cfk-integration-report", "cfk-conservation", "cfk-reverse-trace"):
-        _handle_cfk_hardening_command(args)
+    elif args.command in ("kernel-validate", "kernel-report", "kernel-demo-fold", "kernel-proof-demo"):
+        _handle_kernel_command(args)
     else:
         parser.print_help()
 
@@ -2032,328 +1897,114 @@ def _handle_mabni_command(args) -> None:  # noqa: ANN001
                 )
 
 
-def _handle_cfk_command(args) -> None:  # noqa: ANN001
-    """Handle all cfk-* CLI subcommands (Phase 8: Cognitive Fractal Kernel)."""
+def _handle_kernel_command(args) -> None:
     import json as _json
-
-    from mcd.cfk.cfk_pipeline import CognitiveFractalPipeline
-    from mcd.cfk.cfk_report import generate_markdown_report, generate_json_report
-
-    evidence_refs = [e.strip() for e in args.evidence.split(",") if e.strip()] if args.evidence else []
-
-    pipeline = CognitiveFractalPipeline()
-    result = pipeline.run(args.text, evidence_refs=evidence_refs)
-
-    cmd = args.command
-
-    if cmd == "cfk-analyze":
-        if args.output == "json":
-            print(generate_json_report(result))
-        elif args.output == "markdown":
-            print(generate_markdown_report(result))
-        else:
-            print(result.summary())
-
-    elif cmd == "cfk-compare":
-        table = result.table
-        if args.output == "json":
-            print(_json.dumps(table.to_dict(), ensure_ascii=False, indent=2))
-        elif args.output == "markdown":
-            print(table.to_markdown())
-        else:
-            # text mode; [:70] slices 70 Unicode code points — safe for Arabic in Python 3
-            print(f"النص: {args.text[:70]}")
-            print(f"{'البعد':<18} {'GPT (إحصائي)':<22} {'العربية':<22} {'العقل'}")
-            print("-" * 85)
-            for row in table.rows:
-                print(
-                    f"{row.dimension:<18} {row.statistical_value:<22} "
-                    f"{row.arabic_value:<22} {row.epistemic_value}"
-                )
-            print(f"\nالحكم النهائي: {table.kernel_judgment}")
-
-    elif cmd == "cfk-proof":
-        proof = result.proof
-        if args.output == "json":
-            print(_json.dumps(proof.to_dict(), ensure_ascii=False, indent=2))
-        else:
-            print(f"الحكم:               {proof.judgment}")
-            print(f"الثقة الإحصائية:     {round(proof.statistical_confidence, 3)}")
-            print(f"القوة اللغوية:       {proof.linguistic_force}")
-            print(f"اليقين المعرفي:      {round(proof.epistemic_certainty, 3)}")
-            print(f"حالة الدليل:         {proof.evidence_state}")
-            print(f"الباقي المعرفي:      {round(proof.cognitive_residual, 3)}")
-            print(f"نوع الباقي:          {proof.residual_type}")
-            print(f"إشارة التعلم:        {proof.learning_signal}")
-            if not proof.conservation.passed:
-                print(f"انتهاكات قوانين الحفظ: {len(proof.conservation.violations)}")
-                for v in proof.conservation.violations:
-                    print(f"  [{v.law}] {v.description}")
-
-    elif cmd == "cfk-table":
-        table = result.table
-        if args.output == "json":
-            print(_json.dumps(table.to_dict(), ensure_ascii=False, indent=2))
-        else:
-            print(table.to_markdown())
-
-
-def _handle_cfk_hardening_command(args) -> None:  # noqa: ANN001
-    """Handle Phase 8.1 CFK hardening CLI commands."""
-    import json as _json
-
-    from mcd.cfk.cfk_pipeline import CognitiveFractalPipeline
-    from mcd.cfk.cfk_integration_contract import (
-        ContractValidator,
-        ALL_CONTRACTS,
-        STATISTICAL_TRANSFORM_CONTRACT,
-        ARABIC_SEMANTIC_TRANSFORM_CONTRACT,
-        EPISTEMIC_TRANSFORM_CONTRACT,
+    from mcd.fractal_kernel import (
+        CognitiveFractalUnit, KernelValidator, KernelReport,
+        FoldOperation, FoldLawEnforcer, ProofObject, ReverseTrace,
+        UnifiedVector, CognitiveOperator, OperatorAlgebra,
     )
 
-    evidence_refs = [e.strip() for e in args.evidence.split(",") if e.strip()] if args.evidence else []
-    text = args.text
-    cmd = args.command
-
-    pipeline = CognitiveFractalPipeline()
-    result = pipeline.run(text, evidence_refs=evidence_refs)
-
-    if cmd == "cfk-validate":
-        # Validate all three projections against their contracts
-        validator = ContractValidator()
-        stat_check = validator.validate_statistical_projection(result.kernel.statistical)
-        arab_check = validator.validate_arabic_projection(result.kernel.arabic)
-        epis_check = validator.validate_epistemic_projection(result.kernel.epistemic)
-
-        checks = [stat_check, arab_check, epis_check]
-        all_passed = all(c.passed for c in checks)
-        total_violations = sum(len(c.violations) for c in checks)
-        validation_score = max(0.0, 1.0 - total_violations * 0.1)
-
-        output = {
-            "text": text,
-            "cfk_validation_score": round(validation_score, 4),
-            "all_passed": all_passed,
-            "checks": [c.to_dict() for c in checks],
-            "proof_judgment": result.proof.judgment,
-        }
-
-        if args.output == "json":
-            print(_json.dumps(output, ensure_ascii=False, indent=2))
-        else:
-            print(f"CFK Validation Score: {round(validation_score, 4)}")
-            print(f"All Passed: {all_passed}")
-            for c in checks:
-                status = "✓" if c.passed else "✗"
-                print(f"  {status} {c.source_layer}")
-                for v in c.violations:
-                    print(f"    [{v.severity}] {v.rule}: {v.description}")
-
-    elif cmd == "cfk-integration-report":
-        # Full integration contract report in markdown or json
-        validator = ContractValidator()
-        stat_check = validator.validate_statistical_projection(result.kernel.statistical)
-        arab_check = validator.validate_arabic_projection(result.kernel.arabic)
-        epis_check = validator.validate_epistemic_projection(result.kernel.epistemic)
-
-        checks = [stat_check, arab_check, epis_check]
-        all_passed = all(c.passed for c in checks)
-        total_violations = sum(len(c.violations) for c in checks)
-        validation_score = max(0.0, 1.0 - total_violations * 0.1)
-
-        if args.output == "json":
-            output = {
-                "text": text,
-                "evidence_refs": evidence_refs,
-                "cfk_validation_score": round(validation_score, 4),
-                "all_passed": all_passed,
-                "checks": [c.to_dict() for c in checks],
-                "contracts": [c.to_dict() for c in ALL_CONTRACTS],
-                "proof_judgment": result.proof.judgment,
-                "cross_layer_conservation_score": (
-                    round(result.cross_layer_report.conservation_score, 4)
-                    if result.cross_layer_report else None
-                ),
-            }
-            print(_json.dumps(output, ensure_ascii=False, indent=2))
-        else:
-            lines = [
-                "# CFK Integration Contract Report — Phase 8.1",
-                "",
-                f"**النص:** {text[:80]}",
-                f"**الأدلة:** {evidence_refs or 'لا يوجد'}",
-                f"**الحكم النهائي:** {result.proof.judgment}",
-                "",
-                "## نتائج التحقق من العقود",
-                "",
-                f"| الطبقة | نجح | الانتهاكات |",
-                f"|--------|-----|------------|",
-            ]
-            for c in checks:
-                lines.append(f"| {c.source_layer} | {'✓' if c.passed else '✗'} | {len(c.violations)} |")
-
-            lines += [
-                "",
-                f"**CFK Validation Score:** {round(validation_score, 4)}",
-                "",
-            ]
-
-            if result.cross_layer_report:
-                clr = result.cross_layer_report
-                lines += [
-                    "## Cross-Layer Conservation",
-                    "",
-                    f"**Score:** {round(clr.conservation_score, 4)}",
-                    f"**Passed:** {'✓' if clr.passed else '✗'}",
-                    f"**Violations:** {len(clr.violations)}",
-                    "",
-                ]
-                for v in clr.violations:
-                    lines.append(f"- **[{v.severity}]** `{v.check_name}`: {v.description}")
-
-            lines += [
-                "",
-                "## قواعد العقود",
-                "",
-                "| الطبقة | يمكن إصدار شهادة؟ | يمكن رفع اليقين؟ | يمكن إنشاء دليل؟ |",
-                "|--------|------------------|-----------------|-----------------|",
-            ]
-            for c in ALL_CONTRACTS:
-                lines.append(
-                    f"| {c.source_layer} | {'نعم' if c.can_issue_certificate else 'لا'} "
-                    f"| {'نعم' if c.can_raise_epistemic_certainty else 'لا'} "
-                    f"| {'نعم' if c.can_create_evidence else 'لا'} |"
-                )
-            print("\n".join(lines))
-
-    elif cmd == "cfk-conservation":
-        # Cross-layer conservation report
-        clr = result.cross_layer_report
-        if clr is None:
-            print(_json.dumps({"error": "cross_layer_report not available"}, ensure_ascii=False))
-            return
-
-        output = clr.to_dict()
-        output["text"] = text
-        output["evidence_refs"] = evidence_refs
-        output["kernel_judgment"] = result.proof.judgment
-
-        if args.output == "json":
-            print(_json.dumps(output, ensure_ascii=False, indent=2))
-        else:
-            print(f"Cross-Layer Conservation Score: {round(clr.conservation_score, 4)}")
-            print(f"Passed: {clr.passed}")
-            print(f"Kernel Judgment: {result.proof.judgment}")
-            if clr.violations:
-                print("Violations:")
-                for v in clr.violations:
-                    print(f"  [{v.severity}] {v.check_name}: {v.description}")
-            if clr.warnings:
-                print("Warnings:")
-                for w in clr.warnings:
-                    print(f"  - {w}")
-
-    elif cmd == "cfk-reverse-trace":
-        # Reverse trace for this claim
-        rt = result.proof.reverse_trace_obj
-        if rt is None:
-            print(_json.dumps({"error": "reverse_trace not available"}, ensure_ascii=False))
-            return
-
-        if args.output == "json":
-            out = rt.to_dict()
-            out["text"] = text
-            print(_json.dumps(out, ensure_ascii=False, indent=2))
-        else:
-            lines = [
-                "# CFK Reverse Trace Report — Phase 8.1",
-                "",
-                f"**النص:** {text[:80]}",
-                f"**الحكم النهائي:** {rt.final_judgment}",
-                f"**Reverse Trace ID:** {rt.reverse_trace_id}",
-                f"**Proof ID:** {rt.proof_id}",
-                f"**Complete:** {'✓' if rt.complete else '✗'}",
-                "",
-                "## Projection IDs",
-                f"- Statistical: `{rt.statistical_projection_id}`",
-                f"- Arabic: `{rt.arabic_projection_id}`",
-                f"- Epistemic: `{rt.epistemic_projection_id}`",
-                "",
-                f"## Evidence Refs ({len(rt.evidence_refs)})",
-            ]
-            for ref in rt.evidence_refs:
-                lines.append(f"- {ref}")
-
-            lines += [
-                "",
-                f"## Residual Refs ({len(rt.residual_refs)})",
-            ]
-            for ref in rt.residual_refs:
-                lines.append(f"- {ref}")
-
-            if rt.blocking_violations:
-                lines += ["", "## Blocking Violations"]
-                for bv in rt.blocking_violations:
-                    lines.append(f"- {bv}")
-
-            print("\n".join(lines))
-
-
-def _handle_concept_geometry_command(args) -> None:
-    """Handle Phase 8.3 concept geometry CLI subcommands."""
-    import json as _json
-    cmd = args.command
-
-    if cmd == "jamid-analyze":
-        from mcd.concept_geometry.jamid_essence_ontology import JamidEssenceOntology
-        from mcd.concept_geometry.concept_geometry_report import generate_jamid_report
-        ont = JamidEssenceOntology()
-        proj = ont.to_projection(args.word)
-        if args.output == "json":
-            print(_json.dumps(proj, ensure_ascii=False, indent=2))
-        else:
-            je = ont.get_by_surface(args.word)
-            if je:
-                print(generate_jamid_report(je, output="markdown"))
-            else:
-                print(f"# Jamid Essence: {args.word}\n\n**Not found in ontology.**")
-
-    elif cmd == "mushtaq-analyze":
-        from mcd.concept_geometry.mushtaq_derivation_engine import MushtaqDerivationEngine
-        from mcd.concept_geometry.concept_geometry_report import generate_mushtaq_report
-        engine = MushtaqDerivationEngine()
-        mu = engine.analyze(args.word)
-        if args.output == "json":
-            print(_json.dumps(mu.to_dict(), ensure_ascii=False, indent=2))
-        else:
-            print(generate_mushtaq_report(mu, output="markdown"))
-
-    elif cmd == "concept-geometry-graph":
-        from mcd.concept_geometry.concept_geometry_graph import ConceptGeometryGraphBuilder
-        from mcd.concept_geometry.jamid_essence_ontology import JamidEssenceOntology
-        from mcd.concept_geometry.mushtaq_derivation_engine import MushtaqDerivationEngine
-        ont = JamidEssenceOntology()
-        engine = MushtaqDerivationEngine()
-        builder = ConceptGeometryGraphBuilder()
-        je = ont.get_by_surface(args.word)
-        if je:
-            g = builder.build_for_jamid(args.word, je)
-        else:
-            mu = engine.analyze(args.word)
-            g = builder.build_for_mushtaq(args.word, mu)
-        if args.output == "json":
-            print(_json.dumps(g.to_dict(), ensure_ascii=False, indent=2))
-        else:
-            print(g.to_markdown())
-
-    elif cmd == "concept-geometry-validate":
-        from mcd.concept_geometry.concept_geometry_validator import ConceptGeometryValidator
-        validator = ConceptGeometryValidator()
-        report = validator.quick_validate()
+    if args.command == "kernel-validate":
+        sample_unit = CognitiveFractalUnit(
+            unit_id="CFU-demo-001",
+            level="word",
+            unit_type="lexical",
+            surface="النموذج",
+            fold_state="atomic",
+            trace_refs=["T-001"],
+            metadata={"generated": True},
+        )
+        validator = KernelValidator()
+        report = validator.run_full_validation(units=[sample_unit])
         if args.output == "json":
             print(_json.dumps(report.to_dict(), ensure_ascii=False, indent=2))
         else:
-            print(report.to_markdown())
+            kr = KernelReport()
+            print(kr.generate_markdown(report))
+
+    elif args.command == "kernel-report":
+        validator = KernelValidator()
+        report = validator.run_full_validation()
+        kr = KernelReport()
+        if args.output == "markdown":
+            print(kr.generate_markdown(report, extra_notes=(
+                "This report covers the Fractal Geometry Kernel baseline validation.\n"
+                "All layers (Mabni, Mu'rab, Morphosemantics) must conform to this kernel."
+            )))
+        else:
+            print(_json.dumps(kr.generate_json_summary(report), ensure_ascii=False, indent=2))
+
+    elif args.command == "kernel-demo-fold":
+        text = args.text
+        words = text.split()
+        unit_ids = [f"CFU-{i:04d}" for i in range(len(words))]
+        fold_op = FoldOperation(
+            fold_id="FOLD-demo-001",
+            input_unit_ids=unit_ids,
+            output_fold_unit_id="CFU-fold-001",
+            preserved_relations=["agent_of", "patient_of"],
+            preserved_vectors=["evidence_vector", "certainty_vector"],
+            lost_details=["surface_variation"],
+            summary_signature="unsupported_generalization+missing_evidence",
+        )
+        enforcer = FoldLawEnforcer()
+        trace_ok, trace_warn = enforcer.check_trace_preservation(fold_op, ["T-demo-001"])
+        certainty_ok, cert_warn = enforcer.check_certainty_non_increase(0.3, 0.3)
+        result = {
+            "text": text,
+            "fold_operation": fold_op.to_dict(),
+            "law_checks": {
+                "trace_preservation": {"passed": trace_ok, "warnings": trace_warn},
+                "certainty_non_increase": {"passed": certainty_ok, "warnings": cert_warn},
+            },
+        }
+        if args.output == "json":
+            print(_json.dumps(result, ensure_ascii=False, indent=2))
+        else:
+            print(f"Text: {text}")
+            print(f"Fold ID: {fold_op.fold_id}")
+            print(f"Words folded: {len(words)}")
+            print(f"Trace law passed: {trace_ok}")
+            print(f"Certainty law passed: {certainty_ok}")
+
+    elif args.command == "kernel-proof-demo":
+        text = args.text
+        rtrace_id = ReverseTrace.make_id()
+        proof_id = ProofObject.make_id()
+        rtrace = ReverseTrace(
+            reverse_trace_id=rtrace_id,
+            final_claim=text,
+            proof_id=proof_id,
+            sentence_units=["CFU-sent-001"],
+            token_units=["CFU-tok-001"],
+            evidence_chain=[],
+            certainty_chain=["syntactic_certainty:0.5"],
+            operator_chain=["irab_nominative_operator"],
+            complete=False,
+        )
+        proof = ProofObject(
+            proof_id=proof_id,
+            claim_id="CLAIM-demo-001",
+            proof_status="hypothesis",
+            trace_refs=[rtrace_id],
+            certainty_score=0.4,
+            warnings=["No independent evidence found — hypothesis only"],
+            reverse_trace_id=rtrace_id,
+        )
+        result = {
+            "text": text,
+            "proof_object": proof.to_dict(),
+            "reverse_trace": rtrace.to_dict(),
+            "note": "hypothesis proof: no certificate without independent evidence",
+        }
+        if args.output == "json":
+            print(_json.dumps(result, ensure_ascii=False, indent=2))
+        else:
+            print(f"Claim: {text}")
+            print(f"Proof status: {proof.proof_status}")
+            print(f"Certainty score: {proof.certainty_score}")
+            print(f"Warnings: {proof.warnings}")
 
 
 if __name__ == "__main__":
