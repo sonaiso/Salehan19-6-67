@@ -507,6 +507,47 @@ def main() -> None:
     kernel_proof_demo_parser.add_argument("--text", required=True, help="Arabic text to prove")
     kernel_proof_demo_parser.add_argument("--output", choices=["json", "markdown"], default="json")
 
+    # ── Phase 8.6: Mathematical Function Governance Layer ──────────────────
+    math_governance_parser = subparsers.add_parser(
+        "math-governance",
+        help="Phase 8.6: Run mathematical governance gate report",
+    )
+    math_governance_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
+    math_chain_parser = subparsers.add_parser(
+        "math-chain",
+        help="Phase 8.6: Show governed chain from unicode to final answer",
+    )
+    math_chain_parser.add_argument("--text", required=True, help="Arabic text to evaluate")
+    math_chain_parser.add_argument("--output", choices=["markdown", "json"], default="markdown")
+
+    math_morphisms_parser = subparsers.add_parser(
+        "math-morphisms",
+        help="Phase 8.6: List registered level morphisms",
+    )
+    math_morphisms_parser.add_argument("--output", choices=["markdown", "json"], default="markdown")
+
+    math_operators_parser = subparsers.add_parser(
+        "math-operators",
+        help="Phase 8.6: List operator algebra registry",
+    )
+    math_operators_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
+    math_jami_mani_parser = subparsers.add_parser(
+        "math-jami-mani",
+        help="Phase 8.6: Compute Jami/Mani report for concept",
+    )
+    math_jami_mani_parser.add_argument("--concept", required=True, help="Concept id")
+    math_jami_mani_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
+    math_annotate_parser = subparsers.add_parser(
+        "math-annotate-dataset",
+        help="Phase 8.6: Validate/annotate dataset with mathematical fields",
+    )
+    math_annotate_parser.add_argument("--path", required=True, help="Dataset path (JSONL)")
+    math_annotate_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+    math_annotate_parser.add_argument("--write", action="store_true", default=False)
+
     args = parser.parse_args()
 
     if args.command in ("jamid-analyze", "mushtaq-analyze", "concept-geometry-graph", "concept-geometry-validate"):
@@ -1166,6 +1207,15 @@ def main() -> None:
         _handle_mabni_command(args)
     elif args.command in ("kernel-validate", "kernel-report", "kernel-demo-fold", "kernel-proof-demo"):
         _handle_kernel_command(args)
+    elif args.command in (
+        "math-governance",
+        "math-chain",
+        "math-morphisms",
+        "math-operators",
+        "math-jami-mani",
+        "math-annotate-dataset",
+    ):
+        _handle_math_governance_command(args)
     else:
         parser.print_help()
 
@@ -2007,6 +2057,110 @@ def _handle_kernel_command(args) -> None:
             print(f"Warnings: {proof.warnings}")
 
 
+def _handle_math_governance_command(args) -> None:
+    import json as _json
+    from mcd.math_governance import (
+        GovernedFractalUnit,
+        LevelMorphismRegistry,
+        OperatorAlgebra,
+        JamiManiCalculator,
+        DatasetMathAnnotator,
+        MathematicalGovernanceGate,
+        GovernanceReportBuilder,
+    )
+
+    if args.command == "math-governance":
+        gate = MathematicalGovernanceGate()
+        u1 = GovernedFractalUnit(
+            unit_id="U-unicode-1",
+            level_id="unicode",
+            unit_type="unicode",
+            surface="زيد",
+            post_unit_ids=["U-token-1"],
+            trace_refs=["TR-1"],
+            metadata={"generated_reason": "seed"},
+        )
+        u2 = GovernedFractalUnit(
+            unit_id="U-token-1",
+            level_id="token",
+            unit_type="token",
+            surface="زيد",
+            pre_unit_ids=["U-unicode-1"],
+            post_unit_ids=["U-lexeme-1"],
+            trace_refs=["TR-1"],
+        )
+        u3 = GovernedFractalUnit(
+            unit_id="U-lexeme-1",
+            level_id="lexeme",
+            unit_type="lexeme",
+            surface="كاتب",
+            pre_unit_ids=["U-token-1"],
+            post_unit_ids=[],
+            trace_refs=["TR-1"],
+        )
+        report = gate.run(units=[u1, u2, u3], dataset_path="data/evaluation/ambiguity_ar.jsonl")
+        if args.output == "json":
+            print(_json.dumps(report.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(GovernanceReportBuilder().markdown(report))
+
+    elif args.command == "math-chain":
+        tokens = args.text.split()
+        chain = [
+            {"level": "unicode", "surface": args.text, "morphism_out": "unicode_to_token"},
+            {"level": "token", "surface": "|".join(tokens), "morphism_out": "token_to_lexeme"},
+            {"level": "lexeme", "surface": "|".join(tokens), "morphism_out": "lexeme_to_root_pattern"},
+            {"level": "final_answer", "surface": "suspend", "morphism_out": "proposal_to_residual"},
+        ]
+        if args.output == "json":
+            print(_json.dumps({"text": args.text, "chain": chain}, ensure_ascii=False, indent=2))
+        else:
+            print("# Mathematical Chain")
+            print(f"- text: {args.text}")
+            for row in chain:
+                print(f"- {row['level']} -> {row['morphism_out']} :: {row['surface']}")
+
+    elif args.command == "math-morphisms":
+        morphisms = [m.to_dict() for m in LevelMorphismRegistry().get_all()]
+        if args.output == "json":
+            print(_json.dumps(morphisms, ensure_ascii=False, indent=2))
+        else:
+            print("# Registered Morphisms")
+            for m in morphisms:
+                print(f"- {m['morphism_id']}: {m['source_level']} -> {m['target_level']}")
+
+    elif args.command == "math-operators":
+        operators = [op.to_dict() for op in OperatorAlgebra().get_all()]
+        if args.output == "json":
+            print(_json.dumps(operators, ensure_ascii=False, indent=2))
+        else:
+            print("# Registered Operators")
+            for op in operators:
+                print(f"- {op['operator_id']} ({op['operator_type']})")
+
+    elif args.command == "math-jami-mani":
+        report = JamiManiCalculator().calculate_for_concept(args.concept)
+        if args.output == "json":
+            print(_json.dumps(report.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print("# Jami/Mani Report")
+            print(f"- concept_id: {report.concept_id}")
+            print(f"- jami_score: {report.jami_score}")
+            print(f"- mani_score: {report.mani_score}")
+            print(f"- concept_tightness: {report.concept_tightness}")
+
+    elif args.command == "math-annotate-dataset":
+        report = DatasetMathAnnotator().run(args.path, write=args.write)
+        if args.output == "json":
+            print(_json.dumps(report.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print("# Dataset Mathematical Annotation")
+            print(f"- path: {report.path}")
+            print(f"- total_examples: {report.total_examples}")
+            print(f"- annotated_examples: {report.annotated_examples}")
+            print(f"- compliant_examples: {report.compliant_examples}")
+            print(f"- dataset_annotation_score: {report.dataset_annotation_score}")
+
+
 if __name__ == "__main__":
     main()
-
