@@ -72,6 +72,13 @@ class DepthMetricsReport:
     details: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
+        # Serialize details, converting any sets to sorted lists
+        serialized_details: dict[str, Any] = {}
+        for k, v in self.details.items():
+            if isinstance(v, set):
+                serialized_details[k] = sorted(v)
+            else:
+                serialized_details[k] = v
         return {
             "total_examples": self.total_examples,
             "cognitive_depth_score": round(self.cognitive_depth_score, 4),
@@ -84,7 +91,7 @@ class DepthMetricsReport:
             "contract_strictness_score": round(self.contract_strictness_score, 4),
             "learning_value_score": round(self.learning_value_score, 4),
             "curriculum_completeness_score": round(self.curriculum_completeness_score, 4),
-            "details": self.details,
+            "details": serialized_details,
         }
 
     def to_markdown(self) -> str:

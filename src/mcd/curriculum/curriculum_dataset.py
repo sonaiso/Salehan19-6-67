@@ -63,6 +63,10 @@ def _load_jsonl(path: Path) -> list[CognitiveUnit]:
                 difficulty=data.get("difficulty", "medium"),
                 tags=data.get("tags", []),
                 metadata=data.get("metadata", {}),
+                expected_nodes=data.get("expected_nodes", []),
+                expected_edges=data.get("expected_edges", []),
+                expected_vectors=data.get("expected_vectors", []),
+                expected_domains=data.get("expected_domains", []),
             ))
     return units
 
