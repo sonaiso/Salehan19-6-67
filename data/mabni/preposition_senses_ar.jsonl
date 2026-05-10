@@ -1,0 +1,10 @@
+{"prep": "في", "text": "الكتاب في الحقيبة", "sense": "location", "relation_type": "locative", "creates_evidence": false}
+{"prep": "في", "text": "نام في الليل", "sense": "time", "relation_type": "temporal", "creates_evidence": false}
+{"prep": "من", "text": "جاء من المدينة", "sense": "origin", "relation_type": "source", "creates_evidence": false}
+{"prep": "إلى", "text": "ذهب إلى البيت", "sense": "destination", "relation_type": "goal", "creates_evidence": false}
+{"prep": "على", "text": "وضع الكتاب على الطاولة", "sense": "surface", "relation_type": "surface_location", "creates_evidence": false}
+{"prep": "عن", "text": "تكلم عن العلم", "sense": "topic", "relation_type": "aboutness", "creates_evidence": false}
+{"prep": "ب", "text": "كتب بالقلم", "sense": "instrument", "relation_type": "instrumental", "creates_evidence": false}
+{"prep": "ل", "text": "هذا لزيد", "sense": "possession", "relation_type": "possessive", "creates_evidence": false}
+{"prep": "ك", "text": "هو كالأسد", "sense": "similarity", "relation_type": "comparative", "creates_evidence": false}
+{"prep": "حتى", "text": "قرأ حتى الفجر", "sense": "limit", "relation_type": "terminative", "creates_evidence": false}

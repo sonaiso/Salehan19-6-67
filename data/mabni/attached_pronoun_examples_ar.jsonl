@@ -1,0 +1,10 @@
+{"text": "رأيتُه", "suffix": "ه", "person": "third", "gender": "masculine", "number": "singular", "referent_known": false}
+{"text": "رأيتُها", "suffix": "ها", "person": "third", "gender": "feminine", "number": "singular", "referent_known": false}
+{"text": "رأيتُهم", "suffix": "هم", "person": "third", "gender": "masculine", "number": "plural", "referent_known": false}
+{"text": "رأيتُك", "suffix": "ك", "person": "second", "gender": "masculine", "number": "singular", "referent_known": false}
+{"text": "رأيتُنا", "suffix": "نا", "person": "first", "gender": "common", "number": "plural", "referent_known": false}
+{"text": "كتابُه", "suffix": "ه", "person": "third", "gender": "masculine", "number": "singular", "referent_known": false}
+{"text": "بيتُها", "suffix": "ها", "person": "third", "gender": "feminine", "number": "singular", "referent_known": false}
+{"text": "أعطيتُكم", "suffix": "كم", "person": "second", "gender": "masculine", "number": "plural", "referent_known": false}
+{"text": "أعطيتُني", "suffix": "ي", "person": "first", "gender": "common", "number": "singular", "referent_known": false}
+{"text": "أخذوهن", "suffix": "هن", "person": "third", "gender": "feminine", "number": "plural", "referent_known": false}

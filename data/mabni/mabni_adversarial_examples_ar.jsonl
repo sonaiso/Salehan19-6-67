@@ -1,0 +1,10 @@
+{"text": "إنّ قد جاء", "challenge": "compound emphasis", "trap": "emphasis does not stack to create evidence", "creates_evidence": false}
+{"text": "والله إنّ لو جاء لنجح", "challenge": "oath + inna + conditional", "trap": "oath+emphasis does not assert conditional result", "creates_evidence": false}
+{"text": "بلى إنه لجاء", "challenge": "answer + emphasis", "trap": "bala requires prior negated question", "creates_evidence": false}
+{"text": "لا زيدٌ جاء ولا عمرو", "challenge": "double negation", "trap": "double negation is not affirmation in Arabic", "creates_evidence": false}
+{"text": "ما أجملَ زيداً إلا في المجلس", "challenge": "exclamatory ma + exception", "trap": "exception modifies scope not evidence", "creates_evidence": false}
+{"text": "إنما قد يكون", "challenge": "innama + qad", "trap": "combination is still scope-restriction not evidence", "is_evidence": false}
+{"text": "من في الدار لا أعلم", "challenge": "interrogative + negation", "trap": "interrogative suspends judgment", "creates_evidence": false}
+{"text": "لولا إنّ زيداً هنا", "challenge": "counterfactual + inna", "trap": "counterfactual does not assert", "is_counterfactual": true}
+{"text": "إن كان إذا جاء يُكرَم", "challenge": "nested conditionals", "trap": "both conditionals suspend judgment", "judgment_suspended": true}
+{"text": "ما لا يُفهم قد يُقال", "challenge": "negation + qad", "trap": "qad+negation still no evidence", "creates_evidence": false}

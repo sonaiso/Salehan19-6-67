@@ -1,0 +1,10 @@
+{"text": "ما جاء زيد", "mabni_type": "negation", "surface": "ما", "creates_evidence": false, "note": "sentential negation"}
+{"text": "ما فعلتَ شيئاً", "mabni_type": "negation", "surface": "ما", "creates_evidence": false, "note": "past negation"}
+{"text": "ما أجملَ السماء", "mabni_type": "ta_ajjub", "surface": "ما", "creates_evidence": false, "note": "exclamatory ma"}
+{"text": "ما تفعلُ أفعلُ", "mabni_type": "relative_masdariyya", "surface": "ما", "creates_evidence": false, "note": "masdariyya conditional"}
+{"text": "ما الذي جاء؟", "mabni_type": "interrogative", "surface": "ما", "creates_evidence": false, "note": "interrogative ma"}
+{"text": "ما مِن رجلٍ في الدار", "mabni_type": "negation", "surface": "ما", "creates_evidence": false, "note": "negation with min"}
+{"text": "ما قامَ إلا زيد", "mabni_type": "negation", "surface": "ما", "creates_evidence": false, "note": "negation + exception"}
+{"text": "إنما الأعمالُ بالنيات", "mabni_type": "innama_qasr", "surface": "إنما", "creates_evidence": false, "note": "qasr via innama"}
+{"text": "ما زيدٌ قائماً", "mabni_type": "negation", "surface": "ما", "creates_evidence": false, "note": "hejazi negation"}
+{"text": "بِمَ تفكر؟", "mabni_type": "interrogative", "surface": "ما", "creates_evidence": false, "note": "interrogative with preposition"}

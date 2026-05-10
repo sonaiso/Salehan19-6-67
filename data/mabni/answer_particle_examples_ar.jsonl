@@ -1,0 +1,10 @@
+{"text": "نعم", "answer_type": "affirmative", "reverses_negation": false, "creates_evidence": false}
+{"text": "بلى", "answer_type": "reversal_affirmative", "reverses_negation": true, "creates_evidence": false, "note": "reverses prior negation"}
+{"text": "لا", "answer_type": "negative", "reverses_negation": false, "creates_evidence": false}
+{"text": "كلا", "answer_type": "strong_negative", "reverses_negation": false, "creates_evidence": false}
+{"text": "أجل", "answer_type": "affirmative", "reverses_negation": false, "creates_evidence": false}
+{"text": "إي", "answer_type": "affirmative", "reverses_negation": false, "creates_evidence": false}
+{"text": "هل جاء؟ نعم", "answer_type": "affirmative", "reverses_negation": false, "creates_evidence": false}
+{"text": "ألم يجئ؟ بلى", "answer_type": "reversal_affirmative", "reverses_negation": true, "creates_evidence": false}
+{"text": "ألم تأكل؟ بلى", "answer_type": "reversal_affirmative", "reverses_negation": true, "creates_evidence": false}
+{"text": "أتفعل ذلك؟ لا", "answer_type": "negative", "reverses_negation": false, "creates_evidence": false}

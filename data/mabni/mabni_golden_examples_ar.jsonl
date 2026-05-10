@@ -1,0 +1,10 @@
+{"text": "إن جاء زيدٌ فأكرمه", "expected": {"is_conditional": true, "judgment_suspended": true, "creates_evidence": false}, "notes": "basic conditional"}
+{"text": "لو درستَ لنجحتَ", "expected": {"is_counterfactual": true, "creates_evidence": false}, "notes": "counterfactual"}
+{"text": "ما جاء زيد", "expected": {"mabni_type": "negation", "creates_evidence": false}, "notes": "negation"}
+{"text": "إنما الأعمال بالنيات", "expected": {"qasr_type": "innama_qasr", "is_evidence": false}, "notes": "qasr via innama"}
+{"text": "هل جاء زيد؟", "expected": {"speech_act_type": "istifham", "is_assertion": false}, "notes": "question"}
+{"text": "لا تكذب", "expected": {"mabni_type": "nahy", "creates_evidence": false}, "notes": "prohibition"}
+{"text": "بلى", "expected": {"answer_type": "reversal_affirmative", "reverses_negation": true}, "notes": "bala reverses negation"}
+{"text": "جاء القوم إلا زيداً", "expected": {"scope_modified": true, "is_evidence": false}, "notes": "exception"}
+{"text": "إنّ زيداً قائمٌ", "expected": {"creates_evidence": false, "certainty_increase": 0.0}, "notes": "emphasis only"}
+{"text": "هذا الكتاب", "expected": {"deixis": "proximal", "gender": "masculine"}, "notes": "demonstrative"}
