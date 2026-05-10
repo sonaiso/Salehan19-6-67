@@ -10,7 +10,7 @@ from bayani.runtime.contracts import ZeroResult
 _BLOCKING_PATTERNS = (
     r"يحاكي\s*gpt(?:[-\s]?\d+(?:\.\d+)*)?\s*بالكامل",
     r"بديل\s*gpt",
-    r"مكاف[ئي]\s*(?:ل|لـ)\s*gpt(?:[-\s]?\d+(?:\.\d+)*)?",
+    r"(?:مكافئ|مكافي|مكافى)\s*(?:ل|لـ)\s*gpt(?:[-\s]?\d+(?:\.\d+)*)?",
     r"نموذج\s+لغوي\s+عام\s+كامل",
     r"general\s+llm\s+equivalent",
     r"full\s+gpt(?:[-\s]?\d+(?:\.\d+)*)?\s+equivalent",

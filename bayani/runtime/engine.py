@@ -37,6 +37,9 @@ class MustadilRuntimeEngine:
     7. Returns a :class:`~bayani.runtime.contracts.MustadilOutput`.
     """
 
+    def __init__(self, enable_zero_guard: bool = True) -> None:
+        self.enable_zero_guard = enable_zero_guard
+
     def run(self, prompt: str, mode: str = "analysis") -> MustadilOutput:
         """Execute the full pipeline for *prompt* and return structured output.
 
@@ -85,7 +88,11 @@ class MustadilRuntimeEngine:
         audit_result = run_audit(pt_result, intent_result, required_layers, layer_results)
 
         # Step 7 — Runtime ZeroGuard (blocking product-equivalence claims)
-        governance_zero = detect_blocking_product_claim(prompt)
+        governance_zero = (
+            detect_blocking_product_claim(prompt)
+            if self.enable_zero_guard
+            else None
+        )
         if governance_zero is not None:
             audit_result.passed = False
             audit_result.violations.append(
