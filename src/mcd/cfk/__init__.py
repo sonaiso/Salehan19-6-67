@@ -40,6 +40,26 @@ from mcd.cfk.cfk_comparison_table import ComparisonTable, ComparisonTableBuilder
 from mcd.cfk.cfk_pipeline import CognitiveFractalPipeline, CognitiveFractalResult
 from mcd.cfk.cfk_report import generate_markdown_report, generate_json_report
 from mcd.cfk.serializers import cfk_result_to_json, proof_to_json, unit_to_json
+from mcd.cfk.cfk_integration_contract import (
+    CFKIntegrationContract,
+    ContractValidator,
+    ContractCheckResult,
+    ContractViolation,
+    STATISTICAL_TRANSFORM_CONTRACT,
+    ARABIC_SEMANTIC_TRANSFORM_CONTRACT,
+    MABNI_CONTRACT,
+    MURAB_CONTRACT,
+    EPISTEMIC_TRANSFORM_CONTRACT,
+    PROOF_OBJECT_BUILDER_CONTRACT,
+    ALL_CONTRACTS,
+    CONTRACTS_BY_LAYER,
+)
+from mcd.cfk.cross_layer_conservation import (
+    CrossLayerConservationChecker,
+    CrossLayerConservationReport,
+    CrossLayerViolation,
+)
+from mcd.cfk.reverse_trace import ReverseTrace, ReverseTraceBuilder
 
 __all__ = [
     # Schema
@@ -78,4 +98,24 @@ __all__ = [
     "cfk_result_to_json",
     "proof_to_json",
     "unit_to_json",
+    # Phase 8.1 — Integration Contract
+    "CFKIntegrationContract",
+    "ContractValidator",
+    "ContractCheckResult",
+    "ContractViolation",
+    "STATISTICAL_TRANSFORM_CONTRACT",
+    "ARABIC_SEMANTIC_TRANSFORM_CONTRACT",
+    "MABNI_CONTRACT",
+    "MURAB_CONTRACT",
+    "EPISTEMIC_TRANSFORM_CONTRACT",
+    "PROOF_OBJECT_BUILDER_CONTRACT",
+    "ALL_CONTRACTS",
+    "CONTRACTS_BY_LAYER",
+    # Phase 8.1 — Cross-Layer Conservation
+    "CrossLayerConservationChecker",
+    "CrossLayerConservationReport",
+    "CrossLayerViolation",
+    # Phase 8.1 — ReverseTrace
+    "ReverseTrace",
+    "ReverseTraceBuilder",
 ]

@@ -25,6 +25,7 @@ from mcd.cfk.arabic_semantic_transform import ArabicSemanticTransform
 from mcd.cfk.epistemic_transform import EpistemicTransform
 from mcd.cfk.fractal_kernel import FractalKernel, KernelResult
 from mcd.cfk.conservation_law import ConservationLawChecker, ConservationCheckResult
+from mcd.cfk.cross_layer_conservation import CrossLayerConservationChecker, CrossLayerConservationReport
 from mcd.cfk.proof_object import ProofObject, ProofObjectBuilder
 from mcd.cfk.cfk_comparison_table import ComparisonTable, ComparisonTableBuilder
 
@@ -37,6 +38,7 @@ class CognitiveFractalResult:
     text: str
     kernel: KernelResult
     conservation_results: list[ConservationCheckResult]
+    cross_layer_report: CrossLayerConservationReport | None
     proof: ProofObject
     table: ComparisonTable
 
@@ -46,6 +48,9 @@ class CognitiveFractalResult:
             "text": self.text,
             "kernel": self.kernel.to_dict(),
             "conservation": [c.to_dict() for c in self.conservation_results],
+            "cross_layer_conservation": (
+                self.cross_layer_report.to_dict() if self.cross_layer_report else None
+            ),
             "proof": self.proof.to_dict(),
             "table": self.table.to_dict(),
         }
@@ -79,6 +84,7 @@ class CognitiveFractalPipeline:
         self._epis  = EpistemicTransform()
         self._kernel = FractalKernel()
         self._conservation = ConservationLawChecker()
+        self._cross_conservation = CrossLayerConservationChecker()
         self._proof_builder = ProofObjectBuilder()
         self._table_builder = ComparisonTableBuilder()
 
@@ -146,9 +152,19 @@ class CognitiveFractalPipeline:
         ]
 
         # ------------------------------------------------------------------ #
+        # Step 4b: Cross-layer conservation check
+        # ------------------------------------------------------------------ #
+        cross_layer_report = self._cross_conservation.check(
+            statistical=stat_proj,
+            arabic=arab_proj,
+            epistemic=epis_proj,
+            kernel_judgment=kernel.kernel_judgment,
+        )
+
+        # ------------------------------------------------------------------ #
         # Step 5: Build ProofObject
         # ------------------------------------------------------------------ #
-        proof = self._proof_builder.build(kernel, conservation_results)
+        proof = self._proof_builder.build(kernel, conservation_results, cross_layer_report)
 
         # ------------------------------------------------------------------ #
         # Step 6: Build ComparisonTable
@@ -160,6 +176,7 @@ class CognitiveFractalPipeline:
             text=text,
             kernel=kernel,
             conservation_results=conservation_results,
+            cross_layer_report=cross_layer_report,
             proof=proof,
             table=table,
         )
