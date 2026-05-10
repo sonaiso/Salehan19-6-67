@@ -1,0 +1,12 @@
+{
+  "diminutives": [
+    {"dim_id": "d_kutayyib", "base_form": "كِتاب", "diminutive_form": "كُتَيِّب", "root_id": "ktb", "pattern": "fuayyil", "semantic_shift": "small_booklet", "affective": "neutral", "cultural_usage": "common"},
+    {"dim_id": "d_nuhayyir", "base_form": "نَهر", "diminutive_form": "نُهَيِّر", "root_id": "nhr", "pattern": "fuayyil", "semantic_shift": "small_stream", "affective": "affectionate", "cultural_usage": "poetic"},
+    {"dim_id": "d_jubaayl", "base_form": "جَبَل", "diminutive_form": "جُبَيِّل", "root_id": "jbl", "pattern": "fuayyil", "semantic_shift": "small_hill", "affective": "neutral", "cultural_usage": "literary"},
+    {"dim_id": "d_buhayr", "base_form": "بَحر", "diminutive_form": "بُحَيِّر", "root_id": "bhr", "pattern": "fuayyil", "semantic_shift": "small_sea_lake", "affective": "neutral", "cultural_usage": "geographical"},
+    {"dim_id": "d_kulayyib", "base_form": "كَلب", "diminutive_form": "كُلَيِّب", "root_id": "klb", "pattern": "fuayyil", "semantic_shift": "small_dog", "affective": "affectionate", "cultural_usage": "colloquial"},
+    {"dim_id": "d_duwayla", "base_form": "دَولة", "diminutive_form": "دُوَيِّلة", "root_id": "dwl", "pattern": "fuayyila", "semantic_shift": "small_state", "affective": "diminutive", "cultural_usage": "political"},
+    {"dim_id": "d_3uwayl", "base_form": "عامِل", "diminutive_form": "عُوَيِّل", "root_id": "aml", "pattern": "fuayyil", "semantic_shift": "small_worker", "affective": "affectionate", "cultural_usage": "colloquial"},
+    {"dim_id": "d_balayd", "base_form": "بَلَد", "diminutive_form": "بُلَيِّد", "root_id": "bld", "pattern": "fuayyil", "semantic_shift": "small_town", "affective": "neutral", "cultural_usage": "geographical"}
+  ]
+}
