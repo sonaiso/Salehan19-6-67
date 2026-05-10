@@ -74,3 +74,4 @@ def test_trace_text_injection():
     data = json.loads(result.stdout)
     jt = data["judgment_trace"]
     assert jt["evidence_status"] == "fake"
+    assert jt["final_decision"] in ("reject", "suspend")

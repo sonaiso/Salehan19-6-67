@@ -1155,8 +1155,9 @@ def _handle_trace_command(args) -> None:
                 print(f"")
                 print(f"| # | Text (truncated) | Score | Passed |")
                 print(f"|---|------------------|-------|--------|")
+                _MAX_TEXT_DISPLAY = 40
                 for i, r in enumerate(reports, 1):
-                    t = r['text'][:40].replace('|', '/')
+                    t = r['text'][:_MAX_TEXT_DISPLAY].replace('|', '/')
                     icon = "✅" if r['passed'] else "❌"
                     print(f"| {i} | {t} | {r['score']:.4f} | {icon} |")
         else:
