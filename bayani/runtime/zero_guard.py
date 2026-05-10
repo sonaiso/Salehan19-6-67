@@ -11,7 +11,7 @@ _BLOCKING_PATTERNS = (
     # Patterns are lowercase because input text is normalized with casefold().
     r"يحاكي\s*gpt(?:[-\s]?\d+(?:\.\d+)*)?\s*بالكامل",
     r"بديل\s*gpt",
-    r"(?:مكافئ|مكافي|مكافى)\s*(?:ل|لـ)\s*gpt(?:[-\s]?\d+(?:\.\d+)*)?",
+    r"(?:مكافئ|مكافي)\s*(?:ل|لـ)\s*gpt(?:[-\s]?\d+(?:\.\d+)*)?",
     r"نموذج\s+لغوي\s+عام\s+كامل",
     r"general\s+llm\s+equivalent",
     r"full\s+gpt(?:[-\s]?\d+(?:\.\d+)*)?\s+equivalent",

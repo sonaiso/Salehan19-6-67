@@ -105,6 +105,8 @@ class MustadilRuntimeEngine:
         # Step 8 — Compose output
         final_response: str | None
         if governance_zero is not None:
+            # ZeroGuard is a blocking governance gate and takes precedence
+            # over any non-blocking audit outcome.
             final_response = governance_zero.format_blocking_message()
         elif audit_result.final_rank == "structured_answer_allowed":
             final_response = None  # downstream decoder/LLM fills this
