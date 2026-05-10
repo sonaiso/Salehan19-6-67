@@ -371,13 +371,10 @@ def main() -> None:
     # pattern-operator
     pattern_op_parser = subparsers.add_parser(
         "pattern-operator",
-        help="Phase 7.3: Look up a morphological pattern operator by ID or form",
+        help="Phase 7.3: Look up a morphological pattern operator by form",
     )
     pattern_op_parser.add_argument(
-        "--pattern-id", default=None, help="Pattern ID (e.g. faail)"
-    )
-    pattern_op_parser.add_argument(
-        "--pattern-form", default=None, help="Arabic pattern form (e.g. فاعِل)"
+        "--pattern", required=True, help="Arabic pattern form or ID (e.g. استفعل or faail)"
     )
     pattern_op_parser.add_argument("--output", choices=["json", "markdown"], default="json")
 
@@ -386,7 +383,7 @@ def main() -> None:
         "root-family",
         help="Phase 7.3: Show the full morphosemantic family of an Arabic root",
     )
-    root_family_parser.add_argument("--root-id", required=True, help="Root ID (e.g. ktb)")
+    root_family_parser.add_argument("--root", required=True, help="Root radicals space-separated (e.g. ك ت ب) or root ID (e.g. ktb)")
     root_family_parser.add_argument("--output", choices=["json", "text"], default="json")
 
     args = parser.parse_args()
@@ -1408,14 +1405,13 @@ def _handle_morphosemantic_command(args) -> None:  # noqa: ANN001
 
         registry = PatternOperatorRegistry()
         op = None
-        if args.pattern_id:
-            op = registry.get(args.pattern_id)
-        elif args.pattern_form:
-            op = registry.find_by_form(args.pattern_form)
+        pattern_val = args.pattern
+        op = registry.find_by_form(pattern_val)
+        if op is None:
+            op = registry.get(pattern_val)
 
         if op is None:
-            pid = getattr(args, "pattern_id", None) or getattr(args, "pattern_form", "?")
-            print(f"Pattern not found: {pid}")
+            print(f"Pattern not found: {pattern_val}")
             return
 
         if args.output == "markdown":
@@ -1426,10 +1422,20 @@ def _handle_morphosemantic_command(args) -> None:  # noqa: ANN001
 
     elif args.command == "root-family":
         from mcd.morphosemantics.root_family_graph import RootFamilyGraphBuilder
+        from mcd.morphosemantics.root_ontology import get_root_by_radicals
         from mcd.morphosemantics.serializers import root_family_to_json
 
+        root_arg = args.root
+        # Resolve Arabic radicals (e.g. "ك ت ب") → root_id
+        parts = root_arg.split()
+        if len(parts) >= 2 and all(not c.isascii() for p in parts for c in p if c.strip()):
+            node = get_root_by_radicals(parts)
+            root_id = node.root_id if node else root_arg
+        else:
+            root_id = root_arg
+
         builder = RootFamilyGraphBuilder()
-        graph = builder.build(args.root_id)
+        graph = builder.build(root_id)
 
         if args.output == "json":
             print(root_family_to_json(graph))

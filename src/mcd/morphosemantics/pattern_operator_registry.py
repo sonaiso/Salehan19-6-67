@@ -276,8 +276,13 @@ class PatternOperatorRegistry:
         return self._patterns.get(pattern_id)
 
     def find_by_form(self, form: str) -> Optional[PatternOperator]:
+        from mcd.morphosemantics.morphophonological_normalizer import MorphophonologicalNormalizer
+        norm = MorphophonologicalNormalizer()
+        form_stripped = norm.normalize_str(form)
         for op in self._patterns.values():
             if op.pattern_form == form:
+                return op
+            if norm.normalize_str(op.pattern_form) == form_stripped:
                 return op
         return None
 
