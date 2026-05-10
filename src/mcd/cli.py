@@ -492,6 +492,21 @@ def main() -> None:
     murab_trace_parser.add_argument("--context", default="", help="Space-separated context tokens")
     murab_trace_parser.add_argument("--output", choices=["json", "text"], default="json")
 
+    # ── Phase 7.0K: Fractal Geometry Kernel ──────────────────────────────
+    kernel_validate_parser = subparsers.add_parser("kernel-validate", help="Validate Fractal Geometry Kernel")
+    kernel_validate_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
+    kernel_report_parser = subparsers.add_parser("kernel-report", help="Generate Fractal Geometry Kernel report")
+    kernel_report_parser.add_argument("--output", choices=["json", "markdown"], default="markdown")
+
+    kernel_demo_fold_parser = subparsers.add_parser("kernel-demo-fold", help="Demo fold operation on text")
+    kernel_demo_fold_parser.add_argument("--text", required=True, help="Arabic text to fold")
+    kernel_demo_fold_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
+    kernel_proof_demo_parser = subparsers.add_parser("kernel-proof-demo", help="Demo proof object on text")
+    kernel_proof_demo_parser.add_argument("--text", required=True, help="Arabic text to prove")
+    kernel_proof_demo_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
     args = parser.parse_args()
 
     if args.command == "classify":
@@ -1145,6 +1160,8 @@ def main() -> None:
         _handle_morphosemantic_command(args)
     elif args.command in ("mabni-analyze", "mabni-registry", "mabni-certainty", "mabni-graph", "mabni-trace"):
         _handle_mabni_command(args)
+    elif args.command in ("kernel-validate", "kernel-report", "kernel-demo-fold", "kernel-proof-demo"):
+        _handle_kernel_command(args)
     else:
         parser.print_help()
 
@@ -1874,6 +1891,116 @@ def _handle_mabni_command(args) -> None:  # noqa: ANN001
                     f"certainty={lnk['certainty_effect']:20} "
                     f"judgment={lnk['judgment_status']}"
                 )
+
+
+def _handle_kernel_command(args) -> None:
+    import json as _json
+    from mcd.fractal_kernel import (
+        CognitiveFractalUnit, KernelValidator, KernelReport,
+        FoldOperation, FoldLawEnforcer, ProofObject, ReverseTrace,
+        UnifiedVector, CognitiveOperator, OperatorAlgebra,
+    )
+
+    if args.command == "kernel-validate":
+        sample_unit = CognitiveFractalUnit(
+            unit_id="CFU-demo-001",
+            level="word",
+            unit_type="lexical",
+            surface="النموذج",
+            fold_state="atomic",
+            trace_refs=["T-001"],
+            metadata={"generated": True},
+        )
+        validator = KernelValidator()
+        report = validator.run_full_validation(units=[sample_unit])
+        if args.output == "json":
+            print(_json.dumps(report.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            kr = KernelReport()
+            print(kr.generate_markdown(report))
+
+    elif args.command == "kernel-report":
+        validator = KernelValidator()
+        report = validator.run_full_validation()
+        kr = KernelReport()
+        if args.output == "markdown":
+            print(kr.generate_markdown(report, extra_notes=(
+                "This report covers the Fractal Geometry Kernel baseline validation.\n"
+                "All layers (Mabni, Mu'rab, Morphosemantics) must conform to this kernel."
+            )))
+        else:
+            print(_json.dumps(kr.generate_json_summary(report), ensure_ascii=False, indent=2))
+
+    elif args.command == "kernel-demo-fold":
+        text = args.text
+        words = text.split()
+        unit_ids = [f"CFU-{i:04d}" for i in range(len(words))]
+        fold_op = FoldOperation(
+            fold_id="FOLD-demo-001",
+            input_unit_ids=unit_ids,
+            output_fold_unit_id="CFU-fold-001",
+            preserved_relations=["agent_of", "patient_of"],
+            preserved_vectors=["evidence_vector", "certainty_vector"],
+            lost_details=["surface_variation"],
+            summary_signature="unsupported_generalization+missing_evidence",
+        )
+        enforcer = FoldLawEnforcer()
+        trace_ok, trace_warn = enforcer.check_trace_preservation(fold_op, ["T-demo-001"])
+        certainty_ok, cert_warn = enforcer.check_certainty_non_increase(0.3, 0.3)
+        result = {
+            "text": text,
+            "fold_operation": fold_op.to_dict(),
+            "law_checks": {
+                "trace_preservation": {"passed": trace_ok, "warnings": trace_warn},
+                "certainty_non_increase": {"passed": certainty_ok, "warnings": cert_warn},
+            },
+        }
+        if args.output == "json":
+            print(_json.dumps(result, ensure_ascii=False, indent=2))
+        else:
+            print(f"Text: {text}")
+            print(f"Fold ID: {fold_op.fold_id}")
+            print(f"Words folded: {len(words)}")
+            print(f"Trace law passed: {trace_ok}")
+            print(f"Certainty law passed: {certainty_ok}")
+
+    elif args.command == "kernel-proof-demo":
+        text = args.text
+        rtrace_id = ReverseTrace.make_id()
+        proof_id = ProofObject.make_id()
+        rtrace = ReverseTrace(
+            reverse_trace_id=rtrace_id,
+            final_claim=text,
+            proof_id=proof_id,
+            sentence_units=["CFU-sent-001"],
+            token_units=["CFU-tok-001"],
+            evidence_chain=[],
+            certainty_chain=["syntactic_certainty:0.5"],
+            operator_chain=["irab_nominative_operator"],
+            complete=False,
+        )
+        proof = ProofObject(
+            proof_id=proof_id,
+            claim_id="CLAIM-demo-001",
+            proof_status="hypothesis",
+            trace_refs=[rtrace_id],
+            certainty_score=0.4,
+            warnings=["No independent evidence found — hypothesis only"],
+            reverse_trace_id=rtrace_id,
+        )
+        result = {
+            "text": text,
+            "proof_object": proof.to_dict(),
+            "reverse_trace": rtrace.to_dict(),
+            "note": "hypothesis proof: no certificate without independent evidence",
+        }
+        if args.output == "json":
+            print(_json.dumps(result, ensure_ascii=False, indent=2))
+        else:
+            print(f"Claim: {text}")
+            print(f"Proof status: {proof.proof_status}")
+            print(f"Certainty score: {proof.certainty_score}")
+            print(f"Warnings: {proof.warnings}")
 
 
 if __name__ == "__main__":
