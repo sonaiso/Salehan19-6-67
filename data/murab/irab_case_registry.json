@@ -1,66 +1,62 @@
 {
-  "version": "1.0",
-  "description": "Arabic I'rab Case Registry — Phase 7.5",
-  "cases": [
-    {
-      "case_id": "nominative",
-      "name_ar": "الرفع",
-      "name_en": "nominative",
-      "grammatical_function": "marks the subject of a sentence, predicate of nominal sentence, and names of kana/inna sisters",
-      "common_roles": ["فاعل", "نائب فاعل", "مبتدأ", "خبر", "اسم كان", "خبر إن"],
-      "possible_markers": ["damma", "waw", "alif", "nun", "estimated"],
-      "semantic_projection": "typically marks the entity performing or being described; the pivot of the predication",
-      "certainty_effect": "high — nominative is the default state of stability in Arabic sentence structure"
-    },
-    {
-      "case_id": "accusative",
-      "name_ar": "النصب",
-      "name_en": "accusative",
-      "grammatical_function": "marks direct objects, circumstantial qualifiers, specifiers, exceptions, and predicates of kana",
-      "common_roles": ["مفعول به", "مفعول مطلق", "مفعول لأجله", "مفعول فيه", "حال", "تمييز", "مستثنى", "خبر كان", "اسم إن"],
-      "possible_markers": ["fatha", "ya", "kasra", "estimated", "deleted_nun"],
-      "semantic_projection": "marks the entity affected, the manner, the cause, the time/place as adverbial, or the specification",
-      "certainty_effect": "medium-high — accusative is strongly governed but has many syntactic roles"
-    },
-    {
-      "case_id": "genitive",
-      "name_ar": "الجر",
-      "name_en": "genitive",
-      "grammatical_function": "marks nouns governed by prepositions or in construct state (idafa)",
-      "common_roles": ["مجرور بحرف جر", "مضاف إليه", "تابع مجرور"],
-      "possible_markers": ["kasra", "ya", "fatha", "estimated"],
-      "semantic_projection": "marks possession, attribution, location, manner, and various relational meanings encoded by prepositions",
-      "certainty_effect": "high — genitive is strongly governed by explicit prepositions or idafa structure"
-    },
-    {
-      "case_id": "jussive",
-      "name_ar": "الجزم",
-      "name_en": "jussive",
-      "grammatical_function": "applies to imperfect verbs; marks negation (lam), prohibition (la), and conditional clauses",
-      "common_roles": ["مجزوم بلم", "مجزوم بلا الناهية", "فعل شرط", "جواب شرط"],
-      "possible_markers": ["sukun", "deleted_nun", "deleted_weak_letter"],
-      "semantic_projection": "marks modal contexts: negation of past, prohibition, or conditionality",
-      "certainty_effect": "high — jussive is always triggered by explicit governing particles or conditionals"
-    },
-    {
-      "case_id": "indeclinable_local",
-      "name_ar": "المبني المحلي",
-      "name_en": "indeclinable with local case",
-      "grammatical_function": "indeclinable words that occupy a syntactic position; case is local (محل) not surface",
-      "common_roles": ["في محل رفع", "في محل نصب", "في محل جر"],
-      "possible_markers": ["local"],
-      "semantic_projection": "the word form does not change but its syntactic role is tracked relationally",
-      "certainty_effect": "medium — local case requires structural inference"
-    },
-    {
-      "case_id": "estimated",
-      "name_ar": "المقدر",
-      "name_en": "estimated (muqaddar)",
-      "grammatical_function": "case that cannot be phonetically realized due to alif maqsura, ya, or pronominal suffix",
-      "common_roles": ["مقصور", "منقوص", "مضاف إلى ياء المتكلم"],
-      "possible_markers": ["estimated"],
-      "semantic_projection": "same as the underlying case but hidden by phonological constraints",
-      "certainty_effect": "medium — estimated cases require lexical knowledge of word type"
-    }
-  ]
+  "nominative": {
+    "case_id": "nominative",
+    "name_ar": "الرفع",
+    "name_en": "nominative",
+    "grammatical_function": "رفع",
+    "common_roles": ["agent", "subject", "predicate", "passive_agent", "kana_name", "inna_predicate"],
+    "possible_markers": ["damma", "dammatan", "alif", "waw", "nun"],
+    "semantic_projection": "actor_or_topic",
+    "certainty_effect": 0.9
+  },
+  "accusative": {
+    "case_id": "accusative",
+    "name_ar": "النصب",
+    "name_en": "accusative",
+    "grammatical_function": "نصب",
+    "common_roles": ["object", "absolute_object", "hal", "tamyiz", "exception", "kana_predicate", "inna_name"],
+    "possible_markers": ["fatha", "fathatan", "alif", "ya", "deleted_nun"],
+    "semantic_projection": "patient_or_circumstance",
+    "certainty_effect": 0.85
+  },
+  "genitive": {
+    "case_id": "genitive",
+    "name_ar": "الجر",
+    "name_en": "genitive",
+    "grammatical_function": "جر",
+    "common_roles": ["object_of_preposition", "mudaf_ilayh", "follower_gen"],
+    "possible_markers": ["kasra", "kasratan", "ya", "fatha"],
+    "semantic_projection": "relation_or_specification",
+    "certainty_effect": 0.85
+  },
+  "jussive": {
+    "case_id": "jussive",
+    "name_ar": "الجزم",
+    "name_en": "jussive",
+    "grammatical_function": "جزم",
+    "common_roles": ["jussive_verb", "conditional_verb", "negated_verb"],
+    "possible_markers": ["sukun", "deleted_nun", "deleted_weak_letter"],
+    "semantic_projection": "negation_or_condition",
+    "certainty_effect": 0.9
+  },
+  "indeclinable_local": {
+    "case_id": "indeclinable_local",
+    "name_ar": "البناء المحلي",
+    "name_en": "indeclinable_local",
+    "grammatical_function": "بناء",
+    "common_roles": ["pronoun", "demonstrative", "relative"],
+    "possible_markers": ["local"],
+    "semantic_projection": "reference",
+    "certainty_effect": 0.95
+  },
+  "unknown": {
+    "case_id": "unknown",
+    "name_ar": "مجهول",
+    "name_en": "unknown",
+    "grammatical_function": "غير محدد",
+    "common_roles": ["unknown"],
+    "possible_markers": ["none"],
+    "semantic_projection": "undetermined",
+    "certainty_effect": 0.3
+  }
 }

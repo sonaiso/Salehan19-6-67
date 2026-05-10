@@ -333,6 +333,24 @@ def main() -> None:
     )
     trace_rpt_parser.add_argument("--output", choices=["markdown", "json"], default="markdown")
 
+    # Phase 7.2: Foldable Cognitive Residual Learning
+    fold_residuals_parser = subparsers.add_parser("fold-residuals", help="Phase 7.2: Run full foldable residual pipeline")
+    fold_residuals_parser.add_argument("--input", default="data/foldable_learning/mock_gpt_proposals_ar.jsonl")
+    fold_residuals_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
+    fold_memory_parser = subparsers.add_parser("fold-memory-report", help="Phase 7.2: Foldable memory report")
+    fold_memory_parser.add_argument("--output", choices=["json", "markdown"], default="markdown")
+
+    fold_recall_parser = subparsers.add_parser("fold-recall", help="Phase 7.2: Recall fold patterns for text")
+    fold_recall_parser.add_argument("--text", default="")
+    fold_recall_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
+    fold_cons_parser = subparsers.add_parser("fold-consistency", help="Phase 7.2: Fold-unfold consistency check")
+    fold_cons_parser.add_argument("--output", choices=["json", "markdown"], default="markdown")
+
+    pattern_mine_parser = subparsers.add_parser("pattern-mine", help="Phase 7.2: Mine patterns from residuals")
+    pattern_mine_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
     # ── Phase 7.3: Arabic Morphosemantic Fractal Engine ──────────────────────
 
     # morph-analyze
@@ -386,7 +404,114 @@ def main() -> None:
     root_family_parser.add_argument("--root", required=True, help="Root radicals space-separated (e.g. ك ت ب) or root ID (e.g. ktb)")
     root_family_parser.add_argument("--output", choices=["json", "text"], default="json")
 
+    # ── Phase 7.4: Arabic Mabni Logical-Pragmatic Control Layer ──────────────
+
+    # mabni-analyze
+    mabni_analyze_parser = subparsers.add_parser(
+        "mabni-analyze",
+        help="Phase 7.4: Unfold Arabic Mabni logical-pragmatic operators for input text",
+    )
+    mabni_analyze_parser.add_argument("--text", required=True, help="Arabic text to analyze")
+    mabni_analyze_parser.add_argument("--prev-question", default="", help="Previous question context for answer particles")
+    mabni_analyze_parser.add_argument("--output", choices=["json", "markdown", "summary"], default="summary")
+
+    # mabni-registry
+    mabni_registry_parser = subparsers.add_parser(
+        "mabni-registry",
+        help="Phase 7.4: List or query the Mabni operator registry",
+    )
+    mabni_registry_parser.add_argument("--surface", default="", help="Filter by Arabic surface form")
+    mabni_registry_parser.add_argument("--output", choices=["json", "table"], default="table")
+
+    # mabni-certainty
+    mabni_certainty_parser = subparsers.add_parser(
+        "mabni-certainty",
+        help="Phase 7.4: Evaluate certainty policy for Arabic text operators",
+    )
+    mabni_certainty_parser.add_argument("--text", required=True, help="Arabic text to evaluate certainty for")
+    mabni_certainty_parser.add_argument("--output", choices=["json", "summary"], default="summary")
+
+    # mabni-graph
+    mabni_graph_parser = subparsers.add_parser(
+        "mabni-graph",
+        help="Phase 7.4: Build a Mabni operator graph for Arabic text",
+    )
+    mabni_graph_parser.add_argument("--text", required=True, help="Arabic text to build graph for")
+    mabni_graph_parser.add_argument("--output", choices=["json", "summary"], default="json")
+
+    # mabni-trace
+    mabni_trace_parser = subparsers.add_parser(
+        "mabni-trace",
+        help="Phase 7.4: Trace Mabni operator chain for Arabic text",
+    )
+    mabni_trace_parser.add_argument("--text", required=True, help="Arabic text to trace")
+    mabni_trace_parser.add_argument("--output", choices=["json", "summary"], default="summary")
+
+    # ── Phase 7.5: Arabic Mu'rab / I'rab Relational Engineering Layer ─────────
+
+    # murab-analyze
+    murab_analyze_parser = subparsers.add_parser(
+        "murab-analyze",
+        help="Phase 7.5: Analyze Arabic I'rab (mu'rab) for a sentence",
+    )
+    murab_analyze_parser.add_argument("--text", required=True, help="Arabic text to analyze")
+    murab_analyze_parser.add_argument("--output", choices=["json", "text", "markdown"], default="json")
+
+    # irab-resolve
+    irab_resolve_parser = subparsers.add_parser(
+        "irab-resolve",
+        help="Phase 7.5: Resolve I'rab case for a single Arabic token with context",
+    )
+    irab_resolve_parser.add_argument("--token", required=True, help="Arabic surface token")
+    irab_resolve_parser.add_argument("--context", default="", help="Space-separated context tokens")
+    irab_resolve_parser.add_argument("--output", choices=["json", "text", "markdown"], default="json")
+
+    # murab-graph
+    murab_graph_parser = subparsers.add_parser(
+        "murab-graph",
+        help="Phase 7.5: Build relational I'rab graph for a sentence",
+    )
+    murab_graph_parser.add_argument("--text", required=True, help="Arabic text to graph")
+    murab_graph_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
+    # irab-certainty
+    irab_certainty_parser = subparsers.add_parser(
+        "irab-certainty",
+        help="Phase 7.5: Evaluate I'rab certainty for a token",
+    )
+    irab_certainty_parser.add_argument("--token", required=True, help="Arabic surface token")
+    irab_certainty_parser.add_argument("--context", default="", help="Space-separated context tokens")
+    irab_certainty_parser.add_argument("--output", choices=["json", "text"], default="json")
+
+    # murab-trace
+    murab_trace_parser = subparsers.add_parser(
+        "murab-trace",
+        help="Phase 7.5: Show I'rab trace chain for a token",
+    )
+    murab_trace_parser.add_argument("--token", required=True, help="Arabic surface token")
+    murab_trace_parser.add_argument("--context", default="", help="Space-separated context tokens")
+    murab_trace_parser.add_argument("--output", choices=["json", "text"], default="json")
+
+    # ── Phase 7.0K: Fractal Geometry Kernel ──────────────────────────────
+    kernel_validate_parser = subparsers.add_parser("kernel-validate", help="Validate Fractal Geometry Kernel")
+    kernel_validate_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
+    kernel_report_parser = subparsers.add_parser("kernel-report", help="Generate Fractal Geometry Kernel report")
+    kernel_report_parser.add_argument("--output", choices=["json", "markdown"], default="markdown")
+
+    kernel_demo_fold_parser = subparsers.add_parser("kernel-demo-fold", help="Demo fold operation on text")
+    kernel_demo_fold_parser.add_argument("--text", required=True, help="Arabic text to fold")
+    kernel_demo_fold_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
+    kernel_proof_demo_parser = subparsers.add_parser("kernel-proof-demo", help="Demo proof object on text")
+    kernel_proof_demo_parser.add_argument("--text", required=True, help="Arabic text to prove")
+    kernel_proof_demo_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
     args = parser.parse_args()
+
+    if args.command in ("jamid-analyze", "mushtaq-analyze", "concept-geometry-graph", "concept-geometry-validate"):
+        _handle_concept_geometry_command(args)
+        return
 
     if args.command == "classify":
         from mcd.classification.fractal_prompt_classifier import FractalPromptClassifier
@@ -1022,14 +1147,25 @@ def main() -> None:
         "trace-contribution", "trace-graph-consistency",
     ):
         _handle_epistemic_trace_command(args)
+    elif args.command in ("fold-residuals", "fold-memory-report", "fold-recall", "fold-consistency", "pattern-mine"):
+        _handle_foldable_command(args)
     elif args.command in (
         "morph-analyze",
         "morph-unfold",
         "concept-center",
         "pattern-operator",
         "root-family",
+        "murab-analyze",
+        "irab-resolve",
+        "murab-graph",
+        "irab-certainty",
+        "murab-trace",
     ):
         _handle_morphosemantic_command(args)
+    elif args.command in ("mabni-analyze", "mabni-registry", "mabni-certainty", "mabni-graph", "mabni-trace"):
+        _handle_mabni_command(args)
+    elif args.command in ("kernel-validate", "kernel-report", "kernel-demo-fold", "kernel-proof-demo"):
+        _handle_kernel_command(args)
     else:
         parser.print_help()
 
@@ -1333,8 +1469,122 @@ def _handle_epistemic_trace_command(args) -> None:  # noqa: ANN001
         "concept-center",
         "pattern-operator",
         "root-family",
+        "murab-analyze",
+        "irab-resolve",
+        "murab-graph",
+        "irab-certainty",
+        "murab-trace",
     ):
         _handle_morphosemantic_command(args)
+
+
+def _handle_foldable_command(args) -> None:  # noqa: ANN001
+    """Phase 7.2 — Foldable Cognitive Residual Learning CLI handler."""
+    import json as _json
+    from mcd.foldable_learning.mock_gpt_outputs import generate_mock_proposals
+    from mcd.foldable_learning.proposal_parser import ProposalParser
+    from mcd.foldable_learning.residual_calculator import ResidualCalculator
+    from mcd.foldable_learning.residual_to_fold import ResidualToFoldConverter
+    from mcd.foldable_learning.pattern_memory import PatternMemory
+    from mcd.foldable_learning.recall_engine import RecallEngine
+    from mcd.foldable_learning.learning_action_router import LearningActionRouter
+    from mcd.foldable_learning.mathematical_pattern_miner import MathematicalPatternMiner
+    from mcd.foldable_learning.fold_unfold_consistency import FoldUnfoldConsistencyChecker
+    from mcd.foldable_learning.fold_signature import FoldSignatureRegistry
+    from mcd.foldable_learning.foldable_report import FoldableReport
+
+    proposals = generate_mock_proposals(100)
+    parser_fl = ProposalParser()
+    calc = ResidualCalculator()
+    converter = ResidualToFoldConverter()
+    router = LearningActionRouter()
+    miner = MathematicalPatternMiner()
+    reporter = FoldableReport()
+
+    graphs = [parser_fl.parse(p) for p in proposals]
+    residuals = [calc.calculate(p, g) for p, g in zip(proposals, graphs)]
+    folds = converter.batch_convert(residuals)
+    actions = router.batch_route(residuals)
+    patterns = miner.mine(residuals)
+
+    memory = PatternMemory()
+    for sig in FoldSignatureRegistry.all():
+        memory.add_fold_signature(sig)
+    for fold in folds:
+        memory.add_fold_signature(fold)
+
+    recall_eng = RecallEngine(memory)
+
+    if args.command == "fold-residuals":
+        result = {
+            "total_proposals": len(proposals),
+            "total_residuals": len(residuals),
+            "total_folds": len(folds),
+            "total_actions": len(actions),
+            "residuals": [r.to_dict() for r in residuals[:10]],
+            "folds": [f.to_dict() for f in folds[:10]],
+        }
+        if args.output == "json":
+            print(_json.dumps(result, ensure_ascii=False, indent=2))
+        else:
+            metrics = reporter.generate(proposals, residuals, folds, actions, patterns)
+            print(metrics.to_markdown())
+
+    elif args.command == "fold-memory-report":
+        metrics = reporter.generate(proposals, residuals, folds, actions, patterns)
+        if args.output == "json":
+            print(_json.dumps(metrics.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(metrics.to_markdown())
+
+    elif args.command == "fold-recall":
+        from mcd.residual_learning.proposal_schema import GPTProposal, ProposalType
+        text = getattr(args, "text", "") or ""
+        test_proposal = GPTProposal(
+            proposal_id="recall-test",
+            input_text=text,
+            gpt_output=text,
+            proposal_type=ProposalType.ANSWER,
+            claimed_evidence=[],
+        )
+        test_graph = parser_fl.parse(test_proposal)
+        result = recall_eng.recall(graph=test_graph, text=text)
+        if args.output == "json":
+            print(_json.dumps({
+                "recalled_count": len(result.recalled_fold_signatures),
+                "recalled_fold_ids": [f.fold_id for f in result.recalled_fold_signatures[:20]],
+                "recommended_warnings": result.recommended_warnings,
+                "recommended_certainty_policy": result.recommended_certainty_policy,
+                "recall_precision_estimate": result.recall_precision_estimate,
+                "explanation": result.explanation,
+            }, ensure_ascii=False, indent=2))
+        else:
+            lines = [
+                "# Recall Results",
+                f"Recalled: {len(result.recalled_fold_signatures)} fold signatures",
+                f"Certainty Policy: {result.recommended_certainty_policy}",
+                f"Precision: {result.recall_precision_estimate:.4f}",
+            ]
+            print("\n".join(lines))
+
+    elif args.command == "fold-consistency":
+        checker = FoldUnfoldConsistencyChecker()
+        registry_sigs = FoldSignatureRegistry.all()
+        report = checker.check(registry_sigs, residuals)
+        if args.output == "json":
+            print(_json.dumps(report.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(report.to_markdown())
+
+    elif args.command == "pattern-mine":
+        mined = miner.mine(residuals)
+        if args.output == "json":
+            print(_json.dumps([p.to_dict() for p in mined], ensure_ascii=False, indent=2))
+        else:
+            lines = ["# Mined Patterns", ""]
+            for p in mined:
+                lines.append(f"- {p.pattern_id}: {p.residual_type} (freq={p.frequency})")
+            print("\n".join(lines))
 
 
 def _handle_morphosemantic_command(args) -> None:  # noqa: ANN001
@@ -1449,5 +1699,314 @@ def _handle_morphosemantic_command(args) -> None:  # noqa: ANN001
                 for ev in graph.masdar_events:
                     print(f"  {ev.get('masdar', '?')}  ({ev.get('event_class', '?')})")
 
-if __name__ == '__main__':
+    elif args.command == "murab-analyze":
+        import json as _json
+        from mcd.murab.murab_analyzer import MurabAnalyzer
+        from mcd.murab.murab_report import MurabReport
+        from mcd.murab.serializers import murab_units_to_json, murab_units_to_markdown
+
+        analyzer = MurabAnalyzer()
+        units = analyzer.analyze(args.text)
+        report = MurabReport()
+
+        if args.output == "json":
+            print(murab_units_to_json(units))
+        elif args.output == "markdown":
+            print(murab_units_to_markdown(units, args.text))
+        else:
+            for u in units:
+                print(f"{u.surface}: {u.irab_case} ({u.syntactic_role})")
+
+    elif args.command == "irab-resolve":
+        import json as _json
+        from mcd.murab.murab_analyzer import MurabAnalyzer
+        from mcd.murab.serializers import murab_units_to_json, murab_units_to_markdown
+
+        ctx = args.context.split() if args.context else []
+        analyzer = MurabAnalyzer()
+        text = args.token + (" " + " ".join(ctx) if ctx else "")
+        units = analyzer.analyze(text)
+        unit = units[0] if units else None
+
+        if unit is None:
+            print("Could not resolve I'rab for token")
+            return
+
+        if args.output == "json":
+            print(murab_units_to_json([unit]))
+        elif args.output == "markdown":
+            print(murab_units_to_markdown([unit], args.token))
+        else:
+            print(f"Token: {unit.surface}")
+            print(f"Case: {unit.irab_case}")
+            print(f"Marker: {unit.irab_marker} ({unit.marker_visibility})")
+            print(f"Syntactic Role: {unit.syntactic_role}")
+            print(f"Semantic Role: {unit.semantic_role}")
+
+    elif args.command == "murab-graph":
+        from mcd.murab.murab_analyzer import MurabAnalyzer
+        from mcd.murab.murab_graph_builder import MurabGraphBuilder
+        from mcd.murab.serializers import murab_graph_to_json, murab_graph_to_markdown
+
+        analyzer = MurabAnalyzer()
+        units = analyzer.analyze(args.text)
+        builder = MurabGraphBuilder()
+        graph = builder.build(units, args.text)
+
+        if args.output == "json":
+            print(murab_graph_to_json(graph))
+        else:
+            print(murab_graph_to_markdown(graph))
+
+    elif args.command == "irab-certainty":
+        import json as _json
+        from mcd.murab.murab_analyzer import MurabAnalyzer
+        from mcd.murab.murab_certainty_policy import MurabCertaintyPolicy
+
+        ctx = args.context.split() if args.context else []
+        analyzer = MurabAnalyzer()
+        text = args.token + (" " + " ".join(ctx) if ctx else "")
+        units = analyzer.analyze(text)
+        unit = units[0] if units else None
+
+        if unit is None:
+            print("Could not analyze token")
+            return
+
+        policy = MurabCertaintyPolicy()
+        result = policy.evaluate(unit, None)
+
+        if args.output == "json":
+            print(_json.dumps(result, ensure_ascii=False, indent=2))
+        else:
+            print(f"Syntactic certainty: {result['syntactic_certainty']}")
+            print(f"Evidence effect:     {result['evidence_effect']}")
+            if result.get('warnings'):
+                print(f"Warnings: {', '.join(result['warnings'])}")
+
+    elif args.command == "murab-trace":
+        import json as _json
+        from mcd.murab.murab_analyzer import MurabAnalyzer
+        from mcd.murab.murab_trace_linker import MurabTraceLinker
+
+        ctx = args.context.split() if args.context else []
+        analyzer = MurabAnalyzer()
+        text = args.token + (" " + " ".join(ctx) if ctx else "")
+        units = analyzer.analyze(text)
+        unit = units[0] if units else None
+
+        if unit is None:
+            print("Could not analyze token")
+            return
+
+        linker = MurabTraceLinker()
+        trace = linker.link(unit, unit.token_id, 0, len(args.token))
+
+        if args.output == "json":
+            print(_json.dumps(trace, ensure_ascii=False, indent=2))
+        else:
+            print(f"Unit: {trace['unit_id']}")
+            print(f"Token: {trace['token_id']}")
+            print(f"Char range: {trace['char_range']}")
+            print(f"Estimated: {trace['estimated']}")
+            print(f"Governing factor: {trace['governing_factor_id']}")
+
+
+def _handle_mabni_command(args) -> None:  # noqa: ANN001
+    """Handle all mabni-* CLI subcommands."""
+    import json as _json_mod
+
+    from mcd.mabni.mabni_certainty_policy import MabniCertaintyPolicy
+    from mcd.mabni.mabni_graph_builder import MabniGraphBuilder
+    from mcd.mabni.mabni_registry import MabniRegistry
+    from mcd.mabni.mabni_report import MabniReport
+    from mcd.mabni.mabni_trace_linker import MabniTraceLinker
+    from mcd.mabni.mabni_unfolder import MabniUnfolder
+
+    cmd = args.command
+
+    if cmd == "mabni-analyze":
+        unfolder = MabniUnfolder()
+        result = unfolder.unfold(args.text, previous_question=getattr(args, "prev_question", ""))
+        if args.output == "json":
+            print(_json_mod.dumps(result.to_dict(), ensure_ascii=False, indent=2))
+        elif args.output == "markdown":
+            report = MabniReport(result_dict=result.to_dict())
+            print(report.generate())
+        else:
+            d = result.to_dict()
+            print(f"نص المدخل:     {d['text']}")
+            print(f"فعل الكلام:    {d['speech_act'].get('speech_act', 'unknown')}")
+            print(f"نوع ما:        {d['ma_result'].get('resolved_type', 'لا يوجد')}")
+            print(f"نوع من:        {d['man_result'].get('resolved_type', 'لا يوجد')}")
+            print(f"نوع إن:        {d['in_result'].get('resolved_type', 'لا يوجد')}")
+            print(f"نوع لا:        {d['la_result'].get('resolved_type', 'لا يوجد')}")
+            print(f"شرط:           {d['conditional_result'].get('is_conditional', False)}")
+            print(f"خلاف الواقع:   {d['counterfactual_result'].get('is_counterfactual', False)}")
+            print(f"قصر:           {d['qasr_result'].get('qasr_type', 'لا يوجد')}")
+            print(f"تحذيرات:       {len(d['warnings'])}")
+
+    elif cmd == "mabni-registry":
+        registry = MabniRegistry()
+        if args.surface:
+            ops = registry.get_all_for_surface(args.surface)
+        else:
+            ops = registry.get_all()
+        if args.output == "json":
+            print(_json_mod.dumps([op.to_dict() for op in ops], ensure_ascii=False, indent=2))
+        else:
+            print(f"{'ID':<30} {'Surface':<12} {'Type':<20} {'LogFunc':<20}")
+            print("-" * 84)
+            for op in ops:
+                print(f"{op.operator_id:<30} {op.surface:<12} {op.mabni_type:<20} {op.logical_function:<20}")
+            print(f"\nTotal: {len(ops)} operators")
+
+    elif cmd == "mabni-certainty":
+        unfolder = MabniUnfolder()
+        result = unfolder.unfold(args.text)
+        if args.output == "json":
+            print(_json_mod.dumps(result.certainty_policies, ensure_ascii=False, indent=2))
+        else:
+            for p in result.certainty_policies:
+                print(f"[{p['operator_id']}] policy={p['certainty_policy']} effect={p['decision_effect']}")
+
+    elif cmd == "mabni-graph":
+        unfolder = MabniUnfolder()
+        result = unfolder.unfold(args.text)
+        graph_dict = result.graph
+        if args.output == "json":
+            print(_json_mod.dumps(graph_dict, ensure_ascii=False, indent=2))
+        else:
+            print(f"Graph ID: {graph_dict.get('graph_id', '')}")
+            print(f"Nodes: {len(graph_dict.get('nodes', []))}")
+            print(f"Edges: {len(graph_dict.get('edges', []))}")
+
+    elif cmd == "mabni-trace":
+        unfolder = MabniUnfolder()
+        result = unfolder.unfold(args.text)
+        trace_dict = result.trace
+        if args.output == "json":
+            print(_json_mod.dumps(trace_dict, ensure_ascii=False, indent=2))
+        else:
+            for lnk in trace_dict.get("links", []):
+                print(
+                    f"[{lnk['token_idx']}] {lnk['unicode_token']!r:12} "
+                    f"operator={lnk['operator_id'] or 'none':30} "
+                    f"certainty={lnk['certainty_effect']:20} "
+                    f"judgment={lnk['judgment_status']}"
+                )
+
+
+def _handle_kernel_command(args) -> None:
+    import json as _json
+    from mcd.fractal_kernel import (
+        CognitiveFractalUnit, KernelValidator, KernelReport,
+        FoldOperation, FoldLawEnforcer, ProofObject, ReverseTrace,
+        UnifiedVector, CognitiveOperator, OperatorAlgebra,
+    )
+
+    if args.command == "kernel-validate":
+        sample_unit = CognitiveFractalUnit(
+            unit_id="CFU-demo-001",
+            level="word",
+            unit_type="lexical",
+            surface="النموذج",
+            fold_state="atomic",
+            trace_refs=["T-001"],
+            metadata={"generated": True},
+        )
+        validator = KernelValidator()
+        report = validator.run_full_validation(units=[sample_unit])
+        if args.output == "json":
+            print(_json.dumps(report.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            kr = KernelReport()
+            print(kr.generate_markdown(report))
+
+    elif args.command == "kernel-report":
+        validator = KernelValidator()
+        report = validator.run_full_validation()
+        kr = KernelReport()
+        if args.output == "markdown":
+            print(kr.generate_markdown(report, extra_notes=(
+                "This report covers the Fractal Geometry Kernel baseline validation.\n"
+                "All layers (Mabni, Mu'rab, Morphosemantics) must conform to this kernel."
+            )))
+        else:
+            print(_json.dumps(kr.generate_json_summary(report), ensure_ascii=False, indent=2))
+
+    elif args.command == "kernel-demo-fold":
+        text = args.text
+        words = text.split()
+        unit_ids = [f"CFU-{i:04d}" for i in range(len(words))]
+        fold_op = FoldOperation(
+            fold_id="FOLD-demo-001",
+            input_unit_ids=unit_ids,
+            output_fold_unit_id="CFU-fold-001",
+            preserved_relations=["agent_of", "patient_of"],
+            preserved_vectors=["evidence_vector", "certainty_vector"],
+            lost_details=["surface_variation"],
+            summary_signature="unsupported_generalization+missing_evidence",
+        )
+        enforcer = FoldLawEnforcer()
+        trace_ok, trace_warn = enforcer.check_trace_preservation(fold_op, ["T-demo-001"])
+        certainty_ok, cert_warn = enforcer.check_certainty_non_increase(0.3, 0.3)
+        result = {
+            "text": text,
+            "fold_operation": fold_op.to_dict(),
+            "law_checks": {
+                "trace_preservation": {"passed": trace_ok, "warnings": trace_warn},
+                "certainty_non_increase": {"passed": certainty_ok, "warnings": cert_warn},
+            },
+        }
+        if args.output == "json":
+            print(_json.dumps(result, ensure_ascii=False, indent=2))
+        else:
+            print(f"Text: {text}")
+            print(f"Fold ID: {fold_op.fold_id}")
+            print(f"Words folded: {len(words)}")
+            print(f"Trace law passed: {trace_ok}")
+            print(f"Certainty law passed: {certainty_ok}")
+
+    elif args.command == "kernel-proof-demo":
+        text = args.text
+        rtrace_id = ReverseTrace.make_id()
+        proof_id = ProofObject.make_id()
+        rtrace = ReverseTrace(
+            reverse_trace_id=rtrace_id,
+            final_claim=text,
+            proof_id=proof_id,
+            sentence_units=["CFU-sent-001"],
+            token_units=["CFU-tok-001"],
+            evidence_chain=[],
+            certainty_chain=["syntactic_certainty:0.5"],
+            operator_chain=["irab_nominative_operator"],
+            complete=False,
+        )
+        proof = ProofObject(
+            proof_id=proof_id,
+            claim_id="CLAIM-demo-001",
+            proof_status="hypothesis",
+            trace_refs=[rtrace_id],
+            certainty_score=0.4,
+            warnings=["No independent evidence found — hypothesis only"],
+            reverse_trace_id=rtrace_id,
+        )
+        result = {
+            "text": text,
+            "proof_object": proof.to_dict(),
+            "reverse_trace": rtrace.to_dict(),
+            "note": "hypothesis proof: no certificate without independent evidence",
+        }
+        if args.output == "json":
+            print(_json.dumps(result, ensure_ascii=False, indent=2))
+        else:
+            print(f"Claim: {text}")
+            print(f"Proof status: {proof.proof_status}")
+            print(f"Certainty score: {proof.certainty_score}")
+            print(f"Warnings: {proof.warnings}")
+
+
+if __name__ == "__main__":
     main()
+

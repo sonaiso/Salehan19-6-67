@@ -140,3 +140,9 @@ class IrabMarkerRegistry:
 
 
 IRAB_MARKER_REGISTRY = IrabMarkerRegistry()
+
+
+# Backward-compatible loader used by existing tests
+def load_irab_marker_registry() -> dict[str, "IrabMarker"]:
+    """Return a dict of marker_id → IrabMarker for backward compatibility."""
+    return {m.marker_id: m for m in IRAB_MARKER_REGISTRY.all()}

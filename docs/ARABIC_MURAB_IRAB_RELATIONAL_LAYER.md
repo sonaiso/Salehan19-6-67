@@ -1,231 +1,159 @@
 # Arabic Mu'rab / I'rab Relational Engineering Layer
-# طبقة هندسة المعربات والإعراب العلاقي في العربية
 
-**Phase 7.5 — MCD (Minimal Cognitive Decoder)**
+**Phase 7.5** — MCD (Morpho-Conceptual Decoder) relational layer for Arabic grammatical case analysis (الإعراب).
 
----
+## Overview
 
-## 1. لماذا المعربات طبقة علاقية؟
+The Mu'rab layer analyzes Arabic I'rab (grammatical case inflection), resolving case markers, governing factors, syntactic roles, and semantic projections for each token in an Arabic sentence.
 
-الإعراب في العربية ليس مجرد حركات تُلفظ. الإعراب هو **نظام إسقاط علاقي**: يكشف موقع كل كلمة في شبكة العلاقات النحوية والدلالية داخل الجملة.
-
-الجملة العربية هي graph معرفي. كل كلمة معربة هي عقدة في هذا الـ graph، وعلامتها الإعرابية هي مؤشر على نوع الحافة (edge) التي تربطها بسائر العقد.
+## Architecture
 
 ```
-جاءَ زيدٌ
-       ↑
-فاعل (agent_of) ← زيد ← nominative ← damma
+src/mcd/murab/
+├── __init__.py                  # Package exports
+├── murab_schema.py              # MurabUnit dataclass
+├── irab_case.py                 # IrabCase + registry loader
+├── irab_marker.py               # IrabMarker + registry loader
+├── governing_factor.py          # GoverningFactor detection
+├── case_resolver.py             # Main CaseResolver orchestrator
+├── syntactic_role_resolver.py   # Context-aware syntactic role
+├── nominative_resolver.py       # Nominative (رفع) rules
+├── accusative_resolver.py       # Accusative (نصب) rules
+├── genitive_resolver.py         # Genitive (جر) rules
+├── jussive_resolver.py          # Jussive (جزم) rules
+├── mood_resolver.py             # Imperfect verb mood
+├── agreement_engine.py          # Case agreement checking
+├── dependency_resolver.py       # Dependency relations
+├── idafa_engine.py              # Idafa (إضافة) detection
+├── tawabi_engine.py             # Tawabi' (توابع) agreement
+├── hal_tamyiz_engine.py         # Hal/Tamyiz disambiguation
+├── zarf_engine.py               # Zarf (ظرف) adverbials
+├── exception_irab_engine.py     # Exception (استثناء) cases
+├── estimated_irab_engine.py     # Estimated I'rab (مقصور/منقوص)
+├── irregular_irab_registry.py   # Irregular patterns (خمسة أسماء)
+├── murab_graph_builder.py       # Relational graph construction
+├── murab_trace_linker.py        # Unicode trace chain
+├── murab_certainty_policy.py    # Certainty evaluation
+├── murab_report.py              # Report generation
+└── serializers.py               # JSON/Markdown serialization
 ```
 
-The I'rab layer maps: Surface → Marker → Case → Role → Semantic Relation → Graph Edge.
+## I'rab Cases
 
----
+| Case | Arabic | Grammatical Function | Default Marker |
+|------|--------|----------------------|----------------|
+| `nominative` | الرفع | Raising (رفع) | Damma (ُ) |
+| `accusative` | النصب | Accusation (نصب) | Fatha (َ) |
+| `genitive` | الجر | Lowering (جر) | Kasra (ِ) |
+| `jussive` | الجزم | Jussive (جزم) | Sukun (ْ) |
+| `indeclinable_local` | البناء المحلي | Local position | — |
+| `unknown` | مجهول | Undetermined | — |
 
-## 2. الفرق بين الحركة والعلاقة
+## Governing Factors
 
-| الحركة | العلاقة |
-|--------|---------|
-| الضمة | قد تكون: فاعل / مبتدأ / خبر / اسم كان / خبر إن |
-| الفتحة | قد تكون: مفعول به / حال / تمييز / خبر كان / ظرف |
-| الكسرة | قد تكون: مجرور بحرف / مضاف إليه / تابع مجرور |
-| السكون | قد يكون: فعل مضارع مجزوم / فعل شرط / جواب شرط |
+| Factor | Arabic | Governs | Example |
+|--------|--------|---------|---------|
+| Prepositions (في/من/إلى) | حروف الجر | genitive | في المدرسةِ |
+| Inna particles (إن/أن/لكن) | إن وأخواتها | accusative (name) | إنَّ العلمَ |
+| Kana verbs (كان/أصبح) | كان وأخواتها | nominative (name) | كانَ زيدٌ |
+| Lam/Lamma (لم/لما) | حروف الجزم | jussive | لم يذهبْ |
+| Lan/An (لن/أن) | حروف النصب | accusative mood | لن يذهبَ |
+| Idafa structure | الإضافة | genitive (mudaf ilayh) | كتابُ الطالبِ |
 
-**القاعدة الحاكمة**: الحركة تشير إلى الموقع الإعرابي، لكن العلاقة تُحدَّد بالعامل والتركيب والسياق.
+## Certainty Model
 
----
-
-## 3. العامل والمعمول
-
-كل علامة إعراب لها **عامل** أوجبها:
-
-| العامل | الحكم الإعرابي |
-|--------|---------------|
-| الفعل | يرفع الفاعل، ينصب المفعول |
-| حرف الجر | يجر الاسم |
-| إنَّ وأخواتها | تنصب الاسم، ترفع الخبر |
-| كان وأخواتها | ترفع الاسم، تنصب الخبر |
-| لم / لا الناهية | تجزم المضارع |
-| لن / أن / كي | تنصب المضارع |
-| الإضافة | تجر المضاف إليه |
-
-العامل مذكور أو مقدَّر. إذا كان مقدَّرًا: `governing_factor_id = inferred, inferred=True`.
-
----
-
-## 4. الرفع والنصب والجر والجزم
-
-### الرفع (Nominative)
-يكشف مواقع: الفاعل، نائب الفاعل، المبتدأ، الخبر، اسم كان، خبر إن، الفعل المضارع غير المتأثر بناصب أو جازم.
-
-### النصب (Accusative)
-يكشف مواقع: المفعول به، المفعول المطلق، المفعول لأجله، المفعول فيه، الحال، التمييز، المستثنى، خبر كان، اسم إن، الفعل المضارع بعد ناصب.
-
-### الجر (Genitive)
-يكشف مواقع: الاسم بعد حرف جر، المضاف إليه، التابع المجرور.
-
-### الجزم (Jussive)
-يكشف مواقع: الفعل المضارع بعد جازم (لم، لا الناهية، إن الشرطية، من الشرطية...)، فعل الشرط، جواب الشرط.
-
----
-
-## 5. العلامات الأصلية والفرعية والمقدرة
-
-| النوع | الوصف | مثال |
-|-------|-------|------|
-| أصلية | الحركات الأصلية: ضمة، فتحة، كسرة، سكون | زيدٌ (ضمة)، الدرسَ (فتحة) |
-| فرعية | علامة نيابية: واو، ألف، ياء، نون، ألف كسر | أبوك (واو)، طالبان (ألف) |
-| مقدرة | لا تظهر: للتعذر أو الثقل أو المناسبة | الفتى (ضمة مقدرة) |
-| محلية | المبني في موضع إعراب | هو (في محل رفع) |
-
----
-
-## 6. كيف يكشف الإعراب الفاعلية والمفعولية
-
-```python
-# Example: كَتَبَ زيدٌ الدَّرسَ
-# زيدٌ: nominative → NominativeResolver → فاعل → agent_of(كتب)
-# الدَّرسَ: accusative → AccusativeResolver → مفعول به → patient_of(كتب)
-```
-
-لكن: ليس كل مرفوع فاعلاً:
-- `إنَّ زيدًا قائمٌ` → قائمٌ مرفوع لكنه خبر إن
-- `كانَ زيدٌ عالمًا` → زيدٌ مرفوع لكنه اسم كان
-
-لذلك `NominativeResolver` يستخدم: `irab_case + governing_factor_type + position` لتحديد الدور.
-
----
-
-## 7. كيف يختلف يقين الإعراب عن يقين الواقع
+I'rab analysis raises **syntactic certainty only**, never factual/world-knowledge certainty:
 
 ```
-syntactic_certainty ≠ factual_certainty
+evidence_effect = "syntactic_only"  # Always
 ```
 
-| المستوى | التعريف | مثال |
+| Condition | Syntactic Certainty |
+|-----------|---------------------|
+| Apparent marker + clear governing factor | 0.9 |
+| Apparent marker, no factor | 0.75 |
+| Estimated marker + clear factor | 0.7 |
+| Unclear factor | 0.5 |
+| Unknown case | 0.4 |
+
+## Irregular I'rab
+
+### الأسماء الخمسة (Five Nouns)
+
+| Word | Nominative | Accusative | Genitive |
+|------|-----------|------------|---------|
+| أب (father) | أبو (waw) | أبا (alif) | أبي (ya) |
+| أخ (brother) | أخو (waw) | أخا (alif) | أخي (ya) |
+| حم (father-in-law) | حمو (waw) | حما (alif) | حمي (ya) |
+| فم (mouth) | فو (waw) | فا (alif) | في (ya) |
+| ذو (possessor) | ذو (waw) | ذا (alif) | ذي (ya) |
+
+### Dual — المثنى
+- Nominative: ألف (ـان) e.g. طالبان
+- Accusative/Genitive: ياء (ـين) e.g. طالبين
+
+### Sound Masculine Plural — جمع المذكر السالم
+- Nominative: واو (ـون) e.g. معلمون
+- Accusative/Genitive: ياء (ـين) e.g. معلمين
+
+## Estimated I'rab — الإعراب التقديري
+
+| Pattern | Example | Rule |
 |---------|---------|------|
-| `syntactic_certainty` | مدى وضوح الموقع النحوي | إنَّ زيدًا → اسم إن (واضح نحوياً) |
-| `factual_certainty` | مدى ثبوت مضمون الجملة في الواقع | إنَّ زيدًا قائمٌ → لا يثبت قيامه بمجرد إن |
+| مقصور (ends in ى) | الفتى | Damma/Fatha/Kasra all estimated |
+| منقوص (ends in ي) | القاضي | Damma/Kasra estimated |
+| مضاف إلى ياء المتكلم | كتابي | All case markers estimated |
 
-`MurabCertaintyPolicy` تُفرق بين المستويين:
-- `evidence_effect = "syntactic_only"` → الإعراب لا يُثبت الواقع
-- `evidence_effect = "none"` → التوكيد النحوي لا يزيد اليقين المعرفي
-
----
-
-## 8. كيف يتكامل المعرب مع المبني
-
-المبنيات تتحكم في **هيكل الحكم**. المعربات تكشف **مواقع الكلمات**.
-
-```
-إنَّ زيدًا قائمٌ
-
-Mabni (إنَّ):
-  type: nasikh
-  function: توكيد / ربط
-  evidence_effect: لا تُثبت الواقع
-
-Murab (زيدًا):
-  irab_case: accusative
-  syntactic_role: اسم إن
-  semantic_role: subject
-
-Murab (قائمٌ):
-  irab_case: nominative
-  syntactic_role: خبر إن
-  semantic_role: predicate
-
-Graph:
-  زيد --subject_of--> قيام
-  قيام --predicated_by--> إنَّ
-  certainty: syntactic_only (إن لا تثبت الواقع)
-```
-
----
-
-## 9. كيف يتكامل مع الجذر والوزن
-
-```
-كاتبٌ ماهرٌ
-
-Morphosemantics (كاتب):
-  root: ك-ت-ب (writing)
-  pattern: فاعل → agent_pattern
-  folds_agency: 0.9
-
-Murab (كاتبٌ):
-  irab_case: nominative
-  syntactic_role: مبتدأ
-  semantic_role: subject
-
-Murab (ماهرٌ):
-  irab_case: nominative
-  syntactic_role: خبر
-  semantic_role: predicate
-
-Graph:
-  كاتب --subject_of--> predication
-  ماهر --predicate_of--> كاتب
-  ماهر --modifies--> كاتب (property edge)
-  كاتب --folds_agency--> writing_event
-```
-
----
-
-## 10. كيف يدخل في graph معرفي traceable
-
-كل وحدة معربة (`MurabUnit`) مرتبطة بـ:
-
-```
-UnicodeChar → Grapheme → Token → MurabUnit
-                                    ↓
-                               IrabCase
-                                    ↓
-                           GoverningFactor
-                                    ↓
-                            SyntacticRole
-                                    ↓
-                             SemanticRole
-                                    ↓
-                            CognitiveGraph
-                                    ↓
-                            JudgmentTrace
-```
-
-`MurabTraceLinker` يربط كل وحدة بنطاق الأحرف في النص الأصلي:
-```python
-link = linker.link(unit, token_id="tok-001", char_start=0, char_end=5)
-# link.unit_id, link.token_id, link.char_range, link.estimated
-```
-
-العلامة المقدرة تُذكر سببها:
-```python
-link = linker.link_estimated(unit, reason="تعذر - الاسم المقصور")
-# link.estimated = True, link.reason = "تعذر..."
-```
-
----
-
-## Graph Builder Output
-
-```python
-analyzer = MurabAnalyzer()
-units = analyzer.analyze("كَتَبَ زيدٌ الدَّرسَ بِالقَلَمِ")
-
-builder = MurabGraphBuilder()
-graph = builder.build(units, "كَتَبَ زيدٌ الدَّرسَ بِالقَلَمِ")
-
-# graph.nodes: MurabUnitNode, IrabCaseNode, MarkerNode, ...
-# graph.edges: agent_of, patient_of, governed_by, has_marker, ...
-```
-
----
-
-## CLI Commands
+## CLI Usage
 
 ```bash
-python -m mcd.cli murab-analyze --text "كتب زيد الدرس بالقلم" --output json
-python -m mcd.cli irab-resolve --text "إن زيدًا قائمٌ" --output markdown
-python -m mcd.cli murab-graph --text "جاء زيدٌ راكبًا" --output json
-python -m mcd.cli irab-certainty --text "جاء الفتى" --output json
-python -m mcd.cli murab-trace --text "كتب زيدٌ الدرسَ" --output markdown
+# Analyze full sentence
+python -m mcd.cli murab-analyze --text "جاء المعلمُ" --output json
+
+# Resolve single token
+python -m mcd.cli irab-resolve --token "الكتابُ" --output text
+
+# Build relational graph
+python -m mcd.cli murab-graph --text "ذهبَ الطالبُ إلى المدرسةِ" --output json
+
+# Evaluate certainty
+python -m mcd.cli irab-certainty --token "المدرسةِ" --context "في المدرسةِ" --output json
+
+# Show Unicode trace chain
+python -m mcd.cli murab-trace --token "أب" --output json
+```
+
+## Key Linguistic Distinctions
+
+### Mubtada is Nominative but NOT Agent
+```
+زيدٌ ذكيٌّ   → زيد is nominative (mubtada/subject) but NOT an agent
+```
+
+### Hal and Tamyiz are Accusative but NOT Objects
+```
+جاء فرحاً    → فرحاً is accusative (hal) — NOT a direct object
+عشرون كتاباً → كتاباً is accusative (tamyiz) — NOT a direct object
+```
+
+### Idafa Does Not Always Mean Ownership
+```
+خاتمُ ذهبٍ  → specification (made of gold), not ownership
+بناءُ المصنع → action/masdar relationship
+```
+
+### Lam vs Lan
+```
+لم يذهبْ   → jussive (sukun marker) — negation of past
+لن يذهبَ   → accusative mood (fatha marker) — negation of future
+```
+
+## Data Files
+
+All training/example data lives in `data/murab/`. See `data/murab/README.md` for details.
+
+## Running Tests
+
+```bash
+PYTHONPATH=src python -m pytest tests/test_murab*.py tests/test_irab*.py tests/test_governing*.py tests/test_nominative*.py tests/test_accusative*.py tests/test_genitive*.py tests/test_jussive*.py tests/test_mood*.py tests/test_idafa*.py tests/test_tawabi*.py tests/test_hal_tamyiz*.py tests/test_zarf*.py tests/test_estimated*.py tests/test_irregular*.py -v
 ```

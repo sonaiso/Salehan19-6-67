@@ -110,3 +110,9 @@ class IrabCaseRegistry:
 
 # Module-level singleton
 IRAB_CASE_REGISTRY = IrabCaseRegistry()
+
+
+# Backward-compatible loader used by existing tests
+def load_irab_case_registry() -> dict[str, "IrabCase"]:
+    """Return a dict of case_id → IrabCase for backward compatibility."""
+    return {c.case_id: c for c in IRAB_CASE_REGISTRY.all()}

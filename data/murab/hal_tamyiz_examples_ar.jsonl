@@ -1,80 +1,80 @@
-{"id": "ht-001", "sentence": "جاءَ زيدٌ راكِبًا", "word": "راكِبًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل جاء", "notes": "هيئة صاحب الحال"}
-{"id": "ht-002", "sentence": "رَجَعَ الجُندِيُّ مُنتَصِرًا", "word": "مُنتَصِرًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل رجع", "notes": ""}
-{"id": "ht-003", "sentence": "وَقَفَ الطَّالِبُ خائِفًا", "word": "خائِفًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل وقف", "notes": ""}
-{"id": "ht-004", "sentence": "أَكَلتُ الطَّعامَ ساخِنًا", "word": "ساخِنًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "patient_state", "governing_factor": "فعل أكل", "notes": "حال المفعول به"}
-{"id": "ht-005", "sentence": "سافَرَ المُدِيرُ مُنفَرِدًا", "word": "مُنفَرِدًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل سافر", "notes": ""}
-{"id": "ht-006", "sentence": "رَأَيتُ الهِلالَ طالِعًا", "word": "طالِعًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "patient_state", "governing_factor": "فعل رأى", "notes": ""}
-{"id": "ht-007", "sentence": "وَصَلَ البَريدُ مُتَأَخِّرًا", "word": "مُتَأَخِّرًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل وصل", "notes": ""}
-{"id": "ht-008", "sentence": "دَخَلَ الضَّيفُ مُبتَسِمًا", "word": "مُبتَسِمًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل دخل", "notes": ""}
-{"id": "ht-009", "sentence": "خَرَجَ الوَلَدُ مَسرورًا", "word": "مَسرورًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل خرج", "notes": ""}
-{"id": "ht-010", "sentence": "قَرَأتُ الكِتابَ وَحيدًا", "word": "وَحيدًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل قرأ", "notes": ""}
-{"id": "ht-011", "sentence": "اشتَرَيتُ الثَّوبَ مَقطوعًا", "word": "مَقطوعًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "patient_state", "governing_factor": "فعل اشترى", "notes": ""}
-{"id": "ht-012", "sentence": "جَلَسَ الشَّيخُ مُتَفَكِّرًا", "word": "مُتَفَكِّرًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل جلس", "notes": ""}
-{"id": "ht-013", "sentence": "وَقَفَت المَرأةُ باكِيةً", "word": "باكِيةً", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل وقف", "notes": "حال مؤنثة"}
-{"id": "ht-014", "sentence": "عادَ الغائِبُ سالِمًا", "word": "سالِمًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل عاد", "notes": ""}
-{"id": "ht-015", "sentence": "انتَهى العَمَلُ ناجِحًا", "word": "ناجِحًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل انتهى", "notes": ""}
-{"id": "ht-016", "sentence": "اشتَرَيتُ مَنًّا مِنَ التَّمرِ", "word": "مَنًّا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "الاشتراء", "notes": "تمييز الكيل"}
-{"id": "ht-017", "sentence": "عِندِي رِطلٌ زَيتًا", "word": "زَيتًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "رطل", "notes": "تمييز الوزن"}
-{"id": "ht-018", "sentence": "زَرَعتُ الأَرضَ قَمحًا", "word": "قَمحًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "الأرض", "notes": "تمييز المساحة"}
-{"id": "ht-019", "sentence": "فاقَ زيدٌ الطُّلَّابَ عِلمًا", "word": "عِلمًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "فعل فاق", "notes": "تمييز النسبة"}
-{"id": "ht-020", "sentence": "طابَ زيدٌ نَفسًا", "word": "نَفسًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "فعل طاب", "notes": "تمييز محوَّل عن فاعل"}
-{"id": "ht-021", "sentence": "اشتَعَلَ الرَّأسُ شَيبًا", "word": "شَيبًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "فعل اشتعل", "notes": "تمييز محوَّل عن فاعل"}
-{"id": "ht-022", "sentence": "كَرُمَ خالِدٌ أَخلاقًا", "word": "أَخلاقًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "فعل كرم", "notes": "تمييز النسبة"}
-{"id": "ht-023", "sentence": "حَسُنَ الوَلَدُ خُلُقًا", "word": "خُلُقًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "فعل حسن", "notes": ""}
-{"id": "ht-024", "sentence": "عِشرونَ رَجُلًا حَضَروا", "word": "رَجُلًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "عشرون", "notes": "تمييز العدد"}
-{"id": "ht-025", "sentence": "مَلَأتُ الكوبَ ماءً", "word": "ماءً", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "فعل ملأ", "notes": ""}
-{"id": "ht-026", "sentence": "اشتَريتُ عَشرةَ كُتُبٍ", "word": "كُتُبٍ", "irab_case": "genitive", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "عشرة", "notes": "تمييز مجرور للعدد 3-10"}
-{"id": "ht-027", "sentence": "جاءَ زيدٌ مَشيًا", "word": "مَشيًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل جاء", "notes": "حال مصدر"}
-{"id": "ht-028", "sentence": "يَعِيشُ الصِّدِّيقُ حَقًّا", "word": "حَقًّا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل يعيش", "notes": ""}
-{"id": "ht-029", "sentence": "دَرَسَ الطَّالِبُ وَحدَهُ", "word": "وَحدَهُ", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل درس", "notes": "حال بإضافة"}
-{"id": "ht-030", "sentence": "تَكَلَّمَ الوَلَدُ مُسرِعًا", "word": "مُسرِعًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل تكلم", "notes": ""}
-{"id": "ht-031", "sentence": "أَكلَ الضَّيفُ مُختارًا", "word": "مُختارًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل أكل", "notes": ""}
-{"id": "ht-032", "sentence": "جاءَ الفارِسُ مُسلَّحًا", "word": "مُسلَّحًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل جاء", "notes": ""}
-{"id": "ht-033", "sentence": "رَأَيتُهُ جالِسًا", "word": "جالِسًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "patient_state", "governing_factor": "فعل رأى", "notes": ""}
-{"id": "ht-034", "sentence": "رَجَعَ الوَلَدُ خاسِرًا", "word": "خاسِرًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل رجع", "notes": ""}
-{"id": "ht-035", "sentence": "لَقِيتُهُ ضاحِكًا", "word": "ضاحِكًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "patient_state", "governing_factor": "فعل لقي", "notes": ""}
-{"id": "ht-036", "sentence": "مَلَكَت الأُمَّةُ أَلفَ مِيلٍ أَرضًا", "word": "أَرضًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "ألف ميل", "notes": ""}
-{"id": "ht-037", "sentence": "عِندِي عِشرونَ كِتابًا", "word": "كِتابًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "عشرون", "notes": ""}
-{"id": "ht-038", "sentence": "اشتَرَيتُ رِطلًا زَيتًا", "word": "زَيتًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "رطل", "notes": ""}
-{"id": "ht-039", "sentence": "بَنَيتُ بَيتًا طابَقَينِ", "word": "طابَقَينِ", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "بيت", "notes": ""}
-{"id": "ht-040", "sentence": "يَملِكُ زيدٌ أَكثَرَ مِنكَ مالًا", "word": "مالًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "أكثر", "notes": "تمييز بعد أفعل التفضيل"}
-{"id": "ht-041", "sentence": "عادَ المُسافِرُ مَحزونًا", "word": "مَحزونًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل عاد", "notes": ""}
-{"id": "ht-042", "sentence": "التَقَيتُ بِأَخِيكَ مُصادَفةً", "word": "مُصادَفةً", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "manner", "governing_factor": "فعل التقى", "notes": ""}
-{"id": "ht-043", "sentence": "وَصَلَ البَريدُ سالِمًا", "word": "سالِمًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل وصل", "notes": ""}
-{"id": "ht-044", "sentence": "يُحِبُّ الناسُ الأَمِيرَ عادِلًا", "word": "عادِلًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "patient_state", "governing_factor": "فعل يحب", "notes": ""}
-{"id": "ht-045", "sentence": "فَرَّ العَدُوُّ مَهزومًا", "word": "مَهزومًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل فر", "notes": ""}
-{"id": "ht-046", "sentence": "قَدِمَ الحاجُّ مُلَبِّيًا", "word": "مُلَبِّيًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل قدم", "notes": ""}
-{"id": "ht-047", "sentence": "يَقومُ المُؤَذِّنُ صارِخًا", "word": "صارِخًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل يقوم", "notes": ""}
-{"id": "ht-048", "sentence": "نامَ الطِّفلُ هادِئًا", "word": "هادِئًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل نام", "notes": ""}
-{"id": "ht-049", "sentence": "تَعَلَّمتُ العَرَبِيَّةَ صَغيرًا", "word": "صَغيرًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل تعلم", "notes": ""}
-{"id": "ht-050", "sentence": "غادَرَ الجَيشُ مُنتَصِرًا", "word": "مُنتَصِرًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل غادر", "notes": ""}
-{"id": "ht-051", "sentence": "أَمضَيتُ الإِجازَةَ مُرتاحًا", "word": "مُرتاحًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل أمضى", "notes": ""}
-{"id": "ht-052", "sentence": "قابَلتُ المُعَلِّمَ واقِفًا", "word": "واقِفًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل قابل", "notes": ""}
-{"id": "ht-053", "sentence": "قَرَأتُ الرِّوايَةَ مُستَمتِعًا", "word": "مُستَمتِعًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل قرأ", "notes": ""}
-{"id": "ht-054", "sentence": "اشتَرَيتُ الثِّيابَ جَديدَةً", "word": "جَديدَةً", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "patient_state", "governing_factor": "فعل اشترى", "notes": ""}
-{"id": "ht-055", "sentence": "رَأَيتُ الهِلالَ نَقِيًّا", "word": "نَقِيًّا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "patient_state", "governing_factor": "فعل رأى", "notes": ""}
-{"id": "ht-056", "sentence": "فَرِحتُ مَسرورًا", "word": "مَسرورًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل فرح", "notes": "توكيد الحال"}
-{"id": "ht-057", "sentence": "كَلَّمتُهُ مُنفَرِدًا", "word": "مُنفَرِدًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل كلم", "notes": ""}
-{"id": "ht-058", "sentence": "حَضَرَ الطِّفلُ مُنتَبِهًا", "word": "مُنتَبِهًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل حضر", "notes": ""}
-{"id": "ht-059", "sentence": "جَلَستُ صامِتًا", "word": "صامِتًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل جلس", "notes": ""}
-{"id": "ht-060", "sentence": "يَعمَلُ الطَّلَبةُ مُجتَهِدينَ", "word": "مُجتَهِدينَ", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل يعمل", "notes": "حال جمع"}
-{"id": "ht-061", "sentence": "بَلَغَ سِتِّينَ سَنَةً عُمرًا", "word": "عُمرًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "ستين سنة", "notes": ""}
-{"id": "ht-062", "sentence": "تَمَّ المَشروعُ نَجاحًا", "word": "نَجاحًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "فعل تم", "notes": ""}
-{"id": "ht-063", "sentence": "زادَ الإِنتاجُ خَمسِينَ بِالمِئَةِ كَمِّيَّةً", "word": "كَمِّيَّةً", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "خمسين بالمئة", "notes": ""}
-{"id": "ht-064", "sentence": "تَفَوَّقَ زيدٌ عَلى أَقرانِهِ تَحصيلًا", "word": "تَحصيلًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "فعل تفوق", "notes": ""}
-{"id": "ht-065", "sentence": "امتَلَأَت الخَزينةُ ذَهَبًا", "word": "ذَهَبًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "فعل امتلأت", "notes": "تمييز محوَّل عن فاعل"}
-{"id": "ht-066", "sentence": "طارَ قَلبِي فَرَحًا", "word": "فَرَحًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "فعل طار", "notes": ""}
-{"id": "ht-067", "sentence": "ضاقَ صَدرُهُ هَمًّا", "word": "هَمًّا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "فعل ضاق", "notes": ""}
-{"id": "ht-068", "sentence": "اقشَعَرَّت جِلدَتُهُ خَوفًا", "word": "خَوفًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "فعل اقشعر", "notes": ""}
-{"id": "ht-069", "sentence": "سالَ فُوهُ لُعابًا", "word": "لُعابًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "فعل سال", "notes": ""}
-{"id": "ht-070", "sentence": "عَلا صَوتُهُ صِراخًا", "word": "صِراخًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "فعل علا", "notes": ""}
-{"id": "ht-071", "sentence": "جاءَ المُسافِرونَ فَرِحينَ", "word": "فَرِحينَ", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل جاء", "notes": "حال جمع"}
-{"id": "ht-072", "sentence": "اكتَمَلَ المَشروعُ سَلِيمًا", "word": "سَلِيمًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل اكتمل", "notes": ""}
-{"id": "ht-073", "sentence": "اشتَرَيتُ الأَرضَ فَدَّانًا", "word": "فَدَّانًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "الأرض", "notes": "تمييز مساحة"}
-{"id": "ht-074", "sentence": "قَضَيتُ اليَومَ قِراءَةً", "word": "قِراءَةً", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل قضى", "notes": "حال مصدر"}
-{"id": "ht-075", "sentence": "أَنهَيتُ العَمَلَ مُبكِّرًا", "word": "مُبكِّرًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل أنهى", "notes": ""}
-{"id": "ht-076", "sentence": "وَصَلتُ مَشيًا", "word": "مَشيًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل وصل", "notes": "حال مصدر"}
-{"id": "ht-077", "sentence": "اشتَرَيتُ صاعًا قَمحًا", "word": "قَمحًا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "صاع", "notes": ""}
-{"id": "ht-078", "sentence": "شَرِبتُ كَأسًا ماءً", "word": "ماءً", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "كأس", "notes": ""}
-{"id": "ht-079", "sentence": "أَكَلتُ طَبَقًا أَرُزًّا", "word": "أَرُزًّا", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "تمييز", "semantic_role": "specification", "governing_factor": "طبق", "notes": ""}
-{"id": "ht-080", "sentence": "تَقَدَّمَ الطُّلابُ مُنتَظِمينَ", "word": "مُنتَظِمينَ", "irab_case": "accusative", "irab_marker": "fatha", "syntactic_role": "حال", "semantic_role": "agent_state", "governing_factor": "فعل تقدم", "notes": "حال جمع"}
+{"example_id": "hal_001", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_002", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_003", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_004", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_005", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_006", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_007", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_008", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_009", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_010", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_011", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_012", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_013", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_014", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_015", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_016", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_017", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_018", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_019", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_020", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_021", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_022", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_023", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_024", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_025", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_026", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_027", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_028", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_029", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_030", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_031", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_032", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_033", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_034", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_035", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_036", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_037", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_038", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_039", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_040", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_041", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_042", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_043", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_044", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_045", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_046", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_047", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_048", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_049", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_050", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_051", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_052", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_053", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_054", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_055", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_056", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_057", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_058", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_059", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_060", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_061", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_062", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_063", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_064", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_065", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_066", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_067", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_068", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_069", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_070", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_071", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_072", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_073", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_074", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_075", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_076", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_077", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}
+{"example_id": "hal_078", "text": "فاض النيلُ ماءً", "tokens": [{"token": "ماءً", "role": "tamyiz", "case": "accusative"}], "notes": "تمييز النسبة"}
+{"example_id": "hal_079", "text": "جاء الجنديُّ شجاعاً", "tokens": [{"token": "شجاعاً", "role": "hal", "case": "accusative"}], "notes": "الحال منصوب يبين هيئة الفاعل"}
+{"example_id": "hal_080", "text": "اشتريتُ عشرين كتاباً", "tokens": [{"token": "كتاباً", "role": "tamyiz", "case": "accusative"}], "notes": "التمييز منصوب بعد العدد"}

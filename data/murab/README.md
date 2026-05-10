@@ -1,47 +1,40 @@
-# data/murab — Arabic Mu'rab/I'rab Relational Data
+# data/murab — Arabic Mu'rab / I'rab Data Files
 
-Phase 7.5 seed data for the Arabic I'rab Relational Engineering Layer.
+This directory contains structured data for the Arabic I'rab (Mu'rab) relational engineering layer.
 
-## Files
+## JSON Registry Files
 
-| File | Format | Lines | Description |
-|------|--------|-------|-------------|
-| `irab_case_registry.json` | JSON | 6 cases | الحالات الإعرابية الست |
-| `irab_marker_registry.json` | JSON | 12 markers | علامات الإعراب |
-| `governing_factors_ar.json` | JSON | 16 factors | العوامل النحوية |
-| `nominative_examples_ar.jsonl` | JSONL | 100 | أمثلة الرفع |
-| `accusative_examples_ar.jsonl` | JSONL | 150 | أمثلة النصب |
-| `genitive_examples_ar.jsonl` | JSONL | 100 | أمثلة الجر |
-| `jussive_examples_ar.jsonl` | JSONL | 80 | أمثلة الجزم |
-| `idafa_examples_ar.jsonl` | JSONL | 100 | أمثلة الإضافة |
-| `tawabi_examples_ar.jsonl` | JSONL | 100 | أمثلة التوابع |
-| `hal_tamyiz_examples_ar.jsonl` | JSONL | 80 | أمثلة الحال والتمييز |
-| `zarf_examples_ar.jsonl` | JSONL | 80 | أمثلة الظرف |
-| `estimated_irab_examples_ar.jsonl` | JSONL | 80 | أمثلة الإعراب المقدر |
-| `irregular_irab_examples_ar.jsonl` | JSONL | ~91 | أمثلة الإعراب الشاذ |
-| `murab_golden_examples_ar.jsonl` | JSONL | 100 | أمثلة ذهبية متكاملة |
-| `murab_adversarial_examples_ar.jsonl` | JSONL | 100 | أمثلة خادعة |
+| File | Description |
+|------|-------------|
+| `irab_case_registry.json` | Six I'rab case definitions (nominative, accusative, genitive, jussive, indeclinable_local, unknown) |
+| `irab_marker_registry.json` | 15 I'rab marker entries with Unicode symbols |
+| `governing_factors_ar.json` | ≥20 governing factor objects (prepositions, inna/kana particles, jussive/nasb particles) |
 
-## JSONL Schema
+## JSONL Example Files
 
-### Example entry (nominative)
+| File | Count | Description |
+|------|-------|-------------|
+| `nominative_examples_ar.jsonl` | 100 | Nominative case examples |
+| `accusative_examples_ar.jsonl` | 150 | Accusative case examples |
+| `genitive_examples_ar.jsonl` | 100 | Genitive case examples |
+| `jussive_examples_ar.jsonl` | 80 | Jussive examples (lam, lamma, la nahy) |
+| `idafa_examples_ar.jsonl` | 100 | Idafa (إضافة) construction examples |
+| `tawabi_examples_ar.jsonl` | 100 | Tawabi' (توابع) agreement examples |
+| `hal_tamyiz_examples_ar.jsonl` | 80 | Hal (حال) and Tamyiz (تمييز) disambiguation |
+| `zarf_examples_ar.jsonl` | 80 | Zarf (ظرف) time/place adverbials |
+| `estimated_irab_examples_ar.jsonl` | 80 | Estimated I'rab (مقصور / منقوص / مضاف إلى ياء) |
+| `irregular_irab_examples_ar.jsonl` | 5+ | Irregular I'rab (five nouns, dual, plurals) |
+| `murab_golden_examples_ar.jsonl` | 100 | Golden standard annotated examples |
+| `murab_adversarial_examples_ar.jsonl` | 100 | Adversarial/tricky cases |
+
+## JSONL Format
+
+Each line is a JSON object with at least:
 ```json
-{"id": "nom-001", "sentence": "جاءَ زيدٌ", "word": "زيدٌ",
- "irab_case": "nominative", "syntactic_role": "فاعل",
- "semantic_role": "agent", "governing_factor": "فعل جاء"}
+{
+  "example_id": "nom_001",
+  "text": "جاء المعلمُ",
+  "tokens": [{"token": "...", "role": "...", "case": "..."}],
+  "notes": "الفاعل مرفوع"
+}
 ```
-
-### Golden example entry
-```json
-{"id": "golden-001", "sentence": "كَتَبَ زيدٌ الدَّرسَ", "analysis": [
-  {"word": "زيدٌ", "irab_case": "nominative", "irab_marker": "damma",
-   "syntactic_role": "فاعل", "semantic_role": "agent"}
-]}
-```
-
-## Key Principles
-
-1. **الرفع ≠ الفاعلية**: Not every nominative word is an agent.
-2. **النصب ≠ المفعولية**: Not every accusative word is a patient.
-3. **الجر بالإضافة ≠ الملكية**: Genitive via idafa ≠ ownership.
-4. **يقين نحوي ≠ يقين واقعي**: Syntactic certainty ≠ factual certainty.

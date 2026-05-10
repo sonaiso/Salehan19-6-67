@@ -1,134 +1,186 @@
-{
-  "version": "1.0",
-  "description": "Arabic Governing Factors (العوامل النحوية) — Phase 7.5",
-  "governing_factors": [
-    {
-      "factor_id": "prep_bi",
-      "factor_ar": "حرف الجر (بِ)",
-      "factor_type": "حرف",
-      "governs_case": "genitive",
-      "examples": ["كَتَبتُ بِالقَلَمِ", "مَرَرتُ بِزيدٍ"],
-      "notes": "Preposition meaning 'with/by'; governs genitive"
-    },
-    {
-      "factor_id": "prep_li",
-      "factor_ar": "حرف الجر (لِ)",
-      "factor_type": "حرف",
-      "governs_case": "genitive",
-      "examples": ["الكِتابُ لِزيدٍ", "جِئتُ لِلعِلمِ"],
-      "notes": "Preposition meaning 'for/to'; governs genitive"
-    },
-    {
-      "factor_id": "prep_fi",
-      "factor_ar": "حرف الجر (فِي)",
-      "factor_type": "حرف",
-      "governs_case": "genitive",
-      "examples": ["الكِتابُ فِي الحَقِيبةِ", "جَلَستُ فِي البَيتِ"],
-      "notes": "Preposition meaning 'in'; governs genitive"
-    },
-    {
-      "factor_id": "prep_min",
-      "factor_ar": "حرف الجر (مِن)",
-      "factor_type": "حرف",
-      "governs_case": "genitive",
-      "examples": ["خَرَجتُ مِنَ البَيتِ", "هذا مِن ذَهبٍ"],
-      "notes": "Preposition meaning 'from'; governs genitive"
-    },
-    {
-      "factor_id": "prep_ila",
-      "factor_ar": "حرف الجر (إِلى)",
-      "factor_type": "حرف",
-      "governs_case": "genitive",
-      "examples": ["ذَهَبتُ إِلى المَدرَسَةِ", "نَظَرتُ إِلى السَّماءِ"],
-      "notes": "Preposition meaning 'to/toward'; governs genitive"
-    },
-    {
-      "factor_id": "prep_ala",
-      "factor_ar": "حرف الجر (عَلى)",
-      "factor_type": "حرف",
-      "governs_case": "genitive",
-      "examples": ["جَلَستُ عَلى الكُرسِيِّ", "الكِتابُ عَلى الطَّاوِلَةِ"],
-      "notes": "Preposition meaning 'on/upon'; governs genitive"
-    },
-    {
-      "factor_id": "prep_an",
-      "factor_ar": "حرف الجر (عَن)",
-      "factor_type": "حرف",
-      "governs_case": "genitive",
-      "examples": ["تَكَلَّمتُ عَن زيدٍ", "ابتَعَدتُ عَنِ الشَّرِّ"],
-      "notes": "Preposition meaning 'about/away from'; governs genitive"
-    },
-    {
-      "factor_id": "inna_wa_akhwatuha",
-      "factor_ar": "إِنَّ وأَخَواتُها (إِنَّ، أَنَّ، كَأَنَّ، لَكِنَّ، لَيتَ، لَعَلَّ)",
-      "factor_type": "حرف ناسخ",
-      "governs_case": "accusative_for_name_nominative_for_predicate",
-      "examples": ["إِنَّ زيدًا قائِمٌ", "لَيتَ خالِدًا حاضِرٌ", "كَأَنَّ القَمَرَ شَمسٌ"],
-      "notes": "These particles take the noun in accusative (اسم إن) and leave the predicate nominative (خبر إن)"
-    },
-    {
-      "factor_id": "kana_wa_akhwatuha",
-      "factor_ar": "كانَ وأَخَواتُها (كانَ، أَصبَحَ، أَمسى، ظَلَّ، بَاتَ، صارَ، لَيسَ، مَا زَالَ، مَا دَامَ)",
-      "factor_type": "فعل ناسخ",
-      "governs_case": "nominative_for_name_accusative_for_predicate",
-      "examples": ["كانَ زيدٌ قائِمًا", "أَصبَحَ الجَوُّ بارِدًا", "لَيسَ العِلمُ سَهلًا"],
-      "notes": "These verbs take the noun in nominative (اسم كان) and the predicate in accusative (خبر كان)"
-    },
-    {
-      "factor_id": "lam_jazim",
-      "factor_ar": "لَم الجازِمة",
-      "factor_type": "حرف جازم",
-      "governs_case": "jussive",
-      "examples": ["لَم يَذهَبْ زيدٌ", "لَم تَكتُبِي الدَّرسَ"],
-      "notes": "Negation particle that makes the imperfect verb jussive; negates the past"
-    },
-    {
-      "factor_id": "la_nahiya",
-      "factor_ar": "لا النَّاهِية",
-      "factor_type": "حرف جازم",
-      "governs_case": "jussive",
-      "examples": ["لا تَذهَبْ", "لا تَكذِبْ", "لا تَتَأَخَّرْ"],
-      "notes": "Prohibitive la; makes the imperfect verb jussive to express prohibition"
-    },
-    {
-      "factor_id": "in_shartiya",
-      "factor_ar": "إِن الشَّرطِية",
-      "factor_type": "أداة شرط جازمة",
-      "governs_case": "jussive",
-      "examples": ["إِن تَجتَهِدْ تَنجَحْ", "إِن تَصبِرْ تَظفَرْ"],
-      "notes": "Conditional particle; makes both the condition verb and the response verb jussive"
-    },
-    {
-      "factor_id": "lan_nasib",
-      "factor_ar": "لَن النَّاصِبة",
-      "factor_type": "حرف ناصب",
-      "governs_case": "accusative",
-      "examples": ["لَن أَذهَبَ", "لَن يَفعَلَ ذلِك"],
-      "notes": "Negation of future; makes the imperfect verb accusative"
-    },
-    {
-      "factor_id": "an_nasib",
-      "factor_ar": "أَن المَصدَرية النَّاصِبة",
-      "factor_type": "حرف ناصب",
-      "governs_case": "accusative",
-      "examples": ["أُرِيدُ أَن أَذهَبَ", "يَجِبُ أَن تَدرُسَ"],
-      "notes": "Masdar particle; makes the imperfect verb accusative; creates a masdar-phrase"
-    },
-    {
-      "factor_id": "al_fi'l",
-      "factor_ar": "الفِعل المُتَعَدِّي",
-      "factor_type": "فعل",
-      "governs_case": "nominative_for_agent_accusative_for_object",
-      "examples": ["كَتَبَ زيدٌ الرِّسالةَ", "قَرَأَ الطَّالِبُ الكِتابَ"],
-      "notes": "Transitive verbs assign nominative to their agent (فاعل) and accusative to their object (مفعول به)"
-    },
-    {
-      "factor_id": "al_idafa",
-      "factor_ar": "الإِضافة",
-      "factor_type": "تركيب",
-      "governs_case": "genitive",
-      "examples": ["كِتابُ زيدٍ", "بَيتُ العِلمِ", "صَوتُ الطَّيرِ"],
-      "notes": "Construct state; the second noun (mudaf ilayh) is always genitive"
-    }
-  ]
-}
+[
+  {
+    "factor_id": "prep_fi",
+    "surface": "في",
+    "factor_type": "preposition",
+    "governs_case": "genitive",
+    "scope": "object",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "prep_min",
+    "surface": "من",
+    "factor_type": "preposition",
+    "governs_case": "genitive",
+    "scope": "object",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "prep_ila",
+    "surface": "إلى",
+    "factor_type": "preposition",
+    "governs_case": "genitive",
+    "scope": "object",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "prep_ala",
+    "surface": "على",
+    "factor_type": "preposition",
+    "governs_case": "genitive",
+    "scope": "object",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "prep_an",
+    "surface": "عن",
+    "factor_type": "preposition",
+    "governs_case": "genitive",
+    "scope": "object",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "prep_bi",
+    "surface": "بـ",
+    "factor_type": "preposition",
+    "governs_case": "genitive",
+    "scope": "object",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "prep_li",
+    "surface": "لـ",
+    "factor_type": "preposition",
+    "governs_case": "genitive",
+    "scope": "object",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "prep_ka",
+    "surface": "كـ",
+    "factor_type": "preposition",
+    "governs_case": "genitive",
+    "scope": "object",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "prep_hatta",
+    "surface": "حتى",
+    "factor_type": "preposition",
+    "governs_case": "genitive",
+    "scope": "object",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "prep_mundhu",
+    "surface": "منذ",
+    "factor_type": "preposition",
+    "governs_case": "genitive",
+    "scope": "object",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "inna",
+    "surface": "إن",
+    "factor_type": "inna_particle",
+    "governs_case": "accusative",
+    "scope": "name",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "anna",
+    "surface": "أن",
+    "factor_type": "inna_particle",
+    "governs_case": "accusative",
+    "scope": "name",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "kanna",
+    "surface": "كأن",
+    "factor_type": "inna_particle",
+    "governs_case": "accusative",
+    "scope": "name",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "lakinna",
+    "surface": "لكن",
+    "factor_type": "inna_particle",
+    "governs_case": "accusative",
+    "scope": "name",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "layta",
+    "surface": "ليت",
+    "factor_type": "inna_particle",
+    "governs_case": "accusative",
+    "scope": "name",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "laalla",
+    "surface": "لعل",
+    "factor_type": "inna_particle",
+    "governs_case": "accusative",
+    "scope": "name",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "kana",
+    "surface": "كان",
+    "factor_type": "kana_verb",
+    "governs_case": "nominative",
+    "scope": "name",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "lam_jussive",
+    "surface": "لم",
+    "factor_type": "jussive_particle",
+    "governs_case": "jussive",
+    "scope": "mood",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "lamma_jussive",
+    "surface": "لما",
+    "factor_type": "jussive_particle",
+    "governs_case": "jussive",
+    "scope": "mood",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "la_nahy",
+    "surface": "لا",
+    "factor_type": "jussive_particle",
+    "governs_case": "jussive",
+    "scope": "mood",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "lan_accusative",
+    "surface": "لن",
+    "factor_type": "nasb_particle",
+    "governs_case": "accusative",
+    "scope": "name",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "an_particle",
+    "surface": "أن",
+    "factor_type": "nasb_particle",
+    "governs_case": "accusative",
+    "scope": "name",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "mudaf_idafa",
+    "surface": "",
+    "factor_type": "idafa_structure",
+    "governs_case": "genitive",
+    "scope": "object",
+    "certainty": 0.95
+  }
+]

@@ -1,0 +1,10 @@
+{"text": "لو درستَ لنجحتَ", "particle": "لو", "is_counterfactual": true, "creates_evidence": false, "note": "pure counterfactual"}
+{"text": "لولا زيدٌ لهلكنا", "particle": "لولا", "is_counterfactual": true, "creates_evidence": false, "note": "counterfactual with implied condition"}
+{"text": "لو كنتُ أعلم لفعلتُ", "particle": "لو", "is_counterfactual": true, "creates_evidence": false}
+{"text": "لوما المطر لجئنا", "particle": "لوما", "is_counterfactual": true, "creates_evidence": false}
+{"text": "لو أنك حاضرٌ لرأيتَ العجب", "particle": "لو", "is_counterfactual": true, "creates_evidence": false}
+{"text": "لولا النصيحةُ لضاعَ", "particle": "لولا", "is_counterfactual": true, "creates_evidence": false}
+{"text": "لو أراد لفعل", "particle": "لو", "is_counterfactual": true, "creates_evidence": false}
+{"text": "لولا المساعدة لفشلنا", "particle": "لولا", "is_counterfactual": true, "creates_evidence": false}
+{"text": "لو كان حياً لسرّه هذا", "particle": "لو", "is_counterfactual": true, "creates_evidence": false}
+{"text": "لوما العلم لجهلنا", "particle": "لوما", "is_counterfactual": true, "creates_evidence": false}
