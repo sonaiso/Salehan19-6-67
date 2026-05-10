@@ -1,70 +1,53 @@
-"""IdafaEngine — detects and analyzes Arabic إضافة (genitive construct)."""
+"""IdafaEngine — classifies the type of an Idafa (إضافة) construction."""
 from __future__ import annotations
-from dataclasses import dataclass
-from typing import Optional
+
+from mcd.murab.murab_schema import MurabUnit
 
 
-@dataclass
-class IdafaRelation:
-    mudaf: str
-    mudaf_ilayh: str
-    idafa_type: str  # possession|specification|part_whole|masdar_to_agent|masdar_to_patient|lafziyya|ma'nawiyya
-    mudaf_id: str
-    mudaf_ilayh_id: str
-    certainty: float
-
-    def to_dict(self) -> dict:
-        return {
-            "mudaf": self.mudaf,
-            "mudaf_ilayh": self.mudaf_ilayh,
-            "idafa_type": self.idafa_type,
-            "mudaf_id": self.mudaf_id,
-            "mudaf_ilayh_id": self.mudaf_ilayh_id,
-            "certainty": self.certainty,
-        }
-
-
-def _strip_diacritics(text: str) -> str:
-    diacritics = set('\u064b\u064c\u064d\u064e\u064f\u0650\u0651\u0652')
-    return ''.join(c for c in text if c not in diacritics)
+# Rule: إضافة لا تعني ملكية دائمًا — idafa does not always mean ownership
+_OWNERSHIP_MARKERS = {"بيت", "كتاب", "سيارة", "قلم", "مال", "دار"}
+_PART_WHOLE_MARKERS = {"باب", "نهاية", "بداية", "رأس", "قلب", "يد", "قدم"}
+_MASDAR_MARKERS = {"قراءة", "كتابة", "فهم", "علم", "ضرب", "نصر"}
 
 
 class IdafaEngine:
-    """Detects إضافة (genitive construct) relations in Arabic text."""
+    """Classifies the semantic type of an إضافة construction.
 
-    MASDAR_PATTERNS = {"كِتَابَة", "قِرَاءَة", "كَتْب", "قِرَاء", "فَهْم", "عِلْم"}
+    idafa_types:
+        ownership | specification | part_whole | bayan |
+        masdar_to_agent | masdar_to_patient | lafziyya | manawiyya
+    """
 
-    def detect_idafa(self, tokens: list) -> list:
-        """Detect idafa relations from list of token strings."""
-        relations = []
+    def resolve(
+        self,
+        mudaf: MurabUnit,
+        mudaf_ilayh: MurabUnit,
+    ) -> dict:
+        warnings: list[str] = []
+        import re
+        _H = re.compile(r"[\u064b-\u065f]")
+        mudaf_bare = _H.sub("", mudaf.surface)
+        mudaf_ilayh_bare = _H.sub("", mudaf_ilayh.surface)
 
-        for i in range(len(tokens) - 1):
-            tok = tokens[i]
-            next_tok = tokens[i + 1]
+        idafa_type = self._classify(mudaf_bare, mudaf_ilayh_bare)
 
-            stripped_tok = _strip_diacritics(tok)
-            stripped_next = _strip_diacritics(next_tok)
+        if idafa_type == "ownership":
+            warnings.append("idafa_not_always_ownership_verify_context")
 
-            no_tanwin = not tok.endswith('\u064b') and not tok.endswith('\u064c') and not tok.endswith('\u064d')
-            next_has_kasra = next_tok.endswith('\u0650') or next_tok.endswith('\u064d') or next_tok.startswith('ال')
+        return {
+            "idafa_type": idafa_type,
+            "mudaf_id": mudaf.unit_id,
+            "mudaf_ilayh_id": mudaf_ilayh.unit_id,
+            "certainty_policy": "probable_syntactic",
+            "warnings": warnings,
+        }
 
-            if no_tanwin and next_has_kasra and stripped_tok and stripped_next:
-                idafa_type = self._classify_idafa(stripped_tok, stripped_next)
-                relations.append(IdafaRelation(
-                    mudaf=tok,
-                    mudaf_ilayh=next_tok,
-                    idafa_type=idafa_type,
-                    mudaf_id=f"tok_{i}",
-                    mudaf_ilayh_id=f"tok_{i+1}",
-                    certainty=0.7,
-                ))
-
-        return relations
-
-    def _classify_idafa(self, mudaf: str, mudaf_ilayh: str) -> str:
-        """Classify the type of idafa relation."""
-        if mudaf in {_strip_diacritics(w) for w in self.MASDAR_PATTERNS}:
+    def _classify(self, mudaf: str, mudaf_ilayh: str) -> str:
+        if any(m in mudaf for m in _MASDAR_MARKERS):
             return "masdar_to_agent"
-        if any(part in mudaf for part in ["جزء", "بعض", "كل", "نصف"]):
+        if any(m in mudaf for m in _PART_WHOLE_MARKERS):
             return "part_whole"
-        return "possession"
+        if any(m in mudaf for m in _OWNERSHIP_MARKERS):
+            return "ownership"
+        # Default: specification (الإضافة المعنوية)
+        return "specification"

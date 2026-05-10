@@ -5,30 +5,30 @@ from mcd.murab.mood_resolver import MoodResolver
 
 def test_jussive_mood():
     resolver = MoodResolver()
-    result = resolver.resolve("يذهبْ", ["لم", "يذهبْ"], 1)
+    result = resolver.resolve_mood("يذهبْ", "jazim")
     assert result == "jussive"
 
 
 def test_lan_accusative_mood():
-    """لن makes imperfect verb accusative_mood (منصوب) not jussive."""
+    """nasib makes imperfect verb subjunctive."""
     resolver = MoodResolver()
-    result = resolver.resolve("يذهبَ", ["لن", "يذهبَ"], 1)
-    assert result == "accusative_mood"
+    result = resolver.resolve_mood("يذهبَ", "nasib")
+    assert result == "subjunctive"
 
 
 def test_nominative_mood_default():
     resolver = MoodResolver()
-    result = resolver.resolve("يكتبُ", ["هو", "يكتبُ"], 1)
-    assert result == "nominative_mood"
+    result = resolver.resolve_mood("يكتبُ", None)
+    assert result == "indicative"
 
 
 def test_an_accusative_mood():
     resolver = MoodResolver()
-    result = resolver.resolve("يدرسَ", ["أريدُ", "أن", "يدرسَ"], 2)
-    assert result == "accusative_mood"
+    result = resolver.resolve_mood("يدرسَ", "nasib")
+    assert result == "subjunctive"
 
 
 def test_mood_marker_preserved():
     resolver = MoodResolver()
-    result = resolver.resolve("يكتبُ", ["هو", "يكتبُ"], 1)
+    result = resolver.resolve_mood("يكتبُ", None)
     assert isinstance(result, str)

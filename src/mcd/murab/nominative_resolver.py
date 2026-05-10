@@ -1,37 +1,66 @@
-"""NominativeResolver — distinguishes Arabic nominative roles."""
+"""NominativeResolver — resolves the specific role of a nominative (مرفوع) word."""
 from __future__ import annotations
 
 
+_KANA_SISTERS = {"كان", "أصبح", "أمسى", "أضحى", "ظل", "بات", "صار", "ليس",
+                 "مازال", "مادام", "مابرح", "مانفك"}
+_INNA_SISTERS = {"إنّ", "أنّ", "كأنّ", "لكنّ", "ليت", "لعلّ"}
+
+
 class NominativeResolver:
-    """Distinguishes nominative roles: فاعل، نائب فاعل، مبتدأ، خبر، اسم كان، خبر إن، تابع مرفوع، مضارع مرفوع."""
+    """Determines the precise syntactic + semantic role of a مرفوع token.
 
-    KANA_VERBS = {"كان", "ليس", "صار", "أصبح", "أضحى", "أمسى", "بات", "ظل"}
-    INNA_PARTICLES = {"إنّ", "إن", "أنّ", "أن", "كأنّ", "كأن", "لكنّ", "لكن", "ليت", "لعلّ"}
+    Rule: not every nominative is فاعل — position and governing factor matter.
+    Example: جاء زيدٌ → زيد فاعل مرفوع
+    """
 
-    def resolve(self, surface: str, context_tokens: list, position: int) -> str:
-        """Resolve nominative role."""
-        if position > 0:
-            prev = self._strip_diacritics(context_tokens[position - 1])
-            if prev in self.KANA_VERBS:
-                return "kana_name"
-            if prev in self.INNA_PARTICLES:
-                return "inna_predicate"
+    def resolve(
+        self,
+        surface: str,
+        governing_factor_type: str | None,
+        position_in_sentence: int,
+    ) -> dict:
+        warnings: list[str] = []
 
-        if surface.startswith('يَ') or surface.startswith('تَ') or surface.startswith('أَ') or surface.startswith('نَ'):
-            return "imperfect_verb_nominative"
+        if governing_factor_type == "verb":
+            return {
+                "syntactic_role": "فاعل",
+                "semantic_role": "agent",
+                "certainty_policy": "certain_syntactic",
+                "warnings": warnings,
+            }
 
-        if position == 0:
-            return "agent"
+        if governing_factor_type == "nasikh":
+            # Could be اسم كان or خبر إن depending on surface matching
+            return {
+                "syntactic_role": "اسم ناسخ (اسم كان / خبر إن)",
+                "semantic_role": "subject",
+                "certainty_policy": "certain_syntactic",
+                "warnings": ["governing_nasikh_ambiguity_between_kana_and_inna"],
+            }
 
-        if position == 0 and not self._is_verb(context_tokens[0] if context_tokens else ""):
-            return "subject"
+        if position_in_sentence == 0:
+            return {
+                "syntactic_role": "مبتدأ",
+                "semantic_role": "subject",
+                "certainty_policy": "probable_syntactic",
+                "warnings": warnings,
+            }
 
-        return "agent"
+        if position_in_sentence > 0:
+            # Could be خبر, تابع مرفوع, نائب فاعل, فعل مضارع مرفوع
+            warnings.append("nominative_role_requires_more_context")
+            return {
+                "syntactic_role": "خبر أو تابع مرفوع",
+                "semantic_role": "predicate",
+                "certainty_policy": "hypothesis",
+                "warnings": warnings,
+            }
 
-    def _strip_diacritics(self, text: str) -> str:
-        diacritics = set('\u064b\u064c\u064d\u064e\u064f\u0650\u0651\u0652')
-        return ''.join(c for c in text if c not in diacritics)
-
-    def _is_verb(self, token: str) -> bool:
-        verb_prefixes = ('فَعَ', 'كَتَ', 'ذَهَ', 'جَاءَ', 'قَالَ')
-        return any(token.startswith(p) for p in verb_prefixes)
+        warnings.append("nominative_role_undetermined")
+        return {
+            "syntactic_role": "غير محدد",
+            "semantic_role": "unknown",
+            "certainty_policy": "hypothesis",
+            "warnings": warnings,
+        }

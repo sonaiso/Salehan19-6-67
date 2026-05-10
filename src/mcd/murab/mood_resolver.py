@@ -1,23 +1,39 @@
-"""MoodResolver — detects mood of Arabic imperfect verbs."""
+"""MoodResolver — determines the grammatical mood of an Arabic verb."""
 from __future__ import annotations
+
+import re
+
+_HARAKAT = re.compile(r"[\u064b-\u065f]")
+
+_NASIB_PARTICLES = {"لن", "أن", "كي", "لكي", "حتى", "إذن"}
+_JAZIM_PARTICLES = {"لم", "لمّا", "لام الأمر", "لا الناهية"}
+
+
+def _strip(text: str) -> str:
+    return _HARAKAT.sub("", text)
 
 
 class MoodResolver:
-    """Detects mood of imperfect verb: مرفوع/منصوب/مجزوم."""
+    """Rule-based verb mood resolver.
 
-    JUSSIVE_PARTICLES = {"لم", "لما", "لا", "لام الأمر", "لا الناهية"}
-    NASB_PARTICLES = {"لن", "أن", "كي", "إذن", "حتى", "لام كي", "فاء السببية"}
+    Moods: indicative | subjunctive | jussive | imperative
+    """
 
-    def resolve(self, surface: str, context_tokens: list, position: int) -> str:
-        """Resolve imperfect verb mood."""
-        if position > 0:
-            prev = self._strip_diacritics(context_tokens[position - 1])
-            if prev in self.JUSSIVE_PARTICLES:
-                return "jussive"
-            if prev in self.NASB_PARTICLES:
-                return "accusative_mood"
-        return "nominative_mood"
+    def resolve_mood(
+        self,
+        verb_surface: str,
+        governing_factor_type: str | None,
+    ) -> str:
+        if governing_factor_type == "jazim":
+            return "jussive"
+        if governing_factor_type == "nasib":
+            return "subjunctive"
+        # Imperative verbs are identifiable by their morphological pattern
+        stripped = _strip(verb_surface)
+        if self._looks_imperative(stripped):
+            return "imperative"
+        return "indicative"
 
-    def _strip_diacritics(self, text: str) -> str:
-        diacritics = set('\u064b\u064c\u064d\u064e\u064f\u0650\u0651\u0652')
-        return ''.join(c for c in text if c not in diacritics)
+    def _looks_imperative(self, stripped: str) -> bool:
+        # Simple heuristic: starts with ا and is short
+        return stripped.startswith("ا") and len(stripped) <= 5

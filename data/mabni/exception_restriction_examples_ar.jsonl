@@ -1,0 +1,10 @@
+{"text": "جاء القوم إلا زيداً", "particle": "إلا", "excepted_item": "زيداً", "scope_modified": true, "is_evidence": false}
+{"text": "ما جاء أحدٌ إلا عمرو", "particle": "إلا", "excepted_item": "عمرو", "scope_modified": true, "is_evidence": false}
+{"text": "أكل الجميع غير زيد", "particle": "غير", "excepted_item": "زيد", "scope_modified": true, "is_evidence": false}
+{"text": "نجح الطلاب سوى واحد", "particle": "سوى", "excepted_item": "واحد", "scope_modified": true, "is_evidence": false}
+{"text": "حضر الكل خلا محمد", "particle": "خلا", "excepted_item": "محمد", "scope_modified": true, "is_evidence": false}
+{"text": "أكلوا عدا الصغير", "particle": "عدا", "excepted_item": "الصغير", "scope_modified": true, "is_evidence": false}
+{"text": "جاؤوا حاشا الكريم", "particle": "حاشا", "excepted_item": "الكريم", "scope_modified": true, "is_evidence": false}
+{"text": "لا إله إلا الله", "particle": "إلا", "excepted_item": "الله", "scope_modified": true, "is_evidence": false}
+{"text": "لم يصل إلا ثلاثة", "particle": "إلا", "excepted_item": "ثلاثة", "scope_modified": true, "is_evidence": false}
+{"text": "لا شيء إلا النجاح", "particle": "إلا", "excepted_item": "النجاح", "scope_modified": true, "is_evidence": false}

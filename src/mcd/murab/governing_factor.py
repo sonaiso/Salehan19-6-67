@@ -1,37 +1,19 @@
-"""GoverningFactor — Arabic governing particle/verb analysis."""
+"""GoverningFactor — what forces a particular I'rab case on a word."""
 from __future__ import annotations
-import json
-from dataclasses import dataclass
-from pathlib import Path
+
+from dataclasses import dataclass, field
 from typing import Optional
-
-_DATA_DIR = Path(__file__).parent.parent.parent.parent / "data" / "murab"
-
-# Prepositions that govern genitive
-PREPOSITIONS = {"في", "من", "إلى", "على", "عن", "ب", "ل", "ك", "منذ", "مذ", "حتى", "خلا", "عدا", "حاشا",
-                "الباء", "اللام", "الكاف", "مع", "رب", "واو القسم", "تاء القسم"}
-
-# Particles that govern accusative for name (اسم), nominative for predicate (خبر)
-INNA_PARTICLES = {"إنّ", "إن", "أنّ", "أن", "كأنّ", "كأن", "لكنّ", "لكن", "ليت", "لعل", "لعلّ"}
-
-# Particles that govern nominative for name (اسم), accusative for predicate (خبر)
-KANA_VERBS = {"كان", "ليس", "صار", "أصبح", "أضحى", "أمسى", "أسى", "بات", "ظل", "مازال", "مادام", "مابرح"}
-
-# Particles that govern jussive
-JUSSIVE_PARTICLES = {"لم", "لما", "لا"}
-
-# Particles that govern accusative mood (nasb)
-NASB_PARTICLES = {"لن", "أن", "كي", "إذن", "حتى"}
 
 
 @dataclass
 class GoverningFactor:
     factor_id: str
     surface: str
-    factor_type: str  # preposition|inna_particle|kana_verb|jussive_particle|nasb_particle|verb|conjunction
-    governs_case: str  # nominative|accusative|genitive|jussive
-    scope: str  # name|predicate|object|subject|mood
-    certainty: float
+    factor_type: str  # verb|preposition|particle|nasikh|jazim|nasib|idafa|
+                      # dependency|semantic_governor
+    governs_case: list[str] = field(default_factory=list)
+    scope: str = "next_token"  # next_token|clause|sentence
+    certainty: float = 1.0
 
     def to_dict(self) -> dict:
         return {
@@ -45,74 +27,95 @@ class GoverningFactor:
 
     @classmethod
     def from_dict(cls, d: dict) -> "GoverningFactor":
-        return cls(**d)
+        return cls(
+            factor_id=d["factor_id"],
+            surface=d["surface"],
+            factor_type=d["factor_type"],
+            governs_case=d.get("governs_case", []),
+            scope=d.get("scope", "next_token"),
+            certainty=d.get("certainty", 1.0),
+        )
 
 
-def load_governing_factors() -> list:
-    """Load governing factors from JSON file."""
-    path = _DATA_DIR / "governing_factors_ar.json"
-    try:
-        with open(path, encoding="utf-8") as f:
-            data = json.load(f)
-        return [GoverningFactor.from_dict(d) for d in data]
-    except (FileNotFoundError, json.JSONDecodeError, TypeError):
-        return []
+# Harakat-free surface → governing factor mappings
+_HARDCODED: list[dict] = [
+    # حروف الجر
+    {"factor_id": "gf_bi", "surface": "ب", "factor_type": "preposition",
+     "governs_case": ["genitive"], "scope": "next_token", "certainty": 1.0},
+    {"factor_id": "gf_fi", "surface": "في", "factor_type": "preposition",
+     "governs_case": ["genitive"], "scope": "next_token", "certainty": 1.0},
+    {"factor_id": "gf_ila", "surface": "إلى", "factor_type": "preposition",
+     "governs_case": ["genitive"], "scope": "next_token", "certainty": 1.0},
+    {"factor_id": "gf_ala", "surface": "على", "factor_type": "preposition",
+     "governs_case": ["genitive"], "scope": "next_token", "certainty": 1.0},
+    {"factor_id": "gf_min", "surface": "من", "factor_type": "preposition",
+     "governs_case": ["genitive"], "scope": "next_token", "certainty": 1.0},
+    {"factor_id": "gf_li", "surface": "ل", "factor_type": "preposition",
+     "governs_case": ["genitive"], "scope": "next_token", "certainty": 1.0},
+    {"factor_id": "gf_an", "surface": "عن", "factor_type": "preposition",
+     "governs_case": ["genitive"], "scope": "next_token", "certainty": 1.0},
+    {"factor_id": "gf_hatta", "surface": "حتى", "factor_type": "preposition",
+     "governs_case": ["genitive"], "scope": "next_token", "certainty": 1.0},
+    {"factor_id": "gf_ka", "surface": "ك", "factor_type": "preposition",
+     "governs_case": ["genitive"], "scope": "next_token", "certainty": 1.0},
+    # النواسخ (إنّ وأخواتها) → تنصب الاسم وترفع الخبر
+    {"factor_id": "gf_inna", "surface": "إنّ", "factor_type": "nasikh",
+     "governs_case": ["accusative"], "scope": "next_token", "certainty": 1.0},
+    {"factor_id": "gf_anna", "surface": "أنّ", "factor_type": "nasikh",
+     "governs_case": ["accusative"], "scope": "next_token", "certainty": 1.0},
+    {"factor_id": "gf_laakinna", "surface": "لكنّ", "factor_type": "nasikh",
+     "governs_case": ["accusative"], "scope": "next_token", "certainty": 1.0},
+    {"factor_id": "gf_kaanna", "surface": "كأنّ", "factor_type": "nasikh",
+     "governs_case": ["accusative"], "scope": "next_token", "certainty": 1.0},
+    {"factor_id": "gf_layta", "surface": "ليت", "factor_type": "nasikh",
+     "governs_case": ["accusative"], "scope": "next_token", "certainty": 1.0},
+    {"factor_id": "gf_laalla", "surface": "لعلّ", "factor_type": "nasikh",
+     "governs_case": ["accusative"], "scope": "next_token", "certainty": 1.0},
+    # كان وأخواتها → ترفع الاسم وتنصب الخبر
+    {"factor_id": "gf_kana", "surface": "كان", "factor_type": "nasikh",
+     "governs_case": ["nominative", "accusative"], "scope": "clause", "certainty": 1.0},
+    {"factor_id": "gf_laysa", "surface": "ليس", "factor_type": "nasikh",
+     "governs_case": ["nominative", "accusative"], "scope": "clause", "certainty": 1.0},
+    # أدوات الجزم
+    {"factor_id": "gf_lam", "surface": "لم", "factor_type": "jazim",
+     "governs_case": ["jussive"], "scope": "next_token", "certainty": 1.0},
+    {"factor_id": "gf_lamma", "surface": "لمّا", "factor_type": "jazim",
+     "governs_case": ["jussive"], "scope": "next_token", "certainty": 1.0},
+    {"factor_id": "gf_la_nahiy", "surface": "لا", "factor_type": "jazim",
+     "governs_case": ["jussive"], "scope": "next_token", "certainty": 0.7},
+    # أدوات النصب (مضارع)
+    {"factor_id": "gf_lan", "surface": "لن", "factor_type": "nasib",
+     "governs_case": ["accusative"], "scope": "next_token", "certainty": 1.0},
+    {"factor_id": "gf_an_nasib", "surface": "أن", "factor_type": "nasib",
+     "governs_case": ["accusative"], "scope": "next_token", "certainty": 0.8},
+    {"factor_id": "gf_kay", "surface": "كي", "factor_type": "nasib",
+     "governs_case": ["accusative"], "scope": "next_token", "certainty": 1.0},
+    # الفعل الماضي → يرفع الفاعل وينصب المفعول
+    {"factor_id": "gf_past_verb", "surface": "__past_verb__", "factor_type": "verb",
+     "governs_case": ["nominative", "accusative"], "scope": "clause", "certainty": 1.0},
+]
 
 
-def detect_governing_factors(tokens: list) -> list:
-    """Detect governing factors in a list of token strings."""
-    factors = []
-    for tok in tokens:
-        stripped = _strip_diacritics(tok)
-        if stripped in JUSSIVE_PARTICLES or tok in JUSSIVE_PARTICLES:
-            factors.append(GoverningFactor(
-                factor_id=f"jussive_{stripped}",
-                surface=tok,
-                factor_type="jussive_particle",
-                governs_case="jussive",
-                scope="mood",
-                certainty=0.95,
-            ))
-        elif stripped in NASB_PARTICLES or tok in NASB_PARTICLES:
-            factors.append(GoverningFactor(
-                factor_id=f"nasb_{stripped}",
-                surface=tok,
-                factor_type="nasb_particle",
-                governs_case="accusative",
-                scope="mood",
-                certainty=0.9,
-            ))
-        elif stripped in INNA_PARTICLES or tok in INNA_PARTICLES:
-            factors.append(GoverningFactor(
-                factor_id=f"inna_{stripped}",
-                surface=tok,
-                factor_type="inna_particle",
-                governs_case="accusative",
-                scope="name",
-                certainty=0.9,
-            ))
-        elif stripped in KANA_VERBS or tok in KANA_VERBS:
-            factors.append(GoverningFactor(
-                factor_id=f"kana_{stripped}",
-                surface=tok,
-                factor_type="kana_verb",
-                governs_case="accusative",
-                scope="predicate",
-                certainty=0.85,
-            ))
-        elif stripped in PREPOSITIONS or tok in PREPOSITIONS:
-            factors.append(GoverningFactor(
-                factor_id=f"prep_{stripped}",
-                surface=tok,
-                factor_type="preposition",
-                governs_case="genitive",
-                scope="object",
-                certainty=0.95,
-            ))
-    return factors
+class GoverningFactorRegistry:
+    def __init__(self) -> None:
+        self._by_id: dict[str, GoverningFactor] = {}
+        self._by_surface: dict[str, GoverningFactor] = {}
+        for entry in _HARDCODED:
+            gf = GoverningFactor.from_dict(entry)
+            self._by_id[gf.factor_id] = gf
+            self._by_surface[gf.surface] = gf
+
+    def get(self, factor_id: str) -> Optional[GoverningFactor]:
+        return self._by_id.get(factor_id)
+
+    def get_by_surface(self, surface: str) -> Optional[GoverningFactor]:
+        return self._by_surface.get(surface)
+
+    def all(self) -> list[GoverningFactor]:
+        return list(self._by_id.values())
+
+    def prepositions(self) -> list[GoverningFactor]:
+        return [gf for gf in self._by_id.values() if gf.factor_type == "preposition"]
 
 
-def _strip_diacritics(text: str) -> str:
-    """Remove Arabic diacritics (harakat) from text."""
-    diacritics = set('\u064b\u064c\u064d\u064e\u064f\u0650\u0651\u0652\u0653\u0654\u0655\u0656\u0657\u0658\u0670')
-    return ''.join(c for c in text if c not in diacritics)
+GOVERNING_FACTOR_REGISTRY = GoverningFactorRegistry()

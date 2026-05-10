@@ -1,128 +1,99 @@
-"""IrregularIrabRegistry — handles Arabic irregular I'rab patterns."""
+"""IrregularIrabRegistry — I'rab markers for non-standard Arabic word patterns."""
 from __future__ import annotations
-from dataclasses import dataclass
-from typing import Optional
 
+import re
 
-@dataclass
-class IrregularIrabEntry:
-    word: str
-    irregular_type: str  # five_nouns|dual|sound_masculine_plural|sound_feminine_plural|diptote|five_verbs
-    nominative_marker: str
-    accusative_marker: str
-    genitive_marker: str
-    notes: str
+_HARAKAT = re.compile(r"[\u064b-\u065f]")
 
-    def to_dict(self) -> dict:
-        return {
-            "word": self.word,
-            "irregular_type": self.irregular_type,
-            "nominative_marker": self.nominative_marker,
-            "accusative_marker": self.accusative_marker,
-            "genitive_marker": self.genitive_marker,
-            "notes": self.notes,
-        }
+# أسماء الخمسة (the five nouns) bare forms
+_FIVE_NOUNS = {"أب", "أخ", "حم", "فو", "ذو"}
 
-
-# الأسماء الخمسة (Five Nouns)
-FIVE_NOUNS = {
-    "أب": IrregularIrabEntry("أب", "five_nouns", "waw", "alif", "ya", "أب أخ حم فم ذو"),
-    "أخ": IrregularIrabEntry("أخ", "five_nouns", "waw", "alif", "ya", ""),
-    "حم": IrregularIrabEntry("حم", "five_nouns", "waw", "alif", "ya", ""),
-    "فم": IrregularIrabEntry("فم", "five_nouns", "waw", "alif", "ya", ""),
-    "ذو": IrregularIrabEntry("ذو", "five_nouns", "waw", "alif", "ya", ""),
-}
-
-# جمع المذكر السالم patterns
-SOUND_MASCULINE_ENDINGS = {"ون", "ين"}
-
-# جمع المؤنث السالم patterns
-SOUND_FEMININE_ENDINGS = {"ات"}
-
-# الممنوع من الصرف - diptotes (no tanwin, genitive marked by fatha not kasra)
-DIPTOTE_PATTERNS = {
-    "patterns": ["أفعل", "مفاعل", "فعالى", "فعلاء", "أفعلاء"],
-    "proper_nouns_foreign": True,
-}
+# Known ممنوع من الصرف patterns (partial — proper nouns, broken plurals on fatha)
+_MAMNOO_ROOTS = {"أحمد", "إبراهيم", "مساجد", "مدارس", "أفضل", "أحسن"}
 
 
 class IrregularIrabRegistry:
-    """Registry for irregular Arabic I'rab patterns."""
+    """Registry for irregular I'rab patterns in Arabic grammar.
 
-    def get_five_noun(self, word: str) -> Optional[IrregularIrabEntry]:
-        """Get irregular entry for أسماء خمسة."""
-        return FIVE_NOUNS.get(word)
+    Covers:
+        - أسماء خمسة  (five nouns): use waw/alif/ya instead of damma/fatha/kasra
+        - مثنى (dual): use alif for nominative, ya for genitive/accusative
+        - جمع مذكر سالم (SMP): use waw for nominative, ya for gen/acc
+        - جمع مؤنث سالم (SFP): use damma for nom, kasra for gen/acc
+        - ممنوع من الصرف (diptote): fatha instead of kasra in genitive
+        - أفعال خمسة (five verbs): nun for indicative, deleted-nun for subj/jussive
+        - معتل الآخر (weak-final verbs): deletion of weak letter
+    """
 
-    def is_dual(self, word: str) -> bool:
-        """Check if word is dual form."""
-        stripped = self._strip_diacritics(word)
-        return stripped.endswith('ان') or stripped.endswith('ين')
+    _FIVE_NOUN_MARKERS = {
+        "nominative": "waw",
+        "accusative": "alif",
+        "genitive":   "ya",
+    }
 
-    def is_sound_masculine_plural(self, word: str) -> bool:
-        """Check if word is sound masculine plural."""
-        stripped = self._strip_diacritics(word)
-        return stripped.endswith('ون') or stripped.endswith('ين')
+    _DUAL_MARKERS = {
+        "nominative": "alif",
+        "accusative": "ya",
+        "genitive":   "ya",
+    }
 
-    def is_sound_feminine_plural(self, word: str) -> bool:
-        """Check if word is sound feminine plural."""
-        stripped = self._strip_diacritics(word)
-        return stripped.endswith('ات')
+    _SMP_MARKERS = {   # جمع مذكر سالم
+        "nominative": "waw",
+        "accusative": "ya",
+        "genitive":   "ya",
+    }
 
-    def get_dual_markers(self, case: str) -> str:
-        """Get marker for dual."""
-        if case == "nominative":
-            return "alif"
-        return "ya"
+    _SFP_MARKERS = {   # جمع مؤنث سالم
+        "nominative": "damma",
+        "accusative": "kasra",
+        "genitive":   "kasra",
+    }
 
-    def get_sound_masc_plural_markers(self, case: str) -> str:
-        """Get marker for sound masculine plural."""
-        if case == "nominative":
-            return "waw"
-        return "ya"
+    _DIPTOTE_MARKERS = {   # ممنوع من الصرف
+        "nominative": "damma",
+        "accusative": "fatha",
+        "genitive":   "fatha",  # no tanwin, fatha replaces kasra
+    }
 
-    def get_sound_fem_plural_markers(self, case: str) -> str:
-        """Get marker for sound feminine plural."""
-        if case == "accusative":
-            return "fatha"
-        return "kasra"
+    _FIVE_VERBS_MARKERS = {
+        "nominative": "nun",
+        "accusative": "deleted_nun",
+        "jussive":    "deleted_nun",
+    }
 
-    def analyze_word(self, word: str, irab_case: str) -> dict:
-        """Analyze irregular I'rab for a word."""
-        stripped = self._strip_diacritics(word)
+    def get_marker_for_case(self, word_type: str, irab_case: str) -> str:
+        table = self._get_table(word_type)
+        return table.get(irab_case, "damma")
 
-        five_noun = self.get_five_noun(stripped)
-        if five_noun:
-            return {
-                "irregular_type": "five_nouns",
-                "marker": five_noun.nominative_marker if irab_case == "nominative"
-                          else five_noun.accusative_marker if irab_case == "accusative"
-                          else five_noun.genitive_marker,
-                "notes": five_noun.notes,
-            }
+    def _get_table(self, word_type: str) -> dict:
+        return {
+            "five_nouns":       self._FIVE_NOUN_MARKERS,
+            "dual":             self._DUAL_MARKERS,
+            "sound_plural":     self._SMP_MARKERS,
+            "broken_plural":    self._SFP_MARKERS,
+            "diptote":          self._DIPTOTE_MARKERS,
+            "five_verbs":       self._FIVE_VERBS_MARKERS,
+        }.get(word_type, {})
 
-        if self.is_dual(word):
-            return {
-                "irregular_type": "dual",
-                "marker": self.get_dual_markers(irab_case),
-                "notes": "المثنى - ألف في الرفع وياء في النصب والجر",
-            }
+    def is_irregular(self, surface: str) -> bool:
+        bare = _HARAKAT.sub("", surface)
+        # Strip al-
+        if bare.startswith("ال"):
+            bare = bare[2:]
+        if bare in _FIVE_NOUNS:
+            return True
+        if bare in _MAMNOO_ROOTS:
+            return True
+        # Dual ending
+        if bare.endswith("ان") or bare.endswith("ين"):
+            return True
+        # Sound masculine plural
+        if bare.endswith("ون") or bare.endswith("ين"):
+            return True
+        # Sound feminine plural
+        if bare.endswith("ات"):
+            return True
+        return False
 
-        if self.is_sound_masculine_plural(word):
-            return {
-                "irregular_type": "sound_masculine_plural",
-                "marker": self.get_sound_masc_plural_markers(irab_case),
-                "notes": "جمع المذكر السالم - واو في الرفع وياء في النصب والجر",
-            }
 
-        if self.is_sound_feminine_plural(word):
-            return {
-                "irregular_type": "sound_feminine_plural",
-                "marker": self.get_sound_fem_plural_markers(irab_case),
-                "notes": "جمع المؤنث السالم - ضمة في الرفع وكسرة في النصب والجر",
-            }
-
-        return {"irregular_type": "regular", "marker": None, "notes": ""}
-
-    def _strip_diacritics(self, text: str) -> str:
-        diacritics = set('\u064b\u064c\u064d\u064e\u064f\u0650\u0651\u0652')
-        return ''.join(c for c in text if c not in diacritics)
+IRREGULAR_IRAB_REGISTRY = IrregularIrabRegistry()

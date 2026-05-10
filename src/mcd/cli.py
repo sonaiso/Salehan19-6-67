@@ -404,6 +404,51 @@ def main() -> None:
     root_family_parser.add_argument("--root", required=True, help="Root radicals space-separated (e.g. ك ت ب) or root ID (e.g. ktb)")
     root_family_parser.add_argument("--output", choices=["json", "text"], default="json")
 
+    # ── Phase 7.4: Arabic Mabni Logical-Pragmatic Control Layer ──────────────
+
+    # mabni-analyze
+    mabni_analyze_parser = subparsers.add_parser(
+        "mabni-analyze",
+        help="Phase 7.4: Unfold Arabic Mabni logical-pragmatic operators for input text",
+    )
+    mabni_analyze_parser.add_argument("--text", required=True, help="Arabic text to analyze")
+    mabni_analyze_parser.add_argument("--prev-question", default="", help="Previous question context for answer particles")
+    mabni_analyze_parser.add_argument("--output", choices=["json", "markdown", "summary"], default="summary")
+
+    # mabni-registry
+    mabni_registry_parser = subparsers.add_parser(
+        "mabni-registry",
+        help="Phase 7.4: List or query the Mabni operator registry",
+    )
+    mabni_registry_parser.add_argument("--surface", default="", help="Filter by Arabic surface form")
+    mabni_registry_parser.add_argument("--output", choices=["json", "table"], default="table")
+
+    # mabni-certainty
+    mabni_certainty_parser = subparsers.add_parser(
+        "mabni-certainty",
+        help="Phase 7.4: Evaluate certainty policy for Arabic text operators",
+    )
+    mabni_certainty_parser.add_argument("--text", required=True, help="Arabic text to evaluate certainty for")
+    mabni_certainty_parser.add_argument("--output", choices=["json", "summary"], default="summary")
+
+    # mabni-graph
+    mabni_graph_parser = subparsers.add_parser(
+        "mabni-graph",
+        help="Phase 7.4: Build a Mabni operator graph for Arabic text",
+    )
+    mabni_graph_parser.add_argument("--text", required=True, help="Arabic text to build graph for")
+    mabni_graph_parser.add_argument("--output", choices=["json", "summary"], default="json")
+
+    # mabni-trace
+    mabni_trace_parser = subparsers.add_parser(
+        "mabni-trace",
+        help="Phase 7.4: Trace Mabni operator chain for Arabic text",
+    )
+    mabni_trace_parser.add_argument("--text", required=True, help="Arabic text to trace")
+    mabni_trace_parser.add_argument("--output", choices=["json", "summary"], default="summary")
+
+    # ── Phase 7.5: Arabic Mu'rab / I'rab Relational Engineering Layer ─────────
+
     # murab-analyze
     murab_analyze_parser = subparsers.add_parser(
         "murab-analyze",
@@ -1098,6 +1143,8 @@ def main() -> None:
         "murab-trace",
     ):
         _handle_morphosemantic_command(args)
+    elif args.command in ("mabni-analyze", "mabni-registry", "mabni-certainty", "mabni-graph", "mabni-trace"):
+        _handle_mabni_command(args)
     else:
         parser.print_help()
 
@@ -1632,34 +1679,42 @@ def _handle_morphosemantic_command(args) -> None:  # noqa: ANN001
                     print(f"  {ev.get('masdar', '?')}  ({ev.get('event_class', '?')})")
 
     elif args.command == "murab-analyze":
-        from mcd.murab.case_resolver import CaseResolver
+        import json as _json
+        from mcd.murab.murab_analyzer import MurabAnalyzer
         from mcd.murab.murab_report import MurabReport
+        from mcd.murab.serializers import murab_units_to_json, murab_units_to_markdown
 
-        tokens = args.text.split()
-        resolver = CaseResolver()
-        units = [resolver.resolve(tok, tok, tokens) for tok in tokens]
-        report = MurabReport(units)
+        analyzer = MurabAnalyzer()
+        units = analyzer.analyze(args.text)
+        report = MurabReport()
 
         if args.output == "json":
-            print(report.to_json())
+            print(murab_units_to_json(units))
         elif args.output == "markdown":
-            print(report.to_markdown())
+            print(murab_units_to_markdown(units, args.text))
         else:
-            print(report.to_text())
+            for u in units:
+                print(f"{u.surface}: {u.irab_case} ({u.syntactic_role})")
 
     elif args.command == "irab-resolve":
         import json as _json
-        from mcd.murab.case_resolver import CaseResolver
-        from mcd.murab.serializers import murab_unit_to_json, murab_unit_to_markdown
+        from mcd.murab.murab_analyzer import MurabAnalyzer
+        from mcd.murab.serializers import murab_units_to_json, murab_units_to_markdown
 
         ctx = args.context.split() if args.context else []
-        resolver = CaseResolver()
-        unit = resolver.resolve(args.token, args.token, ctx)
+        analyzer = MurabAnalyzer()
+        text = args.token + (" " + " ".join(ctx) if ctx else "")
+        units = analyzer.analyze(text)
+        unit = units[0] if units else None
+
+        if unit is None:
+            print("Could not resolve I'rab for token")
+            return
 
         if args.output == "json":
-            print(murab_unit_to_json(unit))
+            print(murab_units_to_json([unit]))
         elif args.output == "markdown":
-            print(murab_unit_to_markdown(unit))
+            print(murab_units_to_markdown([unit], args.token))
         else:
             print(f"Token: {unit.surface}")
             print(f"Case: {unit.irab_case}")
@@ -1668,15 +1723,14 @@ def _handle_morphosemantic_command(args) -> None:  # noqa: ANN001
             print(f"Semantic Role: {unit.semantic_role}")
 
     elif args.command == "murab-graph":
-        from mcd.murab.case_resolver import CaseResolver
+        from mcd.murab.murab_analyzer import MurabAnalyzer
         from mcd.murab.murab_graph_builder import MurabGraphBuilder
         from mcd.murab.serializers import murab_graph_to_json, murab_graph_to_markdown
 
-        tokens = args.text.split()
-        resolver = CaseResolver()
-        units = [resolver.resolve(tok, tok, tokens) for tok in tokens]
+        analyzer = MurabAnalyzer()
+        units = analyzer.analyze(args.text)
         builder = MurabGraphBuilder()
-        graph = builder.build(units)
+        graph = builder.build(units, args.text)
 
         if args.output == "json":
             print(murab_graph_to_json(graph))
@@ -1685,42 +1739,143 @@ def _handle_morphosemantic_command(args) -> None:  # noqa: ANN001
 
     elif args.command == "irab-certainty":
         import json as _json
-        from mcd.murab.case_resolver import CaseResolver
+        from mcd.murab.murab_analyzer import MurabAnalyzer
         from mcd.murab.murab_certainty_policy import MurabCertaintyPolicy
 
         ctx = args.context.split() if args.context else []
-        resolver = CaseResolver()
-        unit = resolver.resolve(args.token, args.token, ctx)
+        analyzer = MurabAnalyzer()
+        text = args.token + (" " + " ".join(ctx) if ctx else "")
+        units = analyzer.analyze(text)
+        unit = units[0] if units else None
+
+        if unit is None:
+            print("Could not analyze token")
+            return
+
         policy = MurabCertaintyPolicy()
-        result = policy.evaluate(unit)
+        result = policy.evaluate(unit, None)
 
         if args.output == "json":
             print(_json.dumps(result, ensure_ascii=False, indent=2))
         else:
             print(f"Syntactic certainty: {result['syntactic_certainty']}")
-            print(f"Semantic certainty:  {result['semantic_certainty']}")
             print(f"Evidence effect:     {result['evidence_effect']}")
-            if result['warnings']:
+            if result.get('warnings'):
                 print(f"Warnings: {', '.join(result['warnings'])}")
 
     elif args.command == "murab-trace":
         import json as _json
-        from mcd.murab.case_resolver import CaseResolver
+        from mcd.murab.murab_analyzer import MurabAnalyzer
         from mcd.murab.murab_trace_linker import MurabTraceLinker
 
         ctx = args.context.split() if args.context else []
-        resolver = CaseResolver()
-        unit = resolver.resolve(args.token, args.token, ctx)
+        analyzer = MurabAnalyzer()
+        text = args.token + (" " + " ".join(ctx) if ctx else "")
+        units = analyzer.analyze(text)
+        unit = units[0] if units else None
+
+        if unit is None:
+            print("Could not analyze token")
+            return
+
         linker = MurabTraceLinker()
-        trace = linker.link(unit)
+        trace = linker.link(unit, unit.token_id, 0, len(args.token))
 
         if args.output == "json":
             print(_json.dumps(trace, ensure_ascii=False, indent=2))
         else:
-            print(f"Token: {trace['surface']}")
-            print(f"Unicode trace: {' '.join(trace['unicode_trace'])}")
-            print(f"Trace chain: {' → '.join(trace['trace_chain'])}")
+            print(f"Unit: {trace['unit_id']}")
+            print(f"Token: {trace['token_id']}")
+            print(f"Char range: {trace['char_range']}")
+            print(f"Estimated: {trace['estimated']}")
+            print(f"Governing factor: {trace['governing_factor_id']}")
 
 
-if __name__ == '__main__':
+def _handle_mabni_command(args) -> None:  # noqa: ANN001
+    """Handle all mabni-* CLI subcommands."""
+    import json as _json_mod
+
+    from mcd.mabni.mabni_certainty_policy import MabniCertaintyPolicy
+    from mcd.mabni.mabni_graph_builder import MabniGraphBuilder
+    from mcd.mabni.mabni_registry import MabniRegistry
+    from mcd.mabni.mabni_report import MabniReport
+    from mcd.mabni.mabni_trace_linker import MabniTraceLinker
+    from mcd.mabni.mabni_unfolder import MabniUnfolder
+
+    cmd = args.command
+
+    if cmd == "mabni-analyze":
+        unfolder = MabniUnfolder()
+        result = unfolder.unfold(args.text, previous_question=getattr(args, "prev_question", ""))
+        if args.output == "json":
+            print(_json_mod.dumps(result.to_dict(), ensure_ascii=False, indent=2))
+        elif args.output == "markdown":
+            report = MabniReport(result_dict=result.to_dict())
+            print(report.generate())
+        else:
+            d = result.to_dict()
+            print(f"نص المدخل:     {d['text']}")
+            print(f"فعل الكلام:    {d['speech_act'].get('speech_act', 'unknown')}")
+            print(f"نوع ما:        {d['ma_result'].get('resolved_type', 'لا يوجد')}")
+            print(f"نوع من:        {d['man_result'].get('resolved_type', 'لا يوجد')}")
+            print(f"نوع إن:        {d['in_result'].get('resolved_type', 'لا يوجد')}")
+            print(f"نوع لا:        {d['la_result'].get('resolved_type', 'لا يوجد')}")
+            print(f"شرط:           {d['conditional_result'].get('is_conditional', False)}")
+            print(f"خلاف الواقع:   {d['counterfactual_result'].get('is_counterfactual', False)}")
+            print(f"قصر:           {d['qasr_result'].get('qasr_type', 'لا يوجد')}")
+            print(f"تحذيرات:       {len(d['warnings'])}")
+
+    elif cmd == "mabni-registry":
+        registry = MabniRegistry()
+        if args.surface:
+            ops = registry.get_all_for_surface(args.surface)
+        else:
+            ops = registry.get_all()
+        if args.output == "json":
+            print(_json_mod.dumps([op.to_dict() for op in ops], ensure_ascii=False, indent=2))
+        else:
+            print(f"{'ID':<30} {'Surface':<12} {'Type':<20} {'LogFunc':<20}")
+            print("-" * 84)
+            for op in ops:
+                print(f"{op.operator_id:<30} {op.surface:<12} {op.mabni_type:<20} {op.logical_function:<20}")
+            print(f"\nTotal: {len(ops)} operators")
+
+    elif cmd == "mabni-certainty":
+        unfolder = MabniUnfolder()
+        result = unfolder.unfold(args.text)
+        if args.output == "json":
+            print(_json_mod.dumps(result.certainty_policies, ensure_ascii=False, indent=2))
+        else:
+            for p in result.certainty_policies:
+                print(f"[{p['operator_id']}] policy={p['certainty_policy']} effect={p['decision_effect']}")
+
+    elif cmd == "mabni-graph":
+        unfolder = MabniUnfolder()
+        result = unfolder.unfold(args.text)
+        graph_dict = result.graph
+        if args.output == "json":
+            print(_json_mod.dumps(graph_dict, ensure_ascii=False, indent=2))
+        else:
+            print(f"Graph ID: {graph_dict.get('graph_id', '')}")
+            print(f"Nodes: {len(graph_dict.get('nodes', []))}")
+            print(f"Edges: {len(graph_dict.get('edges', []))}")
+
+    elif cmd == "mabni-trace":
+        unfolder = MabniUnfolder()
+        result = unfolder.unfold(args.text)
+        trace_dict = result.trace
+        if args.output == "json":
+            print(_json_mod.dumps(trace_dict, ensure_ascii=False, indent=2))
+        else:
+            for lnk in trace_dict.get("links", []):
+                print(
+                    f"[{lnk['token_idx']}] {lnk['unicode_token']!r:12} "
+                    f"operator={lnk['operator_id'] or 'none':30} "
+                    f"certainty={lnk['certainty_effect']:20} "
+                    f"judgment={lnk['judgment_status']}"
+                )
+
+
+if __name__ == "__main__":
     main()
+

@@ -1,158 +1,108 @@
-"""CaseResolver — resolves Arabic I'rab case from surface form and context."""
+"""CaseResolver — heuristic I'rab case detection from harakat and context."""
 from __future__ import annotations
+
+import re
+import unicodedata
 from typing import Optional
-from mcd.murab.murab_schema import MurabUnit
-from mcd.murab.governing_factor import detect_governing_factors
 
-# Arabic diacritics
-FATHA = '\u064e'
-DAMMA = '\u064f'
-KASRA = '\u0650'
-SUKUN = '\u0652'
-FATHATAN = '\u064b'
-DAMMATAN = '\u064c'
-KASRATAN = '\u064d'
-SHADDA = '\u0651'
+from mcd.murab.governing_factor import GoverningFactor, GOVERNING_FACTOR_REGISTRY
 
-DIACRITIC_TO_CASE = {
-    DAMMA: ("nominative", "damma"),
-    DAMMATAN: ("nominative", "dammatan"),
-    FATHA: ("accusative", "fatha"),
-    FATHATAN: ("accusative", "fathatan"),
-    KASRA: ("genitive", "kasra"),
-    KASRATAN: ("genitive", "kasratan"),
-    SUKUN: ("jussive", "sukun"),
+# Arabic diacritic code points
+_DAMMA         = "\u064f"   # ُ  damma (nominative)
+_FATHA         = "\u064e"   # َ  fatha (accusative)
+_KASRA         = "\u0650"   # ِ  kasra (genitive)
+_SUKUN         = "\u0652"   # ْ  sukun (jussive)
+_SHADDA        = "\u0651"   # ّ  shadda
+_TANWIN_DAMMA  = "\u064c"   # ٌ  tanwin damma (nominative, nunation)
+_TANWIN_FATHA  = "\u064b"   # ً  tanwin fatha (accusative, nunation)
+_TANWIN_KASRA  = "\u064d"   # ٍ  tanwin kasra (genitive, nunation)
+
+# Harakat strip pattern
+_HARAKAT = re.compile(r"[\u064b-\u065f]")
+
+# Map any haraka to its base case and marker name
+_HARAKA_TO_CASE: dict[str, tuple[str, str]] = {
+    _DAMMA:        ("nominative", "damma"),
+    _TANWIN_DAMMA: ("nominative", "damma"),
+    _FATHA:        ("accusative", "fatha"),
+    _TANWIN_FATHA: ("accusative", "fatha"),
+    _KASRA:        ("genitive",   "kasra"),
+    _TANWIN_KASRA: ("genitive",   "kasra"),
+    _SUKUN:        ("jussive",    "sukun"),
 }
 
 
-def _strip_diacritics(text: str) -> str:
-    diacritics = set('\u064b\u064c\u064d\u064e\u064f\u0650\u0651\u0652\u0653\u0654\u0655\u0670')
-    return ''.join(c for c in text if c not in diacritics)
+def _strip_harakat(text: str) -> str:
+    return _HARAKAT.sub("", text)
 
 
-def _detect_last_diacritic(surface: str) -> Optional[tuple]:
-    """Return (case, marker) from last diacritic character, or None."""
+def _last_haraka(surface: str) -> Optional[str]:
+    """Return the final case-bearing diacritic on the surface form."""
     for ch in reversed(surface):
-        if ch in DIACRITIC_TO_CASE:
-            return DIACRITIC_TO_CASE[ch]
-        if ch.isalpha():
-            break
+        if ch in _HARAKA_TO_CASE:
+            return ch
     return None
 
 
 class CaseResolver:
-    """Resolves Arabic I'rab case for a token given context."""
+    """Rule-based I'rab case resolver using harakat and governing factors."""
 
-    def resolve(self, surface: str, token_id: str, context_tokens: list) -> MurabUnit:
-        """Resolve I'rab for a surface token in context."""
-        normalized = _strip_diacritics(surface)
+    def resolve(
+        self,
+        surface: str,
+        context_tokens: list[str],
+    ) -> tuple[str, str, Optional[str], str, list[str]]:
+        """Resolve I'rab for *surface* given surrounding *context_tokens*.
 
-        # Detect case from diacritics
-        diacritic_result = _detect_last_diacritic(surface)
+        Returns
+        -------
+        (irab_case, irab_marker, governing_factor_id, certainty_policy, warnings)
+        """
+        warnings: list[str] = []
+        governing_factor_id: Optional[str] = None
 
-        # Detect governing factors from context
-        gov_factors = detect_governing_factors(context_tokens)
-        gov_factor_id = gov_factors[0].factor_id if gov_factors else None
+        # 1. Detect governing factor from immediately preceding context token
+        gf = self._find_governing_factor(context_tokens)
+        if gf:
+            governing_factor_id = gf.factor_id
 
-        # Determine case
-        if diacritic_result:
-            irab_case, irab_marker = diacritic_result
-            marker_visibility = "apparent"
-        else:
-            irab_case, irab_marker = self._infer_from_context(surface, normalized, context_tokens)
-            marker_visibility = "estimated" if irab_case != "unknown" else "prevented"
+        # 2. Detect last haraka in surface
+        last = _last_haraka(surface)
 
-        # Resolve roles
-        syntactic_role = self._resolve_syntactic_role(irab_case, surface, context_tokens)
-        semantic_role = self._resolve_semantic_role(syntactic_role, irab_case)
+        # 3. Determine case from haraka (overrides gf when explicit)
+        if last and last in _HARAKA_TO_CASE:
+            irab_case, irab_marker = _HARAKA_TO_CASE[last]
+            return (irab_case, irab_marker, governing_factor_id, "certain_syntactic", warnings)
 
-        # Determine word type
-        word_type = self._detect_word_type(surface, normalized)
+        # 4. No haraka visible — fall back to governing factor inference
+        if gf:
+            if "genitive" in gf.governs_case:
+                warnings.append("marker_not_visible_estimated_from_governing_factor")
+                return ("genitive", "estimated", governing_factor_id, "probable_syntactic", warnings)
+            if "jussive" in gf.governs_case:
+                warnings.append("marker_not_visible_estimated_from_governing_factor")
+                return ("jussive", "estimated", governing_factor_id, "probable_syntactic", warnings)
+            if "accusative" in gf.governs_case and "nominative" not in gf.governs_case:
+                warnings.append("marker_not_visible_estimated_from_governing_factor")
+                return ("accusative", "estimated", governing_factor_id, "probable_syntactic", warnings)
 
-        # Certainty policy
-        if marker_visibility == "apparent" and gov_factor_id:
-            certainty_policy = "syntactic_certain"
-        elif marker_visibility == "apparent":
-            certainty_policy = "syntactic_probable"
-        elif marker_visibility == "estimated":
-            certainty_policy = "syntactic_hypothesis"
-        else:
-            certainty_policy = "unknown"
+        # 5. Completely unknown
+        warnings.append("no_haraka_no_governing_factor_found")
+        return ("unknown", "none", governing_factor_id, "hypothesis", warnings)
 
-        warnings = []
-        if irab_case == "unknown":
-            warnings.append("undetermined_case")
-
-        return MurabUnit(
-            unit_id=f"murab_{token_id}",
-            surface=surface,
-            normalized=normalized,
-            token_id=token_id,
-            word_type=word_type,
-            irab_case=irab_case,
-            irab_marker=irab_marker,
-            marker_visibility=marker_visibility,
-            governing_factor_id=gov_factor_id,
-            syntactic_role=syntactic_role,
-            semantic_role=semantic_role,
-            relation_edges=[],
-            certainty_policy=certainty_policy,
-            warnings=warnings,
-            trace_ids=[token_id],
-        )
-
-    def _infer_from_context(self, surface: str, normalized: str, context_tokens: list) -> tuple:
-        """Infer case from context when no diacritics."""
-        idx = None
-        for i, tok in enumerate(context_tokens):
-            if tok == surface or _strip_diacritics(tok) == normalized:
-                idx = i
-                break
-
-        if idx is None:
-            return ("unknown", "none")
-
-        if idx > 0:
-            prev = _strip_diacritics(context_tokens[idx - 1])
-            if prev in {"لم", "لما"}:
-                return ("jussive", "sukun")
-            if prev in {"لن"}:
-                return ("accusative", "fatha")
-            if prev in {"في", "من", "إلى", "على", "عن"}:
-                return ("genitive", "kasra")
-            if prev in {"إنّ", "إن", "أنّ", "أن"}:
-                return ("accusative", "fatha")
-
-        return ("unknown", "none")
-
-    def _resolve_syntactic_role(self, irab_case: str, surface: str, context_tokens: list) -> str:
-        if irab_case == "nominative":
-            return "agent"
-        elif irab_case == "accusative":
-            return "object"
-        elif irab_case == "genitive":
-            return "object_of_preposition"
-        elif irab_case == "jussive":
-            return "jussive_verb"
-        return "unknown"
-
-    def _resolve_semantic_role(self, syntactic_role: str, irab_case: str) -> str:
-        role_map = {
-            "agent": "agent",
-            "object": "patient",
-            "object_of_preposition": "oblique",
-            "predicate": "predicate",
-            "subject": "subject",
-            "jussive_verb": "action",
-            "unknown": "unknown",
-        }
-        return role_map.get(syntactic_role, "unknown")
-
-    def _detect_word_type(self, surface: str, normalized: str) -> str:
-        if surface.endswith('\u064f') or surface.endswith('\u064c'):
-            return "noun"
-        if surface.endswith('\u064e') or surface.endswith('\u064b'):
-            return "noun"
-        if surface.startswith('يَ') or surface.startswith('تَ') or surface.startswith('أَ') or surface.startswith('نَ'):
-            return "imperfect_verb"
-        return "noun"
+    def _find_governing_factor(
+        self, context_tokens: list[str]
+    ) -> Optional[GoverningFactor]:
+        """Search recent context for a known governing factor."""
+        # Check the immediately preceding tokens (up to 3)
+        for tok in reversed(context_tokens[-3:]):
+            stripped = _strip_harakat(tok)
+            gf = GOVERNING_FACTOR_REGISTRY.get_by_surface(stripped)
+            if gf:
+                return gf
+            # Check with ب prefix attached (e.g., بالقلم)
+            if stripped.startswith("ب"):
+                gf = GOVERNING_FACTOR_REGISTRY.get_by_surface("ب")
+                if gf:
+                    return gf
+        return None
