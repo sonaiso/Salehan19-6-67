@@ -1,5 +1,6 @@
 __pycache__/
 *.py[cod]
+*$py.class
 *.pyo
 *.pyd
 .Python
@@ -9,3 +10,8 @@ build/
 .env
 .venv
 *.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
