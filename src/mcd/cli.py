@@ -904,6 +904,7 @@ def main() -> None:
     elif args.command in (
         "residual-analyze", "residual-report",
         "residual-build-dataset", "residual-calibrate", "residual-test-specs",
+        "curriculum-depth-report", "curriculum-coverage", "curriculum-residual-build",
     ):
         _handle_residual_command(args)
     else:

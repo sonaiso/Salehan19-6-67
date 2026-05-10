@@ -43,7 +43,7 @@ def test_curriculum_validate_single_file():
     result = _run(["curriculum-validate", "data/curriculum/level_01_things_ar.jsonl", "--output", "json"])
     assert result.returncode == 0
     data = json.loads(result.stdout)
-    assert data["total_units"] == 100
+    assert data["total_units"] == 150
 
 
 def test_curriculum_generate_exits_0():
