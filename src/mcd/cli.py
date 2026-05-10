@@ -278,8 +278,39 @@ def main() -> None:
         help="Output JSONL path",
     )
 
-    # ── Phase 7.1.2: Unicode-to-Cognition Traceability ───────────────────
-    # trace-text
+    # ── Phase 7.1.3: Epistemic Traceability Quality Lock ─────────────────
+    # trace-epistemic-validate
+    trace_ep_val_parser = subparsers.add_parser(
+        "trace-epistemic-validate",
+        help="Phase 7.1.3: Epistemic validation of a single text's trace",
+    )
+    trace_ep_val_parser.add_argument("--text", required=True, help="Arabic text to validate")
+    trace_ep_val_parser.add_argument("--output", choices=["json", "markdown", "text"], default="markdown")
+
+    # trace-epistemic-report
+    trace_ep_rpt_parser = subparsers.add_parser(
+        "trace-epistemic-report",
+        help="Phase 7.1.3: Run epistemic validation over all golden examples",
+    )
+    trace_ep_rpt_parser.add_argument("--output", choices=["json", "markdown"], default="markdown")
+
+    # trace-contribution
+    trace_contrib_parser = subparsers.add_parser(
+        "trace-contribution",
+        help="Phase 7.1.3: Compute contribution matrix for a text",
+    )
+    trace_contrib_parser.add_argument("--text", required=True, help="Arabic text to analyse")
+    trace_contrib_parser.add_argument("--output", choices=["json", "markdown", "text"], default="json")
+
+    # trace-graph-consistency
+    trace_gc_parser = subparsers.add_parser(
+        "trace-graph-consistency",
+        help="Phase 7.1.3: Check trace-to-graph consistency for a text",
+    )
+    trace_gc_parser.add_argument("--text", required=True, help="Arabic text to check")
+    trace_gc_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
+
     trace_text_parser = subparsers.add_parser(
         "trace-text",
         help="Phase 7.1.2: Build full Unicode-to-Cognition trace for input text",
@@ -933,6 +964,11 @@ def main() -> None:
         _handle_residual_command(args)
     elif args.command in ("trace-text", "trace-validate", "trace-report"):
         _handle_trace_command(args)
+    elif args.command in (
+        "trace-epistemic-validate", "trace-epistemic-report",
+        "trace-contribution", "trace-graph-consistency",
+    ):
+        _handle_epistemic_trace_command(args)
     else:
         parser.print_help()
 
@@ -1162,6 +1198,73 @@ def _handle_trace_command(args) -> None:
                     print(f"| {i} | {t} | {r['score']:.4f} | {icon} |")
         else:
             print("No golden examples file found at data/traceability/trace_golden_examples_ar.jsonl")
+
+
+def _handle_epistemic_trace_command(args) -> None:  # noqa: ANN001
+    """Phase 7.1.3 — Epistemic Traceability Quality Lock CLI handlers."""
+    import json as _json
+    from mcd.traceability.trace_builder import TraceBuilder
+    from mcd.traceability.epistemic_trace_validator import EpistemicTraceValidator
+    from mcd.traceability.contribution_matrix import ContributionMatrixBuilder
+    from mcd.traceability.trace_graph_consistency import TraceGraphConsistencyChecker
+
+    if args.command == "trace-epistemic-validate":
+        builder = TraceBuilder()
+        bundle = builder.build(args.text)
+        validator = EpistemicTraceValidator()
+        rpt = validator.validate(bundle)
+        if args.output == "json":
+            print(_json.dumps(rpt.to_dict(), ensure_ascii=False, indent=2))
+        elif args.output == "markdown":
+            print(rpt.to_markdown())
+        else:
+            status = "✅ PASSED" if rpt.passed else "❌ FAILED"
+            print(f"Epistemic Trace Validation — {status}")
+            print(f"  epistemic_trace_score: {rpt.epistemic_trace_score:.4f}")
+            print(f"  evidence_trace_score:  {rpt.evidence_trace_score:.4f}")
+            print(f"  certainty_trace_score: {rpt.certainty_trace_score:.4f}")
+            print(f"  judgment_trace_score:  {rpt.judgment_trace_score:.4f}")
+            if rpt.violations:
+                for v in rpt.violations:
+                    print(f"  ❌ {v}")
+
+    elif args.command == "trace-epistemic-report":
+        from pathlib import Path as _Path
+        validator = EpistemicTraceValidator()
+        rpt = validator.validate_golden_examples(
+            _Path("data/traceability/trace_golden_examples_ar.jsonl")
+        )
+        if args.output == "json":
+            print(_json.dumps(rpt.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(rpt.to_markdown())
+
+    elif args.command == "trace-contribution":
+        builder = TraceBuilder()
+        bundle = builder.build(args.text)
+        matrix_builder = ContributionMatrixBuilder()
+        matrix = matrix_builder.build(bundle)
+        if args.output == "json":
+            print(_json.dumps(matrix.to_dict(), ensure_ascii=False, indent=2))
+        elif args.output == "markdown":
+            print(matrix.to_markdown())
+        else:
+            print(f"Contribution Matrix: {args.text}")
+            print(f"  coverage_score:        {matrix.coverage_score:.4f}")
+            print(f"  decision_support_score: {matrix.decision_support_score:.4f}")
+            print(f"  total contributions:   {len(matrix.contributions)}")
+            if matrix.orphan_semantic_units:
+                print(f"  orphan units:         {matrix.orphan_semantic_units}")
+
+    elif args.command == "trace-graph-consistency":
+        builder = TraceBuilder()
+        bundle = builder.build(args.text)
+        checker = TraceGraphConsistencyChecker()
+        rpt = checker.check(bundle)
+        if args.output == "json":
+            print(_json.dumps(rpt.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(rpt.to_markdown())
 
 
 if __name__ == "__main__":

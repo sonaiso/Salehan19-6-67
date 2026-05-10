@@ -14,14 +14,60 @@ from mcd.traceability.evidence_trace import EvidenceTrace
 from mcd.traceability.certainty_trace import CertaintyTrace
 from mcd.traceability.judgment_trace import JudgmentTrace
 
-# Keywords used to detect missing evidence
+# Keywords used to detect missing evidence (single tokens only — excludes standalone
+# "مصدر"/"دليل" to avoid false positives when text provides a source like
+# "المصدر: صحيح البخاري")
+_MISSING_EVIDENCE_SIGNAL_WORDS = {
+    'بلا', 'بدون',
+}
+# Multi-word missing-evidence phrases (token-bigram check)
+_MISSING_EVIDENCE_BIGRAMS = {
+    ('بلا', 'مصدر'), ('بلا', 'دليل'),
+    ('بدون', 'مصدر'), ('بدون', 'دليل'),
+    ('لا', 'دليل'), ('لا', 'مصدر'),
+    ('لا', 'يوجد'),
+}
+# Keep the old set for backward compatibility but trimmed
 _MISSING_EVIDENCE_SIGNALS = {
-    'بلا', 'بدون', 'مصدر', 'دليل', 'بلا مصدر', 'بلا دليل',
+    'بلا', 'بدون', 'بلا مصدر', 'بلا دليل',
     'بدون مصدر', 'بدون دليل', 'لا دليل', 'لا مصدر',
 }
 _UNIVERSAL_QUANTIFIERS = {'كل', 'جميع', 'دائما', 'دائمًا', 'أبدا', 'أبدًا'}
 _INJECTION_SIGNALS = {'تجاهل', 'تجاهل تعليمات', 'ignore', 'forget instructions'}
 _NEGATION_SIGNALS = {'لا', 'لن', 'لم', 'ليس', 'ليست', 'ليسوا', 'لا يوجد', 'غير', 'بلا', 'بدون'}
+
+# Inherently ambiguous Arabic terms that require context for disambiguation
+_AMBIGUOUS_TERMS = {'عين', 'علم', 'حق', 'عدل', 'نظام', 'عيون', 'أعين'}
+
+# Known metaphor patterns: pairs (subject_token, predicate_token)
+_METAPHOR_PAIRS: list[tuple[str, str]] = [
+    ('المجتمع', 'مريض'),
+    ('مجتمع', 'مريض'),
+    ('العلم', 'نور'),
+    ('علم', 'نور'),
+    ('الجهل', 'ظلام'),
+    ('جهل', 'ظلام'),
+    ('الحياة', 'سفر'),
+    ('الوقت', 'ذهب'),
+]
+
+# API/tool/model-as-source signals — these are NOT evidence
+_API_SOURCE_SIGNALS = {
+    'api قال', 'api أعاد', 'النموذج قال', 'النموذج أعاد',
+    'gpt قال', 'gpt أعاد', 'chatgpt قال',
+    'النموذج اقترح', 'الذكاء الاصطناعي قال',
+    'api returned', 'model said',
+}
+# Single token markers that flag API/model output
+_API_SOURCE_TOKENS = {'api', 'gpt', 'chatgpt'}
+
+# Context words that indicate definitional/logical truths (exempt universal quantifiers)
+_DEFINITIONAL_CONTEXT = {
+    'يموت', 'فانٍ', 'فان', 'الموت', 'حتمي', 'سيموت', 'تموت', 'ماتوا',
+    'الله', 'النبي', 'الصلاة', 'القرآن', 'الإسلام', 'الشريعة',
+    'واجب', 'محرم', 'حلال', 'حرام', 'مكروه', 'مستحب',
+    'بالضرورة', 'منطقياً', 'منطقيا', 'رياضياً', 'رياضيا',
+}
 
 
 @dataclass
@@ -223,29 +269,84 @@ class TraceBuilder:
         tokens: list[TokenTrace],
         unicode_units: list[UnicodeTraceUnit],
     ) -> EvidenceTrace:
-        """Detect evidence status from tokens."""
-        surfaces = {t.normalized.strip() for t in tokens}
-        missing = any(s in _MISSING_EVIDENCE_SIGNALS for s in surfaces)
-        # Also check multi-word signals
-        text_joined = " ".join(t.normalized for t in tokens)
-        for sig in _MISSING_EVIDENCE_SIGNALS:
-            if sig in text_joined:
-                missing = True
-                break
+        """Detect evidence status from tokens.
 
-        injection = any(s in _INJECTION_SIGNALS for s in surfaces)
-        for sig in _INJECTION_SIGNALS:
-            if sig in text_joined:
-                injection = True
-                break
+        Epistemic signals checked (word-boundary safe, no substring matching):
+        - Ambiguous terms (عين, علم, حق, عدل, نظام) → context_required
+        - Missing-evidence phrases (بلا مصدر, بدون دليل, ...) → missing
+        - API/model-as-source tokens (api, gpt, النموذج) → unverified
+        - Universal quantifiers without definitional context → source_required
+        - Prompt injection (تجاهل, ignore) → contaminated
+        """
+        semantic_tokens = [t for t in tokens if t.token_type not in ("whitespace",)]
+        # Use word-level sets for robust matching (no substring false positives)
+        surfaces = {t.normalized.strip().lower() for t in tokens}
+        word_list = [t.normalized.strip().lower() for t in tokens if t.normalized.strip()]
+        word_set = set(word_list)
 
+        # --- Missing evidence detection (word-boundary safe) ---
+        missing = any(s in _MISSING_EVIDENCE_SIGNAL_WORDS for s in surfaces)
+        # Check bigrams (consecutive word pairs)
+        if not missing:
+            for i in range(len(word_list) - 1):
+                pair = (word_list[i], word_list[i + 1])
+                if pair in _MISSING_EVIDENCE_BIGRAMS:
+                    missing = True
+                    break
+
+        # --- Injection detection (word-boundary safe) ---
+        injection = 'تجاهل' in word_set or 'ignore' in word_set
+        if not injection:
+            for i in range(len(word_list) - 1):
+                pair_str = word_list[i] + ' ' + word_list[i + 1]
+                if pair_str in ('تجاهل تعليمات', 'forget instructions'):
+                    injection = True
+                    break
+
+        # --- API/model-as-source (model output is not evidence) ---
+        api_as_source = any(s in _API_SOURCE_TOKENS for s in word_set)
+        if not api_as_source:
+            text_joined_lower = ' '.join(word_list)
+            for sig in _API_SOURCE_SIGNALS:
+                if sig in text_joined_lower:
+                    api_as_source = True
+                    break
+
+        # --- Ambiguous terms — if ALL/MOST semantic tokens are ambiguous ---
+        ambiguous_tokens = [t for t in semantic_tokens if t.normalized.strip() in _AMBIGUOUS_TERMS]
+        ambiguity_ratio = (
+            len(ambiguous_tokens) / len(semantic_tokens)
+            if semantic_tokens else 0.0
+        )
+        is_ambiguous = ambiguity_ratio >= 0.5 and len(semantic_tokens) <= 3
+
+        # --- Universal quantifiers (word-boundary safe) ---
+        has_universal = any(q in word_set for q in _UNIVERSAL_QUANTIFIERS)
+
+        # Check if universal is in definitional/logical/religious context
+        has_definitional = any(s in _DEFINITIONAL_CONTEXT for s in word_set)
+        universal_without_source = has_universal and not has_definitional and not missing
+
+        # Priority order for evidence status
         if injection:
-            status = "fake"
-            desc = "Prompt injection signal detected."
+            status = "contaminated"
+            desc = "Prompt injection signal detected — evidence contaminated."
             etype = "injection"
+        elif is_ambiguous:
+            status = "context_required"
+            desc = f"Ambiguous term(s) detected: {[t.surface for t in ambiguous_tokens]}. Context required."
+            etype = "ambiguous"
         elif missing:
             status = "missing"
             desc = "Missing evidence signal detected (بلا مصدر / بدون دليل)."
+            etype = "source_required"
+        elif api_as_source:
+            status = "unverified"
+            desc = "API/model output is not evidence. Cannot verify without source trust policy."
+            etype = "api_not_evidence"
+        elif universal_without_source:
+            status = "source_required"
+            desc = "Universal quantifier without definitional/source context. Source required."
             etype = "source_required"
         else:
             status = "present"
@@ -268,20 +369,38 @@ class TraceBuilder:
         evidence: EvidenceTrace,
         tokens: list[TokenTrace],
     ) -> CertaintyTrace:
-        """Derive certainty policy from evidence trace."""
-        surfaces = {t.normalized.strip() for t in tokens}
-        text_joined = " ".join(t.normalized for t in tokens)
+        """Derive certainty policy from evidence trace.
 
-        has_universal = any(s in _UNIVERSAL_QUANTIFIERS for s in surfaces)
-        for q in _UNIVERSAL_QUANTIFIERS:
-            if q in text_joined:
-                has_universal = True
+        Epistemic signals checked (word-boundary safe):
+        - Contaminated/fake/missing/context_required/source_required/unverified evidence → suspend
+        - Known metaphor patterns (المجتمع/مريض, العلم/نور, ...) → hypothesis
+        - Universal quantifiers with missing evidence → suspend
+        - Partial evidence → probable_knowledge
+        - Present evidence with no flags → strong_knowledge
+        """
+        word_set = {t.normalized.strip().lower() for t in tokens if t.normalized.strip()}
+        word_list = [t.normalized.strip().lower() for t in tokens if t.normalized.strip()]
+        text_joined_lower = ' '.join(word_list)
+
+        # Detect metaphor patterns (word-boundary safe)
+        metaphor_detected = False
+        for subj, pred in _METAPHOR_PAIRS:
+            if subj in word_set and pred in word_set:
+                metaphor_detected = True
                 break
 
-        if evidence.status in ("fake", "missing"):
+        # Universal quantifier (word-boundary safe)
+        has_universal = any(q in word_set for q in _UNIVERSAL_QUANTIFIERS)
+
+        if evidence.status in ("contaminated", "fake", "missing", "context_required",
+                                "source_required", "unverified"):
             policy = "suspend"
             score = 0.1
             reason = f"Evidence status is '{evidence.status}'. Judgment suspended."
+        elif metaphor_detected:
+            policy = "hypothesis"
+            score = 0.3
+            reason = "Metaphor pattern detected. Claim is non-literal — treated as hypothesis."
         elif has_universal and evidence.status != "present":
             policy = "suspend"
             score = 0.2
@@ -322,16 +441,44 @@ class TraceBuilder:
         e_ids = [el.edge_id for el in edge_links]
         v_ids = [vt.vector_id for vt in vector_traces]
 
+        text_lower = text.lower()
+
         warnings: list[str] = []
         if certainty.policy == "near_certainty" and evidence.status != "present":
             warnings.append("near_certainty requires evidence trace but evidence is not 'present'")
         if certainty.policy == "suspend":
             warnings.append(f"Judgment suspended: {certainty.reason}")
 
-        if certainty.policy == "suspend":
+        # Epistemic warnings based on evidence type
+        if evidence.status == "context_required":
+            if "ambiguous_term" not in warnings:
+                warnings.append("ambiguous_term")
+            if "context_required" not in warnings:
+                warnings.append("context_required")
+        if evidence.status == "contaminated":
+            warnings.append("prompt_injection")
+        if evidence.status == "unverified" and evidence.evidence_type == "api_not_evidence":
+            warnings.append("api_not_evidence")
+        if evidence.status == "source_required":
+            warnings.append("source_required")
+            warnings.append("universal_quantifier")
+
+        # Metaphor warnings from certainty reason
+        if certainty.policy == "hypothesis" and "Metaphor" in certainty.reason:
+            warnings.append("metaphor_detected")
+            warnings.append("not_literal")
+
+        # Determine final decision
+        if evidence.status == "contaminated":
+            decision = "reject"
+        elif certainty.policy in ("suspend", "hypothesis"):
             decision = "suspend"
+        elif evidence.status == "context_required":
+            decision = "request_evidence"
         elif evidence.status == "missing":
             decision = "request_evidence"
+        elif evidence.status in ("source_required", "unverified"):
+            decision = "suspend"
         elif evidence.status == "fake":
             decision = "reject"
         else:
