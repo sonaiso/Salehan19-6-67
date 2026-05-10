@@ -49,11 +49,13 @@ src/mcd/curriculum/cognitive_graph.py
 src/mcd/curriculum/cognitive_node.py
 src/mcd/curriculum/cognitive_unit.py
 src/mcd/curriculum/composition_function.py
+src/mcd/curriculum/curriculum_coverage_matrix.py
 src/mcd/curriculum/curriculum_dataset.py
 src/mcd/curriculum/curriculum_evaluator.py
 src/mcd/curriculum/curriculum_generator.py
 src/mcd/curriculum/curriculum_schema.py
 src/mcd/curriculum/curriculum_validator.py
+src/mcd/curriculum/depth_metrics.py
 src/mcd/curriculum/domain_vector.py
 src/mcd/curriculum/golden_examples.py
 src/mcd/curriculum/graph_validator.py
@@ -67,6 +69,7 @@ src/mcd/curriculum/qualification_bridge.py
 src/mcd/curriculum/quality_lock.py
 src/mcd/curriculum/reality_frame.py
 src/mcd/curriculum/report.py
+src/mcd/curriculum/residual_curriculum_builder.py
 src/mcd/curriculum/role_vector.py
 src/mcd/curriculum/serializers.py
 src/mcd/curriculum/vector_space.py
@@ -224,6 +227,7 @@ tests/test_coverage_matrix.py
 tests/test_curriculum_calibration_bridge.py
 tests/test_curriculum_cli.py
 tests/test_curriculum_dataset.py
+tests/test_curriculum_depth_coverage.py
 tests/test_curriculum_evaluator.py
 tests/test_curriculum_generator.py
 tests/test_curriculum_industrial_bridge.py

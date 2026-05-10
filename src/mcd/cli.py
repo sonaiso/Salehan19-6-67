@@ -278,6 +278,30 @@ def main() -> None:
         help="Output JSONL path",
     )
 
+    # ── Phase 7.1.2: Unicode-to-Cognition Traceability ───────────────────
+    # trace-text
+    trace_text_parser = subparsers.add_parser(
+        "trace-text",
+        help="Phase 7.1.2: Build full Unicode-to-Cognition trace for input text",
+    )
+    trace_text_parser.add_argument("--text", required=True, help="Arabic text to trace")
+    trace_text_parser.add_argument("--output", choices=["json", "markdown", "text"], default="json")
+
+    # trace-validate
+    trace_val_parser = subparsers.add_parser(
+        "trace-validate",
+        help="Phase 7.1.2: Build trace and run validation report",
+    )
+    trace_val_parser.add_argument("--text", required=True, help="Arabic text to trace and validate")
+    trace_val_parser.add_argument("--output", choices=["json", "markdown", "text"], default="markdown")
+
+    # trace-report
+    trace_rpt_parser = subparsers.add_parser(
+        "trace-report",
+        help="Phase 7.1.2: Generate full traceability report for golden examples",
+    )
+    trace_rpt_parser.add_argument("--output", choices=["markdown", "json"], default="markdown")
+
     args = parser.parse_args()
 
     if args.command == "classify":
@@ -907,6 +931,8 @@ def main() -> None:
         "curriculum-depth-report", "curriculum-coverage", "curriculum-residual-build",
     ):
         _handle_residual_command(args)
+    elif args.command in ("trace-text", "trace-validate", "trace-report"):
+        _handle_trace_command(args)
     else:
         parser.print_help()
 
@@ -1058,6 +1084,84 @@ def _handle_residual_command(args) -> None:  # noqa: ANN001
         if build_report.errors:
             print(f"Errors: {len(build_report.errors)}")
 
+
+
+def _handle_trace_command(args) -> None:
+    """Phase 7.1.2 — Unicode-to-Cognition Traceability CLI handlers."""
+    import json as _json
+    from mcd.traceability.trace_builder import TraceBuilder
+    from mcd.traceability.trace_validator import TraceValidator
+    from mcd.traceability.trace_report import TraceReport
+    from mcd.traceability.serializers import trace_bundle_to_json
+
+    builder = TraceBuilder()
+
+    if args.command == "trace-text":
+        bundle = builder.build(args.text)
+        if args.output == "json":
+            print(trace_bundle_to_json(bundle))
+        elif args.output == "markdown":
+            report = TraceReport(bundle)
+            print(report.to_markdown())
+        else:
+            jt = bundle.judgment_trace
+            print(f"Text:          {bundle.text}")
+            print(f"Unicode units: {len(bundle.unicode_units)}")
+            print(f"Graphemes:     {len(bundle.graphemes)}")
+            print(f"Tokens:        {len(bundle.tokens)}")
+            if jt:
+                print(f"Decision:      {jt.final_decision}")
+                print(f"Certainty:     {jt.certainty_policy}")
+
+    elif args.command == "trace-validate":
+        bundle = builder.build(args.text)
+        validator = TraceValidator()
+        vr = validator.validate(bundle)
+        if args.output == "json":
+            print(_json.dumps(vr.to_dict(), ensure_ascii=False, indent=2))
+        elif args.output == "markdown":
+            print(vr.to_markdown())
+        else:
+            status = "✅ PASSED" if vr.passed else "❌ FAILED"
+            print(f"Trace Validation — {status}")
+            print(f"  traceability_score: {vr.traceability_score:.4f}")
+            print(f"  total_unicode:      {vr.total_unicode}")
+            print(f"  traced_unicode:     {vr.traced_unicode}")
+            if vr.violations:
+                for v in vr.violations:
+                    print(f"  ❌ {v}")
+
+    elif args.command == "trace-report":
+        from pathlib import Path as _Path
+        golden_path = _Path("data/traceability/trace_golden_examples_ar.jsonl")
+        if golden_path.exists():
+            lines = [l.strip() for l in golden_path.read_text(encoding="utf-8").splitlines() if l.strip()]
+            reports = []
+            scores = []
+            for line in lines:
+                ex = _json.loads(line)
+                bun = builder.build(ex.get("text", ""))
+                vr = TraceValidator().validate(bun)
+                scores.append(vr.traceability_score)
+                reports.append({"text": ex.get("text"), "score": vr.traceability_score, "passed": vr.passed})
+            avg = sum(scores) / len(scores) if scores else 0.0
+            if args.output == "json":
+                print(_json.dumps({"avg_score": avg, "examples": reports}, ensure_ascii=False, indent=2))
+            else:
+                print(f"# Traceability Golden Examples Report")
+                print(f"")
+                print(f"Total examples: {len(lines)}")
+                print(f"Average traceability_score: {avg:.4f}")
+                print(f"")
+                print(f"| # | Text (truncated) | Score | Passed |")
+                print(f"|---|------------------|-------|--------|")
+                _MAX_TEXT_DISPLAY = 40
+                for i, r in enumerate(reports, 1):
+                    t = r['text'][:_MAX_TEXT_DISPLAY].replace('|', '/')
+                    icon = "✅" if r['passed'] else "❌"
+                    print(f"| {i} | {t} | {r['score']:.4f} | {icon} |")
+        else:
+            print("No golden examples file found at data/traceability/trace_golden_examples_ar.jsonl")
 
 
 if __name__ == "__main__":
