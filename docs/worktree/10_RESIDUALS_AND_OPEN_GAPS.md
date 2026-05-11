@@ -2,10 +2,10 @@
 
 ## Residual ledger
 
-### 1) missing_nabhani_mind_worktree
+### 1) root_worktree_not_yet_runtime_governed
 - **severity:** high
-- **why it matters:** without canonical root map, branch growth can drift from epistemic architecture
-- **what fixes it:** establish and maintain docs/spec/tests for root-first worktree
+- **why it matters:** the canonical root worktree map now exists in docs/spec/schema/tests, but branch growth can still drift unless those structures are enforced through executable runtime and governance paths
+- **what fixes it:** bind the root-first worktree index/spec/schema/tests into runtime contracts, governance validation, and reverse-traceable enforcement
 - **proposed next PR:** Phase 2.1 — Formalize Mind Geometry Runtime Contracts
 
 ### 2) mind_geometry_not_runtime_complete
