@@ -24,7 +24,7 @@
 - Mathematical form: `DM(x) = domain in which x is validly interpreted`.
 - Programming contract: `DomainAssignment(domain_id, unit_id, domain, assignment_basis, allowed_evidence_types, forbidden_transfers, confidence, residuals)`.
 - Linguistic function: disambiguates same expressions across legal, linguistic, scientific, or metaphorical usage.
-- Forbidden transitions: `domain_without_designation`, `domain_transfer_without_bridge`, `no_contradiction_without_domain`.
+- Forbidden transitions: `domain_without_designation`, `domain_transfer_without_bridge`, `contradiction_without_domain`.
 - Residuals: `cross_domain_leak`, `domain_ambiguity`, `invalid_transfer_attempt`.
 
 ## Applicability contract
