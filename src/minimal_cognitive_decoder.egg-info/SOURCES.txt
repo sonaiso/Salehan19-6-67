@@ -49,7 +49,6 @@ src/mcd/classification/taxonomy.py
 src/mcd/classification/vector_composer.py
 src/mcd/coding_copilot/__init__.py
 src/mcd/coding_copilot/architecture_evidence.py
-src/mcd/coding_copilot/checks_governance.py
 src/mcd/coding_copilot/code_claim.py
 src/mcd/coding_copilot/coding_copilot_kernel.py
 src/mcd/coding_copilot/coding_judgment.py
@@ -59,7 +58,6 @@ src/mcd/coding_copilot/coding_status.py
 src/mcd/coding_copilot/issue_understanding.py
 src/mcd/coding_copilot/patch_artifact.py
 src/mcd/coding_copilot/patch_plan.py
-src/mcd/coding_copilot/pr_audit.py
 src/mcd/coding_copilot/repo_context.py
 src/mcd/coding_copilot/serializers.py
 src/mcd/coding_copilot/static_evidence.py
@@ -423,13 +421,10 @@ tests/test_cli_ground.py
 tests/test_cli_industrial_test.py
 tests/test_cli_readiness_score.py
 tests/test_code_claim.py
-tests/test_coding_checks_governance.py
 tests/test_coding_copilot_examples.py
 tests/test_coding_copilot_kernel.py
 tests/test_coding_evidence.py
 tests/test_coding_judgment.py
-tests/test_coding_pr_audit.py
-tests/test_coding_real_pr_fixtures.py
 tests/test_coding_reverse_trace.py
 tests/test_coding_status.py
 tests/test_cognitive_graph.py
