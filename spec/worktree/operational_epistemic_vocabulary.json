@@ -502,7 +502,7 @@
       "invariants": ["NoCertificateWithoutProofObject", "NoCertificateWithoutGovernanceGate", "NoCertificateWithoutReverseTrace"],
       "forbidden": ["silent_certainty_rise", "certificate_without_evidence"],
       "residual": ["blocking_residual"],
-      "judgment": "ZERO|HYPOTHESIS|CERTIFICATE"
+      "judgment": "CERTIFICATE"
     }
   }
 }
