@@ -87,7 +87,7 @@ def validate_invariants(graph: CognitiveGraph, has_graph_nodes: bool = True) -> 
                     for e in graph.edges
                     if e.relation == "caused_by"
                     and e.source == ce.target
-                    and e.target == ce.source
+                    and (e.target == ce.source or e.target in effect_node_ids)
                 )
                 if not target_is_effect and not target_has_caused_by:
                     passed_check = False

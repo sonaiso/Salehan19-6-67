@@ -71,19 +71,19 @@ def check_mathematical_contract(graph: CognitiveGraph) -> MathematicalContractRe
         if edge.target not in node_ids:
             violations.append(f"Contract[4]: edge '{edge.edge_id}' target '{edge.target}' not in graph")
 
-    # 5. cause has effect — cause target must be typed as effect OR have a caused_by edge tied to same source/target
+    # 5. cause has effect — cause target must be typed as effect OR have qualified caused_by relation
     cause_edges = [e for e in graph.edges if e.relation == "causes"]
     effect_node_ids = {n.node_id for n in graph.nodes if n.node_type == "effect"}
     for ce in cause_edges:
         # The target of the causes edge must either be an effect-type node
-        # OR there must be a reciprocal caused_by edge tying the same node pair.
+        # OR have caused_by relation that is reciprocal OR points to an effect node.
         target_is_effect = ce.target in effect_node_ids
         target_has_caused_by = any(
             e
             for e in graph.edges
             if e.relation == "caused_by"
             and e.source == ce.target
-            and e.target == ce.source
+            and (e.target == ce.source or e.target in effect_node_ids)
         )
         if not target_is_effect and not target_has_caused_by:
             violations.append(
