@@ -305,7 +305,7 @@ python -m mcd.cli classify "ما معنى علم؟" --output json
 
 Key rule: **ضار ≠ حرام**. A value judgment ("harmful") is not a shari judgment ("forbidden"). FPCL enforces this distinction before any reasoning begins.
 
-See full documentation: [`docs/FRACTAL_PROMPT_CLASSIFICATION.md`](docs/FRACTAL_PROMPT_CLASSIFICATION.md)
+See full documentation: [`docs/FRACTAL_PROMPT_CLASSIFICATION.md`](/docs/FRACTAL_PROMPT_CLASSIFICATION.md)
 
 
 ## Grounded Lexical Cognitive Frame Layer (GLCFL) v1.0
@@ -345,4 +345,4 @@ PYTHONPATH=src python -m mcd.cli ground "المجتمع يرفض الفساد" -
 PYTHONPATH=src python -m mcd.cli ground "النار ساخنة" --output text
 ```
 
-See full documentation: [`docs/GROUNDED_LEXICAL_COGNITIVE_FRAME.md`](docs/GROUNDED_LEXICAL_COGNITIVE_FRAME.md)
+See full documentation: [`docs/GROUNDED_LEXICAL_COGNITIVE_FRAME.md`](/docs/GROUNDED_LEXICAL_COGNITIVE_FRAME.md)
