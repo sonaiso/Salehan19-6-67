@@ -1,344 +1,98 @@
-# Salehan19-6-67
+# Bayani / AFJG Knowledge Verification System
 
-يوفر هذا المستودع طبقة مواصفة وتحقق لمشروع **Bayani Knowledge System**. الحالة الحالية هي مواصفة JSON قابلة للقراءة الآلية، ومخطط JSON Schema، وبرومبتات حاكمة، واختبارات تحقق مستودعية. لا يحتوي هذا المستودع حاليًا على تنفيذ runtime لمحركات Laravel أو Neo4j أو محركات الاستدلال.
+Bayani / AFJG is a governed knowledge-verification and coding-judgment system.
 
-تصف المواصفة بنية قابلة للتحويل مستقبلًا إلى:
+It transforms claims, Arabic texts, model answers, and coding pull requests into governed final judgments:
 
-- JSON Schema
-- Laravel Models
-- Neo4j Graph
-- Test Cases
-- Proof Layer
+- ZERO
+- HYPOTHESIS
+- CERTIFICATE
 
-## الملفات
+The repository began as a machine-readable specification and now contains partial runtime implementation under `src/mcd` plus verification tests.
 
-- `/schema/bayani-knowledge-system.schema.json`: مخطط JSON Schema للنظام.
-- `/spec/bayani-knowledge-system.json`: المثال المرجعي الذي يجمع النواة الرسمية، قاعدة المعرفة السابقة، الأنطولوجيا، طبقات النحو والاستدلال، الاختبارات، وطبقة البرهان، وخط أنابيب المستدل.
-- `/docs/prompts/nabhani-mustadil-readiness.prompt.md`: برومبت جاهزية المستدل الذي يضبط المخرجات على `Certificate | Hypothesis | Zero` دون تعديل المواصفة أو المخطط.
-- `/docs/prompts/mustadil-decoder-pipeline.prompt.md`: برومبت خط أنابيب المستدل الذي يحكم الـ21 طبقة المرتبة من الواقع إلى الحكم المدقق.
-- `/tests/verify_bayani_repository.py`: بوابات تحقق مستودعية تفحص صلاحية JSON، توافق المواصفة مع المخطط، روابط README، أقسام البرومبتات، وثوابت البرهان والملكة وخط الأنابيب.
+## What it is not
 
-## الملامح التي تغطيها المواصفة
+- Not a general LLM
+- Not a GPT replacement
+- Not raw next-token prediction
 
-- النواة الرسمية: `S + D + T + E + Z + C + R + P`
-- قاعدة المعرفة السابقة ووحدات المعرفة مع مصادر موثقة ومؤهلة
-- الأنطولوجيا العليا ومثال حدث الكتابة
-- قواعد العامل والقرينة والحذف والإحالة
-- التعارض والترجيح وربط المستويات بعلاقة `R(level_n, level_n+1)`
-- تحليل إجابات GPT إلى مرشحات ثم دعاوى وعلاقات وأدلة وبيان ومبين وبرهان قبل إصدار الشهادة
-- التوثيق والتعلّم والاختبارات وطبقة البرهان
-- توثيق معماري للكيانات العليا، ونماذج Laravel، وعلاقات Neo4j، ومراحل التنفيذ المستقبلية دون تنفيذ runtime في هذا المستودع
+## Core Thesis
 
-## منهجية قياس الملكة
+LLMs propose; AFJG governs judgment.
 
-تضيف المواصفة طبقة `malakah_methodology` لقياس الملكة بوصفها قدرة استعمال القاعدة في محلها، لا مجرد حفظ القاعدة. تغطي الطبقة آلات قابلية التطبيق، تحقيق المناط، تصنيف الملكات الفرعية، تزاحم القواعد، الاستثناءات، نمو الملكة، تحليل السؤال، منع الرأي السابق، توليد المرشحات، تصنيف الأخطاء، العتبات، الاختبارات التدرجية والخادعة، الذاكرة، سلامة الطبقات، تغطية invariants التنفيذية، توقع الفشل، ضبط التوسع، وقياس أهلية المستدل.
+The system separates:
 
-القاعدة الحاكمة: لا تسمح أي درجة ملكة وحدها بإصدار Certificate؛ الشهادة تحتاج ProofObject صالحًا، وغياب `blocking_zero`، وتحقق محل القاعدة، وربطًا بدليل قابل للتتبع.
+- linguistic analysis from proof
+- model output from evidence
+- merged state from certification
+- test passing from epistemic certainty
+- hypothesis from certificate
 
-## برومبت أهلية المستدل
+## Architecture
 
-أضيف ملف `docs/prompts/nabhani-mustadil-readiness.prompt.md` بوصفه البرومبت الحاكم لطبقة **Mustadil Readiness**. يربط البرومبت النواة الرسمية `S + D + T + E + Z + C + R + P` بشرط أهلية المستدل قبل الجواب، فلا يسمح بتحويل أي نتيجة إلى `Certificate` إلا بعد تحقق الدليل، وغياب الصفر المانع، وصحة `ProofRank`، واكتمال `reverse_trace`.
+| Name | Meaning | Role |
+| --- | --- | --- |
+| AFJG | Architectonic Fractal Judgment Geometry | Governing constitutional law |
+| Bayani | Arabic knowledge verification layer | Arabic epistemic verification |
+| MCD | Implementation namespace | Runtime modules, CLI, and tests |
+| Mustadil | Reasoner/verifier persona | Governed inference actor |
+| GLCFL | Grounded Lexical Cognitive Frame Layer | Lexical grounding layer |
+| Coding Copilot Auditor | Industrial test product | Governed coding PR audit |
 
-ترتبط هذه الطبقة داخل المواصفة بـ `answer_analysis_engine` و`malakah_methodology` و`mustadil_competence_score` و`proof_gate` و`ZeroGuard` و`reverse_trace`، وتبقي المخرجات النهائية محصورة في:
+AFJG is the law. Bayani is the Arabic verifier. MCD is the implementation namespace. Coding Copilot Auditor is the industrial dogfood application.
 
-- `Certificate`
-- `Hypothesis`
-- `Zero`
+## Current Implemented Tracks
 
-## إعادة التموضع: Bayani Verifier بدل دعوى محاكاة GPT
+1. Bayani Verifier
+2. Mustadil Pipeline
+3. Grounded Lexical Cognitive Frame Layer (GLCFL)
+4. Epistemic Decoder
+5. AFJG Coding Copilot Auditor
 
-الحكم التشغيلي الحالي للمشروع:
-
-- **شهادة**: أُنجزت نواة نظرية ومعمارية قوية (Kernel + Proof + Trace + Zero discipline).
-- **فرضية**: قابل للتحول إلى منتج صناعي إذا ضُيّق النطاق إلى مسار مغلق قابل للقياس.
-- **صفر**: دعوى أننا أنجزنا الآن نموذجًا معرفيًا عامًا يضاهي GPT-5.5 غير صحيحة.
-
-التعريف المعتمد:
-
-> المشروع ليس نموذجًا لغويًا عامًا، بل **طبقة تحقق معرفية عربية** فوق مخرجات النماذج اللغوية، تُصدر فقط: `Certificate | Hypothesis | Zero` مع أثر وتتبّع وبرهان.
-
-### المنتج الأول (MVP)
-
-الهدف القريب هو **Bayani Verifier API**:
-
-- مدخل: نص عربي، أو دعوى، أو جواب نموذج لغوي.
-- مخرج: قرار ثلاثي + أثر الدليل + reverse trace + الأصفار المانعة.
-
-```json
-{
-  "result_type": "Certificate | Hypothesis | Zero",
-  "claim": "...",
-  "evidence_trace": [],
-  "reverse_trace": [],
-  "zeros": [],
-  "confidence": 0.0,
-  "final_decision": "..."
-}
-```
-
-نطاق MVP المرحلي:
-
-1. إدخال نص عربي أو جواب نموذج.
-2. تتبع Unicode.
-3. استخراج الدعوى الرئيسة.
-4. فحص وجود الدليل.
-5. فحص القفز المعرفي.
-6. فحص الصفر المانع.
-7. إخراج الثلاثية المعتمدة.
-
-## عقل المستدل كطبقة تحقق فوق النماذج اللغوية
-
-تضيف المواصفة طبقة `mustadil_decoder_pipeline` وهي طبقة رقابية فوق الديكودر اللغوي تحول التدفق من:
+## Final Judgments
 
 ```text
-سياق → توقع الكلمة التالية → جواب
+ZERO        = fatal violation or invalid proof path
+HYPOTHESIS  = plausible structure with incomplete evidence
+CERTIFICATE = evidence + governance + reverse trace completed
 ```
 
-إلى:
+No fourth public final judgment is allowed.
+
+## Merge Governance Rule
 
 ```text
-واقع/نص → تمييز → تعيين → نسب → ربط → مفهوم → حكم → لفظ مضبوط
+MERGED != CERTIFICATE
+3/4 checks != CERTIFICATE
 ```
 
-### القاعدة الذهبية
-
-> لا حكم بلا محل، ولا محل بلا تمييز، ولا تمييز بلا تعيين، ولا تعيين بلا نسب، ولا نسب بلا عوامل، ولا ربط بلا معلومات، ولا مفهوم بلا واقع، ولا تنزيل بلا تحقيق مناط.
-
-### خط الأنابيب — 21 طبقة مرتبة في 5 مجموعات
-
-الطبقات الـ21 مصنّفة في 5 مجموعات وظيفية. كل مجموعة يجب أن تكتمل قبل أن تبدأ المجموعة التالية.
-
-#### المجموعة 1: Epistemic Existence (طبقات 1–2)
-تؤسس ما يوجد حقًا وتفصل المعلومة الموثقة عن الرأي السابق.
-
-| الرتبة | المفتاح | الاسم |
-|-------|---------|-------|
-| 1 | `reality_grounding_layer` | Reality Grounding |
-| 2 | `prior_opinion_filter_layer` | Prior Opinion Filter |
-
-#### المجموعة 2: Semantic-Relational (طبقات 3–8)
-تبني البنية الدلالية العلائقية. **شرط لازم:** يجب إتمامها قبل بدء أي طبقة بيانية لغوية ولا سيما قبل تشكيل الحكم.
-
-| الرتبة | المفتاح | الاسم |
-|-------|---------|-------|
-| 3 | `differentiation_layer` | Differentiation |
-| 4 | `essence_assignment_layer` | Essence Assignment ← مطلوب قبل تشكيل الحكم |
-| 5 | `domain_assignment_layer` | Domain Assignment ← مطلوب قبل تشكيل الحكم |
-| 6 | `relational_mapping_layer` | Relational Mapping (13 أنواع نسب) ← مطلوب قبل تشكيل الحكم |
-| 7 | `arabic_operator_layer` | Arabic Operator Parsing (17 فئة) |
-| 8 | `binding_layer` | Binding |
-
-#### المجموعة 3: Bayani-Linguistic (طبقات 9–15)
-تبني الاستدلال البياني اللغوي. لا تبدأ إلا بعد إتمام المجموعة 2.
-
-| الرتبة | المفتاح | الاسم |
-|-------|---------|-------|
-| 9 | `concept_formation_layer` | Concept Formation |
-| 10 | `judgment_formation_layer` | Judgment Formation |
-| 11 | `signifier_analysis_layer` | Signifier Analysis |
-| 12 | `signified_analysis_layer` | Signified Analysis |
-| 13 | `signifier_signified_relation_layer` | Signifier-Signified Relation |
-| 14 | `mantuq_layer` | Mantuq Analysis |
-| 15 | `mafhoom_layer` | Mafhoom Analysis |
-
-#### المجموعة 4: Usuli-Application (طبقات 16–20)
-تطبق قواعد أصول الفقه وتنزّل الحكم. **شرط لازم:** لا تنزيل قبل تحقيق المناط.
-
-| الرتبة | المفتاح | الاسم |
-|-------|---------|-------|
-| 16 | `general_specific_layer` | General/Specific |
-| 17 | `absolute_restricted_layer` | Absolute/Restricted |
-| 18 | `causal_juridical_relations_layer` | Causal-Juridical Relations |
-| 19 | `tahqeeq_manat_layer` | Tahqeeq al-Manat ← مطلوب قبل التنزيل |
-| 20 | `application_layer` | Application |
-
-#### المجموعة 5: Audit (طبقة 21)
-المراجعة النهائية وإنتاج خريطة اليقين.
-
-| الرتبة | المفتاح | الاسم |
-|-------|---------|-------|
-| 21 | `epistemic_audit_layer` | Epistemic Audit |
-
-### ثوابت خط الأنابيب
-
-- `NoLevelSkipInPipeline` — لا تجاوز طبقة قبل اكتمال مخرجاتها
-- `NoJudgmentBeforeEssenceAssignment` — لا حكم قبل تعيين الذات
-- `NoBayaniLinguisticBeforeSemanticRelationalComplete` — لا تبدأ المجموعة البيانية قبل اكتمال المجموعة الدلالية
-- `NoJudgmentFormationBeforeEssenceDomainRelationsResolved` — لا تشكيل حكم (طبقة 10) قبل إتمام طبقات 4 و5 و6
-- `NoApplicationWithoutTahqeqManat` — لا تنزيل قبل تحقيق المناط
-- `NoPriorOpinionAsEvidence` — لا رأي سابق في مقام الدليل
-- `NoMafhumStrongerThanMantuq` — لا يتجاوز المفهوم قوة المنطوق
-- `NoIllahWithoutValidation` — لا علة قبل اختبارات العلة السبعة
-- `NoDomainTransferWithoutBridge` — لا انتقال مجالي بلا جسر
-
-يصف البرومبت الحاكم لهذه الطبقة ملف `docs/prompts/mustadil-decoder-pipeline.prompt.md`.
-
-## التحقق
-
-يتحقق مسار CI من صلاحية JSON Schema، ومطابقة `spec/bayani-knowledge-system.json` للمخطط، وسلامة روابط Markdown، ووجود أقسام البرومبتات الحاكمة، وحصر مخرجات طبقة أهلية المستدل في الثلاثية المعتمدة، وتغطية اختبارات المواصفة لحالات `Certificate` و`Hypothesis` و`Zero`، وسلامة خط أنابيب المستدل وترتيب طبقاته وثوابته.
-
-يمكن تشغيل بوابات التحقق محليًا عبر:
+## Quick Commands
 
 ```bash
-python -m pip install jsonschema==4.25.1
 python tests/verify_bayani_repository.py
+python -m pytest tests/test_coding_pr_audit.py -v
+python -m pytest tests/test_coding_checks_governance.py -v
+python -m pytest tests/test_coding_real_pr_fixtures.py -v
 ```
 
-## Bayani Relational Parser v0.2
+## Documentation Map
 
-يضيف إصدار v0.2 محلل النسب البياني — طبقة تستخرج البنى الدلالية-العلائقية من نصوص اللغة العربية **قبل** تشكيل أي حكم.
+- [Project Overview](docs/00_PROJECT_OVERVIEW.md)
+- [Architecture Map](docs/01_ARCHITECTURE_MAP.md)
+- [Product Roadmap](docs/02_PRODUCT_ROADMAP.md)
+- [Judgment Model](docs/03_JUDGMENT_MODEL.md)
+- [Merge Governance](docs/04_MERGE_GOVERNANCE.md)
+- [Bayani Verifier API](docs/05_BAYANI_VERIFIER_API.md)
+- [Coding Copilot Auditor](docs/06_CODING_COPILOT_AUDITOR.md)
+- [Epistemic Decoder](docs/07_EPISTEMIC_DECODER.md)
+- [GLCFL](docs/08_GLCFL.md)
+- [Mustadil Pipeline](docs/09_MUSTADIL_PIPELINE.md)
+- [Developer Guide](docs/10_DEVELOPER_GUIDE.md)
+- [Testing and CI](docs/11_TESTING_AND_CI.md)
+- [Historical README Archive](docs/12_ARCHIVE_README_HISTORY.md)
 
-### الوظيفة الأساسية
+## Current Status
 
-يحوّل المحلل النص المدخل إلى هيكل نسبي منظم يكشف عن:
-
-- **نوع النسبة** — واحدة من 13 نسبة: إسنادية، تضمينية، تقييدية، فاعلية، مفعولية، سببية، مسببية، شرطية، غائية، زمانية، مكانية، حالية، استثنائية.
-- **العامل الحامل** — الأداة النحوية أو اللغوية التي حملت النسبة (مثل `nominal_sentence`، `verb_sentence`، `conditional_tool`، `exception_tool`، `ghayah_tool`، `hal`، `cause_tool`).
-- **الرتبة المعرفية** — قطعي أو ظني.
-- **الأثر الأصولي المحتمل** — مثل `possible_mafhoom_sifah`، `takhsis_candidate`، `illah_candidate`.
-- **قفزات محظورة مُراجَعة** — مثل `NoJudgmentFormationBeforeEssenceDomainRelationsResolved`.
-
-### القاعدة الحاكمة
-
-> لا حكم قبل حل النسب. لا نسبة بلا عامل حامل.
-
-### التكامل مع خط الأنابيب
-
-- **الطبقة 6 — relational_mapping_layer**: تستدعي `parse_relations()` وتُرفق أنواع النسب وعواملها في `claims` الطبقة. تُسجَّل النسب غير المحلولة في `uncertainties`.
-- **الطبقة 7 — arabic_operator_layer**: تعرض قيم `carrier_operator` المستخرجة في `claims` لضمان توثيق علاقات العامل والمعمول.
-- **الثابت الجديد NoRelationWithoutCarrier**: يرفض المحقق (audit) أي نسبة لا يحملها عامل موثق.
-
-### تشغيل الاختبارات
-
-```bash
-python -m pytest tests/test_mustadil_runtime.py tests/test_bayani_relational_parser.py -v
-python tests/verify_bayani_repository.py
-```
-
-## Epistemic Cognitive Decoder v0.3
-
-يضيف إصدار v0.3 **الديكودر المعرفي** — طبقة محاكاة قرار معرفية مبنية فوق النموذج اللغوي تفرض عليه سلسلة التحقق:
-
-```text
-واقع → حس/مصدر → معلومات → ربط → فكر → مطابقة → دليل → درجة يقين → جواب
-```
-
-### ملفات MVP (5 ملفات)
-
-| الملف | المحتوى |
-|-------|---------|
-| `bayani/epistemic_decoder/ontology.yaml` | واقع، حس، معلومات، ربط، فكر، مفهوم، يقين |
-| `bayani/epistemic_decoder/semiotics.yaml` | دال، مدلول، مطابقة، تضمن، التزام، كلي، جزئي |
-| `bayani/epistemic_decoder/relations.yaml` | إسناد، تقييد، تضمين، سبب، مسبب، علة، قياس |
-| `bayani/epistemic_decoder/decoder_policy.md` | قواعد السماح والمنع المعرفي |
-| `run_decoder.py` | يشغّل الديكودر المعرفي + التحقق + إخراج الجواب |
-
-### معمارية الوحدات السبع
-
-| الوحدة | الاسم | الوظيفة |
-|--------|-------|---------|
-| 1 | `InputAnalyzer` | تصنيف نوع المهمة، المجال، خطر الهلوسة |
-| 2 | `RealityExtractor` | استخراج الواقع موضوع السؤال |
-| 3 | `SemioticParser` | تفكيك الدال والمدلول |
-| 4 | `RelationGraphBuilder` | بناء شبكة العلاقات الدلالية |
-| 5 | `EvidenceRetriever` | استرجاع الأدلة والمصادر |
-| 6 | `CertaintyScorer` | حساب درجة اليقين المعرفي |
-| 7 | `AnswerDecoder` | تأليف الجواب المضبوط |
-
-### معادلة اختيار الجواب
-
-```text
-AnswerScore =
-  0.20 x LinguisticCoherence
-+ 0.25 x RealityMatch
-+ 0.20 x EvidenceStrength
-+ 0.15 x SemanticValidity
-+ 0.10 x InferenceValidity
-+ 0.10 x CertaintyClarity
-- 0.30 x HallucinationRisk
-```
-
-الحد الأدنى للسماح بالجواب: `AnswerScore >= 0.60`.
-
-### استخدام سريع
-
-```python
-from bayani.epistemic_decoder import EpistemicCognitiveDecoder
-
-decoder = EpistemicCognitiveDecoder()
-output = decoder.decode("ما الفرق بين العلم والثقافة؟", reasoning_effort="high")
-print(output.final_answer)
-print(output.certainty_level)
-print(output.answer_score)
-```
-
-أو عبر سطر الأوامر:
-
-```bash
-python run_decoder.py "ما الفرق بين العلم والثقافة؟" --verbose
-python run_decoder.py "هل المفاهيم مرتبطة بالواقع؟" --effort xhigh --json
-```
-
-### تشغيل اختبارات الديكودر المعرفي
-
-```bash
-python -m pytest tests/test_epistemic_decoder.py -v
-```
-
-## Fractal Prompt Classification Layer (FPCL) v0.5
-
-Before decoding or reasoning, MCD can classify a prompt into six dimensions:
-**Root Domain**, **Concept Type**, **Knowledge Category**, **Judgment Type**, **Evidence Need**, and **Certainty Policy**.
-
-This prevents the system from answering a shari question as an epistemic question, or a technical prompt as a purely linguistic prompt.
-
-```bash
-python -m mcd.cli classify "النار تحرق" --output json
-python -m mcd.cli classify "هل الكذب حرام؟" --output json
-python -m mcd.cli classify "كيف نبني API للديكودر؟" --output json
-python -m mcd.cli classify "ما معنى علم؟" --output json
-```
-
-Key rule: **ضار ≠ حرام**. A value judgment ("harmful") is not a shari judgment ("forbidden"). FPCL enforces this distinction before any reasoning begins.
-
-See full documentation: [`docs/FRACTAL_PROMPT_CLASSIFICATION.md`](docs/FRACTAL_PROMPT_CLASSIFICATION.md)
-
-
-## Grounded Lexical Cognitive Frame Layer (GLCFL) v1.0
-
-The GLCFL is the fourth major layer of MCD. It doesn't just classify prompts or check evidence — it builds a **grounded frame for every word**, every relation, every manat check, every civilization context, and every societal concept.
-
-An ungrounded word carries no knowledge. GLCFL asks: *what does this word refer to in reality?*
-
-### What GLCFL Does
-
-1. **Lexical Grounding** — grounds every word against the knowledge store (ThingStore, PropertyRegistry, RelationStore). Words like `نار` are fully grounded; `علم` without context is partially grounded; `حرام` without revelation evidence is partially grounded.
-2. **Role Frames** — builds semantic role frames from Arabic sentences (VSO order): `كتب زيد الدرس بالقلم في المدرسة أمس` → `action=كتب, agent=زيد, patient=الدرس, instrument=القلم, place=المدرسة, time=أمس`
-3. **Nisbah Frames** — extracts relational propositions (زيد `agent_of` كتب, القلم `instrument_of` كتب, ...)
-4. **Manat Engine** — checks whether a rule's conditions are actually present in the target reality
-5. **Usul Semantics** — applies Arabic usul al-fiqh semantic analysis (iltizam, qiyas, aam/khas, mutlaq/muqayyad)
-6. **Tarjih Engine** — resolves conflicts between claims (combine, specify, restrict, prefer, suspend)
-7. **Value System** — strictly separates epistemic (`صحيح/خطأ`), practical (`نافع/ضار`), aesthetic (`جميل/قبيح`), shari (`حرام/واجب`), and social (`مقبول/مرفوض`) values
-8. **Civilization/Civility Classifier** — distinguishes tools (`مدنية`) from civilizational concepts (`حضارة`); AI is a special case with value-transfer risk
-9. **Society Model** — requires ideas + feelings + systems; individual statements ≠ public opinion
-10. **Human/Individual Model** — distinguishes species-level truths from individual cases; never generalizes from one person to all humanity
-
-### Key Rules
-
-- `ضار` (harmful) ≠ `حرام` (haram) — they are different types of value judgments
-- `نافع` (beneficial) ≠ `واجب` (wajib)
-- A single individual's statement is never public opinion
-- Shari judgments always need revelation evidence; without it, certainty is capped
-- AI carries risk of civilizational value transfer (assumptions about humans, knowledge, authority)
-
-### CLI Usage
-
-```bash
-PYTHONPATH=src python -m mcd.cli ground "كتب زيد الدرس بالقلم في المدرسة أمس" --output json
-PYTHONPATH=src python -m mcd.cli ground "الكذب ضار أم حرام؟" --output json
-PYTHONPATH=src python -m mcd.cli ground "الذكاء الاصطناعي أداة مدنية أم مفهوم حضاري؟" --output json
-PYTHONPATH=src python -m mcd.cli ground "المجتمع يرفض الفساد" --output json
-PYTHONPATH=src python -m mcd.cli ground "النار ساخنة" --output text
-```
-
-See full documentation: [`docs/GROUNDED_LEXICAL_COGNITIVE_FRAME.md`](docs/GROUNDED_LEXICAL_COGNITIVE_FRAME.md)
+- **CERTIFICATE:** The repository has a strong governed architecture and a testable PR-audit kernel.
+- **HYPOTHESIS:** It can become an industrial verification product when CI and branch governance are fully enforced.
+- **ZERO:** The claim that this repository is already a general GPT-level model is false.

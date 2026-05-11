@@ -16,10 +16,19 @@ README_PATH = ROOT / "README.md"
 
 ALLOWED_OUTPUTS = ["Certificate", "Hypothesis", "Zero"]
 README_REQUIRED_REFERENCES = [
-    "docs/prompts/nabhani-mustadil-readiness.prompt.md",
-    "docs/prompts/mustadil-decoder-pipeline.prompt.md",
-    "spec/bayani-knowledge-system.json",
-    "schema/bayani-knowledge-system.schema.json",
+    "docs/00_PROJECT_OVERVIEW.md",
+    "docs/01_ARCHITECTURE_MAP.md",
+    "docs/02_PRODUCT_ROADMAP.md",
+    "docs/03_JUDGMENT_MODEL.md",
+    "docs/04_MERGE_GOVERNANCE.md",
+    "docs/05_BAYANI_VERIFIER_API.md",
+    "docs/06_CODING_COPILOT_AUDITOR.md",
+    "docs/07_EPISTEMIC_DECODER.md",
+    "docs/08_GLCFL.md",
+    "docs/09_MUSTADIL_PIPELINE.md",
+    "docs/10_DEVELOPER_GUIDE.md",
+    "docs/11_TESTING_AND_CI.md",
+    "docs/12_ARCHIVE_README_HISTORY.md",
     "tests/verify_bayani_repository.py",
 ]
 REQUIRED_SPEC_KEYS = [
@@ -112,8 +121,8 @@ ANSWER_ANALYSIS_STATUS_POLICY_KEYS = {"certificate", "hypothesis", "zero"}
 MIN_BLOCKING_ZEROS = 5
 PROOF_RANK_POLICY_REQUIRED_KEYS = {"ranks", "rules"}
 
-# PR #7 — README scope declaration
-README_NO_RUNTIME_PHRASE = "دون تنفيذ runtime في هذا المستودع"
+# PR #7/Phase 1.2 — README scope declaration
+README_PARTIAL_RUNTIME_PHRASE = "partial runtime implementation under `src/mcd`"
 
 # Deep system-correctness tests
 RECURSIVE_RELATION_EXAMPLE_COUNT = 7
@@ -426,11 +435,11 @@ class BayaniRepositoryVerification(unittest.TestCase):
         self.assertGreater(len(policy["rules"]), 0)
 
     # ------------------------------------------------------------------
-    # PR #7 — README scope clarity (no runtime implementation)
+    # PR #7/Phase 1.2 — README scope clarity (partial runtime implementation)
     # ------------------------------------------------------------------
 
-    def test_readme_declares_no_runtime_implementation(self):
-        self.assertIn(README_NO_RUNTIME_PHRASE, self.readme)
+    def test_readme_declares_partial_runtime_implementation(self):
+        self.assertIn(README_PARTIAL_RUNTIME_PHRASE, self.readme)
 
     # ------------------------------------------------------------------
     # Deep system-correctness tests
