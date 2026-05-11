@@ -129,14 +129,31 @@ class MabniUnfolder:
         for p in result.preposition_results:
             result.warnings.extend(p.get("warnings", []))
 
-        # Certainty policies from registry operators
-        for op in self._registry.get_all():
-            policy = self._certainty_policy.evaluate(op)
-            result.certainty_policies.append({"operator_id": op.operator_id, **policy.to_dict()})
+        # Certainty policies — only for operators actually detected in this text.
+        # Collect detected operator surfaces from sub-resolver outputs.
+        detected_surfaces: set[str] = set()
+        for key in ("ma_result", "man_result", "in_result", "la_result"):
+            d = getattr(result, key, {})
+            if isinstance(d, dict):
+                op_dict = d.get("operator", d)
+                s = op_dict.get("surface") or d.get("surface")
+                if s:
+                    detected_surfaces.add(s)
+        for p in result.preposition_results:
+            s = p.get("preposition") or p.get("surface")
+            if s:
+                detected_surfaces.add(s)
 
-        # Build graph
+        for op in self._registry.get_all():
+            if op.surface in detected_surfaces or op.normalized in detected_surfaces:
+                policy = self._certainty_policy.evaluate(op)
+                result.certainty_policies.append({"operator_id": op.operator_id, **policy.to_dict()})
+
+        # Build graph — use deterministic SHA-256 hash for stable graph_id across runs.
+        import hashlib
+        text_hash = hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
         unfold_dict = result.to_dict()
-        graph: MabniGraph = self._graph_builder.build(unfold_dict, graph_id=f"mabni_{hash(text)}")
+        graph: MabniGraph = self._graph_builder.build(unfold_dict, graph_id=f"mabni_{text_hash}")
         result.graph = graph.to_dict()
 
         # Build trace

@@ -71,7 +71,14 @@ class MabniGraphBuilder:
         return f"E{self._edge_counter:04d}"
 
     def build(self, unfold_result: dict, graph_id: str = "mabni_graph") -> MabniGraph:
-        """Build a MabniGraph from a MabniUnfoldResult dict."""
+        """Build a MabniGraph from a MabniUnfoldResult dict.
+
+        Counters are reset at the start of each call so that node/edge IDs are
+        deterministic per-invocation regardless of how many times this builder
+        has been reused in the same process.
+        """
+        self._node_counter = 0
+        self._edge_counter = 0
         graph = MabniGraph(graph_id=graph_id)
         node_index: dict[str, str] = {}
 

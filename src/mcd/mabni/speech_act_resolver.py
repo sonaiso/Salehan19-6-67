@@ -24,7 +24,10 @@ class SpeechActResult:
         }
 
 
-_QUESTION_MARKERS = {"هل", "أ", "من", "ما", "أين", "متى", "كيف", "لماذا", "لم", "أليس", "أَلَيْسَ"}
+# Only unambiguously interrogative markers — excludes "من" and "ما" which are
+# frequently used as prepositions/relative pronouns in non-interrogative contexts.
+# Position-independent interrogative adverbs and particles (؟ is checked separately).
+_QUESTION_MARKERS = {"هل", "أليس", "أَلَيْسَ", "أين", "متى", "كيف", "لماذا", "لِمَ"}
 _PROHIBITION_STARTERS = {"لا تـ", "لا ت"}
 _WISH_MARKERS = {"ليت", "لعل", "عسى", "لو"}
 _WARNING_MARKERS = {"إياك", "إياكم", "حذار", "انتبه"}
@@ -46,8 +49,16 @@ class SpeechActResolver:
         tokens = set(text_stripped.split())
         warnings: list[str] = []
 
-        # Question (Istifham)
-        if "؟" in text_stripped or tokens.intersection(_QUESTION_MARKERS):
+        # Question (Istifham): triggered by explicit question mark or unambiguous
+        # interrogative markers (هل, أليس, أين, متى, كيف, لماذا).
+        # Also triggered by "أ" or "همزة" only when it is the FIRST token (not mid-sentence).
+        first_token = text_stripped.split()[0] if text_stripped.split() else ""
+        is_question = (
+            "؟" in text_stripped
+            or bool(tokens.intersection(_QUESTION_MARKERS))
+            or (first_token in {"أ", "أَ"})
+        )
+        if is_question:
             warnings.append("question_not_assertion: istifham does not create an assertion")
             return SpeechActResult(
                 speech_act="istifham",
@@ -58,13 +69,14 @@ class SpeechActResolver:
                 warnings=warnings,
             )
 
-        # Oath (Qasam)
+        # Oath (Qasam) — qasam is an assertion (khabar) with emphasis; it is NOT inshaa.
+        # Emphasis/oath does not constitute external evidence.
         if tokens.intersection(_OATH_MARKERS):
             warnings.append("oath_not_external_evidence: qasam is emphasis, not external evidence")
             return SpeechActResult(
                 speech_act="qasam",
                 is_assertion=True,
-                is_inshaa=True,
+                is_inshaa=False,
                 establishes_reality=False,
                 certainty_policy="emphasis_only",
                 warnings=warnings,
@@ -174,14 +186,25 @@ def _get_token_after(text: str, token: str) -> str:
 
 
 def _is_imperative(text: str) -> bool:
-    """Heuristic: check if text starts with a plausible imperative form."""
+    """Heuristic: check if text starts with a plausible imperative form.
+
+    Excludes:
+    - Words starting with the definite article "ال" (e.g., "الكتاب", "البيت").
+    - Words of length < 3 that begin with "ا" (too short to be an imperative stem).
+    """
     tokens = text.split()
     if not tokens:
         return False
     first = tokens[0]
-    # Arabic imperatives often start with اِ or are short forms
-    if first.startswith("اِ") or first.startswith("ا") and len(first) >= 3:
+    # Definite article prefix — definitely NOT an imperative
+    if first.startswith("ال"):
+        return False
+    # Common explicit imperatives (highest confidence)
+    common_imps = {"اذهب", "تعال", "قل", "اقرأ", "اكتب", "افعل", "قم", "اجلس", "انظر", "خذ"}
+    if first in common_imps:
         return True
-    # Common imperatives
-    common_imps = {"اذهب", "تعال", "قل", "اقرأ", "اكتب", "افعل", "قم", "اجلس"}
-    return first in common_imps
+    # Arabic imperatives of Form I often start with اِ followed by at least 2 more chars;
+    # require length >= 4 to avoid false positives from short words beginning with "ا".
+    if (first.startswith("اِ") or first.startswith("ا")) and len(first) >= 4:
+        return True
+    return False

@@ -31,8 +31,6 @@ class MaResolutionResult:
         }
 
 
-_REGISTRY = MabniRegistry()
-
 # Negation verb patterns (words that follow negation ما)
 _NEG_VERB_STARTERS = {
     "جاء", "حضر", "قال", "كان", "أراد", "فعل", "ذهب", "وجد", "رأى", "علم",

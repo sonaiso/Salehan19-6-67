@@ -69,12 +69,12 @@ class ConditionalEngine:
         if not detected_particle:
             warnings.append("no conditional particle detected; check if this is truly a conditional")
             return ConditionalResult(
-                condition_type="unknown",
+                condition_type="none",
                 particle="",
                 protasis=text_stripped,
                 apodosis="",
-                judgment_suspended=True,
-                certainty_policy="suspend",
+                judgment_suspended=False,
+                certainty_policy="standard",
                 warnings=warnings,
             )
 

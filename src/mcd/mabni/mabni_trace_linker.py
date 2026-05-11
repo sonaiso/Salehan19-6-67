@@ -67,13 +67,19 @@ class MabniTraceLinker:
             for key, value in unfold_result.items():
                 if not isinstance(value, dict):
                     continue
-                surface = _strip_diacritics(value.get("surface", ""))
+                # Resolver outputs may nest operator metadata under an "operator" key;
+                # prefer that sub-dict for operator_id / certainty_effect / creates_evidence.
+                op_dict = value.get("operator") if isinstance(value.get("operator"), dict) else value
+                surface = _strip_diacritics(op_dict.get("surface", value.get("surface", "")))
                 if not surface:
                     continue
                 if surface == clean or clean.startswith(surface) or surface.startswith(clean):
-                    operator_id = value.get("operator_id", key)
-                    certainty_effect = str(value.get("certainty_effect", value.get("certainty_note", "none")))
-                    is_evidence = value.get("is_evidence", value.get("creates_evidence", False))
+                    operator_id = op_dict.get("operator_id", value.get("operator_id", key))
+                    certainty_effect = str(
+                        op_dict.get("certainty_effect",
+                        value.get("certainty_effect", value.get("certainty_note", "none")))
+                    )
+                    is_evidence = op_dict.get("creates_evidence", value.get("is_evidence", value.get("creates_evidence", False)))
                     evidence_link = "direct" if is_evidence else "no_direct_evidence"
                     if value.get("judgment_suspended", False):
                         judgment_status = "suspended"
