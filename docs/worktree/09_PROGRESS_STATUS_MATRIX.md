@@ -25,7 +25,7 @@ Status vocabulary used in this matrix:
 | Judgment Geometry | Judgment | PARTIAL_RUNTIME | `docs/03_JUDGMENT_MODEL.md` | Runtime bridge completion | concept_judgment_evidence_bridge_partial | Phase 2.3 |
 | Evidence Governance | Evidence | PARTIAL_RUNTIME | `docs/07_CLAIM_AND_EVIDENCE.md`, `docs/10_FORBIDDEN_TRANSITIONS.md` | Stronger runtime isolation from spec-only paths | bayani_runtime_mixed_with_spec | Phase 2.3 |
 | ReverseTrace | Traceability | PARTIAL_RUNTIME | `docs/09_REVERSE_TRACE.md` | Full worktree coverage | training_trace_not_yet_built | Phase 2.4 |
-| Residual Policy | Governance | CERTIFICATE | `docs/08_RESIDUAL_POLICY.md` | N/A | N/A | Maintain |
+| Residual Policy | Governance | CERTIFICATE | `docs/08_RESIDUAL_POLICY.md` | N/A | — | Maintain |
 | Bayani Verifier | Product | PARTIAL_RUNTIME | `docs/05_BAYANI_VERIFIER_API.md`, `src/mcd/` | Separate runtime/spec boundaries | bayani_runtime_mixed_with_spec | Phase 2.3 |
 | Mustadil Pipeline | Product | PARTIAL_RUNTIME | `docs/09_MUSTADIL_PIPELINE.md` | Full worktree alignment | concept_judgment_evidence_bridge_partial | Phase 2.3 |
 | GLCFL | Product Layer | PARTIAL_RUNTIME | `docs/08_GLCFL.md` | Runtime-to-evidence linkage hardening | language_geometry_fragmented | Phase 2.2 |
