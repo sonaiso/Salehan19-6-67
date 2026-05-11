@@ -4,13 +4,16 @@ from pathlib import Path
 from mcd.coding_copilot.pr_audit import PRAuditInput, audit_pr_fixture
 
 
+def _is_reverse_trace_complete(reverse_trace: dict) -> bool:
+    if not reverse_trace:
+        return False
+    if "complete" in reverse_trace:
+        return bool(reverse_trace["complete"])
+    return all(reverse_trace.values())
+
+
 def _fixture_to_input(payload: dict) -> PRAuditInput:
     reverse_trace = payload.get("reverse_trace") or {}
-    reverse_trace_complete = bool(
-        reverse_trace.get("complete")
-        if "complete" in reverse_trace
-        else all(reverse_trace.values()) if reverse_trace else False
-    )
     return PRAuditInput(
         pr_number=payload["pr_number"],
         title=payload["title"],
@@ -24,7 +27,7 @@ def _fixture_to_input(payload: dict) -> PRAuditInput:
         claims=payload["claims"],
         evidence=payload["evidence"],
         residuals=payload.get("residuals", []),
-        reverse_trace_complete=reverse_trace_complete,
+        reverse_trace_complete=_is_reverse_trace_complete(reverse_trace),
     )
 
 

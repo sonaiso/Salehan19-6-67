@@ -6,6 +6,8 @@ from typing import Any
 
 from mcd.coding_copilot.checks_governance import ChecksGovernance
 
+BLOCKING_RESIDUAL_TYPES = {"ci_pending", "failing_checks", "missing_check_evidence", "architecture_violation"}
+
 
 @dataclass
 class PRAuditInput:
@@ -87,19 +89,19 @@ def _has_fatal_failure(evidence: dict[str, Any], residuals: list[str]) -> bool:
 
 
 def _build_result(
-    input_data: PRAuditInput,
+    pr_input: PRAuditInput,
     *,
     judgment: str,
     residuals: list[str],
     reason: str,
 ) -> PRAuditResult:
-    merged_note = "merged" if input_data.merged else "not_merged"
+    merged_note = "merged" if pr_input.merged else "not_merged"
     report = (
-        f"pr={input_data.pr_number}; judgment={judgment}; reason={reason}; "
+        f"pr={pr_input.pr_number}; judgment={judgment}; reason={reason}; "
         f"{merged_note}; certificate_allowed={judgment == 'CERTIFICATE'}"
     )
     return PRAuditResult(
-        pr_number=input_data.pr_number,
+        pr_number=pr_input.pr_number,
         final_judgment=judgment,
         residuals=residuals,
         certificate_allowed=judgment == "CERTIFICATE",
@@ -108,38 +110,38 @@ def _build_result(
     )
 
 
-def audit_pr_fixture(input: PRAuditInput) -> PRAuditResult:
+def audit_pr_fixture(pr_input: PRAuditInput) -> PRAuditResult:
     checks = ChecksGovernance(
-        checks_total=input.checks_total,
-        checks_passed=input.checks_passed,
-        checks_failed=input.checks_failed,
-        checks_pending=input.checks_pending,
+        checks_total=pr_input.checks_total,
+        checks_passed=pr_input.checks_passed,
+        checks_failed=pr_input.checks_failed,
+        checks_pending=pr_input.checks_pending,
     )
-    residual_types = _normalize_residual_types(input.residuals)
+    residual_types = _normalize_residual_types(pr_input.residuals)
     for residual in checks.residuals():
         if residual.residual_type not in residual_types:
             residual_types.append(residual.residual_type)
 
     if checks.has_pending():
         return _build_result(
-            input,
+            pr_input,
             judgment="HYPOTHESIS",
             residuals=residual_types,
             reason="ci_pending",
         )
 
     if checks.has_failures():
-        fatal_failure = _has_fatal_failure(input.evidence, residual_types)
+        fatal_failure = _has_fatal_failure(pr_input.evidence, residual_types)
         return _build_result(
-            input,
+            pr_input,
             judgment="ZERO" if fatal_failure else "HYPOTHESIS",
             residuals=residual_types,
             reason="failing_checks_required" if fatal_failure else "failing_checks_nonfatal",
         )
 
-    if input.checks_total == 0:
+    if pr_input.checks_total == 0:
         return _build_result(
-            input,
+            pr_input,
             judgment="HYPOTHESIS",
             residuals=residual_types,
             reason="missing_check_evidence",
@@ -147,43 +149,42 @@ def audit_pr_fixture(input: PRAuditInput) -> PRAuditResult:
 
     if not checks.all_green():
         return _build_result(
-            input,
+            pr_input,
             judgment="HYPOTHESIS",
             residuals=residual_types,
             reason="checks_not_all_green",
         )
 
-    if not input.reverse_trace_complete:
+    if not pr_input.reverse_trace_complete:
         if "insufficient_evidence" not in residual_types:
             residual_types.append("insufficient_evidence")
         return _build_result(
-            input,
+            pr_input,
             judgment="HYPOTHESIS",
             residuals=residual_types,
             reason="reverse_trace_incomplete",
         )
 
-    if not _claims_have_matching_evidence(input.claims, input.evidence):
+    if not _claims_have_matching_evidence(pr_input.claims, pr_input.evidence):
         if "insufficient_evidence" not in residual_types:
             residual_types.append("insufficient_evidence")
         return _build_result(
-            input,
+            pr_input,
             judgment="HYPOTHESIS",
             residuals=residual_types,
             reason="claims_evidence_mismatch",
         )
 
-    blocking_or_fatal = {"ci_pending", "failing_checks", "missing_check_evidence", "architecture_violation"}
-    if any(item in blocking_or_fatal for item in residual_types):
+    if any(item in BLOCKING_RESIDUAL_TYPES for item in residual_types):
         return _build_result(
-            input,
+            pr_input,
             judgment="HYPOTHESIS",
             residuals=residual_types,
             reason="blocking_residual_present",
         )
 
     return _build_result(
-        input,
+        pr_input,
         judgment="CERTIFICATE",
         residuals=residual_types,
         reason="all_certificate_gates_passed",
