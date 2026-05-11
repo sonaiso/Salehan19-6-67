@@ -20,6 +20,10 @@ ResidualType = Literal[
     "ci_pending",
     "failing_checks",
     "missing_check_evidence",
+    "merge_with_pending_checks",
+    "merge_without_required_checks",
+    "merge_without_pr_certification",
+    "branch_protection_not_configured",
     "insufficient_evidence",
 ]
 
