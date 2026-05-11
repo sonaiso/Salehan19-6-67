@@ -60,6 +60,6 @@
   },
   "required_checks_configured": true,
   "branch_protection_configured": true,
-  "pr_certification_present": false,
+  "pr_certification_present": true,
   "expected_final_judgment": "HYPOTHESIS"
 }

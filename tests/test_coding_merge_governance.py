@@ -63,6 +63,13 @@ def test_certificate_requires_all_merge_gates():
     assert result.merge_allowed_epistemically is True
 
 
+
+
+def test_unmerged_pr_can_reach_certificate_when_all_gates_pass():
+    result = evaluate_merge_governance(_base_input(merged=False))
+    assert result.final_judgment == "CERTIFICATE"
+    assert result.merge_allowed_epistemically is True
+
 def test_pr59_fixture_is_hypothesis_due_pending_checks():
     path = (
         Path(__file__).resolve().parents[1]

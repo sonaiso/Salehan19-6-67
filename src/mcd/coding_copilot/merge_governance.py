@@ -39,8 +39,8 @@ _CERTIFICATE_GATES = (
 )
 
 
-def evaluate_merge_governance(input: MergeGovernanceInput) -> MergeGovernanceResult:
-    if input.checks_pending > 0:
+def evaluate_merge_governance(governance_input: MergeGovernanceInput) -> MergeGovernanceResult:
+    if governance_input.checks_pending > 0:
         return MergeGovernanceResult(
             merge_allowed_epistemically=False,
             final_judgment="HYPOTHESIS",
@@ -49,7 +49,7 @@ def evaluate_merge_governance(input: MergeGovernanceInput) -> MergeGovernanceRes
             required_actions=["Wait for all required checks to complete before merge."],
         )
 
-    if input.checks_failed > 0:
+    if governance_input.checks_failed > 0:
         return MergeGovernanceResult(
             merge_allowed_epistemically=False,
             final_judgment="ZERO",
@@ -58,7 +58,7 @@ def evaluate_merge_governance(input: MergeGovernanceInput) -> MergeGovernanceRes
             required_actions=["Fix failing required checks before merge."],
         )
 
-    if input.checks_total == 0:
+    if governance_input.checks_total == 0:
         return MergeGovernanceResult(
             merge_allowed_epistemically=False,
             final_judgment="HYPOTHESIS",
@@ -67,7 +67,7 @@ def evaluate_merge_governance(input: MergeGovernanceInput) -> MergeGovernanceRes
             required_actions=["Configure and run required checks for the PR."],
         )
 
-    if not input.branch_protection_configured:
+    if not governance_input.branch_protection_configured:
         return MergeGovernanceResult(
             merge_allowed_epistemically=False,
             final_judgment="HYPOTHESIS",
@@ -76,7 +76,7 @@ def evaluate_merge_governance(input: MergeGovernanceInput) -> MergeGovernanceRes
             required_actions=["Enable branch protection/ruleset on the target branch."],
         )
 
-    if not input.required_checks_configured:
+    if not governance_input.required_checks_configured:
         return MergeGovernanceResult(
             merge_allowed_epistemically=False,
             final_judgment="HYPOTHESIS",
@@ -85,7 +85,7 @@ def evaluate_merge_governance(input: MergeGovernanceInput) -> MergeGovernanceRes
             required_actions=["Mark AFJG checks as required in branch protection."],
         )
 
-    if not input.pr_certification_present:
+    if not governance_input.pr_certification_present:
         return MergeGovernanceResult(
             merge_allowed_epistemically=False,
             final_judgment="HYPOTHESIS",
@@ -95,14 +95,14 @@ def evaluate_merge_governance(input: MergeGovernanceInput) -> MergeGovernanceRes
         )
 
     certificate_ready = (
-        input.checks_pending == 0
-        and input.checks_failed == 0
-        and input.checks_total > 0
-        and input.checks_passed == input.checks_total
-        and input.branch_protection_configured
-        and input.required_checks_configured
-        and input.pr_certification_present
-        and input.reverse_trace_complete
+        governance_input.checks_pending == 0
+        and governance_input.checks_failed == 0
+        and governance_input.checks_total > 0
+        and governance_input.checks_passed == governance_input.checks_total
+        and governance_input.branch_protection_configured
+        and governance_input.required_checks_configured
+        and governance_input.pr_certification_present
+        and governance_input.reverse_trace_complete
     )
     if certificate_ready:
         return MergeGovernanceResult(

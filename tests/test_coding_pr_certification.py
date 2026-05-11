@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from mcd.coding_copilot.pr_certification import PRCertification
 
 
@@ -16,7 +18,8 @@ def _base_cert(**kwargs) -> PRCertification:
 
 
 def test_hypothesis_is_not_merge_certificate():
-    cert = _base_cert(judgment="HYPOTHESIS")
+    cert = _base_cert(judgment="HYPOTHESIS", reverse_trace_complete=True)
+    assert cert.reverse_trace_complete is True
     assert cert.certificate_allowed is False
 
 
@@ -33,3 +36,11 @@ def test_ci_pending_blocks_certificate():
 def test_merge_with_pending_checks_blocks_certificate():
     cert = _base_cert(residuals=["merge_with_pending_checks"])
     assert cert.certificate_allowed is False
+
+
+def test_created_at_is_populated_and_ordered():
+    first = _base_cert()
+    second = _base_cert()
+    first_ts = datetime.fromisoformat(first.created_at)
+    second_ts = datetime.fromisoformat(second.created_at)
+    assert second_ts >= first_ts
