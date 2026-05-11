@@ -8,7 +8,7 @@ from mcd.curriculum.binary_epistemic_language import BinaryEpistemicUnit
 
 def _base_unit() -> BinaryEpistemicUnit:
     return BinaryEpistemicUnit(
-        unit="العلم نور",
+        unit="knowledge is light",
         existence_bit=1,
         trace_bit=1,
         distinction_bit=1,
@@ -24,13 +24,23 @@ def _base_unit() -> BinaryEpistemicUnit:
 
 
 def test_binary_epistemic_unit_exposes_architecture_contract_fields():
-    d = _base_unit().to_dict()
+    unit = _base_unit()
+    d = unit.to_dict()
     for key in (
         "pre", "current", "post", "phi_in", "phi_out", "beta",
         "type", "order", "composition", "invariants", "forbidden",
         "residual", "judgment",
     ):
         assert key in d
+    assert isinstance(d["pre"], list)
+    assert isinstance(d["post"], list)
+    assert isinstance(d["composition"], list)
+    assert isinstance(d["invariants"], list)
+    assert isinstance(d["forbidden"], list)
+    assert isinstance(d["residual"], list)
+    assert d["type"] == "belief_unit"
+    assert d["judgment"] == "HYPOTHESIS"
+    assert unit.evaluate_judgment() == "CERTIFICATE"
 
 
 def test_bit_validation_rejects_non_binary_value():
@@ -47,6 +57,8 @@ def test_missing_foundational_bits_forces_zero():
 def test_no_certificate_without_governance_gate():
     unit = _base_unit()
     unit.governance_gate_bit = 0
+    unit.forbidden = ["certificate_without_governance_gate"]
+    assert unit.blocked_forbidden_transitions() == ["certificate_without_governance_gate"]
     assert unit.evaluate_judgment() == "HYPOTHESIS"
 
 

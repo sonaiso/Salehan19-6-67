@@ -59,7 +59,7 @@ class BinaryEpistemicUnit:
     phi_in: str = ""
     phi_out: str = ""
     beta: str = "undefined"
-    type: str = "belief_unit"
+    unit_type: str = "belief_unit"
     order: int = 0
     composition: list[str] = field(default_factory=list)
     invariants: list[str] = field(default_factory=list)
@@ -104,7 +104,7 @@ class BinaryEpistemicUnit:
         return self.judgment
 
     def blocked_forbidden_transitions(self) -> list[str]:
-        """Return forbidden transition keys explicitly blocked at this unit."""
+        """Return forbidden transitions declared as blocked in this unit configuration."""
         return sorted({item for item in self.forbidden if item in FORBIDDEN_TRANSITIONS})
 
     def to_dict(self) -> dict:
@@ -127,7 +127,7 @@ class BinaryEpistemicUnit:
             "phi_in": self.phi_in,
             "phi_out": self.phi_out,
             "beta": self.beta,
-            "type": self.type,
+            "type": self.unit_type,
             "order": self.order,
             "composition": self.composition,
             "invariants": self.invariants,
