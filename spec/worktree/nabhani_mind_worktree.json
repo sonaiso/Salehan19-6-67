@@ -1,0 +1,193 @@
+{
+  "worktree": "nabhani_mind_worktree",
+  "version": "0.1.0",
+  "final_epistemic_judgments": [
+    "ZERO",
+    "HYPOTHESIS",
+    "CERTIFICATE"
+  ],
+  "zero_distinction": {
+    "initial": "epistemic_zero_genesis",
+    "final": "final_zero_judgment",
+    "invariant": "InitialZeroIsNotFinalZero",
+    "final_zero_requires": "blocking_failure"
+  },
+  "nodes": [
+    {
+      "id": "nabhani_cognitive_kernel",
+      "type": "cognitive_kernel",
+      "parent": null,
+      "dependencies": [],
+      "progress_status": "HYPOTHESIS",
+      "pre": "sensed_reality_available",
+      "current": "kernel_governance_active",
+      "post": "mind_geometry_can_execute",
+      "phi_in": "sensation",
+      "phi_out": "governed_link_context",
+      "beta": "kernel_prelink",
+      "order": 1,
+      "composition": [
+        "fit_brain_condition",
+        "epistemic_zero_genesis",
+        "mind_geometry"
+      ],
+      "invariants": [
+        "BrainIsConditionNotMind",
+        "NoConceptWithoutEpistemicZeroAttention"
+      ],
+      "forbidden": [
+        "silent_level_skip",
+        "certificate_without_proof_object"
+      ],
+      "residual": "initial_zero_runtime_contract_missing",
+      "judgment": "HYPOTHESIS",
+      "residuals": [
+        "initial_zero_runtime_contract_missing"
+      ],
+      "next_actions": [
+        "Formalize kernel runtime contracts"
+      ]
+    },
+    {
+      "id": "fit_brain_condition",
+      "type": "biological_condition",
+      "parent": "nabhani_cognitive_kernel",
+      "dependencies": [],
+      "progress_status": "HYPOTHESIS",
+      "pre": "biological_reception_capability_present",
+      "current": "reception_and_attention_capacity_available",
+      "post": "cognitive_activation_possible",
+      "phi_in": "raw_sensation_signal",
+      "phi_out": "receivable_sensation",
+      "beta": "condition_only",
+      "order": 2,
+      "composition": [
+        "brain_reception",
+        "attention_capacity"
+      ],
+      "invariants": [
+        "BrainIsConditionNotMind"
+      ],
+      "forbidden": [
+        "root_or_pattern_as_factual_proof",
+        "silent_level_skip"
+      ],
+      "residual": "brain_mind_boundary_not_runtime_formalized",
+      "judgment": "HYPOTHESIS",
+      "residuals": [
+        "brain_mind_boundary_not_runtime_formalized"
+      ],
+      "next_actions": [
+        "Formalize brain as condition, not mind"
+      ]
+    },
+    {
+      "id": "epistemic_zero_genesis",
+      "type": "cognitive_activation",
+      "parent": "nabhani_cognitive_kernel",
+      "dependencies": [
+        "fit_brain_condition"
+      ],
+      "progress_status": "HYPOTHESIS",
+      "pre": "conscious_attention_available",
+      "current": "epistemic_absence_detected",
+      "post": "prior_information_search_required",
+      "phi_in": "attended_sensation",
+      "phi_out": "inquiry_trigger",
+      "beta": "pre_link_alert",
+      "order": 3,
+      "composition": [
+        "conscious_attention",
+        "epistemic_absence_detection"
+      ],
+      "invariants": [
+        "NoConceptWithoutEpistemicZeroAttention",
+        "InitialZeroIsNotFinalZero"
+      ],
+      "forbidden": [
+        "memory_as_external_evidence",
+        "silent_level_skip"
+      ],
+      "residual": "initial_zero_runtime_contract_missing",
+      "judgment": "HYPOTHESIS",
+      "residuals": [
+        "initial_zero_runtime_contract_missing"
+      ],
+      "next_actions": [
+        "Define initial zero as inquiry-starting alert"
+      ]
+    },
+    {
+      "id": "mind_geometry",
+      "type": "governed_linking_operation",
+      "parent": "nabhani_cognitive_kernel",
+      "dependencies": [
+        "epistemic_zero_genesis"
+      ],
+      "progress_status": "HYPOTHESIS",
+      "pre": "prior_information_retrieved",
+      "current": "beta_linking_executes",
+      "post": "concept_and_judgment_candidate",
+      "phi_in": "sensation_plus_prior_information",
+      "phi_out": "concept_candidate",
+      "beta": "linking_operation",
+      "order": 4,
+      "composition": [
+        "beta_linking",
+        "concept_formation",
+        "judgment_precheck"
+      ],
+      "invariants": [
+        "NoConceptWithoutEpistemicZeroAttention"
+      ],
+      "forbidden": [
+        "certificate_without_governance_gate",
+        "certificate_without_reverse_trace"
+      ],
+      "residual": "mind_geometry_runtime_contract_partial",
+      "judgment": "HYPOTHESIS",
+      "residuals": [
+        "mind_geometry_runtime_contract_partial"
+      ],
+      "next_actions": [
+        "Bind mind geometry to runtime governance contracts"
+      ]
+    },
+    {
+      "id": "final_zero_judgment",
+      "type": "final_judgment",
+      "parent": "mind_geometry",
+      "dependencies": [
+        "mind_geometry"
+      ],
+      "progress_status": "HYPOTHESIS",
+      "pre": "proof_or_trace_or_morphism_failed",
+      "current": "blocking_failure_confirmed",
+      "post": "certificate_blocked",
+      "phi_in": "failed_governance_path",
+      "phi_out": "ZERO",
+      "beta": "none",
+      "order": 5,
+      "composition": [
+        "blocking_failure",
+        "zero_emission"
+      ],
+      "invariants": [
+        "FinalZeroRequiresBlockingFailure"
+      ],
+      "forbidden": [
+        "certificate_without_proof_object",
+        "certificate_without_governance_gate",
+        "certificate_without_reverse_trace"
+      ],
+      "residual": "blocking_failure_preserved",
+      "judgment": "ZERO",
+      "residuals": [
+        "blocking_failure_preserved"
+      ],
+      "next_actions": [
+        "Keep final zero as certification blocker"
+      ]
+    }
+  ]
+}
