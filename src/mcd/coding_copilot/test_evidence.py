@@ -6,6 +6,8 @@ from dataclasses import dataclass, field
 
 @dataclass
 class TestEvidence:
+    __test__ = False
+
     test_command: str
     passed: bool
     failures: list[str] = field(default_factory=list)
