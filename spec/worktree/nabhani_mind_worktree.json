@@ -39,7 +39,6 @@
         "silent_level_skip",
         "certificate_without_proof_object"
       ],
-      "residual": "initial_zero_runtime_contract_missing",
       "judgment": "HYPOTHESIS",
       "residuals": [
         "initial_zero_runtime_contract_missing"
@@ -72,7 +71,6 @@
         "root_or_pattern_as_factual_proof",
         "silent_level_skip"
       ],
-      "residual": "brain_mind_boundary_not_runtime_formalized",
       "judgment": "HYPOTHESIS",
       "residuals": [
         "brain_mind_boundary_not_runtime_formalized"
@@ -108,7 +106,6 @@
         "memory_as_external_evidence",
         "silent_level_skip"
       ],
-      "residual": "initial_zero_runtime_contract_missing",
       "judgment": "HYPOTHESIS",
       "residuals": [
         "initial_zero_runtime_contract_missing"
@@ -144,7 +141,6 @@
         "certificate_without_governance_gate",
         "certificate_without_reverse_trace"
       ],
-      "residual": "mind_geometry_runtime_contract_partial",
       "judgment": "HYPOTHESIS",
       "residuals": [
         "mind_geometry_runtime_contract_partial"
@@ -180,7 +176,6 @@
         "certificate_without_governance_gate",
         "certificate_without_reverse_trace"
       ],
-      "residual": "blocking_failure_preserved",
       "judgment": "ZERO",
       "residuals": [
         "blocking_failure_preserved"
