@@ -1,0 +1,15 @@
+{
+  "issue": {"issue_id": "ISSUE-6", "raw_text": "fix flaky test behavior", "task_type": "test"},
+  "repo_context": {"repo_snapshot_id": "snap-6", "relevant_files": ["tests/test_flaky.py"], "relevant_tests": ["tests/test_flaky.py"]},
+  "code_claims": [{"claim_id": "C-6", "claim_type": "preserves_behavior", "affected_files": ["tests/test_flaky.py"], "required_evidence": ["test::pytest tests/test_flaky.py -q"]}],
+  "patch_plan": {"plan_id": "P-6", "steps": ["stabilize fixture timing"], "expected_tests": ["tests/test_flaky.py"], "rollback_plan": "revert commit"},
+  "patch_artifact": {"patch_id": "A-6", "changed_files": ["tests/test_flaky.py"], "additions": 4, "deletions": 1, "linked_claims": {"tests/test_flaky.py": ["C-6"]}},
+  "evidence": {
+    "test_evidence": {"test_command": "pytest tests/test_flaky.py -q", "passed": true, "failures": []},
+    "static_evidence": {"tool_name": "ruff", "passed": true, "findings": []},
+    "architecture_evidence": {"checked_rules": ["no_merge_with_pending_checks"], "violations": [], "passed": true}
+  },
+  "residuals": [{"residual_type": "ci_pending", "severity": "blocking", "message": "CI checks still pending"}],
+  "reverse_trace": {"trace_id": "T-6", "issue_id": "ISSUE-6", "repo_snapshot_id": "snap-6", "claim_ids": ["C-6"], "patch_id": "A-6", "evidence_ids": ["test::pytest tests/test_flaky.py -q", "static::ruff", "architecture::governance"], "test_commands": ["pytest tests/test_flaky.py -q"], "changed_files": ["tests/test_flaky.py"], "commit_sha": "abc125", "pr_number": "", "complete": false, "gaps": ["missing_pr_number"]},
+  "final_judgment": "hypothesis"
+}

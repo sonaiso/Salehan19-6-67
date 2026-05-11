@@ -1,0 +1,15 @@
+{
+  "issue": {"issue_id": "ISSUE-3", "raw_text": "add shortcut certificate path", "task_type": "architecture"},
+  "repo_context": {"repo_snapshot_id": "snap-3", "relevant_files": ["src/mcd/cfk/proof_object.py"], "relevant_tests": ["tests/test_cfk_reverse_trace.py"]},
+  "code_claims": [{"claim_id": "C-3", "claim_type": "aligns_governance", "affected_files": ["src/mcd/cfk/proof_object.py"], "required_evidence": ["architecture::governance"]}],
+  "patch_plan": {"plan_id": "P-3", "steps": ["modify certificate gate"], "expected_tests": ["tests/test_cfk_reverse_trace.py"], "rollback_plan": "revert commit"},
+  "patch_artifact": {"patch_id": "A-3", "changed_files": ["src/mcd/cfk/proof_object.py"], "additions": 20, "deletions": 4, "linked_claims": {"src/mcd/cfk/proof_object.py": ["C-3"]}},
+  "evidence": {
+    "test_evidence": {"test_command": "pytest tests/test_cfk_reverse_trace.py -q", "passed": true, "failures": []},
+    "static_evidence": {"tool_name": "ruff", "passed": true, "findings": []},
+    "architecture_evidence": {"checked_rules": ["certificate_without_governance_gate"], "violations": ["certificate path bypasses governance gate"], "passed": false}
+  },
+  "residuals": [{"residual_type": "architecture_violation", "severity": "fatal", "message": "gate bypass"}],
+  "reverse_trace": {"trace_id": "T-3", "issue_id": "ISSUE-3", "repo_snapshot_id": "snap-3", "claim_ids": ["C-3"], "patch_id": "A-3", "evidence_ids": ["test::pytest tests/test_cfk_reverse_trace.py -q", "architecture::governance"], "test_commands": ["pytest tests/test_cfk_reverse_trace.py -q"], "changed_files": ["src/mcd/cfk/proof_object.py"], "commit_sha": "abc999", "pr_number": "102", "complete": true, "gaps": []},
+  "final_judgment": "zero"
+}
