@@ -1,0 +1,48 @@
+{
+  "pr_number": 56,
+  "title": "Restore CLI/CFK/Concept Geometry surfaces",
+  "merged": true,
+  "checks_total": 4,
+  "checks_passed": 4,
+  "checks_failed": 0,
+  "checks_pending": 0,
+  "files_changed_count": 24,
+  "commits_count": 2,
+  "summary": "Restored CLI command surfaces and preserved CFK/concept geometry runtime paths.",
+  "affected_layers": ["cli", "cfk", "concept_geometry"],
+  "claims": [
+    {
+      "claim_id": "PR56-C1",
+      "claim_type": "restores_cli_surface",
+      "required_evidence": [
+        "test::PYTHONPATH=src python -m pytest tests/test_cfk_cli.py -q",
+        "architecture::governance"
+      ]
+    }
+  ],
+  "evidence": {
+    "test_evidence": {
+      "test_command": "PYTHONPATH=src python -m pytest tests/test_cfk_cli.py -q",
+      "passed": true,
+      "failures": []
+    },
+    "static_evidence": {
+      "tool_name": "ruff",
+      "passed": true,
+      "findings": []
+    },
+    "architecture_evidence": {
+      "checked_rules": ["no_silent_level_skip", "no_certificate_without_reverse_trace"],
+      "violations": [],
+      "passed": true
+    }
+  },
+  "residuals": [],
+  "reverse_trace": {
+    "issue_to_claim": true,
+    "claim_to_patch": true,
+    "patch_to_evidence": true,
+    "evidence_to_judgment": true
+  },
+  "expected_final_judgment": "CERTIFICATE"
+}

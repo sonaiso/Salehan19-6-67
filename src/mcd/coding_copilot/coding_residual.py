@@ -18,6 +18,8 @@ ResidualType = Literal[
     "summary_as_proof",
     "copilot_output_as_evidence",
     "ci_pending",
+    "failing_checks",
+    "missing_check_evidence",
     "insufficient_evidence",
 ]
 

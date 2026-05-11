@@ -1,0 +1,54 @@
+{
+  "pr_number": 58,
+  "title": "Add AFJG Coding Copilot Simulator Kernel",
+  "merged": true,
+  "checks_total": 4,
+  "checks_passed": 3,
+  "checks_failed": 0,
+  "checks_pending": 1,
+  "files_changed_count": 34,
+  "commits_count": 2,
+  "summary": "Introduced coding copilot kernel contracts: issue, claim, patch, evidence, residual, reverse trace, and judgment.",
+  "affected_layers": ["coding_copilot", "governance", "tests"],
+  "claims": [
+    {
+      "claim_id": "PR58-C1",
+      "claim_type": "aligns_governance",
+      "required_evidence": [
+        "test::PYTHONPATH=src python -m pytest tests/test_coding_copilot_kernel.py -q",
+        "architecture::governance"
+      ]
+    }
+  ],
+  "evidence": {
+    "test_evidence": {
+      "test_command": "PYTHONPATH=src python -m pytest tests/test_coding_copilot_kernel.py -q",
+      "passed": true,
+      "failures": []
+    },
+    "static_evidence": {
+      "tool_name": "ruff",
+      "passed": true,
+      "findings": []
+    },
+    "architecture_evidence": {
+      "checked_rules": ["no_certificate_without_reverse_trace", "no_silent_level_skip"],
+      "violations": [],
+      "passed": true
+    }
+  },
+  "residuals": [
+    {
+      "residual_type": "ci_pending",
+      "severity": "blocking",
+      "message": "3/4 checks passed at merge time; one required check pending."
+    }
+  ],
+  "reverse_trace": {
+    "issue_to_claim": true,
+    "claim_to_patch": true,
+    "patch_to_evidence": true,
+    "evidence_to_judgment": true
+  },
+  "expected_final_judgment": "HYPOTHESIS"
+}
