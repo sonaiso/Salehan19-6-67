@@ -56,9 +56,18 @@ Reality
 14. [Contradiction Linking Interpretation](./20_CONTRADICTION_LINKING_INTERPRETATION.md)
 15. [First Principles as Operators](./21_FIRST_PRINCIPLES_AS_OPERATORS.md)
 
+## Phase 2.1D — Minimal Complete Fractal Epistemic Geometry
+
+16. [Minimal Complete Fractal Epistemic Geometry](./23_MINIMAL_COMPLETE_FRACTAL_EPISTEMIC_GEOMETRY.md)
+17. [Node Edge Dimension Domain Relation Model](./24_NODE_EDGE_DIMENSION_DOMAIN_RELATION_MODEL.md)
+18. [Fractal Repetition Folding Retrieval](./25_FRACTAL_REPETITION_FOLDING_RETRIEVAL.md)
+19. [Jami Mani Geometry Criteria](./26_JAMI_MANI_GEOMETRY_CRITERIA.md)
+
 ## Machine-readable artifacts
 
 - `spec/worktree/nabhani_mind_worktree.json`
 - `spec/worktree/progress_status.schema.json`
 - `spec/worktree/operational_epistemic_vocabulary.json`
 - `spec/worktree/operational_epistemic_vocabulary.schema.json`
+- `spec/worktree/minimal_fractal_epistemic_geometry.json`
+- `spec/worktree/minimal_fractal_epistemic_geometry.schema.json`
