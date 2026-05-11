@@ -1,0 +1,401 @@
+{
+  "root_node": "nabhani_cognitive_kernel",
+  "branches": [
+    "mind_geometry",
+    "language_geometry",
+    "judgment_geometry",
+    "evidence_geometry",
+    "programming_geometry",
+    "industrial_geometry"
+  ],
+  "nodes": [
+    {
+      "node_id": "nabhani_cognitive_kernel",
+      "name": "Nabhani Cognitive Kernel",
+      "type": "root",
+      "parent": null,
+      "dependencies": [],
+      "status": "HYPOTHESIS",
+      "evidence_paths": ["docs/worktree/01_NABHANI_COGNITIVE_KERNEL.md"],
+      "residuals": ["missing_nabhani_mind_worktree"],
+      "next_actions": ["Formalize runtime contracts for root cognitive chain"]
+    },
+    {
+      "node_id": "mind_geometry",
+      "name": "Mind Geometry",
+      "type": "primary_branch",
+      "parent": "nabhani_cognitive_kernel",
+      "dependencies": ["nabhani_cognitive_kernel"],
+      "status": "HYPOTHESIS",
+      "evidence_paths": ["docs/worktree/03_ARCHITECTURE_OF_ARCHITECTURES.md"],
+      "residuals": ["mind_geometry_not_runtime_complete"],
+      "next_actions": ["Define executable distinction/identity/concept contracts"]
+    },
+    {
+      "node_id": "language_geometry",
+      "name": "Language Geometry",
+      "type": "primary_branch",
+      "parent": "nabhani_cognitive_kernel",
+      "dependencies": ["mind_geometry"],
+      "status": "PARTIAL_RUNTIME",
+      "evidence_paths": ["docs/worktree/04_LANGUAGE_REVEALS_MIND.md"],
+      "residuals": ["language_geometry_fragmented", "signifier_signified_not_fully_bound"],
+      "next_actions": ["Implement signifier-signified runtime bridge"]
+    },
+    {
+      "node_id": "judgment_geometry",
+      "name": "Judgment Geometry",
+      "type": "primary_branch",
+      "parent": "nabhani_cognitive_kernel",
+      "dependencies": ["mind_geometry"],
+      "status": "PARTIAL_RUNTIME",
+      "evidence_paths": ["docs/03_JUDGMENT_MODEL.md", "docs/worktree/06_CONCEPT_JUDGMENT_EVIDENCE.md"],
+      "residuals": ["concept_judgment_evidence_bridge_partial"],
+      "next_actions": ["Complete concept-to-judgment runtime linkage"]
+    },
+    {
+      "node_id": "evidence_geometry",
+      "name": "Evidence Geometry",
+      "type": "primary_branch",
+      "parent": "nabhani_cognitive_kernel",
+      "dependencies": ["judgment_geometry"],
+      "status": "PARTIAL_RUNTIME",
+      "evidence_paths": ["docs/07_CLAIM_AND_EVIDENCE.md", "docs/09_REVERSE_TRACE.md"],
+      "residuals": ["bayani_runtime_mixed_with_spec"],
+      "next_actions": ["Strengthen runtime/spec evidence separation"]
+    },
+    {
+      "node_id": "programming_geometry",
+      "name": "Programming Geometry",
+      "type": "primary_branch",
+      "parent": "nabhani_cognitive_kernel",
+      "dependencies": ["judgment_geometry"],
+      "status": "GOVERNANCE_ENFORCED",
+      "evidence_paths": ["docs/worktree/07_PROGRAMMING_EXECUTION_TREE.md", "docs/18_MERGE_GOVERNANCE.md"],
+      "residuals": ["ruleset_enforcement_needs_live_pr_test"],
+      "next_actions": ["Capture live merge-lock proof object"]
+    },
+    {
+      "node_id": "industrial_geometry",
+      "name": "Industrial Geometry",
+      "type": "primary_branch",
+      "parent": "nabhani_cognitive_kernel",
+      "dependencies": ["programming_geometry"],
+      "status": "RUNTIME_TESTED",
+      "evidence_paths": ["docs/worktree/08_INDUSTRIAL_BRANCHES.md", "docs/06_CODING_COPILOT_AUDITOR.md"],
+      "residuals": ["coding_copilot_branch_ahead_of_mind_root", "industrial_gateway_deferred"],
+      "next_actions": ["Align industrial branch with root worktree completion"]
+    },
+    {
+      "node_id": "mind_validity_standard",
+      "name": "Mind Validity Standard",
+      "type": "governance",
+      "parent": "mind_geometry",
+      "dependencies": ["mind_geometry"],
+      "status": "PARTIAL_RUNTIME",
+      "evidence_paths": ["docs/01_MIND_VALIDITY_STANDARD.md", "docs/worktree/02_MIND_VALIDITY_STANDARD.md"],
+      "residuals": ["mind_geometry_not_runtime_complete"],
+      "next_actions": ["Bind validity standard checks to runtime transitions"]
+    },
+    {
+      "node_id": "architecture_of_architectures",
+      "name": "Architecture of Architectures",
+      "type": "architecture",
+      "parent": "mind_geometry",
+      "dependencies": ["mind_geometry"],
+      "status": "HYPOTHESIS",
+      "evidence_paths": ["docs/worktree/03_ARCHITECTURE_OF_ARCHITECTURES.md"],
+      "residuals": ["missing_nabhani_mind_worktree"],
+      "next_actions": ["Translate branch map to executable contracts"]
+    },
+    {
+      "node_id": "language_reveals_mind",
+      "name": "Language Reveals Mind",
+      "type": "language",
+      "parent": "language_geometry",
+      "dependencies": ["language_geometry"],
+      "status": "HYPOTHESIS",
+      "evidence_paths": ["docs/04_LANGUAGE_REVEALS_MIND.md", "docs/worktree/04_LANGUAGE_REVEALS_MIND.md"],
+      "residuals": ["language_geometry_fragmented"],
+      "next_actions": ["Complete reveal contracts with runtime checks"]
+    },
+    {
+      "node_id": "signifier_geometry",
+      "name": "Signifier Geometry",
+      "type": "language",
+      "parent": "language_geometry",
+      "dependencies": ["language_geometry"],
+      "status": "HYPOTHESIS",
+      "evidence_paths": ["docs/worktree/05_SIGNIFIER_SIGNIFIED_GEOMETRY.md"],
+      "residuals": ["signifier_signified_not_fully_bound"],
+      "next_actions": ["Add signifier validators"]
+    },
+    {
+      "node_id": "signified_geometry",
+      "name": "Signified Geometry",
+      "type": "language",
+      "parent": "language_geometry",
+      "dependencies": ["language_geometry"],
+      "status": "HYPOTHESIS",
+      "evidence_paths": ["docs/worktree/05_SIGNIFIER_SIGNIFIED_GEOMETRY.md"],
+      "residuals": ["signifier_signified_not_fully_bound"],
+      "next_actions": ["Add signified validators"]
+    },
+    {
+      "node_id": "signifier_signified_relation",
+      "name": "Signifier-Signified Relation",
+      "type": "language",
+      "parent": "language_geometry",
+      "dependencies": ["signifier_geometry", "signified_geometry"],
+      "status": "HYPOTHESIS",
+      "evidence_paths": ["docs/worktree/05_SIGNIFIER_SIGNIFIED_GEOMETRY.md"],
+      "residuals": ["signifier_signified_not_fully_bound"],
+      "next_actions": ["Bind signifier and signified with relation contracts"]
+    },
+    {
+      "node_id": "concept_geometry",
+      "name": "Concept Geometry",
+      "type": "conceptual",
+      "parent": "mind_geometry",
+      "dependencies": ["mind_geometry"],
+      "status": "RUNTIME_TESTED",
+      "evidence_paths": ["src/mcd/concept_geometry/", "tests/test_concept_geometry_validator.py"],
+      "residuals": ["concept_judgment_evidence_bridge_partial"],
+      "next_actions": ["Connect concept outputs to judgment bridge"]
+    },
+    {
+      "node_id": "evidence_governance",
+      "name": "Evidence Governance",
+      "type": "evidence",
+      "parent": "evidence_geometry",
+      "dependencies": ["judgment_geometry", "evidence_geometry"],
+      "status": "PARTIAL_RUNTIME",
+      "evidence_paths": ["docs/07_CLAIM_AND_EVIDENCE.md", "docs/10_FORBIDDEN_TRANSITIONS.md"],
+      "residuals": ["bayani_runtime_mixed_with_spec"],
+      "next_actions": ["Enforce evidence matching checks in runtime"]
+    },
+    {
+      "node_id": "reverse_trace",
+      "name": "ReverseTrace",
+      "type": "trace",
+      "parent": "evidence_geometry",
+      "dependencies": ["evidence_governance"],
+      "status": "PARTIAL_RUNTIME",
+      "evidence_paths": ["docs/09_REVERSE_TRACE.md"],
+      "residuals": ["training_trace_not_yet_built"],
+      "next_actions": ["Extend reverse trace to full worktree nodes"]
+    },
+    {
+      "node_id": "residual_policy",
+      "name": "Residual Policy",
+      "type": "governance",
+      "parent": "evidence_geometry",
+      "dependencies": ["evidence_governance"],
+      "status": "CERTIFICATE",
+      "evidence_paths": ["docs/08_RESIDUAL_POLICY.md"],
+      "residuals": [],
+      "next_actions": ["Maintain residual emission and preservation invariants"]
+    },
+    {
+      "node_id": "bayani_verifier",
+      "name": "Bayani Verifier",
+      "type": "product",
+      "parent": "programming_geometry",
+      "dependencies": ["language_geometry", "judgment_geometry", "evidence_geometry", "programming_geometry"],
+      "status": "PARTIAL_RUNTIME",
+      "evidence_paths": ["docs/05_BAYANI_VERIFIER_API.md", "src/mcd/"],
+      "residuals": ["bayani_runtime_mixed_with_spec"],
+      "next_actions": ["Separate runtime and spec execution paths clearly"]
+    },
+    {
+      "node_id": "mustadil_pipeline",
+      "name": "Mustadil Pipeline",
+      "type": "product",
+      "parent": "programming_geometry",
+      "dependencies": ["bayani_verifier", "programming_geometry"],
+      "status": "PARTIAL_RUNTIME",
+      "evidence_paths": ["docs/09_MUSTADIL_PIPELINE.md"],
+      "residuals": ["concept_judgment_evidence_bridge_partial"],
+      "next_actions": ["Complete concept-judgment-evidence bridge in pipeline"]
+    },
+    {
+      "node_id": "glcfl",
+      "name": "GLCFL",
+      "type": "product",
+      "parent": "programming_geometry",
+      "dependencies": ["language_geometry", "programming_geometry"],
+      "status": "PARTIAL_RUNTIME",
+      "evidence_paths": ["docs/08_GLCFL.md"],
+      "residuals": ["language_geometry_fragmented"],
+      "next_actions": ["Unify language runtime contracts used by GLCFL"]
+    },
+    {
+      "node_id": "epistemic_decoder",
+      "name": "Epistemic Decoder",
+      "type": "product",
+      "parent": "programming_geometry",
+      "dependencies": ["mustadil_pipeline", "programming_geometry"],
+      "status": "PARTIAL_RUNTIME",
+      "evidence_paths": ["docs/07_EPISTEMIC_DECODER.md"],
+      "residuals": ["concept_judgment_evidence_bridge_partial"],
+      "next_actions": ["Tighten evidence bridge in decoder outputs"]
+    },
+    {
+      "node_id": "coding_copilot_auditor",
+      "name": "Coding Copilot Auditor",
+      "type": "industrial",
+      "parent": "industrial_geometry",
+      "dependencies": ["programming_geometry", "merge_governance", "ruleset_enforcement"],
+      "status": "RUNTIME_TESTED",
+      "evidence_paths": ["docs/06_CODING_COPILOT_AUDITOR.md", "tests/test_coding_pr_audit.py"],
+      "residuals": ["coding_copilot_branch_ahead_of_mind_root"],
+      "next_actions": ["Keep industrial branch aligned to root worktree progress"]
+    },
+    {
+      "node_id": "merge_governance",
+      "name": "Merge Governance",
+      "type": "industrial",
+      "parent": "industrial_geometry",
+      "dependencies": ["programming_geometry", "judgment_geometry"],
+      "status": "GOVERNANCE_ENFORCED",
+      "evidence_paths": ["docs/18_MERGE_GOVERNANCE.md", "tests/test_coding_merge_governance.py"],
+      "residuals": ["ruleset_enforcement_needs_live_pr_test"],
+      "next_actions": ["Collect live PR governance proof object"]
+    },
+    {
+      "node_id": "ruleset_enforcement",
+      "name": "Ruleset Enforcement",
+      "type": "industrial",
+      "parent": "industrial_geometry",
+      "dependencies": ["merge_governance", "programming_geometry"],
+      "status": "GOVERNANCE_ENFORCED",
+      "evidence_paths": ["docs/18_MERGE_GOVERNANCE.md"],
+      "residuals": ["ruleset_enforcement_needs_live_pr_test"],
+      "next_actions": ["Validate branch-up-to-date and merge lock in a tiny PR"]
+    },
+    {
+      "node_id": "training_traces",
+      "name": "Training Traces",
+      "type": "future",
+      "parent": "industrial_geometry",
+      "dependencies": ["reverse_trace", "evidence_governance"],
+      "status": "SPEC_ONLY",
+      "evidence_paths": ["docs/02_PRODUCT_ROADMAP.md"],
+      "residuals": ["training_trace_not_yet_built"],
+      "next_actions": ["Build governed dataset extraction from worktree traces"]
+    }
+  ],
+  "dependencies": {
+    "mind_geometry": ["nabhani_cognitive_kernel"],
+    "language_geometry": ["mind_geometry"],
+    "judgment_geometry": ["mind_geometry"],
+    "evidence_geometry": ["judgment_geometry"],
+    "programming_geometry": ["judgment_geometry"],
+    "industrial_geometry": ["programming_geometry"],
+    "coding_copilot_auditor": ["programming_geometry", "merge_governance", "ruleset_enforcement"],
+    "training_traces": ["reverse_trace", "evidence_governance"]
+  },
+  "statuses": {
+    "CERTIFICATE": "Documented repository-level completion under governance evidence",
+    "HYPOTHESIS": "Structurally valid but incomplete evidence or runtime closure",
+    "ZERO": "Invalidated or blocked state",
+    "SPEC_ONLY": "Specification-level only, no runtime implementation",
+    "PARTIAL_RUNTIME": "Runtime exists but full contract coverage is incomplete",
+    "RUNTIME_TESTED": "Runtime behavior tested in repository",
+    "GOVERNANCE_ENFORCED": "Enforced by CI/ruleset governance controls"
+  },
+  "residuals": [
+    {
+      "id": "missing_nabhani_mind_worktree",
+      "severity": "high",
+      "why_it_matters": "Root architecture map must be canonical before branch expansion",
+      "what_fixes_it": "Maintain root-first worktree docs/spec/tests",
+      "proposed_next_pr": "Phase 2.1: Formalize Mind Geometry Runtime Contracts"
+    },
+    {
+      "id": "mind_geometry_not_runtime_complete",
+      "severity": "high",
+      "why_it_matters": "Mind distinctions are not yet executable end-to-end",
+      "what_fixes_it": "Runtime contracts for distinction/identity/concept chain",
+      "proposed_next_pr": "Phase 2.1: Formalize Mind Geometry Runtime Contracts"
+    },
+    {
+      "id": "language_geometry_fragmented",
+      "severity": "medium",
+      "why_it_matters": "Language nodes are present but not unified in one executable bridge",
+      "what_fixes_it": "Language reveal runtime bridge",
+      "proposed_next_pr": "Phase 2.2: Language Reveals Mind Runtime Bridge"
+    },
+    {
+      "id": "signifier_signified_not_fully_bound",
+      "severity": "high",
+      "why_it_matters": "Signifier/signified mismatches can leak false certainty",
+      "what_fixes_it": "Signifier-signified relation validators",
+      "proposed_next_pr": "Phase 2.2: Signifier/Signified Runtime Bridge"
+    },
+    {
+      "id": "concept_judgment_evidence_bridge_partial",
+      "severity": "high",
+      "why_it_matters": "Judgment transitions remain partially connected to evidence gates",
+      "what_fixes_it": "Executable concept->judgment->evidence chain",
+      "proposed_next_pr": "Phase 2.3: Concept to Evidence Bridge"
+    },
+    {
+      "id": "bayani_runtime_mixed_with_spec",
+      "severity": "medium",
+      "why_it_matters": "Runtime confidence can be blurred by mixed spec/runtime boundaries",
+      "what_fixes_it": "Runtime/spec boundary hardening",
+      "proposed_next_pr": "Phase 2.3: Runtime/Spec Boundary Hardening"
+    },
+    {
+      "id": "coding_copilot_branch_ahead_of_mind_root",
+      "severity": "medium",
+      "why_it_matters": "Industrial maturity can outpace root architecture closure",
+      "what_fixes_it": "Root-first worktree completion sequencing",
+      "proposed_next_pr": "Phase 2.1: Root Completion Alignment"
+    },
+    {
+      "id": "training_trace_not_yet_built",
+      "severity": "medium",
+      "why_it_matters": "Learning traces require governed extraction from worktree nodes",
+      "what_fixes_it": "Training trace pipeline",
+      "proposed_next_pr": "Phase 2.4: TrainingTrace from Worktree Nodes"
+    },
+    {
+      "id": "industrial_gateway_deferred",
+      "severity": "low",
+      "why_it_matters": "Industrial gateway remains a roadmap item",
+      "what_fixes_it": "Scoped implementation plan and rollout criteria",
+      "proposed_next_pr": "Future industrial gateway planning PR"
+    },
+    {
+      "id": "ruleset_enforcement_needs_live_pr_test",
+      "severity": "high",
+      "why_it_matters": "Ruleset snapshots are HYPOTHESIS until observed merge-lock behavior",
+      "what_fixes_it": "Tiny PR proof object with blocked merge before required check success",
+      "proposed_next_pr": "Governance evidence PR"
+    }
+  ],
+  "next_prs": [
+    {
+      "id": "phase_2_1",
+      "title": "Phase 2.1: Formalize Mind Geometry Runtime Contracts",
+      "scope": "Distinction/identity/concept runtime contracts"
+    },
+    {
+      "id": "phase_2_2",
+      "title": "Phase 2.2: Language Reveals Mind — Signifier/Signified Runtime Bridge",
+      "scope": "Language geometry runtime bridge"
+    },
+    {
+      "id": "phase_2_3",
+      "title": "Phase 2.3: Concept -> Judgment -> Evidence Bridge",
+      "scope": "Judgment and evidence chain hardening"
+    },
+    {
+      "id": "phase_2_4",
+      "title": "Phase 2.4: TrainingTrace from Worktree Nodes",
+      "scope": "Governed training trace extraction"
+    }
+  ]
+}
