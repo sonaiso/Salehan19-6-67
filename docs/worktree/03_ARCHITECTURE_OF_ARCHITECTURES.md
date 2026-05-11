@@ -76,5 +76,5 @@
 - **invariants:** industrial branch cannot become root architecture
 - **forbidden transitions:** `coding_copilot_branch_ahead_of_mind_root`
 - **residuals:** `industrial_gateway_deferred`, `training_trace_not_yet_built`
-- **current repository status:** PARTIAL_RUNTIME
+- **current repository status:** RUNTIME_TESTED
 - **next required work:** align industrial outputs to completed root worktree
