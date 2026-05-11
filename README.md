@@ -90,6 +90,7 @@ python -m pytest tests/test_coding_real_pr_fixtures.py -v
 - [Developer Guide](docs/10_DEVELOPER_GUIDE.md)
 - [Testing and CI](docs/11_TESTING_AND_CI.md)
 - [Historical README Archive](docs/12_ARCHIVE_README_HISTORY.md)
+- [Worktree Progress](docs/worktree/00_WORKTREE_INDEX.md)
 
 ## Current Status
 
