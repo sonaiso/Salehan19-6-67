@@ -24,16 +24,26 @@ def test_schema_validates_json_spec():
 def test_chain_order_dependencies():
     spec = _load_json(SPEC_PATH)
     chain = spec["chain_order"]
-    pos = {node: idx for idx, node in enumerate(chain)}
+    expected_chain = [
+        "epistemic_zero",
+        "attention",
+        "distinction",
+        "identity",
+        "universal",
+        "particular",
+        "designation",
+        "linking",
+        "aspect",
+        "temporal_scope",
+        "judgment_rank",
+        "domain",
+        "contradiction_check",
+        "interpretation",
+        "conception",
+        "judgment",
+    ]
 
-    assert pos["epistemic_zero"] < pos["attention"]
-    assert pos["attention"] < pos["distinction"]
-    assert pos["distinction"] < pos["designation"]
-    assert pos["designation"] < pos["domain"]
-    assert pos["domain"] < pos["contradiction_check"]
-    assert pos["linking"] < pos["interpretation"]
-    assert pos["interpretation"] < pos["conception"]
-    assert pos["conception"] < pos["judgment"]
+    assert chain == expected_chain
 
 
 def test_contradiction_requires_domain_time_aspect_and_rank():
