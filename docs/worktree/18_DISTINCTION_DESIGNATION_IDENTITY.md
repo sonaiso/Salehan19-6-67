@@ -13,7 +13,7 @@
 
 - Epistemic definition: continuity preservation of the same referent across context, scope, and time.
 - Mathematical form: `ID(x1) = ID(x2)` when valid continuity path exists.
-- Programming contract: `IdentityUnit(identity_id, mentions, reference_type, continuity_scope, temporal_scope, identity_basis, confidence, residuals)`.
+- Programming contract: `IdentityUnit(identity_id, mentions, reference_type, continuity_scope, identity_basis, confidence, residuals)`.
 - Linguistic function: resolves anaphora/coreference and protects subject continuity.
 - Forbidden transitions: `judgment_without_subject`, `homonym_confusion_as_identity`.
 - Residuals: `identity_shift`, `temporal_identity_gap`, `unresolved_reference`.
