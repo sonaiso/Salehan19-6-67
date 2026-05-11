@@ -33,7 +33,7 @@
 - Mathematical form: `I = τ(S,R,K,L,Π,Γ)`.
 - Programming contract: `InterpretationObject(interpretation_id, input_signal, reality_ref, prior_information_refs, link_candidates, first_principles_applied, global_rules_applied, meaning, scope, residuals)`.
 - Linguistic function: transforms expression into scoped semantic interpretation.
-- Forbidden transitions: `interpretation_without_link_candidates`, `model_output_as_evidence`.
+- Forbidden transitions: `interpretation_without_links`, `model_output_as_evidence`.
 - Residuals: `underspecified_meaning`, `evidence_gap`, `scope_uncertainty`.
 
 ## Conception (C)
