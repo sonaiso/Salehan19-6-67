@@ -1,0 +1,205 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bayani.spec/worktree/operational_epistemic_vocabulary.schema.json",
+  "title": "Operational Epistemic Vocabulary",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "vocabulary_version",
+    "final_judgments",
+    "chain_order",
+    "nodes"
+  ],
+  "properties": {
+    "vocabulary_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "final_judgments": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "ZERO",
+          "HYPOTHESIS",
+          "CERTIFICATE"
+        ]
+      },
+      "uniqueItems": true,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "chain_order": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "epistemic_zero",
+          "attention",
+          "distinction",
+          "designation",
+          "identity",
+          "universal",
+          "particular",
+          "domain",
+          "aspect",
+          "temporal_scope",
+          "judgment_rank",
+          "contradiction_check",
+          "linking",
+          "interpretation",
+          "conception",
+          "judgment"
+        ]
+      },
+      "uniqueItems": true,
+      "minItems": 16,
+      "maxItems": 16
+    },
+    "nodes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "epistemic_zero",
+        "attention",
+        "distinction",
+        "designation",
+        "identity",
+        "universal",
+        "particular",
+        "domain",
+        "aspect",
+        "temporal_scope",
+        "judgment_rank",
+        "contradiction_check",
+        "linking",
+        "interpretation",
+        "conception",
+        "judgment"
+      ],
+      "properties": {
+        "epistemic_zero": {"$ref": "#/$defs/node"},
+        "attention": {"$ref": "#/$defs/node"},
+        "distinction": {"$ref": "#/$defs/node"},
+        "designation": {"$ref": "#/$defs/node"},
+        "identity": {"$ref": "#/$defs/node"},
+        "universal": {"$ref": "#/$defs/node"},
+        "particular": {"$ref": "#/$defs/node"},
+        "domain": {"$ref": "#/$defs/node"},
+        "aspect": {"$ref": "#/$defs/node"},
+        "temporal_scope": {"$ref": "#/$defs/node"},
+        "judgment_rank": {"$ref": "#/$defs/node"},
+        "contradiction_check": {"$ref": "#/$defs/node"},
+        "linking": {"$ref": "#/$defs/node"},
+        "interpretation": {"$ref": "#/$defs/node"},
+        "conception": {"$ref": "#/$defs/node"},
+        "judgment": {"$ref": "#/$defs/node"}
+      }
+    }
+  },
+  "$defs": {
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node_id",
+        "rank",
+        "definition",
+        "epistemic_definition",
+        "mathematical_form",
+        "programming_contract",
+        "linguistic_function",
+        "required_inputs",
+        "outputs",
+        "forbidden_transitions",
+        "residuals",
+        "next_nodes",
+        "pre",
+        "current",
+        "post",
+        "phi_in",
+        "phi_out",
+        "beta",
+        "type",
+        "order",
+        "composition",
+        "invariants",
+        "forbidden",
+        "residual",
+        "judgment"
+      ],
+      "properties": {
+        "node_id": {"type": "string", "minLength": 1},
+        "rank": {"type": "integer", "minimum": 0},
+        "definition": {"type": "string", "minLength": 1},
+        "epistemic_definition": {"type": "string", "minLength": 1},
+        "mathematical_form": {"type": "string", "minLength": 1},
+        "programming_contract": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["class_name", "fields"],
+          "properties": {
+            "class_name": {"type": "string", "minLength": 1},
+            "fields": {
+              "type": "array",
+              "items": {"type": "string", "minLength": 1},
+              "minItems": 1
+            }
+          }
+        },
+        "linguistic_function": {"type": "string", "minLength": 1},
+        "required_inputs": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1}
+        },
+        "outputs": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "minItems": 1
+        },
+        "forbidden_transitions": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "minItems": 1
+        },
+        "residuals": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "minItems": 1
+        },
+        "next_nodes": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1}
+        },
+        "pre": {"type": "string", "minLength": 1},
+        "current": {"type": "string", "minLength": 1},
+        "post": {"type": "string", "minLength": 1},
+        "phi_in": {"type": "string", "minLength": 1},
+        "phi_out": {"type": "string", "minLength": 1},
+        "beta": {"type": "string", "minLength": 1},
+        "type": {"type": "string", "minLength": 1},
+        "order": {"type": "integer", "minimum": 0},
+        "composition": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1}
+        },
+        "invariants": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "minItems": 1
+        },
+        "forbidden": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "minItems": 1
+        },
+        "residual": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "minItems": 1
+        },
+        "judgment": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}
