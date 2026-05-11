@@ -516,7 +516,7 @@ def main() -> None:
 
     math_chain_parser = subparsers.add_parser(
         "math-chain",
-        help="Phase 8.6: Show governed chain from unicode to final answer",
+        help="Phase 8.6: Show governed Unicode-to-FullText ascent up to final judgment",
     )
     math_chain_parser.add_argument("--text", required=True, help="Arabic text to evaluate")
     math_chain_parser.add_argument("--output", choices=["markdown", "json"], default="markdown")
@@ -2107,10 +2107,23 @@ def _handle_math_governance_command(args) -> None:
     elif args.command == "math-chain":
         tokens = args.text.split()
         chain = [
-            {"level": "unicode", "surface": args.text, "morphism_out": "unicode_to_token"},
+            {"level": "raw_text", "surface": args.text, "morphism_out": "raw_text_to_unicode"},
+            {"level": "unicode", "surface": args.text, "morphism_out": "unicode_to_grapheme"},
+            {"level": "grapheme", "surface": args.text, "morphism_out": "grapheme_to_orthographic_unit"},
+            {"level": "orthographic_unit", "surface": "|".join(tokens), "morphism_out": "orthographic_unit_to_token"},
             {"level": "token", "surface": "|".join(tokens), "morphism_out": "token_to_lexeme"},
-            {"level": "lexeme", "surface": "|".join(tokens), "morphism_out": "lexeme_to_root_pattern"},
-            {"level": "final_answer", "surface": "suspend", "morphism_out": "proposal_to_residual"},
+            {"level": "lexeme", "surface": "|".join(tokens), "morphism_out": "lexeme_to_morphology"},
+            {"level": "morphology", "surface": "|".join(tokens), "morphism_out": "morphology_to_phrase"},
+            {"level": "phrase", "surface": args.text, "morphism_out": "phrase_to_clause"},
+            {"level": "clause", "surface": args.text, "morphism_out": "clause_to_sentence"},
+            {"level": "sentence", "surface": args.text, "morphism_out": "sentence_to_paragraph"},
+            {"level": "paragraph", "surface": args.text, "morphism_out": "paragraph_to_section"},
+            {"level": "section", "surface": args.text, "morphism_out": "section_to_full_text"},
+            {"level": "full_text", "surface": args.text, "morphism_out": "full_text_to_discourse_graph"},
+            {"level": "discourse_graph", "surface": args.text, "morphism_out": "discourse_graph_to_claim_graph"},
+            {"level": "claim_graph", "surface": args.text, "morphism_out": "claim_graph_to_proof_object"},
+            {"level": "proof_object", "surface": "hypothesis", "morphism_out": "proof_object_to_final_judgment"},
+            {"level": "final_judgment", "surface": "hypothesis", "morphism_out": ""},
         ]
         if args.output == "json":
             print(_json.dumps({"text": args.text, "chain": chain}, ensure_ascii=False, indent=2))

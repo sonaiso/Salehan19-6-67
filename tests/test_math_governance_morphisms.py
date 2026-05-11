@@ -10,20 +10,20 @@ def test_no_transition_without_morphism():
 
 def test_morphism_preserves_trace():
     reg = LevelMorphismRegistry()
-    ok, msgs = reg.validate_transition("unicode", "token")
+    ok, msgs = reg.validate_transition("unicode", "grapheme")
     assert ok is True
     assert not msgs
 
 
 def test_morphism_cannot_create_evidence():
     reg = LevelMorphismRegistry()
-    ok, msgs = reg.validate_effects("unicode_to_token", create_evidence=True)
+    ok, msgs = reg.validate_effects("unicode_to_grapheme", create_evidence=True)
     assert ok is False
     assert any("create evidence" in m.lower() for m in msgs)
 
 
 def test_morphism_cannot_issue_certificate():
     reg = LevelMorphismRegistry()
-    ok, msgs = reg.validate_effects("unicode_to_token", issue_certificate=True)
+    ok, msgs = reg.validate_effects("unicode_to_grapheme", issue_certificate=True)
     assert ok is False
     assert any("certificate" in m.lower() for m in msgs)

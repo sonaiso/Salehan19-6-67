@@ -8,6 +8,7 @@ from mcd.math_governance.fractal_unit_governance import GovernedFractalUnit
 from mcd.math_governance.jami_mani_calculator import JamiManiCalculator, JamiManiDefinition
 from mcd.math_governance.level_morphism_registry import LevelMorphismRegistry
 from mcd.math_governance.operator_algebra import CognitiveOperator, OperatorAlgebra
+from mcd.math_governance.text_ascent_chain import validate_text_ascent_chain
 
 
 @dataclass
@@ -60,6 +61,8 @@ class MathematicalGovernanceGate:
                 violations.append(f"{unit.unit_id}: missing pre link to previous unit")
             if i < len(units) - 1 and units[i + 1].unit_id not in unit.post_unit_ids:
                 violations.append(f"{unit.unit_id}: missing post link to next unit")
+        ascent = validate_text_ascent_chain(units)
+        violations.extend(ascent.violations)
         return len(violations) == 0, violations
 
     def validate_morphisms(self, units: list[GovernedFractalUnit]) -> tuple[float, list[str]]:
