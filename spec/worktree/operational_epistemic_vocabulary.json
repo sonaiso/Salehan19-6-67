@@ -44,7 +44,7 @@
       "current": "zero_registered",
       "post": "attention_candidate",
       "phi_in": "awareness_presence",
-      "phi_out": "unknown_presence_token",
+      "phi_out": "zero_signal",
       "beta": "zero_preservation",
       "type": "epistemic_gate",
       "order": 0,
