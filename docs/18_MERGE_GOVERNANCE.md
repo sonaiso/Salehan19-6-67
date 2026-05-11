@@ -32,12 +32,40 @@ A PR cannot be epistemically merge-allowed when any of the following holds:
 6. Do not allow bypass unless explicitly documented
 7. Disable auto-merge unless all AFJG gates pass
 
+## Main ruleset evidence (2026-05-11)
+
+Observed governance snapshot:
+
+```text
+Ruleset: Active
+Target: main
+Required status check: AFJG PR Certification
+Bypass list: empty
+```
+
+This is a configuration snapshot and remains `HYPOTHESIS`-level governance evidence
+until validated by a test PR with full ProofObject + GovernanceGate + ReverseTrace.
+
+Required elevation package for `CERTIFICATE`:
+
+- ProofObject: test PR execution trace showing Merge blocked while `AFJG PR Certification` is pending/failing and unlocked only after success
+- GovernanceGate: active ruleset enforcement on `main` (required check + no bypass) demonstrably preventing premature merge
+- ReverseTrace: ruleset configuration snapshot → observable blocked-merge behavior → archived governance record
+
+Current residual to close before final repository-level certification:
+
+- execute a tiny docs PR and verify Merge stays blocked until `AFJG PR Certification` succeeds (ProofObject + GovernanceGate + ReverseTrace)
+- ensure `Require branches to be up to date before merging` is enabled in the ruleset
+- confirm these controls remain enabled: Require pull request, Require status checks, Block force pushes, Restrict deletions
+- prefer enabling conversation resolution before merge if available in the pull request settings
+
 ## Operational checklist
 
-- [ ] Branch protection enabled on main
-- [ ] Required checks configured
-- [ ] PR certification check required
-- [ ] Pending checks block merge
+- [ ] Branch protection enabled on main (snapshot observed; ProofObject pending)
+- [ ] Required checks configured (snapshot observed; ProofObject pending)
+- [ ] PR certification check required (snapshot observed; ProofObject pending)
+- [ ] Branches required to be up to date before merge
+- [ ] Pending checks block merge (validated by test PR)
 - [ ] Review conversations resolved before merge
 
 ## Enforcement note
