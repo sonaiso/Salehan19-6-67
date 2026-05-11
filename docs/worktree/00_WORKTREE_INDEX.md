@@ -48,7 +48,17 @@ Reality
 9. [Progress Status Matrix](09_PROGRESS_STATUS_MATRIX.md)
 10. [Residuals and Open Gaps](10_RESIDUALS_AND_OPEN_GAPS.md)
 
+## Phase 2.1A — Operational Epistemic Vocabulary
+
+11. [Operational Epistemic Vocabulary](./17_OPERATIONAL_EPISTEMIC_VOCABULARY.md)
+12. [Distinction Designation Identity](./18_DISTINCTION_DESIGNATION_IDENTITY.md)
+13. [Universal Particular Domain](./19_UNIVERSAL_PARTICULAR_DOMAIN.md)
+14. [Contradiction Linking Interpretation](./20_CONTRADICTION_LINKING_INTERPRETATION.md)
+15. [First Principles as Operators](./21_FIRST_PRINCIPLES_AS_OPERATORS.md)
+
 ## Machine-readable artifacts
 
 - `spec/worktree/nabhani_mind_worktree.json`
 - `spec/worktree/progress_status.schema.json`
+- `spec/worktree/operational_epistemic_vocabulary.json`
+- `spec/worktree/operational_epistemic_vocabulary.schema.json`
