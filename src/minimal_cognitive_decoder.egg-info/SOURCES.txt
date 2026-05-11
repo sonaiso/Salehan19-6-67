@@ -63,7 +63,6 @@ src/mcd/coding_copilot/patch_plan.py
 src/mcd/coding_copilot/pr_audit.py
 src/mcd/coding_copilot/pr_certification.py
 src/mcd/coding_copilot/repo_context.py
-src/mcd/coding_copilot/serializers.py
 src/mcd/coding_copilot/static_evidence.py
 src/mcd/coding_copilot/test_evidence.py
 src/mcd/concept_geometry/__init__.py
