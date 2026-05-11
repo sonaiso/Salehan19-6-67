@@ -14,9 +14,9 @@ Status vocabulary used in this matrix:
 
 | Worktree Node | Type | Status | Evidence in Repository | Missing Work | Residual | Next PR |
 | --- | --- | --- | --- | --- | --- | --- |
-| Nabhani Cognitive Kernel | Cognitive Root | HYPOTHESIS | `docs/worktree/01_NABHANI_COGNITIVE_KERNEL.md` | Runtime mind contracts | missing_nabhani_mind_worktree | Phase 2.1 |
+| Nabhani Cognitive Kernel | Cognitive Root | HYPOTHESIS | `docs/worktree/01_NABHANI_COGNITIVE_KERNEL.md` | Runtime mind contracts | runtime_mind_contracts_not_complete | Phase 2.1 |
 | Mind Validity Standard | Governance | PARTIAL_RUNTIME | `docs/01_MIND_VALIDITY_STANDARD.md` | Runtime coupling to worktree nodes | mind_geometry_not_runtime_complete | Phase 2.1 |
-| Architecture of Architectures | Architecture | HYPOTHESIS | `docs/worktree/03_ARCHITECTURE_OF_ARCHITECTURES.md` | Branch-level executable coverage | missing_nabhani_mind_worktree | Phase 2.1 |
+| Architecture of Architectures | Architecture | HYPOTHESIS | `docs/worktree/03_ARCHITECTURE_OF_ARCHITECTURES.md` | Branch-level executable coverage | branch_executable_coverage_not_complete | Phase 2.1 |
 | Language Reveals Mind | Language | HYPOTHESIS | `docs/04_LANGUAGE_REVEALS_MIND.md` | Runtime reveal bridge completion | language_geometry_fragmented | Phase 2.2 |
 | Signifier Geometry | Language Geometry | HYPOTHESIS | `docs/worktree/05_SIGNIFIER_SIGNIFIED_GEOMETRY.md` | Runtime signifier validators | signifier_signified_not_fully_bound | Phase 2.2 |
 | Signified Geometry | Language Geometry | HYPOTHESIS | `docs/worktree/05_SIGNIFIER_SIGNIFIED_GEOMETRY.md` | Runtime signified validators | signifier_signified_not_fully_bound | Phase 2.2 |
