@@ -36,6 +36,9 @@ from .curriculum_coverage_matrix import CurriculumCoverageMatrix, CurriculumCove
 from .residual_curriculum_builder import (
     ResidualCurriculumBuilder, ResidualCurriculumUnit, ResidualBuildReport,
 )
+from .binary_epistemic_language import (
+    BinaryEpistemicUnit, FINAL_EPISTEMIC_JUDGMENTS, FORBIDDEN_TRANSITIONS,
+)
 
 __all__ = [
     "CognitiveUnit", "CognitiveNode", "CognitiveEdge", "CognitiveGraph",
@@ -64,4 +67,5 @@ __all__ = [
     "DepthMetricsCalculator", "DepthMetricsReport",
     "CurriculumCoverageMatrix", "CoverageCoverageReport",
     "ResidualCurriculumBuilder", "ResidualCurriculumUnit", "ResidualBuildReport",
+    "BinaryEpistemicUnit", "FINAL_EPISTEMIC_JUDGMENTS", "FORBIDDEN_TRANSITIONS",
 ]
