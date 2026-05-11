@@ -1,0 +1,15 @@
+{
+  "issue": {"issue_id": "ISSUE-5", "raw_text": "update docs for governance constraints", "task_type": "docs"},
+  "repo_context": {"repo_snapshot_id": "snap-5", "relevant_files": ["docs/11_ACCEPTANCE_CRITERIA.md"], "relevant_tests": []},
+  "code_claims": [{"claim_id": "C-5", "claim_type": "aligns_governance", "affected_files": ["docs/11_ACCEPTANCE_CRITERIA.md"], "required_evidence": []}],
+  "patch_plan": {"plan_id": "P-5", "steps": ["clarify acceptance text"], "expected_tests": [], "rollback_plan": "git checkout -- docs/11_ACCEPTANCE_CRITERIA.md"},
+  "patch_artifact": {"patch_id": "A-5", "changed_files": ["docs/11_ACCEPTANCE_CRITERIA.md"], "additions": 6, "deletions": 1, "linked_claims": {"docs/11_ACCEPTANCE_CRITERIA.md": ["C-5"]}},
+  "evidence": {
+    "test_evidence": null,
+    "static_evidence": null,
+    "architecture_evidence": {"checked_rules": ["docs_consistency"], "violations": [], "passed": true}
+  },
+  "residuals": [{"residual_type": "insufficient_evidence", "severity": "warning", "message": "docs-only local simulation"}],
+  "reverse_trace": {"trace_id": "T-5", "issue_id": "ISSUE-5", "repo_snapshot_id": "snap-5", "claim_ids": ["C-5"], "patch_id": "A-5", "evidence_ids": ["architecture::governance"], "test_commands": [], "changed_files": ["docs/11_ACCEPTANCE_CRITERIA.md"], "commit_sha": "", "pr_number": "", "complete": false, "gaps": ["missing_commit_sha", "missing_pr_number"]},
+  "final_judgment": "hypothesis"
+}

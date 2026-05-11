@@ -1,0 +1,15 @@
+{
+  "issue": {"issue_id": "ISSUE-2", "raw_text": "fix parser edge case", "task_type": "bugfix"},
+  "repo_context": {"repo_snapshot_id": "snap-2", "relevant_files": ["src/mcd/parser.py"], "relevant_tests": []},
+  "code_claims": [{"claim_id": "C-2", "claim_type": "fixes_bug", "affected_files": ["src/mcd/parser.py"], "required_evidence": ["test::pytest tests/test_parser.py -q"]}],
+  "patch_plan": {"plan_id": "P-2", "steps": ["guard null path"], "expected_tests": [], "rollback_plan": "revert commit"},
+  "patch_artifact": {"patch_id": "A-2", "changed_files": ["src/mcd/parser.py"], "additions": 10, "deletions": 1, "linked_claims": {"src/mcd/parser.py": ["C-2"]}},
+  "evidence": {
+    "test_evidence": null,
+    "static_evidence": {"tool_name": "ruff", "passed": true, "findings": []},
+    "architecture_evidence": {"checked_rules": ["no_certificate_without_proof_object"], "violations": [], "passed": true}
+  },
+  "residuals": [{"residual_type": "missing_expected_tests", "severity": "blocking", "message": "No tests"}],
+  "reverse_trace": {"trace_id": "T-2", "issue_id": "ISSUE-2", "repo_snapshot_id": "snap-2", "claim_ids": ["C-2"], "patch_id": "A-2", "evidence_ids": [], "test_commands": [], "changed_files": ["src/mcd/parser.py"], "commit_sha": "", "pr_number": "", "complete": false, "gaps": ["missing_evidence_ids", "missing_commit_sha", "missing_pr_number"]},
+  "final_judgment": "hypothesis"
+}

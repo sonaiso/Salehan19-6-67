@@ -1,0 +1,15 @@
+{
+  "issue": {"issue_id": "ISSUE-CLI-001", "raw_text": "restore CLI surface for command X", "task_type": "bugfix"},
+  "repo_context": {"repo_snapshot_id": "snap-1", "relevant_files": ["src/mcd/cli.py"], "relevant_tests": ["tests/test_cli.py"]},
+  "code_claims": [{"claim_id": "C-1", "claim_type": "restores_cli_surface", "affected_files": ["src/mcd/cli.py"], "required_evidence": ["test::PYTHONPATH=src python -m pytest tests/test_cli.py -q"]}],
+  "patch_plan": {"plan_id": "P-1", "steps": ["restore arg mapping"], "expected_tests": ["tests/test_cli.py"], "rollback_plan": "revert commit"},
+  "patch_artifact": {"patch_id": "A-1", "changed_files": ["src/mcd/cli.py"], "additions": 8, "deletions": 2, "linked_claims": {"src/mcd/cli.py": ["C-1"]}},
+  "evidence": {
+    "test_evidence": {"test_command": "PYTHONPATH=src python -m pytest tests/test_cli.py -q", "passed": true, "failures": []},
+    "static_evidence": {"tool_name": "ruff", "passed": true, "findings": []},
+    "architecture_evidence": {"checked_rules": ["no_silent_level_skip"], "violations": [], "passed": true}
+  },
+  "residuals": [],
+  "reverse_trace": {"trace_id": "T-1", "issue_id": "ISSUE-CLI-001", "repo_snapshot_id": "snap-1", "claim_ids": ["C-1"], "patch_id": "A-1", "evidence_ids": ["test::PYTHONPATH=src python -m pytest tests/test_cli.py -q", "static::ruff", "architecture::governance"], "test_commands": ["PYTHONPATH=src python -m pytest tests/test_cli.py -q"], "changed_files": ["src/mcd/cli.py"], "commit_sha": "abc123", "pr_number": "101", "complete": true, "gaps": []},
+  "final_judgment": "certificate"
+}
