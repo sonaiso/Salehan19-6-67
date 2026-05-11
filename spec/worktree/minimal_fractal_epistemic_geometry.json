@@ -1,0 +1,226 @@
+{
+  "geometry_version": "phase-2.1d",
+  "node_model": {
+    "model_name": "MinimalFractalNode",
+    "required_fields": [
+      "node_id",
+      "rank",
+      "node_type",
+      "domain",
+      "dimensions",
+      "gates",
+      "scores",
+      "relations",
+      "incoming_edges",
+      "outgoing_edges",
+      "residuals",
+      "trace_refs",
+      "allowed_next",
+      "forbidden_transitions"
+    ],
+    "rules": [
+      "no_node_without_trace_refs",
+      "no_node_without_at_least_one_gate",
+      "no_node_without_domain_or_domain_missing_residual",
+      "no_certificate_from_node_alone",
+      "score_cannot_override_gates"
+    ],
+    "architecture_contract_fields": [
+      "pre",
+      "current",
+      "post",
+      "phi_in",
+      "phi_out",
+      "beta",
+      "type",
+      "order",
+      "composition",
+      "invariants",
+      "forbidden",
+      "residual",
+      "judgment"
+    ]
+  },
+  "edge_model": {
+    "model_name": "MinimalFractalEdge",
+    "required_fields": [
+      "edge_id",
+      "source_node",
+      "target_node",
+      "morphism_id",
+      "relation_type",
+      "preserves",
+      "adds",
+      "forbids",
+      "gate_requirements",
+      "score_effects",
+      "residual_policy",
+      "trace_policy"
+    ],
+    "rules": [
+      "no_edge_without_morphism_id",
+      "no_edge_without_relation_type",
+      "edge_preserves_trace_unless_generated_with_reason",
+      "edge_cannot_erase_residual_silently",
+      "edge_cannot_create_evidence_without_governed_evidence_relation",
+      "no_silent_level_skip"
+    ],
+    "architecture_contract_fields": [
+      "pre",
+      "current",
+      "post",
+      "phi_in",
+      "phi_out",
+      "beta",
+      "type",
+      "order",
+      "composition",
+      "invariants",
+      "forbidden",
+      "residual",
+      "judgment"
+    ]
+  },
+  "dimension_model": {
+    "model_name": "EpistemicDimension",
+    "required_fields": [
+      "dimension_id",
+      "dimension_type",
+      "gate",
+      "score",
+      "residuals",
+      "trace_refs"
+    ],
+    "dimension_types": [
+      "existence",
+      "trace",
+      "distinction",
+      "designation",
+      "identity",
+      "universal_particular",
+      "domain",
+      "aspect",
+      "time",
+      "judgment_rank",
+      "relation",
+      "evidence",
+      "certainty",
+      "residual",
+      "reverse_trace",
+      "governance"
+    ],
+    "rules": [
+      "every_dimension_has_gate_and_score",
+      "gate_is_binary",
+      "score_in_unit_interval",
+      "score_cannot_open_gate",
+      "failed_critical_dimension_blocks_transition"
+    ]
+  },
+  "domain_model": {
+    "domains": [
+      "linguistic",
+      "morphological",
+      "syntactic",
+      "semantic",
+      "rhetorical",
+      "factual",
+      "legal",
+      "shari",
+      "scientific",
+      "mathematical",
+      "programming",
+      "governance",
+      "metaphorical"
+    ],
+    "rules": [
+      "no_relation_without_domain",
+      "no_domain_transfer_without_bridge"
+    ]
+  },
+  "relation_model": {
+    "relation_types": [
+      "matching",
+      "inclusion",
+      "implication",
+      "reference",
+      "nisbah",
+      "cause",
+      "condition",
+      "purpose",
+      "metaphor",
+      "evidence",
+      "judgment",
+      "governance",
+      "trace"
+    ],
+    "rules": [
+      "metaphor_relation_cannot_become_literal_certificate",
+      "evidence_relation_requires_evidence_governance",
+      "judgment_relation_requires_evidence_and_trace"
+    ]
+  },
+  "folding_model": {
+    "folded_node_summary_fields": [
+      "node_id",
+      "passed_gates_count",
+      "failed_critical_gates",
+      "completeness_score",
+      "domain",
+      "relation_count",
+      "blocking_residuals",
+      "trace_status",
+      "judgment_boundary"
+    ],
+    "retrieval_path_fields": [
+      "folded_node_id",
+      "expanded_dimensions",
+      "expanded_edges",
+      "residual_path",
+      "reverse_trace"
+    ],
+    "rules": [
+      "folding_preserves_blocking_residuals",
+      "folding_preserves_trace_status",
+      "retrieval_reconstructs_dimensions_and_edges",
+      "fold_cannot_hide_failed_gates"
+    ]
+  },
+  "retrieval_model": {
+    "requires_trace": true,
+    "rules": [
+      "no_judgment_without_trace",
+      "reverse_trace_required_for_certificate_boundary"
+    ]
+  },
+  "invariants": {
+    "final_judgments": [
+      "ZERO",
+      "HYPOTHESIS",
+      "CERTIFICATE"
+    ],
+    "gate_values": [
+      0,
+      1
+    ],
+    "score_range": [
+      0,
+      1
+    ],
+    "forbidden_transitions": [
+      "root_or_pattern_as_factual_proof",
+      "derivative_as_proof",
+      "irab_as_factual_certainty",
+      "emphasis_as_evidence",
+      "metaphor_as_literal_certificate",
+      "memory_as_external_evidence",
+      "model_output_as_evidence",
+      "tool_output_as_certificate_without_governance",
+      "residual_erasure",
+      "silent_level_skip",
+      "certificate_without_proof_object",
+      "certificate_without_governance_gate",
+      "certificate_without_reverse_trace"
+    ]
+  }
+}

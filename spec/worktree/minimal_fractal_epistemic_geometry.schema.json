@@ -1,0 +1,208 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bayani.spec/worktree/minimal_fractal_epistemic_geometry.schema.json",
+  "title": "Minimal Fractal Epistemic Geometry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "geometry_version",
+    "node_model",
+    "edge_model",
+    "dimension_model",
+    "domain_model",
+    "relation_model",
+    "folding_model",
+    "retrieval_model",
+    "invariants"
+  ],
+  "properties": {
+    "geometry_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "node_model": {
+      "$ref": "#/$defs/model_with_rules"
+    },
+    "edge_model": {
+      "$ref": "#/$defs/model_with_rules"
+    },
+    "dimension_model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model_name",
+        "required_fields",
+        "dimension_types",
+        "rules"
+      ],
+      "properties": {
+        "model_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "required_fields": {
+          "$ref": "#/$defs/non_empty_string_array"
+        },
+        "dimension_types": {
+          "$ref": "#/$defs/non_empty_string_array"
+        },
+        "rules": {
+          "$ref": "#/$defs/non_empty_string_array"
+        }
+      }
+    },
+    "domain_model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "domains",
+        "rules"
+      ],
+      "properties": {
+        "domains": {
+          "$ref": "#/$defs/non_empty_string_array"
+        },
+        "rules": {
+          "$ref": "#/$defs/non_empty_string_array"
+        }
+      }
+    },
+    "relation_model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relation_types",
+        "rules"
+      ],
+      "properties": {
+        "relation_types": {
+          "$ref": "#/$defs/non_empty_string_array"
+        },
+        "rules": {
+          "$ref": "#/$defs/non_empty_string_array"
+        }
+      }
+    },
+    "folding_model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "folded_node_summary_fields",
+        "retrieval_path_fields",
+        "rules"
+      ],
+      "properties": {
+        "folded_node_summary_fields": {
+          "$ref": "#/$defs/non_empty_string_array"
+        },
+        "retrieval_path_fields": {
+          "$ref": "#/$defs/non_empty_string_array"
+        },
+        "rules": {
+          "$ref": "#/$defs/non_empty_string_array"
+        }
+      }
+    },
+    "retrieval_model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requires_trace",
+        "rules"
+      ],
+      "properties": {
+        "requires_trace": {
+          "type": "boolean"
+        },
+        "rules": {
+          "$ref": "#/$defs/non_empty_string_array"
+        }
+      }
+    },
+    "invariants": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "final_judgments",
+        "gate_values",
+        "score_range",
+        "forbidden_transitions"
+      ],
+      "properties": {
+        "final_judgments": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "ZERO",
+              "HYPOTHESIS",
+              "CERTIFICATE"
+            ]
+          },
+          "uniqueItems": true,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "gate_values": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ]
+          },
+          "uniqueItems": true,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "score_range": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "forbidden_transitions": {
+          "$ref": "#/$defs/non_empty_string_array"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "non_empty_string_array": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "model_with_rules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model_name",
+        "required_fields",
+        "rules",
+        "architecture_contract_fields"
+      ],
+      "properties": {
+        "model_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "required_fields": {
+          "$ref": "#/$defs/non_empty_string_array"
+        },
+        "rules": {
+          "$ref": "#/$defs/non_empty_string_array"
+        },
+        "architecture_contract_fields": {
+          "$ref": "#/$defs/non_empty_string_array"
+        }
+      }
+    }
+  }
+}
