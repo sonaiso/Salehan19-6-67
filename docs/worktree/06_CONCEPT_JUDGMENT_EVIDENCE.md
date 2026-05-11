@@ -20,7 +20,7 @@ Concept -> Relation -> Claim -> EvidenceNeed -> Evidence -> Judgment -> Residual
 
 ## Current status
 
-- **status:** PARTIAL_RUNTIME
+- **progress_status:** PARTIAL_RUNTIME
 - **evidence:** judgment model, residual policy, reverse trace docs
 - **residual:** `concept_judgment_evidence_bridge_partial`
 - **next action:** complete runtime bridge from concept output to evidence gate input

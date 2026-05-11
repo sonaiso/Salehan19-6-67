@@ -18,7 +18,7 @@ Bind linguistic signal and cognitive meaning without promoting language alone to
 
 ## Current status
 
-- **status:** HYPOTHESIS
+- **progress_status:** HYPOTHESIS
 - **evidence:** Bayani grammar/reasoning/spec tracks
 - **residual:** `signifier_signified_not_fully_bound`
 - **next action:** executable relation validators across signifier/signified paths

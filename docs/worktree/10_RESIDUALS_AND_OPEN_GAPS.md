@@ -2,7 +2,7 @@
 
 ## Residual ledger
 
-### 1) root_worktree_not_yet_runtime_governed
+### 1) root_runtime_contract_incomplete
 - **severity:** high
 - **why it matters:** the canonical root worktree map now exists in docs/spec/schema/tests, but branch growth can still drift unless those structures are enforced through executable runtime and governance paths
 - **what fixes it:** bind the root-first worktree index/spec/schema/tests into runtime contracts, governance validation, and reverse-traceable enforcement

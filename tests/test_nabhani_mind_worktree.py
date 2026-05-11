@@ -1,9 +1,7 @@
 import json
 from pathlib import Path
 
-import pytest
-
-jsonschema = pytest.importorskip("jsonschema")
+import jsonschema
 
 
 ROOT = Path(__file__).resolve().parents[1]

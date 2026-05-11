@@ -24,7 +24,7 @@ Language is a revealer of mind, not the root of mind.
 
 ## Worktree status
 
-- **status:** HYPOTHESIS
+- **progress_status:** HYPOTHESIS
 - **evidence:** `docs/04_LANGUAGE_REVEALS_MIND.md` and language-governance modules
 - **residual:** signifier/signified runtime coupling remains incomplete
 - **next action:** enforce signifier-signified runtime links in executable contracts

@@ -18,7 +18,7 @@ Final epistemic judgment remains restricted to:
 
 ## Worktree node contract
 
-- **status:** PARTIAL_RUNTIME
+- **progress_status:** PARTIAL_RUNTIME
 - **evidence:** `docs/01_MIND_VALIDITY_STANDARD.md`, `docs/03_JUDGMENT_MODEL.md`
 - **residual:** bridge to explicit mind-geometry runtime contracts is pending
 - **next action:** bind mind validity states to worktree runtime contract checks

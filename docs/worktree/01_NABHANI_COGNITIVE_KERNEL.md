@@ -24,7 +24,7 @@ Reality -> Sensation -> Prior Information -> Linking β -> Thought/Judgment
 
 ## Layer contract
 
-- **status:** HYPOTHESIS
+- **progress_status:** HYPOTHESIS
 - **evidence:** constitutional docs and AFJG architecture chain
 - **residual:** runtime contracts for mind geometry are not complete
 - **next action:** formalize executable mind-geometry contracts

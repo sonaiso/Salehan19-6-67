@@ -16,7 +16,7 @@ Coding Copilot is an industrial test branch, not the root architecture.
 
 ## Current status
 
-- **status:** RUNTIME_TESTED
+- **progress_status:** RUNTIME_TESTED
 - **evidence:** coding audit and merge-governance test suites
 - **residual:** `coding_copilot_branch_ahead_of_mind_root`, `industrial_gateway_deferred`
 - **next action:** continue root-first worktree completion before adding new industrial layers

@@ -1,6 +1,6 @@
 # 09 — Progress Status Matrix
 
-Status vocabulary used in this matrix:
+Progress status vocabulary used in this matrix:
 
 - CERTIFICATE
 - HYPOTHESIS
@@ -12,7 +12,7 @@ Status vocabulary used in this matrix:
 
 > CERTIFICATE in this matrix means documented repository-level completion under governance evidence, not metaphysical certainty.
 
-| Worktree Node | Type | Status | Evidence in Repository | Missing Work | Residual | Next PR |
+| Worktree Node | Type | Progress Status | Evidence in Repository | Missing Work | Residual | Next PR |
 | --- | --- | --- | --- | --- | --- | --- |
 | Nabhani Cognitive Kernel | Cognitive Root | HYPOTHESIS | `docs/worktree/01_NABHANI_COGNITIVE_KERNEL.md` | Runtime mind contracts | root_runtime_contract_incomplete | Phase 2.1 |
 | Mind Validity Standard | Governance | PARTIAL_RUNTIME | `docs/01_MIND_VALIDITY_STANDARD.md` | Runtime coupling to worktree nodes | mind_geometry_not_runtime_complete | Phase 2.1 |
