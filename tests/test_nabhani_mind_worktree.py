@@ -49,6 +49,8 @@ def test_initial_zero_distinct_from_final_zero() -> None:
 
     assert distinction["initial"] != distinction["final"]
     assert initial_zero["type"] == "cognitive_activation"
+    assert initial_zero["judgment"] == "HYPOTHESIS"
+    assert initial_zero["judgment"] != "ZERO"
     assert final_zero["judgment"] == "ZERO"
     assert distinction["final_zero_requires"] == "blocking_failure"
 

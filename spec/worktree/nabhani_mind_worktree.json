@@ -9,7 +9,7 @@
   "zero_distinction": {
     "initial": "epistemic_zero_genesis",
     "final": "final_zero_judgment",
-    "invariant": "InitialZeroIsNotFinalZero",
+    "invariant": "InitialZeroMustRemainInquiryActivationAndCannotBeFinalJudgment",
     "final_zero_requires": "blocking_failure"
   },
   "nodes": [
@@ -178,7 +178,7 @@
       ],
       "judgment": "ZERO",
       "residuals": [
-        "blocking_failure_preserved"
+        "blocking_failure_trace_archived"
       ],
       "next_actions": [
         "Keep final zero as certification blocker"
