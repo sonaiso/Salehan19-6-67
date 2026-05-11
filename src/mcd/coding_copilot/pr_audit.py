@@ -5,8 +5,19 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from mcd.coding_copilot.checks_governance import ChecksGovernance
+from mcd.coding_copilot.merge_governance import MergeGovernanceInput, evaluate_merge_governance
+from mcd.coding_copilot.pr_certification import PRCertification
 
-BLOCKING_RESIDUAL_TYPES = {"ci_pending", "failing_checks", "missing_check_evidence", "architecture_violation"}
+BLOCKING_RESIDUAL_TYPES = {
+    "ci_pending",
+    "failing_checks",
+    "missing_check_evidence",
+    "architecture_violation",
+    "merge_with_pending_checks",
+    "merge_without_required_checks",
+    "merge_without_pr_certification",
+    "branch_protection_not_configured",
+}
 
 
 @dataclass
@@ -24,6 +35,9 @@ class PRAuditInput:
     evidence: dict[str, Any] = field(default_factory=dict)
     residuals: list[dict[str, Any] | str] = field(default_factory=list)
     reverse_trace_complete: bool = False
+    required_checks_configured: bool = True
+    branch_protection_configured: bool = True
+    pr_certification_present: bool = True
 
 
 @dataclass
@@ -77,17 +91,6 @@ def _claims_have_matching_evidence(claims: list[dict[str, Any]], evidence: dict[
     return True
 
 
-def _has_fatal_failure(evidence: dict[str, Any], residuals: list[str]) -> bool:
-    if "required_check_failed" in residuals:
-        return True
-    if "fatal_check_failure" in residuals:
-        return True
-    failed_required = evidence.get("failed_required_checks")
-    if isinstance(failed_required, list) and len(failed_required) > 0:
-        return True
-    return bool(evidence.get("fatal_failure", False))
-
-
 def _build_result(
     pr_input: PRAuditInput,
     *,
@@ -95,16 +98,29 @@ def _build_result(
     residuals: list[str],
     reason: str,
 ) -> PRAuditResult:
+    certification = PRCertification(
+        pr_number=pr_input.pr_number,
+        certified_by="audit_pr_fixture",
+        judgment=judgment,
+        checks_summary={
+            "checks_total": pr_input.checks_total,
+            "checks_passed": pr_input.checks_passed,
+            "checks_failed": pr_input.checks_failed,
+            "checks_pending": pr_input.checks_pending,
+        },
+        residuals=residuals,
+        reverse_trace_complete=pr_input.reverse_trace_complete,
+    )
     merged_note = "merged" if pr_input.merged else "not_merged"
     report = (
         f"pr={pr_input.pr_number}; judgment={judgment}; reason={reason}; "
-        f"{merged_note}; certificate_allowed={judgment == 'CERTIFICATE'}"
+        f"{merged_note}; certificate_allowed={certification.certificate_allowed}"
     )
     return PRAuditResult(
         pr_number=pr_input.pr_number,
         final_judgment=judgment,
         residuals=residuals,
-        certificate_allowed=judgment == "CERTIFICATE",
+        certificate_allowed=certification.certificate_allowed,
         reason=reason,
         public_report=report,
     )
@@ -122,37 +138,31 @@ def audit_pr_fixture(pr_input: PRAuditInput) -> PRAuditResult:
         if residual.residual_type not in residual_types:
             residual_types.append(residual.residual_type)
 
-    if checks.has_pending():
-        return _build_result(
-            pr_input,
-            judgment="HYPOTHESIS",
-            residuals=residual_types,
-            reason="ci_pending",
+    merge_governance = evaluate_merge_governance(
+        MergeGovernanceInput(
+            pr_number=pr_input.pr_number,
+            merged=pr_input.merged,
+            checks_total=pr_input.checks_total,
+            checks_passed=pr_input.checks_passed,
+            checks_failed=pr_input.checks_failed,
+            checks_pending=pr_input.checks_pending,
+            required_checks_configured=pr_input.required_checks_configured,
+            branch_protection_configured=pr_input.branch_protection_configured,
+            pr_certification_present=pr_input.pr_certification_present,
+            reverse_trace_complete=pr_input.reverse_trace_complete,
         )
+    )
 
-    if checks.has_failures():
-        fatal_failure = _has_fatal_failure(pr_input.evidence, residual_types)
+    for residual in merge_governance.residuals:
+        if residual not in residual_types:
+            residual_types.append(residual)
+
+    if merge_governance.final_judgment != "CERTIFICATE":
         return _build_result(
             pr_input,
-            judgment="ZERO" if fatal_failure else "HYPOTHESIS",
+            judgment=merge_governance.final_judgment,
             residuals=residual_types,
-            reason="failing_checks_required" if fatal_failure else "failing_checks_nonfatal",
-        )
-
-    if pr_input.checks_total == 0:
-        return _build_result(
-            pr_input,
-            judgment="HYPOTHESIS",
-            residuals=residual_types,
-            reason="missing_check_evidence",
-        )
-
-    if not checks.all_green():
-        return _build_result(
-            pr_input,
-            judgment="HYPOTHESIS",
-            residuals=residual_types,
-            reason="checks_not_all_green",
+            reason=merge_governance.reason,
         )
 
     if not pr_input.reverse_trace_complete:

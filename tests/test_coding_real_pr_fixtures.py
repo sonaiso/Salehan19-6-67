@@ -28,6 +28,9 @@ def _fixture_to_input(payload: dict) -> PRAuditInput:
         evidence=payload["evidence"],
         residuals=payload.get("residuals", []),
         reverse_trace_complete=_is_reverse_trace_complete(reverse_trace),
+        required_checks_configured=payload.get("required_checks_configured", True),
+        branch_protection_configured=payload.get("branch_protection_configured", True),
+        pr_certification_present=payload.get("pr_certification_present", True),
     )
 
 
@@ -59,10 +62,24 @@ def test_pr58_expected_hypothesis_due_three_of_four_checks():
     assert "ci_pending" in result.residuals
 
 
+def test_pr59_expected_hypothesis_due_pending_check_after_merge():
+    path = (
+        Path(__file__).resolve().parents[1]
+        / "examples"
+        / "coding_copilot"
+        / "real_prs"
+        / "pr_59_dogfood_pr_audit.json"
+    )
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    result = audit_pr_fixture(_fixture_to_input(payload))
+    assert result.final_judgment == "HYPOTHESIS"
+    assert "merge_with_pending_checks" in result.residuals
+
+
 def test_real_pr_fixtures_validate():
     root = Path(__file__).resolve().parents[1] / "examples" / "coding_copilot" / "real_prs"
     files = sorted(root.glob("*.json"))
-    assert len(files) == 3
+    assert len(files) == 4
     required = {
         "pr_number",
         "title",

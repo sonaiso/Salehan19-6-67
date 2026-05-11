@@ -3,16 +3,16 @@
 ## لماذا هذه المرحلة
 
 PR #58 يمثل تقدمًا هندسيًا قويًا لأنه نقل AFJG من وصف منهجي إلى نواة حكم برمجي قابلة للاختبار.  
-لكن دمج PR مع checks غير مكتملة لا يمنحه `CERTIFICATE` معرفيًا.
+PR #59 أضاف تدقيق PRs واقعية (`#56`, `#57`, `#58`) وأثبت عمليًا أن `MERGED != CERTIFICATE` وأن `3/4 checks != CERTIFICATE`.
 
 ## قاعدة الحوكمة الأساسية
 
 - `MERGED` حالة مستودع، وليست حكمًا معرفيًا.
 - حالة CI هي دليل تنفيذي، وليست الحكم النهائي.
-- أي `checks_pending > 0` يفرض `HYPOTHESIS` مع residual من نوع `ci_pending`.
+- أي `checks_pending > 0` يفرض `HYPOTHESIS` مع residual من نوع `ci_pending` و`merge_with_pending_checks`.
 - المرور الكامل للـ checks شرط لازم للشهادة، لكنه غير كافٍ وحده.
 
-## لماذا PR #58 يبقى HYPOTHESIS
+## لماذا PR #58 و PR #59 يبقيان HYPOTHESIS
 
 عند وجود 3/4 checks فقط:
 
@@ -20,9 +20,15 @@ PR #58 يمثل تقدمًا هندسيًا قويًا لأنه نقل AFJG من
 - لا يُسمح بترقية الحكم إلى `CERTIFICATE`.
 - الحكم الصحيح هو `HYPOTHESIS` بسبب `ci_pending`.
 
+PR #59 أصبح أيضًا حالة self-audit مهمة:
+
+- تم دمجه مع check pending.
+- يظل حكمه المعرفي `HYPOTHESIS` حتى بعد الدمج.
+- residual الإضافي هو `merge_with_pending_checks`.
+
 ## كيف يتم التدقيق الآن
 
-Dogfood audit يحمّل fixtures محلية لـ PRs حقيقية (`#56`, `#57`, `#58`) من:
+Dogfood audit يحمّل fixtures محلية لـ PRs حقيقية (`#56`, `#57`, `#58`, `#59`) من:
 
 `examples/coding_copilot/real_prs/`
 

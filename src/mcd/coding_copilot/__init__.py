@@ -15,6 +15,8 @@ from mcd.coding_copilot.coding_status import (
     is_public_final_coding_judgment,
 )
 from mcd.coding_copilot.issue_understanding import IssueUnderstanding
+from mcd.coding_copilot.merge_governance import MergeGovernanceInput, MergeGovernanceResult, evaluate_merge_governance
+from mcd.coding_copilot.pr_certification import PRCertification
 from mcd.coding_copilot.patch_artifact import PatchArtifact
 from mcd.coding_copilot.patch_plan import PatchPlan
 from mcd.coding_copilot.repo_context import RepoContextMap
@@ -39,6 +41,10 @@ __all__ = [
     "collapse_to_public_status",
     "is_public_final_coding_judgment",
     "IssueUnderstanding",
+    "MergeGovernanceInput",
+    "MergeGovernanceResult",
+    "evaluate_merge_governance",
+    "PRCertification",
     "PatchArtifact",
     "PatchPlan",
     "RepoContextMap",
