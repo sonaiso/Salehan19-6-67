@@ -1,29 +1,46 @@
-# 21 — First Principles as Operators
+# First Principles as Operators
 
-## Conception
-- epistemic definition: forms bounded meaning without final proof judgment.
-- mathematical form: `C=concept(I)`.
-- programming contract: `ConceptionObject(conception_id, interpreted_meaning, concept_type, boundaries, examples, counterexamples, residuals)`.
-- linguistic function: outputs usable concept representation.
-- forbidden transitions: `judgment_without_subject`, `certificate_without_proof_object`.
-- residuals: `concept_boundary_unclear`, `counterexample_gap`.
+## Operator contract
 
-## Judgment
-- epistemic definition: governed assignment after subject/domain/aspect/time/rank/evidence checks.
-- mathematical form: `J=judge(C,E,Gate,Trace)`.
-- programming contract: `JudgmentObject(judgment_id, claim_id, final_judgment, evidence_refs, residuals, reverse_trace, proof_object, governance_gate)`.
-- linguistic function: emits governed epistemic status.
-- forbidden transitions: `judgment_without_subject`, `certificate_without_evidence`, `certificate_without_proof_object`, `certificate_without_governance_gate`, `certificate_without_reverse_trace`.
-- residuals: `missing_subject`, `insufficient_evidence`, `blocking_residual_present`.
+`EpistemicOperator(operator_id, name, required_inputs, applies_before, applies_after, forbids, residual_on_violation)`
 
-## Operators
-- `NoContradictionWithoutDomain`
-- `NoDomainWithoutDesignation`
-- `NoDesignationWithoutDistinction`
-- `NoJudgmentWithoutSubject`
-- `NoCertificateWithoutEvidence`
-- `NoEvidenceWithoutClaimMatch`
-- `NoDomainTransferWithoutBridge`
-- `NoUniversalToParticularWithoutApplicability`
+## Core operators
 
-All operators must publish: `required_inputs`, `applies_before`, `applies_after`, `forbids`, `residual_on_violation`.
+1. `NoDesignationWithoutDistinction`
+2. `NoDomainWithoutDesignation`
+3. `NoContradictionWithoutDomain`
+4. `NoJudgmentWithoutSubject`
+5. `NoCertificateWithoutEvidence`
+6. `NoEvidenceWithoutClaimMatch`
+7. `NoDomainTransferWithoutBridge`
+8. `NoUniversalToParticularWithoutApplicability`
+9. `NoCertificateWithoutProofObject`
+10. `NoCertificateWithoutGovernanceGate`
+11. `NoCertificateWithoutReverseTrace`
+12. `NoSilentLevelSkip`
+13. `NoResidualErasure`
+
+## Operator invariants
+
+- Mind precedes language.
+- Language reveals mind.
+- Analysis is not proof.
+- Linguistic structure is not evidence.
+- No certainty rise without valid evidence.
+- Final epistemic judgments are only: `ZERO`, `HYPOTHESIS`, `CERTIFICATE`.
+
+## Forbidden transitions baseline
+
+- root_or_pattern_as_factual_proof
+- derivative_as_proof
+- irab_as_factual_certainty
+- emphasis_as_evidence
+- metaphor_as_literal_certificate
+- memory_as_external_evidence
+- model_output_as_evidence
+- tool_output_as_certificate_without_governance
+- residual_erasure
+- silent_level_skip
+- certificate_without_proof_object
+- certificate_without_governance_gate
+- certificate_without_reverse_trace

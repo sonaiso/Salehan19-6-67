@@ -5,8 +5,8 @@ import jsonschema
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCHEMA_PATH = ROOT / "spec" / "worktree" / "operational_epistemic_vocabulary.schema.json"
-SPEC_PATH = ROOT / "spec" / "worktree" / "operational_epistemic_vocabulary.json"
+SPEC_PATH = ROOT / "spec/worktree/operational_epistemic_vocabulary.json"
+SCHEMA_PATH = ROOT / "spec/worktree/operational_epistemic_vocabulary.schema.json"
 
 
 def _load_json(path: Path) -> dict:
@@ -14,95 +14,58 @@ def _load_json(path: Path) -> dict:
         return json.load(handle)
 
 
-def _nodes(spec: dict) -> dict:
-    return {node["node_id"]: node for node in spec["nodes"]}
-
-
-def _index(spec: dict, node_id: str) -> int:
-    return spec["chain"].index(node_id)
-
-
-def test_schema_validates_json() -> None:
+def test_schema_validates_json_spec():
     schema = _load_json(SCHEMA_PATH)
     spec = _load_json(SPEC_PATH)
     jsonschema.Draft202012Validator.check_schema(schema)
     jsonschema.validate(spec, schema)
 
 
-def test_epistemic_zero_precedes_attention() -> None:
+def test_chain_order_dependencies():
     spec = _load_json(SPEC_PATH)
-    assert _index(spec, "epistemic_zero") < _index(spec, "attention")
+    chain = spec["chain_order"]
+    expected_chain = [
+        "epistemic_zero",
+        "attention",
+        "distinction",
+        "designation",
+        "identity",
+        "universal",
+        "particular",
+        "domain",
+        "aspect",
+        "temporal_scope",
+        "judgment_rank",
+        "contradiction_check",
+        "linking",
+        "interpretation",
+        "conception",
+        "judgment",
+    ]
+
+    assert chain == expected_chain
 
 
-def test_attention_precedes_distinction() -> None:
+def test_contradiction_requires_domain_time_aspect_and_rank():
     spec = _load_json(SPEC_PATH)
-    assert _index(spec, "attention") < _index(spec, "distinction")
+    required_inputs = set(spec["nodes"]["contradiction_check"]["required_inputs"])
+
+    assert "domain" in required_inputs
+    assert "temporal_scope" in required_inputs
+    assert "aspect" in required_inputs
+    assert "judgment_rank" in required_inputs
 
 
-def test_distinction_precedes_designation() -> None:
+def test_final_judgment_values_are_limited_to_three_states():
     spec = _load_json(SPEC_PATH)
-    assert _index(spec, "distinction") < _index(spec, "designation")
+    allowed = set(spec["final_judgments"])
+
+    assert allowed == {"ZERO", "HYPOTHESIS", "CERTIFICATE"}
 
 
-def test_designation_precedes_domain() -> None:
+def test_every_node_defines_residuals_and_forbidden_transitions():
     spec = _load_json(SPEC_PATH)
-    assert _index(spec, "designation") < _index(spec, "domain")
 
-
-def test_domain_required_before_contradiction() -> None:
-    spec = _load_json(SPEC_PATH)
-    node = _nodes(spec)["contradiction_check"]
-    assert "domain_assignment" in node["required_inputs"]
-
-
-def test_time_required_before_contradiction() -> None:
-    spec = _load_json(SPEC_PATH)
-    node = _nodes(spec)["contradiction_check"]
-    assert "time_scope" in node["required_inputs"]
-
-
-def test_aspect_required_before_contradiction() -> None:
-    spec = _load_json(SPEC_PATH)
-    node = _nodes(spec)["contradiction_check"]
-    assert "aspect_scope" in node["required_inputs"]
-
-
-def test_judgment_rank_required_before_contradiction() -> None:
-    spec = _load_json(SPEC_PATH)
-    node = _nodes(spec)["contradiction_check"]
-    assert "rank_assignment" in node["required_inputs"]
-
-
-def test_linking_comes_before_interpretation() -> None:
-    spec = _load_json(SPEC_PATH)
-    assert _index(spec, "linking") < _index(spec, "interpretation")
-
-
-def test_interpretation_comes_before_conception() -> None:
-    spec = _load_json(SPEC_PATH)
-    assert _index(spec, "interpretation") < _index(spec, "conception")
-
-
-def test_conception_comes_before_judgment() -> None:
-    spec = _load_json(SPEC_PATH)
-    assert _index(spec, "conception") < _index(spec, "judgment")
-
-
-def test_no_final_judgment_outside_zero_hypothesis_certificate() -> None:
-    spec = _load_json(SPEC_PATH)
-    allowed = {"ZERO", "HYPOTHESIS", "CERTIFICATE"}
-    assert set(spec["final_epistemic_judgments"]) == allowed
-    judgment = _nodes(spec)["judgment"]
-    assert set(judgment["allowed_final_judgments"]) == allowed
-
-
-def test_every_node_has_residuals() -> None:
-    spec = _load_json(SPEC_PATH)
-    for node in spec["nodes"]:
-        assert len(node["residuals"]) > 0, f"node missing residuals: {node['node_id']}"
-
-
-def test_every_node_has_forbidden_transitions() -> None:
-    spec = _load_json(SPEC_PATH)
-    for node in spec["nodes"]:
-        assert len(node["forbidden_transitions"]) > 0, f"node missing forbidden_transitions: {node['node_id']}"
+    for node_name, node in spec["nodes"].items():
+        assert node["residuals"], f"{node_name} must define residuals"
+        assert node["forbidden_transitions"], f"{node_name} must define forbidden transitions"

@@ -1,25 +1,24 @@
-# 18 — Distinction, Designation, Identity
+# Distinction, Designation, Identity
 
-## Distinction
-- epistemic definition: separates a processable unit from background.
-- mathematical form: `D(x,b)=unit(x) where x is separated from background b`.
-- programming contract: `DistinctionUnit(unit_id, source_signal, boundary, distinct_from, confidence, residuals)`.
-- linguistic function: isolates tokens/phrases before assignment.
-- forbidden transitions: `designation_without_distinction`, `silent_level_skip`.
-- residuals: `unclear_boundary`, `overlapping_units`, `unsegmented_input`.
+## Designation (G)
 
-## Designation
-- epistemic definition: assigns type/reference/function/domain to a distinguished unit.
-- mathematical form: `G(u)=assign(u→type/reference/function/domain)`.
-- programming contract: `DesignationUnit(designation_id, distinguished_unit_id, assigned_type, assigned_reference, assignment_basis, confidence, residuals)`.
-- linguistic function: maps a token to grammatical/semantic role.
-- forbidden transitions: `domain_without_designation`, `designation_without_distinction`.
-- residuals: `ambiguous_assignment`, `unresolved_reference`, `unknown_type`.
+- Epistemic definition: assignment of type/reference/function to a distinguished unit.
+- Mathematical form: `G(u) = assign(u → type/reference/function/domain)`.
+- Programming contract: `DesignationUnit(designation_id, distinguished_unit_id, assigned_type, assigned_identity, assigned_reference, assigned_function, assignment_basis, confidence, residuals)`.
+- Linguistic function: binds lexical unit to role (e.g., proper noun, participle, operator).
+- Forbidden transitions: `designation_without_distinction`, `wrong_assignment_basis`.
+- Residuals: `ambiguous_assignment`, `unknown_type`, `unresolved_reference`.
 
-## Identity
-- epistemic definition: preserves sameness across context/time/reference.
-- mathematical form: `ID(x1)=ID(x2)` when continuity path exists.
-- programming contract: `IdentityUnit(identity_id, mentions, reference_type, continuity_scope, temporal_scope, identity_basis, confidence, residuals)`.
-- linguistic function: resolves anaphora/coreference and continuity.
-- forbidden transitions: `judgment_without_identity_resolution`, `silent_level_skip`.
-- residuals: `identity_shift`, `homonym_confusion`, `temporal_identity_gap`.
+## Identity (ID)
+
+- Epistemic definition: continuity preservation of the same referent across context, scope, and time.
+- Mathematical form: `ID(x1) = ID(x2)` when valid continuity path exists.
+- Programming contract: `IdentityUnit(identity_id, mentions, reference_type, continuity_scope, identity_basis, confidence, residuals)`.
+- Linguistic function: resolves anaphora/coreference and protects subject continuity.
+- Forbidden transitions: `judgment_without_subject`, `homonym_confusion_as_identity`.
+- Residuals: `identity_shift`, `temporal_identity_gap`, `unresolved_reference`.
+
+## Governance constraints
+
+- No designation without distinction.
+- No judgment on a subject before identity continuity is either established or explicitly unresolved and downgraded.
