@@ -43,7 +43,8 @@ Required status check: AFJG PR Certification
 Bypass list: empty
 ```
 
-This confirms `main` is protected with `AFJG PR Certification` as a required check.
+This is a configuration snapshot and remains `HYPOTHESIS`-level governance evidence
+until validated by a test PR with full ProofObject + GovernanceGate + ReverseTrace.
 
 Current residual to close before final repository-level certification:
 
@@ -54,9 +55,9 @@ Current residual to close before final repository-level certification:
 
 ## Operational checklist
 
-- [x] Branch protection enabled on main
-- [x] Required checks configured
-- [x] PR certification check required
+- [ ] Branch protection enabled on main (snapshot observed; ProofObject pending)
+- [ ] Required checks configured (snapshot observed; ProofObject pending)
+- [ ] PR certification check required (snapshot observed; ProofObject pending)
 - [ ] Branches required to be up to date before merge
 - [ ] Pending checks block merge (validated by test PR)
 - [ ] Review conversations resolved before merge
