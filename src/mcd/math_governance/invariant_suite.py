@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from mcd.math_governance.fractal_unit_governance import GovernedFractalUnit
 from mcd.math_governance.governance_gate import MathematicalGovernanceGate
 from mcd.math_governance.level_morphism_registry import LevelMorphismRegistry
+from mcd.math_governance.text_ascent_chain import validate_text_ascent_chain
 
 
 @dataclass
@@ -32,16 +33,14 @@ class MathematicalInvariantSuite:
                 details.extend(msg)
         return InvariantResult("every level transition has morphism", passed, details)
 
-    def final_answer_has_reverse_path(self, units: list[GovernedFractalUnit]) -> InvariantResult:
+    def final_judgment_has_reverse_path(self, units: list[GovernedFractalUnit]) -> InvariantResult:
         if not units:
-            return InvariantResult("final answer reverse path", False, ["empty chain"])
-        tail = units[-1]
-        passed = bool(tail.trace_refs) and tail.level_id == "final_answer"
-        details = [] if passed else ["final answer missing reverse trace to earlier levels"]
-        return InvariantResult("final answer has reverse path", passed, details)
+            return InvariantResult("final judgment reverse path", False, ["empty chain"])
+        report = validate_text_ascent_chain(units)
+        return InvariantResult("final judgment has unicode-to-fulltext reverse path", report.passed, report.violations)
 
     def run(self, units: list[GovernedFractalUnit]) -> list[InvariantResult]:
         return [
             self.every_level_transition_has_morphism(units),
-            self.final_answer_has_reverse_path(units),
+            self.final_judgment_has_reverse_path(units),
         ]

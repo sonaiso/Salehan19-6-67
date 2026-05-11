@@ -20,6 +20,12 @@ from mcd.math_governance.fractal_pattern_memory import FractalPattern, FractalPa
 from mcd.math_governance.dataset_math_annotator import DatasetMathAnnotator, DatasetAnnotationReport, REQUIRED_FIELDS
 from mcd.math_governance.governance_gate import MathematicalGovernanceGate, MathematicalGovernanceReport
 from mcd.math_governance.invariant_suite import InvariantResult, MathematicalInvariantSuite
+from mcd.math_governance.text_ascent_chain import (
+    ASCENT_LEVELS,
+    FINAL_JUDGMENTS,
+    TextAscentValidationReport,
+    validate_text_ascent_chain,
+)
 from mcd.math_governance.governance_report import GovernanceReportBuilder
 from mcd.math_governance.serializers import to_json
 
@@ -55,6 +61,10 @@ __all__ = [
     "MathematicalGovernanceReport",
     "InvariantResult",
     "MathematicalInvariantSuite",
+    "ASCENT_LEVELS",
+    "FINAL_JUDGMENTS",
+    "TextAscentValidationReport",
+    "validate_text_ascent_chain",
     "GovernanceReportBuilder",
     "to_json",
 ]

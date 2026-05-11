@@ -48,19 +48,22 @@ class LevelMorphism:
 
 
 _DEFAULT_MORPHISMS: list[tuple[str, str, str]] = [
-    ("unicode_to_token", "unicode", "token"),
+    ("raw_text_to_unicode", "raw_text", "unicode"),
+    ("unicode_to_grapheme", "unicode", "grapheme"),
+    ("grapheme_to_orthographic_unit", "grapheme", "orthographic_unit"),
+    ("orthographic_unit_to_token", "orthographic_unit", "token"),
     ("token_to_lexeme", "token", "lexeme"),
-    ("lexeme_to_root_pattern", "lexeme", "root_pattern"),
-    ("root_pattern_to_jamid_mushtaq", "root_pattern", "jamid_mushtaq"),
-    ("jamid_mushtaq_to_concept_center", "jamid_mushtaq", "concept_center"),
-    ("mabni_murab_to_judgment_operation", "mabni_murab", "claim"),
-    ("sentence_to_claim", "sentence", "claim"),
-    ("claim_to_evidence_need", "claim", "evidence"),
-    ("evidence_to_certainty", "evidence", "certainty"),
-    ("certainty_to_proof", "certainty", "proof_object"),
-    ("proof_to_final_answer", "proof_object", "final_answer"),
-    ("proposal_to_residual", "final_answer", "residual_pattern"),
-    ("residual_to_pattern", "residual_pattern", "root_pattern"),
+    ("lexeme_to_morphology", "lexeme", "morphology"),
+    ("morphology_to_phrase", "morphology", "phrase"),
+    ("phrase_to_clause", "phrase", "clause"),
+    ("clause_to_sentence", "clause", "sentence"),
+    ("sentence_to_paragraph", "sentence", "paragraph"),
+    ("paragraph_to_section", "paragraph", "section"),
+    ("section_to_full_text", "section", "full_text"),
+    ("full_text_to_discourse_graph", "full_text", "discourse_graph"),
+    ("discourse_graph_to_claim_graph", "discourse_graph", "claim_graph"),
+    ("claim_graph_to_proof_object", "claim_graph", "proof_object"),
+    ("proof_object_to_final_judgment", "proof_object", "final_judgment"),
 ]
 
 
