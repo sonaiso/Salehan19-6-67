@@ -99,10 +99,10 @@ def test_no_final_judgment_outside_zero_hypothesis_certificate() -> None:
 def test_every_node_has_residuals() -> None:
     spec = _load_json(SPEC_PATH)
     for node in spec["nodes"]:
-        assert node["residuals"], f"node missing residuals: {node['node_id']}"
+        assert len(node["residuals"]) > 0, f"node missing residuals: {node['node_id']}"
 
 
 def test_every_node_has_forbidden_transitions() -> None:
     spec = _load_json(SPEC_PATH)
     for node in spec["nodes"]:
-        assert node["forbidden_transitions"], f"node missing forbidden_transitions: {node['node_id']}"
+        assert len(node["forbidden_transitions"]) > 0, f"node missing forbidden_transitions: {node['node_id']}"

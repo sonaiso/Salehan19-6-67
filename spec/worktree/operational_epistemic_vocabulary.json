@@ -28,7 +28,7 @@
     {
       "node_id": "epistemic_zero",
       "rank": 1,
-      "definition": "Alert that a present signal in awareness is not yet determined knowledge.",
+      "definition": "Alert that a present signal in awareness is not yet determined knowledge (plain: x is in awareness but not in determined knowledge).",
       "mathematical_form": "Z0(x)=1 ⇔ x∈Awareness ∧ x∉DeterminedKnowledge",
       "programming_contract": "EpistemicZero(zero_id, signal_ref, reason, awareness_present, knowledge_determined, residuals)",
       "linguistic_function": "Marks unknown presence and preserves it for governed processing.",

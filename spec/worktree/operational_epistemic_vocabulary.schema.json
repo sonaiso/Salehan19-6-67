@@ -15,6 +15,7 @@
     "version": {"type": "string", "minLength": 1},
     "chain": {
       "type": "array",
+      "description": "Phase 2.1A canonical chain length fixed to 16 nodes and must stay aligned with the node_id enum.",
       "minItems": 16,
       "items": {"type": "string", "minLength": 1}
     },
@@ -26,6 +27,7 @@
     },
     "nodes": {
       "type": "array",
+      "description": "Must include all 16 canonical operational epistemic vocabulary objects.",
       "minItems": 16,
       "items": {"$ref": "#/$defs/node"}
     }
