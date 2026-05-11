@@ -61,7 +61,6 @@ src/mcd/coding_copilot/merge_governance.py
 src/mcd/coding_copilot/patch_artifact.py
 src/mcd/coding_copilot/patch_plan.py
 src/mcd/coding_copilot/pr_audit.py
-src/mcd/coding_copilot/pr_certification.py
 src/mcd/coding_copilot/repo_context.py
 src/mcd/coding_copilot/serializers.py
 src/mcd/coding_copilot/static_evidence.py
