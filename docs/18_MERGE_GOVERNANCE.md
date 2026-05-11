@@ -46,9 +46,15 @@ Bypass list: empty
 This is a configuration snapshot and remains `HYPOTHESIS`-level governance evidence
 until validated by a test PR with full ProofObject + GovernanceGate + ReverseTrace.
 
+Required elevation package for `CERTIFICATE`:
+
+- ProofObject: test PR execution trace showing Merge blocked while `AFJG PR Certification` is pending/failing and unlocked only after success
+- GovernanceGate: active ruleset enforcement on `main` (required check + no bypass) demonstrably preventing premature merge
+- ReverseTrace: ruleset configuration snapshot → observable blocked-merge behavior → archived governance record
+
 Current residual to close before final repository-level certification:
 
-- execute a tiny docs PR and verify Merge stays blocked until `AFJG PR Certification` succeeds
+- execute a tiny docs PR and verify Merge stays blocked until `AFJG PR Certification` succeeds (ProofObject + GovernanceGate + ReverseTrace)
 - ensure `Require branches to be up to date before merging` is enabled in the ruleset
 - confirm these controls remain enabled: Require pull request, Require status checks, Block force pushes, Restrict deletions
 - prefer enabling conversation resolution before merge if available in the pull request settings
