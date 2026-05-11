@@ -21,7 +21,7 @@ Governance rule: no node may issue a higher-order outcome while required prior n
 - Mathematical form: `A(x) = select(x | Z0(x), salience, urgency, relevance)`.
 - Programming contract: `AttentionEvent(event_id, zero_id, selected_signal, salience_score, urgency_score, relevance_score, reason, residuals)`.
 - Linguistic function: promotes latent presence into explicit processing focus.
-- Forbidden transitions: `designation_without_distinction`, `silent_level_skip`.
+- Forbidden transitions: `distinction_without_attention`, `silent_level_skip`.
 - Residuals: `low_salience_conflict`, `priority_collision`, `deferred_attention`.
 
 ## Distinction (D)
