@@ -22,4 +22,4 @@ Final epistemic judgment remains restricted to:
 - **evidence:** `docs/01_MIND_VALIDITY_STANDARD.md`, `docs/03_JUDGMENT_MODEL.md`
 - **residual:** bridge to explicit mind-geometry runtime contracts is pending
 - **next action:** bind mind validity states to worktree runtime contract checks
-- **dependencies:** `nabhani_cognitive_kernel`
+- **dependencies:** `mind_geometry`
