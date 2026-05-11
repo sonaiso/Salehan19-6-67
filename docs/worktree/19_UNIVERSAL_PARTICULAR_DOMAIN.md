@@ -4,7 +4,7 @@
 
 - Epistemic definition: concept predicable over many particulars.
 - Mathematical form: `Universal(U) ⇔ ∃x,y,z : predicable(U, x,y,z)`.
-- Programming contract: `UniversalConcept(concept_id, label, applies_to_many, necessary_features, accidental_features, domain, scope, residuals)`.
+- Programming contract: `UniversalConcept(concept_id, label, applies_to_many, necessary_features, domain, scope, residuals)`.
 - Linguistic function: abstracts recurring meaning classes.
 - Forbidden transitions: `universal_to_particular_without_applicability`.
 - Residuals: `overgeneralization`, `scope_ambiguity`.
