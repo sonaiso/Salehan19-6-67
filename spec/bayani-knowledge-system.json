@@ -801,7 +801,7 @@
       },
       {
         "id": "ANS-0003",
-        "answer": "النظام لا يقلد GPT احتماليًا بل يبني طبقة معرفية فوق مخرجاته ويحولها إلى دعاوى وأدلة وبراهين، لكن القدرة على محاكاة GPT بالكامل تحتاج تحديدًا.",
+        "answer": "النظام لا يقلد GPT احتماليًا بل يعمل كطبقة تحقق معرفية فوق المخرجات اللغوية: نُثبت النواة، ونفترض قابلية التحول الصناعي عند تضييق النطاق، ونُصفر دعوى محاكاة GPT-5.5 بالكامل.",
         "candidate_claims": [
           {
             "text": "النظام لا يقلد GPT احتماليًا",
@@ -835,8 +835,8 @@
           },
           {
             "text": "النظام يحاكي GPT-5.5 بالكامل",
-            "status": "Hypothesis",
-            "reason": "تحتاج تحديد معنى المحاكاة: مخرجات أم قدرات داخلية"
+            "status": "Zero",
+            "reason": "دعوى مرفوضة مرحليًا: المشروع طبقة تحقق معرفية عربية فوق النماذج، لا نموذج لغوي عامًا مكافئًا لـ GPT-5.5"
           }
         ],
         "gap": "missing_epistemic_candidate_generation",
@@ -846,9 +846,11 @@
           "Candidate-to-Evidence Binding",
           "Proof Gate before Certificate"
         ],
-        "blocking_zeros": [],
+        "blocking_zeros": [
+          "NoGeneralLLMEquivalenceClaim"
+        ],
         "result_type": "Hypothesis",
-        "final_decision": "قابل للشهادة بعد إضافة طبقة المرشحات"
+        "final_decision": "النواة مشهودة، والتحول الصناعي فرضية مقيدة بـ MVP، ودعوى محاكاة GPT-5.5 بالكامل صفر مانع"
       }
     ]
   },
@@ -957,9 +959,9 @@
         "id": "TEST-0006",
         "input": "النظام يحاكي GPT-5.5 بالكامل.",
         "expected": {
-          "result_type": "Hypothesis",
-          "reason": "المرشح يحتاج تحديد معنى المحاكاة وربطه بدليل قبل الشهادة",
-          "required_layer": "Epistemic Candidate Generation"
+          "result_type": "Zero",
+          "reason": "دعوى مكافأة نموذج لغوي عام غير صحيحة في المرحلة الحالية؛ المعتمد هو طبقة تحقق معرفية فوق النماذج",
+          "required_layer": "ZeroGuard"
         }
       }
     ],

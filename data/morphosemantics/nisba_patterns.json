@@ -1,0 +1,12 @@
+{
+  "nisba_forms": [
+    {"nisba_id": "n_arabi", "base_form": "عَرَب", "nisba_form": "عَرَبيّ", "root_id": "arb", "derivation_rule": "append_iyy", "gender_pair": ["عَرَبيّ", "عَرَبِيّة"], "semantic_shift": "ethnic_affiliation", "domain": "ethnicity"},
+    {"nisba_id": "n_3ilmi", "base_form": "عِلم", "nisba_form": "عِلمي", "root_id": "alm", "derivation_rule": "append_iyy", "gender_pair": ["عِلمي", "عِلمِيّة"], "semantic_shift": "domain_affiliation", "domain": "knowledge"},
+    {"nisba_id": "n_zira3i", "base_form": "زِراعة", "nisba_form": "زِراعي", "root_id": "zraa", "derivation_rule": "strip_ta_append_iyy", "gender_pair": ["زِراعي", "زِراعِيّة"], "semantic_shift": "craft_domain", "domain": "agriculture"},
+    {"nisba_id": "n_sina3i", "base_form": "صِناعة", "nisba_form": "صِناعي", "root_id": "snaa", "derivation_rule": "strip_ta_append_iyy", "gender_pair": ["صِناعي", "صِناعِيّة"], "semantic_shift": "craft_domain", "domain": "industry"},
+    {"nisba_id": "n_bahri", "base_form": "بَحر", "nisba_form": "بَحري", "root_id": "bhr", "derivation_rule": "append_iyy", "gender_pair": ["بَحري", "بَحرِيّة"], "semantic_shift": "place_affiliation", "domain": "geography"},
+    {"nisba_id": "n_jabali", "base_form": "جَبَل", "nisba_form": "جَبَلي", "root_id": "jbl", "derivation_rule": "append_iyy", "gender_pair": ["جَبَلي", "جَبَلِيّة"], "semantic_shift": "place_affiliation", "domain": "geography"},
+    {"nisba_id": "n_madani", "base_form": "مَدينة", "nisba_form": "مَدَني", "root_id": "mdn", "derivation_rule": "strip_ina_append_iyy", "gender_pair": ["مَدَني", "مَدَنِيّة"], "semantic_shift": "place_civic", "domain": "society"},
+    {"nisba_id": "n_kitabi", "base_form": "كِتاب", "nisba_form": "كِتابي", "root_id": "ktb", "derivation_rule": "append_iyy", "gender_pair": ["كِتابي", "كِتابِيّة"], "semantic_shift": "domain_affiliation", "domain": "literacy"}
+  ]
+}

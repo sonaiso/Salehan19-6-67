@@ -1,0 +1,100 @@
+{"example_id": "gen_001", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_002", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_003", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_004", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}
+{"example_id": "gen_005", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_006", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_007", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_008", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}
+{"example_id": "gen_009", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_010", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_011", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_012", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}
+{"example_id": "gen_013", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_014", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_015", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_016", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}
+{"example_id": "gen_017", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_018", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_019", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_020", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}
+{"example_id": "gen_021", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_022", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_023", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_024", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}
+{"example_id": "gen_025", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_026", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_027", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_028", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}
+{"example_id": "gen_029", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_030", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_031", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_032", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}
+{"example_id": "gen_033", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_034", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_035", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_036", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}
+{"example_id": "gen_037", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_038", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_039", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_040", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}
+{"example_id": "gen_041", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_042", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_043", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_044", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}
+{"example_id": "gen_045", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_046", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_047", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_048", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}
+{"example_id": "gen_049", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_050", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_051", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_052", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}
+{"example_id": "gen_053", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_054", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_055", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_056", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}
+{"example_id": "gen_057", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_058", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_059", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_060", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}
+{"example_id": "gen_061", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_062", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_063", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_064", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}
+{"example_id": "gen_065", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_066", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_067", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_068", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}
+{"example_id": "gen_069", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_070", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_071", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_072", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}
+{"example_id": "gen_073", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_074", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_075", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_076", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}
+{"example_id": "gen_077", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_078", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_079", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_080", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}
+{"example_id": "gen_081", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_082", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_083", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_084", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}
+{"example_id": "gen_085", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_086", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_087", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_088", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}
+{"example_id": "gen_089", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_090", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_091", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_092", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}
+{"example_id": "gen_093", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_094", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_095", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_096", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}
+{"example_id": "gen_097", "text": "ذهبتُ إلى المدرسةِ", "tokens": [{"token": "المدرسةِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بحرف الجر"}
+{"example_id": "gen_098", "text": "كتابُ الطالبِ", "tokens": [{"token": "الطالبِ", "role": "mudaf_ilayh", "case": "genitive"}], "notes": "المضاف إليه مجرور"}
+{"example_id": "gen_099", "text": "أقبلَ من المغربِ", "tokens": [{"token": "المغربِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بمن"}
+{"example_id": "gen_100", "text": "سافرتُ في الليلِ", "tokens": [{"token": "الليلِ", "role": "object_of_preposition", "case": "genitive"}], "notes": "مجرور بفي"}

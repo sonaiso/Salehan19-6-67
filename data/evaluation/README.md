@@ -7,9 +7,9 @@ This directory contains the benchmark dataset for Phase 4 dynamic dataset expans
 | File | Description | Count |
 |------|-------------|-------|
 | `static_gold_ar.jsonl` | Curated gold-standard Arabic examples | 350 |
-| `adversarial_ar.jsonl` | Adversarial examples testing model robustness | 50+ |
-| `ambiguity_ar.jsonl` | Ambiguous Arabic words/phrases | 30+ |
-| `calibration_ar.jsonl` | Calibration examples per dimension | 30+ |
+| `adversarial_ar.jsonl` | Adversarial examples testing model robustness | 100 |
+| `ambiguity_ar.jsonl` | Ambiguous Arabic words/phrases | 60 |
+| `calibration_ar.jsonl` | Calibration examples per dimension | 61 |
 | `dynamic_templates_ar.json` | Templates for dynamic dataset generation | 10 families |
 | `benchmark_profiles.json` | Named benchmark profiles | 5 profiles |
 | `web_evaluator_prompts_ar_dataset.jsonl` | Web Evaluator Arabic Prompt Dataset (Categories A–I) | 85 |

@@ -1,0 +1,186 @@
+[
+  {
+    "factor_id": "prep_fi",
+    "surface": "في",
+    "factor_type": "preposition",
+    "governs_case": "genitive",
+    "scope": "object",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "prep_min",
+    "surface": "من",
+    "factor_type": "preposition",
+    "governs_case": "genitive",
+    "scope": "object",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "prep_ila",
+    "surface": "إلى",
+    "factor_type": "preposition",
+    "governs_case": "genitive",
+    "scope": "object",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "prep_ala",
+    "surface": "على",
+    "factor_type": "preposition",
+    "governs_case": "genitive",
+    "scope": "object",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "prep_an",
+    "surface": "عن",
+    "factor_type": "preposition",
+    "governs_case": "genitive",
+    "scope": "object",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "prep_bi",
+    "surface": "بـ",
+    "factor_type": "preposition",
+    "governs_case": "genitive",
+    "scope": "object",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "prep_li",
+    "surface": "لـ",
+    "factor_type": "preposition",
+    "governs_case": "genitive",
+    "scope": "object",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "prep_ka",
+    "surface": "كـ",
+    "factor_type": "preposition",
+    "governs_case": "genitive",
+    "scope": "object",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "prep_hatta",
+    "surface": "حتى",
+    "factor_type": "preposition",
+    "governs_case": "genitive",
+    "scope": "object",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "prep_mundhu",
+    "surface": "منذ",
+    "factor_type": "preposition",
+    "governs_case": "genitive",
+    "scope": "object",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "inna",
+    "surface": "إن",
+    "factor_type": "inna_particle",
+    "governs_case": "accusative",
+    "scope": "name",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "anna",
+    "surface": "أن",
+    "factor_type": "inna_particle",
+    "governs_case": "accusative",
+    "scope": "name",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "kanna",
+    "surface": "كأن",
+    "factor_type": "inna_particle",
+    "governs_case": "accusative",
+    "scope": "name",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "lakinna",
+    "surface": "لكن",
+    "factor_type": "inna_particle",
+    "governs_case": "accusative",
+    "scope": "name",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "layta",
+    "surface": "ليت",
+    "factor_type": "inna_particle",
+    "governs_case": "accusative",
+    "scope": "name",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "laalla",
+    "surface": "لعل",
+    "factor_type": "inna_particle",
+    "governs_case": "accusative",
+    "scope": "name",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "kana",
+    "surface": "كان",
+    "factor_type": "kana_verb",
+    "governs_case": "nominative",
+    "scope": "name",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "lam_jussive",
+    "surface": "لم",
+    "factor_type": "jussive_particle",
+    "governs_case": "jussive",
+    "scope": "mood",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "lamma_jussive",
+    "surface": "لما",
+    "factor_type": "jussive_particle",
+    "governs_case": "jussive",
+    "scope": "mood",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "la_nahy",
+    "surface": "لا",
+    "factor_type": "jussive_particle",
+    "governs_case": "jussive",
+    "scope": "mood",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "lan_accusative",
+    "surface": "لن",
+    "factor_type": "nasb_particle",
+    "governs_case": "accusative",
+    "scope": "name",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "an_particle",
+    "surface": "أن",
+    "factor_type": "nasb_particle",
+    "governs_case": "accusative",
+    "scope": "name",
+    "certainty": 0.95
+  },
+  {
+    "factor_id": "mudaf_idafa",
+    "surface": "",
+    "factor_type": "idafa_structure",
+    "governs_case": "genitive",
+    "scope": "object",
+    "certainty": 0.95
+  }
+]

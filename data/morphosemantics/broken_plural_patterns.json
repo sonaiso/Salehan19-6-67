@@ -1,0 +1,274 @@
+{
+  "entries": [
+    {
+      "bp_id": "bp_kutub",
+      "singular": "كِتاب",
+      "plural": "كُتُب",
+      "root_id": "ktb",
+      "pattern": "fuuul",
+      "semantic_shift": "mass_collection",
+      "freq": 0.9
+    },
+    {
+      "bp_id": "bp_jibal",
+      "singular": "جَبَل",
+      "plural": "جِبال",
+      "root_id": "jbl",
+      "pattern": "fiaal",
+      "semantic_shift": "mass_collection",
+      "freq": 0.95
+    },
+    {
+      "bp_id": "bp_rijal",
+      "singular": "رَجُل",
+      "plural": "رِجال",
+      "root_id": "rjl",
+      "pattern": "fiaal",
+      "semantic_shift": "mass_human",
+      "freq": 0.99
+    },
+    {
+      "bp_id": "bp_a3mal",
+      "singular": "عَمَل",
+      "plural": "أَعمال",
+      "root_id": "aml",
+      "pattern": "afaal",
+      "semantic_shift": "mass_collection",
+      "freq": 0.95
+    },
+    {
+      "bp_id": "bp_aqwal",
+      "singular": "قَول",
+      "plural": "أَقوال",
+      "root_id": "qwl",
+      "pattern": "afaal",
+      "semantic_shift": "mass_collection",
+      "freq": 0.9
+    },
+    {
+      "bp_id": "bp_af3al",
+      "singular": "فِعل",
+      "plural": "أَفعال",
+      "root_id": "fal",
+      "pattern": "afaal",
+      "semantic_shift": "mass_collection",
+      "freq": 0.95
+    },
+    {
+      "bp_id": "bp_kutaab",
+      "singular": "كاتِب",
+      "plural": "كُتّاب",
+      "root_id": "ktb",
+      "pattern": "fuaal",
+      "semantic_shift": "agent_plural",
+      "freq": 0.8
+    },
+    {
+      "bp_id": "bp_3ulama",
+      "singular": "عالِم",
+      "plural": "عُلَماء",
+      "root_id": "alm",
+      "pattern": "fualaa2",
+      "semantic_shift": "agent_plural",
+      "freq": 0.9
+    },
+    {
+      "bp_id": "bp_madhahib",
+      "singular": "مَذهَب",
+      "plural": "مَذاهِب",
+      "root_id": "dhb",
+      "pattern": "mafaaiil",
+      "semantic_shift": "place_plural",
+      "freq": 0.85
+    },
+    {
+      "bp_id": "bp_masaajid",
+      "singular": "مَسجِد",
+      "plural": "مَساجِد",
+      "root_id": "sjd",
+      "pattern": "mafaaiil",
+      "semantic_shift": "place_plural",
+      "freq": 0.9
+    },
+    {
+      "bp_id": "bp_maktatib",
+      "singular": "مَكتَبة",
+      "plural": "مَكاتِب",
+      "root_id": "ktb",
+      "pattern": "mafaaiil",
+      "semantic_shift": "place_plural",
+      "freq": 0.85
+    },
+    {
+      "bp_id": "bp_dowal",
+      "singular": "دَولة",
+      "plural": "دُوَل",
+      "root_id": "dwl",
+      "pattern": "fual",
+      "semantic_shift": "mass_political",
+      "freq": 0.95
+    },
+    {
+      "bp_id": "bp_sowar",
+      "singular": "صورة",
+      "plural": "صُوَر",
+      "root_id": "swr",
+      "pattern": "fual",
+      "semantic_shift": "mass_collection",
+      "freq": 0.9
+    },
+    {
+      "bp_id": "bp_quloob",
+      "singular": "قَلب",
+      "plural": "قُلوب",
+      "root_id": "qlb",
+      "pattern": "fuuul",
+      "semantic_shift": "mass_body",
+      "freq": 0.98
+    },
+    {
+      "bp_id": "bp_buyoot",
+      "singular": "بَيت",
+      "plural": "بُيوت",
+      "root_id": "byt",
+      "pattern": "fuuul",
+      "semantic_shift": "mass_place",
+      "freq": 0.98
+    },
+    {
+      "bp_id": "bp_a3yun",
+      "singular": "عَين",
+      "plural": "أَعيُن",
+      "root_id": "ain",
+      "pattern": "afuul",
+      "semantic_shift": "mass_body",
+      "freq": 0.95
+    },
+    {
+      "bp_id": "bp_ansaar",
+      "singular": "ناصِر",
+      "plural": "أَنصار",
+      "root_id": "nsr",
+      "pattern": "anfaal",
+      "semantic_shift": "agent_plural",
+      "freq": 0.8
+    },
+    {
+      "bp_id": "bp_ayman",
+      "singular": "يَمين",
+      "plural": "أَيمان",
+      "root_id": "ymn",
+      "pattern": "afaal",
+      "semantic_shift": "mass_collection",
+      "freq": 0.8
+    },
+    {
+      "bp_id": "bp_mawaqif",
+      "singular": "مَوقِف",
+      "plural": "مَواقِف",
+      "root_id": "wqf",
+      "pattern": "mafaaiil",
+      "semantic_shift": "place_plural",
+      "freq": 0.9
+    },
+    {
+      "bp_id": "bp_mazaaric",
+      "singular": "مَزرَعة",
+      "plural": "مَزارِع",
+      "root_id": "zraa",
+      "pattern": "mafaaiil",
+      "semantic_shift": "place_plural",
+      "freq": 0.9
+    },
+    {
+      "bp_id": "bp_masaani3",
+      "singular": "مَصنَع",
+      "plural": "مَصانِع",
+      "root_id": "snaa",
+      "pattern": "mafaaiil",
+      "semantic_shift": "place_plural",
+      "freq": 0.9
+    },
+    {
+      "bp_id": "bp_mabaani",
+      "singular": "مَبنى",
+      "plural": "مَباني",
+      "root_id": "bny",
+      "pattern": "mafaaiil",
+      "semantic_shift": "place_plural",
+      "freq": 0.85
+    },
+    {
+      "bp_id": "bp_ahkaam",
+      "singular": "حُكم",
+      "plural": "أَحكام",
+      "root_id": "hkm",
+      "pattern": "afaal",
+      "semantic_shift": "mass_collection",
+      "freq": 0.9
+    },
+    {
+      "bp_id": "bp_ahlam",
+      "singular": "حُلم",
+      "plural": "أَحلام",
+      "root_id": "hlm",
+      "pattern": "afaal",
+      "semantic_shift": "mass_mental",
+      "freq": 0.95
+    },
+    {
+      "bp_id": "bp_afkaar",
+      "singular": "فِكر",
+      "plural": "أَفكار",
+      "root_id": "fkr",
+      "pattern": "afaal",
+      "semantic_shift": "mass_mental",
+      "freq": 0.9
+    },
+    {
+      "bp_id": "bp_arbaab",
+      "singular": "رَب",
+      "plural": "أَرباب",
+      "root_id": "rbb",
+      "pattern": "afaal",
+      "semantic_shift": "mass_social",
+      "freq": 0.8
+    },
+    {
+      "bp_id": "bp_mabaahij",
+      "singular": "مَبهَج",
+      "plural": "مَباهِج",
+      "root_id": "bhj",
+      "pattern": "mafaaiil",
+      "semantic_shift": "mass_emotion",
+      "freq": 0.7
+    },
+    {
+      "bp_id": "bp_asliha",
+      "singular": "سِلاح",
+      "plural": "أَسلِحة",
+      "root_id": "slh",
+      "pattern": "af3ila",
+      "semantic_shift": "mass_collection",
+      "freq": 0.85
+    },
+    {
+      "bp_id": "bp_anhar",
+      "singular": "نَهر",
+      "plural": "أَنهار",
+      "root_id": "nhr",
+      "pattern": "anfaal",
+      "semantic_shift": "mass_geographical",
+      "freq": 0.95
+    },
+    {
+      "bp_id": "bp_bihar",
+      "singular": "بَحر",
+      "plural": "بِحار",
+      "root_id": "bhr",
+      "pattern": "fiaal",
+      "semantic_shift": "mass_geographical",
+      "freq": 0.9
+    }
+  ]
+}
