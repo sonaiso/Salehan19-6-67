@@ -80,7 +80,7 @@ def test_no_industrial_branch_is_marked_as_root():
 def test_every_hypothesis_node_has_residuals():
     spec = _load_json(SPEC_PATH)
     for node in spec["nodes"]:
-        if node["status"] == "HYPOTHESIS":
+        if node["progress_status"] == "HYPOTHESIS":
             assert node["residuals"], f"HYPOTHESIS node {node['node_id']} must include residuals"
 
 
