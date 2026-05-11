@@ -15,7 +15,7 @@
 - Mathematical form: `Contradiction(P,¬P) ⇔ same_subject ∧ same_predicate ∧ same_meaning ∧ same_domain ∧ same_time ∧ same_aspect ∧ same_judgment_rank`.
 - Programming contract: `ContradictionCheck` with explicit boolean gates for each sameness condition.
 - Linguistic function: prevents false contradiction inflation from scope shifts.
-- Forbidden transitions: `contradiction_without_domain`, `contradiction_without_scope_resolution`.
+- Forbidden transitions: `contradiction_without_domain`, `contradiction_without_time`, `contradiction_without_aspect`, `contradiction_without_rank`.
 - Residuals: `partial_scope_alignment`, `predicate_drift`, `meaning_divergence`.
 
 ## Linking (L)
