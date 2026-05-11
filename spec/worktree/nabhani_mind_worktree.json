@@ -306,10 +306,10 @@
   },
   "residuals": [
     {
-      "id": "missing_nabhani_mind_worktree",
+      "id": "root_runtime_contract_incomplete",
       "severity": "high",
-      "why_it_matters": "Root architecture map must be canonical before branch expansion",
-      "what_fixes_it": "Maintain root-first worktree docs/spec/tests",
+      "why_it_matters": "The root architecture is documented canonically, but its runtime contract and executable closure are not yet fully formalized",
+      "what_fixes_it": "Define and govern root-level runtime contracts that connect the canonical worktree specification to executable architecture guarantees",
       "proposed_next_pr": "Phase 2.1: Formalize Mind Geometry Runtime Contracts"
     },
     {
