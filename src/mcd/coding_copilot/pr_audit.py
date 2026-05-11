@@ -62,6 +62,13 @@ def _normalize_residual_types(residuals: list[dict[str, Any] | str]) -> list[str
     return normalized
 
 
+def _append_unique(items: list[str], seen: set[str], value: str) -> None:
+    normalized = (value or "").strip()
+    if normalized and normalized not in seen:
+        items.append(normalized)
+        seen.add(normalized)
+
+
 def _claims_have_matching_evidence(claims: list[dict[str, Any]], evidence: dict[str, Any]) -> bool:
     if not claims:
         return False
@@ -134,9 +141,9 @@ def audit_pr_fixture(pr_input: PRAuditInput) -> PRAuditResult:
         checks_pending=pr_input.checks_pending,
     )
     residual_types = _normalize_residual_types(pr_input.residuals)
+    residual_seen = set(residual_types)
     for residual in checks.residuals():
-        if residual.residual_type not in residual_types:
-            residual_types.append(residual.residual_type)
+        _append_unique(residual_types, residual_seen, residual.residual_type)
 
     merge_governance = evaluate_merge_governance(
         MergeGovernanceInput(
@@ -154,8 +161,7 @@ def audit_pr_fixture(pr_input: PRAuditInput) -> PRAuditResult:
     )
 
     for residual in merge_governance.residuals:
-        if residual not in residual_types:
-            residual_types.append(residual)
+        _append_unique(residual_types, residual_seen, residual)
 
     if merge_governance.final_judgment != "CERTIFICATE":
         return _build_result(
@@ -166,8 +172,7 @@ def audit_pr_fixture(pr_input: PRAuditInput) -> PRAuditResult:
         )
 
     if not pr_input.reverse_trace_complete:
-        if "insufficient_evidence" not in residual_types:
-            residual_types.append("insufficient_evidence")
+        _append_unique(residual_types, residual_seen, "insufficient_evidence")
         return _build_result(
             pr_input,
             judgment="HYPOTHESIS",
@@ -176,8 +181,7 @@ def audit_pr_fixture(pr_input: PRAuditInput) -> PRAuditResult:
         )
 
     if not _claims_have_matching_evidence(pr_input.claims, pr_input.evidence):
-        if "insufficient_evidence" not in residual_types:
-            residual_types.append("insufficient_evidence")
+        _append_unique(residual_types, residual_seen, "insufficient_evidence")
         return _build_result(
             pr_input,
             judgment="HYPOTHESIS",
