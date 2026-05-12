@@ -34,21 +34,28 @@ jobs:
           test -f research/formal/lean/CoreJudgment.lean
           test -f research/formal/lean/NoIllicitCertification.lean
           test -f research/formal/lean/TriadClosure.lean
+          test -f research/formal/lean/RankSoundness.lean
+          test -f research/formal/lean/TypedResiduals.lean
+          test -f research/formal/lean/ResidualCalculus.lean
           test -f research/formal/coq/README.md
 
-      - name: Attempt Lean machine-check for minimal core (if available)
+      - name: Attempt Lean machine-check for theorem core (if available)
         run: |
           if command -v lean >/dev/null 2>&1; then
-            echo "Lean detected; running machine-check for minimal core."
+            echo "Lean detected; running machine-check for theorem core."
             lean --version
             cd research/formal/lean
             lean CoreJudgment.lean
             lean NoIllicitCertification.lean
             lean TriadClosure.lean
+            lean RankSoundness.lean
+            lean TypedResiduals.lean
+            lean ResidualCalculus.lean
           else
             echo "Lean not available; running fallback theorem-contract checks only."
             python - <<'PY'
             from pathlib import Path
+
             required = {
                 "CoreJudgment.lean": ["inductive PublicJudgment", "def certificateAllowed", "def publicJudgment"],
                 "NoIllicitCertification.lean": [
@@ -58,11 +65,31 @@ jobs:
                     "theorem residual_erasure_blocks_certificate",
                 ],
                 "TriadClosure.lean": ["theorem triad_closure"],
+                "RankSoundness.lean": [
+                    "inductive EpistemicRank",
+                    "def requiredRank",
+                    "theorem rank_soundness",
+                    "theorem insufficient_rank_blocks_certificate",
+                ],
+                "TypedResiduals.lean": [
+                    "inductive Residual",
+                    "abbrev ResidualSet",
+                    "def resolvedByEvidence",
+                    "def residualPreserved",
+                ],
+                "ResidualCalculus.lean": [
+                    "theorem residual_persistence",
+                    "theorem rank_gap_blocks_certificate",
+                    "theorem missing_evidence_blocks_certificate",
+                    "theorem residual_erasure_blocks_certificate",
+                    "theorem unresolved_conflict_blocks_certificate",
+                ],
             }
+
             base = Path("research/formal/lean")
             for file_name, tokens in required.items():
                 text = (base / file_name).read_text(encoding="utf-8")
-                assert "sorry" not in text
+                assert "sorry" not in text, f"found disallowed sorry in {file_name}"
                 for token in tokens:
                     assert token in text, f"missing token {token} in {file_name}"
             print("Lean fallback contract checks passed.")
@@ -74,4 +101,6 @@ jobs:
           PYTHONPATH=src python -m pytest -q \
             tests/test_formal_theorem_scaffolding.py \
             tests/test_formal_scientific_validation_baseline.py \
-            tests/test_formal_theorem_track.py
+            tests/test_formal_theorem_track.py \
+            tests/test_formal_rank_soundness_track.py \
+            tests/test_formal_residual_calculus_track.py
