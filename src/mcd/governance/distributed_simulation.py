@@ -26,7 +26,7 @@ class DistributedSimulationResult:
     def summary(self) -> dict:
         counts = {"zero": 0, "hypothesis": 0, "certificate": 0}
         for evaluation in self.evaluations:
-            counts[evaluation.public_judgment] = counts.get(evaluation.public_judgment, 0) + 1
+            counts[evaluation.public_judgment] += 1
         return {
             "total_attempts": len(self.evaluations),
             "judgment_counts": counts,

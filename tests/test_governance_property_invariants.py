@@ -24,9 +24,9 @@ def test_adversarial_public_judgment_always_canonical(requested_judgment: str):
 
 
 @hypothesis.given(
-    proof_object_ref=strategies.text(max_size=8),
+    proof_object_ref=strategies.one_of(strategies.just(""), strategies.text(min_size=1, max_size=8)),
     governance_gate_passed=strategies.booleans(),
-    reverse_trace_ref=strategies.text(max_size=8),
+    reverse_trace_ref=strategies.one_of(strategies.just(""), strategies.text(min_size=1, max_size=8)),
     evidence_matches_claim=strategies.booleans(),
 )
 def test_certificate_never_issued_when_mandatory_gates_missing(
@@ -45,7 +45,14 @@ def test_certificate_never_issued_when_mandatory_gates_missing(
             evidence_matches_claim=evidence_matches_claim,
         )
     )
-    if not proof_object_ref or not governance_gate_passed or not reverse_trace_ref or not evidence_matches_claim:
+    if (
+        proof_object_ref == ""
+        or governance_gate_passed is False
+        or reverse_trace_ref == ""
+        or evidence_matches_claim is False
+        or "-" not in proof_object_ref
+        or "-" not in reverse_trace_ref
+    ):
         assert result.public_judgment != "certificate"
 
 

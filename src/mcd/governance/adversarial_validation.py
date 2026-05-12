@@ -63,10 +63,14 @@ def _blocked_certificate_reasons(attempt: AdversarialAttempt) -> list[str]:
             reasons.append(tag)
     if not attempt.proof_object_ref:
         reasons.append("certificate_without_proof_object")
+    elif "-" not in attempt.proof_object_ref:
+        reasons.append("invalid_proof_object_ref_format")
     if not attempt.governance_gate_passed:
         reasons.append("certificate_without_governance_gate")
     if not attempt.reverse_trace_ref:
         reasons.append("certificate_without_reverse_trace")
+    elif "-" not in attempt.reverse_trace_ref:
+        reasons.append("invalid_reverse_trace_ref_format")
     if not attempt.evidence_matches_claim:
         reasons.append("evidence_mismatch")
     if attempt.residuals:

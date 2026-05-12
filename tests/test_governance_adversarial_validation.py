@@ -63,3 +63,18 @@ def test_residual_erasure_emits_residual_marker():
     assert result.public_judgment == "hypothesis"
     assert "residual_erasure" in result.blocked_reasons
     assert "residual_missing_detected" in result.residuals
+
+
+def test_certificate_reference_format_is_validated():
+    attempt = AdversarialAttempt(
+        attempt_id="ATT-005",
+        requested_judgment="certificate",
+        proof_object_ref="PO1",
+        governance_gate_passed=True,
+        reverse_trace_ref="RT1",
+        evidence_matches_claim=True,
+    )
+    result = evaluate_adversarial_attempt(attempt)
+    assert result.public_judgment == "hypothesis"
+    assert "invalid_proof_object_ref_format" in result.blocked_reasons
+    assert "invalid_reverse_trace_ref_format" in result.blocked_reasons
