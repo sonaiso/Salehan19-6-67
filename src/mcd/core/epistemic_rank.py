@@ -11,6 +11,7 @@ class EpistemicRank(IntEnum):
     WEAK_EVIDENCE = 3
     STRONG_EVIDENCE = 4
     CERTIFICATE = 5
+    # Internal transition-control ceiling, not a public epistemic status.
     FINAL_JUDGMENT = 6
 
 
@@ -18,7 +19,10 @@ def parse_rank(rank: str | EpistemicRank) -> EpistemicRank:
     if isinstance(rank, EpistemicRank):
         return rank
     normalized = (rank or "").strip().upper()
-    return EpistemicRank[normalized]
+    try:
+        return EpistemicRank[normalized]
+    except KeyError as exc:
+        raise ValueError(f"invalid epistemic rank: {rank}") from exc
 
 
 def is_rank_sufficient(evidence_rank: str | EpistemicRank, required_rank: str | EpistemicRank) -> bool:

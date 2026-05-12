@@ -19,11 +19,15 @@ class TraceGraph:
         return cls(
             steps=[
                 TraceStep("Reality"),
-                TraceStep("Linking"),
-                TraceStep("Interpretation"),
+                TraceStep("Cognitive Distinction"),
+                TraceStep("Linguistic Signification"),
+                TraceStep("Conceptual Geometry"),
+                TraceStep("Direct Meaning"),
+                TraceStep("Licensed Implication"),
+                TraceStep("Claim"),
                 TraceStep("Evidence"),
-                TraceStep("Governance"),
                 TraceStep("Judgment"),
+                TraceStep("ReverseTrace"),
             ]
         )
 

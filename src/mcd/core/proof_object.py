@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from mcd.core.epistemic_rank import EpistemicRank, is_rank_sufficient
+from mcd.core.epistemic_rank import EpistemicRank, is_rank_sufficient, parse_rank
 from mcd.core.legitimacy_state import LegitimacyState
 
 
@@ -18,10 +18,17 @@ class ProofObject:
     governance_log: list[str] = field(default_factory=list)
     contradiction_checks: list[bool] = field(default_factory=list)
     confidence: float = 0.0
-    rank: str = EpistemicRank.HYPOTHESIS.name
+    rank: EpistemicRank | str = EpistemicRank.HYPOTHESIS
+
+    def __post_init__(self) -> None:
+        self.rank = parse_rank(self.rank)
 
     def has_valid_chains(self) -> bool:
-        return bool(self.evidence_chain and self.transition_chain and self.governance_log)
+        return (
+            len(self.evidence_chain) > 0
+            and len(self.transition_chain) > 0
+            and len(self.governance_log) > 0
+        )
 
     def contradiction_free(self) -> bool:
         return bool(self.contradiction_checks) and all(self.contradiction_checks)

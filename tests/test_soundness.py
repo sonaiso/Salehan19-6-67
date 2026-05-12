@@ -7,9 +7,10 @@ from mcd.core.epistemic_rank import EpistemicRank, is_rank_sufficient, required_
 from mcd.core.forbidden_transitions import ForbiddenTransition, validate_transition
 from mcd.core.legitimacy_state import LegitimacyState
 from mcd.core.proof_object import CertificateRequirementError, ProofObject, require_certificate_ready
+from mcd.core.trace_graph import TraceGraph
 
 
-def test_no_certificate_without_proof() -> None:
+def test_no_certificate_with_missing_evidence_chain() -> None:
     legitimacy = LegitimacyState(
         context_valid=True,
         evidence_valid=True,
@@ -33,6 +34,8 @@ def test_no_certificate_without_proof() -> None:
 def test_forbidden_transition() -> None:
     with pytest.raises(ForbiddenTransition):
         validate_transition("ZERO", "CERTIFICATE")
+    with pytest.raises(ForbiddenTransition):
+        validate_transition("METAPHOR", "LITERAL_CERTIFICATE")
 
     validate_transition("HYPOTHESIS", "HYPOTHESIS")
 
@@ -41,3 +44,19 @@ def test_rank_enforcement() -> None:
     required = required_rank_for_judgment("CERTIFICATE")
     assert not is_rank_sufficient(EpistemicRank.WEAK_EVIDENCE, required)
     assert is_rank_sufficient(EpistemicRank.STRONG_EVIDENCE, EpistemicRank.HYPOTHESIS)
+
+
+def test_canonical_trace_graph_matches_supreme_architecture() -> None:
+    graph = TraceGraph.canonical()
+    assert graph.replay() == [
+        "Reality",
+        "Cognitive Distinction",
+        "Linguistic Signification",
+        "Conceptual Geometry",
+        "Direct Meaning",
+        "Licensed Implication",
+        "Claim",
+        "Evidence",
+        "Judgment",
+        "ReverseTrace",
+    ]
