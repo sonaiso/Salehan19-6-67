@@ -39,7 +39,7 @@ def test_rank_soundness_theorems_and_mapping_exist():
 
 
 def test_rank_soundness_claim_boundary_is_honest_and_non_agi():
-    payload = json.loads(Path("research/formal/proof_mapping.json").read_text(encoding="utf-8")).__str__().lower()
+    payload = Path("research/formal/proof_mapping.json").read_text(encoding="utf-8").lower()
     roadmap = Path("research/theorem_roadmap.md").read_text(encoding="utf-8").lower()
 
     forbidden = ["full mathematical proof of the whole project", "consciousness", "agi"]
