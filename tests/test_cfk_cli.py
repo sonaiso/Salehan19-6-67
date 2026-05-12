@@ -38,7 +38,7 @@ class TestCFKAnalyzeCLI:
         assert code == 0
         d = json.loads(out)
         assert "proof" in d
-        assert d["proof"]["judgment"] in ("certificate", "hypothesis", "suspend", "zero")
+        assert d["proof"]["judgment"] in ("certificate", "hypothesis", "zero")
 
     def test_cfk_analyze_markdown_output(self):
         out, code = _run_cli("cfk-analyze", "--text", "زيد كاتب", "--output", "markdown")
@@ -77,7 +77,7 @@ class TestCFKCompareCLI:
         out, code = _run_cli("cfk-compare", "--text", "زيد كاتب", "--output", "json")
         assert code == 0
         d = json.loads(out)
-        assert d["kernel_judgment"] in ("certificate", "hypothesis", "suspend", "zero")
+        assert d["kernel_judgment"] in ("certificate", "hypothesis", "zero")
 
 
 class TestCFKProofCLI:
@@ -91,7 +91,7 @@ class TestCFKProofCLI:
         assert code == 0
         d = json.loads(out)
         assert "judgment" in d
-        assert d["judgment"] in ("certificate", "hypothesis", "suspend", "zero")
+        assert d["judgment"] in ("certificate", "hypothesis", "zero")
 
     def test_cfk_proof_shows_residual(self):
         out, code = _run_cli("cfk-proof", "--text", "إن هذا لحق", "--output", "text")
@@ -103,11 +103,11 @@ class TestCFKProofCLI:
         assert code == 0
         assert "الدليل" in out or "evidence" in out.lower()
 
-    def test_cfk_proof_universal_is_suspend(self):
+    def test_cfk_proof_universal_collapses_to_hypothesis(self):
         out, code = _run_cli("cfk-proof", "--text", "كل الشركات تستخدم GraphRAG", "--output", "json")
         assert code == 0
         d = json.loads(out)
-        assert d["judgment"] == "suspend"
+        assert d["judgment"] == "hypothesis"
 
     def test_cfk_proof_with_evidence(self):
         out, code = _run_cli(

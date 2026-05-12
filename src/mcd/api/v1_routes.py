@@ -18,9 +18,10 @@ from __future__ import annotations
 
 import time
 import uuid
+import os
 
 from fastapi import APIRouter
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, PlainTextResponse
 
 from mcd.api.errors import (
     EngineExecutionError,
@@ -36,6 +37,9 @@ from mcd.api.schemas import (
 )
 from mcd.api.serializers import safe_serialize
 from mcd.api.version import API_VERSION, LAYERS, SERVICE_NAME
+from mcd.api.observability import get_trace_store
+from mcd.audit import build_governance_audit_report, replay_trace_events
+from mcd.metrics import compute_governance_metrics
 
 v1_router = APIRouter(prefix="/v1")
 
@@ -56,14 +60,14 @@ _INDUSTRIAL_PROFILES = {"quick", "full"}
 
 # Production blockers (always present in this phase)
 _PRODUCTION_BLOCKERS = [
-    "No authentication implemented",
-    "No rate limiting implemented",
-    "No persistent logging",
+    "Authentication/authorization is profile-gated and must be validated end-to-end (MCD_API_PROFILE + MCD_API_KEY)",
+    "Rate limiting is in-process and needs distributed backing (Redis/Memcached) in production",
+    "Persistent logging is file-backed and needs managed retention/rotation policy",
     "No external source adapters (MockSourceAPI only)",
-    "No production deployment configuration",
+    "Production deployment configuration requires infra-level hardening",
     "No load testing under real traffic",
     "No security audit completed",
-    "API versioning via URL path added in Phase 6.1 but not validated in production",
+    "API versioning via URL path is not yet externally certified",
 ]
 
 
@@ -379,6 +383,48 @@ def v1_pilot_readiness() -> dict:
         "tests_verified": False,
         "warnings": [
             "tests_pass must be verified by CI — cannot be hardcoded true",
-            "Production requires auth, rate limiting, persistent logging, and security audit",
+            "Production requires external security audit and real traffic validation",
         ],
     }
+
+
+@v1_router.get("/readiness", tags=["v1", "health"])
+def v1_readiness() -> dict:
+    """Readiness probe for deployment profiles."""
+    profile = os.environ.get("MCD_API_PROFILE", "local").strip().lower()
+    traces = get_trace_store().all_persistent()
+    replay = replay_trace_events(traces).to_dict()
+    return {
+        "status": "ready" if replay["replay_success"] else "degraded",
+        "profile": profile,
+        "trace_events": replay["total_events"],
+        "replay_success": replay["replay_success"],
+    }
+
+
+@v1_router.get("/audit/replay", tags=["v1", "audit"])
+def v1_audit_replay() -> dict:
+    """Replay stored traces and validate replay integrity."""
+    traces = get_trace_store().all_persistent()
+    return replay_trace_events(traces).to_dict()
+
+
+@v1_router.get("/audit/report", tags=["v1", "audit"])
+def v1_audit_report() -> dict:
+    """Generate governance audit report from persistent traces."""
+    traces = get_trace_store().all_persistent()
+    return build_governance_audit_report(traces)
+
+
+@v1_router.get("/metrics", tags=["v1", "metrics"])
+def v1_metrics() -> dict:
+    """Return governance metrics in JSON."""
+    traces = get_trace_store().all_persistent()
+    return compute_governance_metrics(traces).to_dict()
+
+
+@v1_router.get("/metrics/prometheus", tags=["v1", "metrics"], response_class=PlainTextResponse)
+def v1_metrics_prometheus() -> str:
+    """Return governance metrics in Prometheus exposition format."""
+    traces = get_trace_store().all_persistent()
+    return compute_governance_metrics(traces).to_prometheus()

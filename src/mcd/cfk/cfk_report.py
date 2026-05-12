@@ -4,19 +4,18 @@ from __future__ import annotations
 import json
 import re
 from mcd.cfk.cfk_pipeline import CognitiveFractalResult
+from mcd.core.public_judgment import collapse_to_public_judgment
 
 
 _JUDGMENT_ICONS = {
     "certificate": "✅",
     "hypothesis":  "🔶",
-    "suspend":     "⏸️",
     "zero":        "❌",
 }
 
 _JUDGMENT_AR = {
     "certificate": "شهادة يقين",
     "hypothesis":  "فرضية — انتظار دليل",
-    "suspend":     "تعليق — دليل ناقص",
     "zero":        "خطأ بنيوي — باقٍ معرفي",
 }
 
@@ -41,8 +40,9 @@ def _trunc(text: str, n: int) -> str:
 
 def generate_markdown_report(result: CognitiveFractalResult) -> str:
     proof = result.proof
-    icon  = _JUDGMENT_ICONS.get(proof.judgment, "?")
-    ar    = _JUDGMENT_AR.get(proof.judgment, proof.judgment)
+    public_judgment = collapse_to_public_judgment(proof.judgment)
+    icon = _JUDGMENT_ICONS.get(public_judgment, "?")
+    ar = _JUDGMENT_AR.get(public_judgment, public_judgment)
     # Escape user-supplied text before embedding in Markdown
     safe_text = _escape_md(result.text)
 
@@ -67,6 +67,11 @@ def generate_markdown_report(result: CognitiveFractalResult) -> str:
         f"| إشارة التعلم                | {_escape_md(proof.learning_signal)} |",
         f"",
     ]
+    if proof.judgment != public_judgment:
+        lines.extend([
+            f"_تحويل حوكمي:_ الحالة الداخلية `{proof.judgment}` → الحكم العام `{public_judgment}`.",
+            "",
+        ])
 
     # Conservation laws
     cons = proof.conservation

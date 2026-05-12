@@ -34,4 +34,10 @@ jobs:
             tests/test_coding_real_pr_fixtures.py \
             tests/test_coding_merge_governance.py \
             tests/test_coding_pr_certification.py \
-            tests/test_nabhani_mind_worktree.py
+            tests/test_nabhani_mind_worktree.py \
+            tests/test_public_judgment_contract.py \
+            tests/test_cross_runtime_governance_consistency.py \
+            tests/test_certificate_pipeline_integrity.py \
+            tests/test_api_hardening.py \
+            tests/test_runtime_concurrency.py \
+            tests/test_replay_consistency.py
