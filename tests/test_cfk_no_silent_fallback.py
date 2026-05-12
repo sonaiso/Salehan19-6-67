@@ -154,13 +154,11 @@ class TestNoCertificateWithoutEvidence:
         result = self.pipeline.run("إن هذا لحق", evidence_refs=[])
         assert result.proof.judgment != JudgmentStatus.CERTIFICATE.value
 
-    def test_universal_without_evidence_suspend(self):
-        """Universal quantifier + no evidence → suspend or hypothesis, not certificate."""
+    def test_universal_without_evidence_hypothesis_public(self):
+        """Universal quantifier + no evidence → internal suspended + public hypothesis, not certificate."""
         result = self.pipeline.run("كل الشركات تستخدم GraphRAG", evidence_refs=[])
-        assert result.proof.judgment in (
-            JudgmentStatus.SUSPEND.value,
-            JudgmentStatus.HYPOTHESIS.value,
-        )
+        assert result.proof.judgment == JudgmentStatus.HYPOTHESIS.value
+        assert result.proof.internal_state == JudgmentStatus.SUSPENDED.value
         assert result.proof.judgment != JudgmentStatus.CERTIFICATE.value
 
     def test_murab_syntactic_certainty_not_factual_certainty(self):

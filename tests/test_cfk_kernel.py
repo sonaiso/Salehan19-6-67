@@ -71,16 +71,14 @@ class TestFractalKernel:
         """No evidence → judgment ≤ hypothesis (not certificate)."""
         s, a, e = _make_projections("إن هذا لحق")
         result = self.kernel.apply("إن هذا لحق", s, a, e)
-        assert result.kernel_judgment in (
-            JudgmentStatus.HYPOTHESIS.value,
-            JudgmentStatus.SUSPEND.value,
-        )
+        assert result.kernel_judgment == JudgmentStatus.HYPOTHESIS.value
         assert result.kernel_judgment != JudgmentStatus.CERTIFICATE.value
 
-    def test_universal_without_evidence_is_suspend(self):
+    def test_universal_without_evidence_is_hypothesis_with_internal_suspended(self):
         s, a, e = _make_projections("كل الشركات تستخدم هذه التقنية")
         result = self.kernel.apply("كل الشركات تستخدم هذه التقنية", s, a, e)
-        assert result.kernel_judgment == JudgmentStatus.SUSPEND.value
+        assert result.kernel_judgment == JudgmentStatus.HYPOTHESIS.value
+        assert result.kernel_internal_state == JudgmentStatus.SUSPENDED.value
         assert result.residual_type == "unsupported_generalization_residual"
 
     def test_emphasis_does_not_upgrade_to_certificate(self):
@@ -242,7 +240,7 @@ class TestProofObjectBuilder:
 
     def test_learning_signal_mapped(self):
         proof = self._build("زيد كاتب")
-        assert proof.learning_signal in ("reinforce", "correct", "suspend", "ignore")
+        assert proof.learning_signal in ("reinforce", "correct", "ignore")
 
     def test_reverse_trace_non_empty(self):
         proof = self._build("النار حارة")

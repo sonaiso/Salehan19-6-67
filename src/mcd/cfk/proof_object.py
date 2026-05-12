@@ -1,10 +1,12 @@
 """ProofObject — the final output of the Cognitive Fractal Kernel pipeline.
 
-A ProofObject is one of four types:
+A ProofObject public judgment is one of three types:
   Certificate   — دليل مكتمل — يقين (evidence present, certainty ≥ 0.75)
   Hypothesis    — دعوى محتملة — انتظار (partial evidence or moderate certainty)
-  Suspend       — دليل ناقص — تعليق (evidence missing, or rule violated)
   Zero          — باقٍ معرفي — خطأ بنيوي (fake evidence, conservation law broken)
+
+Internal procedural state may still be "suspended", but it must collapse into
+public judgment="hypothesis" with residuals explaining blocked certification.
 
 The ProofObject carries:
   - the three projections (statistical, arabic, epistemic)
@@ -24,7 +26,7 @@ from __future__ import annotations
 import uuid
 from dataclasses import dataclass, field
 
-from mcd.cfk.cfk_schema import JudgmentStatus
+from mcd.cfk.cfk_schema import JudgmentStatus, coerce_public_judgment
 from mcd.cfk.fractal_kernel import KernelResult
 from mcd.cfk.conservation_law import ConservationCheckResult
 from mcd.cfk.reverse_trace import ReverseTrace, ReverseTraceBuilder
@@ -38,7 +40,7 @@ class ProofObject:
     text: str
 
     # Final judgment
-    judgment: str   # certificate|hypothesis|suspend|zero
+    judgment: str   # certificate|hypothesis|zero (public contract only)
 
     # Scores from each coordinate system
     statistical_confidence: float
@@ -54,7 +56,10 @@ class ProofObject:
     # Residual
     cognitive_residual: float
     residual_type: str
-    learning_signal: str  # reinforce|correct|suspend|ignore
+    learning_signal: str  # reinforce|correct|ignore
+
+    internal_state: str = "active"
+    residuals: list[str] = field(default_factory=list)
 
     # Trace — Phase 8.1: structured ReverseTrace replaces plain list
     reverse_trace_obj: ReverseTrace | None = None
@@ -75,7 +80,9 @@ class ProofObject:
             "conservation": self.conservation.to_dict(),
             "cognitive_residual": round(self.cognitive_residual, 4),
             "residual_type": self.residual_type,
+            "residuals": self.residuals,
             "learning_signal": self.learning_signal,
+            "internal_state": self.internal_state,
             "reverse_trace": self.reverse_trace,
         }
         if self.reverse_trace_obj is not None:
@@ -108,7 +115,9 @@ class ProofObjectBuilder:
         primary_conservation = self._merge_conservation(conservation_results)
 
         # Determine final judgment
-        judgment = kernel_result.kernel_judgment
+        judgment = coerce_public_judgment(kernel_result.kernel_judgment)
+        internal_state = kernel_result.kernel_internal_state
+        residuals: list[str] = []
 
         # Override: if any conservation law is blocking → Zero
         blocking = any(
@@ -117,6 +126,8 @@ class ProofObjectBuilder:
         )
         if blocking:
             judgment = JudgmentStatus.ZERO.value
+            internal_state = "active"
+            residuals.append("certificate_blocked")
 
         # Generate a preliminary proof_id so ReverseTrace can reference it
         proof_id = f"PO-{uuid.uuid4().hex[:10]}"
@@ -138,15 +149,29 @@ class ProofObjectBuilder:
                 # Downgrade to Hypothesis if reverse trace is incomplete
                 judgment = JudgmentStatus.HYPOTHESIS.value
                 rt.final_judgment = judgment
+                residuals.extend(["certificate_blocked", "reverse_trace_missing"])
+
+        if internal_state == JudgmentStatus.SUSPENDED.value:
+            residuals.append("certificate_blocked")
+            if not kernel_result.epistemic.unit.E.evidence_refs:
+                residuals.append("insufficient_evidence")
+            if not rt.complete:
+                residuals.append("reverse_trace_missing")
+            if not primary_conservation.passed:
+                residuals.append("governance_incomplete")
+
+        if judgment == JudgmentStatus.HYPOTHESIS.value and not residuals:
+            residuals.append("governance_incomplete")
+
+        residuals = list(dict.fromkeys(residuals))
 
         # Learning signal
         signal_map = {
             JudgmentStatus.CERTIFICATE.value: "reinforce",
             JudgmentStatus.HYPOTHESIS.value:  "correct",
-            JudgmentStatus.SUSPEND.value:     "suspend",
             JudgmentStatus.ZERO.value:        "ignore",
         }
-        learning_signal = signal_map.get(judgment, "suspend")
+        learning_signal = signal_map.get(judgment, "correct")
 
         # Reverse trace path (human-readable list, kept for backward compat)
         reverse_trace: list[str] = []
@@ -168,7 +193,9 @@ class ProofObjectBuilder:
             conservation=primary_conservation,
             cognitive_residual=kernel_result.cognitive_residual,
             residual_type=kernel_result.residual_type,
+            residuals=residuals,
             learning_signal=learning_signal,
+            internal_state=internal_state,
             reverse_trace_obj=rt,
             reverse_trace=reverse_trace,
             kernel_result=kernel_result,
@@ -195,4 +222,3 @@ class ProofObjectBuilder:
             violations=all_violations,
             conservation_score=score,
         )
-

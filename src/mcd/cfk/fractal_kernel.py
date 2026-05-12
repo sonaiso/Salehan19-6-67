@@ -26,6 +26,7 @@ from mcd.cfk.cfk_schema import (
     KernelProjection,
     JudgmentStatus,
     CoordinateType,
+    coerce_public_judgment,
 )
 
 
@@ -46,6 +47,7 @@ class KernelResult:
 
     # Unified judgment derived by the kernel
     kernel_judgment: str = JudgmentStatus.HYPOTHESIS.value
+    kernel_internal_state: str = "active"
     kernel_score: float = 0.0     # weighted combination
 
     # Per-dimension comparable scores (K(system(x)))
@@ -67,6 +69,7 @@ class KernelResult:
             "arabic": self.arabic.to_dict(),
             "epistemic": self.epistemic.to_dict(),
             "kernel_judgment": self.kernel_judgment,
+            "kernel_internal_state": self.kernel_internal_state,
             "kernel_score": round(self.kernel_score, 4),
             "k_statistical": round(self.k_statistical, 4),
             "k_arabic": round(self.k_arabic, 4),
@@ -124,24 +127,28 @@ class FractalKernel:
         # --- Kernel judgment rules (enforce conservation laws) ---
         notes: list[str] = []
 
-        # Rule 1: evidence gate — missing evidence caps at Hypothesis / Suspend
+        # Rule 1: evidence gate — missing evidence caps at Hypothesis
+        kernel_internal_state = "active"
         if evidence_state == "missing":
             if stat_score >= 0.7:
                 notes.append(
                     "high_statistical_confidence_without_evidence → unsupported_generalization"
                 )
                 residual_type = "unsupported_generalization_residual"
-                kernel_judgment = JudgmentStatus.SUSPEND.value
+                kernel_judgment = JudgmentStatus.HYPOTHESIS.value
+                kernel_internal_state = JudgmentStatus.SUSPENDED.value
             else:
                 residual_type = "evidence_gap_residual"
                 kernel_judgment = JudgmentStatus.HYPOTHESIS.value
+                kernel_internal_state = JudgmentStatus.SUSPENDED.value
 
         elif evidence_state == "partial":
             residual_type = "partial_evidence_residual"
             if epistemic_score >= 0.60:
                 kernel_judgment = JudgmentStatus.HYPOTHESIS.value
             else:
-                kernel_judgment = JudgmentStatus.SUSPEND.value
+                kernel_judgment = JudgmentStatus.HYPOTHESIS.value
+                kernel_internal_state = JudgmentStatus.SUSPENDED.value
 
         else:
             # evidence present
@@ -151,7 +158,8 @@ class FractalKernel:
             elif epistemic_score >= 0.55:
                 kernel_judgment = JudgmentStatus.HYPOTHESIS.value
             else:
-                kernel_judgment = JudgmentStatus.SUSPEND.value
+                kernel_judgment = JudgmentStatus.HYPOTHESIS.value
+                kernel_internal_state = JudgmentStatus.SUSPENDED.value
 
         # Rule 2: emphasis ≠ proof
         if ling_force == "emphasis" and kernel_judgment == JudgmentStatus.CERTIFICATE.value:
@@ -160,13 +168,15 @@ class FractalKernel:
 
         # Rule 3: universal quantifier without evidence
         if logical_function == "universal_quantifier" and evidence_state == "missing":
-            kernel_judgment = JudgmentStatus.SUSPEND.value
+            kernel_judgment = JudgmentStatus.HYPOTHESIS.value
+            kernel_internal_state = JudgmentStatus.SUSPENDED.value
             residual_type = "unsupported_generalization_residual"
-            notes.append("universal_quantifier + no_evidence → suspend")
+            notes.append("universal_quantifier + no_evidence → suspended(internal) + hypothesis(public)")
 
         # Rule 4: fake evidence or zero judgment
         if epistemic.judgment == JudgmentStatus.ZERO.value:
             kernel_judgment = JudgmentStatus.ZERO.value
+            kernel_internal_state = "active"
             residual_type = "fake_evidence_residual"
             notes.append("fake_evidence_detected → kernel_judgment=zero")
 
@@ -181,7 +191,8 @@ class FractalKernel:
             statistical=statistical,
             arabic=arabic,
             epistemic=epistemic,
-            kernel_judgment=kernel_judgment,
+            kernel_judgment=coerce_public_judgment(kernel_judgment),
+            kernel_internal_state=kernel_internal_state,
             kernel_score=kernel_score,
             k_statistical=ks,
             k_arabic=ka,

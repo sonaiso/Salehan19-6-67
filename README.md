@@ -53,7 +53,7 @@ AFJG is the law. Bayani is the Arabic verifier. MCD is the implementation namesp
 
 ```text
 ZERO        = fatal violation or invalid proof path
-HYPOTHESIS  = plausible structure with incomplete evidence
+HYPOTHESIS  = plausible structure with incomplete evidence (including internal suspension)
 CERTIFICATE = evidence + governance + reverse trace completed
 ```
 

@@ -65,11 +65,11 @@ class TestCrossLayerConservationChecker:
         check_names = [v.check_name for v in report.violations]
         assert "universal_without_evidence" in check_names or not report.passed
 
-    def test_universal_without_evidence_suspend_ok(self):
-        """Universal + no evidence + suspend judgment → should have no blocking violations."""
+    def test_universal_without_evidence_hypothesis_ok(self):
+        """Universal + no evidence + hypothesis judgment → should have no blocking violations."""
         text = "كل الشركات تستخدم GraphRAG"
         s, a, e = _make_projections(text, evidence_refs=[])
-        report = self.checker.check(s, a, e, JudgmentStatus.SUSPEND.value)
+        report = self.checker.check(s, a, e, JudgmentStatus.HYPOTHESIS.value)
         blocking = [v for v in report.violations if v.severity == "blocking" and v.check_name == "universal_without_evidence"]
         assert len(blocking) == 0
 
@@ -107,7 +107,7 @@ class TestCrossLayerConservationChecker:
         """High statistical confidence without evidence + hypothesis → no blocking."""
         text = "الأرض كروية"
         s, a, e = _make_projections(text, evidence_refs=[], statistical_claimed="near_certainty")
-        report = self.checker.check(s, a, e, JudgmentStatus.SUSPEND.value)
+        report = self.checker.check(s, a, e, JudgmentStatus.HYPOTHESIS.value)
         blocking = [v for v in report.violations if v.severity == "blocking"]
         assert len(blocking) == 0
 

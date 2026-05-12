@@ -9,14 +9,12 @@ from mcd.cfk.cfk_pipeline import CognitiveFractalResult
 _JUDGMENT_ICONS = {
     "certificate": "✅",
     "hypothesis":  "🔶",
-    "suspend":     "⏸️",
     "zero":        "❌",
 }
 
 _JUDGMENT_AR = {
     "certificate": "شهادة يقين",
-    "hypothesis":  "فرضية — انتظار دليل",
-    "suspend":     "تعليق — دليل ناقص",
+    "hypothesis":  "فرضية — انتظار دليل/تعليق إجرائي",
     "zero":        "خطأ بنيوي — باقٍ معرفي",
 }
 

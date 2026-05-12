@@ -38,8 +38,26 @@ from typing import Any
 class JudgmentStatus(str, Enum):
     CERTIFICATE = "certificate"       # دليل مكتمل — يقين
     HYPOTHESIS  = "hypothesis"        # دعوى محتملة — انتظار
-    SUSPEND     = "suspend"           # دليل ناقص — تعليق
+    SUSPENDED   = "suspended"         # حالة إجرائية داخلية فقط (ليست حكمًا نهائيًا عامًا)
+    SUSPEND     = "suspended"         # backward-compatible alias
     ZERO        = "zero"              # باقٍ معرفي — خطأ بنيوي
+
+
+PUBLIC_FINAL_JUDGMENTS: tuple[str, str, str] = (
+    JudgmentStatus.ZERO.value,
+    JudgmentStatus.HYPOTHESIS.value,
+    JudgmentStatus.CERTIFICATE.value,
+)
+
+
+def coerce_public_judgment(judgment: str | None) -> str:
+    """Map any internal/non-public state into the public final judgment contract."""
+    normalized = (judgment or "").strip().lower()
+    if normalized in PUBLIC_FINAL_JUDGMENTS:
+        return normalized
+    if normalized in {"suspend", JudgmentStatus.SUSPENDED.value}:
+        return JudgmentStatus.HYPOTHESIS.value
+    return JudgmentStatus.HYPOTHESIS.value
 
 
 class CoordinateType(str, Enum):
@@ -192,7 +210,7 @@ class ResidualInfo:
     residual_score: float = 0.0
     residual_type: str = "none"
     missing_components: list[str] = field(default_factory=list)
-    learning_signal: str = "none"    # reinforce|correct|suspend|ignore
+    learning_signal: str = "none"    # reinforce|correct|ignore
 
     def to_dict(self) -> dict:
         return {

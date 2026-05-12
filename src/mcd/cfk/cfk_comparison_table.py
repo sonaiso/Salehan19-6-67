@@ -106,7 +106,7 @@ class ComparisonTableBuilder:
         stat_cert   = f"إحصائي ({round(stat_u.C.statistical_confidence, 2)})"
         arab_cert   = f"تداولي ({arab_u.C.linguistic_force})"
         epis_cert   = (
-            "معلق" if proof.judgment in ("suspend", "zero")
+            "معلق" if (proof.internal_state == "suspended" or proof.judgment == "zero")
             else f"{epis_u.C.certainty_level}"
         )
 
