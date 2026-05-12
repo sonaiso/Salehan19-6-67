@@ -39,7 +39,7 @@ class JudgmentStatus(str, Enum):
     CERTIFICATE = "certificate"       # دليل مكتمل — يقين
     HYPOTHESIS  = "hypothesis"        # دعوى محتملة — انتظار
     SUSPENDED   = "suspended"         # حالة إجرائية داخلية فقط (ليست حكمًا نهائيًا عامًا)
-    SUSPEND     = "suspended"         # backward-compatible alias
+    SUSPEND     = "suspended"         # deprecated alias; prefer SUSPENDED/internal_state + public three-state judgment
     ZERO        = "zero"              # باقٍ معرفي — خطأ بنيوي
 
 

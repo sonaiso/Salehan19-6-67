@@ -56,7 +56,7 @@ class ProofObject:
     # Residual
     cognitive_residual: float
     residual_type: str
-    learning_signal: str  # reinforce|correct|ignore
+    learning_signal: str  # certificate->reinforce, hypothesis->correct, zero->ignore
 
     internal_state: str = "active"
     residuals: list[str] = field(default_factory=list)
@@ -160,7 +160,7 @@ class ProofObjectBuilder:
             if not primary_conservation.passed:
                 residuals.append("governance_incomplete")
 
-        residuals = list(dict.fromkeys(residuals))
+        residuals = list(dict.fromkeys(residuals))  # deduplicate while preserving insertion order
 
         # Learning signal
         signal_map = {
