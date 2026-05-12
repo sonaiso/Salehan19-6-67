@@ -33,10 +33,12 @@ def test_production_requires_role(monkeypatch):
 def test_rate_limiting(monkeypatch):
     monkeypatch.setenv("MCD_API_PROFILE", "staging")
     monkeypatch.setenv("MCD_API_KEY", "secret-rate")
-    monkeypatch.setenv("MCD_RATE_LIMIT_PER_MIN", "1")
+    monkeypatch.setenv("MCD_RATE_LIMIT_PER_MIN", "2")
     client = TestClient(build_app())
     h = {"x-api-key": "secret-rate"}
     first = client.post("/v1/classify", json={"text": "النار حارة"}, headers=h)
     second = client.post("/v1/classify", json={"text": "النار حارة"}, headers=h)
+    third = client.post("/v1/classify", json={"text": "النار حارة"}, headers=h)
     assert first.status_code == 200
-    assert second.status_code == 429
+    assert second.status_code == 200
+    assert third.status_code == 429

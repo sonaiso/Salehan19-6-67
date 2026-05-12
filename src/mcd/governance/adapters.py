@@ -20,9 +20,11 @@ def from_cfk_proof(proof) -> CanonicalGovernanceRecord:
         trace_graph_ref="TraceGraph.canonical",
         legitimacy_state="legitimate" if governance_gate_passed else "blocked",
         rank_calculus_state=collapse_to_public_judgment(getattr(proof, "judgment", "")),
-        residuals=[
-            r for r in [getattr(proof, "residual_type", "none")] if r and r != "none"
-        ],
+        residuals=(
+            [getattr(proof, "residual_type", "none")]
+            if getattr(proof, "residual_type", "none") not in {"", "none"}
+            else []
+        ),
     )
 
 
@@ -61,4 +63,3 @@ def from_coding_judgment(judgment) -> CanonicalGovernanceRecord:
         rank_calculus_state=collapse_to_public_judgment(getattr(judgment, "final_judgment", "")),
         residuals=[r for r in residuals if r],
     )
-

@@ -1010,6 +1010,7 @@ def main() -> None:
             "operational_readiness": operational_readiness,
             "audit_readiness": READINESS_BASELINE_SCORES["audit_readiness"],
             "production_ready": production_ready,
+            "production_readiness_rule": "all readiness dimensions must be >= 4.5",
             "final_judgment_contract": ["ZERO", "HYPOTHESIS", "CERTIFICATE"],
         }
         md = "\n".join(

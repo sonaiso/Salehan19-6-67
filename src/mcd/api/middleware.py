@@ -81,6 +81,8 @@ class RequestTracingMiddleware(BaseHTTPMiddleware):
 
         if _requires_auth(request.url.path):
             limit = int(os.environ.get("MCD_RATE_LIMIT_PER_MIN", str(_DEFAULT_RATE_LIMIT)))
+            # Baseline fallback for unauthenticated callers.
+            # For production behind proxies, use trusted proxy-aware identity plumbing.
             client_host = request.client.host if request.client else "unknown"
             key = request.headers.get("x-api-key", f"ip:{client_host}")
             now = time.monotonic()

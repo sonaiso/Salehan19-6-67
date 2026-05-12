@@ -60,9 +60,9 @@ _INDUSTRIAL_PROFILES = {"quick", "full"}
 
 # Production blockers (always present in this phase)
 _PRODUCTION_BLOCKERS = [
-    "Authentication/authorization is profile-gated and must be validated end-to-end",
-    "Rate limiting is in-process and needs distributed backing in production",
-    "Persistent logging is file-backed and needs managed retention/rotation",
+    "Authentication/authorization is profile-gated and must be validated end-to-end (MCD_API_PROFILE + MCD_API_KEY)",
+    "Rate limiting is in-process and needs distributed backing (Redis/Memcached) in production",
+    "Persistent logging is file-backed and needs managed retention/rotation policy",
     "No external source adapters (MockSourceAPI only)",
     "Production deployment configuration requires infra-level hardening",
     "No load testing under real traffic",

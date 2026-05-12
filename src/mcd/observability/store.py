@@ -9,8 +9,12 @@ from datetime import datetime, timezone
 
 
 def _default_trace_file() -> str:
-    root = os.environ.get("MCD_AUDIT_DIR", "/tmp/mcd_audit")
+    root = os.environ.get("MCD_AUDIT_DIR", os.path.join(os.getcwd(), ".mcd_audit"))
     os.makedirs(root, exist_ok=True)
+    try:
+        os.chmod(root, 0o700)
+    except PermissionError:
+        pass
     return os.path.join(root, "api_traces.jsonl")
 
 
