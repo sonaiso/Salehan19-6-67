@@ -16,7 +16,7 @@ EXPECTED_OBLIGATION_IDS = {
 }
 
 
-def test_formal_theorem_obligations_cover_pr73_targets():
+def test_formal_theorem_obligations_contain_required_obligations():
     payload = json.loads(Path("research/formal/theorem_obligations.json").read_text(encoding="utf-8"))
     assert payload["status"] == "scaffold"
     assert payload["phase_scope"] == "phase_0_governance_formal_artifacts_only"
@@ -52,11 +52,11 @@ def test_lean_and_coq_skeletons_are_placeholder_only():
         assert "not machine-checked proof completion yet" in text
 
 
-def test_roadmap_declares_post_pr73_dependency_chain():
+def test_roadmap_declares_downstream_dependency_chain():
     roadmap = Path("research/theorem_roadmap.md").read_text(encoding="utf-8")
-    assert "PR #73" in roadmap
-    assert "PR #74" in roadmap
-    assert "PR #75" in roadmap
+    assert "Formal Theorem Verification Track" in roadmap
+    assert "Distributed Governance Runtime" in roadmap
+    assert "Cryptographic Certification" in roadmap
     assert "downstream" in roadmap
 
 
