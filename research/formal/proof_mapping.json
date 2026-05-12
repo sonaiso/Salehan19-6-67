@@ -1,6 +1,6 @@
 {
   "title": "Formal Proof Mapping",
-  "status": "scaffold",
+  "status": "scaffold_plus_minimal_machine_checkable_core",
   "phase_scope": "phase_0_governance_formal_artifacts_only",
   "mapping": [
     {
@@ -14,6 +14,17 @@
         "ProofObject",
         "GovernanceGate",
         "ReverseTrace"
+      ],
+      "formal_artifacts": [
+        "research/formal/lean/CoreJudgment.lean",
+        "research/formal/lean/NoIllicitCertification.lean"
+      ],
+      "theorem_contracts": [
+        "no_illicit_certification",
+        "missing_gate_blocks_certificate",
+        "forbidden_transition_blocks_certificate",
+        "residual_erasure_blocks_certificate",
+        "complete_gates_enable_certificate"
       ]
     },
     {
@@ -36,6 +47,12 @@
       "evidence_gates": [
         "ForbiddenTransitionBlock",
         "HypothesisDowngrade"
+      ],
+      "formal_artifacts": [
+        "research/formal/lean/NoIllicitCertification.lean"
+      ],
+      "theorem_contracts": [
+        "forbidden_transition_blocks_certificate"
       ]
     },
     {
@@ -46,6 +63,14 @@
       ],
       "evidence_gates": [
         "PublicJudgmentTriad"
+      ],
+      "formal_artifacts": [
+        "research/formal/lean/CoreJudgment.lean",
+        "research/formal/lean/TriadClosure.lean"
+      ],
+      "theorem_contracts": [
+        "triad_closure",
+        "triad_type_closure"
       ]
     },
     {

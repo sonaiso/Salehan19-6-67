@@ -11,11 +11,12 @@ Current scaffolded targets:
 - triad closure
 - replay integrity
 
-Phase-0 scope for PR #73:
+Phase-0 scope for PR #73/PR #74:
 
 - governance/formal artifacts only
 - no runtime behavior change
-- Lean/Coq are skeleton directories, not complete machine-checked proofs
+- Lean includes a minimal machine-checkable core model for judgment/certificate gating
+- Coq remains skeleton-only and is not proof completion
 
 Final epistemic judgments policy:
 

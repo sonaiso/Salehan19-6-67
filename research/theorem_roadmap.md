@@ -25,10 +25,32 @@ This PR is constrained to **Phase-0 governance/formal artifacts only** and does 
 CERTIFICATE issuance remains gated by ProofObject + GovernanceGate + ReverseTrace.
 Final epistemic judgments remain ZERO/HYPOTHESIS/CERTIFICATE only.
 
-## Dependency chain after PR #73
+## PR #74 — Minimal Machine-Checkable Core
 
-- PR #74 → Distributed Governance Runtime
-- PR #75 → Cryptographic Certification
-- PR #76 → External Audit + Research Publication
+This stage formalizes only the public-judgment and certificate-gating core:
 
-PR #74 and PR #75 are downstream of the obligations + proof mapping produced in PR #73.
+- `research/formal/lean/CoreJudgment.lean`
+- `research/formal/lean/NoIllicitCertification.lean`
+- `research/formal/lean/TriadClosure.lean`
+
+Theorems targeted in this minimal core:
+
+- triad_closure
+- no_illicit_certification
+- missing_gate_blocks_certificate
+- forbidden_transition_blocks_certificate
+- residual_erasure_blocks_certificate
+- complete_gates_enable_certificate (limited liveness)
+
+Claim boundary:
+
+- machine-checkable core only
+- no full-project proof claim
+
+## Dependency chain after PR #74
+
+- PR #75 → Rank Soundness + typed residual foundations
+- PR #76 → Replay integrity formalization
+- PR #77 → Runtime-to-formal equivalence mapping
+
+PR #75+ are downstream of the obligations + proof mapping produced in PR #73 and core model in PR #74.
