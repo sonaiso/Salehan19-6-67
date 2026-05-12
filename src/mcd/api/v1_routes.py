@@ -39,7 +39,8 @@ from mcd.api.serializers import safe_serialize
 from mcd.api.version import API_VERSION, LAYERS, SERVICE_NAME
 from mcd.api.observability import get_trace_store
 from mcd.audit import build_governance_audit_report, replay_trace_events
-from mcd.metrics import compute_governance_metrics
+from mcd.observability.prometheus import export_metrics_json, export_prometheus_metrics
+from mcd.observability.runtime_metrics import build_liveness_payload, build_readiness_payload
 
 v1_router = APIRouter(prefix="/v1")
 
@@ -391,15 +392,19 @@ def v1_pilot_readiness() -> dict:
 @v1_router.get("/readiness", tags=["v1", "health"])
 def v1_readiness() -> dict:
     """Readiness probe for deployment profiles."""
-    profile = os.environ.get("MCD_API_PROFILE", "local").strip().lower()
-    traces = get_trace_store().all_persistent()
-    replay = replay_trace_events(traces).to_dict()
-    return {
-        "status": "ready" if replay["replay_success"] else "degraded",
-        "profile": profile,
-        "trace_events": replay["total_events"],
-        "replay_success": replay["replay_success"],
-    }
+    return build_readiness_payload()
+
+
+@v1_router.get("/production/livez", tags=["v1", "production"])
+def v1_production_livez() -> dict:
+    """Production liveness endpoint."""
+    return build_liveness_payload()
+
+
+@v1_router.get("/production/readyz", tags=["v1", "production"])
+def v1_production_readyz() -> dict:
+    """Production readiness endpoint."""
+    return build_readiness_payload()
 
 
 @v1_router.get("/audit/replay", tags=["v1", "audit"])
@@ -419,12 +424,10 @@ def v1_audit_report() -> dict:
 @v1_router.get("/metrics", tags=["v1", "metrics"])
 def v1_metrics() -> dict:
     """Return governance metrics in JSON."""
-    traces = get_trace_store().all_persistent()
-    return compute_governance_metrics(traces).to_dict()
+    return export_metrics_json()
 
 
 @v1_router.get("/metrics/prometheus", tags=["v1", "metrics"], response_class=PlainTextResponse)
 def v1_metrics_prometheus() -> str:
     """Return governance metrics in Prometheus exposition format."""
-    traces = get_trace_store().all_persistent()
-    return compute_governance_metrics(traces).to_prometheus()
+    return export_prometheus_metrics()
