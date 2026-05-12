@@ -60,7 +60,9 @@ def replay_trace_events(events: list[dict]) -> ReplayResult:
             failures.append(f"event[{i}] missing request_id")
         if not e.get("replay_id"):
             failures.append(f"event[{i}] missing replay_id")
-        if not e.get("residual_preserved", True):
+        if "residual_preserved" not in e:
+            failures.append(f"event[{i}] missing residual_preserved")
+        elif not e.get("residual_preserved"):
             failures.append(f"event[{i}] residual_preserved=false")
     reconstruction = reconstruct_governance_events(events)
     has_valid_residual_preservation = any(

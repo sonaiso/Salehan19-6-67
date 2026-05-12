@@ -3,14 +3,13 @@ from __future__ import annotations
 from fastapi.testclient import TestClient
 
 from mcd.api.app import build_app
-from mcd.audit.backend import PersistentAuditBackend
+from mcd.api.observability import get_trace_store
 
 
 def test_prometheus_metrics_exporter_exposes_governance_health(monkeypatch, tmp_path):
     monkeypatch.setenv("MCD_AUDIT_DIR", str(tmp_path))
     client = TestClient(build_app())
-    backend = PersistentAuditBackend()
-    backend.clear()
+    get_trace_store().clear()
 
     client.get("/v1/health")
     resp = client.get("/v1/metrics/prometheus")
@@ -26,8 +25,7 @@ def test_production_readiness_endpoints(monkeypatch, tmp_path):
     monkeypatch.setenv("MCD_AUDIT_DIR", str(tmp_path))
     monkeypatch.setenv("MCD_API_PROFILE", "production")
     client = TestClient(build_app())
-    backend = PersistentAuditBackend()
-    backend.clear()
+    get_trace_store().clear()
 
     client.get("/v1/health")
 
@@ -49,8 +47,7 @@ def test_production_readiness_endpoints(monkeypatch, tmp_path):
 def test_audit_replay_endpoint_reconstructs_governance_paths(monkeypatch, tmp_path):
     monkeypatch.setenv("MCD_AUDIT_DIR", str(tmp_path))
     client = TestClient(build_app())
-    backend = PersistentAuditBackend()
-    backend.clear()
+    get_trace_store().clear()
 
     client.get("/v1/health")
     replay = client.get("/v1/audit/replay")
@@ -64,8 +61,7 @@ def test_audit_replay_endpoint_reconstructs_governance_paths(monkeypatch, tmp_pa
 def test_metrics_json_contains_runtime_snapshot(monkeypatch, tmp_path):
     monkeypatch.setenv("MCD_AUDIT_DIR", str(tmp_path))
     client = TestClient(build_app())
-    backend = PersistentAuditBackend()
-    backend.clear()
+    get_trace_store().clear()
     client.get("/v1/health")
     payload = client.get("/v1/metrics").json()
     assert "trace_event_count" in payload
