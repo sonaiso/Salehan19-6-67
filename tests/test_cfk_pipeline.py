@@ -6,6 +6,7 @@ from mcd.cfk.cfk_pipeline import CognitiveFractalPipeline, CognitiveFractalResul
 from mcd.cfk.cfk_comparison_table import ComparisonTable, ComparisonTableBuilder
 from mcd.cfk.cfk_schema import JudgmentStatus
 from mcd.cfk.cfk_report import generate_markdown_report, generate_json_report
+from mcd.core.public_judgment import collapse_to_public_judgment
 
 
 class TestCognitiveFractalPipeline:
@@ -181,7 +182,7 @@ class TestComparisonTable:
 
     def test_table_kernel_judgment_matches_proof(self):
         result = self._run("كل الشركات تستخدم هذه التقنية")
-        assert result.table.kernel_judgment == result.proof.judgment
+        assert result.table.kernel_judgment == collapse_to_public_judgment(result.proof.judgment)
 
 
 class TestCFKReports:

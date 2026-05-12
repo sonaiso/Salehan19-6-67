@@ -1,10 +1,8 @@
-"""API observability — lightweight in-memory request tracing.
-
-Phase 6.1: No persistent storage. Traces are held in memory and
-accessible via debug mode. No DB, no network, no file I/O.
+"""API observability with in-memory + persistent request tracing.
 
 APILogTrace fields:
 - request_id
+- replay_id
 - path
 - method
 - status_code
@@ -18,6 +16,8 @@ import threading
 from dataclasses import dataclass, field
 from typing import List
 
+from mcd.observability import GovernanceTraceEvent, PersistentTraceStore
+
 
 @dataclass
 class APILogTrace:
@@ -29,10 +29,12 @@ class APILogTrace:
     execution_time_ms: float
     warning_count: int = 0
     error_count: int = 0
+    replay_id: str = ""
 
     def to_dict(self) -> dict:
         return {
             "request_id": self.request_id,
+            "replay_id": self.replay_id,
             "path": self.path,
             "method": self.method,
             "status_code": self.status_code,
@@ -52,12 +54,23 @@ class TraceStore:
     def __init__(self) -> None:
         self._lock = threading.Lock()
         self._traces: List[APILogTrace] = []
+        self._persistent = PersistentTraceStore()
 
     def record(self, trace: APILogTrace) -> None:
         with self._lock:
             self._traces.append(trace)
             if len(self._traces) > self._MAX_TRACES:
                 self._traces = self._traces[-self._MAX_TRACES:]
+        self._persistent.append(
+            GovernanceTraceEvent(
+                request_id=trace.request_id,
+                replay_id=trace.replay_id or trace.request_id,
+                path=trace.path,
+                method=trace.method,
+                status_code=trace.status_code,
+                execution_time_ms=trace.execution_time_ms,
+            )
+        )
 
     def recent(self, n: int = 20) -> List[APILogTrace]:
         with self._lock:
@@ -70,6 +83,10 @@ class TraceStore:
     def clear(self) -> None:
         with self._lock:
             self._traces.clear()
+        self._persistent.clear()
+
+    def all_persistent(self) -> List[dict]:
+        return self._persistent.read_all()
 
 
 # Module-level singleton

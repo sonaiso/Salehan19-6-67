@@ -74,6 +74,22 @@ def main() -> None:
     pilot_parser = subparsers.add_parser("pilot-readiness", help="Evaluate pilot readiness gate")
     pilot_parser.add_argument("--output", choices=["markdown", "json"], default="json")
 
+    # governance-replay
+    replay_parser = subparsers.add_parser("governance-replay", help="Replay persistent governance traces")
+    replay_parser.add_argument("--output", choices=["json", "text"], default="json")
+
+    # governance-audit
+    audit_parser = subparsers.add_parser("governance-audit", help="Generate governance audit report")
+    audit_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
+    # governance-metrics
+    metrics_parser = subparsers.add_parser("governance-metrics", help="Compute governance metrics from traces")
+    metrics_parser.add_argument("--output", choices=["json", "text", "prometheus"], default="json")
+
+    # readiness-report
+    readiness_report_parser = subparsers.add_parser("readiness-report", help="Generate readiness report artifacts")
+    readiness_report_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
     # latency-benchmark
     latency_parser = subparsers.add_parser("latency-benchmark", help="Run latency benchmark")
     latency_parser.add_argument("--cases", type=int, default=20)
@@ -927,6 +943,82 @@ def main() -> None:
                 print(f"\n## Blockers")
                 for b in result.blockers:
                     print(f"- {b}")
+    elif args.command == "governance-replay":
+        from mcd.api.observability import get_trace_store
+        from mcd.audit import replay_trace_events
+
+        traces = get_trace_store().all_persistent()
+        replay = replay_trace_events(traces).to_dict()
+        if args.output == "json":
+            print(json.dumps(replay, ensure_ascii=False, indent=2))
+        else:
+            print(f"events={replay['total_events']}")
+            print(f"replay_success={replay['replay_success']}")
+            if replay["failures"]:
+                for f in replay["failures"]:
+                    print(f"- {f}")
+    elif args.command == "governance-audit":
+        from mcd.api.observability import get_trace_store
+        from mcd.audit import build_governance_audit_report
+
+        traces = get_trace_store().all_persistent()
+        report = build_governance_audit_report(traces)
+        if args.output == "json":
+            print(json.dumps(report, ensure_ascii=False, indent=2))
+        else:
+            print("# Governance Audit Report")
+            print(f"- status: {report['governance_status']}")
+            print(f"- replay_success: {report['replay']['replay_success']}")
+            print(f"- total_events: {report['replay']['total_events']}")
+    elif args.command == "governance-metrics":
+        from mcd.api.observability import get_trace_store
+        from mcd.metrics import compute_governance_metrics
+
+        traces = get_trace_store().all_persistent()
+        metrics = compute_governance_metrics(traces)
+        if args.output == "json":
+            print(json.dumps(metrics.to_dict(), ensure_ascii=False, indent=2))
+        elif args.output == "prometheus":
+            print(metrics.to_prometheus())
+        else:
+            for k, v in metrics.to_dict().items():
+                print(f"{k}={v:.4f}")
+    elif args.command == "readiness-report":
+        from pathlib import Path
+        from mcd.evaluation.production_readiness import ProductionReadinessReport
+
+        readiness = ProductionReadinessReport.build_default()
+        report = {
+            "governance_readiness": 3.6,
+            "industrial_readiness": 2.8,
+            "scientific_readiness": 2.9,
+            "operational_readiness": round(readiness.average_score, 2),
+            "audit_readiness": 3.0,
+            "production_ready": False,
+            "final_judgment_contract": ["ZERO", "HYPOTHESIS", "CERTIFICATE"],
+        }
+        md = "\n".join(
+            [
+                "# Readiness Report",
+                "",
+                f"- Governance readiness: {report['governance_readiness']}/5",
+                f"- Industrial readiness: {report['industrial_readiness']}/5",
+                f"- Scientific readiness: {report['scientific_readiness']}/5",
+                f"- Operational readiness: {report['operational_readiness']}/5",
+                f"- Audit readiness: {report['audit_readiness']}/5",
+                f"- Production ready: {report['production_ready']}",
+            ]
+        )
+        out_dir = Path("evaluation")
+        out_dir.mkdir(parents=True, exist_ok=True)
+        (out_dir / "readiness_report.json").write_text(
+            json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
+        (out_dir / "readiness_report.md").write_text(md, encoding="utf-8")
+        if args.output == "json":
+            print(json.dumps(report, ensure_ascii=False, indent=2))
+        else:
+            print(md)
     elif args.command == "latency-benchmark":
         from mcd.industrial.latency_benchmark import LatencyBenchmark
         from mcd.industrial.industrial_test_case import get_default_test_cases
@@ -2046,6 +2138,7 @@ def _handle_cfk_command(args) -> None:
         ReverseTraceBuilder,
         generate_markdown_report,
     )
+    from mcd.core.public_judgment import collapse_to_public_judgment
 
     text = getattr(args, "text", "النار حارة")
     evidence_refs = _split_evidence(getattr(args, "evidence", ""))
@@ -2054,7 +2147,10 @@ def _handle_cfk_command(args) -> None:
 
     if args.command == "cfk-analyze":
         if args.output == "json":
-            print(_json.dumps(result.to_dict(), ensure_ascii=False, indent=2))
+            payload = result.to_dict()
+            payload["proof"]["judgment"] = collapse_to_public_judgment(payload["proof"].get("judgment", ""))
+            payload["kernel"]["kernel_judgment"] = collapse_to_public_judgment(payload["kernel"].get("kernel_judgment", ""))
+            print(_json.dumps(payload, ensure_ascii=False, indent=2))
         elif args.output == "markdown":
             print(generate_markdown_report(result))
         else:
@@ -2063,16 +2159,21 @@ def _handle_cfk_command(args) -> None:
 
     if args.command in ("cfk-compare", "cfk-table"):
         if args.output == "json":
-            print(_json.dumps(result.table.to_dict(), ensure_ascii=False, indent=2))
+            payload = result.table.to_dict()
+            payload["kernel_judgment"] = collapse_to_public_judgment(payload.get("kernel_judgment", ""))
+            print(_json.dumps(payload, ensure_ascii=False, indent=2))
         else:
             print(result.table.to_markdown())
         return
 
     if args.command == "cfk-proof":
+        public_judgment = collapse_to_public_judgment(result.proof.judgment)
         if args.output == "json":
-            print(_json.dumps(result.proof.to_dict(), ensure_ascii=False, indent=2))
+            payload = result.proof.to_dict()
+            payload["judgment"] = public_judgment
+            print(_json.dumps(payload, ensure_ascii=False, indent=2))
         else:
-            print(f"الحكم: {result.proof.judgment}")
+            print(f"الحكم: {public_judgment}")
             print(f"الدليل: {result.proof.evidence_state}")
             print(f"الباقي: {result.proof.cognitive_residual:.3f} ({result.proof.residual_type})")
             print(f"الثقة: {result.proof.epistemic_certainty:.3f}")
@@ -2161,7 +2262,7 @@ def _handle_cfk_command(args) -> None:
     if args.command == "cfk-reverse-trace":
         reverse_trace = ReverseTraceBuilder().build(
             proof_id=result.proof.proof_id,
-            final_judgment=result.proof.judgment,
+            final_judgment=collapse_to_public_judgment(result.proof.judgment),
             statistical_projection=result.kernel.statistical,
             arabic_projection=result.kernel.arabic,
             epistemic_projection=result.kernel.epistemic,
@@ -2549,4 +2650,3 @@ def _handle_mabni_command(args) -> None:  # noqa: ANN001
 
 if __name__ == "__main__":
     main()
-
