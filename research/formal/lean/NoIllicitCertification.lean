@@ -4,9 +4,11 @@ theorem no_illicit_certification (s : GovernanceState) :
     publicJudgment s = PublicJudgment.certificate → certificateAllowed s = true := by
   intro h
   unfold publicJudgment at h
-  by_cases hAllowed : certificateAllowed s
-  · simpa [hAllowed] using hAllowed
-  · simp [hAllowed] at h
+  by_cases hRecognized : !s.recognizedInput
+  · simp [hRecognized] at h
+  · by_cases hAllowed : certificateAllowed s
+    · simpa [hAllowed] using hAllowed
+    · simp [hRecognized, hAllowed] at h
 
 theorem missing_gate_blocks_certificate
     (s : GovernanceState)
@@ -52,6 +54,7 @@ theorem residual_erasure_blocks_certificate
 
 theorem complete_gates_enable_certificate
     (s : GovernanceState)
+    (hRecognized : s.recognizedInput = true)
     (hProof : s.hasProofObject = true)
     (hGate : s.governanceGatePassed = true)
     (hTrace : s.reverseTraceComplete = true)
@@ -60,4 +63,4 @@ theorem complete_gates_enable_certificate
     (hResidual : s.residualErasure = false) :
     publicJudgment s = PublicJudgment.certificate := by
   unfold publicJudgment certificateAllowed
-  simp [hProof, hGate, hTrace, hEvidence, hForbidden, hResidual]
+  simp [hRecognized, hProof, hGate, hTrace, hEvidence, hForbidden, hResidual]

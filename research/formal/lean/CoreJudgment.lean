@@ -14,6 +14,7 @@ inductive PublicJudgment where
   deriving DecidableEq, Repr
 
 structure GovernanceState where
+  recognizedInput : Bool
   hasProofObject : Bool
   governanceGatePassed : Bool
   reverseTraceComplete : Bool
@@ -23,13 +24,13 @@ structure GovernanceState where
   deriving Repr
 
 def certificateAllowed (s : GovernanceState) : Bool :=
-  s.hasProofObject &&
-    s.governanceGatePassed &&
-      s.reverseTraceComplete &&
-        s.evidenceMatchesClaim &&
-          (!s.forbiddenTransition) &&
-            (!s.residualErasure)
+  s.hasProofObject && s.governanceGatePassed && s.reverseTraceComplete && s.evidenceMatchesClaim &&
+    (!s.forbiddenTransition) && (!s.residualErasure)
 
 def publicJudgment (s : GovernanceState) : PublicJudgment :=
-  if certificateAllowed s then PublicJudgment.certificate else PublicJudgment.hypothesis
-
+  if !s.recognizedInput then
+    PublicJudgment.zero
+  else if certificateAllowed s then
+    PublicJudgment.certificate
+  else
+    PublicJudgment.hypothesis

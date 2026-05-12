@@ -63,7 +63,7 @@ def test_lean_core_files_exist_and_are_non_placeholder():
         assert "sorry" not in text
 
 
-def test_lean_and_coq_readme_boundary_claims_are_honest():
+def test_lean_and_coq_readme_boundary_claims_are_accurate():
     lean = Path("research/formal/lean/README.md").read_text(encoding="utf-8").lower()
     coq = Path("research/formal/coq/README.md").read_text(encoding="utf-8").lower()
     assert "minimal machine-checkable core proof model" in lean
