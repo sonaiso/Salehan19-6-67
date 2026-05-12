@@ -77,7 +77,7 @@ def test_concurrent_writes(monkeypatch, tmp_path):
         try:
             for i in range(25):
                 backend.append_trace(_sample_trace(offset + i))
-        except Exception as exc:  # pragma: no cover - defensive
+        except (OSError, ValueError, TypeError) as exc:  # pragma: no cover - defensive
             errors.append(exc)
 
     threads = [threading.Thread(target=_write, args=(n * 1000,)) for n in range(4)]

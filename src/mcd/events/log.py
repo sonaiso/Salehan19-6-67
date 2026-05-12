@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import logging
 import os
 import threading
 from dataclasses import dataclass
@@ -16,7 +17,10 @@ def _default_event_log_file() -> str:
     try:
         os.chmod(root, 0o700)
     except PermissionError:
-        pass
+        logging.getLogger("mcd.governance").warning(
+            "Could not enforce 0700 permissions on audit directory: %s",
+            root,
+        )
     return os.path.join(root, "governance_events.jsonl")
 
 

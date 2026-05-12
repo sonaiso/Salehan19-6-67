@@ -44,7 +44,7 @@ def collect_runtime_metrics() -> RuntimeMetricsSnapshot:
         trace_event_count=len(traces),
         governance_event_count=len(event_records),
         immutable_event_log_valid=immutable_ok,
-        replay_success=bool(replay["replay_success"]),
+        replay_success=replay["replay_success"],
         profile=profile,
         governance_metrics=metrics,
     )
