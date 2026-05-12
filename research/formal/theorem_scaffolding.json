@@ -1,0 +1,18 @@
+{
+  "title": "Formal Theorem Scaffolding",
+  "status": "scaffold",
+  "theorems": [
+    {
+      "name": "no_illicit_certification",
+      "statement": "Certificate issuance requires ProofObject + GovernanceGate + ReverseTrace."
+    },
+    {
+      "name": "monotonicity_boundaries",
+      "statement": "No certainty rise is allowed without matching valid evidence."
+    },
+    {
+      "name": "residual_persistence",
+      "statement": "Residuals must be emitted and cannot be silently erased."
+    }
+  ]
+}

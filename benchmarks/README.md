@@ -11,3 +11,7 @@ This directory contains industrial/scientific benchmark baselines for:
 - uncertainty propagation
 - replay consistency
 
+Formal scientific validation baseline is tracked in:
+
+- `benchmarks/formal_scientific_validation_baseline.json`
+- `benchmarks/formal_scientific_validation_baseline.md`
