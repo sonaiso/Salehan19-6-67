@@ -16,7 +16,7 @@ import threading
 from dataclasses import dataclass, field
 from typing import List
 
-from mcd.observability import GovernanceTraceEvent, PersistentTraceStore
+from mcd.observability import GovernanceEventSink, GovernanceTraceEvent, PersistentTraceStore
 
 
 @dataclass
@@ -30,6 +30,14 @@ class APILogTrace:
     warning_count: int = 0
     error_count: int = 0
     replay_id: str = ""
+    forbidden_transition: bool = False
+    certificate_blocked: bool = False
+    residual_preserved: bool = True
+    trace_complete: bool = True
+    governance_consistent: bool = True
+    collapse_event: bool = False
+    hypothesis_downgrade: bool = False
+    public_judgment: str = "zero"
 
     def to_dict(self) -> dict:
         return {
@@ -41,6 +49,14 @@ class APILogTrace:
             "execution_time_ms": self.execution_time_ms,
             "warning_count": self.warning_count,
             "error_count": self.error_count,
+            "forbidden_transition": self.forbidden_transition,
+            "certificate_blocked": self.certificate_blocked,
+            "residual_preserved": self.residual_preserved,
+            "trace_complete": self.trace_complete,
+            "governance_consistent": self.governance_consistent,
+            "collapse_event": self.collapse_event,
+            "hypothesis_downgrade": self.hypothesis_downgrade,
+            "public_judgment": self.public_judgment,
         }
 
 
@@ -55,6 +71,7 @@ class TraceStore:
         self._lock = threading.Lock()
         self._traces: List[APILogTrace] = []
         self._persistent = PersistentTraceStore()
+        self._event_sink = GovernanceEventSink()
 
     def record(self, trace: APILogTrace) -> None:
         with self._lock:
@@ -69,8 +86,17 @@ class TraceStore:
                 method=trace.method,
                 status_code=trace.status_code,
                 execution_time_ms=trace.execution_time_ms,
+                forbidden_transition=trace.forbidden_transition,
+                certificate_blocked=trace.certificate_blocked,
+                residual_preserved=trace.residual_preserved,
+                trace_complete=trace.trace_complete,
+                governance_consistent=trace.governance_consistent,
+                collapse_event=trace.collapse_event,
+                hypothesis_downgrade=trace.hypothesis_downgrade,
+                public_judgment=trace.public_judgment,
             )
         )
+        self._event_sink.append_trace_events(trace.to_dict())
 
     def recent(self, n: int = 20) -> List[APILogTrace]:
         with self._lock:
