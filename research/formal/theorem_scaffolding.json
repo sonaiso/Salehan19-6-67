@@ -1,6 +1,7 @@
 {
   "title": "Formal Theorem Scaffolding",
   "status": "scaffold",
+  "phase_scope": "phase_0_governance_formal_artifacts_only",
   "theorems": [
     {
       "name": "no_illicit_certification",
@@ -13,6 +14,18 @@
     {
       "name": "residual_persistence",
       "statement": "Residuals must be emitted and cannot be silently erased."
+    },
+    {
+      "name": "forbidden_escalation",
+      "statement": "Forbidden transitions must block certificate escalation and preserve downgrade visibility."
+    },
+    {
+      "name": "triad_closure",
+      "statement": "Public final judgments are closed to zero/hypothesis/certificate only."
+    },
+    {
+      "name": "replay_integrity",
+      "statement": "Replay and forensic reconstruction must remain reproducible from immutable event history."
     }
   ]
 }

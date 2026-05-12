@@ -2,11 +2,21 @@
 
 This folder tracks formalization artifacts for:
 
-- no-illicit-certification
-- monotonicity boundaries
-- transition soundness
-- residual persistence
-- forbidden escalation invariants
+- NoIllicitCertification
+- ResidualPersistence
+- ForbiddenEscalation
+- TriadClosure
+- ReplayIntegrity
 
-Machine-checkable proof files are planned in subsequent iterations.
+Final epistemic judgments policy:
 
+- ZERO
+- HYPOTHESIS
+- CERTIFICATE
+
+PR #73 is a Phase-0 formalization bridge (obligations/mapping/skeletons).
+Machine-checked proof completion is deferred to subsequent iterations.
+
+Planned sequence:
+- PR #74: Distributed Governance Runtime
+- PR #75: Cryptographic Certification

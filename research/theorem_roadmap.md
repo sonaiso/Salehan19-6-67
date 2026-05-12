@@ -1,23 +1,34 @@
 # Theorem Roadmap
 
-## Target invariants
+## PR #73 — Formal Theorem Verification Track
 
-1. no-illicit-certification theorem
-2. monotonicity boundaries
-3. transition soundness
-4. residual persistence
-5. forbidden escalation invariants
+This PR is constrained to **Phase-0 governance/formal artifacts only** and does not alter runtime behavior.
 
-## Machine-checkable roadmap
+### Target obligations
 
-- Lean integration plan (placeholder)
-- Coq integration plan (placeholder)
-- Isabelle integration plan (placeholder)
+1. NoIllicitCertification
+2. ResidualPersistence
+3. ForbiddenEscalation
+4. TriadClosure
+5. ReplayIntegrity
 
-## Governance note
+### Artifacts delivered in PR #73
+
+- obligations file: `research/formal/theorem_obligations.json`
+- proof mapping: `research/formal/proof_mapping.json`
+- Lean skeleton: `research/formal/lean/`
+- Coq skeleton: `research/formal/coq/`
+- theorem scaffolding: `research/formal/theorem_scaffolding.json`
+
+### Governance note
 
 CERTIFICATE issuance remains gated by ProofObject + GovernanceGate + ReverseTrace.
+Final epistemic judgments remain ZERO/HYPOTHESIS/CERTIFICATE only.
 
-## Scaffolding location
+## Dependency chain after PR #73
 
-- `research/formal/theorem_scaffolding.json`
+- PR #74 → Distributed Governance Runtime
+- PR #75 → Cryptographic Certification
+- PR #76 → External Audit + Research Publication
+
+PR #74 and PR #75 are downstream of the obligations + proof mapping produced in PR #73.

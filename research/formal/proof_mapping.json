@@ -1,0 +1,63 @@
+{
+  "title": "Formal Proof Mapping",
+  "status": "scaffold",
+  "phase_scope": "phase_0_governance_formal_artifacts_only",
+  "mapping": [
+    {
+      "obligation": "NoIllicitCertification",
+      "runtime_contracts": [
+        "tests/test_governance_adversarial_validation.py::test_fake_certificate_is_downgraded_to_hypothesis",
+        "tests/test_governance_adversarial_validation.py::test_valid_certificate_is_allowed",
+        "tests/test_certificate_pipeline_integrity.py::test_certificate_requires_evidence_gate"
+      ],
+      "evidence_gates": [
+        "ProofObject",
+        "GovernanceGate",
+        "ReverseTrace"
+      ]
+    },
+    {
+      "obligation": "ResidualPersistence",
+      "runtime_contracts": [
+        "tests/test_governance_adversarial_validation.py::test_residual_erasure_emits_residual_marker",
+        "tests/test_event_sourced_governance_log.py::test_event_sourced_replay_reconstructs_required_paths"
+      ],
+      "evidence_gates": [
+        "ResidualEmission",
+        "ResidualPreservation"
+      ]
+    },
+    {
+      "obligation": "ForbiddenEscalation",
+      "runtime_contracts": [
+        "tests/test_governance_adversarial_validation.py::test_forbidden_transition_blocks_certification",
+        "tests/test_event_sourced_governance_log.py::test_event_sourced_replay_reconstructs_required_paths"
+      ],
+      "evidence_gates": [
+        "ForbiddenTransitionBlock",
+        "HypothesisDowngrade"
+      ]
+    },
+    {
+      "obligation": "TriadClosure",
+      "runtime_contracts": [
+        "src/mcd/core/public_judgment.py::collapse_to_public_judgment",
+        "tests/test_public_judgment_contract.py::test_cfk_json_serializers_do_not_emit_suspend_publicly"
+      ],
+      "evidence_gates": [
+        "PublicJudgmentTriad"
+      ]
+    },
+    {
+      "obligation": "ReplayIntegrity",
+      "runtime_contracts": [
+        "tests/test_event_sourced_governance_log.py::test_event_log_immutability_and_integrity",
+        "tests/test_persistent_audit_backend.py::test_replay_from_stored_events"
+      ],
+      "evidence_gates": [
+        "ImmutableEventLog",
+        "ReplayReconstruction"
+      ]
+    }
+  ]
+}

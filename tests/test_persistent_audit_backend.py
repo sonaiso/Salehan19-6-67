@@ -102,3 +102,31 @@ def test_certificate_forensic_reconstruction(monkeypatch, tmp_path):
     assert forensics["certificate_candidate_events"] >= 1
     assert forensics["hypothesis_downgrade_events"] >= 1
     assert forensics["residual_preservation_events"] >= 1
+
+
+def test_replay_fails_when_residual_not_preserved(monkeypatch, tmp_path):
+    monkeypatch.setenv("MCD_AUDIT_DIR", str(tmp_path))
+    backend = PersistentAuditBackend()
+    backend.clear()
+    backend.append_trace(_sample_trace(20, forbidden_transition=True, residual_preserved=False))
+
+    snapshot = backend.replay_from_events().to_dict()
+    replay = snapshot["replay"]
+    assert replay["replay_success"] is False
+    assert replay["reconstruction"]["forbidden_transition"] >= 1
+    assert replay["reconstruction"]["residual_preservation"] == 0
+    assert any("residual_preserved=false" in item for item in replay["failures"])
+    assert "no residual_preservation events found" in replay["failures"]
+
+
+def test_replay_preserves_forbidden_and_residual_paths_together(monkeypatch, tmp_path):
+    monkeypatch.setenv("MCD_AUDIT_DIR", str(tmp_path))
+    backend = PersistentAuditBackend()
+    backend.clear()
+    backend.append_trace(_sample_trace(21, forbidden_transition=True, residual_preserved=True))
+
+    snapshot = backend.replay_from_events().to_dict()
+    replay = snapshot["replay"]
+    assert replay["replay_success"] is True
+    assert replay["reconstruction"]["forbidden_transition"] >= 1
+    assert replay["reconstruction"]["residual_preservation"] >= 1
