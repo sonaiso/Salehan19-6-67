@@ -1,4 +1,35 @@
-import research.formal.lean.CoreJudgment
+/-!
+Standalone minimal theorem file for PR #74.
+No external imports required so this can be checked file-by-file.
+-/
+
+inductive PublicJudgment where
+  | zero
+  | hypothesis
+  | certificate
+  deriving DecidableEq, Repr
+
+structure GovernanceState where
+  recognizedInput : Bool
+  hasProofObject : Bool
+  governanceGatePassed : Bool
+  reverseTraceComplete : Bool
+  evidenceMatchesClaim : Bool
+  forbiddenTransition : Bool
+  residualErasure : Bool
+  deriving Repr
+
+def certificateAllowed (s : GovernanceState) : Bool :=
+  s.hasProofObject && s.governanceGatePassed && s.reverseTraceComplete && s.evidenceMatchesClaim &&
+    (!s.forbiddenTransition) && (!s.residualErasure)
+
+def publicJudgment (s : GovernanceState) : PublicJudgment :=
+  if !s.recognizedInput then
+    PublicJudgment.zero
+  else if certificateAllowed s then
+    PublicJudgment.certificate
+  else
+    PublicJudgment.hypothesis
 
 theorem no_illicit_certification (s : GovernanceState) :
     publicJudgment s = PublicJudgment.certificate → certificateAllowed s = true := by
@@ -64,3 +95,4 @@ theorem complete_gates_enable_certificate
     publicJudgment s = PublicJudgment.certificate := by
   unfold publicJudgment certificateAllowed
   simp [hRecognized, hProof, hGate, hTrace, hEvidence, hForbidden, hResidual]
+

@@ -41,9 +41,10 @@ jobs:
           if command -v lean >/dev/null 2>&1; then
             echo "Lean detected; running machine-check for minimal core."
             lean --version
-            lean research/formal/lean/CoreJudgment.lean
-            lean research/formal/lean/NoIllicitCertification.lean
-            lean research/formal/lean/TriadClosure.lean
+            cd research/formal/lean
+            lean CoreJudgment.lean
+            lean NoIllicitCertification.lean
+            lean TriadClosure.lean
           else
             echo "Lean not available; running fallback theorem-contract checks only."
             python - <<'PY'
