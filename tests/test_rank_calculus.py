@@ -25,7 +25,7 @@ def test_forbidden_transition_rank_enforcement_for_governed_certification() -> N
         enforce_linking_rank("GOVERNED_CERTIFICATION", "STRONG_EVIDENCE")
 
 
-def test_residuals_survive_escalation_payload() -> None:
+def test_residuals_propagate_through_escalation_payload() -> None:
     from mcd.core.linking_contract import LinkingContract
 
     residuals = ["ambiguity:r1", "conflict:r2"]

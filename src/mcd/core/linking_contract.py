@@ -47,8 +47,11 @@ class LinkingContract:
         if self.linking_type is LinkingType.INTERPRETIVE and self.target == "CERTIFICATE":
             raise LinkingContractError("forbidden transition: INTERPRETATION -> CERTIFICATE")
 
-        if self.linking_type is LinkingType.SEMANTIC and self.target in ("FINAL_JUDGMENT", *FINAL_JUDGMENTS):
+        if self.linking_type is LinkingType.SEMANTIC and self.target == "FINAL_JUDGMENT":
             raise LinkingContractError("forbidden transition: SEMANTIC_LINK -> FINAL_JUDGMENT")
+
+        if self.linking_type is LinkingType.SEMANTIC and self.target in FINAL_JUDGMENTS:
+            raise LinkingContractError(f"forbidden transition: SEMANTIC_LINK -> {self.target}")
 
         if self.source == "ZERO" and self.target == "CERTIFICATE":
             raise LinkingContractError("forbidden transition: ZERO -> CERTIFICATE")
