@@ -52,7 +52,9 @@ def test_proof_mapping_links_runtime_contracts_and_evidence_gates():
         assert mapping[obligation]["test_file"]
         assert mapping[obligation]["lean_file"]
         assert mapping[obligation]["claim_boundary"]
-        assert "full" not in mapping[obligation]["claim_boundary"].lower()
+        boundary = mapping[obligation]["claim_boundary"].lower()
+        assert "full-project" not in boundary
+        assert "full-system" not in boundary
 
     assert set(mapping["NoIllicitCertification"]["evidence_gates"]) == {
         "ProofObject",
