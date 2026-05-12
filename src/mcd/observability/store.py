@@ -119,3 +119,6 @@ class GovernanceEventSink:
                     replay_id=replay_id,
                     payload=payload,
                 )
+
+    def clear(self) -> None:
+        self._event_log.clear()

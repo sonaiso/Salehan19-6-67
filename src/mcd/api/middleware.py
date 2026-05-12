@@ -37,7 +37,14 @@ def _api_profile() -> str:
 
 
 def _requires_auth(path: str) -> bool:
-    return path.startswith("/v1/") and path not in {"/v1/health", "/v1/version", "/v1/pilot/readiness", "/v1/readiness"}
+    return path.startswith("/v1/") and path not in {
+        "/v1/health",
+        "/v1/version",
+        "/v1/pilot/readiness",
+        "/v1/readiness",
+        "/v1/production/livez",
+        "/v1/production/readyz",
+    }
 
 
 class RequestTracingMiddleware(BaseHTTPMiddleware):

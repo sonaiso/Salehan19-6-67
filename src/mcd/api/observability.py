@@ -110,6 +110,7 @@ class TraceStore:
         with self._lock:
             self._traces.clear()
         self._persistent.clear()
+        self._event_sink.clear()
 
     def all_persistent(self) -> List[dict]:
         return self._persistent.read_all()

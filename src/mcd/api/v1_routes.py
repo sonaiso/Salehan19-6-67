@@ -38,8 +38,7 @@ from mcd.api.schemas import (
 from mcd.api.serializers import safe_serialize
 from mcd.api.version import API_VERSION, LAYERS, SERVICE_NAME
 from mcd.api.observability import get_trace_store
-from mcd.audit import build_governance_audit_report
-from mcd.audit.backend import PersistentAuditBackend
+from mcd.audit import build_governance_audit_report, replay_trace_events
 from mcd.observability.prometheus import export_metrics_json, export_prometheus_metrics
 from mcd.observability.runtime_metrics import build_liveness_payload, build_readiness_payload
 
@@ -411,7 +410,8 @@ def v1_production_readyz() -> dict:
 @v1_router.get("/audit/replay", tags=["v1", "audit"])
 def v1_audit_replay() -> dict:
     """Replay stored traces and validate replay integrity."""
-    return PersistentAuditBackend().replay_from_events().to_dict()["replay"]
+    traces = get_trace_store().all_persistent()
+    return replay_trace_events(traces).to_dict()
 
 
 @v1_router.get("/audit/report", tags=["v1", "audit"])
