@@ -18,3 +18,6 @@
 
 CERTIFICATE issuance remains gated by ProofObject + GovernanceGate + ReverseTrace.
 
+## Scaffolding location
+
+- `research/formal/theorem_scaffolding.json`

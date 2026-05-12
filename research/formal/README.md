@@ -1,0 +1,15 @@
+# Formal Scientific Validation Scaffolding
+
+This folder hosts the formal theorem scaffolding for governance certification.
+
+Current scaffolded targets:
+
+- no illicit certification
+- monotonicity boundaries
+- residual persistence
+
+All theorem work remains governed by:
+
+- no certificate without ProofObject
+- no certificate without GovernanceGate
+- no certificate without ReverseTrace
