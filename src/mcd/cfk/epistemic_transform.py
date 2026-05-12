@@ -210,6 +210,8 @@ class EpistemicTransform:
             metadata={
                 "evidence_state": evidence_state,
                 "judgment": coerce_public_judgment(judgment),
+                # Internal procedural suspension is preserved for governance,
+                # while the public judgment remains within the three-state contract.
                 "internal_state": (
                     JudgmentStatus.SUSPENDED.value if evidence_state == "missing" else "active"
                 ),

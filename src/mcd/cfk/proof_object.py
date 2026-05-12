@@ -160,9 +160,6 @@ class ProofObjectBuilder:
             if not primary_conservation.passed:
                 residuals.append("governance_incomplete")
 
-        if judgment == JudgmentStatus.HYPOTHESIS.value and not residuals:
-            residuals.append("governance_incomplete")
-
         residuals = list(dict.fromkeys(residuals))
 
         # Learning signal
