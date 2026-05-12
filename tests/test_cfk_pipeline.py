@@ -40,6 +40,7 @@ class TestCognitiveFractalPipeline:
         """كل الشركات ... — universal without evidence → internal suspended + public hypothesis."""
         result = self.pipeline.run("كل الشركات تستخدم GraphRAG")
         assert result.proof.judgment == JudgmentStatus.HYPOTHESIS.value
+        assert result.proof.judgment != "suspend"
         assert result.proof.internal_state == JudgmentStatus.SUSPENDED.value
         assert "insufficient_evidence" in result.proof.residuals
         assert result.proof.residual_type == "unsupported_generalization_residual"

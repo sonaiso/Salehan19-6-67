@@ -55,7 +55,8 @@ def coerce_public_judgment(judgment: str | None) -> str:
     normalized = (judgment or "").strip().lower()
     if normalized in PUBLIC_FINAL_JUDGMENTS:
         return normalized
-    if normalized in {"suspend", JudgmentStatus.SUSPENDED.value}:
+    # Accept historical "suspend" and internal "suspended" inputs, collapse both to public hypothesis.
+    if normalized in {"suspend", "suspended"}:
         return JudgmentStatus.HYPOTHESIS.value
     return JudgmentStatus.HYPOTHESIS.value
 

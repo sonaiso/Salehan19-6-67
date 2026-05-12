@@ -160,7 +160,8 @@ class ProofObjectBuilder:
             if not primary_conservation.passed:
                 residuals.append("governance_incomplete")
 
-        residuals = list(dict.fromkeys(residuals))  # deduplicate while preserving insertion order
+        # The same residual may be appended by multiple governance checks; deduplicate in stable order.
+        residuals = list(dict.fromkeys(residuals))
 
         # Learning signal
         signal_map = {
