@@ -1,0 +1,155 @@
+{
+  "generated_at": "2026-05-12T07:58:44.269805+00:00",
+  "total_cases": 10,
+  "metrics": {
+    "illicit_certification_block_rate": 1.0,
+    "forbidden_transition_detection_rate": 1.0,
+    "residual_preservation_rate": 1.0,
+    "replay_success_rate": 0.9,
+    "distributed_consistency_rate": 1.0,
+    "trace_completeness_score": 0.9,
+    "adversarial_downgrade_accuracy": 1.0
+  },
+  "metric_counts": {
+    "illicit_certification_block_rate": {
+      "numerator": 7,
+      "denominator": 7
+    },
+    "forbidden_transition_detection_rate": {
+      "numerator": 4,
+      "denominator": 4
+    },
+    "residual_preservation_rate": {
+      "numerator": 2,
+      "denominator": 2
+    },
+    "replay_success_rate": {
+      "numerator": 9,
+      "denominator": 10
+    },
+    "distributed_consistency_rate": {
+      "numerator": 10,
+      "denominator": 10
+    },
+    "trace_completeness_score": {
+      "numerator": 9,
+      "denominator": 10
+    },
+    "adversarial_downgrade_accuracy": {
+      "numerator": 7,
+      "denominator": 7
+    }
+  },
+  "consistency_violations": [],
+  "required_metrics": [
+    "illicit_certification_block_rate",
+    "forbidden_transition_detection_rate",
+    "residual_preservation_rate",
+    "replay_success_rate",
+    "distributed_consistency_rate",
+    "trace_completeness_score",
+    "adversarial_downgrade_accuracy"
+  ],
+  "cases": [
+    {
+      "case_id": "BMK-001",
+      "agent_id": "agent-a",
+      "requested_judgment": "certificate",
+      "public_judgment": "certificate",
+      "blocked_reasons": [],
+      "residuals": []
+    },
+    {
+      "case_id": "BMK-002",
+      "agent_id": "agent-b",
+      "requested_judgment": "certificate",
+      "public_judgment": "hypothesis",
+      "blocked_reasons": [
+        "certificate_without_proof_object"
+      ],
+      "residuals": []
+    },
+    {
+      "case_id": "BMK-003",
+      "agent_id": "agent-c",
+      "requested_judgment": "certificate",
+      "public_judgment": "hypothesis",
+      "blocked_reasons": [
+        "certificate_without_governance_gate"
+      ],
+      "residuals": []
+    },
+    {
+      "case_id": "BMK-004",
+      "agent_id": "agent-a",
+      "requested_judgment": "certificate",
+      "public_judgment": "hypothesis",
+      "blocked_reasons": [
+        "certificate_without_reverse_trace"
+      ],
+      "residuals": []
+    },
+    {
+      "case_id": "BMK-005",
+      "agent_id": "agent-b",
+      "requested_judgment": "certificate",
+      "public_judgment": "hypothesis",
+      "blocked_reasons": [
+        "model_output_as_evidence"
+      ],
+      "residuals": []
+    },
+    {
+      "case_id": "BMK-006",
+      "agent_id": "agent-c",
+      "requested_judgment": "certificate",
+      "public_judgment": "hypothesis",
+      "blocked_reasons": [
+        "residual_erasure"
+      ],
+      "residuals": [
+        "residual_missing_detected"
+      ]
+    },
+    {
+      "case_id": "BMK-007",
+      "agent_id": "agent-a",
+      "requested_judgment": "certificate",
+      "public_judgment": "hypothesis",
+      "blocked_reasons": [
+        "silent_level_skip"
+      ],
+      "residuals": []
+    },
+    {
+      "case_id": "BMK-008",
+      "agent_id": "agent-b",
+      "requested_judgment": "hypothesis",
+      "public_judgment": "hypothesis",
+      "blocked_reasons": [
+        "emphasis_as_evidence"
+      ],
+      "residuals": []
+    },
+    {
+      "case_id": "BMK-009",
+      "agent_id": "agent-c",
+      "requested_judgment": "certificate",
+      "public_judgment": "hypothesis",
+      "blocked_reasons": [
+        "blocking_residual_present"
+      ],
+      "residuals": [
+        "residual_conflict"
+      ]
+    },
+    {
+      "case_id": "BMK-010",
+      "agent_id": "agent-a",
+      "requested_judgment": "zero",
+      "public_judgment": "zero",
+      "blocked_reasons": [],
+      "residuals": []
+    }
+  ]
+}
