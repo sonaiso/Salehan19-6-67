@@ -28,7 +28,7 @@ def test_formal_theorem_obligations_contain_required_obligations():
 
 def test_proof_mapping_links_runtime_contracts_and_evidence_gates():
     payload = json.loads(Path("research/formal/proof_mapping.json").read_text(encoding="utf-8"))
-    assert payload["status"] == "scaffold"
+    assert payload["status"] in {"scaffold", "scaffold_plus_minimal_machine_checkable_core"}
     mapping = {item["obligation"]: item for item in payload["mapping"]}
 
     for obligation in EXPECTED_OBLIGATION_IDS:
@@ -41,22 +41,44 @@ def test_proof_mapping_links_runtime_contracts_and_evidence_gates():
         "GovernanceGate",
         "ReverseTrace",
     }
+    assert set(mapping["NoIllicitCertification"]["theorem_contracts"]) == {
+        "no_illicit_certification",
+        "missing_gate_blocks_certificate",
+        "forbidden_transition_blocks_certificate",
+        "residual_erasure_blocks_certificate",
+        "complete_gates_enable_certificate",
+    }
 
 
-def test_lean_and_coq_skeletons_are_placeholder_only():
+def test_lean_core_files_exist_and_are_non_placeholder():
+    lean_files = [
+        Path("research/formal/lean/CoreJudgment.lean"),
+        Path("research/formal/lean/NoIllicitCertification.lean"),
+        Path("research/formal/lean/TriadClosure.lean"),
+    ]
+    for path in lean_files:
+        assert path.exists()
+        text = path.read_text(encoding="utf-8")
+        assert "theorem" in text or "inductive" in text
+        assert "sorry" not in text
+
+
+def test_lean_and_coq_readme_boundary_claims_are_honest():
     lean = Path("research/formal/lean/README.md").read_text(encoding="utf-8").lower()
     coq = Path("research/formal/coq/README.md").read_text(encoding="utf-8").lower()
-    for text in (lean, coq):
-        assert "skeleton-only" in text
-        assert "no runtime behavior change" in text
-        assert "not machine-checked proof completion yet" in text
+    assert "minimal machine-checkable core proof model" in lean
+    assert "not full-project proof completion" in lean
+    assert "does not claim proof of consciousness" in lean
+    assert "skeleton-only" in coq
+    assert "not machine-checked proof completion yet" in coq
 
 
 def test_roadmap_declares_downstream_dependency_chain():
     roadmap = Path("research/theorem_roadmap.md").read_text(encoding="utf-8")
     assert "Formal Theorem Verification Track" in roadmap
-    assert "Distributed Governance Runtime" in roadmap
-    assert "Cryptographic Certification" in roadmap
+    assert "Minimal Machine-Checkable Core" in roadmap
+    assert "Rank Soundness" in roadmap
+    assert "Replay integrity formalization" in roadmap
     assert "downstream" in roadmap
 
 

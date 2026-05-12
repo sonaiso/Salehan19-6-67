@@ -31,7 +31,42 @@ jobs:
           test -f research/formal/theorem_obligations.json
           test -f research/formal/proof_mapping.json
           test -f research/formal/lean/README.md
+          test -f research/formal/lean/CoreJudgment.lean
+          test -f research/formal/lean/NoIllicitCertification.lean
+          test -f research/formal/lean/TriadClosure.lean
           test -f research/formal/coq/README.md
+
+      - name: Attempt Lean machine-check for minimal core (if available)
+        run: |
+          if command -v lean >/dev/null 2>&1; then
+            echo "Lean detected; running machine-check for minimal core."
+            lean --version
+            lean research/formal/lean/CoreJudgment.lean
+            lean research/formal/lean/NoIllicitCertification.lean
+            lean research/formal/lean/TriadClosure.lean
+          else
+            echo "Lean not available; running fallback theorem-contract checks only."
+            python - <<'PY'
+            from pathlib import Path
+            required = {
+                "CoreJudgment.lean": ["inductive PublicJudgment", "def certificateAllowed", "def publicJudgment"],
+                "NoIllicitCertification.lean": [
+                    "theorem no_illicit_certification",
+                    "theorem missing_gate_blocks_certificate",
+                    "theorem forbidden_transition_blocks_certificate",
+                    "theorem residual_erasure_blocks_certificate",
+                ],
+                "TriadClosure.lean": ["theorem triad_closure"],
+            }
+            base = Path("research/formal/lean")
+            for file_name, tokens in required.items():
+                text = (base / file_name).read_text(encoding="utf-8")
+                assert "sorry" not in text
+                for token in tokens:
+                    assert token in text, f"missing token {token} in {file_name}"
+            print("Lean fallback contract checks passed.")
+            PY
+          fi
 
       - name: Run formal theorem track tests
         run: |

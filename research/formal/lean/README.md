@@ -1,9 +1,18 @@
-# Lean Skeleton (PR #73)
+# Lean Formal Core (PR #74)
 
-This directory is a **skeleton-only** placeholder for Lean formalization.
+This directory now contains a **minimal machine-checkable core proof model** for:
 
-Phase-0 scope for PR #73:
+- public judgment triad closure
+- certificate gating
+- no illicit certification
+- gate/muting blockers (forbidden transition + residual erasure)
+- limited liveness for non-vacuous safety
+
+Phase-0 scope remains:
 - governance/formal artifacts only
 - no runtime behavior change
 
-Status: not machine-checked proof completion yet.
+Current boundary:
+- this is not full-project proof completion
+- this does not claim proof of consciousness
+- this formalizes only the certificate-gating core
