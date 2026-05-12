@@ -16,6 +16,7 @@ import os
 import time
 import uuid
 from collections import defaultdict, deque
+from threading import Lock
 
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
@@ -26,6 +27,7 @@ from mcd.observability import log_governance_event
 
 
 _RATE_BUCKETS: dict[str, deque[float]] = defaultdict(deque)
+_RATE_LOCK = Lock()
 _RATE_WINDOW_SECONDS = 60.0
 _DEFAULT_RATE_LIMIT = 120
 
@@ -79,22 +81,24 @@ class RequestTracingMiddleware(BaseHTTPMiddleware):
 
         if _requires_auth(request.url.path):
             limit = int(os.environ.get("MCD_RATE_LIMIT_PER_MIN", str(_DEFAULT_RATE_LIMIT)))
-            key = request.headers.get("x-api-key", "anonymous")
+            client_host = request.client.host if request.client else "unknown"
+            key = request.headers.get("x-api-key", f"ip:{client_host}")
             now = time.monotonic()
-            bucket = _RATE_BUCKETS[key]
-            while bucket and now - bucket[0] > _RATE_WINDOW_SECONDS:
-                bucket.popleft()
-            if len(bucket) >= limit:
-                return JSONResponse(
-                    status_code=429,
-                    content={
-                        "request_id": request_id,
-                        "error_code": "RATE_LIMITED",
-                        "message": "Rate limit exceeded",
-                        "details": {"limit_per_min": limit},
-                    },
-                )
-            bucket.append(now)
+            with _RATE_LOCK:
+                bucket = _RATE_BUCKETS[key]
+                while bucket and now - bucket[0] > _RATE_WINDOW_SECONDS:
+                    bucket.popleft()
+                if len(bucket) >= limit:
+                    return JSONResponse(
+                        status_code=429,
+                        content={
+                            "request_id": request_id,
+                            "error_code": "RATE_LIMITED",
+                            "message": "Rate limit exceeded",
+                            "details": {"limit_per_min": limit},
+                        },
+                    )
+                bucket.append(now)
 
         response: Response = await call_next(request)
 

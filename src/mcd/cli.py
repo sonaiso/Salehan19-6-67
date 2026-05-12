@@ -5,6 +5,13 @@ import argparse
 import json
 import sys
 
+READINESS_BASELINE_SCORES = {
+    "governance_readiness": 3.6,
+    "industrial_readiness": 2.8,
+    "scientific_readiness": 2.9,
+    "audit_readiness": 3.0,
+}
+
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Minimal Cognitive Decoder — فك التشفير المعرفي")
@@ -988,13 +995,21 @@ def main() -> None:
         from mcd.evaluation.production_readiness import ProductionReadinessReport
 
         readiness = ProductionReadinessReport.build_default()
+        operational_readiness = round(readiness.average_score, 2)
+        production_ready = (
+            READINESS_BASELINE_SCORES["governance_readiness"] >= 4.5
+            and READINESS_BASELINE_SCORES["industrial_readiness"] >= 4.5
+            and READINESS_BASELINE_SCORES["scientific_readiness"] >= 4.5
+            and READINESS_BASELINE_SCORES["audit_readiness"] >= 4.5
+            and operational_readiness >= 4.5
+        )
         report = {
-            "governance_readiness": 3.6,
-            "industrial_readiness": 2.8,
-            "scientific_readiness": 2.9,
-            "operational_readiness": round(readiness.average_score, 2),
-            "audit_readiness": 3.0,
-            "production_ready": False,
+            "governance_readiness": READINESS_BASELINE_SCORES["governance_readiness"],
+            "industrial_readiness": READINESS_BASELINE_SCORES["industrial_readiness"],
+            "scientific_readiness": READINESS_BASELINE_SCORES["scientific_readiness"],
+            "operational_readiness": operational_readiness,
+            "audit_readiness": READINESS_BASELINE_SCORES["audit_readiness"],
+            "production_ready": production_ready,
             "final_judgment_contract": ["ZERO", "HYPOTHESIS", "CERTIFICATE"],
         }
         md = "\n".join(

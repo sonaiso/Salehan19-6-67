@@ -4,7 +4,7 @@ from __future__ import annotations
 import json
 import os
 import threading
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timezone
 
 
@@ -28,10 +28,11 @@ class GovernanceTraceEvent:
     trace_complete: bool = True
     governance_consistent: bool = True
     collapse_event: bool = False
+    timestamp: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
     def to_dict(self) -> dict:
         return {
-            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "timestamp": self.timestamp,
             "request_id": self.request_id,
             "replay_id": self.replay_id,
             "path": self.path,
@@ -75,4 +76,3 @@ class PersistentTraceStore:
         with self._lock:
             if os.path.exists(self._trace_file):
                 os.remove(self._trace_file)
-
