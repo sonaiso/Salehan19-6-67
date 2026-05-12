@@ -6,7 +6,11 @@ from typing import Any
 
 from mcd.audit.replay import reconstruct_certificate_forensics, replay_trace_events
 from mcd.events import ImmutableGovernanceEventLog
-from mcd.observability.store import GovernanceTraceEvent, PersistentTraceStore
+from mcd.observability.store import (
+    GovernanceTraceEvent,
+    PersistentTraceStore,
+    governance_event_types_from_payload,
+)
 
 
 @dataclass
@@ -48,37 +52,9 @@ class PersistentAuditBackend:
             replay_id=replay_id,
             payload=payload,
         )
-        if payload.get("public_judgment", "").strip().lower() == "certificate":
+        for event_type in governance_event_types_from_payload(payload):
             self.append_governance_event(
-                event_type="certificate",
-                request_id=request_id,
-                replay_id=replay_id,
-                payload=payload,
-            )
-        if payload.get("hypothesis_downgrade", False):
-            self.append_governance_event(
-                event_type="hypothesis_downgrade",
-                request_id=request_id,
-                replay_id=replay_id,
-                payload=payload,
-            )
-        if payload.get("forbidden_transition", False):
-            self.append_governance_event(
-                event_type="forbidden_transition",
-                request_id=request_id,
-                replay_id=replay_id,
-                payload=payload,
-            )
-        if payload.get("residual_preserved", False):
-            self.append_governance_event(
-                event_type="residual_preservation",
-                request_id=request_id,
-                replay_id=replay_id,
-                payload=payload,
-            )
-        if payload.get("collapse_event", False):
-            self.append_governance_event(
-                event_type="collapse_event",
+                event_type=event_type,
                 request_id=request_id,
                 replay_id=replay_id,
                 payload=payload,
@@ -106,6 +82,7 @@ class PersistentAuditBackend:
         return self._event_log.read_all_dicts()
 
     def replay_from_events(self, replay_id: str | None = None) -> AuditReplaySnapshot:
+        """Replay immutable governance events, optionally scoped to one replay_id."""
         events = self.read_events()
         governance_events: list[dict[str, Any]] = []
         for event in events:

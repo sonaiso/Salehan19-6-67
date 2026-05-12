@@ -25,6 +25,7 @@ class ReplayResult:
 
 
 def reconstruct_governance_events(events: list[dict]) -> dict:
+    """Categorize replayable governance events by reconstruction path type."""
     def _filter(predicate) -> list[dict]:
         return [e for e in events if predicate(e)]
 

@@ -25,6 +25,11 @@ def _utc_now_iso() -> str:
 
 
 def _canonical_json(payload: dict[str, Any]) -> str:
+    """Return stable JSON encoding used by the hash chain.
+
+    Hash verification depends on byte-identical serialization across writes/reads,
+    so keys are sorted and whitespace is minimized.
+    """
     return json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
 
 

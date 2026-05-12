@@ -104,21 +104,29 @@ class GovernanceEventSink:
             replay_id=replay_id,
             payload=payload,
         )
-        event_flags = (
-            ("certificate", payload.get("public_judgment", "").strip().lower() == "certificate"),
-            ("hypothesis_downgrade", bool(payload.get("hypothesis_downgrade", False))),
-            ("forbidden_transition", bool(payload.get("forbidden_transition", False))),
-            ("residual_preservation", bool(payload.get("residual_preserved", False))),
-            ("collapse_event", bool(payload.get("collapse_event", False))),
-        )
-        for event_type, should_emit in event_flags:
-            if should_emit:
-                self._event_log.append(
-                    event_type=event_type,
-                    request_id=request_id,
-                    replay_id=replay_id,
-                    payload=payload,
-                )
+        for event_type in governance_event_types_from_payload(payload):
+            self._event_log.append(
+                event_type=event_type,
+                request_id=request_id,
+                replay_id=replay_id,
+                payload=payload,
+            )
 
     def clear(self) -> None:
         self._event_log.clear()
+
+
+def governance_event_types_from_payload(payload: dict[str, Any]) -> list[str]:
+    """Return derived governance event types from a trace payload."""
+    event_types: list[str] = []
+    if payload.get("public_judgment", "").strip().lower() == "certificate":
+        event_types.append("certificate")
+    if bool(payload.get("hypothesis_downgrade", False)):
+        event_types.append("hypothesis_downgrade")
+    if bool(payload.get("forbidden_transition", False)):
+        event_types.append("forbidden_transition")
+    if bool(payload.get("residual_preserved", False)):
+        event_types.append("residual_preservation")
+    if bool(payload.get("collapse_event", False)):
+        event_types.append("collapse_event")
+    return event_types
