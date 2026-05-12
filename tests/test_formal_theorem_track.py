@@ -7,6 +7,15 @@ from mcd.core.public_judgment import PUBLIC_FINAL_JUDGMENTS, collapse_to_public_
 from mcd.governance.adversarial_validation import AdversarialAttempt, evaluate_adversarial_attempt
 
 
+EXPECTED_OBLIGATION_IDS = {
+    "NoIllicitCertification",
+    "ResidualPersistence",
+    "ForbiddenEscalation",
+    "TriadClosure",
+    "ReplayIntegrity",
+}
+
+
 def test_formal_theorem_obligations_cover_pr73_targets():
     payload = json.loads(Path("research/formal/theorem_obligations.json").read_text(encoding="utf-8"))
     assert payload["status"] == "scaffold"
@@ -14,13 +23,7 @@ def test_formal_theorem_obligations_cover_pr73_targets():
     assert payload["runtime_behavior_changes"] is False
 
     obligation_ids = {item["id"] for item in payload["obligations"]}
-    assert obligation_ids == {
-        "NoIllicitCertification",
-        "ResidualPersistence",
-        "ForbiddenEscalation",
-        "TriadClosure",
-        "ReplayIntegrity",
-    }
+    assert obligation_ids == EXPECTED_OBLIGATION_IDS
 
 
 def test_proof_mapping_links_runtime_contracts_and_evidence_gates():
@@ -28,13 +31,7 @@ def test_proof_mapping_links_runtime_contracts_and_evidence_gates():
     assert payload["status"] == "scaffold"
     mapping = {item["obligation"]: item for item in payload["mapping"]}
 
-    for obligation in (
-        "NoIllicitCertification",
-        "ResidualPersistence",
-        "ForbiddenEscalation",
-        "TriadClosure",
-        "ReplayIntegrity",
-    ):
+    for obligation in EXPECTED_OBLIGATION_IDS:
         assert obligation in mapping
         assert mapping[obligation]["runtime_contracts"]
         assert mapping[obligation]["evidence_gates"]
