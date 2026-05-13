@@ -40,7 +40,7 @@ def test_enum_validation_enforced() -> None:
     schema = _load_json(SCHEMA_PATH)
     contract = _load_json(CONTRACT_PATH)
     broken = copy.deepcopy(contract)
-    broken["engine_name"] = "PAE_V2"
+    broken["engine_name"] = "INVALID_ENGINE"
     with pytest.raises(jsonschema.ValidationError):
         _validate(broken, schema)
 
