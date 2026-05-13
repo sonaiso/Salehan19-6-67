@@ -44,3 +44,12 @@ Official positioning:
 - Added explicit replay integrity contract payload (`ValidEventLog => replay-consistent judgment sequence`).
 - Added layer sovereignty registry with Governor, allowed/forbidden ascent, required evidence, χ_L, MC_L, and residual rules.
 - Aligned official wording to pilot qualification posture.
+- Added PR #89 external pilot package docs:
+  - `docs/EXTERNAL_AUDIT_PACKAGE.md`
+  - `docs/PILOT_RISK_REGISTER.md`
+  - `docs/PILOT_DEPLOYMENT_GUIDE.md`
+  - `docs/SCIENTIFIC_VALIDATION_REPORT.md`
+  - `docs/INDUSTRIAL_VALIDATION_REPORT.md`
+  - `docs/KNOWN_LIMITATIONS.md`
+  - `examples/pilot/`
+  - `scripts/run_pilot_validation.py`
