@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 from typing import Any
+from collections.abc import Iterator
 
 PUBLIC_FINAL_JUDGMENTS: tuple[str, ...] = ("zero", "hypothesis", "certificate")
 INTERNAL_SUSPEND = "suspend"
@@ -43,7 +44,12 @@ def is_public_final_judgment(status: str) -> bool:
 
 
 def normalize_public_judgment_fields(payload: Any) -> Any:
-    """Recursively normalize all public-judgment fields in a payload."""
+    """Recursively normalize all judgment fields across nested payload structures.
+
+    Traverses dict/list/tuple containers and canonicalizes values of
+    judgment keys (judgment/kernel_judgment/final_judgment/proof_status)
+    into the public triad.
+    """
     if isinstance(payload, dict):
         out: dict[Any, Any] = {}
         for key, value in payload.items():
@@ -61,7 +67,15 @@ def normalize_public_judgment_fields(payload: Any) -> Any:
 
 
 def enforce_governed_output_contract(payload: dict[str, Any]) -> dict[str, Any]:
-    """Enforce AFJG public-output rules on governed payloads."""
+    """Enforce AFJG public-output rules on governed payloads.
+
+    Rules applied to every nested dict node:
+    - Normalize judgment fields into ZERO/HYPOTHESIS/CERTIFICATE public triad.
+    - Collapse internal suspend/suspended state to public hypothesis.
+    - Downgrade certificate when proof object, governance gate, or reverse trace
+      requirements are missing.
+    - Preserve existing residuals and append governance residual markers.
+    """
     normalized = normalize_public_judgment_fields(deepcopy(payload))
     for node in _iter_dict_nodes(normalized):
         _enforce_internal_state_rule(node)
@@ -69,7 +83,8 @@ def enforce_governed_output_contract(payload: dict[str, Any]) -> dict[str, Any]:
     return normalized
 
 
-def _iter_dict_nodes(payload: Any):
+def _iter_dict_nodes(payload: Any) -> Iterator[dict[str, Any]]:
+    """Yield every dict node inside nested dict/list payload structures."""
     if isinstance(payload, dict):
         yield payload
         for value in payload.values():
@@ -80,6 +95,7 @@ def _iter_dict_nodes(payload: Any):
 
 
 def _enforce_internal_state_rule(payload: dict[str, Any]) -> None:
+    """Mutate payload in place: suspend/suspended internal state => hypothesis."""
     internal_state = str(payload.get("internal_state", "")).strip().lower()
     if internal_state not in {INTERNAL_SUSPEND, INTERNAL_SUSPENDED}:
         return
@@ -138,6 +154,7 @@ def _certificate_blocked(payload: dict[str, Any]) -> bool:
 
 
 def _append_residual(payload: dict[str, Any], residual: str) -> None:
+    """Mutate payload by appending a non-empty residual marker once."""
     existing = payload.get("residuals")
     residuals: list[str]
     if isinstance(existing, list):

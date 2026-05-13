@@ -42,6 +42,21 @@ def test_internal_suspended_state_forces_public_hypothesis():
     assert "internal_suspension_collapsed" in payload["residuals"]
 
 
+def test_internal_suspended_state_collapses_even_when_gates_fail():
+    payload = enforce_governed_output_contract(
+        {
+            "proof_id": "",
+            "judgment": "certificate",
+            "internal_state": "suspended",
+            "conservation": {"passed": False},
+            "reverse_trace_obj": {"complete": False},
+            "residuals": [],
+        }
+    )
+    assert payload["judgment"] == "hypothesis"
+    assert "internal_suspension_collapsed" in payload["residuals"]
+
+
 def test_certificate_without_gate_requirements_downgrades_and_preserves_residuals():
     payload = enforce_governed_output_contract(
         {

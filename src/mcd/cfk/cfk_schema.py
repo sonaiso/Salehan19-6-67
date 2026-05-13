@@ -30,7 +30,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any
 
-from mcd.core.public_judgment import collapse_to_public_judgment, is_public_final_judgment
+from mcd.core.public_judgment import is_public_final_judgment
 
 # ---------------------------------------------------------------------------
 # Judgment vocabulary
@@ -52,22 +52,18 @@ PUBLIC_FINAL_JUDGMENTS: tuple[str, str, str] = (
 
 
 def coerce_public_judgment(judgment: str | None) -> str:
-    """Map any internal/non-public state into the public final judgment contract."""
+    """Map any internal/non-public state into the public final judgment contract.
+
+    CFK preserves explicit upstream public judgments (including explicit "zero"),
+    collapses suspend/suspended to "hypothesis", and defaults unknown labels to
+    "hypothesis" rather than exposing non-contract values.
+    """
     normalized = (judgment or "").strip().lower()
     if is_public_final_judgment(normalized):
         return normalized
     if normalized in {"suspend", "suspended"}:
         return JudgmentStatus.HYPOTHESIS.value
-    if not normalized:
-        return JudgmentStatus.HYPOTHESIS.value
-    collapsed = collapse_to_public_judgment(normalized)
-    # CFK keeps unknown/non-public labels at public "hypothesis" instead of
-    # exposing a hard "zero" unless that zero was explicitly produced upstream.
-    return (
-        JudgmentStatus.HYPOTHESIS.value
-        if collapsed == JudgmentStatus.ZERO.value
-        else collapsed
-    )
+    return JudgmentStatus.HYPOTHESIS.value
 
 
 class CoordinateType(str, Enum):
