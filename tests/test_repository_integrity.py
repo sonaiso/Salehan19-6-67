@@ -40,7 +40,7 @@ def test_no_duplicate_top_level_definitions():
 
 
 def test_no_duplicate_test_functions():
-    for path in Path("tests").glob("test_*.py"):
+    for path in Path("tests").rglob("test_*.py"):
         tree = _parse(path)
         test_names = [
             node.name
