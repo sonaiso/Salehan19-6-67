@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import ast
+from collections import Counter
 from pathlib import Path
 
 
@@ -47,7 +48,7 @@ def test_cli_commands_registered_once():
     tree = ast.parse(cli_path.read_text(encoding="utf-8"), filename=str(cli_path))
     registered, _ = _collect_cli_commands(tree)
 
-    duplicate_registrations = sorted({name for name in registered if registered.count(name) > 1})
+    duplicate_registrations = sorted(name for name, count in Counter(registered).items() if count > 1)
     assert not duplicate_registrations, f"duplicate command registrations: {duplicate_registrations}"
 
 

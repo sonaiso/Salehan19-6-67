@@ -19,7 +19,7 @@ class ExceptionIrabResult:
     particle: str | None
     style: str
     certainty_policy: str
-    warnings: list[str]
+    warnings: tuple[str, ...]
 
 
 class ExceptionIrabEngine:
@@ -33,7 +33,7 @@ class ExceptionIrabEngine:
                 particle=None,
                 style="none",
                 certainty_policy="hypothesis",
-                warnings=[],
+                warnings=(),
             )
 
         style = "explicit_illa" if particle == "إلا" else "general_exception_particle"
@@ -42,5 +42,5 @@ class ExceptionIrabEngine:
             particle=particle,
             style=style,
             certainty_policy="hypothesis",
-            warnings=[],
+            warnings=(),
         )
