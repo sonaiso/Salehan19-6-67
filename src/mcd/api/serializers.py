@@ -14,6 +14,8 @@ from typing import Any
 
 from mcd.core.public_judgment import enforce_governed_output_contract
 
+_GOVERNANCE_WRAPPER_KEY = "_mcd_governed_root"
+
 
 def _coerce(obj: Any) -> Any:
     """Recursively make ``obj`` JSON-safe."""
@@ -30,7 +32,7 @@ def _coerce(obj: Any) -> Any:
             nk = _key(k)
             cv = _coerce(v)
             out[nk] = cv
-        return enforce_governed_output_contract(out)
+        return out
     if isinstance(obj, (list, tuple)):
         return [_coerce(v) for v in obj]
     if dataclasses.is_dataclass(obj) and not isinstance(obj, type):
@@ -57,7 +59,7 @@ def _key(k: Any) -> str:
 
 def safe_serialize(data: Any) -> dict:
     """Return a JSON-safe dict for use in APIResponse.data."""
-    coerced = _coerce(data)
+    coerced = _enforce_once(_coerce(data))
     if isinstance(coerced, dict):
         return coerced
     return {"result": coerced}
@@ -65,4 +67,11 @@ def safe_serialize(data: Any) -> dict:
 
 def to_json_string(data: Any) -> str:
     """Serialize data to a compact JSON string (for debug use)."""
-    return json.dumps(_coerce(data), ensure_ascii=False, indent=2)
+    return json.dumps(_enforce_once(_coerce(data)), ensure_ascii=False, indent=2)
+
+
+def _enforce_once(payload: Any) -> Any:
+    if isinstance(payload, dict):
+        return enforce_governed_output_contract(payload)
+    wrapped = enforce_governed_output_contract({_GOVERNANCE_WRAPPER_KEY: payload})
+    return wrapped[_GOVERNANCE_WRAPPER_KEY]

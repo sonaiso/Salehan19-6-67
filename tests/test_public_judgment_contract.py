@@ -72,3 +72,22 @@ def test_certificate_without_gate_requirements_downgrades_and_preserves_residual
     assert "certificate_without_proof_object" in payload["residuals"]
     assert "certificate_without_governance_gate" in payload["residuals"]
     assert "certificate_without_reverse_trace" in payload["residuals"]
+
+
+def test_nested_reverse_trace_preserves_certificate():
+    payload = enforce_governed_output_contract(
+        {
+            "proof_id": "PO-1",
+            "judgment": "certificate",
+            "conservation": {"passed": True},
+            "reverse_trace_obj": {
+                "final_judgment": "certificate",
+                "reverse_trace_id": "RT-1",
+                "complete": True,
+            },
+            "residuals": [],
+        }
+    )
+    assert payload["judgment"] == "certificate"
+    assert payload["reverse_trace_obj"]["final_judgment"] == "certificate"
+    assert "residuals" not in payload["reverse_trace_obj"]

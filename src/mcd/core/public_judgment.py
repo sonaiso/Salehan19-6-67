@@ -9,6 +9,18 @@ PUBLIC_FINAL_JUDGMENTS: tuple[str, ...] = ("zero", "hypothesis", "certificate")
 INTERNAL_SUSPEND = "suspend"
 INTERNAL_SUSPENDED = "suspended"
 _JUDGMENT_KEYS = frozenset({"judgment", "kernel_judgment", "final_judgment", "proof_status"})
+_GOVERNANCE_CONTEXT_KEYS = frozenset(
+    {
+        "proof_id",
+        "proof_object_ref",
+        "governance_gate_passed",
+        "conservation",
+        "reverse_trace_ref",
+        "reverse_trace_obj",
+        "reverse_trace",
+        "transition_tags",
+    }
+)
 _BLOCKING_TRANSITIONS = frozenset(
     {
         "root_or_pattern_as_factual_proof",
@@ -70,7 +82,8 @@ def enforce_governed_output_contract(payload: dict[str, Any]) -> dict[str, Any]:
     """Enforce AFJG public-output rules on governed payloads.
 
     Rules applied to every nested dict node:
-    - Normalize judgment fields into ZERO/HYPOTHESIS/CERTIFICATE public triad.
+    - Normalize judgment fields into the canonical public triad
+      (zero/hypothesis/certificate).
     - Collapse internal suspend/suspended state to public hypothesis.
     - Downgrade certificate when proof object, governance gate, or reverse trace
       requirements are missing.
@@ -106,12 +119,36 @@ def _enforce_internal_state_rule(payload: dict[str, Any]) -> None:
 
 
 def _enforce_certificate_gate(payload: dict[str, Any]) -> None:
+    if _is_reverse_trace_payload(payload):
+        return
+    if not _has_governance_context(payload):
+        return
     for key in ("judgment", "final_judgment", "proof_status"):
         current = payload.get(key)
         if not isinstance(current, str) or collapse_to_public_judgment(current) != "certificate":
             continue
         if _certificate_blocked(payload):
             payload[key] = "hypothesis"
+
+
+def _has_governance_context(payload: dict[str, Any]) -> bool:
+    return bool(payload.keys() & _GOVERNANCE_CONTEXT_KEYS)
+
+
+def _is_reverse_trace_payload(payload: dict[str, Any]) -> bool:
+    """Detect embedded reverse-trace snapshots that are not governed outputs.
+
+    ReverseTrace payloads may carry `final_judgment` for trace bookkeeping, but
+    they do not represent top-level governed certificate claims and should not
+    be certificate-gated independently.
+    """
+    return (
+        "reverse_trace_id" in payload
+        and "complete" in payload
+        and "governance_gate_passed" not in payload
+        and "conservation" not in payload
+        and "reverse_trace_ref" not in payload
+    )
 
 
 def _certificate_blocked(payload: dict[str, Any]) -> bool:
