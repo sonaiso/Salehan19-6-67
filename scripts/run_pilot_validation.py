@@ -64,7 +64,7 @@ def _replay_integrity_summary() -> dict[str, Any]:
                 status_code=200,
                 execution_time_ms=1.0,
                 residual_preserved=True,
-                public_judgment="certificate",
+                public_judgment="hypothesis",
             ),
         )
         backend.append_trace(
@@ -76,7 +76,7 @@ def _replay_integrity_summary() -> dict[str, Any]:
                 status_code=200,
                 execution_time_ms=1.1,
                 residual_preserved=True,
-                public_judgment="hypothesis",
+                public_judgment="zero",
             ),
         )
 
@@ -186,4 +186,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
