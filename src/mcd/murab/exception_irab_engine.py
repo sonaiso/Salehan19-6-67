@@ -2,7 +2,8 @@
 
 This module provides a lightweight structural classifier that keeps
 exception handling explicit and traceable without changing public judgment
-contracts.
+contracts. Arabic terminology is used because this module serves the
+Arabic I'rab analysis track in the Mu'rab layer.
 """
 from __future__ import annotations
 
@@ -40,6 +41,6 @@ class ExceptionIrabEngine:
             has_exception=True,
             particle=particle,
             style=style,
-            certainty_policy="probable_syntactic",
+            certainty_policy="hypothesis",
             warnings=[],
         )

@@ -27,7 +27,7 @@ def _all_function_names(path: Path) -> set[str]:
     return names
 
 
-def test_no_duplicate_top_level_functions_or_classes():
+def test_no_duplicate_top_level_definitions():
     for path in _iter_python_files("src", "tests", "research/formal/lean/scripts"):
         tree = _parse(path)
         top_level_names = [
@@ -39,7 +39,7 @@ def test_no_duplicate_top_level_functions_or_classes():
         assert not duplicates, f"{path} has duplicate top-level symbols: {duplicates}"
 
 
-def test_no_duplicate_top_level_test_functions_per_file():
+def test_no_duplicate_test_functions():
     for path in Path("tests").glob("test_*.py"):
         tree = _parse(path)
         test_names = [
@@ -51,7 +51,7 @@ def test_no_duplicate_top_level_test_functions_per_file():
         assert not duplicates, f"{path} has duplicate test names: {duplicates}"
 
 
-def test_formal_obligations_and_mapping_are_unique_and_consistent():
+def test_formal_obligations_mapping_consistency():
     obligations_payload = json.loads(Path("research/formal/theorem_obligations.json").read_text(encoding="utf-8"))
     mapping_payload = json.loads(Path("research/formal/proof_mapping.json").read_text(encoding="utf-8"))
 

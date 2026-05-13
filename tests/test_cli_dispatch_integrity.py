@@ -42,13 +42,19 @@ def _collect_cli_commands(tree: ast.AST) -> tuple[list[str], set[str]]:
     return registered, dispatched
 
 
-def test_cli_registered_commands_are_unique_and_dispatched():
+def test_cli_commands_registered_once():
+    cli_path = Path("src/mcd/cli.py")
+    tree = ast.parse(cli_path.read_text(encoding="utf-8"), filename=str(cli_path))
+    registered, _ = _collect_cli_commands(tree)
+
+    duplicate_registrations = sorted({name for name in registered if registered.count(name) > 1})
+    assert not duplicate_registrations, f"duplicate command registrations: {duplicate_registrations}"
+
+
+def test_cli_commands_all_dispatched():
     cli_path = Path("src/mcd/cli.py")
     tree = ast.parse(cli_path.read_text(encoding="utf-8"), filename=str(cli_path))
     registered, dispatched = _collect_cli_commands(tree)
 
     registered_set = set(registered)
-    duplicate_registrations = sorted({name for name in registered if registered.count(name) > 1})
-
-    assert not duplicate_registrations, f"duplicate command registrations: {duplicate_registrations}"
     assert not (registered_set - dispatched), f"missing dispatch branches: {sorted(registered_set - dispatched)}"
