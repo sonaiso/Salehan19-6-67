@@ -82,7 +82,6 @@ def test_reverse_trace_payload_nodes_are_not_mutated_as_governed_outputs():
             "conservation": {"passed": True},
             "reverse_trace_obj": {
                 "final_judgment": "certificate",
-                "proof_id": "RT-PO-1",
                 "reverse_trace_id": "RT-1",
                 "complete": True,
             },

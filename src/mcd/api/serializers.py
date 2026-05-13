@@ -14,6 +14,8 @@ from typing import Any
 
 from mcd.core.public_judgment import enforce_governed_output_contract
 
+_GOVERNED_ROOT_SENTINEL = "_mcd_governed_root"
+
 
 def _coerce(obj: Any) -> Any:
     """Recursively make ``obj`` JSON-safe."""
@@ -71,6 +73,5 @@ def to_json_string(data: Any) -> str:
 def _enforce_once(payload: Any) -> Any:
     if isinstance(payload, dict):
         return enforce_governed_output_contract(payload)
-    sentinel_key = "__mcd_governed_root__"
-    wrapped = enforce_governed_output_contract({sentinel_key: payload})
-    return wrapped[sentinel_key]
+    wrapped = enforce_governed_output_contract({_GOVERNED_ROOT_SENTINEL: payload})
+    return wrapped[_GOVERNED_ROOT_SENTINEL]
