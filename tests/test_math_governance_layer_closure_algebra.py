@@ -39,6 +39,7 @@ def test_no_layer_theft_when_bridge_fails():
     lexeme_unit = next(unit for unit in units if unit.level_id == "lexeme")
     lexeme_unit.pre_unit_ids = []
     vector = LayerClosureAlgebra().evaluate(units)
+    assert any(not bridge.passed for bridge in vector.bridge_evaluations)
     reasons = [reason for bridge in vector.bridge_evaluations for reason in bridge.reasons]
     assert "layer_theft_blocked" in reasons
 

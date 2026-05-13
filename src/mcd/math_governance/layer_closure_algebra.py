@@ -196,6 +196,7 @@ class ResidualRegistry:
         self._rules: dict[str, list[str]] = {}
 
     def register(self, layer_id: str, rules: list[str]) -> None:
+        # Deduplicate while preserving rule declaration order.
         self._rules[layer_id] = list(dict.fromkeys(rules))
 
     def get(self, layer_id: str) -> list[str]:
@@ -255,7 +256,7 @@ class BridgeRegistry:
         return list(self._bridges.values())
 
 
-class NonDerivationalTree:
+class NonDerivationalClassifier:
     def __init__(self) -> None:
         self._categories = set(NON_DERIVATIONAL_DEFAULT_CATEGORIES)
 
@@ -263,6 +264,9 @@ class NonDerivationalTree:
         tags = {unit.unit_type.lower(), unit.level_id.lower(), *(str(x).lower() for x in unit.invariants)}
         metadata_tag = str(unit.metadata.get("non_derivational_category", "")).lower()
         return bool((tags & self._categories) or metadata_tag in self._categories)
+
+
+NonDerivationalTree = NonDerivationalClassifier
 
 
 class LayerClosureAlgebra:
@@ -286,6 +290,7 @@ class LayerClosureAlgebra:
         self.non_derivational_tree = non_derivational_tree or NonDerivationalTree()
 
     def _evaluate_local(self, unit: GovernedFractalUnit) -> LocalCertificate:
+        """Evaluate local layer certificate where χ_L is closure and MC_L is minimum completeness."""
         minimum, closure = self.closure_registry.evaluate(unit.level_id, unit)
         reasons: list[str] = []
         fatal = False
@@ -436,7 +441,7 @@ class LayerClosureAlgebra:
         if not no_fatal:
             reasons.append("fatal barrier detected")
 
-        global_passed = all([required_present, all_local, all_bridges, residuals_ok, replayable, no_fatal])
+        global_passed = all((required_present, all_local, all_bridges, residuals_ok, replayable, no_fatal))
         if not required_present or not no_fatal:
             global_judgment = ZERO
         elif global_passed:
