@@ -30,13 +30,13 @@ def build_app() -> FastAPI:
             "Minimal Cognitive Decoder — Arabic epistemic reasoning via REST API.\n\n"
             "**Phase 6.1 additions:** /v1 versioned routes, unified response envelope, "
             "schema stability checker, pilot readiness endpoint, API observability.\n\n"
+            "**Industrial closure additions:** persistent audit traces, replay endpoints, "
+            "governance metrics hooks, profile-gated auth/authz/rate limiting.\n\n"
             "**Limitations:**\n"
-            "- No authentication (TODO before production)\n"
-            "- No rate limiting (TODO before production)\n"
             "- No external source calls\n"
             "- No LLM calls\n"
             "- No GraphRAG\n"
-            "- Not production-ready; pilot-ready candidate only\n"
+            "- Not production-ready; industrial controls are baseline-only\n"
         ),
         version=API_VERSION,
         docs_url="/docs",

@@ -1,0 +1,90 @@
+{
+  "title": "Formal Theorem Obligations",
+  "status": "scaffold_plus_rank_residual_extension",
+  "phase_scope": "phase_0_governance_formal_artifacts_only",
+  "runtime_behavior_changes": false,
+  "obligations": [
+    {
+      "id": "NoIllicitCertification",
+      "statement": "CERTIFICATE is forbidden unless ProofObject exists, GovernanceGate passes, and ReverseTrace is complete.",
+      "runtime_invariants": [
+        "no_certificate_without_proof_object",
+        "no_certificate_without_governance_gate",
+        "no_certificate_without_reverse_trace"
+      ]
+    },
+    {
+      "id": "ResidualPersistence",
+      "statement": "Residuals are preserved and replay-visible; residual erasure is forbidden.",
+      "runtime_invariants": [
+        "no_residual_erasure"
+      ]
+    },
+    {
+      "id": "ForbiddenEscalation",
+      "statement": "Forbidden transitions cannot silently escalate any flow to CERTIFICATE.",
+      "runtime_invariants": [
+        "forbidden_transition_blocks_certificate",
+        "no_silent_level_skip"
+      ]
+    },
+    {
+      "id": "TriadClosure",
+      "statement": "Final epistemic judgments terminate only in ZERO/HYPOTHESIS/CERTIFICATE.",
+      "runtime_invariants": [
+        "final_judgment_in_public_triad"
+      ]
+    },
+    {
+      "id": "ReplayIntegrity",
+      "statement": "Immutable event log integrity and replay reconstruction remain deterministic and auditable.",
+      "runtime_invariants": [
+        "append_only_event_log",
+        "hash_chain_integrity",
+        "replay_reconstruction_determinism"
+      ]
+    },
+    {
+      "id": "RankSoundness",
+      "statement": "CERTIFICATE requires sufficient epistemic rank under the formal rank order.",
+      "runtime_invariants": [
+        "rank_soundness_for_certificate"
+      ]
+    },
+    {
+      "id": "InsufficientRankBlocksCertificate",
+      "statement": "Insufficient rank blocks CERTIFICATE issuance.",
+      "runtime_invariants": [
+        "insufficient_rank_blocks_certificate"
+      ]
+    },
+    {
+      "id": "RankGapBlocksCertificate",
+      "statement": "Unresolved rank gaps block CERTIFICATE issuance.",
+      "runtime_invariants": [
+        "rank_gap_blocks_certificate"
+      ]
+    },
+    {
+      "id": "MissingEvidenceBlocksCertificate",
+      "statement": "Unresolved missing evidence blocks CERTIFICATE issuance.",
+      "runtime_invariants": [
+        "missing_evidence_blocks_certificate"
+      ]
+    },
+    {
+      "id": "ResidualErasureBlocksCertificate",
+      "statement": "Residual erasure blocks CERTIFICATE issuance.",
+      "runtime_invariants": [
+        "residual_erasure_blocks_certificate"
+      ]
+    },
+    {
+      "id": "TypedResidualCalculus",
+      "statement": "Residual ontology is typed and residual preservation is explicit over transitions.",
+      "runtime_invariants": [
+        "typed_residual_calculus"
+      ]
+    }
+  ]
+}

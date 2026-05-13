@@ -12,6 +12,8 @@ import enum
 import json
 from typing import Any
 
+from mcd.core.public_judgment import collapse_to_public_judgment
+
 
 def _coerce(obj: Any) -> Any:
     """Recursively make ``obj`` JSON-safe."""
@@ -23,7 +25,15 @@ def _coerce(obj: Any) -> Any:
         return obj
     if isinstance(obj, dict):
         # Keys may be str-enum instances — normalize them to plain strings
-        return {_key(k): _coerce(v) for k, v in obj.items()}
+        out = {}
+        for k, v in obj.items():
+            nk = _key(k)
+            cv = _coerce(v)
+            if nk in {"judgment", "kernel_judgment", "final_judgment", "proof_status"} and isinstance(cv, str):
+                out[nk] = collapse_to_public_judgment(cv)
+            else:
+                out[nk] = cv
+        return out
     if isinstance(obj, (list, tuple)):
         return [_coerce(v) for v in obj]
     if dataclasses.is_dataclass(obj) and not isinstance(obj, type):

@@ -18,6 +18,7 @@ from dataclasses import dataclass, field
 
 from mcd.cfk.fractal_kernel import KernelResult
 from mcd.cfk.proof_object import ProofObject
+from mcd.core.public_judgment import collapse_to_public_judgment
 
 
 # ---------------------------------------------------------------------------
@@ -105,6 +106,7 @@ class ComparisonTableBuilder:
         # --- Certainty ---
         stat_cert   = f"إحصائي ({round(stat_u.C.statistical_confidence, 2)})"
         arab_cert   = f"تداولي ({arab_u.C.linguistic_force})"
+        public_judgment = collapse_to_public_judgment(proof.judgment)
         epis_cert   = (
             "معلق" if (proof.internal_state == "suspended" or proof.judgment == "zero")
             else f"{epis_u.C.certainty_level}"
@@ -113,7 +115,7 @@ class ComparisonTableBuilder:
         # --- Judgment ---
         stat_judg   = "plausible"
         arab_judg   = self._arabic_judgment_label(arab_u.C.linguistic_force)
-        epis_judg   = proof.judgment
+        epis_judg   = public_judgment
 
         rows = [
             ComparisonRow("نوع الجملة",  stat_sent,  arab_sent,  epis_sent),
@@ -126,7 +128,7 @@ class ComparisonTableBuilder:
         return ComparisonTable(
             text=kernel.text,
             rows=rows,
-            kernel_judgment=proof.judgment,
+            kernel_judgment=public_judgment,
         )
 
     @staticmethod

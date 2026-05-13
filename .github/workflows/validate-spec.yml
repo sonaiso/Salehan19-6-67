@@ -24,3 +24,10 @@ jobs:
 
       - name: Run repository verification tests
         run: python tests/verify_bayani_repository.py
+
+      - name: Verify readiness and formal artifacts exist
+        run: |
+          test -f evaluation/readiness_report.json
+          test -f evaluation/readiness_report.md
+          test -f research/theorem_roadmap.md
+          test -f docs/formal_proofs/README.md

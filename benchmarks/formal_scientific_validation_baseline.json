@@ -1,0 +1,29 @@
+{
+  "suite_id": "FSV-BASELINE-001",
+  "scope": "formal_scientific_validation_and_adversarial_governance",
+  "strategic_order": [
+    "adversarial_governance_validation",
+    "property_based_invariant_testing",
+    "distributed_governance_simulation",
+    "scientific_benchmarking",
+    "formal_theorem_system",
+    "production_scaling",
+    "external_audit_and_publication"
+  ],
+  "attack_harness": [
+    "governance_bypass",
+    "replay_corruption",
+    "trace_tampering",
+    "fake_certification",
+    "residual_erasure",
+    "rank_escalation_attack"
+  ],
+  "required_invariants": [
+    "no_certificate_without_proof_object",
+    "no_certificate_without_governance_gate",
+    "no_certificate_without_reverse_trace",
+    "no_residual_erasure",
+    "no_silent_level_skip",
+    "final_judgment_in_public_triad"
+  ]
+}
