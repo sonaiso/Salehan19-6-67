@@ -1,0 +1,233 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bayani.spec/worktree/pae_contract.schema.json",
+  "title": "PAE (Preserved Ascent Engine) Contract Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_version",
+    "engine_name",
+    "final_judgment_triad",
+    "patc_output_mapping",
+    "architecture_contract_fields",
+    "certificate_requirements",
+    "forbidden_transitions",
+    "residual_policy",
+    "output_examples"
+  ],
+  "properties": {
+    "contract_version": { "type": "string", "minLength": 1 },
+    "engine_name": {
+      "type": "string",
+      "enum": ["PAE"]
+    },
+    "final_judgment_triad": {
+      "type": "array",
+      "prefixItems": [
+        { "const": "ZERO" },
+        { "const": "HYPOTHESIS" },
+        { "const": "CERTIFICATE" }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "patc_output_mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["blocked", "incomplete", "gated"],
+      "properties": {
+        "blocked": { "const": "ZERO" },
+        "incomplete": { "const": "HYPOTHESIS" },
+        "gated": { "const": "CERTIFICATE" }
+      }
+    },
+    "architecture_contract_fields": {
+      "type": "array",
+      "prefixItems": [
+        { "const": "pre" },
+        { "const": "current" },
+        { "const": "post" },
+        { "const": "phi_in" },
+        { "const": "phi_out" },
+        { "const": "beta" },
+        { "const": "type" },
+        { "const": "order" },
+        { "const": "composition" },
+        { "const": "invariants" },
+        { "const": "forbidden" },
+        { "const": "residual" },
+        { "const": "judgment" }
+      ],
+      "items": false,
+      "minItems": 13,
+      "maxItems": 13
+    },
+    "certificate_requirements": {
+      "type": "array",
+      "prefixItems": [
+        { "const": "ProofObject" },
+        { "const": "GovernanceGate" },
+        { "const": "ReverseTrace" }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "forbidden_transitions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "root_or_pattern_as_factual_proof",
+          "derivative_as_proof",
+          "irab_as_factual_certainty",
+          "emphasis_as_evidence",
+          "metaphor_as_literal_certificate",
+          "memory_as_external_evidence",
+          "model_output_as_evidence",
+          "tool_output_as_certificate_without_governance",
+          "residual_erasure",
+          "silent_level_skip",
+          "certificate_without_proof_object",
+          "certificate_without_governance_gate",
+          "certificate_without_reverse_trace"
+        ]
+      },
+      "uniqueItems": true,
+      "minItems": 1
+    },
+    "residual_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["preserve_residuals", "forbid_residual_erasure"],
+      "properties": {
+        "preserve_residuals": { "const": true },
+        "forbid_residual_erasure": { "const": true }
+      }
+    },
+    "output_examples": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/output_record" }
+    }
+  },
+  "$defs": {
+    "output_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "judgment",
+        "proof_object",
+        "governance_gate",
+        "reverse_trace",
+        "residuals",
+        "transition_tags"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "judgment": {
+          "type": "string",
+          "enum": ["ZERO", "HYPOTHESIS", "CERTIFICATE"]
+        },
+        "proof_object": {
+          "anyOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "null" }
+          ]
+        },
+        "governance_gate": {
+          "type": "string",
+          "enum": ["passed", "failed", "missing"]
+        },
+        "reverse_trace": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "residuals": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "transition_tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "root_or_pattern_as_factual_proof",
+              "derivative_as_proof",
+              "irab_as_factual_certainty",
+              "emphasis_as_evidence",
+              "metaphor_as_literal_certificate",
+              "memory_as_external_evidence",
+              "model_output_as_evidence",
+              "tool_output_as_certificate_without_governance",
+              "residual_erasure",
+              "silent_level_skip",
+              "certificate_without_proof_object",
+              "certificate_without_governance_gate",
+              "certificate_without_reverse_trace"
+            ]
+          },
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "judgment": { "const": "CERTIFICATE" } },
+            "required": ["judgment"]
+          },
+          "then": {
+            "properties": {
+              "proof_object": { "type": "string", "minLength": 1 },
+              "governance_gate": { "const": "passed" },
+              "reverse_trace": { "minItems": 1 }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "transition_tags": {
+                "contains": {
+                  "enum": [
+                    "certificate_without_proof_object",
+                    "certificate_without_governance_gate",
+                    "certificate_without_reverse_trace",
+                    "residual_erasure"
+                  ]
+                }
+              }
+            },
+            "required": ["transition_tags"]
+          },
+          "then": {
+            "properties": {
+              "residuals": {
+                "contains": {
+                  "enum": [
+                    "certificate_without_proof_object",
+                    "certificate_without_governance_gate",
+                    "certificate_without_reverse_trace",
+                    "residual_erasure"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "not": {
+            "properties": {
+              "transition_tags": {
+                "contains": { "const": "silent_level_skip" }
+              }
+            },
+            "required": ["transition_tags"]
+          }
+        }
+      ]
+    }
+  }
+}
