@@ -1,0 +1,79 @@
+{
+  "title": "Runtime-to-Formal Equivalence Truth Table",
+  "scope": "public judgment, certificate gating, rank gating, residual blocking",
+  "status": "qualification_phase_pr1_runtime_formal_equivalence",
+  "truth_table": [
+    {
+      "case_id": "T00-unrecognized-input",
+      "python_public_judgment": "zero",
+      "lean_public_judgment": "zero",
+      "equivalent": "true"
+    },
+    {
+      "case_id": "T01-certificate-allowed",
+      "python_public_judgment": "certificate",
+      "lean_public_judgment": "certificate",
+      "equivalent": "true"
+    },
+    {
+      "case_id": "T02-missing-proof-object",
+      "python_public_judgment": "hypothesis",
+      "lean_public_judgment": "hypothesis",
+      "equivalent": "true"
+    },
+    {
+      "case_id": "T03-governance-gate-failed",
+      "python_public_judgment": "hypothesis",
+      "lean_public_judgment": "hypothesis",
+      "equivalent": "true"
+    },
+    {
+      "case_id": "T04-reverse-trace-missing",
+      "python_public_judgment": "hypothesis",
+      "lean_public_judgment": "hypothesis",
+      "equivalent": "true"
+    },
+    {
+      "case_id": "T05-evidence-mismatch",
+      "python_public_judgment": "hypothesis",
+      "lean_public_judgment": "hypothesis",
+      "equivalent": "true"
+    },
+    {
+      "case_id": "T06-forbidden-transition",
+      "python_public_judgment": "hypothesis",
+      "lean_public_judgment": "hypothesis",
+      "equivalent": "true"
+    },
+    {
+      "case_id": "T07-residual-erasure",
+      "python_public_judgment": "hypothesis",
+      "lean_public_judgment": "hypothesis",
+      "equivalent": "true"
+    },
+    {
+      "case_id": "T08-insufficient-rank",
+      "python_public_judgment": "hypothesis",
+      "lean_public_judgment": "hypothesis",
+      "equivalent": "true"
+    },
+    {
+      "case_id": "T09-rank-gap",
+      "python_public_judgment": "hypothesis",
+      "lean_public_judgment": "hypothesis",
+      "equivalent": "true"
+    },
+    {
+      "case_id": "T10-missing-evidence",
+      "python_public_judgment": "hypothesis",
+      "lean_public_judgment": "hypothesis",
+      "equivalent": "true"
+    },
+    {
+      "case_id": "T11-unresolved-conflict",
+      "python_public_judgment": "hypothesis",
+      "lean_public_judgment": "hypothesis",
+      "equivalent": "true"
+    }
+  ]
+}

@@ -78,3 +78,15 @@ Claim boundary:
 - PR #77 → Runtime-to-formal equivalence mapping
 
 PR #76+ are downstream of the obligations + proof mapping produced in PR #73 and core model in PR #74, with PR #75 introducing rank/residual formal contracts as the next downstream layer.
+
+## Qualification Phase closure artifacts
+
+The repository now includes executable qualification artifacts for the first downstream closure steps:
+
+- Runtime↔Formal truth-table artifact:
+  - `research/formal/runtime_formal_equivalence_truth_table.json`
+  - `src/mcd/qualification/runtime_formal_equivalence.py`
+- Replay integrity contract payload:
+  - `src/mcd/audit/backend/persistent.py` (`replay_integrity_contract`)
+- Layer sovereignty registry contract:
+  - `src/mcd/qualification/layer_sovereignty_registry.py`

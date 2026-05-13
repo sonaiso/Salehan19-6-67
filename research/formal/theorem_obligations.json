@@ -85,6 +85,22 @@
       "runtime_invariants": [
         "typed_residual_calculus"
       ]
+    },
+    {
+      "id": "RuntimeFormalEquivalence",
+      "statement": "Runtime public judgment contract remains equivalent to formal truth-table gates for certificate, rank, and residual blocking.",
+      "runtime_invariants": [
+        "runtime_formal_truth_table_equivalence",
+        "certificate_rank_residual_gate_alignment"
+      ]
+    },
+    {
+      "id": "LayerSovereigntyRegistry",
+      "statement": "Layer authority is explicit: governor, allowed/forbidden ascent, required evidence, χ_L, MC_L, and residual rules.",
+      "runtime_invariants": [
+        "no_authority_outside_rank",
+        "layer_sovereignty_registry_complete"
+      ]
     }
   ]
 }

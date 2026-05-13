@@ -19,6 +19,7 @@ class AuditReplaySnapshot:
     certificate_forensics: dict[str, Any]
     immutable_log_valid: bool
     immutable_log_failures: list[str]
+    replay_integrity_contract: dict[str, Any]
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -26,6 +27,7 @@ class AuditReplaySnapshot:
             "certificate_forensics": self.certificate_forensics,
             "immutable_log_valid": self.immutable_log_valid,
             "immutable_log_failures": self.immutable_log_failures,
+            "replay_integrity_contract": self.replay_integrity_contract,
         }
 
 
@@ -96,11 +98,27 @@ class PersistentAuditBackend:
         replay = replay_trace_events(governance_events).to_dict()
         immutable_ok, immutable_failures = self._event_log.verify_integrity()
         forensics = reconstruct_certificate_forensics(governance_events)
+        original_sequence = [
+            str(event.get("public_judgment", "")).strip().lower()
+            for event in governance_events
+            if str(event.get("public_judgment", "")).strip()
+        ]
+        replay_sequence = [str(item).strip().lower() for item in replay.get("judgment_sequence", [])]
+        judgment_consistent = original_sequence == replay_sequence
+        replay_integrity_contract = {
+            "statement": "ValidEventLog => Replay(log) preserves public_judgment sequence",
+            "valid_event_log": immutable_ok,
+            "original_judgment_sequence": original_sequence,
+            "replayed_judgment_sequence": replay_sequence,
+            "judgment_consistent": judgment_consistent,
+            "contract_holds": immutable_ok and judgment_consistent and bool(replay.get("replay_success", False)),
+        }
         return AuditReplaySnapshot(
             replay=replay,
             certificate_forensics=forensics,
             immutable_log_valid=immutable_ok,
             immutable_log_failures=immutable_failures,
+            replay_integrity_contract=replay_integrity_contract,
         )
 
     def verify_event_immutability(self) -> tuple[bool, list[str]]:

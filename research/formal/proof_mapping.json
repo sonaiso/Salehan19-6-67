@@ -247,6 +247,58 @@
         "residual_persistence",
         "unresolved_conflict_blocks_certificate"
       ]
+    },
+    {
+      "obligation": "RuntimeFormalEquivalence",
+      "runtime_invariant_name": "runtime_formal_truth_table_equivalence",
+      "runtime_contracts": [
+        "tests/test_runtime_formal_equivalence.py::test_runtime_formal_truth_table_matches_committed_artifact",
+        "tests/test_runtime_formal_equivalence.py::test_runtime_formal_truth_table_covers_certificate_rank_and_residual_gates"
+      ],
+      "python_file": "src/mcd/qualification/runtime_formal_equivalence.py",
+      "test_file": "tests/test_runtime_formal_equivalence.py",
+      "lean_file": "research/formal/lean/RankSoundness.lean",
+      "claim_boundary": "runtime and formal truth-table alignment for governed public judgments only",
+      "evidence_gates": [
+        "ProofObject",
+        "GovernanceGate",
+        "ReverseTrace",
+        "EvidenceRank",
+        "ResidualPreservation"
+      ],
+      "formal_artifacts": [
+        "research/formal/lean/CoreJudgment.lean",
+        "research/formal/lean/RankSoundness.lean",
+        "research/formal/lean/ResidualCalculus.lean",
+        "research/formal/runtime_formal_equivalence_truth_table.json"
+      ],
+      "theorem_contracts": [
+        "publicJudgment",
+        "rank_soundness",
+        "residual_erasure_blocks_certificate"
+      ]
+    },
+    {
+      "obligation": "LayerSovereigntyRegistry",
+      "runtime_invariant_name": "layer_sovereignty_registry_complete",
+      "runtime_contracts": [
+        "tests/test_layer_sovereignty_registry.py::test_layer_sovereignty_registry_covers_all_levels",
+        "tests/test_layer_sovereignty_registry.py::test_layer_sovereignty_registry_blocks_silent_level_skip"
+      ],
+      "python_file": "src/mcd/qualification/layer_sovereignty_registry.py",
+      "test_file": "tests/test_layer_sovereignty_registry.py",
+      "lean_file": "research/formal/lean/CoreJudgment.lean",
+      "claim_boundary": "layer sovereignty registry execution contract only",
+      "evidence_gates": [
+        "LayerGovernor",
+        "AllowedAscent",
+        "ForbiddenAscent",
+        "ResidualPreservation"
+      ],
+      "formal_artifacts": [
+        "docs/QUALIFICATION_PHASE.md"
+      ],
+      "theorem_contracts": []
     }
   ]
 }
