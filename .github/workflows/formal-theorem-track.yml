@@ -1,43 +1,82 @@
 name: Formal Theorem Track
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
 on:
   pull_request:
+    paths:
+      - "research/formal/**"
+      - "tests/test_formal_*.py"
+      - "src/**"
+      - "pyproject.toml"
+      - ".github/workflows/formal-theorem-track.yml"
   push:
     branches: [main]
+    paths:
+      - "research/formal/**"
+      - "tests/test_formal_*.py"
+      - "src/**"
+      - "pyproject.toml"
+      - ".github/workflows/formal-theorem-track.yml"
+  workflow_dispatch:
 
 jobs:
   formal-theorem-track:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
+    timeout-minutes: 20
+    env:
+      PYTHONPATH: src
     steps:
       - name: Check out repository
         uses: actions/checkout@v4.2.2
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.3.0
         with:
           python-version: "3.12"
+          cache: "pip"
 
       - name: Install project and test dependencies
         run: |
+          set -euo pipefail
           python -m pip install --upgrade pip
           python -m pip install pytest
           python -m pip install -e .
 
       - name: Verify formal scaffolding artifacts
         run: |
-          test -f research/formal/theorem_scaffolding.json
-          test -f research/formal/theorem_obligations.json
-          test -f research/formal/proof_mapping.json
-          test -f research/formal/lean/README.md
-          test -f research/formal/lean/CoreJudgment.lean
-          test -f research/formal/lean/NoIllicitCertification.lean
-          test -f research/formal/lean/TriadClosure.lean
-          test -f research/formal/coq/README.md
+          set -euo pipefail
+          required_files=(
+            research/formal/theorem_scaffolding.json
+            research/formal/theorem_obligations.json
+            research/formal/proof_mapping.json
+            research/formal/lean/README.md
+            research/formal/lean/CoreJudgment.lean
+            research/formal/lean/NoIllicitCertification.lean
+            research/formal/lean/TriadClosure.lean
+            research/formal/coq/README.md
+          )
+          missing=0
+          for f in "${required_files[@]}"; do
+            if [[ ! -f "$f" ]]; then
+              echo "::error file=$f::required formal artifact missing"
+              missing=1
+            fi
+          done
+          exit "$missing"
 
       - name: Attempt Lean machine-check for minimal core (if available)
         run: |
+          set -euo pipefail
           if command -v lean >/dev/null 2>&1; then
             echo "Lean detected; running machine-check for minimal core."
             lean --version
@@ -47,31 +86,13 @@ jobs:
             lean TriadClosure.lean
           else
             echo "Lean not available; running fallback theorem-contract checks only."
-            python - <<'PY'
-            from pathlib import Path
-            required = {
-                "CoreJudgment.lean": ["inductive PublicJudgment", "def certificateAllowed", "def publicJudgment"],
-                "NoIllicitCertification.lean": [
-                    "theorem no_illicit_certification",
-                    "theorem missing_gate_blocks_certificate",
-                    "theorem forbidden_transition_blocks_certificate",
-                    "theorem residual_erasure_blocks_certificate",
-                ],
-                "TriadClosure.lean": ["theorem triad_closure"],
-            }
-            base = Path("research/formal/lean")
-            for file_name, tokens in required.items():
-                text = (base / file_name).read_text(encoding="utf-8")
-                assert "sorry" not in text
-                for token in tokens:
-                    assert token in text, f"missing token {token} in {file_name}"
-            print("Lean fallback contract checks passed.")
-            PY
+            python research/formal/lean/scripts/contract_check.py
           fi
 
       - name: Run formal theorem track tests
         run: |
-          PYTHONPATH=src python -m pytest -q \
+          set -euo pipefail
+          python -m pytest -q \
             tests/test_formal_theorem_scaffolding.py \
             tests/test_formal_scientific_validation_baseline.py \
             tests/test_formal_theorem_track.py
