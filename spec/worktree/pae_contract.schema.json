@@ -204,15 +204,74 @@
           },
           "then": {
             "properties": {
+              "residuals": { "minItems": 1 }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "transition_tags": {
+                "contains": { "const": "certificate_without_proof_object" }
+              }
+            },
+            "required": ["transition_tags"]
+          },
+          "then": {
+            "properties": {
               "residuals": {
-                "contains": {
-                  "enum": [
-                    "certificate_without_proof_object",
-                    "certificate_without_governance_gate",
-                    "certificate_without_reverse_trace",
-                    "residual_erasure"
-                  ]
-                }
+                "contains": { "const": "certificate_without_proof_object" }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "transition_tags": {
+                "contains": { "const": "certificate_without_governance_gate" }
+              }
+            },
+            "required": ["transition_tags"]
+          },
+          "then": {
+            "properties": {
+              "residuals": {
+                "contains": { "const": "certificate_without_governance_gate" }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "transition_tags": {
+                "contains": { "const": "certificate_without_reverse_trace" }
+              }
+            },
+            "required": ["transition_tags"]
+          },
+          "then": {
+            "properties": {
+              "residuals": {
+                "contains": { "const": "certificate_without_reverse_trace" }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "transition_tags": {
+                "contains": { "const": "residual_erasure" }
+              }
+            },
+            "required": ["transition_tags"]
+          },
+          "then": {
+            "properties": {
+              "residuals": {
+                "contains": { "const": "residual_erasure" }
               }
             }
           }

@@ -72,6 +72,16 @@ def test_residual_preservation_for_blocking_tags() -> None:
         _validate(broken, schema)
 
 
+def test_blocking_tag_requires_matching_residual() -> None:
+    schema = _load_json(SCHEMA_PATH)
+    contract = _load_json(CONTRACT_PATH)
+    broken = copy.deepcopy(contract)
+    broken["output_examples"][0]["transition_tags"] = ["certificate_without_reverse_trace"]
+    broken["output_examples"][0]["residuals"] = ["certificate_without_proof_object"]
+    with pytest.raises(jsonschema.ValidationError):
+        _validate(broken, schema)
+
+
 def test_silent_level_skip_prevents_certificate() -> None:
     schema = _load_json(SCHEMA_PATH)
     contract = _load_json(CONTRACT_PATH)
