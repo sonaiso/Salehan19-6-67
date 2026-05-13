@@ -135,6 +135,12 @@ def _has_governance_context(payload: dict[str, Any]) -> bool:
 
 
 def _is_reverse_trace_payload(payload: dict[str, Any]) -> bool:
+    """Detect embedded reverse-trace snapshots that are not governed outputs.
+
+    ReverseTrace payloads may carry `final_judgment` for trace bookkeeping, but
+    they do not represent top-level governed certificate claims and should not
+    be certificate-gated independently.
+    """
     return (
         "reverse_trace_id" in payload
         and "complete" in payload

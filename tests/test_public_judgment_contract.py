@@ -74,7 +74,7 @@ def test_certificate_without_gate_requirements_downgrades_and_preserves_residual
     assert "certificate_without_reverse_trace" in payload["residuals"]
 
 
-def test_reverse_trace_payload_nodes_are_not_mutated_as_governed_outputs():
+def test_reverse_trace_payload_nodes_preserve_certificate_status():
     payload = enforce_governed_output_contract(
         {
             "proof_id": "PO-1",
