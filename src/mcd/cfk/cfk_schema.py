@@ -61,6 +61,8 @@ def coerce_public_judgment(judgment: str | None) -> str:
     if not normalized:
         return JudgmentStatus.HYPOTHESIS.value
     collapsed = collapse_to_public_judgment(normalized)
+    # CFK keeps unknown/non-public labels at public "hypothesis" instead of
+    # exposing a hard "zero" unless that zero was explicitly produced upstream.
     return (
         JudgmentStatus.HYPOTHESIS.value
         if collapsed == JudgmentStatus.ZERO.value

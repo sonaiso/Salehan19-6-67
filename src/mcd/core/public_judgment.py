@@ -56,7 +56,7 @@ def normalize_public_judgment_fields(payload: Any) -> Any:
     if isinstance(payload, list):
         return [normalize_public_judgment_fields(v) for v in payload]
     if isinstance(payload, tuple):
-        return [normalize_public_judgment_fields(v) for v in payload]
+        return tuple(normalize_public_judgment_fields(v) for v in payload)
     return payload
 
 
