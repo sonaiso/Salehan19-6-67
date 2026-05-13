@@ -643,6 +643,27 @@ def main() -> None:
     math_annotate_parser.add_argument("--output", choices=["json", "markdown"], default="json")
     math_annotate_parser.add_argument("--write", action="store_true", default=False)
 
+    math_jv_parser = subparsers.add_parser(
+        "math-judgment-vector",
+        help="Phase 8.6: Compute layered JudgmentVector with local/global certificates",
+    )
+    math_jv_parser.add_argument("--text", required=True, help="Arabic text to evaluate")
+    math_jv_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
+    math_bridge_report_parser = subparsers.add_parser(
+        "math-bridge-report",
+        help="Phase 8.6: Show bridge ascend pass/fail report for layered chain",
+    )
+    math_bridge_report_parser.add_argument("--text", required=True, help="Arabic text to evaluate")
+    math_bridge_report_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
+    math_global_certificate_parser = subparsers.add_parser(
+        "math-global-certificate",
+        help="Phase 8.6: Explain global certificate pass/fail reasons",
+    )
+    math_global_certificate_parser.add_argument("--text", required=True, help="Arabic text to evaluate")
+    math_global_certificate_parser.add_argument("--output", choices=["json", "markdown"], default="json")
+
     args = parser.parse_args()
 
     if args.command in ("jamid-analyze", "mushtaq-analyze", "concept-geometry-graph", "concept-geometry-validate"):
@@ -1407,6 +1428,9 @@ def main() -> None:
         "math-operators",
         "math-jami-mani",
         "math-annotate-dataset",
+        "math-judgment-vector",
+        "math-bridge-report",
+        "math-global-certificate",
     ):
         _handle_math_governance_command(args)
     else:
@@ -2467,6 +2491,9 @@ def _handle_math_governance_command(args) -> None:
         DatasetMathAnnotator,
         MathematicalGovernanceGate,
         GovernanceReportBuilder,
+        LayerClosureAlgebra,
+        build_default_units_for_text,
+        global_certificate,
     )
 
     if args.command == "math-governance":
@@ -2505,25 +2532,14 @@ def _handle_math_governance_command(args) -> None:
             print(GovernanceReportBuilder().markdown(report))
 
     elif args.command == "math-chain":
-        tokens = args.text.split()
+        units = build_default_units_for_text(args.text, final_judgment="hypothesis")
         chain = [
-            {"level": "raw_text", "surface": args.text, "morphism_out": "raw_text_to_unicode"},
-            {"level": "unicode", "surface": args.text, "morphism_out": "unicode_to_grapheme"},
-            {"level": "grapheme", "surface": args.text, "morphism_out": "grapheme_to_orthographic_unit"},
-            {"level": "orthographic_unit", "surface": "|".join(tokens), "morphism_out": "orthographic_unit_to_token"},
-            {"level": "token", "surface": "|".join(tokens), "morphism_out": "token_to_lexeme"},
-            {"level": "lexeme", "surface": "|".join(tokens), "morphism_out": "lexeme_to_morphology"},
-            {"level": "morphology", "surface": "|".join(tokens), "morphism_out": "morphology_to_phrase"},
-            {"level": "phrase", "surface": args.text, "morphism_out": "phrase_to_clause"},
-            {"level": "clause", "surface": args.text, "morphism_out": "clause_to_sentence"},
-            {"level": "sentence", "surface": args.text, "morphism_out": "sentence_to_paragraph"},
-            {"level": "paragraph", "surface": args.text, "morphism_out": "paragraph_to_section"},
-            {"level": "section", "surface": args.text, "morphism_out": "section_to_full_text"},
-            {"level": "full_text", "surface": args.text, "morphism_out": "full_text_to_discourse_graph"},
-            {"level": "discourse_graph", "surface": args.text, "morphism_out": "discourse_graph_to_claim_graph"},
-            {"level": "claim_graph", "surface": args.text, "morphism_out": "claim_graph_to_proof_object"},
-            {"level": "proof_object", "surface": "hypothesis", "morphism_out": "proof_object_to_final_judgment"},
-            {"level": "final_judgment", "surface": "hypothesis", "morphism_out": ""},
+            {
+                "level": unit.level_id,
+                "surface": unit.surface,
+                "morphism_out": unit.morphism_out or "",
+            }
+            for unit in units
         ]
         if args.output == "json":
             print(_json.dumps({"text": args.text, "chain": chain}, ensure_ascii=False, indent=2))
@@ -2573,6 +2589,77 @@ def _handle_math_governance_command(args) -> None:
             print(f"- annotated_examples: {report.annotated_examples}")
             print(f"- compliant_examples: {report.compliant_examples}")
             print(f"- dataset_annotation_score: {report.dataset_annotation_score}")
+
+    elif args.command == "math-judgment-vector":
+        units = build_default_units_for_text(args.text, final_judgment="hypothesis")
+        vector = LayerClosureAlgebra().evaluate(units)
+        if args.output == "json":
+            print(_json.dumps(vector.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print("# Judgment Vector")
+            print(f"- text: {args.text}")
+            for layer, judgment in vector.layer_judgments.items():
+                print(f"- {layer}: {judgment}")
+            if vector.reasons:
+                print("## Reasons")
+                for reason in vector.reasons:
+                    print(f"- {reason}")
+
+    elif args.command == "math-bridge-report":
+        units = build_default_units_for_text(args.text, final_judgment="hypothesis")
+        vector = LayerClosureAlgebra().evaluate(units)
+        payload = {
+            "text": args.text,
+            "bridges": [
+                {
+                    "bridge_id": bridge.bridge_id,
+                    "source_layer": bridge.source_layer,
+                    "target_layer": bridge.target_layer,
+                    "passed": bridge.passed,
+                    "reasons": bridge.reasons,
+                }
+                for bridge in vector.bridge_evaluations
+            ],
+        }
+        if args.output == "json":
+            print(_json.dumps(payload, ensure_ascii=False, indent=2))
+        else:
+            print("# Bridge Report")
+            print(f"- text: {args.text}")
+            for bridge in payload["bridges"]:
+                status = "PASS" if bridge["passed"] else "FAIL"
+                print(f"- {bridge['bridge_id']} ({bridge['source_layer']}->{bridge['target_layer']}): {status}")
+                for reason in bridge["reasons"]:
+                    print(f"  - {reason}")
+
+    elif args.command == "math-global-certificate":
+        units = build_default_units_for_text(args.text, final_judgment="hypothesis")
+        report = global_certificate(units)
+        payload = {
+            "text": args.text,
+            "judgment": report.judgment,
+            "passed": report.passed,
+            "scope_defined": report.scope_defined,
+            "residuals_preserved": report.residuals_preserved,
+            "replayable_trace": report.replayable_trace,
+            "no_fatal_barrier": report.no_fatal_barrier,
+            "reasons": report.reasons,
+        }
+        if args.output == "json":
+            print(_json.dumps(payload, ensure_ascii=False, indent=2))
+        else:
+            print("# Global Certificate")
+            print(f"- text: {args.text}")
+            print(f"- judgment: {report.judgment}")
+            print(f"- passed: {report.passed}")
+            print(f"- scope_defined: {report.scope_defined}")
+            print(f"- residuals_preserved: {report.residuals_preserved}")
+            print(f"- replayable_trace: {report.replayable_trace}")
+            print(f"- no_fatal_barrier: {report.no_fatal_barrier}")
+            if report.reasons:
+                print("## Reasons")
+                for reason in report.reasons:
+                    print(f"- {reason}")
 
 
 def _handle_mabni_command(args) -> None:  # noqa: ANN001
