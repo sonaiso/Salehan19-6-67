@@ -374,6 +374,18 @@ class LayerClosureAlgebra:
             if target_unit.unit_id not in source_unit.post_unit_ids:
                 passed = False
                 reasons.append(f"{bridge.bridge_id}: missing post link from source to target")
+            source_morphism_out = getattr(source_unit, "morphism_out", None)
+            if source_morphism_out != bridge.bridge_id:
+                passed = False
+                reasons.append(
+                    f"{bridge.bridge_id}: source morphism_out mismatch ({source_morphism_out!r})"
+                )
+            target_morphism_in = getattr(target_unit, "morphism_in", None)
+            if target_morphism_in != bridge.bridge_id:
+                passed = False
+                reasons.append(
+                    f"{bridge.bridge_id}: target morphism_in mismatch ({target_morphism_in!r})"
+                )
             if bridge.preserved_residuals:
                 missing_residuals = [r for r in source_unit.residuals if r not in target_unit.residuals]
                 if missing_residuals:
