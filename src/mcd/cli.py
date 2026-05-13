@@ -2646,5 +2646,6 @@ def _handle_math_governance_command(args) -> None:
                 for reason in report.reasons:
                     print(f"- {reason}")
 
+
 if __name__ == "__main__":
     main()
