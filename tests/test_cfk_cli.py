@@ -103,11 +103,12 @@ class TestCFKProofCLI:
         assert code == 0
         assert "الدليل" in out or "evidence" in out.lower()
 
-    def test_cfk_proof_universal_collapses_to_hypothesis(self):
+    def test_cfk_proof_universal_is_hypothesis(self):
         out, code = _run_cli("cfk-proof", "--text", "كل الشركات تستخدم GraphRAG", "--output", "json")
         assert code == 0
         d = json.loads(out)
         assert d["judgment"] == "hypothesis"
+        assert d["internal_state"] == "suspended"
 
     def test_cfk_proof_with_evidence(self):
         out, code = _run_cli(

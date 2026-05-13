@@ -35,6 +35,7 @@ from mcd.cfk.cfk_schema import (
     CoordinateType,
     JudgmentStatus,
     KernelProjection,
+    coerce_public_judgment,
 )
 
 
@@ -141,7 +142,7 @@ class EpistemicTransform:
         elif certainty_level in ("probable_knowledge",) and not fake_evidence_detected:
             judgment = JudgmentStatus.HYPOTHESIS.value
         elif evidence_state == "missing":
-            judgment = JudgmentStatus.SUSPEND.value
+            judgment = JudgmentStatus.HYPOTHESIS.value
         else:
             judgment = JudgmentStatus.HYPOTHESIS.value
 
@@ -198,7 +199,7 @@ class EpistemicTransform:
             missing_components=(
                 ["evidence_refs"] if evidence_state == "missing" else []
             ) + (["valid_evidence"] if fake_evidence_detected else []),
-            learning_signal="correct" if judgment == JudgmentStatus.CERTIFICATE.value else "suspend",
+            learning_signal="correct" if judgment == JudgmentStatus.CERTIFICATE.value else "correct",
         )
 
         unit = CognitiveFractalUnit(
@@ -208,7 +209,12 @@ class EpistemicTransform:
             N=n, V=v, R=r, O=o, E=e, C=c, P=p, T=t, Z=z,
             metadata={
                 "evidence_state": evidence_state,
-                "judgment": judgment,
+                "judgment": coerce_public_judgment(judgment),
+                # Internal procedural suspension is preserved for governance,
+                # while the public judgment remains within the three-state contract.
+                "internal_state": (
+                    JudgmentStatus.SUSPENDED.value if evidence_state == "missing" else "active"
+                ),
                 "fake_evidence_detected": fake_evidence_detected,
             },
         )
@@ -225,6 +231,6 @@ class EpistemicTransform:
             coordinate_type=CoordinateType.EPISTEMIC.value,
             unit=unit,
             comparable_score=epistemic_certainty,
-            judgment=judgment,
+            judgment=coerce_public_judgment(judgment),
             transform_notes=notes,
         )

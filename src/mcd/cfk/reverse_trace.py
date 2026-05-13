@@ -25,8 +25,7 @@ class ReverseTrace:
     reverse_trace_id:
         Unique ID for this trace record.
     final_judgment:
-        Public judgment this trace is attached to (certificate|hypothesis|zero).
-        Internal suspended states are collapsed to hypothesis at public boundary.
+        The judgment this trace is attached to (certificate|hypothesis|zero).
     proof_id:
         ID of the ProofObject that owns this trace.
     statistical_projection_id:

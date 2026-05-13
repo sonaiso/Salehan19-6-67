@@ -182,9 +182,10 @@ class TestEpistemicTransform:
         )
         assert proj.judgment == JudgmentStatus.CERTIFICATE.value
 
-    def test_suspend_with_no_evidence(self):
+    def test_missing_evidence_maps_to_hypothesis_publicly(self):
         proj = self.transform.transform("إن هذا لحق", statistical_confidence=0.5)
-        assert proj.judgment == JudgmentStatus.SUSPEND.value
+        assert proj.judgment == JudgmentStatus.HYPOTHESIS.value
+        assert proj.unit.metadata["internal_state"] == JudgmentStatus.SUSPENDED.value
 
     def test_coordinate_type_epistemic(self):
         proj = self.transform.transform("test")

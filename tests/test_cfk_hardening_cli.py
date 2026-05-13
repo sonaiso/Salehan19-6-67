@@ -244,15 +244,13 @@ class TestCFKHardeningCritical:
         result = pipeline.run("إن هذا لحق", evidence_refs=[])
         assert result.proof.judgment != JudgmentStatus.CERTIFICATE.value
 
-    def test_universal_without_evidence_suspend(self):
+    def test_universal_without_evidence_hypothesis_public(self):
         from mcd.cfk.cfk_pipeline import CognitiveFractalPipeline
         from mcd.cfk.cfk_schema import JudgmentStatus
         pipeline = CognitiveFractalPipeline()
         result = pipeline.run("كل الشركات تستخدم GraphRAG", evidence_refs=[])
-        assert result.proof.judgment in (
-            JudgmentStatus.SUSPEND.value,
-            JudgmentStatus.HYPOTHESIS.value,
-        )
+        assert result.proof.judgment == JudgmentStatus.HYPOTHESIS.value
+        assert result.proof.internal_state == JudgmentStatus.SUSPENDED.value
         assert result.proof.judgment != JudgmentStatus.CERTIFICATE.value
 
     def test_murab_syntactic_certainty_not_factual_certainty(self):

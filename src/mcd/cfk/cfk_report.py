@@ -15,7 +15,7 @@ _JUDGMENT_ICONS = {
 
 _JUDGMENT_AR = {
     "certificate": "شهادة يقين",
-    "hypothesis":  "فرضية — انتظار دليل",
+    "hypothesis":  "فرضية — انتظار دليل/تعليق إجرائي",
     "zero":        "خطأ بنيوي — باقٍ معرفي",
 }
 

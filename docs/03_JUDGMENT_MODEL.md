@@ -26,7 +26,7 @@ Valid evidence + governance gate passed + reverse trace complete + no blocking r
 
 ## Clarifications
 
-- `SUSPEND` may exist as an internal control state, not a final public judgment.
+- `SUSPENDED` may exist as an internal control state, but it must collapse publicly to `HYPOTHESIS` with residuals.
 - `PASS`/`FAIL` are test outcomes, not epistemic judgments.
 - `MERGED` is repository state, not epistemic judgment.
 

@@ -33,17 +33,17 @@ class TestCognitiveFractalPipeline:
     def test_in_hadha_la_haqqun(self):
         """إن هذا لحق — emphasis, no evidence → hypothesis."""
         result = self.pipeline.run("إن هذا لحق")
-        assert result.proof.judgment in (
-            JudgmentStatus.HYPOTHESIS.value,
-            JudgmentStatus.SUSPEND.value,
-        )
+        assert result.proof.judgment == JudgmentStatus.HYPOTHESIS.value
         assert result.proof.linguistic_force == "emphasis"
         assert result.proof.evidence_state == "missing"
 
-    def test_universal_quantifier_no_evidence_is_suspend(self):
-        """كل الشركات ... — universal without evidence → suspend."""
+    def test_universal_quantifier_no_evidence_is_hypothesis(self):
+        """كل الشركات ... — universal without evidence → internal suspended + public hypothesis."""
         result = self.pipeline.run("كل الشركات تستخدم GraphRAG")
-        assert result.proof.judgment == JudgmentStatus.SUSPEND.value
+        assert result.proof.judgment == JudgmentStatus.HYPOTHESIS.value
+        assert result.proof.judgment != "suspend"
+        assert result.proof.internal_state == JudgmentStatus.SUSPENDED.value
+        assert "insufficient_evidence" in result.proof.residuals
         assert result.proof.residual_type == "unsupported_generalization_residual"
 
     def test_with_evidence_near_certainty_is_certificate(self):
@@ -71,7 +71,7 @@ class TestCognitiveFractalPipeline:
 
     def test_learning_signal_present(self):
         result = self.pipeline.run("test")
-        assert result.proof.learning_signal in ("reinforce", "correct", "suspend", "ignore")
+        assert result.proof.learning_signal in ("reinforce", "correct", "ignore")
 
     def test_to_dict_structure(self):
         result = self.pipeline.run("test")
@@ -112,11 +112,8 @@ class TestCognitiveFractalPipeline:
             "claimed_evidence": ["ref1"],
         }
         result = self.pipeline.run("زيد كريم", proposal_dict=proposal, evidence_refs=["ref1"])
-        # strong_knowledge + 1 evidence (partial) → epistemic ~0.50 → suspend or hypothesis
-        assert result.proof.judgment in (
-            JudgmentStatus.HYPOTHESIS.value,
-            JudgmentStatus.SUSPEND.value,
-        )
+        # strong_knowledge + 1 evidence (partial) → epistemic ~0.50 → public hypothesis
+        assert result.proof.judgment == JudgmentStatus.HYPOTHESIS.value
 
     def test_empty_text(self):
         """Empty text should not crash the pipeline."""
@@ -213,4 +210,4 @@ class TestCFKReports:
         result = self.pipeline.run("test")
         s = generate_json_report(result)
         d = json.loads(s)
-        assert d["proof"]["judgment"] in ("certificate", "hypothesis", "suspend", "zero")
+        assert d["proof"]["judgment"] in ("certificate", "hypothesis", "zero")

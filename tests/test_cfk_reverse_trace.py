@@ -181,12 +181,11 @@ class TestProofObjectReverseTrace:
         assert result.proof.judgment != JudgmentStatus.CERTIFICATE.value
 
     def test_hypothesis_allowed_without_complete_reverse_trace(self):
-        """Hypothesis and suspend should work even without a complete trace."""
+        """Hypothesis should work even without a complete trace."""
         result = self.pipeline.run("زيد كاتب", evidence_refs=[])
-        # Should be hypothesis or suspend — never blocked just because trace incomplete
+        # Should be hypothesis/zero — never blocked just because trace incomplete
         assert result.proof.judgment in (
             JudgmentStatus.HYPOTHESIS.value,
-            JudgmentStatus.SUSPEND.value,
             JudgmentStatus.ZERO.value,
         )
 

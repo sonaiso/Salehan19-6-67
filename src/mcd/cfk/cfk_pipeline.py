@@ -7,7 +7,7 @@ Pipeline:
     → E(x): Epistemic Transform
     → K:    Fractal Kernel (unification)
     → ConservationLaw checks
-    → ProofObject (Certificate | Hypothesis | Suspend | Zero)
+    → ProofObject (Certificate | Hypothesis | Zero)
     → ComparisonTable
     → CognitiveFractalResidual (learning signal)
 

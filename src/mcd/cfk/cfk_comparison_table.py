@@ -108,7 +108,7 @@ class ComparisonTableBuilder:
         arab_cert   = f"تداولي ({arab_u.C.linguistic_force})"
         public_judgment = collapse_to_public_judgment(proof.judgment)
         epis_cert   = (
-            "معلق" if public_judgment in ("hypothesis", "zero")
+            "معلق" if (proof.internal_state == "suspended" or proof.judgment == "zero")
             else f"{epis_u.C.certainty_level}"
         )
 

@@ -133,7 +133,8 @@ class TestJudgmentStatus:
     def test_all_values(self):
         assert JudgmentStatus.CERTIFICATE.value == "certificate"
         assert JudgmentStatus.HYPOTHESIS.value == "hypothesis"
-        assert JudgmentStatus.SUSPEND.value == "suspend"
+        assert JudgmentStatus.SUSPENDED.value == "suspended"
+        assert JudgmentStatus.SUSPEND.value == "suspended"
         assert JudgmentStatus.ZERO.value == "zero"
 
 
