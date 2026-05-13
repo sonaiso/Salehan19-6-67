@@ -14,7 +14,7 @@ from typing import Any
 
 from mcd.core.public_judgment import enforce_governed_output_contract
 
-_MCD_GOVERNED_ROOT_SENTINEL = "_mcd_governed_root"
+_GOVERNANCE_WRAPPER_KEY = "_mcd_governed_root"
 
 
 def _coerce(obj: Any) -> Any:
@@ -73,5 +73,5 @@ def to_json_string(data: Any) -> str:
 def _enforce_once(payload: Any) -> Any:
     if isinstance(payload, dict):
         return enforce_governed_output_contract(payload)
-    wrapped = enforce_governed_output_contract({_MCD_GOVERNED_ROOT_SENTINEL: payload})
-    return wrapped[_MCD_GOVERNED_ROOT_SENTINEL]
+    wrapped = enforce_governed_output_contract({_GOVERNANCE_WRAPPER_KEY: payload})
+    return wrapped[_GOVERNANCE_WRAPPER_KEY]

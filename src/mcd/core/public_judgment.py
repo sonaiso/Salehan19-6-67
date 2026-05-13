@@ -82,7 +82,8 @@ def enforce_governed_output_contract(payload: dict[str, Any]) -> dict[str, Any]:
     """Enforce AFJG public-output rules on governed payloads.
 
     Rules applied to every nested dict node:
-    - Normalize judgment fields into zero/hypothesis/certificate public triad.
+    - Normalize judgment fields into the canonical public triad
+      (zero/hypothesis/certificate).
     - Collapse internal suspend/suspended state to public hypothesis.
     - Downgrade certificate when proof object, governance gate, or reverse trace
       requirements are missing.
@@ -131,7 +132,7 @@ def _enforce_certificate_gate(payload: dict[str, Any]) -> None:
 
 
 def _has_governance_context(payload: dict[str, Any]) -> bool:
-    return any(key in payload for key in _GOVERNANCE_CONTEXT_KEYS)
+    return bool(payload.keys() & _GOVERNANCE_CONTEXT_KEYS)
 
 
 def _is_reverse_trace_payload(payload: dict[str, Any]) -> bool:
