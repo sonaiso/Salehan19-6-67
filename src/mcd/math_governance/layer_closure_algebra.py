@@ -14,6 +14,17 @@ Judgment = str
 ZERO = "zero"
 HYPOTHESIS = "hypothesis"
 CERTIFICATE = "certificate"
+NON_DERIVATIONAL_DEFAULT_CATEGORIES = {
+    "mabni",
+    "pronoun",
+    "demonstrative",
+    "relative",
+    "particle",
+    "proper_noun",
+    "loanword",
+    "term",
+    "heard_form",
+}
 
 
 def _normalize_judgment(value: str) -> str:
@@ -223,7 +234,7 @@ class BridgeRegistry:
                     bridge_id=morphism.morphism_id,
                     source_layer=morphism.source_level,
                     target_layer=morphism.target_level,
-                    allowed_input=[morphism.source_level],
+                    allowed_input=list(morphism.source_unit_types),
                     required_evidence_rank=0,
                     preserved_residuals=morphism.preserves.get("residual", True),
                     governor="default",
@@ -245,20 +256,8 @@ class BridgeRegistry:
 
 
 class NonDerivationalTree:
-    DEFAULT_CATEGORIES = {
-        "mabni",
-        "pronoun",
-        "demonstrative",
-        "relative",
-        "particle",
-        "proper_noun",
-        "loanword",
-        "term",
-        "heard_form",
-    }
-
     def __init__(self) -> None:
-        self._categories = set(self.DEFAULT_CATEGORIES)
+        self._categories = set(NON_DERIVATIONAL_DEFAULT_CATEGORIES)
 
     def is_non_derivational(self, unit: GovernedFractalUnit) -> bool:
         tags = {unit.unit_type.lower(), unit.level_id.lower(), *(str(x).lower() for x in unit.invariants)}
@@ -356,7 +355,7 @@ class LayerClosureAlgebra:
             if source_cert and source_cert.judgment != CERTIFICATE:
                 passed = False
                 reasons.append(f"{source}: source layer not locally certified")
-            if source_unit.level_id not in bridge.allowed_input:
+            if source_unit.level_id not in bridge.allowed_input and source_unit.unit_type not in bridge.allowed_input:
                 passed = False
                 reasons.append(f"{bridge.bridge_id}: output not acceptable for target")
             target_contract = self.layer_registry.get(target)
@@ -436,7 +435,12 @@ class LayerClosureAlgebra:
             reasons.append("fatal barrier detected")
 
         global_passed = all([required_present, all_local, all_bridges, residuals_ok, replayable, no_fatal])
-        global_judgment = CERTIFICATE if global_passed else HYPOTHESIS
+        if not required_present or not no_fatal:
+            global_judgment = ZERO
+        elif global_passed:
+            global_judgment = CERTIFICATE
+        else:
+            global_judgment = HYPOTHESIS
         layer_judgments = {layer: cert.judgment for layer, cert in local.items()}
         layer_judgments["global"] = global_judgment
 

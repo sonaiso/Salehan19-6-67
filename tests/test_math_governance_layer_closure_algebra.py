@@ -1,6 +1,7 @@
 from mcd.math_governance import (
     CERTIFICATE,
     HYPOTHESIS,
+    ZERO,
     GovernedFractalUnit,
     LayerClosureAlgebra,
     build_default_units_for_text,
@@ -38,14 +39,15 @@ def test_no_layer_theft_when_bridge_fails():
     lexeme_unit = next(unit for unit in units if unit.level_id == "lexeme")
     lexeme_unit.pre_unit_ids = []
     vector = LayerClosureAlgebra().evaluate(units)
-    assert any("layer_theft_blocked" in reason for bridge in vector.bridge_evaluations for reason in bridge.reasons)
+    reasons = [reason for bridge in vector.bridge_evaluations for reason in bridge.reasons]
+    assert "layer_theft_blocked" in reasons
 
 
 def test_scoped_certificate_local_not_equal_global():
     units = build_default_units_for_text("ضرب زيد عمرًا", final_judgment="hypothesis")
     vector = LayerClosureAlgebra().evaluate(units, required_layers=["raw_text", "final_judgment", "external_reality"])
     assert vector.local_certificates["raw_text"].judgment == CERTIFICATE
-    assert vector.global_judgment == HYPOTHESIS
+    assert vector.global_judgment == ZERO
 
 
 def test_non_derivational_tree_prevents_absolute_zero():
