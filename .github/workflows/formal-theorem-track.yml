@@ -54,17 +54,6 @@ jobs:
 
       - name: Verify formal scaffolding artifacts
         run: |
-          test -f research/formal/theorem_scaffolding.json
-          test -f research/formal/theorem_obligations.json
-          test -f research/formal/proof_mapping.json
-          test -f research/formal/lean/README.md
-          test -f research/formal/lean/CoreJudgment.lean
-          test -f research/formal/lean/NoIllicitCertification.lean
-          test -f research/formal/lean/TriadClosure.lean
-          test -f research/formal/lean/RankSoundness.lean
-          test -f research/formal/lean/TypedResiduals.lean
-          test -f research/formal/lean/ResidualCalculus.lean
-          test -f research/formal/coq/README.md
           set -euo pipefail
           required_files=(
             research/formal/theorem_scaffolding.json
@@ -74,6 +63,9 @@ jobs:
             research/formal/lean/CoreJudgment.lean
             research/formal/lean/NoIllicitCertification.lean
             research/formal/lean/TriadClosure.lean
+            research/formal/lean/RankSoundness.lean
+            research/formal/lean/TypedResiduals.lean
+            research/formal/lean/ResidualCalculus.lean
             research/formal/coq/README.md
           )
           missing=0
