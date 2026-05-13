@@ -97,3 +97,17 @@ python -m pytest tests/test_coding_real_pr_fixtures.py -v
 - **CERTIFICATE:** The repository has a strong governed architecture and a testable PR-audit kernel.
 - **HYPOTHESIS:** It can become an industrial verification product when CI and branch governance are fully enforced.
 - **ZERO:** The claim that this repository is already a general GPT-level model is false.
+
+## Official Positioning (Qualification Phase)
+
+Current external positioning is pilot-qualified:
+
+- A governed epistemic and meaning-ascent platform with:
+  - machine-checkable core proof fragments,
+  - ranked certificate gating,
+  - typed residual preservation,
+  - persistent audit replay,
+  - adversarial validation,
+  - empirical readiness scoring.
+
+Current posture is **not production-certified** and **not full-theory proof completion**.

@@ -13,6 +13,8 @@ EXPECTED_OBLIGATION_IDS = {
     "ForbiddenEscalation",
     "TriadClosure",
     "ReplayIntegrity",
+    "RuntimeFormalEquivalence",
+    "LayerSovereigntyRegistry",
     "RankSoundness",
     "InsufficientRankBlocksCertificate",
     "RankGapBlocksCertificate",

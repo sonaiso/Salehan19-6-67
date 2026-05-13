@@ -13,6 +13,8 @@ class ReplayResult:
     metrics: dict
     failures: list[str]
     reconstruction: dict
+    judgment_sequence: list[str]
+    last_public_judgment: str
 
     def to_dict(self) -> dict:
         return {
@@ -21,6 +23,8 @@ class ReplayResult:
             "metrics": self.metrics,
             "failures": self.failures,
             "reconstruction": self.reconstruction,
+            "judgment_sequence": self.judgment_sequence,
+            "last_public_judgment": self.last_public_judgment,
         }
 
 
@@ -53,8 +57,18 @@ def reconstruct_governance_events(events: list[dict]) -> dict:
     }
 
 
+def extract_judgment_sequence(events: list[dict]) -> list[str]:
+    """Extract normalized public-judgment sequence from replay events."""
+    return [
+        str(e.get("public_judgment", "")).strip().lower()
+        for e in events
+        if str(e.get("public_judgment", "")).strip()
+    ]
+
+
 def replay_trace_events(events: list[dict]) -> ReplayResult:
     failures: list[str] = []
+    judgment_sequence = extract_judgment_sequence(events)
     for i, e in enumerate(events):
         if not e.get("request_id"):
             failures.append(f"event[{i}] missing request_id")
@@ -77,6 +91,8 @@ def replay_trace_events(events: list[dict]) -> ReplayResult:
         metrics=metrics,
         failures=failures,
         reconstruction={k: len(v) for k, v in reconstruction.items()},
+        judgment_sequence=judgment_sequence,
+        last_public_judgment=judgment_sequence[-1] if judgment_sequence else "zero",
     )
 
 

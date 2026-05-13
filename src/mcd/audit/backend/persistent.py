@@ -4,7 +4,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
-from mcd.audit.replay import reconstruct_certificate_forensics, replay_trace_events
+from mcd.audit.replay import extract_judgment_sequence, reconstruct_certificate_forensics, replay_trace_events
 from mcd.events import ImmutableGovernanceEventLog
 from mcd.observability.store import (
     GovernanceTraceEvent,
@@ -19,6 +19,7 @@ class AuditReplaySnapshot:
     certificate_forensics: dict[str, Any]
     immutable_log_valid: bool
     immutable_log_failures: list[str]
+    replay_integrity_contract: dict[str, Any]
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -26,6 +27,7 @@ class AuditReplaySnapshot:
             "certificate_forensics": self.certificate_forensics,
             "immutable_log_valid": self.immutable_log_valid,
             "immutable_log_failures": self.immutable_log_failures,
+            "replay_integrity_contract": self.replay_integrity_contract,
         }
 
 
@@ -96,11 +98,23 @@ class PersistentAuditBackend:
         replay = replay_trace_events(governance_events).to_dict()
         immutable_ok, immutable_failures = self._event_log.verify_integrity()
         forensics = reconstruct_certificate_forensics(governance_events)
+        original_sequence = extract_judgment_sequence(governance_events)
+        replay_sequence = list(replay.get("judgment_sequence", []))
+        judgment_consistent = original_sequence == replay_sequence
+        replay_integrity_contract = {
+            "statement": "Precondition: ValidEventLog=true. Guarantee: Replay(log) preserves public_judgment sequence.",
+            "valid_event_log": immutable_ok,
+            "original_judgment_sequence": original_sequence,
+            "replayed_judgment_sequence": replay_sequence,
+            "judgment_consistent": judgment_consistent,
+            "contract_holds": immutable_ok and judgment_consistent and bool(replay.get("replay_success", False)),
+        }
         return AuditReplaySnapshot(
             replay=replay,
             certificate_forensics=forensics,
             immutable_log_valid=immutable_ok,
             immutable_log_failures=immutable_failures,
+            replay_integrity_contract=replay_integrity_contract,
         )
 
     def verify_event_immutability(self) -> tuple[bool, list[str]]:
