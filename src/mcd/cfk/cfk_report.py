@@ -4,7 +4,7 @@ from __future__ import annotations
 import json
 import re
 from mcd.cfk.cfk_pipeline import CognitiveFractalResult
-from mcd.core.public_judgment import collapse_to_public_judgment
+from mcd.core.public_judgment import collapse_to_public_judgment, enforce_governed_output_contract
 
 
 _JUDGMENT_ICONS = {
@@ -111,4 +111,4 @@ def generate_markdown_report(result: CognitiveFractalResult) -> str:
 
 
 def generate_json_report(result: CognitiveFractalResult) -> str:
-    return json.dumps(result.to_dict(), ensure_ascii=False, indent=2)
+    return json.dumps(enforce_governed_output_contract(result.to_dict()), ensure_ascii=False, indent=2)

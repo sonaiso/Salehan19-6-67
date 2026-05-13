@@ -5,6 +5,7 @@ import json
 from mcd.api.serializers import safe_serialize
 from mcd.cfk.cfk_pipeline import CognitiveFractalPipeline
 from mcd.cfk.serializers import cfk_result_to_json, proof_to_json
+from mcd.core.public_judgment import enforce_governed_output_contract
 
 
 def test_cfk_json_serializers_do_not_emit_suspend_publicly():
@@ -25,3 +26,34 @@ def test_api_safe_serialize_collapses_judgment_fields():
     assert data["judgment"] == "hypothesis"
     assert data["nested"]["final_judgment"] == "hypothesis"
 
+
+def test_internal_suspended_state_forces_public_hypothesis():
+    payload = enforce_governed_output_contract(
+        {
+            "proof_id": "PO-1",
+            "judgment": "certificate",
+            "internal_state": "suspended",
+            "conservation": {"passed": True},
+            "reverse_trace_obj": {"complete": True},
+            "residuals": [],
+        }
+    )
+    assert payload["judgment"] == "hypothesis"
+    assert "internal_suspension_collapsed" in payload["residuals"]
+
+
+def test_certificate_without_gate_requirements_downgrades_and_preserves_residuals():
+    payload = enforce_governed_output_contract(
+        {
+            "proof_id": "",
+            "judgment": "certificate",
+            "conservation": {"passed": False},
+            "reverse_trace_obj": {"complete": False},
+            "residuals": ["baseline_residual"],
+        }
+    )
+    assert payload["judgment"] == "hypothesis"
+    assert "baseline_residual" in payload["residuals"]
+    assert "certificate_without_proof_object" in payload["residuals"]
+    assert "certificate_without_governance_gate" in payload["residuals"]
+    assert "certificate_without_reverse_trace" in payload["residuals"]

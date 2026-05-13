@@ -12,7 +12,7 @@ import enum
 import json
 from typing import Any
 
-from mcd.core.public_judgment import collapse_to_public_judgment
+from mcd.core.public_judgment import enforce_governed_output_contract
 
 
 def _coerce(obj: Any) -> Any:
@@ -29,11 +29,8 @@ def _coerce(obj: Any) -> Any:
         for k, v in obj.items():
             nk = _key(k)
             cv = _coerce(v)
-            if nk in {"judgment", "kernel_judgment", "final_judgment", "proof_status"} and isinstance(cv, str):
-                out[nk] = collapse_to_public_judgment(cv)
-            else:
-                out[nk] = cv
-        return out
+            out[nk] = cv
+        return enforce_governed_output_contract(out)
     if isinstance(obj, (list, tuple)):
         return [_coerce(v) for v in obj]
     if dataclasses.is_dataclass(obj) and not isinstance(obj, type):

@@ -3,6 +3,8 @@ from __future__ import annotations
 
 from enum import Enum
 
+from mcd.core.public_judgment import collapse_to_public_judgment, is_public_final_judgment
+
 
 class CodingStatus(str, Enum):
     ZERO = "zero"
@@ -16,13 +18,8 @@ INTERNAL_SUSPEND = "suspend"
 
 def collapse_to_public_status(status: str) -> str:
     """Collapse internal/intermediate statuses to the 3 public AFJG coding statuses."""
-    normalized = (status or "").strip().lower()
-    if normalized in PUBLIC_FINAL_CODING_JUDGMENTS:
-        return normalized
-    if normalized == INTERNAL_SUSPEND:
-        return CodingStatus.HYPOTHESIS.value
-    return CodingStatus.ZERO.value
+    return collapse_to_public_judgment(status)
 
 
 def is_public_final_coding_judgment(status: str) -> bool:
-    return (status or "").strip().lower() in PUBLIC_FINAL_CODING_JUDGMENTS
+    return is_public_final_judgment(status)

@@ -30,6 +30,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any
 
+from mcd.core.public_judgment import collapse_to_public_judgment
 
 # ---------------------------------------------------------------------------
 # Judgment vocabulary
@@ -52,13 +53,10 @@ PUBLIC_FINAL_JUDGMENTS: tuple[str, str, str] = (
 
 def coerce_public_judgment(judgment: str | None) -> str:
     """Map any internal/non-public state into the public final judgment contract."""
-    normalized = (judgment or "").strip().lower()
-    if normalized in PUBLIC_FINAL_JUDGMENTS:
-        return normalized
-    # Accept historical "suspend" and internal "suspended" inputs, collapse both to public hypothesis.
-    if normalized in {"suspend", "suspended"}:
+    collapsed = collapse_to_public_judgment(judgment or "")
+    if collapsed == JudgmentStatus.ZERO.value and (judgment or "").strip():
         return JudgmentStatus.HYPOTHESIS.value
-    return JudgmentStatus.HYPOTHESIS.value
+    return collapsed
 
 
 class CoordinateType(str, Enum):
