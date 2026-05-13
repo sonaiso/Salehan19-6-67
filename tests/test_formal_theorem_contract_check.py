@@ -17,5 +17,9 @@ def test_formal_theorem_contract_check_script_passes():
         check=False,
     )
 
-    assert result.returncode == 0, result.stdout + result.stderr
+    assert result.returncode == 0, (
+        f"script failed with exit code {result.returncode}\n"
+        f"stdout:\n{result.stdout}\n"
+        f"stderr:\n{result.stderr}"
+    )
     assert "Lean fallback contract checks passed." in result.stdout

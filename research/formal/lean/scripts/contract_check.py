@@ -19,14 +19,24 @@ REQUIRED_TOKENS = {
 }
 
 
+def _line_number_for(text: str, token: str) -> int | None:
+    for line_number, line in enumerate(text.splitlines(), start=1):
+        if token in line:
+            return line_number
+    return None
+
+
 def validate_contracts(base: Path) -> None:
     for file_name, tokens in REQUIRED_TOKENS.items():
-        text = (base / file_name).read_text(encoding="utf-8")
+        path = base / file_name
+        text = path.read_text(encoding="utf-8")
         if "sorry" in text:
-            raise AssertionError(f'"sorry" is not allowed in {file_name}')
+            line_number = _line_number_for(text, "sorry")
+            location = f":{line_number}" if line_number is not None else ""
+            raise AssertionError(f'"sorry" is not allowed in {path}{location}')
         for token in tokens:
             if token not in text:
-                raise AssertionError(f"missing token {token} in {file_name}")
+                raise AssertionError(f"missing token {token} in {path}")
 
 
 def main() -> None:
