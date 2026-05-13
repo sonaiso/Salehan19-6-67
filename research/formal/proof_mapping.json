@@ -81,7 +81,7 @@
       "obligation": "TriadClosure",
       "runtime_invariant_name": "final_judgment_in_public_triad",
       "runtime_contracts": [
-        "src/mcd/core/public_judgment.py::collapse_to_public_judgment",
+        "tests/test_public_judgment_contract.py::test_proof_serializer_collapses_suspend_to_hypothesis",
         "tests/test_public_judgment_contract.py::test_cfk_json_serializers_do_not_emit_suspend_publicly"
       ],
       "python_file": "src/mcd/core/public_judgment.py",
@@ -229,7 +229,7 @@
       "obligation": "TypedResidualCalculus",
       "runtime_invariant_name": "typed_residual_calculus",
       "runtime_contracts": [
-        "tests/test_formal_residual_calculus_track.py::test_residual_type_system_and_persistence_contracts_exist"
+        "tests/test_formal_residual_calculus_track.py::test_typed_residual_lean_file_contains_required_contracts"
       ],
       "python_file": "src/mcd/governance/adversarial_validation.py",
       "test_file": "tests/test_formal_residual_calculus_track.py",
