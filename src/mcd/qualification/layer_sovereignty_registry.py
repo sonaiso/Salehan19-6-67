@@ -6,6 +6,8 @@ from dataclasses import dataclass, field
 from mcd.core.epistemic_rank import EpistemicRank
 from mcd.math_governance.level_schema import ALL_LEVELS
 
+_DEFAULT_RESIDUAL_RULES = ("preserve", "no_silent_drop", "no_residual_erasure")
+
 
 @dataclass(frozen=True)
 class LayerSovereigntyEntry:
@@ -14,7 +16,7 @@ class LayerSovereigntyEntry:
     allowed_ascent: list[str] = field(default_factory=list)
     forbidden_ascent: list[str] = field(default_factory=list)
     required_evidence: str = "ZERO"
-    residual_rules: list[str] = field(default_factory=lambda: ["preserve", "no_silent_drop"])
+    residual_rules: list[str] = field(default_factory=lambda: list(_DEFAULT_RESIDUAL_RULES))
     closure_function: str = "chi_L_default"
     minimum_completion: str = "MC_L_default"
 

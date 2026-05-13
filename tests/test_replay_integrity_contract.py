@@ -26,12 +26,14 @@ def test_replay_integrity_contract_holds_for_valid_log(monkeypatch, tmp_path) ->
     backend = PersistentAuditBackend()
     backend.clear()
     backend.append_trace(_trace(1, public_judgment="certificate"))
-    backend.append_trace(_trace(2, public_judgment="hypothesis", hypothesis_downgrade=True))
+    backend.append_trace(_trace(2, public_judgment="hypothesis"))
 
-    contract = backend.replay_from_events().to_dict()["replay_integrity_contract"]
+    snapshot = backend.replay_from_events().to_dict()
+    contract = snapshot["replay_integrity_contract"]
     assert contract["valid_event_log"] is True
     assert contract["judgment_consistent"] is True
     assert contract["contract_holds"] is True
+    assert snapshot["replay"]["reconstruction"]["residual_preservation"] >= 1
 
 
 def test_replay_integrity_contract_fails_for_tampered_log(monkeypatch, tmp_path) -> None:

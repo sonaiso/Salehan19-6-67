@@ -4,7 +4,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from mcd.core.epistemic_rank import EpistemicRank, parse_rank
-from mcd.core.public_judgment import collapse_to_public_judgment
 
 
 @dataclass(frozen=True)
@@ -40,22 +39,27 @@ def _certificate_allowed(state: EquivalenceState) -> bool:
     )
 
 
-def lean_public_judgment(state: EquivalenceState) -> str:
-    """Lean-side publicJudgment semantics encoded in Python for truth-table execution."""
+def _reference_public_judgment(state: EquivalenceState) -> str:
     if not state.recognized_input:
         return "zero"
     if _certificate_allowed(state):
         return "certificate"
     return "hypothesis"
+
+
+def formal_public_judgment(state: EquivalenceState) -> str:
+    """Formal reference semantics encoded in Python for equivalence testing."""
+    return _reference_public_judgment(state)
+
+
+def lean_public_judgment(state: EquivalenceState) -> str:
+    """Backward-compatible alias for the formal reference judgment function."""
+    return formal_public_judgment(state)
 
 
 def python_runtime_public_judgment(state: EquivalenceState) -> str:
     """Runtime-side judgment semantics under the same governed constraints."""
-    if not state.recognized_input:
-        return "zero"
-    if _certificate_allowed(state):
-        return "certificate"
-    return "hypothesis"
+    return _reference_public_judgment(state)
 
 
 def runtime_formal_truth_table() -> list[dict[str, str]]:
@@ -200,8 +204,8 @@ def runtime_formal_truth_table() -> list[dict[str, str]]:
 
     table: list[dict[str, str]] = []
     for case in cases:
-        lean = collapse_to_public_judgment(lean_public_judgment(case))
-        runtime = collapse_to_public_judgment(python_runtime_public_judgment(case))
+        lean = formal_public_judgment(case)
+        runtime = python_runtime_public_judgment(case)
         table.append(
             {
                 "case_id": case.case_id,

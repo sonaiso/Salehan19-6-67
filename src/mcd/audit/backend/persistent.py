@@ -4,7 +4,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
-from mcd.audit.replay import reconstruct_certificate_forensics, replay_trace_events
+from mcd.audit.replay import extract_judgment_sequence, reconstruct_certificate_forensics, replay_trace_events
 from mcd.events import ImmutableGovernanceEventLog
 from mcd.observability.store import (
     GovernanceTraceEvent,
@@ -98,15 +98,11 @@ class PersistentAuditBackend:
         replay = replay_trace_events(governance_events).to_dict()
         immutable_ok, immutable_failures = self._event_log.verify_integrity()
         forensics = reconstruct_certificate_forensics(governance_events)
-        original_sequence = [
-            str(event.get("public_judgment", "")).strip().lower()
-            for event in governance_events
-            if str(event.get("public_judgment", "")).strip()
-        ]
-        replay_sequence = [str(item).strip().lower() for item in replay.get("judgment_sequence", [])]
+        original_sequence = extract_judgment_sequence(governance_events)
+        replay_sequence = list(replay.get("judgment_sequence", []))
         judgment_consistent = original_sequence == replay_sequence
         replay_integrity_contract = {
-            "statement": "ValidEventLog => Replay(log) preserves public_judgment sequence",
+            "statement": "Precondition: ValidEventLog=true. Guarantee: Replay(log) preserves public_judgment sequence.",
             "valid_event_log": immutable_ok,
             "original_judgment_sequence": original_sequence,
             "replayed_judgment_sequence": replay_sequence,

@@ -57,13 +57,18 @@ def reconstruct_governance_events(events: list[dict]) -> dict:
     }
 
 
-def replay_trace_events(events: list[dict]) -> ReplayResult:
-    failures: list[str] = []
-    judgment_sequence = [
+def extract_judgment_sequence(events: list[dict]) -> list[str]:
+    """Extract normalized public-judgment sequence from replay events."""
+    return [
         str(e.get("public_judgment", "")).strip().lower()
         for e in events
         if str(e.get("public_judgment", "")).strip()
     ]
+
+
+def replay_trace_events(events: list[dict]) -> ReplayResult:
+    failures: list[str] = []
+    judgment_sequence = extract_judgment_sequence(events)
     for i, e in enumerate(events):
         if not e.get("request_id"):
             failures.append(f"event[{i}] missing request_id")
