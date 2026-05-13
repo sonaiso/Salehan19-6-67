@@ -54,3 +54,27 @@ def test_math_annotate_dataset_json():
     assert r.returncode == 0
     data = json.loads(r.stdout)
     assert "dataset_annotation_score" in data
+
+
+def test_math_judgment_vector_json():
+    r = _run("math-judgment-vector", "--text", "زيد كاتب", "--output", "json")
+    assert r.returncode == 0
+    data = json.loads(r.stdout)
+    assert "layer_judgments" in data
+    assert "global_judgment" in data
+
+
+def test_math_bridge_report_json():
+    r = _run("math-bridge-report", "--text", "زيد كاتب", "--output", "json")
+    assert r.returncode == 0
+    data = json.loads(r.stdout)
+    assert "bridges" in data
+    assert isinstance(data["bridges"], list)
+
+
+def test_math_global_certificate_json():
+    r = _run("math-global-certificate", "--text", "زيد كاتب", "--output", "json")
+    assert r.returncode == 0
+    data = json.loads(r.stdout)
+    assert "judgment" in data
+    assert data["judgment"] in {"zero", "hypothesis", "certificate"}
