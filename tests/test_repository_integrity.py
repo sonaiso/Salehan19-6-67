@@ -84,9 +84,14 @@ def test_formal_mapping_entries_reference_real_files_tests_and_theorems():
                 f"mapped test function not found: {contract}"
             )
 
-        lean_text = lean_file.read_text(encoding="utf-8")
+        searchable_lean_files = [lean_file]
+        for artifact in item.get("formal_artifacts", []):
+            artifact_path = Path(artifact)
+            if artifact_path.suffix == ".lean" and artifact_path.exists():
+                searchable_lean_files.append(artifact_path)
+        lean_text = "\n".join(path.read_text(encoding="utf-8") for path in searchable_lean_files)
         for theorem_name in item.get("theorem_contracts", []):
             token_pattern = rf"\b(?:theorem|def)\s+{re.escape(theorem_name)}\b"
             assert re.search(token_pattern, lean_text), (
-                f"missing theorem/def '{theorem_name}' in {lean_file}"
+                f"missing theorem/def '{theorem_name}' in mapped Lean artifacts for {item['obligation']}"
             )

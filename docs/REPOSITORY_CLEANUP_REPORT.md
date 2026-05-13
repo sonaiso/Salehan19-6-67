@@ -16,7 +16,10 @@ This cleanup focused on repository integrity hardening, duplicate/drift detectio
    - theorem obligation ID uniqueness
    - proof mapping obligation uniqueness and parity with obligations
    - proof mapping references to real files, tests, and Lean theorem/def tokens
-4. Simplified duplicate file-existence checks in `.github/workflows/formal-theorem-track.yml` while preserving required formal artifact verification.
+4. Fixed stale formal mapping reference for `ReplayIntegrity`:
+   - from `src/mcd/governance/event_sourcing.py` (nonexistent)
+   - to `src/mcd/audit/backend/persistent.py` (actual implementation)
+5. Simplified duplicate file-existence checks in `.github/workflows/formal-theorem-track.yml` while preserving required formal artifact verification.
 
 ## What was intentionally left unchanged
 
