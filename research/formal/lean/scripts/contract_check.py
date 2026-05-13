@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 from pathlib import Path
 
 
@@ -39,8 +40,16 @@ def validate_contracts(base: Path) -> None:
                 raise AssertionError(f"missing token {token} in {path}")
 
 
+def _default_base() -> Path:
+    return Path(__file__).resolve().parents[1]
+
+
 def main() -> None:
-    validate_contracts(Path("research/formal/lean"))
+    parser = argparse.ArgumentParser()
+    parser.add_argument("base", nargs="?", type=Path, default=_default_base())
+    args = parser.parse_args()
+
+    validate_contracts(args.base)
     print("Lean fallback contract checks passed.")
 
 
