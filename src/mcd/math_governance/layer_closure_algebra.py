@@ -519,4 +519,6 @@ def global_certificate(
 
 
 def is_public_judgment(value: str) -> bool:
-    return _normalize_judgment(value) in PUBLIC_FINAL_JUDGMENTS
+    if not isinstance(value, str):
+        return False
+    return value.strip().lower() in PUBLIC_FINAL_JUDGMENTS
