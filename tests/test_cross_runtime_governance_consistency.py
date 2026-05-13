@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from types import SimpleNamespace
+
 from mcd.cfk.cfk_pipeline import CognitiveFractalPipeline
 from mcd.coding_copilot.coding_judgment import CodingJudgment
 from mcd.coding_copilot.coding_status import CodingStatus
@@ -59,3 +61,16 @@ def test_cross_runtime_governance_record_has_canonical_fields():
         "residuals",
     }
 
+
+def test_cfk_adapter_preserves_existing_residuals():
+    proof = SimpleNamespace(
+        judgment="hypothesis",
+        proof_id="PO-42",
+        conservation=SimpleNamespace(passed=True),
+        reverse_trace_obj=SimpleNamespace(reverse_trace_id="RT-42", blocking_violations=[]),
+        residual_type="none",
+        residuals=["certificate_blocked", "reverse_trace_missing"],
+    )
+    record = from_cfk_proof(proof)
+    assert "certificate_blocked" in record.residuals
+    assert "reverse_trace_missing" in record.residuals

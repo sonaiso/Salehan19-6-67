@@ -2154,7 +2154,7 @@ def _handle_cfk_command(args) -> None:
         ReverseTraceBuilder,
         generate_markdown_report,
     )
-    from mcd.core.public_judgment import collapse_to_public_judgment
+    from mcd.core.public_judgment import collapse_to_public_judgment, enforce_governed_output_contract
 
     text = getattr(args, "text", "النار حارة")
     evidence_refs = _split_evidence(getattr(args, "evidence", ""))
@@ -2163,9 +2163,7 @@ def _handle_cfk_command(args) -> None:
 
     if args.command == "cfk-analyze":
         if args.output == "json":
-            payload = result.to_dict()
-            payload["proof"]["judgment"] = collapse_to_public_judgment(payload["proof"].get("judgment", ""))
-            payload["kernel"]["kernel_judgment"] = collapse_to_public_judgment(payload["kernel"].get("kernel_judgment", ""))
+            payload = enforce_governed_output_contract(result.to_dict())
             print(_json.dumps(payload, ensure_ascii=False, indent=2))
         elif args.output == "markdown":
             print(generate_markdown_report(result))
@@ -2175,8 +2173,7 @@ def _handle_cfk_command(args) -> None:
 
     if args.command in ("cfk-compare", "cfk-table"):
         if args.output == "json":
-            payload = result.table.to_dict()
-            payload["kernel_judgment"] = collapse_to_public_judgment(payload.get("kernel_judgment", ""))
+            payload = enforce_governed_output_contract(result.table.to_dict())
             print(_json.dumps(payload, ensure_ascii=False, indent=2))
         else:
             print(result.table.to_markdown())
@@ -2185,8 +2182,7 @@ def _handle_cfk_command(args) -> None:
     if args.command == "cfk-proof":
         public_judgment = collapse_to_public_judgment(result.proof.judgment)
         if args.output == "json":
-            payload = result.proof.to_dict()
-            payload["judgment"] = public_judgment
+            payload = enforce_governed_output_contract(result.proof.to_dict())
             print(_json.dumps(payload, ensure_ascii=False, indent=2))
         else:
             print(f"الحكم: {public_judgment}")

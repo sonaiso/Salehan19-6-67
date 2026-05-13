@@ -100,47 +100,6 @@ jobs:
             lean ResidualCalculus.lean
           else
             echo "Lean not available; running fallback theorem-contract checks only."
-            python - <<'PY'
-            from pathlib import Path
-
-            required = {
-                "CoreJudgment.lean": ["inductive PublicJudgment", "def certificateAllowed", "def publicJudgment"],
-                "NoIllicitCertification.lean": [
-                    "theorem no_illicit_certification",
-                    "theorem missing_gate_blocks_certificate",
-                    "theorem forbidden_transition_blocks_certificate",
-                    "theorem residual_erasure_blocks_certificate",
-                ],
-                "TriadClosure.lean": ["theorem triad_closure"],
-                "RankSoundness.lean": [
-                    "inductive EpistemicRank",
-                    "def requiredRank",
-                    "theorem rank_soundness",
-                    "theorem insufficient_rank_blocks_certificate",
-                ],
-                "TypedResiduals.lean": [
-                    "inductive Residual",
-                    "abbrev ResidualSet",
-                    "def resolvedByEvidence",
-                    "def residualPreserved",
-                ],
-                "ResidualCalculus.lean": [
-                    "theorem residual_persistence",
-                    "theorem rank_gap_blocks_certificate",
-                    "theorem missing_evidence_blocks_certificate",
-                    "theorem residual_erasure_blocks_certificate",
-                    "theorem unresolved_conflict_blocks_certificate",
-                ],
-            }
-
-            base = Path("research/formal/lean")
-            for file_name, tokens in required.items():
-                text = (base / file_name).read_text(encoding="utf-8")
-                assert "sorry" not in text, f"found disallowed sorry in {file_name}"
-                for token in tokens:
-                    assert token in text, f"missing token {token} in {file_name}"
-            print("Lean fallback contract checks passed.")
-            PY
             python research/formal/lean/scripts/contract_check.py
           fi
 

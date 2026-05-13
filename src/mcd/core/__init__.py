@@ -30,6 +30,9 @@ from mcd.core.linking_contract import LinkingContract, LinkingContractError
 from mcd.core.public_judgment import (
     PUBLIC_FINAL_JUDGMENTS,
     INTERNAL_SUSPEND,
+    INTERNAL_SUSPENDED,
     collapse_to_public_judgment,
+    enforce_governed_output_contract,
     is_public_final_judgment,
+    normalize_public_judgment_fields,
 )

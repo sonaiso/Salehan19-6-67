@@ -22,13 +22,26 @@ jobs:
       - name: Install project and test dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install pytest
+          python -m pip install pytest hypothesis
           python -m pip install jsonschema==4.25.1
           python -m pip install -e .
 
+      - name: Run CFK regression subset (contract gate)
+        run: |
+          PYTHONPATH=src:. python -m pytest -q \
+            tests/test_cfk_kernel.py \
+            tests/test_cfk_pipeline.py \
+            tests/test_cfk_schema.py \
+            tests/test_cfk_transforms.py \
+            tests/test_cfk_reverse_trace.py \
+            tests/test_cfk_cross_layer_conservation.py \
+            tests/test_cfk_no_silent_fallback.py \
+            tests/test_cfk_integration_contract.py \
+            tests/test_public_judgment_contract.py
+
       - name: Run AFJG merge governance tests
         run: |
-          PYTHONPATH=src python -m pytest -q \
+          PYTHONPATH=src:. python -m pytest -q \
             tests/test_coding_checks_governance.py \
             tests/test_coding_pr_audit.py \
             tests/test_coding_real_pr_fixtures.py \
@@ -41,3 +54,7 @@ jobs:
             tests/test_api_hardening.py \
             tests/test_runtime_concurrency.py \
             tests/test_replay_consistency.py
+
+      - name: Run full regression suite
+        run: |
+          PYTHONPATH=src:. python -m pytest -q
