@@ -1,15 +1,20 @@
 {
   "title": "Formal Proof Mapping",
-  "status": "scaffold_plus_minimal_machine_checkable_core",
+  "status": "scaffold_plus_rank_residual_machine_checkable_extension",
   "phase_scope": "phase_0_governance_formal_artifacts_only",
   "mapping": [
     {
       "obligation": "NoIllicitCertification",
+      "runtime_invariant_name": "no_illicit_certification",
       "runtime_contracts": [
         "tests/test_governance_adversarial_validation.py::test_fake_certificate_is_downgraded_to_hypothesis",
         "tests/test_governance_adversarial_validation.py::test_valid_certificate_is_allowed",
         "tests/test_certificate_pipeline_integrity.py::test_certificate_requires_evidence_gate"
       ],
+      "python_file": "src/mcd/governance/adversarial_validation.py",
+      "test_file": "tests/test_governance_adversarial_validation.py",
+      "lean_file": "research/formal/lean/NoIllicitCertification.lean",
+      "claim_boundary": "minimal certificate-gating core only",
       "evidence_gates": [
         "ProofObject",
         "GovernanceGate",
@@ -29,21 +34,38 @@
     },
     {
       "obligation": "ResidualPersistence",
+      "runtime_invariant_name": "residual_persistence",
       "runtime_contracts": [
         "tests/test_governance_adversarial_validation.py::test_residual_erasure_emits_residual_marker",
         "tests/test_event_sourced_governance_log.py::test_event_sourced_replay_reconstructs_required_paths"
       ],
+      "python_file": "src/mcd/governance/adversarial_validation.py",
+      "test_file": "tests/test_governance_adversarial_validation.py",
+      "lean_file": "research/formal/lean/ResidualCalculus.lean",
+      "claim_boundary": "typed residual preservation only",
       "evidence_gates": [
         "ResidualEmission",
         "ResidualPreservation"
+      ],
+      "formal_artifacts": [
+        "research/formal/lean/TypedResiduals.lean",
+        "research/formal/lean/ResidualCalculus.lean"
+      ],
+      "theorem_contracts": [
+        "residual_persistence"
       ]
     },
     {
       "obligation": "ForbiddenEscalation",
+      "runtime_invariant_name": "forbidden_transition_blocks_certificate",
       "runtime_contracts": [
         "tests/test_governance_adversarial_validation.py::test_forbidden_transition_blocks_certification",
         "tests/test_event_sourced_governance_log.py::test_event_sourced_replay_reconstructs_required_paths"
       ],
+      "python_file": "src/mcd/governance/adversarial_validation.py",
+      "test_file": "tests/test_governance_adversarial_validation.py",
+      "lean_file": "research/formal/lean/NoIllicitCertification.lean",
+      "claim_boundary": "minimal certificate-gating core only",
       "evidence_gates": [
         "ForbiddenTransitionBlock",
         "HypothesisDowngrade"
@@ -57,10 +79,15 @@
     },
     {
       "obligation": "TriadClosure",
+      "runtime_invariant_name": "final_judgment_in_public_triad",
       "runtime_contracts": [
         "src/mcd/core/public_judgment.py::collapse_to_public_judgment",
         "tests/test_public_judgment_contract.py::test_cfk_json_serializers_do_not_emit_suspend_publicly"
       ],
+      "python_file": "src/mcd/core/public_judgment.py",
+      "test_file": "tests/test_public_judgment_contract.py",
+      "lean_file": "research/formal/lean/TriadClosure.lean",
+      "claim_boundary": "public triad closure only",
       "evidence_gates": [
         "PublicJudgmentTriad"
       ],
@@ -75,13 +102,150 @@
     },
     {
       "obligation": "ReplayIntegrity",
+      "runtime_invariant_name": "replay_reconstruction_determinism",
       "runtime_contracts": [
         "tests/test_event_sourced_governance_log.py::test_event_log_immutability_and_integrity",
         "tests/test_persistent_audit_backend.py::test_replay_from_stored_events"
       ],
+      "python_file": "src/mcd/governance/event_sourcing.py",
+      "test_file": "tests/test_event_sourced_governance_log.py",
+      "lean_file": "research/formal/lean/CoreJudgment.lean",
+      "claim_boundary": "replay artifact linkage only",
       "evidence_gates": [
         "ImmutableEventLog",
         "ReplayReconstruction"
+      ],
+      "formal_artifacts": [
+        "research/formal/lean/CoreJudgment.lean"
+      ],
+      "theorem_contracts": []
+    },
+    {
+      "obligation": "RankSoundness",
+      "runtime_invariant_name": "rank_soundness_for_certificate",
+      "runtime_contracts": [
+        "tests/test_formal_rank_soundness_track.py::test_rank_soundness_theorems_and_mapping_exist"
+      ],
+      "python_file": "src/mcd/governance/adversarial_validation.py",
+      "test_file": "tests/test_formal_rank_soundness_track.py",
+      "lean_file": "research/formal/lean/RankSoundness.lean",
+      "claim_boundary": "minimal formal rank extension only",
+      "evidence_gates": [
+        "EvidenceRank",
+        "RequiredRank"
+      ],
+      "formal_artifacts": [
+        "research/formal/lean/RankSoundness.lean"
+      ],
+      "theorem_contracts": [
+        "rank_soundness"
+      ]
+    },
+    {
+      "obligation": "InsufficientRankBlocksCertificate",
+      "runtime_invariant_name": "insufficient_rank_blocks_certificate",
+      "runtime_contracts": [
+        "tests/test_formal_rank_soundness_track.py::test_rank_soundness_theorems_and_mapping_exist"
+      ],
+      "python_file": "src/mcd/governance/adversarial_validation.py",
+      "test_file": "tests/test_formal_rank_soundness_track.py",
+      "lean_file": "research/formal/lean/RankSoundness.lean",
+      "claim_boundary": "minimal formal rank extension only",
+      "evidence_gates": [
+        "EvidenceRank",
+        "RequiredRank"
+      ],
+      "formal_artifacts": [
+        "research/formal/lean/RankSoundness.lean"
+      ],
+      "theorem_contracts": [
+        "insufficient_rank_blocks_certificate"
+      ]
+    },
+    {
+      "obligation": "RankGapBlocksCertificate",
+      "runtime_invariant_name": "rank_gap_blocks_certificate",
+      "runtime_contracts": [
+        "tests/test_formal_residual_calculus_track.py::test_residual_calculus_theorems_and_mapping_exist"
+      ],
+      "python_file": "src/mcd/governance/adversarial_validation.py",
+      "test_file": "tests/test_formal_residual_calculus_track.py",
+      "lean_file": "research/formal/lean/ResidualCalculus.lean",
+      "claim_boundary": "typed residual and rank-gap blocking only",
+      "evidence_gates": [
+        "ResidualEmission",
+        "ResidualPreservation"
+      ],
+      "formal_artifacts": [
+        "research/formal/lean/ResidualCalculus.lean"
+      ],
+      "theorem_contracts": [
+        "rank_gap_blocks_certificate"
+      ]
+    },
+    {
+      "obligation": "MissingEvidenceBlocksCertificate",
+      "runtime_invariant_name": "missing_evidence_blocks_certificate",
+      "runtime_contracts": [
+        "tests/test_formal_residual_calculus_track.py::test_residual_calculus_theorems_and_mapping_exist"
+      ],
+      "python_file": "src/mcd/governance/adversarial_validation.py",
+      "test_file": "tests/test_formal_residual_calculus_track.py",
+      "lean_file": "research/formal/lean/ResidualCalculus.lean",
+      "claim_boundary": "typed residual and missing-evidence blocking only",
+      "evidence_gates": [
+        "ResidualEmission",
+        "ResidualPreservation"
+      ],
+      "formal_artifacts": [
+        "research/formal/lean/ResidualCalculus.lean"
+      ],
+      "theorem_contracts": [
+        "missing_evidence_blocks_certificate"
+      ]
+    },
+    {
+      "obligation": "ResidualErasureBlocksCertificate",
+      "runtime_invariant_name": "residual_erasure_blocks_certificate",
+      "runtime_contracts": [
+        "tests/test_formal_residual_calculus_track.py::test_residual_calculus_theorems_and_mapping_exist"
+      ],
+      "python_file": "src/mcd/governance/adversarial_validation.py",
+      "test_file": "tests/test_formal_residual_calculus_track.py",
+      "lean_file": "research/formal/lean/ResidualCalculus.lean",
+      "claim_boundary": "typed residual and erasure blocking only",
+      "evidence_gates": [
+        "ResidualEmission",
+        "ResidualPreservation"
+      ],
+      "formal_artifacts": [
+        "research/formal/lean/ResidualCalculus.lean"
+      ],
+      "theorem_contracts": [
+        "residual_erasure_blocks_certificate"
+      ]
+    },
+    {
+      "obligation": "TypedResidualCalculus",
+      "runtime_invariant_name": "typed_residual_calculus",
+      "runtime_contracts": [
+        "tests/test_formal_residual_calculus_track.py::test_residual_type_system_and_persistence_contracts_exist"
+      ],
+      "python_file": "src/mcd/governance/adversarial_validation.py",
+      "test_file": "tests/test_formal_residual_calculus_track.py",
+      "lean_file": "research/formal/lean/TypedResiduals.lean",
+      "claim_boundary": "typed residual ontology only",
+      "evidence_gates": [
+        "ResidualEmission",
+        "ResidualPreservation"
+      ],
+      "formal_artifacts": [
+        "research/formal/lean/TypedResiduals.lean",
+        "research/formal/lean/ResidualCalculus.lean"
+      ],
+      "theorem_contracts": [
+        "residual_persistence",
+        "unresolved_conflict_blocks_certificate"
       ]
     }
   ]

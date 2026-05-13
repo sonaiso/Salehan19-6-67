@@ -1,6 +1,6 @@
 {
   "title": "Formal Theorem Obligations",
-  "status": "scaffold",
+  "status": "scaffold_plus_rank_residual_extension",
   "phase_scope": "phase_0_governance_formal_artifacts_only",
   "runtime_behavior_changes": false,
   "obligations": [
@@ -42,6 +42,48 @@
         "append_only_event_log",
         "hash_chain_integrity",
         "replay_reconstruction_determinism"
+      ]
+    },
+    {
+      "id": "RankSoundness",
+      "statement": "CERTIFICATE requires sufficient epistemic rank under the formal rank order.",
+      "runtime_invariants": [
+        "rank_soundness_for_certificate"
+      ]
+    },
+    {
+      "id": "InsufficientRankBlocksCertificate",
+      "statement": "Insufficient rank blocks CERTIFICATE issuance.",
+      "runtime_invariants": [
+        "insufficient_rank_blocks_certificate"
+      ]
+    },
+    {
+      "id": "RankGapBlocksCertificate",
+      "statement": "Unresolved rank gaps block CERTIFICATE issuance.",
+      "runtime_invariants": [
+        "rank_gap_blocks_certificate"
+      ]
+    },
+    {
+      "id": "MissingEvidenceBlocksCertificate",
+      "statement": "Unresolved missing evidence blocks CERTIFICATE issuance.",
+      "runtime_invariants": [
+        "missing_evidence_blocks_certificate"
+      ]
+    },
+    {
+      "id": "ResidualErasureBlocksCertificate",
+      "statement": "Residual erasure blocks CERTIFICATE issuance.",
+      "runtime_invariants": [
+        "residual_erasure_blocks_certificate"
+      ]
+    },
+    {
+      "id": "TypedResidualCalculus",
+      "statement": "Residual ontology is typed and residual preservation is explicit over transitions.",
+      "runtime_invariants": [
+        "typed_residual_calculus"
       ]
     }
   ]

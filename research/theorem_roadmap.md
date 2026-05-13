@@ -47,10 +47,34 @@ Claim boundary:
 - machine-checkable core only
 - no full-project proof claim
 
-## Dependency chain after PR #74
+## PR #75 — Rank Soundness & Typed Residual Calculus
 
-- PR #75 → Rank Soundness + typed residual foundations
+This stage extends the core with a minimal formal rank/residual layer:
+
+- `research/formal/lean/RankSoundness.lean`
+- `research/formal/lean/TypedResiduals.lean`
+- `research/formal/lean/ResidualCalculus.lean`
+
+Theorems targeted in this stage:
+
+- rank_soundness
+- insufficient_rank_blocks_certificate
+- residual_persistence
+- rank_gap_blocks_certificate
+- missing_evidence_blocks_certificate
+- residual_erasure_blocks_certificate
+- unresolved_conflict_blocks_certificate
+
+Claim boundary:
+
+- minimal formal rank/residual extension only
+- no full-project proof completion
+- no consciousness or AGI claim
+- no complete semantic algebra claim
+
+## Dependency chain after PR #75
+
 - PR #76 → Replay integrity formalization
 - PR #77 → Runtime-to-formal equivalence mapping
 
-PR #75+ are downstream of the obligations + proof mapping produced in PR #73 and core model in PR #74.
+PR #76+ are downstream of the obligations + proof mapping produced in PR #73 and core model in PR #74, with PR #75 introducing rank/residual formal contracts as the next downstream layer.

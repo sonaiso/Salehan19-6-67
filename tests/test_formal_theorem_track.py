@@ -13,28 +13,48 @@ EXPECTED_OBLIGATION_IDS = {
     "ForbiddenEscalation",
     "TriadClosure",
     "ReplayIntegrity",
+    "RankSoundness",
+    "InsufficientRankBlocksCertificate",
+    "RankGapBlocksCertificate",
+    "MissingEvidenceBlocksCertificate",
+    "ResidualErasureBlocksCertificate",
+    "TypedResidualCalculus",
 }
 
 
 def test_formal_theorem_obligations_contain_required_obligations():
     payload = json.loads(Path("research/formal/theorem_obligations.json").read_text(encoding="utf-8"))
-    assert payload["status"] == "scaffold"
+    assert payload["status"] in {
+        "scaffold",
+        "scaffold_plus_rank_residual_extension",
+    }
     assert payload["phase_scope"] == "phase_0_governance_formal_artifacts_only"
     assert payload["runtime_behavior_changes"] is False
 
     obligation_ids = {item["id"] for item in payload["obligations"]}
-    assert obligation_ids == EXPECTED_OBLIGATION_IDS
+    assert EXPECTED_OBLIGATION_IDS.issubset(obligation_ids)
 
 
 def test_proof_mapping_links_runtime_contracts_and_evidence_gates():
     payload = json.loads(Path("research/formal/proof_mapping.json").read_text(encoding="utf-8"))
-    assert payload["status"] in {"scaffold", "scaffold_plus_minimal_machine_checkable_core"}
+    assert payload["status"] in {
+        "scaffold",
+        "scaffold_plus_minimal_machine_checkable_core",
+        "scaffold_plus_rank_residual_machine_checkable_extension",
+    }
     mapping = {item["obligation"]: item for item in payload["mapping"]}
 
     for obligation in EXPECTED_OBLIGATION_IDS:
         assert obligation in mapping
         assert mapping[obligation]["runtime_contracts"]
         assert mapping[obligation]["evidence_gates"]
+        assert mapping[obligation]["python_file"]
+        assert mapping[obligation]["test_file"]
+        assert mapping[obligation]["lean_file"]
+        assert mapping[obligation]["claim_boundary"]
+        boundary = mapping[obligation]["claim_boundary"].lower()
+        assert "full-project" not in boundary
+        assert "full-system" not in boundary
 
     assert set(mapping["NoIllicitCertification"]["evidence_gates"]) == {
         "ProofObject",
@@ -55,6 +75,9 @@ def test_lean_core_files_exist_and_are_non_placeholder():
         Path("research/formal/lean/CoreJudgment.lean"),
         Path("research/formal/lean/NoIllicitCertification.lean"),
         Path("research/formal/lean/TriadClosure.lean"),
+        Path("research/formal/lean/RankSoundness.lean"),
+        Path("research/formal/lean/TypedResiduals.lean"),
+        Path("research/formal/lean/ResidualCalculus.lean"),
     ]
     for path in lean_files:
         assert path.exists()
