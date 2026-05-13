@@ -355,7 +355,8 @@ class LayerClosureAlgebra:
             if source_cert and source_cert.judgment != CERTIFICATE:
                 passed = False
                 reasons.append(f"{source}: source layer not locally certified")
-            if source_unit.level_id not in bridge.allowed_input and source_unit.unit_type not in bridge.allowed_input:
+            source_output_type = str(source_unit.metadata.get("output_type", source_unit.unit_type)).strip()
+            if source_unit.level_id not in bridge.allowed_input and source_output_type not in bridge.allowed_input:
                 passed = False
                 reasons.append(f"{bridge.bridge_id}: output not acceptable for target")
             target_contract = self.layer_registry.get(target)
@@ -389,7 +390,8 @@ class LayerClosureAlgebra:
     @staticmethod
     def _residuals_preserved(units: list[GovernedFractalUnit]) -> bool:
         for i in range(len(units) - 1):
-            if any(item not in units[i + 1].residuals for item in units[i].residuals):
+            next_residuals = set(units[i + 1].residuals)
+            if any(item not in next_residuals for item in units[i].residuals):
                 return False
         return True
 

@@ -45,7 +45,9 @@ def test_no_layer_theft_when_bridge_fails():
 
 def test_scoped_certificate_local_not_equal_global():
     units = build_default_units_for_text("ضرب زيد عمرًا", final_judgment="hypothesis")
-    vector = LayerClosureAlgebra().evaluate(units, required_layers=["raw_text", "final_judgment", "external_reality"])
+    final_unit = next(unit for unit in units if unit.level_id == "final_judgment")
+    final_unit.metadata["fatal_barrier"] = True
+    vector = LayerClosureAlgebra().evaluate(units, required_layers=["raw_text", "final_judgment"])
     assert vector.local_certificates["raw_text"].judgment == CERTIFICATE
     assert vector.global_judgment == ZERO
 
