@@ -53,6 +53,18 @@ class BridgeContract:
     governor: str = "default"
     bridge_barriers: list[str] = field(default_factory=list)
 
+    def __post_init__(self) -> None:
+        if self.governor != "default":
+            raise ValueError(
+                f"BridgeContract {self.bridge_id!r} declares unsupported governor "
+                f"{self.governor!r}; bridge governors must be enforced explicitly."
+            )
+        if self.bridge_barriers:
+            raise ValueError(
+                f"BridgeContract {self.bridge_id!r} declares unsupported bridge_barriers "
+                f"{self.bridge_barriers!r}; bridge barriers must be enforced explicitly."
+            )
+
 
 @dataclass(frozen=True)
 class LocalCertificate:
