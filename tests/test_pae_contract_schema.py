@@ -72,11 +72,39 @@ def test_residual_preservation_for_blocking_tags() -> None:
         _validate(broken, schema)
 
 
-def test_silent_level_skip_prevention() -> None:
+def test_silent_level_skip_prevents_certificate() -> None:
     schema = _load_json(SCHEMA_PATH)
     contract = _load_json(CONTRACT_PATH)
     broken = copy.deepcopy(contract)
+    broken["output_examples"][0]["judgment"] = "CERTIFICATE"
+    broken["output_examples"][0]["proof_object"] = "proof-obj-1"
+    broken["output_examples"][0]["governance_gate"] = "passed"
+    broken["output_examples"][0]["reverse_trace"] = ["trace-1"]
     broken["output_examples"][0]["transition_tags"] = ["silent_level_skip"]
     broken["output_examples"][0]["residuals"] = ["silent_level_skip"]
+    with pytest.raises(jsonschema.ValidationError):
+        _validate(broken, schema)
+
+
+def test_silent_level_skip_traceability_allowed_below_certificate() -> None:
+    schema = _load_json(SCHEMA_PATH)
+    contract = _load_json(CONTRACT_PATH)
+    valid = copy.deepcopy(contract)
+    valid["output_examples"][0]["judgment"] = "HYPOTHESIS"
+    valid["output_examples"][0]["transition_tags"] = ["silent_level_skip"]
+    valid["output_examples"][0]["residuals"] = ["silent_level_skip"]
+    valid["output_examples"][0]["proof_object"] = None
+    valid["output_examples"][0]["governance_gate"] = "failed"
+    valid["output_examples"][0]["reverse_trace"] = []
+    _validate(valid, schema)
+
+
+def test_silent_level_skip_requires_residual() -> None:
+    schema = _load_json(SCHEMA_PATH)
+    contract = _load_json(CONTRACT_PATH)
+    broken = copy.deepcopy(contract)
+    broken["output_examples"][0]["judgment"] = "HYPOTHESIS"
+    broken["output_examples"][0]["transition_tags"] = ["silent_level_skip"]
+    broken["output_examples"][0]["residuals"] = []
     with pytest.raises(jsonschema.ValidationError):
         _validate(broken, schema)

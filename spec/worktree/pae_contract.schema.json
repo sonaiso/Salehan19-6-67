@@ -218,13 +218,23 @@
           }
         },
         {
-          "not": {
+          "if": {
             "properties": {
               "transition_tags": {
                 "contains": { "const": "silent_level_skip" }
               }
             },
             "required": ["transition_tags"]
+          },
+          "then": {
+            "properties": {
+              "judgment": {
+                "enum": ["ZERO", "HYPOTHESIS"]
+              },
+              "residuals": {
+                "contains": { "const": "silent_level_skip" }
+              }
+            }
           }
         }
       ]

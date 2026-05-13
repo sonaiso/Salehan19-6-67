@@ -59,6 +59,11 @@ A transition to `CERTIFICATE` is legal iff all are true:
 - evidence type matches claim type
 - no blocking residual remains
 
+`EvidenceMatch(x)` means the accepted evidence modality for claim `x` is explicitly
+compatible with the claim domain/type under active governance constraints.
+Examples: linguistic evidence for linguistic claims, formal proof artifacts for
+formal mathematical claims, and governed trace-linked factual sources for factual claims.
+
 Formal gate:
 
 \[
