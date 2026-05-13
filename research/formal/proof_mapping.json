@@ -107,7 +107,7 @@
         "tests/test_event_sourced_governance_log.py::test_event_log_immutability_and_integrity",
         "tests/test_persistent_audit_backend.py::test_replay_from_stored_events"
       ],
-      "python_file": "src/mcd/governance/event_sourcing.py",
+      "python_file": "src/mcd/audit/backend/persistent.py",
       "test_file": "tests/test_event_sourced_governance_log.py",
       "lean_file": "research/formal/lean/CoreJudgment.lean",
       "claim_boundary": "replay artifact linkage only",
