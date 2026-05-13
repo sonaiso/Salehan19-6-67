@@ -1,0 +1,65 @@
+{
+  "contract_version": "phase-0.1",
+  "engine_name": "PAE",
+  "final_judgment_triad": ["ZERO", "HYPOTHESIS", "CERTIFICATE"],
+  "patc_output_mapping": {
+    "blocked": "ZERO",
+    "incomplete": "HYPOTHESIS",
+    "gated": "CERTIFICATE"
+  },
+  "architecture_contract_fields": [
+    "pre",
+    "current",
+    "post",
+    "phi_in",
+    "phi_out",
+    "beta",
+    "type",
+    "order",
+    "composition",
+    "invariants",
+    "forbidden",
+    "residual",
+    "judgment"
+  ],
+  "certificate_requirements": ["ProofObject", "GovernanceGate", "ReverseTrace"],
+  "forbidden_transitions": [
+    "root_or_pattern_as_factual_proof",
+    "derivative_as_proof",
+    "irab_as_factual_certainty",
+    "emphasis_as_evidence",
+    "metaphor_as_literal_certificate",
+    "memory_as_external_evidence",
+    "model_output_as_evidence",
+    "tool_output_as_certificate_without_governance",
+    "residual_erasure",
+    "silent_level_skip",
+    "certificate_without_proof_object",
+    "certificate_without_governance_gate",
+    "certificate_without_reverse_trace"
+  ],
+  "residual_policy": {
+    "preserve_residuals": true,
+    "forbid_residual_erasure": true
+  },
+  "output_examples": [
+    {
+      "id": "pae-example-hypothesis-001",
+      "judgment": "HYPOTHESIS",
+      "proof_object": null,
+      "governance_gate": "failed",
+      "reverse_trace": [],
+      "residuals": ["certificate_without_governance_gate"],
+      "transition_tags": ["certificate_without_governance_gate"]
+    },
+    {
+      "id": "pae-example-certificate-001",
+      "judgment": "CERTIFICATE",
+      "proof_object": "proof-obj-42",
+      "governance_gate": "passed",
+      "reverse_trace": ["trace-step-1", "trace-step-2"],
+      "residuals": [],
+      "transition_tags": []
+    }
+  ]
+}
