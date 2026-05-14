@@ -112,7 +112,7 @@ class NabhaniFeatureFrame:
 
 
 def _token(value: object, *, default: str) -> str:
-    token = str(value or "").strip().lower()
+    token = str("" if value is None else value).strip().lower()
     return token or default
 
 
@@ -148,7 +148,7 @@ def derive_nabhani_features_from_example(example: dict) -> NabhaniFeatureFrame:
     expected = example.get("expected", {})
     method_type = _token(feature_input.get("method_type") or example.get("thinking_method", {}).get("method_type"), default="rational")
     judgment_domain = _token(feature_input.get("judgment_domain"), default=_infer_judgment_domain(example))
-    certainty_rank, inferred_rank_source = _infer_certainty_rank(example)
+    certainty_rank, derived_rank_source = _infer_certainty_rank(example)
 
     has_reality = bool(feature_input.get("has_reality", bool(consciousness.get("reality_refs"))))
     has_source = bool(feature_input.get("has_source", bool(trace.get("evidence_refs")) or has_reality))
@@ -217,9 +217,9 @@ def derive_nabhani_features_from_example(example: dict) -> NabhaniFeatureFrame:
         method_type=method_type,
         judgment_domain=judgment_domain,
         certainty_rank=certainty_rank,
-        rank_source=_token(feature_input.get("rank_source"), default=inferred_rank_source),
-        missing_features=sorted({item for item in missing_features}),
-        feature_residuals=sorted({item for item in feature_residuals}),
+        rank_source=_token(feature_input.get("rank_source"), default=derived_rank_source),
+        missing_features=sorted(set(missing_features)),
+        feature_residuals=sorted(set(feature_residuals)),
     )
 
 
@@ -334,6 +334,7 @@ def validate_nabhani_features(features: dict) -> NabhaniFeatureValidationReport:
 
 
 def _token_to_id(token: str, choices: tuple[str, ...]) -> int:
+    """Map a validated token to a stable index."""
     return choices.index(token)
 
 
@@ -356,4 +357,3 @@ def nabhani_features_to_training_vector(features: dict) -> dict:
         "certainty_rank": _token_to_id(_token(features["certainty_rank"], default="zero"), CERTAINTY_RANK_TOKENS),
     }
     return normalized
-

@@ -15,6 +15,10 @@ def _load_example(name: str) -> dict:
     return load_json_file(EXAMPLES_DIR / name)
 
 
+def _remove_residual_from_example(example: dict, residual_name: str) -> None:
+    example["expected"]["residuals"] = [item for item in example["expected"]["residuals"] if item != residual_name]
+
+
 def test_reference_examples_pass_validator() -> None:
     for name in [
         "minimal_hypothesis.json",
@@ -111,7 +115,7 @@ def test_missing_source_requires_missing_source_residual() -> None:
 
 def test_missing_prior_information_requires_residual_for_rational_method() -> None:
     broken = copy.deepcopy(_load_example("minimal_hypothesis.json"))
-    broken["expected"]["residuals"] = [item for item in broken["expected"]["residuals"] if item != "missing_prior_information"]
+    _remove_residual_from_example(broken, "missing_prior_information")
 
     report = validate_training_example(broken)
     assert not report.valid
@@ -120,7 +124,7 @@ def test_missing_prior_information_requires_residual_for_rational_method() -> No
 
 def test_missing_linking_requires_missing_linking_residual() -> None:
     broken = copy.deepcopy(_load_example("minimal_hypothesis.json"))
-    broken["expected"]["residuals"] = [item for item in broken["expected"]["residuals"] if item != "missing_linking"]
+    _remove_residual_from_example(broken, "missing_linking")
 
     report = validate_training_example(broken)
     assert not report.valid
