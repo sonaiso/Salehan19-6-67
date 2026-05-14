@@ -16,11 +16,17 @@ class ThoughtBirthTrace:
     language_ref: str = ""
     evidence_refs: list[str] = field(default_factory=list)
     residuals: list[str] = field(default_factory=list)
+    path_complete: bool = False
+    evidence_complete: bool = False
+    certificate_complete: bool = False
     complete: bool = False
 
     def assess_completeness(self) -> None:
-        """Update `complete` based on required refs and evidence refs presence."""
-        self.complete = all(
+        """Update path/evidence/certificate completeness flags.
+
+        `complete` is retained as a compatibility alias for certificate completeness.
+        """
+        self.path_complete = all(
             [
                 self.intent_ref,
                 self.consciousness_ref,
@@ -30,4 +36,7 @@ class ThoughtBirthTrace:
                 self.means_ref,
                 self.language_ref,
             ]
-        ) and bool(self.evidence_refs)
+        )
+        self.evidence_complete = bool(self.evidence_refs)
+        self.certificate_complete = self.path_complete and self.evidence_complete
+        self.complete = self.certificate_complete

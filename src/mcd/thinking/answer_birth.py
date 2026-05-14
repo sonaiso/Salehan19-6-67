@@ -7,7 +7,7 @@ from mcd.core.public_judgment import PUBLIC_FINAL_JUDGMENTS, collapse_to_public_
 from mcd.thinking.forbidden_transitions import find_forbidden_transitions
 from mcd.thinking.intent import UserIntentFrame
 from mcd.thinking.means import ThinkingMeans
-from mcd.thinking.mentality import ControlledConsciousnessFrame, MentalityFrame
+from mcd.thinking.mentality import OUTPUT_KINDS, ControlledConsciousnessFrame, MentalityFrame
 from mcd.thinking.methods import ThinkingMethod, evidence_rank_sufficient
 from mcd.thinking.styles import ThinkingStyle, style_belongs_to_method
 from mcd.thinking.trace import ThoughtBirthTrace
@@ -35,6 +35,8 @@ class AnswerBirthEvaluationResult:
     blockers: list[str] = field(default_factory=list)
     residuals: list[str] = field(default_factory=list)
     trace_complete: bool = False
+    trace_path_complete: bool = False
+    trace_evidence_complete: bool = False
 
 
 def evaluate_answer_birth_contract(contract: AnswerBirthContract) -> AnswerBirthEvaluationResult:
@@ -46,10 +48,18 @@ def evaluate_answer_birth_contract(contract: AnswerBirthContract) -> AnswerBirth
     blockers = _collect_blockers(contract)
     residuals = _collect_residuals(contract)
 
-    trace_complete = bool(contract.thought_trace and contract.thought_trace.complete)
+    trace_path_complete = False
+    trace_evidence_complete = False
+    trace_complete = False
     if contract.thought_trace:
         contract.thought_trace.assess_completeness()
-        trace_complete = contract.thought_trace.complete
+        trace_path_complete = contract.thought_trace.path_complete
+        trace_evidence_complete = contract.thought_trace.evidence_complete
+        trace_complete = contract.thought_trace.certificate_complete
+
+    method_residuals = _validate_method_requirements(contract)
+    if method_residuals:
+        residuals = _merge_unique(residuals, method_residuals)
 
     fatal = bool(blockers)
     if fatal:
@@ -59,6 +69,8 @@ def evaluate_answer_birth_contract(contract: AnswerBirthContract) -> AnswerBirth
             blockers=blockers,
             residuals=_merge_unique(residuals, blockers),
             trace_complete=trace_complete,
+            trace_path_complete=trace_path_complete,
+            trace_evidence_complete=trace_evidence_complete,
         )
 
     intent = contract.user_intent
@@ -66,15 +78,24 @@ def evaluate_answer_birth_contract(contract: AnswerBirthContract) -> AnswerBirth
     method = contract.thinking_method
 
     if not intent or intent.intent_status in {"missing"}:
-        return _zero(contract.contract_id, ["answer_without_intent_understanding"], residuals, trace_complete)
+        return _zero(
+            contract.contract_id,
+            ["answer_without_intent_understanding"],
+            residuals,
+            trace_complete,
+            trace_path_complete=trace_path_complete,
+            trace_evidence_complete=trace_evidence_complete,
+        )
 
-    if not trace_complete:
+    if not trace_path_complete:
         return AnswerBirthEvaluationResult(
             contract_id=contract.contract_id,
             public_judgment="hypothesis",
             blockers=[],
             residuals=_merge_unique(residuals, ["answer_without_birth_trace"]),
             trace_complete=False,
+            trace_path_complete=False,
+            trace_evidence_complete=trace_evidence_complete,
         )
 
     if intent.intent_status in {"ambiguous", "inferred"} and intent.uncertainty_preserved:
@@ -83,7 +104,31 @@ def evaluate_answer_birth_contract(contract: AnswerBirthContract) -> AnswerBirth
             public_judgment="hypothesis",
             blockers=[],
             residuals=_merge_unique(residuals, ["intent_not_fully_explicit"]),
-            trace_complete=True,
+            trace_complete=trace_complete,
+            trace_path_complete=trace_path_complete,
+            trace_evidence_complete=trace_evidence_complete,
+        )
+
+    if method_residuals:
+        return AnswerBirthEvaluationResult(
+            contract_id=contract.contract_id,
+            public_judgment="hypothesis",
+            blockers=[],
+            residuals=residuals,
+            trace_complete=trace_complete,
+            trace_path_complete=trace_path_complete,
+            trace_evidence_complete=trace_evidence_complete,
+        )
+
+    if not trace_evidence_complete:
+        return AnswerBirthEvaluationResult(
+            contract_id=contract.contract_id,
+            public_judgment="hypothesis",
+            blockers=[],
+            residuals=_merge_unique(residuals, ["incomplete_evidence_rank"]),
+            trace_complete=False,
+            trace_path_complete=trace_path_complete,
+            trace_evidence_complete=trace_evidence_complete,
         )
 
     if method and not evidence_rank_sufficient(method.required_evidence_rank, evidence_refs):
@@ -92,7 +137,9 @@ def evaluate_answer_birth_contract(contract: AnswerBirthContract) -> AnswerBirth
             public_judgment="hypothesis",
             blockers=[],
             residuals=_merge_unique(residuals, ["incomplete_evidence_rank"]),
-            trace_complete=True,
+            trace_complete=False,
+            trace_path_complete=trace_path_complete,
+            trace_evidence_complete=trace_evidence_complete,
         )
 
     requested = collapse_to_public_judgment(contract.public_judgment)
@@ -105,7 +152,20 @@ def evaluate_answer_birth_contract(contract: AnswerBirthContract) -> AnswerBirth
             public_judgment="zero",
             blockers=[],
             residuals=residuals,
-            trace_complete=True,
+            trace_complete=trace_complete,
+            trace_path_complete=trace_path_complete,
+            trace_evidence_complete=trace_evidence_complete,
+        )
+
+    if requested == "hypothesis":
+        return AnswerBirthEvaluationResult(
+            contract_id=contract.contract_id,
+            public_judgment="hypothesis",
+            blockers=[],
+            residuals=residuals,
+            trace_complete=trace_complete,
+            trace_path_complete=trace_path_complete,
+            trace_evidence_complete=trace_evidence_complete,
         )
 
     return AnswerBirthEvaluationResult(
@@ -113,7 +173,9 @@ def evaluate_answer_birth_contract(contract: AnswerBirthContract) -> AnswerBirth
         public_judgment="certificate",
         blockers=[],
         residuals=residuals,
-        trace_complete=True,
+        trace_complete=trace_complete,
+        trace_path_complete=trace_path_complete,
+        trace_evidence_complete=trace_evidence_complete,
     )
 
 
@@ -142,7 +204,7 @@ def _collect_blockers(contract: AnswerBirthContract) -> list[str]:
         blockers.append("style_without_method")
 
     if means is None:
-        blockers.append("means_as_method")
+        blockers.append("missing_means")
 
     if means and means.can_issue_judgment:
         blockers.append("means_as_judgment")
@@ -158,7 +220,8 @@ def _collect_blockers(contract: AnswerBirthContract) -> list[str]:
             if not any([trace.intent_ref, trace.method_ref, trace.style_ref, trace.means_ref]):
                 blockers.append("answer_without_birth_trace")
 
-    if trace and trace.language_ref and not trace.evidence_refs:
+    requested = collapse_to_public_judgment(contract.public_judgment)
+    if requested == "certificate" and trace and trace.language_ref and not trace.evidence_refs:
         blockers.append("fluent_language_as_proof")
 
     if method and method.method_type == "scientific":
@@ -186,6 +249,52 @@ def _collect_residuals(contract: AnswerBirthContract) -> list[str]:
     return list(dict.fromkeys((r or "").strip().lower() for r in residuals if (r or "").strip()))
 
 
+def _validate_method_requirements(contract: AnswerBirthContract) -> list[str]:
+    """Validate method-required inputs and output constraints.
+
+    Returns residual markers for missing required inputs and output-policy
+    mismatches.
+    """
+    method = contract.thinking_method
+    if method is None:
+        return []
+    trace = contract.thought_trace
+    consciousness = contract.consciousness_frame
+    intent = contract.user_intent
+    present: dict[str, bool] = {
+        "intent": bool(intent and intent.has_intent()),
+        "consciousness": bool(consciousness),
+        "mentality": bool(contract.mentality_frame),
+        "method": True,
+        "style": bool(contract.thinking_style),
+        "means": bool(contract.thinking_means),
+        "evidence": bool(trace and trace.evidence_refs),
+        "trace": bool(trace and trace.path_complete),
+        "language": bool(trace and trace.language_ref),
+        "reality_refs": bool(consciousness and consciousness.reality_refs),
+        "prior_information_refs": bool(consciousness and consciousness.prior_information_refs),
+    }
+    residuals: list[str] = []
+    for required in method.required_inputs:
+        key = (required or "").strip().lower()
+        if key and not present.get(key, False):
+            residuals.append(f"missing_required_input::{key}")
+
+    allowed_outputs = {(item or "").strip().lower() for item in method.allowed_outputs if (item or "").strip()}
+    forbidden_outputs = {(item or "").strip().lower() for item in method.forbidden_outputs if (item or "").strip()}
+    output_kind = _normalized_output_kind(contract.mentality_frame)
+    requested = collapse_to_public_judgment(contract.public_judgment)
+    output_kinds = set(OUTPUT_KINDS)
+    forbidden_output_kinds = forbidden_outputs & output_kinds
+    output_forbidden = requested in forbidden_outputs or output_kind in forbidden_output_kinds
+    if forbidden_outputs and output_forbidden:
+        residuals.append(f"method_forbidden_output::{requested or output_kind}")
+    allowed_output_kinds = allowed_outputs & output_kinds
+    if allowed_output_kinds and output_kind and output_kind not in allowed_output_kinds:
+        residuals.append(f"output_kind_not_in_method_allowed_outputs::{output_kind}")
+    return residuals
+
+
 def _target_text(mentality: MentalityFrame | None, method: ThinkingMethod | None) -> str:
     if mentality is None:
         return ""
@@ -195,12 +304,29 @@ def _target_text(mentality: MentalityFrame | None, method: ThinkingMethod | None
     return " ".join((x or "").strip().lower() for x in hay)
 
 
+def _normalized_output_kind(mentality: MentalityFrame | None) -> str:
+    """Normalize mentality output kind into a lowercase token."""
+    return ((mentality.output_kind if mentality else "") or "").strip().lower()
+
+
 def _targets_worldview(mentality: MentalityFrame | None, method: ThinkingMethod | None) -> bool:
+    output_kind = _normalized_output_kind(mentality)
+    if output_kind == "worldview":
+        return True
+    method_targets = {(x or "").strip().lower() for x in (method.allowed_outputs if method else [])}
+    if "worldview" in method_targets:
+        return True
     text = _target_text(mentality, method)
     return "worldview" in text
 
 
 def _targets_normative(mentality: MentalityFrame | None, method: ThinkingMethod | None) -> bool:
+    output_kind = _normalized_output_kind(mentality)
+    if output_kind in {"normative", "legal", "shari"}:
+        return True
+    method_targets = {(x or "").strip().lower() for x in (method.allowed_outputs if method else [])}
+    if method_targets & {"normative", "legal", "shari"}:
+        return True
     text = _target_text(mentality, method)
     return any(token in text for token in ("normative", "moral", "legal", "shari"))
 
@@ -219,11 +345,20 @@ def _merge_unique(base: list[str], extra: list[str]) -> list[str]:
     return out
 
 
-def _zero(contract_id: str, blockers: list[str], residuals: list[str], trace_complete: bool) -> AnswerBirthEvaluationResult:
+def _zero(
+    contract_id: str,
+    blockers: list[str],
+    residuals: list[str],
+    trace_complete: bool,
+    trace_path_complete: bool,
+    trace_evidence_complete: bool,
+) -> AnswerBirthEvaluationResult:
     return AnswerBirthEvaluationResult(
         contract_id=contract_id,
         public_judgment="zero",
         blockers=list(dict.fromkeys(blockers)),
         residuals=_merge_unique(residuals, blockers),
         trace_complete=trace_complete,
+        trace_path_complete=trace_path_complete,
+        trace_evidence_complete=trace_evidence_complete,
     )

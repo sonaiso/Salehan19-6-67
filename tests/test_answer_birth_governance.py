@@ -103,6 +103,67 @@ def test_trace_completeness_is_required_for_certificate():
     result = evaluate_answer_birth_contract(contract)
     assert result.public_judgment == "hypothesis"
     assert result.trace_complete is False
+    assert result.trace_path_complete is False
+
+
+def test_requested_hypothesis_is_not_promoted_to_certificate():
+    contract = _complete_contract()
+    contract.public_judgment = "hypothesis"
+    result = evaluate_answer_birth_contract(contract)
+    assert result.public_judgment == "hypothesis"
+
+
+def test_trace_path_complete_without_evidence_returns_hypothesis():
+    contract = _complete_contract()
+    contract.public_judgment = "hypothesis"
+    contract.thinking_means.means_type = "internal_reasoning"
+    contract.thought_trace.evidence_refs = []
+    result = evaluate_answer_birth_contract(contract)
+    assert result.public_judgment == "hypothesis"
+    assert result.trace_path_complete is True
+    assert result.trace_evidence_complete is False
+
+
+def test_missing_means_emits_missing_means_not_means_as_method():
+    contract = _complete_contract()
+    contract.thinking_means = None
+    result = evaluate_answer_birth_contract(contract)
+    assert result.public_judgment == "zero"
+    assert "missing_means" in result.blockers
+    assert "means_as_method" not in result.blockers
+
+
+def test_internal_reasoning_means_is_allowed():
+    contract = _complete_contract()
+    contract.thinking_means.means_type = "internal_reasoning"
+    result = evaluate_answer_birth_contract(contract)
+    assert result.public_judgment == "certificate"
+
+
+def test_required_method_inputs_are_enforced():
+    contract = _complete_contract()
+    contract.thinking_method.required_inputs = ["intent", "reality_refs"]
+    result = evaluate_answer_birth_contract(contract)
+    assert result.public_judgment == "hypothesis"
+    assert "missing_required_input::reality_refs" in result.residuals
+
+
+def test_governed_evidence_rank_does_not_bypass_core_certificate_gate():
+    contract = _complete_contract()
+    contract.thought_trace.evidence_refs = ["rank:governed::ev-1", "normative::ev-norm-1"]
+    contract.public_judgment = "hypothesis"
+    result = evaluate_answer_birth_contract(contract)
+    assert result.public_judgment == "hypothesis"
+
+
+def test_scientific_method_worldview_detection_uses_output_kind_not_substring_only():
+    contract = _complete_contract()
+    contract.thinking_method.method_type = "scientific"
+    contract.mentality_frame.output_kind = "worldview"
+    contract.mentality_frame.domain = "technical"
+    result = evaluate_answer_birth_contract(contract)
+    assert result.public_judgment == "zero"
+    assert "scientific_method_as_worldview" in result.blockers
 
 
 def test_residuals_are_preserved_in_result():
