@@ -60,8 +60,9 @@ def test_release_candidate_report_shape_and_required_fields(tmp_path: Path) -> N
     assert not missing, f"missing required report fields: {sorted(missing)}"
 
 
-def test_release_candidate_claim_boundaries_and_artifact_references() -> None:
-    payload = json.loads(_run_script().stdout)
+def test_release_candidate_claim_boundaries_and_artifact_references(tmp_path: Path) -> None:
+    output_path = tmp_path / "release_candidate_report.json"
+    payload = json.loads(_run_script("--output", str(output_path)).stdout)
 
     assert payload["pilot_status"] == "HYPOTHESIS"
     assert payload["production_certified"] is False
