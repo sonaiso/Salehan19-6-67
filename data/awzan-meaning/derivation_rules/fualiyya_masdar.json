@@ -1,0 +1,38 @@
+{
+  "rule_id": "fualiyya_masdar_derivation",
+  "rule_name_ar": "المصدر الصناعي على وزن فَعَالِيَّة",
+  "target_pattern": "فَعَالِيَّة",
+  "target_pattern_id": "fualiyya_masdar",
+  "summary_ar": "بزيادة ياء النسبة المشدّدة والتاء على فَعَال، يدلّ على الصفة المجردة من الموصوف.",
+  "base_rule": {
+    "description_ar": "مصدر صناعي على وزن فَعَالِيَّة بزيادة ياء النسبة وتاء التأنيث على فَعَال.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "بناء فَعَال"
+      },
+      {
+        "step": 2,
+        "description_ar": "زيادة ياء النسبة المشدّدة"
+      },
+      {
+        "step": 3,
+        "description_ar": "زيادة تاء التأنيث"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "original": "إنْسَان",
+      "result": "إِنْسَانِيَّة"
+    },
+    {
+      "original": "وَطَن",
+      "result": "وَطَنِيَّة"
+    },
+    {
+      "original": "عَمَال",
+      "result": "عَمَالِيَّة"
+    }
+  ]
+}

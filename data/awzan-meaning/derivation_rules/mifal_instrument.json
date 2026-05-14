@@ -1,0 +1,43 @@
+{
+  "rule_id": "mifal_instrument_derivation",
+  "rule_name_ar": "اسم الآلة على وزن مِفْعَل",
+  "target_pattern": "مِفْعَل",
+  "target_pattern_id": "mifal_instrument",
+  "summary_ar": "ميم مكسورة + فاء ساكنة + عين مفتوحة + لام، اسم آلة قياسي يدلّ على الأداة التي يُقام بها الفعل.",
+  "base_rule": {
+    "description_ar": "يُصاغ بزيادة ميم مكسورة في الأول مع إسكان الفاء وفتح العين.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "زيادة ميم مكسورة",
+        "insert_letter": "مِ"
+      },
+      {
+        "step": 2,
+        "description_ar": "إسكان الفاء"
+      },
+      {
+        "step": 3,
+        "description_ar": "فتح العين"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "verb": "بَرَدَ",
+      "result": "مِبْرَد"
+    },
+    {
+      "verb": "شَرَطَ",
+      "result": "مِشْرَط"
+    },
+    {
+      "verb": "قَوَدَ",
+      "result": "مِقْوَد"
+    },
+    {
+      "verb": "قَصَّ",
+      "result": "مِقَصّ"
+    }
+  ]
+}

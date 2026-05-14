@@ -1,0 +1,105 @@
+{
+  "rule_id": "istafala_verb_derivation",
+  "rule_name_ar": "قاعدة بناء الفعل المزيد على وزن اِسْتَفْعَل",
+  "target_pattern": "إِسْتَفْعَل",
+  "target_pattern_id": "istafala_verb",
+  "summary_ar": "همزة وصل مكسورة + سين ساكنة + تاء مفتوحة + فاء ساكنة + عين مفتوحة + لام، فعلٌ مزيد بثلاثة أحرف يدلّ على الطلب أو التحوّل.",
+  "base_rule": {
+    "description_ar": "يُبنى الفعل المزيد بالسين والتاء والهمزة بزيادة همزة وصل وسين وتاء في أوّل الفعل الثلاثي المجرد.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "زيادة همزة وصل مكسورة + سين ساكنة + تاء مفتوحة",
+        "insert_at": "start",
+        "insert_letter": "اِسْتَ"
+      },
+      {
+        "step": 2,
+        "description_ar": "إسكان فاء الكلمة",
+        "target_position": "root[0]",
+        "harakah": "sukun"
+      },
+      {
+        "step": 3,
+        "description_ar": "فتح عين الكلمة",
+        "target_position": "root[1]",
+        "harakah": "fatha"
+      }
+    ],
+    "example_walkthrough": {
+      "root": [
+        "خ",
+        "ر",
+        "ج"
+      ],
+      "verb": "خَرَجَ",
+      "result": "اِسْتَخْرَجَ"
+    }
+  },
+  "semantic_functions": {
+    "functions": [
+      {
+        "label_ar": "الطلب",
+        "description_ar": "طلب وقوع الفعل من غيره",
+        "examples": [
+          {
+            "result": "اِسْتَغْفَرَ",
+            "meaning_ar": "طلب المغفرة"
+          }
+        ]
+      },
+      {
+        "label_ar": "التحوّل",
+        "description_ar": "صار صاحب الصفة",
+        "examples": [
+          {
+            "result": "اِسْتَحْجَرَ",
+            "meaning_ar": "تحوّل إلى حجر"
+          }
+        ]
+      },
+      {
+        "label_ar": "العدّ",
+        "description_ar": "اعتقد الموصوف بالصفة",
+        "examples": [
+          {
+            "result": "اِسْتَحْسَنَ",
+            "meaning_ar": "عدّه حسناً"
+          }
+        ]
+      },
+      {
+        "label_ar": "المطاوعة",
+        "description_ar": "قبول أثر فعل آخر",
+        "examples": [
+          {
+            "result": "اِسْتَقَرَّ",
+            "meaning_ar": "ثبت واستقر"
+          }
+        ]
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "verb": "خَرَجَ",
+      "result": "اِسْتَخْرَجَ"
+    },
+    {
+      "verb": "غَفَرَ",
+      "result": "اِسْتَغْفَرَ"
+    },
+    {
+      "verb": "عَمِلَ",
+      "result": "اِسْتَعْمَلَ"
+    },
+    {
+      "verb": "فَهِمَ",
+      "result": "اِسْتَفْهَمَ"
+    },
+    {
+      "verb": "قَبِلَ",
+      "result": "اِسْتَقْبَلَ"
+    }
+  ]
+}

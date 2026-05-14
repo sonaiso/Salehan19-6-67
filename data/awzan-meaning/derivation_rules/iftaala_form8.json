@@ -1,0 +1,116 @@
+{
+  "rule_id": "iftaala_form8_derivation",
+  "rule_name_ar": "بناء الفعل على وزن اِفْتَعَل",
+  "target_pattern": "إِفْتَعَل",
+  "target_pattern_id": "iftaala_form8",
+  "summary_ar": "همزة وصل + فاء ساكنة + تاء مفتوحة + عين مفتوحة + لام، فعل مزيد بالهمزة والتاء يدلّ على المطاوعة أو الاتخاذ.",
+  "base_rule": {
+    "description_ar": "يُبنى هذا الباب بزيادة همزة وصل في أوّل الفعل، وزيادة تاء بين الفاء والعين.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "زيادة همزة وصل + إسكان الفاء",
+        "insert_at": "start",
+        "insert_letter": "اِ"
+      },
+      {
+        "step": 2,
+        "description_ar": "إسكان الفاء"
+      },
+      {
+        "step": 3,
+        "description_ar": "زيادة تاء مفتوحة بعد الفاء",
+        "insert_after": "root[0]",
+        "insert_letter": "تَ"
+      },
+      {
+        "step": 4,
+        "description_ar": "فتح العين"
+      }
+    ]
+  },
+  "semantic_functions": {
+    "functions": [
+      {
+        "label_ar": "المطاوعة",
+        "examples": [
+          {
+            "original": "جَمَعَ",
+            "result": "اِجْتَمَعَ"
+          },
+          {
+            "original": "خَلَفَ",
+            "result": "اِخْتَلَفَ"
+          }
+        ]
+      },
+      {
+        "label_ar": "الاتخاذ",
+        "description_ar": "اتخاذ الشيء من المادة",
+        "examples": [
+          {
+            "result": "اِتَّخَذَ"
+          },
+          {
+            "result": "اِشْتَوَى",
+            "meaning_ar": "اتخذ اللحم شواءً"
+          }
+        ]
+      },
+      {
+        "label_ar": "المشاركة",
+        "examples": [
+          {
+            "result": "اِخْتَصَمَ"
+          },
+          {
+            "result": "اِقْتَتَلَ"
+          }
+        ]
+      },
+      {
+        "label_ar": "الاجتهاد في الفعل",
+        "examples": [
+          {
+            "result": "اِكْتَسَبَ",
+            "meaning_ar": "بذل جهداً في الكسب"
+          }
+        ]
+      }
+    ]
+  },
+  "phonetic_rules": {
+    "description_ar": "تُبدل تاء افتعل أحياناً بحسب الفاء",
+    "rules": [
+      {
+        "if": "الفاء صاد أو ضاد أو طاء أو ظاء",
+        "transformation": "التاء → طاء",
+        "example": "اِصْطَبَرَ"
+      },
+      {
+        "if": "الفاء واو أو ياء",
+        "transformation": "تُدغم",
+        "example": "وَصَلَ → اِتَّصَلَ"
+      },
+      {
+        "if": "الفاء دال أو ذال أو زاي",
+        "transformation": "التاء → دال",
+        "example": "زَجَرَ → اِزْدَجَرَ"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "verb": "اِجْتَمَعَ",
+      "ism_fail": "مُجْتَمِع"
+    },
+    {
+      "verb": "اِخْتَلَفَ",
+      "ism_fail": "مُخْتَلِف"
+    },
+    {
+      "verb": "اِقْتَرَبَ",
+      "ism_fail": "مُقْتَرِب"
+    }
+  ]
+}

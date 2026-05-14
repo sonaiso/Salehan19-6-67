@@ -1,0 +1,75 @@
+{
+  "rule_id": "faaala_verb_form3_derivation",
+  "rule_name_ar": "بناء الفعل المزيد بالألف على وزن فَاعَل",
+  "target_pattern": "فَاعَل",
+  "target_pattern_id": "faaala_verb_form3",
+  "summary_ar": "فاء مفتوحة + ألف + عين مفتوحة + لام، فعل مزيد بألف بين الفاء والعين يدلّ غالباً على المشاركة بين اثنين.",
+  "base_rule": {
+    "description_ar": "يُبنى فعل المفاعلة بزيادة ألف بين فاء الفعل وعينه، ويدلّ غالباً على مشاركة الفاعل مع غيره في الحدث.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "فتح الفاء"
+      },
+      {
+        "step": 2,
+        "description_ar": "زيادة ألف بعد الفاء",
+        "insert_after": "root[0]",
+        "insert_letter": "ا"
+      },
+      {
+        "step": 3,
+        "description_ar": "فتح العين"
+      }
+    ]
+  },
+  "semantic_functions": {
+    "functions": [
+      {
+        "label_ar": "المشاركة",
+        "examples": [
+          {
+            "original": "كَتَبَ",
+            "result": "كَاتَبَ",
+            "meaning_ar": "تبادل الكتابة معه"
+          },
+          {
+            "original": "قَتَلَ",
+            "result": "قَاتَلَ"
+          }
+        ]
+      },
+      {
+        "label_ar": "التكثير",
+        "examples": [
+          {
+            "result": "ضَاعَفَ",
+            "meaning_ar": "زاد مراراً"
+          }
+        ]
+      },
+      {
+        "label_ar": "بمعنى المجرد",
+        "examples": [
+          {
+            "result": "سَافَرَ"
+          }
+        ]
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "verb": "كَاتَبَ",
+      "ism_fail": "مُكَاتِب"
+    },
+    {
+      "verb": "وَاعَدَ",
+      "ism_fail": "مُوَاعِد"
+    },
+    {
+      "verb": "سَاعَدَ",
+      "ism_fail": "مُسَاعِد"
+    }
+  ]
+}

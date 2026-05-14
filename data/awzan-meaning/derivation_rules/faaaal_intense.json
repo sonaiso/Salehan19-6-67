@@ -1,0 +1,116 @@
+{
+  "rule_id": "faaaal_intensified_derivation",
+  "rule_name_ar": "قاعدة اشتقاق صيغة المبالغة على وزن فَعَّال",
+  "target_pattern": "فَعَّال",
+  "target_pattern_id": "faaaal_intense",
+  "summary_ar": "فاء مفتوحة + عين مضعّفة مفتوحة + ألف زائدة + لام، تدلّ على من اتصف بالفعل اتصافاً شديداً أو كثيراً، وتدلّ كثيراً على الحرفة والصناعة.",
+
+  "base_rule": {
+    "description_ar": "صيغة المبالغة على وزن فَعَّال تُصاغ من الفعل الثلاثي المتعدّي بفتح فائه، وتضعيف عينه مع فتحها، وزيادة ألف بعد العين، وتدلّ على المبالغة في القيام بالفعل والمداومة عليه.",
+    "operations": [
+      {
+        "step": 1,
+        "operation_id": "fath_fa",
+        "description_ar": "فتح فاء الكلمة",
+        "target_position": "root[0]",
+        "harakah": "fatha",
+        "harakah_code": "\u064E"
+      },
+      {
+        "step": 2,
+        "operation_id": "double_ain",
+        "description_ar": "تضعيف عين الكلمة (شدّة) مع فتحها",
+        "target_position": "root[1]",
+        "double_letter": true,
+        "harakah": "fatha",
+        "shadda_code": "\u0651"
+      },
+      {
+        "step": 3,
+        "operation_id": "insert_alif",
+        "description_ar": "زيادة ألف بعد العين المضعّفة",
+        "insert_after": "root[1]",
+        "insert_letter": "ا"
+      }
+    ],
+    "example_walkthrough": {
+      "root": ["ك", "ت", "ب"],
+      "verb": "كَتَبَ",
+      "wazn_template": "فَ + عّـ + ا + ل",
+      "derivation": "كَ + تّـ + ا + ب",
+      "result": "كَتَّاب",
+      "meaning_ar": "كثير الكتابة، الذي يحترف الكتابة"
+    }
+  },
+
+  "application_conditions": {
+    "description_ar": "تنطبق صيغة 'فَعَّال' بالشروط التالية",
+    "conditions": [
+      {
+        "condition_id": "is_trilateral",
+        "description_ar": "ثلاثي مجرد",
+        "check": "len(root) == 3 and no_augmentations(verb)"
+      },
+      {
+        "condition_id": "is_transitive_or_intensive",
+        "description_ar": "يصحّ في المتعدّي واللازم، بشرط أن يقبل المبالغة",
+        "check": "accepts_intensification(verb)"
+      }
+    ]
+  },
+
+  "semantic_functions": {
+    "description_ar": "تأتي فَعَّال لثلاثة معانٍ تتقارب",
+    "functions": [
+      {
+        "function_id": "intensification",
+        "label_ar": "المبالغة في الفعل",
+        "description_ar": "كثرة وقوع الفعل من الفاعل أو شدّته",
+        "examples": [
+          {"verb": "غَفَرَ", "result": "غَفَّار", "meaning_ar": "كثير المغفرة"},
+          {"verb": "صَبَرَ", "result": "صَبَّار", "meaning_ar": "كثير الصبر"},
+          {"verb": "شَكَرَ", "result": "شَكَّار", "meaning_ar": "كثير الشكر"},
+          {"verb": "كَذَبَ", "result": "كَذَّاب", "meaning_ar": "كثير الكذب"}
+        ]
+      },
+      {
+        "function_id": "profession",
+        "label_ar": "الحرفة والصناعة",
+        "description_ar": "من يمارس الفعل حرفةً ومهنةً",
+        "examples": [
+          {"verb": "نَجَرَ", "result": "نَجَّار", "meaning_ar": "محترف النجارة"},
+          {"verb": "حَدَدَ", "result": "حَدَّاد", "meaning_ar": "محترف الحدادة"},
+          {"verb": "خَبَزَ", "result": "خَبَّاز", "meaning_ar": "محترف الخبز"},
+          {"verb": "بَنَى", "result": "بَنَّاء", "meaning_ar": "محترف البناء"},
+          {"verb": "كَتَبَ", "result": "كَتَّاب", "meaning_ar": "محترف الكتابة"}
+        ]
+      },
+      {
+        "function_id": "characteristic",
+        "label_ar": "الصفة اللازمة",
+        "description_ar": "الصفة التي صارت سمةً لازمةً للموصوف",
+        "examples": [
+          {"verb": "ضَحِكَ", "result": "ضَحَّاك", "meaning_ar": "كثير الضحك"},
+          {"verb": "بَكَى", "result": "بَكَّاء", "meaning_ar": "كثير البكاء"}
+        ]
+      }
+    ]
+  },
+
+  "related_intensification_patterns": {
+    "description_ar": "أوزان المبالغة الخمسة المشهورة",
+    "patterns": [
+      {"pattern": "فَعَّال", "pattern_id": "faaaal_intense", "frequency_ar": "الأكثر شيوعاً (غَفَّار، كَذَّاب)"},
+      {"pattern": "فَعُول", "pattern_id": "faulu_quality_noun", "frequency_ar": "شائع (صَبُور، شَكُور)"},
+      {"pattern": "فَعِيل", "pattern_id": "faiil_attr", "frequency_ar": "ثابت كصفة (رَحِيم، عَلِيم)"},
+      {"pattern": "فَعِل", "pattern_id": "faila_verb_state", "frequency_ar": "قليل (حَذِر، فَطِن)"},
+      {"pattern": "مِفْعَال", "pattern_id": "mifaal_instrument", "frequency_ar": "نادر للمبالغة (مِطْعَام)"}
+    ]
+  },
+
+  "comparison_with_faail": {
+    "description_ar": "الفرق بين فَاعِل و فَعَّال",
+    "faail": "يدلّ على من قام بالفعل مرّة واحدة أو وقتاً معيّناً (كَاتِب = من يكتب)",
+    "faaaal": "يدلّ على من اعتاد الفعل وكثُر منه (كَتَّاب = من يكتب كثيراً ويحترف الكتابة)"
+  }
+}

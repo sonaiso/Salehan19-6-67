@@ -1,0 +1,17 @@
+word_ar,word_normalized,pos,synset_id,synset_definition,preferred,reason
+رأى,رأى,v,see.v.01,see with one's eyes,yes,core meaning: visual perception — not metaphorical
+رأى,رأى,v,think.v.01,judge or regard; look upon; consider,no,secondary sense: opinion/belief
+يوم,يوم,n,day.n.01,time for Earth to make a complete rotation on its axis,yes,primary meaning
+الجمعة,جمعة,n,Friday.n.01,the sixth day of the week,yes,only valid synset
+سلام,سلام,n,peace.n.01,the state prevailing during the absence of war,yes,primary meaning
+سلام,سلام,n,greeting.n.01,an acknowledgment or salutation on meeting,no,secondary sense: greeting
+مطلع,مطلع,n,dawn.n.02,the first light of day,yes,rising/beginning of daylight
+الفجر,فجر,n,dawn.n.01,the time in the morning when the sky becomes lighter,yes,primary meaning
+سلطان,سلطان,n,ruler.n.01,a person who rules or commands,yes,primary meaning
+سلطان,سلطان,n,authority.n.01,the power to make decisions,no,abstract sense
+عادل,عادل,a,just.s.01,used especially of what is legally or ethically right or proper,yes,primary meaning
+عادل,عادل,a,fair.a.01,free from favoritism or self-interest,no,secondary sense
+كتب,كتب,v,write.v.01,produce a literary work,yes,primary sense — not read.v.08 or record.v.01
+كتب,كتب,v,write.v.02,communicate or express by writing,no,secondary sense
+قلم,قلم,n,,pen (writing instrument) — NOT in OMW Arabic,no,missing from Arabic OMW — must use things.csv
+مدرسة,مدرسة,n,,school — NOT in OMW Arabic,no,missing from Arabic OMW — must use things.csv

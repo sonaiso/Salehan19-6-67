@@ -1,0 +1,41 @@
+{
+  "rule_id": "faulu_quality_noun_derivation",
+  "rule_name_ar": "صيغة المبالغة على وزن فَعُول",
+  "target_pattern": "فَعُول",
+  "target_pattern_id": "faulu_quality_noun",
+  "summary_ar": "فاء مفتوحة + عين مضمومة + واو + لام، صيغة مبالغة تدلّ على كثرة الصفة في الموصوف.",
+  "base_rule": {
+    "description_ar": "صيغة مبالغة من الفعل الثلاثي بفتح الفاء وضمّ العين وزيادة واو.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "فتح الفاء"
+      },
+      {
+        "step": 2,
+        "description_ar": "ضمّ العين"
+      },
+      {
+        "step": 3,
+        "description_ar": "زيادة واو بعد العين"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "verb": "صَبَرَ",
+      "result": "صَبُور",
+      "meaning_ar": "كثير الصبر"
+    },
+    {
+      "verb": "شَكَرَ",
+      "result": "شَكُور",
+      "meaning_ar": "كثير الشكر"
+    },
+    {
+      "verb": "غَفَرَ",
+      "result": "غَفُور"
+    }
+  ],
+  "note_ar": "فَعُول تستوي في المذكر والمؤنث، فلا يقال (فَعُولَة) إلا فيما شذّ."
+}

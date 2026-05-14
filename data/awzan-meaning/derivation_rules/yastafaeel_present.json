@@ -1,0 +1,43 @@
+{
+  "rule_id": "yastafaeel_present_derivation",
+  "rule_name_ar": "مضارع باب اِسْتَفْعَل على وزن يَسْتَفْعِل",
+  "target_pattern": "يَسْتَفْعِل",
+  "target_pattern_id": "yastafaeel_present",
+  "summary_ar": "ياء مفتوحة + سين ساكنة + تاء مفتوحة + فاء ساكنة + عين مكسورة + لام، مضارع باب اِسْتَفْعَل.",
+  "base_rule": {
+    "description_ar": "مضارع اِسْتَفْعَل: تُحذف همزة الوصل، وتُلحق ياء المضارعة المفتوحة في الأول، وتُكسر العين.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "احذف همزة الوصل"
+      },
+      {
+        "step": 2,
+        "description_ar": "زيادة ياء مفتوحة + سين ساكنة + تاء مفتوحة",
+        "insert_letter": "يَسْتَ"
+      },
+      {
+        "step": 3,
+        "description_ar": "إسكان الفاء"
+      },
+      {
+        "step": 4,
+        "description_ar": "كسر العين"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "madi": "اِسْتَخْرَجَ",
+      "mudari": "يَسْتَخْرِج"
+    },
+    {
+      "madi": "اِسْتَغْفَرَ",
+      "mudari": "يَسْتَغْفِر"
+    },
+    {
+      "madi": "اِسْتَعْمَلَ",
+      "mudari": "يَسْتَعْمِل"
+    }
+  ]
+}

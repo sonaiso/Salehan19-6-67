@@ -1,0 +1,152 @@
+{
+  "rule_id": "mafal_place_time_derivation",
+  "rule_name_ar": "قاعدة اشتقاق اسم المكان والزمان والمصدر الميمي على وزن مَفْعَل",
+  "target_pattern": "مَفْعَل",
+  "target_pattern_id": "mafal_place",
+  "summary_ar": "ميم مفتوحة + فاء ساكنة + عين مفتوحة + لام، يدلّ على مكان وقوع الفعل أو زمانه أو مصدره الميمي، ويُصاغ على وزن مَفْعَل إن كان مضارع الفعل مفتوح العين أو مضمومها.",
+
+  "base_rule": {
+    "description_ar": "اسم المكان والزمان من الفعل الثلاثي المجرد يُصاغ على وزن مَفْعَل إذا كان مضارعه مفتوح العين (يَفْعَل) أو مضموم العين (يَفْعُل).",
+    "operations": [
+      {
+        "step": 1,
+        "operation_id": "prefix_mim",
+        "description_ar": "زيادة ميم مفتوحة في أول الكلمة",
+        "insert_at": "start",
+        "insert_letter": "مَ"
+      },
+      {
+        "step": 2,
+        "operation_id": "silent_fa",
+        "description_ar": "إسكان فاء الكلمة (الحرف الأول من الجذر)",
+        "target_position": "root[0]",
+        "harakah": "sukun",
+        "harakah_code": "\u0652"
+      },
+      {
+        "step": 3,
+        "operation_id": "fath_ain",
+        "description_ar": "فتح عين الكلمة (الحرف الثاني من الجذر)",
+        "target_position": "root[1]",
+        "harakah": "fatha",
+        "harakah_code": "\u064E"
+      },
+      {
+        "step": 4,
+        "operation_id": "lam_endings",
+        "description_ar": "تأتي لام الكلمة ساكنةً في الوقف، حاملةً علامة الإعراب في الوصل",
+        "target_position": "root[2]"
+      }
+    ],
+    "example_walkthrough": {
+      "root": ["ك", "ت", "ب"],
+      "verb_past": "كَتَبَ",
+      "verb_present": "يَكْتُب",
+      "wazn_template": "مَ + فْـ + عَـ + ل",
+      "derivation": "مَ + كْـ + تَـ + ب",
+      "result": "مَكْتَب"
+    }
+  },
+
+  "application_conditions": {
+    "description_ar": "تنطبق صيغة 'مَفْعَل' (للمكان والزمان) إذا توفّرت كل هذه الشروط",
+    "conditions": [
+      {
+        "condition_id": "is_trilateral",
+        "description_ar": "ثلاثي مجرد (ثلاثة أحرف أصلية بلا زيادة)",
+        "check": "len(root) == 3 and no_augmentations(verb)"
+      },
+      {
+        "condition_id": "mudari_ain_open_or_damm",
+        "description_ar": "مضارعه مفتوح العين (يَفْعَل) أو مضموم العين (يَفْعُل)",
+        "check": "mudari_pattern in ['يَفْعَل', 'يَفْعُل']",
+        "note_ar": "إن كان مضارعه مكسور العين (يَفْعِل) فاسم المكان والزمان على وزن مَفْعِل"
+      },
+      {
+        "condition_id": "not_naqis_yai",
+        "description_ar": "ليس ناقصاً يائيّاً، فإن كان فاسم المكان على مَفْعِل",
+        "check": "root[2] != 'ي'"
+      }
+    ]
+  },
+
+  "transformations": {
+    "description_ar": "حالات إعلال اسم المكان والزمان",
+
+    "mahmuz": {
+      "label_ar": "مهموز الفاء",
+      "description_ar": "إذا كانت فاء الكلمة همزة، تبقى على حالها",
+      "trigger": "root[0] in ['ء','أ','إ']",
+      "examples": [
+        {"verb": "أَكَلَ", "root": ["أ","ك","ل"], "result": "مَأْكَل"},
+        {"verb": "أَوَى", "root": ["أ","و","ي"], "result": "مَأْوَى"}
+      ]
+    },
+
+    "ajwaf": {
+      "label_ar": "أجوف (العين حرف علّة)",
+      "description_ar": "إذا كانت عين الكلمة واواً أو ياءً، تبقى على حالها وتُقلب إلى ألف لتحرّكها وانفتاح ما قبلها",
+      "trigger": "root[1] in ['و','ي']",
+      "transformation": "حرف علّة العين متحرك بفتحة + ما قبله مفتوح → ألف",
+      "examples": [
+        {"verb": "قَالَ", "root": ["ق","و","ل"], "result": "مَقَال"},
+        {"verb": "سَارَ", "root": ["س","ي","ر"], "result": "مَسَار"},
+        {"verb": "زَارَ", "root": ["ز","و","ر"], "result": "مَزَار"}
+      ]
+    },
+
+    "naqis_wawi": {
+      "label_ar": "ناقص واويّ (اللام واو)",
+      "description_ar": "تُقلب الواو ألفاً مقصورة لتحرّكها وانفتاح ما قبلها، فيُكتب على وزن مَفْعَى",
+      "trigger": "root[2] == 'و'",
+      "examples": [
+        {"verb": "دَعَا", "root": ["د","ع","و"], "result": "مَدْعَى"},
+        {"verb": "رَجَا", "root": ["ر","ج","و"], "result": "مَرْجَى"}
+      ]
+    },
+
+    "mudaaaf": {
+      "label_ar": "مضعّف",
+      "description_ar": "تُدغم العين واللام المتماثلتان",
+      "trigger": "root[1] == root[2]",
+      "examples": [
+        {"verb": "مَرَّ", "root": ["م","ر","ر"], "result": "مَمَرّ"},
+        {"verb": "فَرَّ", "root": ["ف","ر","ر"], "result": "مَفَرّ"}
+      ]
+    }
+  },
+
+  "semantic_disambiguation": {
+    "description_ar": "نفس الصيغة 'مَفْعَل' تأتي لثلاثة معانٍ مختلفة، يُميَّز بينها بالسياق",
+    "meanings": [
+      {
+        "meaning_id": "place",
+        "label_ar": "اسم المكان",
+        "description_ar": "يدلّ على المكان الذي يقع فيه الفعل",
+        "examples": ["مَكْتَب (مكان الكتابة)", "مَلْعَب (مكان اللعب)", "مَدْخَل (مكان الدخول)"]
+      },
+      {
+        "meaning_id": "time",
+        "label_ar": "اسم الزمان",
+        "description_ar": "يدلّ على الزمان الذي يقع فيه الفعل",
+        "examples": ["مَوْلِد (زمن الولادة)", "مَطْلَع (وقت الطلوع)"]
+      },
+      {
+        "meaning_id": "masdar_mimi",
+        "label_ar": "المصدر الميمي",
+        "description_ar": "يدلّ على الحدث المجرد كالمصدر العادي، لكن بزيادة الميم",
+        "examples": ["مَذْهَب (الذَهَاب)", "مَرْجِع (الرجوع)"]
+      }
+    ]
+  },
+
+  "fallback_rule": {
+    "label_ar": "قاعدة الفرع: ما ليس ثلاثيًا مجردًا",
+    "description_ar": "اسم المكان والزمان من غير الثلاثي يُصاغ على وزن اسم المفعول (مُــ ـَ ـ): يُؤتى بالمضارع المبني للمجهول، ويُقلب حرف المضارعة ميماً مضمومة، ويُفتح ما قبل الآخر.",
+    "examples": [
+      {"verb": "اِجْتَمَعَ", "ism_makaan": "مُجْتَمَع", "pattern": "مُفْتَعَل"},
+      {"verb": "اِسْتَشْفَى", "ism_makaan": "مُسْتَشْفَى", "pattern": "مُسْتَفْعَل"},
+      {"verb": "اِنْطَلَقَ", "ism_makaan": "مُنْطَلَق", "pattern": "مُنْفَعَل"}
+    ]
+  }
+}

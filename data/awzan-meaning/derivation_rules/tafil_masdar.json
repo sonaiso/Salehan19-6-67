@@ -1,0 +1,56 @@
+{
+  "rule_id": "tafil_masdar_derivation",
+  "rule_name_ar": "مصدر باب فَعَّل على وزن تَفْعِيل",
+  "target_pattern": "تَفْعِيل",
+  "target_pattern_id": "tafil_masdar",
+  "summary_ar": "تاء مفتوحة + فاء ساكنة + عين مكسورة + ياء ساكنة + لام، مصدر قياسي لباب فَعَّل المضعّف.",
+  "base_rule": {
+    "description_ar": "يُبنى مصدر فَعَّل القياسي بزيادة تاء في أوّله وياء قبل آخره، وقد يكون على فِعَال أو تَفْعِلَة.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "زيادة تاء مفتوحة في الأول",
+        "insert_letter": "تَ"
+      },
+      {
+        "step": 2,
+        "description_ar": "إسكان الفاء"
+      },
+      {
+        "step": 3,
+        "description_ar": "كسر العين"
+      },
+      {
+        "step": 4,
+        "description_ar": "زيادة ياء ساكنة بعد العين"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "verb": "عَلَّمَ",
+      "masdar": "تَعْلِيم"
+    },
+    {
+      "verb": "قَطَّعَ",
+      "masdar": "تَقْطِيع"
+    },
+    {
+      "verb": "نَظَّمَ",
+      "masdar": "تَنْظِيم"
+    }
+  ],
+  "alternative_patterns": {
+    "description_ar": "مصادر بديلة لباب فَعَّل",
+    "patterns": [
+      {
+        "pattern": "تَفْعِلَة",
+        "example": "تَرْبِيَة (من رَبَّى)"
+      },
+      {
+        "pattern": "فِعَّال",
+        "example": "كِذَّاب"
+      }
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "rule_id": "fawaail_plural_derivation",
+  "rule_name_ar": "جمع التكسير على وزن فَوَاعِل",
+  "target_pattern": "فَوَاعِل",
+  "target_pattern_id": "fawaail_plural",
+  "summary_ar": "فاء مفتوحة + واو + ألف + عين مكسورة + لام، صيغة منتهى الجموع من جموع الكثرة.",
+  "base_rule": {
+    "description_ar": "يُجمع فاعِلَة المؤنث على وزن فَوَاعِل، وهو من صيغ منتهى الجموع غير المنصرفة.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "فتح الفاء"
+      },
+      {
+        "step": 2,
+        "description_ar": "زيادة واو ساكنة"
+      },
+      {
+        "step": 3,
+        "description_ar": "زيادة ألف"
+      },
+      {
+        "step": 4,
+        "description_ar": "كسر العين"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "mufrad": "فَارِس",
+      "result": "فَوَارِس"
+    },
+    {
+      "mufrad": "شَاهِد",
+      "result": "شَوَاهِد"
+    },
+    {
+      "mufrad": "نَافِذَة",
+      "result": "نَوَافِذ"
+    }
+  ]
+}

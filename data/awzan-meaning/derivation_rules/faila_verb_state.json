@@ -1,0 +1,88 @@
+{
+  "rule_id": "faila_verb_state_derivation",
+  "rule_name_ar": "الفعل الماضي الثلاثي على وزن فَعِل",
+  "target_pattern": "فَعِل",
+  "target_pattern_id": "faila_verb_state",
+  "summary_ar": "فاء مفتوحة + عين مكسورة + لام مفتوحة، فعل ثلاثي يدلّ غالباً على حالة عارضة أو صفة متجدّدة في الفاعل.",
+  "base_rule": {
+    "description_ar": "فعل ماضٍ ثلاثي على باب عَلِم يَعلَم، تكون عين فعله مكسورة في الماضي ومفتوحة في المضارع.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "فتح فاء الكلمة"
+      },
+      {
+        "step": 2,
+        "description_ar": "كسر عين الكلمة"
+      },
+      {
+        "step": 3,
+        "description_ar": "فتح لام الكلمة"
+      }
+    ]
+  },
+  "semantic_functions": {
+    "functions": [
+      {
+        "label_ar": "الحالة الانفعالية",
+        "examples": [
+          {
+            "verb": "فَرِحَ"
+          },
+          {
+            "verb": "حَزِنَ"
+          },
+          {
+            "verb": "غَضِبَ"
+          }
+        ]
+      },
+      {
+        "label_ar": "الإحساس والشعور",
+        "examples": [
+          {
+            "verb": "عَلِمَ"
+          },
+          {
+            "verb": "فَهِمَ"
+          },
+          {
+            "verb": "سَمِعَ"
+          }
+        ]
+      },
+      {
+        "label_ar": "الأعراض البدنية",
+        "examples": [
+          {
+            "verb": "مَرِضَ"
+          },
+          {
+            "verb": "عَطِشَ"
+          },
+          {
+            "verb": "جَاعَ"
+          }
+        ]
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "verb": "عَلِمَ",
+      "mudari": "يَعْلَم"
+    },
+    {
+      "verb": "فَهِمَ",
+      "mudari": "يَفْهَم"
+    },
+    {
+      "verb": "شَرِبَ",
+      "mudari": "يَشْرَب"
+    },
+    {
+      "verb": "فَرِحَ",
+      "mudari": "يَفْرَح"
+    }
+  ]
+}

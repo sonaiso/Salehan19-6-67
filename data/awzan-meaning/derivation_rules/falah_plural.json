@@ -1,0 +1,42 @@
+{
+  "rule_id": "falah_plural_derivation",
+  "rule_name_ar": "جمع التكسير على وزن فَعَلَة",
+  "target_pattern": "فَعَلَة",
+  "target_pattern_id": "falah_plural",
+  "summary_ar": "فاء مفتوحة + عين مفتوحة + لام مفتوحة + تاء، جمع تكسير من جموع الكثرة، يكثر في جمع فاعل المختصّ بالعقلاء.",
+  "base_rule": {
+    "description_ar": "يُجمع اسم الفاعل العاقل على وزن فَعَلَة جمعَ تكسير.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "فتح الفاء"
+      },
+      {
+        "step": 2,
+        "description_ar": "فتح العين"
+      },
+      {
+        "step": 3,
+        "description_ar": "فتح اللام"
+      },
+      {
+        "step": 4,
+        "description_ar": "زيادة تاء"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "mufrad": "عَابِد",
+      "result": "عَبَدَة"
+    },
+    {
+      "mufrad": "كَاتِب",
+      "result": "كَتَبَة"
+    },
+    {
+      "mufrad": "حَامِل",
+      "result": "حَمَلَة"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "rule_id": "faula_verb_quality_derivation",
+  "rule_name_ar": "الفعل الماضي الثلاثي على وزن فَعُل",
+  "target_pattern": "فَعُل",
+  "target_pattern_id": "faula_verb_quality",
+  "summary_ar": "فاء مفتوحة + عين مضمومة + لام مفتوحة، فعل ثلاثي يدلّ على ثبوت صفة لازمة في الفاعل.",
+  "base_rule": {
+    "description_ar": "فعل ماضٍ ثلاثي على باب كَرُم يَكرُم، تكون عين فعله مضمومة في الماضي والمضارع، ويدلّ على الصفة الثابتة اللازمة.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "فتح الفاء"
+      },
+      {
+        "step": 2,
+        "description_ar": "ضمّ العين"
+      },
+      {
+        "step": 3,
+        "description_ar": "فتح اللام"
+      }
+    ]
+  },
+  "semantic_function": {
+    "label_ar": "الصفة الثابتة",
+    "description_ar": "هذا الباب يُستعمل للصفات اللازمة الطبيعية، فلا يدلّ على حدث متجدد بل على سجيّة ثابتة"
+  },
+  "common_examples": [
+    {
+      "verb": "كَرُمَ",
+      "mudari": "يَكْرُم"
+    },
+    {
+      "verb": "ضَعُفَ",
+      "mudari": "يَضْعُف"
+    },
+    {
+      "verb": "شَرُفَ",
+      "mudari": "يَشْرُف"
+    },
+    {
+      "verb": "حَسُنَ",
+      "mudari": "يَحْسُن"
+    },
+    {
+      "verb": "كَبُرَ",
+      "mudari": "يَكْبُر"
+    }
+  ]
+}

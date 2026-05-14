@@ -1,0 +1,86 @@
+{
+  "rule_id": "tafaaala_form5_derivation",
+  "rule_name_ar": "بناء الفعل على وزن تَفَعَّل",
+  "target_pattern": "تَفَعَّل",
+  "target_pattern_id": "tafaaala_form5",
+  "summary_ar": "تاء مفتوحة + فاء مفتوحة + عين مضعّفة مفتوحة + لام، فعل مزيد بالتاء وتضعيف العين، يدلّ على المطاوعة أو التكلّف.",
+  "base_rule": {
+    "description_ar": "يُبنى هذا الباب بزيادة تاء في أوّل فَعَّل، ويدلّ غالباً على مطاوعة فَعَّل.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "زيادة تاء مفتوحة في الأول",
+        "insert_at": "start",
+        "insert_letter": "تَ"
+      },
+      {
+        "step": 2,
+        "description_ar": "فتح الفاء"
+      },
+      {
+        "step": 3,
+        "description_ar": "تضعيف العين مع فتحها"
+      },
+      {
+        "step": 4,
+        "description_ar": "فتح اللام"
+      }
+    ]
+  },
+  "semantic_functions": {
+    "functions": [
+      {
+        "label_ar": "مطاوعة فَعَّل",
+        "description_ar": "قبول أثر فعل من باب فَعَّل",
+        "examples": [
+          {
+            "original": "كَسَّرَ",
+            "result": "تَكَسَّرَ"
+          },
+          {
+            "original": "عَلَّمَ",
+            "result": "تَعَلَّمَ"
+          }
+        ]
+      },
+      {
+        "label_ar": "التكلّف",
+        "description_ar": "تكلّف الصفة دون تحقّقها الكامل",
+        "examples": [
+          {
+            "result": "تَحَلَّمَ",
+            "meaning_ar": "تكلّف الحلم"
+          },
+          {
+            "result": "تَجَلَّدَ",
+            "meaning_ar": "تكلّف الجلد"
+          }
+        ]
+      },
+      {
+        "label_ar": "التدرّج",
+        "examples": [
+          {
+            "result": "تَجَرَّعَ",
+            "meaning_ar": "شَرِب جرعةً جرعة"
+          }
+        ]
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "verb": "تَعَلَّمَ",
+      "ism_fail": "مُتَعَلِّم",
+      "masdar": "تَعَلُّم"
+    },
+    {
+      "verb": "تَكَسَّرَ",
+      "ism_fail": "مُتَكَسِّر"
+    },
+    {
+      "verb": "تَفَرَّقَ",
+      "ism_fail": "مُتَفَرِّق"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+relation_id,relation_type,source,target,conditions,certainty,notes
+rel_zayd_agent_raya,agent_of,thing_zayd,thing_raya,,0.88,زيد هو الفاعل في فعل الرؤية
+rel_zayd_agent_raya_past,agent_of,thing_zayd,thing_raya_past1,,0.88,زيد رأيت — صيغة الماضي
+rel_mundhu_restricts_yawm,restricts,thing_mundhu,thing_yawm,,0.95,منذ تقيد يوم الجمعة — ابتداء غاية زمنية
+rel_yawm_is_part_jumua,is_part_of,thing_jumua,thing_yawm,,0.95,يوم الجمعة جزء من مفهوم اليوم
+rel_hatta_restricts_matlaa,restricts,thing_hatta,thing_matlaa,,0.95,حتى تنتهي عند مطلع الفجر — انتهاء غاية
+rel_matlaa_is_part_fajr,is_part_of,thing_matlaa,thing_fajr,,0.90,المطلع يرتبط بالفجر زمنياً
+rel_fajr_causes_matlaa,causes,thing_fajr,thing_matlaa,,0.88,الفجر سبب ظهور المطلع
+rel_salam_predicates_layla,predicates,thing_salam,thing_hatta,,0.92,سلام هي حتى مطلع الفجر — السلام وصف لتلك الليلة
+rel_laalla_restricts_sultan,restricts,thing_laalla,thing_sultan,,0.90,لعل تدخل على السلطان فتنصبه
+rel_sultan_agent_aadil,predicates,thing_sultan,thing_aadil,,0.88,العدل خبر السلطان — السلطان يوصف بالعدل
+rel_raya_patient_zayd,patient_of,thing_zayd,thing_raya,,0.85,المرئي مرتبط بفاعل الرؤية
+rel_ma_prevents_raya,prevents,thing_ma_neg,thing_raya,,0.95,ما النافية تمنع إثبات الرؤية
+rel_ustadh_agent_daraba,agent_of,thing_ustadh,thing_daraba,,0.92,الأستاذ هو الفاعل في فعل الضرب
+rel_mithal_patient_daraba,patient_of,thing_mithal,thing_daraba,,0.90,المثال هو المفعول به — ما وقع عليه الضرب
+rel_laib_agent_daraba,agent_of,thing_laib,thing_daraba,,0.92,اللاعب هو الفاعل في ضرب الكرة
+rel_kura_patient_daraba,patient_of,thing_kura,thing_daraba,,0.92,الكرة هي المفعول به — ما وقع عليه الضرب

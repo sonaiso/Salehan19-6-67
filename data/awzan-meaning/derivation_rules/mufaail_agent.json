@@ -1,0 +1,52 @@
+{
+  "rule_id": "mufaail_agent_derivation",
+  "rule_name_ar": "قاعدة اشتقاق اسم الفاعل من باب فَاعَل على وزن مُفَاعِل",
+  "target_pattern": "مُفَاعِل",
+  "target_pattern_id": "mufaail_agent",
+  "summary_ar": "ميم مضمومة + فاء مفتوحة + ألف + عين مكسورة + لام، يدلّ على من شارك غيره في الفعل.",
+  "base_rule": {
+    "description_ar": "اسم الفاعل من باب فَاعَل (المشاركة) يُصاغ بأخذ المضارع وقلب حرف المضارعة ميماً مضمومة مع كسر ما قبل الآخر.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "خذ المضارع (يُفَاعِل)"
+      },
+      {
+        "step": 2,
+        "description_ar": "اقلب ياء المضارعة ميماً",
+        "transformation": "يُ → مُ"
+      },
+      {
+        "step": 3,
+        "description_ar": "تأكّد من كسر ما قبل الآخر"
+      }
+    ],
+    "example_walkthrough": {
+      "verb": "كَاتَبَ",
+      "mudari": "يُكَاتِب",
+      "result": "مُكَاتِب"
+    }
+  },
+  "common_examples": [
+    {
+      "verb": "كَاتَبَ",
+      "result": "مُكَاتِب"
+    },
+    {
+      "verb": "شَارَكَ",
+      "result": "مُشَارِك"
+    },
+    {
+      "verb": "سَاعَدَ",
+      "result": "مُسَاعِد"
+    },
+    {
+      "verb": "جَادَلَ",
+      "result": "مُجَادِل"
+    },
+    {
+      "verb": "خَاصَمَ",
+      "result": "مُخَاصِم"
+    }
+  ]
+}

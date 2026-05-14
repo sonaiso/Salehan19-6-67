@@ -1,0 +1,43 @@
+{
+  "rule_id": "yatafaaeel_present_derivation",
+  "rule_name_ar": "مضارع باب تَفَعَّل على وزن يَتَفَعَّل",
+  "target_pattern": "يَتَفَعَّل",
+  "target_pattern_id": "yatafaaeel_present",
+  "summary_ar": "ياء مفتوحة + تاء مفتوحة + فاء مفتوحة + عين مضعّفة مفتوحة + لام، مضارع باب تَفَعَّل المزيد.",
+  "base_rule": {
+    "description_ar": "مضارع تَفَعَّل يُبنى بإلحاق ياء المضارعة المفتوحة وإبقاء بقية الفعل كما هو، يدلّ على المطاوعة في الزمن الحاضر.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "زيادة ياء مفتوحة في الأول",
+        "insert_letter": "يَ"
+      },
+      {
+        "step": 2,
+        "description_ar": "فتح التاء"
+      },
+      {
+        "step": 3,
+        "description_ar": "فتح الفاء"
+      },
+      {
+        "step": 4,
+        "description_ar": "تضعيف العين مع فتحها"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "madi": "تَعَلَّمَ",
+      "mudari": "يَتَعَلَّم"
+    },
+    {
+      "madi": "تَفَرَّقَ",
+      "mudari": "يَتَفَرَّق"
+    },
+    {
+      "madi": "تَرَبَّصَ",
+      "mudari": "يَتَرَبَّص"
+    }
+  ]
+}

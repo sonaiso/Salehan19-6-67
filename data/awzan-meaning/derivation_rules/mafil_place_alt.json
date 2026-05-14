@@ -1,0 +1,115 @@
+{
+  "rule_id": "mafil_place_derivation",
+  "rule_name_ar": "قاعدة اشتقاق اسم المكان والزمان على وزن مَفْعِل",
+  "target_pattern": "مَفْعِل",
+  "target_pattern_id": "mafil_place_alt",
+  "summary_ar": "ميم مفتوحة + فاء ساكنة + عين مكسورة + لام، يدلّ على مكان وقوع الفعل أو زمانه، ويُصاغ على وزن مَفْعِل إن كان مضارع الفعل مكسور العين أو كان الفعل مثالاً واوياً.",
+
+  "base_rule": {
+    "description_ar": "اسم المكان والزمان من الفعل الثلاثي المجرد يُصاغ على وزن مَفْعِل في حالتين: إذا كان مضارعه مكسور العين (يَفْعِل)، أو إذا كان الفعل مثالاً واويّاً (فاؤه واو) وحُذفت الواو في المضارع.",
+    "operations": [
+      {
+        "step": 1,
+        "operation_id": "prefix_mim",
+        "description_ar": "زيادة ميم مفتوحة في أول الكلمة",
+        "insert_at": "start",
+        "insert_letter": "مَ"
+      },
+      {
+        "step": 2,
+        "operation_id": "silent_fa",
+        "description_ar": "إسكان فاء الكلمة",
+        "target_position": "root[0]",
+        "harakah": "sukun",
+        "harakah_code": "\u0652"
+      },
+      {
+        "step": 3,
+        "operation_id": "kasr_ain",
+        "description_ar": "كسر عين الكلمة",
+        "target_position": "root[1]",
+        "harakah": "kasra",
+        "harakah_code": "\u0650"
+      }
+    ],
+    "example_walkthrough": {
+      "root": ["ج", "ل", "س"],
+      "verb_past": "جَلَسَ",
+      "verb_present": "يَجْلِس",
+      "wazn_template": "مَ + فْـ + عِـ + ل",
+      "derivation": "مَ + جْـ + لِـ + س",
+      "result": "مَجْلِس"
+    }
+  },
+
+  "application_conditions": {
+    "description_ar": "تنطبق صيغة 'مَفْعِل' في إحدى حالتين",
+    "conditions": [
+      {
+        "condition_id": "mudari_kasr",
+        "description_ar": "مضارعه مكسور العين (يَفْعِل)",
+        "check": "mudari_pattern == 'يَفْعِل'",
+        "examples_ar": ["جَلَسَ يَجْلِس → مَجْلِس", "نَزَلَ يَنْزِل → مَنْزِل"]
+      },
+      {
+        "condition_id": "mithaal_wawi",
+        "description_ar": "مثال واويّ (فاء الكلمة واو) وحُذفت في المضارع",
+        "check": "root[0] == 'و'",
+        "examples_ar": ["وَعَدَ يَعِد → مَوْعِد", "وَقَفَ يَقِف → مَوْقِف", "وَلَدَ يَلِد → مَوْلِد"]
+      },
+      {
+        "condition_id": "naqis_yai",
+        "description_ar": "ناقص يائي (لامه ياء)، ولو كان مضارعه مفتوحاً",
+        "check": "root[2] == 'ي'",
+        "examples_ar": ["رَمَى يَرْمِي → مَرْمِى", "سَعَى يَسْعَى → مَسْعَى"]
+      }
+    ]
+  },
+
+  "transformations": {
+    "description_ar": "حالات الإعلال في صيغة مَفْعِل",
+
+    "mithaal_wawi_complete": {
+      "label_ar": "مثال واويّ كامل",
+      "description_ar": "تبقى الواو في اسم المكان مع كسر ما قبلها (الميم بقيت مفتوحة)",
+      "trigger": "root[0] == 'و'",
+      "examples": [
+        {"verb": "وَعَدَ", "root": ["و","ع","د"], "result": "مَوْعِد"},
+        {"verb": "وَقَفَ", "root": ["و","ق","ف"], "result": "مَوْقِف"},
+        {"verb": "وَلَدَ", "root": ["و","ل","د"], "result": "مَوْلِد"},
+        {"verb": "وَضَعَ", "root": ["و","ض","ع"], "result": "مَوْضِع"},
+        {"verb": "وَرَدَ", "root": ["و","ر","د"], "result": "مَوْرِد"}
+      ]
+    },
+
+    "ajwaf_yai": {
+      "label_ar": "أجوف يائيّ",
+      "description_ar": "تُقلب الياء ألفاً في اسم المكان لتحرّكها وانفتاح ما قبلها",
+      "trigger": "root[1] == 'ي'",
+      "examples": [
+        {"verb": "بَاعَ", "root": ["ب","ي","ع"], "result": "مَبَاع"},
+        {"verb": "سَارَ", "root": ["س","ي","ر"], "result": "مَسَار"}
+      ]
+    },
+
+    "naqis_yai": {
+      "label_ar": "ناقص يائيّ",
+      "description_ar": "تبقى الياء في اسم المكان مع كسر العين، وقد يكتب مقصوراً (مَفْعَى)",
+      "trigger": "root[2] == 'ي'",
+      "examples": [
+        {"verb": "رَمَى", "root": ["ر","م","ي"], "result": "مَرْمَى"},
+        {"verb": "سَعَى", "root": ["س","ع","ي"], "result": "مَسْعَى"},
+        {"verb": "هَدَى", "root": ["ه","د","ي"], "result": "مَهْدَى"}
+      ]
+    }
+  },
+
+  "common_examples": [
+    {"verb": "جَلَسَ", "result": "مَجْلِس", "meaning_ar": "مكان الجلوس"},
+    {"verb": "سَجَدَ", "result": "مَسْجِد", "meaning_ar": "مكان السجود"},
+    {"verb": "نَزَلَ", "result": "مَنْزِل", "meaning_ar": "مكان النزول، البيت"},
+    {"verb": "وَعَدَ", "result": "مَوْعِد", "meaning_ar": "زمان الوعد"},
+    {"verb": "وَلَدَ", "result": "مَوْلِد", "meaning_ar": "زمان الولادة"},
+    {"verb": "ضَرَبَ", "result": "مَضْرِب", "meaning_ar": "مكان الضرب"}
+  ]
+}

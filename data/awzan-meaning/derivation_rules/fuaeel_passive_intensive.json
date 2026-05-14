@@ -1,0 +1,16 @@
+{
+  "rule_id": "fuaeel_passive_intensive_derivation",
+  "rule_name_ar": "صيغة فُعَّل (نادرة)",
+  "target_pattern": "فُعَّل",
+  "target_pattern_id": "fuaeel_passive_intensive",
+  "summary_ar": "فاء مضمومة + عين مضعّفة مفتوحة + لام، صيغة نادرة قد تكون مبنياً للمجهول من فَعَّل في حالات خاصة.",
+  "note_ar": "هذا الوزن نادر، يظهر في حالات قرآنية خاصة مع ضمائر معينة.",
+  "common_examples": [
+    {
+      "context": "حُجَّتُنا"
+    },
+    {
+      "context": "غُلَّت"
+    }
+  ]
+}

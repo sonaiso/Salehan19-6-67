@@ -1,0 +1,35 @@
+{
+  "rule_id": "tastafeel_present_derivation",
+  "rule_name_ar": "مضارع المخاطب من باب اِسْتَفْعَل على وزن تَسْتَفْعِل",
+  "target_pattern": "تَسْتَفْعِل",
+  "target_pattern_id": "tastafeel_present",
+  "summary_ar": "تاء مفتوحة + سين ساكنة + تاء مفتوحة + فاء ساكنة + عين مكسورة + لام، مضارع المخاطب أو الغائبة من باب اِسْتَفْعَل.",
+  "base_rule": {
+    "description_ar": "مضارع المخاطب من اِسْتَفْعَل بإلحاق تاء المخاطبة في الأول مكان الياء.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "حرف المضارعة: تاء مفتوحة بدل الياء",
+        "insert_letter": "تَسْتَ"
+      },
+      {
+        "step": 2,
+        "description_ar": "إسكان الفاء"
+      },
+      {
+        "step": 3,
+        "description_ar": "كسر العين"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "madi": "اِسْتَعْجَلَ",
+      "mudari_mukhatab": "تَسْتَعْجِل"
+    },
+    {
+      "madi": "اِسْتَغْفَرَ",
+      "mudari_mukhatab": "تَسْتَغْفِر"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "rule_id": "tafili_nisba_derivation",
+  "rule_name_ar": "النسبة من المصدر على وزن تَفْعِيلِي",
+  "target_pattern": "تَفْعِيلِي",
+  "target_pattern_id": "tafili_nisba",
+  "summary_ar": "تاء + فاء ساكنة + عين مكسورة + ياء + لام + ياء النسبة، نسبة من المصدر تَفْعِيل.",
+  "base_rule": {
+    "description_ar": "صفة منسوبة من المصدر القياسي لباب فَعَّل (تَفْعِيل).",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "خذ المصدر تَفْعِيل"
+      },
+      {
+        "step": 2,
+        "description_ar": "زِد ياء النسبة"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "masdar": "تَصْوِير",
+      "result": "تَصْوِيرِي"
+    },
+    {
+      "masdar": "تَعْلِيم",
+      "result": "تَعْلِيمِي"
+    },
+    {
+      "masdar": "تَحْلِيل",
+      "result": "تَحْلِيلِي"
+    }
+  ]
+}

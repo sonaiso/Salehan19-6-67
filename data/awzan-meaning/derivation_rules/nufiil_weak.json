@@ -1,0 +1,20 @@
+{
+  "rule_id": "nufiil_weak_derivation",
+  "rule_name_ar": "مضارع المتكلّمين المعتلّ على وزن نُفْعِل",
+  "target_pattern": "نُفعِل",
+  "target_pattern_id": "nufiil_weak",
+  "summary_ar": "نون مضمومة + فاء + عين مكسورة + لام، مضارع المتكلّمين من الفعل المعتلّ.",
+  "base_rule": {
+    "description_ar": "مضارع المعتلّ للمتكلّمين بإلحاق نون المضارعة المضمومة."
+  },
+  "common_examples": [
+    {
+      "madi": "أَوْحَى",
+      "mudari": "نُوحِي"
+    },
+    {
+      "madi": "أَنَادَى",
+      "mudari": "نُودِي"
+    }
+  ]
+}

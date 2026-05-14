@@ -1,0 +1,178 @@
+{
+  "rule_id": "ism_fail_derivation",
+  "rule_name_ar": "قاعدة اشتقاق اسم الفاعل",
+  "target_pattern": "فَاعِل",
+  "target_pattern_id": "faail",
+  "summary_ar": "فاء مفتوحة + ألف زائدة + عين مكسورة + لام، ما لم يدخل حرف علّة فيُعدَّل بالإعلال، أو يكون الفعل مزيدًا فيُحوَّل إلى صيغة 'مُــ ـِ ـ'.",
+
+  "base_rule": {
+    "description_ar": "اسم الفاعل من الفعل الثلاثي المجرد المتصرّف يُصاغ على وزن فَاعِل بإجراء ثلاث عمليات على الجذر.",
+    "operations": [
+      {
+        "step": 1,
+        "operation_id": "open_fa",
+        "description_ar": "فتح فاء الكلمة (الحرف الأول من الجذر)",
+        "target_position": "root[0]",
+        "harakah": "fatha",
+        "harakah_code": "\u064E"
+      },
+      {
+        "step": 2,
+        "operation_id": "insert_alif",
+        "description_ar": "زيادة ألف ساكنة بعد الفاء",
+        "insert_after": "root[0]",
+        "insert_letter": "ا"
+      },
+      {
+        "step": 3,
+        "operation_id": "break_ain",
+        "description_ar": "كسر عين الكلمة (الحرف الثاني من الجذر)",
+        "target_position": "root[1]",
+        "harakah": "kasra",
+        "harakah_code": "\u0650"
+      },
+      {
+        "step": 4,
+        "operation_id": "lam_endings",
+        "description_ar": "تأتي لام الكلمة ساكنةً في الوقف، مكسورةً أو منوّنة في الإعراب",
+        "target_position": "root[2]",
+        "harakah_default": "sukun_or_tanwin"
+      }
+    ],
+    "example_walkthrough": {
+      "root": ["ك", "ت", "ب"],
+      "verb": "كَتَبَ",
+      "wazn_template": "فَ + ا + عِـ + ل",
+      "derivation": "كَ + ا + تِـ + ب",
+      "result": "كَاتِب"
+    }
+  },
+
+  "application_conditions": {
+    "description_ar": "تنطبق صيغة 'فَاعِل' مباشرة إذا توفّرت كل هذه الشروط في الفعل",
+    "conditions": [
+      {
+        "condition_id": "is_trilateral",
+        "description_ar": "ثلاثي (ثلاثة أحرف أصلية)",
+        "check": "len(root) == 3"
+      },
+      {
+        "condition_id": "is_bare",
+        "description_ar": "مجرّد (لا زيادة فيه)",
+        "check": "no_augmentations(verb)"
+      },
+      {
+        "condition_id": "is_mutasarrif",
+        "description_ar": "متصرّف (يأتي منه الماضي والمضارع، ليس جامدًا)",
+        "check": "has_past_and_present(verb)",
+        "exceptions": ["لَيْسَ", "عَسَى", "نِعْمَ", "بِئْسَ"]
+      },
+      {
+        "condition_id": "is_active",
+        "description_ar": "معلوم للفاعل (لا للمفعول)",
+        "check": "voice == active"
+      },
+      {
+        "condition_id": "no_weak_letters",
+        "description_ar": "سالم العين واللام من حروف العلة",
+        "check": "root[1] not in ['و','ي','ا'] and root[2] not in ['و','ي','ا']"
+      }
+    ]
+  },
+
+  "transformations": {
+    "description_ar": "حالات تستوجب تعديلًا (إعلال). القاعدة الأم تبقى، لكن إذا وقع في الجذر حرف علّة فإن قواعد الإعلال تتدخّل.",
+
+    "mahmuz_fa": {
+      "label_ar": "مهموز الفاء",
+      "description_ar": "إذا كانت فاء الكلمة همزة، تُدغم همزة الوزن (الألف) مع همزة الجذر فتصير مدًّا",
+      "trigger": "root[0] == 'ء' or root[0] in ['أ','إ']",
+      "transformation": "همزة + ألف → آ",
+      "examples": [
+        {"verb": "أَكَلَ", "root": ["أ","ك","ل"], "result": "آكِل"},
+        {"verb": "أَخَذَ", "root": ["أ","خ","ذ"], "result": "آخِذ"},
+        {"verb": "أَمَرَ", "root": ["أ","م","ر"], "result": "آمِر"}
+      ]
+    },
+
+    "mahmuz_ain": {
+      "label_ar": "مهموز العين",
+      "description_ar": "إذا كانت عين الكلمة همزة، تُكتب الهمزة على نبرة لكسر ما قبلها",
+      "trigger": "root[1] == 'ء' or root[1] in ['أ','إ']",
+      "transformation": "همزة العين تُكتب على نبرة (ئ)",
+      "examples": [
+        {"verb": "سَأَلَ", "root": ["س","أ","ل"], "result": "سَائِل"},
+        {"verb": "قَرَأَ", "root": ["ق","ر","أ"], "result": "قَارِئ"},
+        {"verb": "بَرِئَ", "root": ["ب","ر","أ"], "result": "بَارِئ"}
+      ]
+    },
+
+    "ajwaf": {
+      "label_ar": "أجوف (العين حرف علّة)",
+      "description_ar": "إذا كانت عين الكلمة واواً أو ياءً، تُقلب همزةً في اسم الفاعل",
+      "trigger": "root[1] in ['و','ي']",
+      "transformation": "حرف علّة العين → همزة على نبرة (ئ)",
+      "reason_ar": "التقاء ألف الوزن الزائدة مع حرف العلّة في العين، فيُتخلَّص من الثقل بالقلب همزةً.",
+      "examples": [
+        {"verb": "قَالَ", "root": ["ق","و","ل"], "result": "قَائِل"},
+        {"verb": "بَاعَ", "root": ["ب","ي","ع"], "result": "بَائِع"},
+        {"verb": "صَامَ", "root": ["ص","و","م"], "result": "صَائِم"},
+        {"verb": "سَارَ", "root": ["س","ي","ر"], "result": "سَائِر"},
+        {"verb": "نَامَ", "root": ["ن","و","م"], "result": "نَائِم"}
+      ]
+    },
+
+    "naqis": {
+      "label_ar": "ناقص (اللام حرف علّة)",
+      "description_ar": "إذا كانت لام الكلمة واواً أو ياءً، تبقى ثم تُحذف عند التنوين في حالتي الرفع والجر، وتظهر الياء في حالة النصب",
+      "trigger": "root[2] in ['و','ي']",
+      "transformation": "لام علّة → ياء، تُحذف مع التنوين رفعاً وجراً، تظهر نصباً",
+      "derivation_path_ar": "أصلها فاعِوٌ → فاعِيٌ → فاعٍ بحذف الياء",
+      "examples": [
+        {"verb": "دَعَا", "root": ["د","ع","و"], "pause_form": "دَاعِي", "raf_jar": "دَاعٍ", "nasb": "دَاعِيًا"},
+        {"verb": "رَمَى", "root": ["ر","م","ي"], "pause_form": "رَامِي", "raf_jar": "رَامٍ", "nasb": "رَامِيًا"},
+        {"verb": "سَعَى", "root": ["س","ع","ي"], "pause_form": "سَاعِي", "raf_jar": "سَاعٍ", "nasb": "سَاعِيًا"},
+        {"verb": "قَضَى", "root": ["ق","ض","ي"], "pause_form": "قَاضِي", "raf_jar": "قَاضٍ", "nasb": "قَاضِيًا"}
+      ]
+    },
+
+    "mudaaaf": {
+      "label_ar": "مضعّف",
+      "description_ar": "إذا كانت العين واللام من جنس واحد، تُدغم في اسم الفاعل",
+      "trigger": "root[1] == root[2]",
+      "transformation": "الحرفان المتماثلان → حرف مشدّد",
+      "examples": [
+        {"verb": "مَدَّ", "root": ["م","د","د"], "result": "مَادّ"},
+        {"verb": "شَدَّ", "root": ["ش","د","د"], "result": "شَادّ"},
+        {"verb": "رَدَّ", "root": ["ر","د","د"], "result": "رَادّ"},
+        {"verb": "حَلَّ", "root": ["ح","ل","ل"], "result": "حَالّ"}
+      ]
+    }
+  },
+
+  "fallback_rule": {
+    "label_ar": "قاعدة الفرع: ما ليس ثلاثيًا مجردًا",
+    "description_ar": "إذا كان الفعل مزيدًا أو رباعيًا، فلا يأتي اسم فاعله على 'فَاعِل'، بل يُؤتى بمضارعه، ويُقلب حرف المضارعة ميمًا مضمومة، ويُكسر ما قبل الآخر.",
+    "procedure": [
+      "خذ المضارع",
+      "اقلب حرف المضارعة (ي/ت/ن/أ) ميماً مضمومة (مُ)",
+      "اكسر ما قبل الآخر"
+    ],
+    "examples": [
+      {"verb": "أَكْرَمَ", "mudari": "يُكْرِم", "ism_fail": "مُكْرِم", "pattern": "مُفْعِل"},
+      {"verb": "اِنْطَلَقَ", "mudari": "يَنْطَلِق", "ism_fail": "مُنْطَلِق", "pattern": "مُنْفَعِل"},
+      {"verb": "اِسْتَخْرَجَ", "mudari": "يَسْتَخْرِج", "ism_fail": "مُسْتَخْرِج", "pattern": "مُسْتَفْعِل"},
+      {"verb": "دَحْرَجَ", "mudari": "يُدَحْرِج", "ism_fail": "مُدَحْرِج", "pattern": "مُفَعْلِل"},
+      {"verb": "عَلَّمَ", "mudari": "يُعَلِّم", "ism_fail": "مُعَلِّم", "pattern": "مُفَعِّل"},
+      {"verb": "كَاتَبَ", "mudari": "يُكَاتِب", "ism_fail": "مُكَاتِب", "pattern": "مُفَاعِل"}
+    ],
+    "small_exception": {
+      "label_ar": "استثناء: المضارع المفتوح ما قبل الآخر",
+      "description_ar": "ما كان مضارعه مفتوح ما قبل الآخر يبقى مفتوحًا في اسم الفاعل أيضًا",
+      "examples": [
+        {"verb": "اِحْمَرَّ", "mudari": "يَحْمَرُّ", "ism_fail": "مُحْمَرّ"},
+        {"verb": "اِخْضَرَّ", "mudari": "يَخْضَرُّ", "ism_fail": "مُخْضَرّ"}
+      ]
+    }
+  }
+}

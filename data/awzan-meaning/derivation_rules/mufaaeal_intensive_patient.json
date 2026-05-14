@@ -1,0 +1,43 @@
+{
+  "rule_id": "mufaaeal_intensive_patient_derivation",
+  "rule_name_ar": "اسم المفعول من باب فَعَّل على وزن مُفَعَّل",
+  "target_pattern": "مُفَعَّل",
+  "target_pattern_id": "mufaaeal_intensive_patient",
+  "summary_ar": "ميم مضمومة + فاء مفتوحة + عين مضعّفة مفتوحة + لام، اسم المفعول من باب فَعَّل، يدلّ على من وقع عليه الفعل المُكثَّف.",
+  "base_rule": {
+    "description_ar": "اسم المفعول من فَعَّل يُصاغ بأخذ مضارعه المبني للمجهول وقلب الياء ميماً مضمومة.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "خذ المضارع المبني للمجهول (يُفَعَّل)"
+      },
+      {
+        "step": 2,
+        "description_ar": "اقلب الياء ميماً مضمومة",
+        "transformation": "يُ → مُ"
+      },
+      {
+        "step": 3,
+        "description_ar": "تأكد من فتح ما قبل الآخر"
+      }
+    ]
+  },
+  "comparison_with_active": {
+    "active": "مُعَلِّم (بكسر اللام)",
+    "passive": "مُعَلَّم (بفتح اللام)"
+  },
+  "common_examples": [
+    {
+      "verb": "عَلَّمَ",
+      "result": "مُعَلَّم"
+    },
+    {
+      "verb": "كَسَّرَ",
+      "result": "مُكَسَّر"
+    },
+    {
+      "verb": "نَظَّمَ",
+      "result": "مُنَظَّم"
+    }
+  ]
+}

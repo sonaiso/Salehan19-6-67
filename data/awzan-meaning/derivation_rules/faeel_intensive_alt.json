@@ -1,0 +1,38 @@
+{
+  "rule_id": "faeel_intensive_alt_derivation",
+  "rule_name_ar": "فعل الأمر من باب فَعَّل على وزن فَعِّل",
+  "target_pattern": "فَعِّل",
+  "target_pattern_id": "faeel_intensive_alt",
+  "summary_ar": "فاء مفتوحة + عين مضعّفة مكسورة + لام، فعل أمر من باب فَعَّل المضعّف.",
+  "base_rule": {
+    "description_ar": "فعل الأمر من فَعَّل بحذف حرف المضارعة وكسر العين المضعّفة.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "خذ مضارع فَعَّل (يُفَعِّل)"
+      },
+      {
+        "step": 2,
+        "description_ar": "احذف ياء المضارعة"
+      },
+      {
+        "step": 3,
+        "description_ar": "تصبح الفاء مفتوحة"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "mudari": "يُنَبِّئ",
+      "amr": "نَبِّئ"
+    },
+    {
+      "mudari": "يُبَشِّر",
+      "amr": "بَشِّر"
+    },
+    {
+      "mudari": "يُعَلِّم",
+      "amr": "عَلِّم"
+    }
+  ]
+}

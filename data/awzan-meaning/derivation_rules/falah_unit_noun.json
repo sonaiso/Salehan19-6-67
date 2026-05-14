@@ -1,0 +1,45 @@
+{
+  "rule_id": "falah_unit_noun_derivation",
+  "rule_name_ar": "اسم المرّة على وزن فَعْلَة",
+  "target_pattern": "فَعْلَة",
+  "target_pattern_id": "falah_unit_noun",
+  "summary_ar": "فاء مفتوحة + عين ساكنة + لام مفتوحة + تاء، اسم يدلّ على المرة الواحدة من وقوع الفعل.",
+  "base_rule": {
+    "description_ar": "اسم المرة من الفعل الثلاثي يُصاغ على وزن فَعْلَة بزيادة تاء التأنيث على فَعْل.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "فتح الفاء"
+      },
+      {
+        "step": 2,
+        "description_ar": "إسكان العين"
+      },
+      {
+        "step": 3,
+        "description_ar": "فتح اللام"
+      },
+      {
+        "step": 4,
+        "description_ar": "زيادة تاء التأنيث",
+        "insert_letter": "ة"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "verb": "ضَرَبَ",
+      "result": "ضَرْبَة",
+      "meaning_ar": "مرة واحدة من الضرب"
+    },
+    {
+      "verb": "وَقَفَ",
+      "result": "وَقْفَة",
+      "meaning_ar": "مرة واحدة من الوقوف"
+    },
+    {
+      "verb": "نَظَرَ",
+      "result": "نَظْرَة"
+    }
+  ]
+}

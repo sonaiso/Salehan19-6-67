@@ -1,0 +1,94 @@
+{
+  "rule_id": "afaal_verb_derivation",
+  "rule_name_ar": "بناء الفعل المزيد بالهمزة على وزن أَفْعَل",
+  "target_pattern": "أَفْعَل",
+  "target_pattern_id": "afaal_verb",
+  "summary_ar": "همزة قطع مفتوحة + فاء ساكنة + عين مفتوحة + لام، فعل مزيد بالهمزة يدلّ على التعدية والصيرورة.",
+  "base_rule": {
+    "description_ar": "يُبنى الفعل المزيد بالهمزة بزيادة همزة قطع في أوّل الفعل الثلاثي المجرد، مع إسكان الفاء وفتح العين.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "زيادة همزة قطع مفتوحة في الأول",
+        "insert_at": "start",
+        "insert_letter": "أَ"
+      },
+      {
+        "step": 2,
+        "description_ar": "إسكان الفاء"
+      },
+      {
+        "step": 3,
+        "description_ar": "فتح العين"
+      }
+    ]
+  },
+  "semantic_functions": {
+    "functions": [
+      {
+        "label_ar": "التعدية",
+        "description_ar": "نقل الفعل من اللزوم إلى التعدي",
+        "examples": [
+          {
+            "original": "خَرَجَ",
+            "result": "أَخْرَجَ",
+            "meaning_ar": "جعله يخرج"
+          },
+          {
+            "original": "دَخَلَ",
+            "result": "أَدْخَلَ"
+          }
+        ]
+      },
+      {
+        "label_ar": "الصيرورة",
+        "description_ar": "صار صاحب الصفة",
+        "examples": [
+          {
+            "result": "أَثْمَرَ",
+            "meaning_ar": "صار ذا ثمر"
+          },
+          {
+            "result": "أَجْدَبَ",
+            "meaning_ar": "صار ذا جدب"
+          }
+        ]
+      },
+      {
+        "label_ar": "الإيجاد",
+        "examples": [
+          {
+            "result": "أَنْتَجَ",
+            "meaning_ar": "أوجد إنتاجاً"
+          }
+        ]
+      },
+      {
+        "label_ar": "السلب",
+        "examples": [
+          {
+            "result": "أَشْكَى",
+            "meaning_ar": "أزال الشكوى"
+          }
+        ]
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "verb": "أَخْرَجَ",
+      "ism_fail": "مُخْرِج",
+      "ism_mafuul": "مُخْرَج"
+    },
+    {
+      "verb": "أَكْرَمَ",
+      "ism_fail": "مُكْرِم",
+      "ism_mafuul": "مُكْرَم"
+    },
+    {
+      "verb": "أَحْسَنَ",
+      "ism_fail": "مُحْسِن",
+      "ism_mafuul": "مُحْسَن"
+    }
+  ]
+}

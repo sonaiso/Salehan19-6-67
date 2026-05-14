@@ -1,0 +1,42 @@
+{
+  "rule_id": "fual_plural_derivation",
+  "rule_name_ar": "جمع التكسير على وزن فُعَل",
+  "target_pattern": "فُعَل",
+  "target_pattern_id": "fual_plural",
+  "summary_ar": "فاء مضمومة + عين مفتوحة + لام، جمع تكسير من جموع الكثرة، يكثر في جمع فُعْلَة المؤنّثة.",
+  "base_rule": {
+    "description_ar": "يُجمع الاسم على وزن فُعَل من المفرد المؤنث على وزن فُعْلَة كثيراً.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "ضمّ الفاء",
+        "target_position": "root[0]",
+        "harakah": "damma"
+      },
+      {
+        "step": 2,
+        "description_ar": "فتح العين",
+        "target_position": "root[1]",
+        "harakah": "fatha"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "mufrad": "دَوْلَة",
+      "result": "دُوَل"
+    },
+    {
+      "mufrad": "صُورَة",
+      "result": "صُوَر"
+    },
+    {
+      "mufrad": "حُجَّة",
+      "result": "حُجَج"
+    },
+    {
+      "mufrad": "غُرْفَة",
+      "result": "غُرَف"
+    }
+  ]
+}

@@ -15,4 +15,8 @@ build/
 .ruff_cache/
 .coverage
 htmlcov/
-.mcd_audit/
+.DS_Store
+data/.DS_Store
+**/__pycache__/
+*.pyc
+*.pyo

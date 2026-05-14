@@ -1,0 +1,136 @@
+{
+  "rule_id": "mustafeel_agent_derivation",
+  "rule_name_ar": "قاعدة اشتقاق اسم الفاعل من باب اِسْتَفْعَل على وزن مُسْتَفْعِل",
+  "target_pattern": "مُسْتَفْعِل",
+  "target_pattern_id": "mustafeel_agent",
+  "summary_ar": "ميم مضمومة + سين ساكنة + تاء مفتوحة + فاء ساكنة + عين مكسورة + لام، يدلّ على من يطلب وقوع الفعل أو يحاول إيقاعه، اسم الفاعل من باب اِسْتَفْعَل.",
+
+  "base_rule": {
+    "description_ar": "اسم الفاعل من الفعل المزيد بالسين والتاء والهمزة (باب اِسْتَفْعَل) يُصاغ على وزن مُسْتَفْعِل بأخذ المضارع وقلب حرف المضارعة ميماً مضمومة مع كسر ما قبل الآخر.",
+    "operations": [
+      {
+        "step": 1,
+        "operation_id": "take_mudari",
+        "description_ar": "خذ مضارع الفعل (يَسْتَفْعِل)",
+        "input_type": "mudari",
+        "expected_pattern": "يَسْتَفْعِل"
+      },
+      {
+        "step": 2,
+        "operation_id": "replace_yaa_with_mim_damma",
+        "description_ar": "اقلب ياء المضارعة المفتوحة ميماً مضمومة",
+        "transformation": "يَ → مُ"
+      },
+      {
+        "step": 3,
+        "operation_id": "verify_kasra",
+        "description_ar": "تأكّد من كسر ما قبل الآخر (وهو محقّق في يَسْتَفْعِل)",
+        "verify": "second_to_last is kasrah"
+      }
+    ],
+    "example_walkthrough": {
+      "root": ["خ", "ر", "ج"],
+      "verb_past": "اِسْتَخْرَجَ",
+      "verb_present": "يَسْتَخْرِج",
+      "transformation": "يَسْتَخْرِج → مُسْتَخْرِج",
+      "result": "مُسْتَخْرِج"
+    }
+  },
+
+  "application_conditions": {
+    "description_ar": "تنطبق صيغة 'مُسْتَفْعِل' بالشروط التالية",
+    "conditions": [
+      {
+        "condition_id": "from_form10_verb",
+        "description_ar": "من فعل على باب اِسْتَفْعَل (الثلاثي المزيد بالسين والتاء والهمزة)",
+        "check": "verb_form == 'اِسْتَفْعَل'",
+        "form_number": 10
+      },
+      {
+        "condition_id": "active_voice",
+        "description_ar": "اسم فاعل لا مفعول (المعلوم لا المجهول)",
+        "check": "voice == 'active'"
+      }
+    ]
+  },
+
+  "semantic_functions": {
+    "description_ar": "يحمل مُسْتَفْعِل معاني باب اِسْتَفْعَل التي يقوم بها الفاعل",
+    "functions": [
+      {
+        "function_id": "seeking",
+        "label_ar": "الطلب",
+        "description_ar": "من يطلب وقوع الفعل من غيره",
+        "examples": [
+          {"verb": "اِسْتَغْفَرَ", "result": "مُسْتَغْفِر", "meaning_ar": "من يطلب المغفرة"},
+          {"verb": "اِسْتَنْصَرَ", "result": "مُسْتَنْصِر", "meaning_ar": "من يطلب النصر"},
+          {"verb": "اِسْتَأْذَنَ", "result": "مُسْتَأْذِن", "meaning_ar": "من يطلب الإذن"}
+        ]
+      },
+      {
+        "function_id": "transformation",
+        "label_ar": "التحوّل",
+        "description_ar": "من تحوّل إلى الحالة المشتقّ منها أو صار صاحبها",
+        "examples": [
+          {"verb": "اِسْتَحْجَرَ", "result": "مُسْتَحْجِر", "meaning_ar": "من تحول إلى حجر"},
+          {"verb": "اِسْتَنْوَقَ", "result": "مُسْتَنْوِق", "meaning_ar": "من صار كالناقة"}
+        ]
+      },
+      {
+        "function_id": "considering",
+        "label_ar": "العدّ والاعتقاد",
+        "description_ar": "من عدّ شيئاً متصفاً بالصفة المشتقّ منها",
+        "examples": [
+          {"verb": "اِسْتَعْظَمَ", "result": "مُسْتَعْظِم", "meaning_ar": "من عدّ الشيء عظيماً"},
+          {"verb": "اِسْتَحْسَنَ", "result": "مُسْتَحْسِن", "meaning_ar": "من عدّ الشيء حسناً"},
+          {"verb": "اِسْتَكْبَرَ", "result": "مُسْتَكْبِر", "meaning_ar": "من عدّ نفسه كبيراً"}
+        ]
+      },
+      {
+        "function_id": "extraction",
+        "label_ar": "الاستخراج والتحصيل",
+        "description_ar": "من حصّل الشيء أو استخرجه",
+        "examples": [
+          {"verb": "اِسْتَخْرَجَ", "result": "مُسْتَخْرِج", "meaning_ar": "من يستخرج الشيء"},
+          {"verb": "اِسْتَوْرَدَ", "result": "مُسْتَوْرِد", "meaning_ar": "من يستورد البضائع"},
+          {"verb": "اِسْتَعْمَلَ", "result": "مُسْتَعْمِل", "meaning_ar": "من يحصّل الفعل ويستخدمه"}
+        ]
+      }
+    ]
+  },
+
+  "common_examples": [
+    {"verb": "اِسْتَخْرَجَ", "result": "مُسْتَخْرِج"},
+    {"verb": "اِسْتَعْمَلَ", "result": "مُسْتَعْمِل"},
+    {"verb": "اِسْتَغْفَرَ", "result": "مُسْتَغْفِر"},
+    {"verb": "اِسْتَفْهَمَ", "result": "مُسْتَفْهِم"},
+    {"verb": "اِسْتَقْبَلَ", "result": "مُسْتَقْبِل"},
+    {"verb": "اِسْتَأْجَرَ", "result": "مُسْتَأْجِر"},
+    {"verb": "اِسْتَشْعَرَ", "result": "مُسْتَشْعِر"},
+    {"verb": "اِسْتَدْعَى", "result": "مُسْتَدْعٍ"}
+  ],
+
+  "transformations": {
+    "description_ar": "حالات الإعلال في باب اِسْتَفْعَل",
+
+    "naqis": {
+      "label_ar": "ناقص (اللام حرف علّة)",
+      "description_ar": "تُحذف لام الفعل في الرفع والجر مع التنوين، وتظهر في النصب",
+      "trigger": "root[2] in ['و','ي']",
+      "examples": [
+        {"verb": "اِسْتَدْعَى", "root": ["د","ع","و"], "raf_jar": "مُسْتَدْعٍ", "nasb": "مُسْتَدْعِيًا"},
+        {"verb": "اِسْتَهْدَى", "root": ["ه","د","ي"], "raf_jar": "مُسْتَهْدٍ", "nasb": "مُسْتَهْدِيًا"}
+      ]
+    }
+  },
+
+  "related_passive_pattern": {
+    "label_ar": "اسم المفعول المقابل",
+    "pattern": "مُسْتَفْعَل",
+    "pattern_id": "mustafl_patient",
+    "comparison": {
+      "active": "مُسْتَخْرِج - من يستخرج (كسر العين)",
+      "passive": "مُسْتَخْرَج - ما يُستخرج (فتح العين)"
+    }
+  }
+}

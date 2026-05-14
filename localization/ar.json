@@ -1,0 +1,85 @@
+{
+  "_comment": "Arabic translations for all English-facing strings in the MCD codebase.",
+
+  "relation_types": {
+    "has_root":       "له جذر",
+    "has_pattern":    "له وزن",
+    "agent_of":       "فاعل",
+    "patient_of":     "مفعول به",
+    "is_part_of":     "جزء من",
+    "denotes":        "يدل على",
+    "entails":        "يستلزم",
+    "includes":       "يشمل",
+    "restricts":      "يقيّد",
+    "predicates":     "مسند",
+    "causes":         "يُسبّب",
+    "caused_by":      "مُسبَّب بـ",
+    "requires":       "يستلزم",
+    "prevents":       "يمنع",
+    "generalizes":    "يُعمّم",
+    "specializes":    "يُخصّص",
+    "analogizes":     "يُشابه",
+    "evidences":      "دليل على",
+    "contradicts":    "يتناقض مع"
+  },
+
+  "roles": {
+    "verb":          "فعل",
+    "agent_noun":    "اسم فاعل",
+    "passive_noun":  "اسم مفعول",
+    "adjective":     "صفة",
+    "noun_instance": "اسم مرة",
+    "place_noun":    "اسم مكان",
+    "verb_x":        "باب استفعال",
+    "verb_vi":       "باب تفاعل",
+    "verb_viii":     "باب افتعال",
+    "verb_vii":      "باب انفعال"
+  },
+
+  "semantic_hints": {
+    "action":            "حدث",
+    "doer of action":    "فاعل الحدث",
+    "acted upon":        "مفعول به",
+    "quality/intense":   "صفة ووصف",
+    "single instance":   "اسم مرة",
+    "place of action":   "اسم مكان",
+    "seeking/deeming":   "طلب أو اعتبار",
+    "mutual action":     "تفاعل",
+    "reflexive action":  "افتعال",
+    "passive action":    "انفعال"
+  },
+
+  "certainty_levels": {
+    "weak_or_unverified": "ضعيف أو غير موثق",
+    "hypothesis":         "فرضية",
+    "probable_knowledge": "معرفة محتملة",
+    "strong_knowledge":   "معرفة راسخة",
+    "near_certainty":     "شبه يقين"
+  },
+
+  "evidence_types": {
+    "linguistic":  "لغوي",
+    "logical":     "منطقي",
+    "empirical":   "تجريبي",
+    "testimonial": "روائي"
+  },
+
+  "labels": {
+    "input":          "المدخل",
+    "normalized":     "المُعيَّر",
+    "root":           "الجذر",
+    "pattern":        "الوزن",
+    "role":           "الدور",
+    "certainty":      "اليقين",
+    "relations":      "العلاقات",
+    "answer":         "الإجابة",
+    "word":           "الكلمة",
+    "source":         "المصدر",
+    "target":         "الهدف",
+    "main_claim":     "الادعاء الرئيسي",
+    "prior_knowledge":"المعرفة السابقة",
+    "overall_certainty": "مستوى اليقين الكلي",
+    "morphological":  "صرفي",
+    "linguistic":     "لغوي"
+  }
+}

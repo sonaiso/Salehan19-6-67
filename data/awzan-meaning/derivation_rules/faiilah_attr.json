@@ -1,0 +1,35 @@
+{
+  "rule_id": "faiilah_attr_derivation",
+  "rule_name_ar": "الصفة المشبّهة المؤنثة على وزن فَعِيلَة",
+  "target_pattern": "فَعِيلَة",
+  "target_pattern_id": "faiilah_attr",
+  "summary_ar": "فاء مفتوحة + عين مكسورة + ياء + لام مفتوحة + تاء، مؤنث فَعِيل بالتاء.",
+  "base_rule": {
+    "description_ar": "تُؤنّث الصفة المشبّهة فَعِيل بزيادة تاء التأنيث.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "بناء فَعِيل المذكر"
+      },
+      {
+        "step": 2,
+        "description_ar": "زيادة تاء التأنيث في الآخر",
+        "insert_letter": "ة"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "masculine": "كَرِيم",
+      "feminine": "كَرِيمَة"
+    },
+    {
+      "masculine": "جَمِيل",
+      "feminine": "جَمِيلَة"
+    },
+    {
+      "masculine": "حَمِيد",
+      "feminine": "حَمِيدَة"
+    }
+  ]
+}

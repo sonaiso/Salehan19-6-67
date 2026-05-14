@@ -1,0 +1,20 @@
+thing_id,name_ar,name_ar_vocalized,category,haqiqa,properties,effects,affordances,certainty_score,certainty_type,wordnet_synset,notes
+thing_zayd,زيد,زَيْدٌ,proper_noun,اسم علم لشخص بشري يُستخدم في الأمثلة النحوية العربية,prop_alive|prop_rational,يتكلم|يكتب|يرى,يُضرب به المثل في النحو,0.88,experimental,,أكثر الأسماء استخداماً في الأمثلة النحوية
+thing_yawm,يوم,يَوْمٌ,noun,وحدة زمنية تساوي أربعاً وعشرين ساعة,,,يُحسب|يُذكر,0.95,experimental,day.n.01,
+thing_jumua,الجمعة,الْجُمُعَةُ,noun,اليوم السابع من أيام الأسبوع ويوم صلاة المسلمين,,يجمع المسلمين,يُصلى فيه,0.95,experimental,,,
+thing_raya,رأى,رَأَى,verb,فعل الإبصار بالعين أو الإدراك بالعقل,,يُدرك|يُبصر,يُرى,0.90,experimental,see.v.01,فعل ثلاثي معتل الآخر
+thing_raya_past1,رأيت,رَأَيْتُ,verb,فعل رأى صيغة المتكلم الماضي — يُحيل إلى thing_raya,,يُدرك|يُبصر,يُرى,0.90,experimental,see.v.01,صيغة ماضي متكلم لـ رأى
+thing_salam,سلام,سَلَامٌ,noun,الأمان والطمأنينة وانعدام الحرب أو الأذى,prop_rational,يُشيع|ينعم به,يُهدى|يُعطى,0.92,experimental,peace.n.01,من أسماء الله الحسنى
+thing_matlaa,مطلع,مَطْلَعٌ,noun,وقت شروق الشمس أو بداية ظهور شيء,,يبدأ|يظهر,يُرقب,0.88,experimental,dawn.n.02,
+thing_fajr,الفجر,الْفَجْرُ,noun,أول ضوء النهار قبيل شروق الشمس,prop_luminous,يُضيء|ينبثق,يُصلى عنده,0.95,experimental,dawn.n.01,سورة الفجر في القرآن الكريم
+thing_sultan,سلطان,السُّلْطَانُ,noun,صاحب السلطة والحكم والأمر في الدولة,prop_rational,يحكم|يأمر|ينهى,يُطاع,0.88,experimental,ruler.n.01,
+thing_aadil,عادل,عَادِلٌ,adjective,من يحكم بالعدل ويُنصف بين الناس,prop_rational,يُنصف|يحكم بالحق,,0.88,experimental,just.s.01,صفة مشبهة من العدل
+thing_ma_neg,ما,مَا,particle,حرف نفي يدل على النفي في الجملة الاسمية والفعلية,,,تدخل على الجملة لنفيها,0.95,linguistic,,حرف نفي — يختلف عن ماء (الماء)
+thing_mundhu,منذ,مُنْذُ,particle,حرف جر يدل على ابتداء الغاية الزمنية أو انتهائها,,,يجر ما بعده,0.95,linguistic,,يأتي اسماً وحرفاً — راجع operators_catalog row 16
+thing_hatta,حتى,حَتَّى,particle,حرف جر يدل على انتهاء الغاية الزمنية أو المكانية,,,يجر ما بعده,0.95,linguistic,,راجع operators_catalog row 17
+thing_laalla,لعل,لَعَلَّ,particle,حرف ترجٍ وتوقع يدل على الرجاء والأمل,,,تنصب الاسم وترفع الخبر,0.95,linguistic,,من أخوات إنَّ — راجع operators_catalog row 26
+thing_daraba,ضرب,ضَرَبَ,verb,فعل ثلاثي يدل على الإيقاع والضرب والتمثيل,,يُؤثر|يُوجع|يُمثّل,يُفعل,0.92,experimental,strike.v.01,يأتي بمعنى الضرب الحسي ومعنى ضرب المثل
+thing_ustadh,أستاذ,أُسْتَاذٌ,noun,معلم متخصص يقوم بالتعليم والتدريس في مؤسسة تعليمية,prop_rational|prop_alive,يُعلّم|يُدرّس|يَضرب المثل,يُحترم|يُسأل,0.92,experimental,teacher.n.01,
+thing_mithal,مثل,مِثَالٌ,noun,نموذج أو شاهد يُستشهد به لتوضيح فكرة أو مبدأ,,يُوضّح|يُقرّب المعنى,يُضرب|يُستشهد به,0.90,experimental,example.n.01,يُستخدم في التعليم والبيان
+thing_laib,لاعب,لَاعِبٌ,noun,شخص يمارس اللعب أو الرياضة احترافياً أو هواية,prop_rational|prop_alive,يلعب|يُحرّك|يَضرب,يُشجَّع|يُقيَّم,0.90,experimental,player.n.01,
+thing_kura,كرة,كُرَةٌ,noun,جسم كروي يُستخدم في الألعاب الرياضية كالقدم والسلة,,,تُضرب|تُركل|تُرمى,0.92,experimental,ball.n.01,

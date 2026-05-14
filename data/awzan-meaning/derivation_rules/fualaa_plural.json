@@ -1,0 +1,42 @@
+{
+  "rule_id": "fualaa_plural_derivation",
+  "rule_name_ar": "جمع التكسير على وزن فُعَلَاء",
+  "target_pattern": "فُعَلَاء",
+  "target_pattern_id": "fualaa_plural",
+  "summary_ar": "فاء مضمومة + عين مفتوحة + لام مفتوحة + ألف + همزة، جمع تكسير لفعيل بمعنى فاعل العاقل.",
+  "base_rule": {
+    "description_ar": "يُجمع فَعِيل بمعنى فاعل المختصّ بالعقلاء على وزن فُعَلَاء.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "ضمّ الفاء"
+      },
+      {
+        "step": 2,
+        "description_ar": "فتح العين"
+      },
+      {
+        "step": 3,
+        "description_ar": "فتح اللام + ألف + همزة"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "mufrad": "عَلِيم",
+      "result": "عُلَمَاء"
+    },
+    {
+      "mufrad": "فَقِيه",
+      "result": "فُقَهَاء"
+    },
+    {
+      "mufrad": "وَزِير",
+      "result": "وُزَرَاء"
+    },
+    {
+      "mufrad": "سَفِيه",
+      "result": "سُفَهَاء"
+    }
+  ]
+}
