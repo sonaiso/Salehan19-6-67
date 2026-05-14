@@ -35,3 +35,7 @@ def load_concept_graph_schema() -> dict:
 
 def load_governed_trace_schema() -> dict:
     return load_json_file(_schema_dir() / "governed_trace.schema.json")
+
+
+def load_nabhani_features_schema() -> dict:
+    return load_json_file(_schema_dir() / "nabhani_features.schema.json")

@@ -73,8 +73,11 @@ Examples carry evidence rank in two synchronized tokens:
 ## Files
 
 - `data/schemas/answer_birth_training_example.schema.json`
+- `data/schemas/nabhani_features.schema.json`
 - `data/schemas/concept_graph.schema.json`
 - `data/schemas/governed_trace.schema.json`
 - `data/examples/answer_birth/*.json`
 - `src/mcd/ml/dataset_schema.py`
 - `src/mcd/ml/example_validator.py`
+- `src/mcd/ml/nabhani_features.py`
+- `docs/NABHANI_FEATURE_ADAPTER.md`

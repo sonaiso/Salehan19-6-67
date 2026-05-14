@@ -11,6 +11,7 @@ from mcd.ml.dataset_schema import (
     THINKING_EVIDENCE_RANK_TOKENS,
     load_answer_birth_training_example_schema,
 )
+from mcd.ml.nabhani_features import derive_nabhani_features_from_example, validate_nabhani_features
 from mcd.thinking.methods import thinking_rank_to_core_epistemic_rank
 
 
@@ -121,5 +122,81 @@ def validate_training_example(example: dict, *, schema: dict | None = None) -> E
     if method_type == "scientific" and output_kind in {"normative", "legal", "shari"}:
         if "scientific_method_as_normative_judgment" not in blockers_set:
             errors.append(ExampleValidationError("expected.blockers", "scientific normative output must carry blocker"))
+
+    features = derive_nabhani_features_from_example(example).to_dict()
+    feature_report = validate_nabhani_features(features)
+    for feature_error in feature_report.errors:
+        errors.append(ExampleValidationError(f"nabhani_features.{feature_error.field}", feature_error.message))
+    feature_residuals = {str(item).strip().lower() for item in features.get("feature_residuals", [])}
+
+    if method_type == "rational":
+        if not features.get("has_reality") and "missing_reality" not in feature_residuals:
+            errors.append(ExampleValidationError("nabhani_features.feature_residuals", "rational method missing reality must preserve missing_reality"))
+        if not features.get("has_source") and "missing_source" not in feature_residuals:
+            errors.append(ExampleValidationError("nabhani_features.feature_residuals", "rational method missing source must preserve missing_source"))
+        if not features.get("has_prior_information") and "missing_prior_information" not in feature_residuals:
+            errors.append(
+                ExampleValidationError(
+                    "nabhani_features.feature_residuals",
+                    "rational method missing prior information must preserve missing_prior_information",
+                )
+            )
+        if not features.get("has_linking") and "missing_linking" not in feature_residuals:
+            errors.append(ExampleValidationError("nabhani_features.feature_residuals", "rational method missing linking must preserve missing_linking"))
+
+    if not features.get("has_reality") and final == "certificate":
+        errors.append(ExampleValidationError("expected.final_judgment", "final certificate requires reality"))
+    if not features.get("has_source") and "missing_source" not in labels:
+        errors.append(ExampleValidationError("expected.residuals", "missing source must preserve missing_source residual"))
+    if method_type == "rational" and not features.get("has_prior_information") and "missing_prior_information" not in labels:
+        errors.append(
+            ExampleValidationError(
+                "expected.residuals",
+                "rational method without prior information must preserve missing_prior_information residual",
+            )
+        )
+    if not features.get("has_linking") and "missing_linking" not in labels:
+        errors.append(ExampleValidationError("expected.residuals", "missing linking must preserve missing_linking residual"))
+    if str(features.get("linking_validity", "")).strip().lower() == "invalid" and "invalid_linking" not in blockers_set:
+        errors.append(ExampleValidationError("expected.blockers", "invalid linking must carry invalid_linking blocker"))
+    if not features.get("has_correspondence"):
+        if "missing_correspondence" not in labels:
+            errors.append(ExampleValidationError("expected.residuals", "missing correspondence must preserve missing_correspondence residual"))
+        if final == "certificate":
+            errors.append(ExampleValidationError("expected.final_judgment", "final certificate requires correspondence"))
+    if not features.get("has_evidence") and bool(expected.get("certificate_eligibility")):
+        errors.append(ExampleValidationError("expected.certificate_eligibility", "missing evidence must block certificate eligibility"))
+
+    certainty_rank = str(features.get("certainty_rank", "")).strip().lower()
+    if birth == "certificate":
+        if not features.get("has_evidence"):
+            errors.append(ExampleValidationError("nabhani_features.has_evidence", "birth certificate requires evidence"))
+        if certainty_rank not in {"strong_evidence", "certificate"}:
+            errors.append(
+                ExampleValidationError(
+                    "nabhani_features.certainty_rank",
+                    "birth certificate requires certainty_rank strong_evidence or certificate",
+                )
+            )
+
+    if final == "certificate":
+        if not has_proof_object:
+            errors.append(ExampleValidationError("proof_object_ref", "final certificate requires proof_object_ref"))
+        if not has_governance_gate:
+            errors.append(ExampleValidationError("governance_gate_passed", "final certificate requires governance_gate_passed"))
+        if not has_reverse_trace:
+            errors.append(ExampleValidationError("reverse_trace_ref", "final certificate requires reverse_trace_ref"))
+        if not features.get("has_correspondence"):
+            errors.append(ExampleValidationError("nabhani_features.has_correspondence", "final certificate requires correspondence"))
+        if not features.get("has_evidence"):
+            errors.append(ExampleValidationError("nabhani_features.has_evidence", "final certificate requires evidence"))
+
+    if not features.get("evidence_matches_claim_domain") and bool(expected.get("certificate_eligibility")):
+        errors.append(
+            ExampleValidationError(
+                "expected.certificate_eligibility",
+                "certificate eligibility requires evidence_matches_claim_domain",
+            )
+        )
 
     return ExampleValidationReport(valid=not errors, errors=errors)

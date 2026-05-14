@@ -10,6 +10,7 @@ from mcd.ml.dataset_schema import (
     load_answer_birth_training_example_schema,
     load_concept_graph_schema,
     load_governed_trace_schema,
+    load_nabhani_features_schema,
     load_json_file,
 )
 
@@ -28,6 +29,7 @@ def _load_example(name: str) -> dict:
         load_answer_birth_training_example_schema,
         load_concept_graph_schema,
         load_governed_trace_schema,
+        load_nabhani_features_schema,
     ],
 )
 def test_schemas_are_valid_json_schema(schema_loader) -> None:
@@ -52,6 +54,7 @@ def test_fixture_subcontracts_validate_against_dedicated_schemas() -> None:
     sample = _load_example("minimal_hypothesis.json")
     jsonschema.validate(instance=sample["concept_graph"], schema=load_concept_graph_schema())
     jsonschema.validate(instance=sample["thought_trace"], schema=load_governed_trace_schema())
+    jsonschema.validate(instance=sample["nabhani_features"], schema=load_nabhani_features_schema())
 
 
 def test_public_judgment_triad_is_enforced_by_schema() -> None:
