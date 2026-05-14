@@ -66,6 +66,41 @@
       {"source": "n4", "target": "n3", "relation": "residual_of"}
     ]
   },
+  "nabhani_features": {
+    "has_reality": false,
+    "reality_kind": "unknown",
+    "reality_status": "missing",
+    "reality_access_mode": "none",
+    "has_source": false,
+    "source_type": "none",
+    "source_rank": "none",
+    "source_role": "none",
+    "has_prior_information": false,
+    "prior_information_kind": "none",
+    "prior_information_sufficiency": "absent",
+    "has_linking": false,
+    "linking_type": "missing",
+    "linking_validity": "missing",
+    "has_correspondence": false,
+    "correspondence_type": "missing",
+    "has_evidence": false,
+    "evidence_type": "none",
+    "evidence_sufficiency": "absent",
+    "evidence_matches_claim_domain": true,
+    "method_type": "rational",
+    "judgment_domain": "epistemic",
+    "certainty_rank": "hypothesis",
+    "rank_source": "feature_annotation",
+    "missing_features": ["reality", "source", "prior_information", "linking", "correspondence", "evidence"],
+    "feature_residuals": [
+      "missing_reality",
+      "missing_source",
+      "missing_prior_information",
+      "missing_linking",
+      "missing_correspondence",
+      "missing_evidence"
+    ]
+  },
   "language_output": "أفهم الطلب، لكن الدليل الحالي غير كافٍ لإصدار شهادة.",
   "requested_public_judgment": "hypothesis",
   "expected": {
@@ -76,6 +111,15 @@
     "final_judgment": "hypothesis",
     "certificate_eligibility": false,
     "blockers": [],
-    "residuals": ["intent_not_fully_explicit", "incomplete_evidence_rank"]
+    "residuals": [
+      "intent_not_fully_explicit",
+      "incomplete_evidence_rank",
+      "missing_reality",
+      "missing_source",
+      "missing_prior_information",
+      "missing_linking",
+      "missing_correspondence",
+      "missing_evidence"
+    ]
   }
 }
