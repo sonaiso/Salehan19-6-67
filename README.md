@@ -91,6 +91,7 @@ python -m pytest tests/test_coding_real_pr_fixtures.py -v
 - [Testing and CI](docs/11_TESTING_AND_CI.md)
 - [Historical README Archive](docs/12_ARCHIVE_README_HISTORY.md)
 - [Enlightened Governed Prediction Architecture (PR #97)](docs/ENLIGHTENED_GOVERNED_PREDICTION.md)
+- [Synthetic Governed Answer-Birth Dataset Generator (PR #98)](docs/SYNTHETIC_GOVERNED_ANSWER_BIRTH_DATASET.md)
 - [Worktree Progress](docs/worktree/00_WORKTREE_INDEX.md)
 
 ## Current Status

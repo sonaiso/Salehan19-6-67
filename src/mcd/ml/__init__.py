@@ -24,6 +24,11 @@ from mcd.ml.nabhani_features import (
     validate_nabhani_features,
 )
 from mcd.ml.serialization import dump_json, load_json
+from mcd.ml.synthetic_generator import (
+    CATEGORY_SPECS,
+    SyntheticAnswerBirthDatasetGenerator,
+    generate_synthetic_answer_birth_dataset,
+)
 
 __all__ = [
     "THINKING_EVIDENCE_RANK_TOKENS",
@@ -42,6 +47,9 @@ __all__ = [
     "derive_nabhani_features_from_example",
     "validate_nabhani_features",
     "nabhani_features_to_training_vector",
+    "CATEGORY_SPECS",
+    "SyntheticAnswerBirthDatasetGenerator",
+    "generate_synthetic_answer_birth_dataset",
     "dump_json",
     "load_json",
 ]
