@@ -48,9 +48,9 @@ def validate_training_example(example: dict, *, schema: dict | None = None) -> E
     requested = collapse_to_public_judgment(example.get("requested_public_judgment", ""))
 
     if expected.get("birth_judgment") not in PUBLIC_FINAL_JUDGMENTS:
-        errors.append(ExampleValidationError("expected.birth_judgment", "birth_judgment خارج الثلاثية العامة"))
+        errors.append(ExampleValidationError("expected.birth_judgment", "birth_judgment outside public triad"))
     if expected.get("final_judgment") not in PUBLIC_FINAL_JUDGMENTS:
-        errors.append(ExampleValidationError("expected.final_judgment", "final_judgment خارج الثلاثية العامة"))
+        errors.append(ExampleValidationError("expected.final_judgment", "final_judgment outside public triad"))
 
     if requested == "hypothesis" and (birth == "certificate" or final == "certificate"):
         errors.append(ExampleValidationError("expected.birth_judgment", "silent promotion from hypothesis to certificate"))

@@ -36,7 +36,10 @@
             ]
           },
           "label": {"type": "string", "minLength": 1},
-          "metadata": {"type": "object"}
+          "metadata": {
+            "type": "object",
+            "description": "Optional node-level annotations for feature engineering or provenance context."
+          }
         }
       }
     },
