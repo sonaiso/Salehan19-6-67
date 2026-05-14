@@ -208,6 +208,11 @@ Decoder output must obey:
 - scientific method cannot output worldview/normative certainty
 - final certificate requires `proof_object_ref`, `governance_gate_passed`, and `reverse_trace_ref`
 
+Naming convention:
+
+- `ProofObject`, `GovernanceGate`, and `ReverseTrace` denote governance artifacts/types.
+- `proof_object_ref`, `governance_gate_passed`, and `reverse_trace_ref` denote required path/output fields that reference those artifacts.
+
 ## Certificate Governance Gate
 
 Final `CERTIFICATE` is forbidden unless all are true:
