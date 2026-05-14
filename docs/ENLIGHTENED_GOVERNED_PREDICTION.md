@@ -235,7 +235,8 @@ Otherwise judgment must remain `HYPOTHESIS` or `ZERO`.
 - **blocked forbidden transitions:** root/pattern/derivative as proof, fluency as proof, means as judgment, scientific-overreach, certificate without required gates
 - **possible residuals:** missing reality/source/prior/linking/correspondence/evidence, domain mismatch, unresolved ambiguity
 - **certificate issuance:** possible only through governance gate; never from neural score alone
-- **enforcement loci:** `ProofObject`, `GovernanceGate`, and `ReverseTrace` remain required for final certificate
+- **required governance artifacts/types:** `ProofObject`, `GovernanceGate`, and `ReverseTrace` remain required for final certificate
+- **required output/path references:** `proof_object_ref`, `governance_gate_passed`, and `reverse_trace_ref` must be present for final certificate eligibility
 - **compliance tests:** repository markdown link checks and governance tests remain the enforcement baseline
 
 ## Implementation Boundary
