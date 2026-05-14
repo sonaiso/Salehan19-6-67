@@ -666,9 +666,13 @@ class SyntheticAnswerBirthDatasetGenerator:
         expected["output_kind"] = sample["mentality_frame"]["output_kind"]
 
         if expected["birth_judgment"] not in FINAL_JUDGMENT_TRIAD:
-            raise ValueError("birth_judgment must be one of: zero, hypothesis, certificate")
+            raise ValueError(
+                f"invalid birth_judgment {expected['birth_judgment']!r}; expected one of {FINAL_JUDGMENT_TRIAD}"
+            )
         if expected["final_judgment"] not in FINAL_JUDGMENT_TRIAD:
-            raise ValueError("final_judgment must be one of: zero, hypothesis, certificate")
+            raise ValueError(
+                f"invalid final_judgment {expected['final_judgment']!r}; expected one of {FINAL_JUDGMENT_TRIAD}"
+            )
 
         if expected["birth_judgment"] == "certificate":
             sample["thought_trace"]["trace_path_complete"] = True
@@ -732,7 +736,7 @@ class SyntheticAnswerBirthDatasetGenerator:
 
         final_judgment = sample["expected"]["final_judgment"]
         if final_judgment not in FINAL_JUDGMENT_TRIAD:
-            raise ValueError(f"invalid final judgment token: {final_judgment}")
+            raise ValueError(f"invalid final_judgment {final_judgment!r}; expected one of {FINAL_JUDGMENT_TRIAD}")
 
     @staticmethod
     def _write_jsonl(path: Path, samples: list[dict]) -> None:
