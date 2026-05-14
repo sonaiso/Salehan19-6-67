@@ -13,7 +13,7 @@ from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT = REPO_ROOT / "artifacts" / "release" / "release_candidate_report.json"
-PILOT_REPORT = REPO_ROOT / "artifacts" / "pilot" / "pilot_validation_report.json"
+PILOT_VALIDATION_SCRIPT = REPO_ROOT / "scripts" / "run_pilot_validation.py"
 RUNTIME_FORMAL_ARTIFACT = REPO_ROOT / "research" / "formal" / "runtime_formal_equivalence_truth_table.json"
 
 REMAINING_PRODUCTION_GAPS = [
@@ -42,13 +42,13 @@ def _run(command: list[str]) -> dict[str, Any]:
 
 
 def _ensure_pilot_validation_report() -> dict[str, Any]:
-    run_info = _run([sys.executable, "scripts/run_pilot_validation.py", "--output", str(PILOT_REPORT)])
+    run_info = _run([sys.executable, str(PILOT_VALIDATION_SCRIPT.relative_to(REPO_ROOT))])
     payload: dict[str, Any] | None = None
-    if PILOT_REPORT.exists():
-        payload = json.loads(PILOT_REPORT.read_text(encoding="utf-8"))
+    if run_info["passed"] and run_info["stdout"].strip():
+        payload = json.loads(run_info["stdout"])
     return {
         "checked": run_info["passed"] and payload is not None,
-        "artifact_path": str(PILOT_REPORT.relative_to(REPO_ROOT)),
+        "artifact_path": str(PILOT_VALIDATION_SCRIPT.relative_to(REPO_ROOT)),
         "pilot_status": (payload or {}).get("final_epistemic_status"),
         "stage": (payload or {}).get("stage"),
         "command": run_info,
@@ -56,10 +56,14 @@ def _ensure_pilot_validation_report() -> dict[str, Any]:
 
 
 def _runtime_formal_equivalence_check() -> dict[str, Any]:
+    def _equivalent_cell_true(value: Any) -> bool:
+        """Accept legacy string and normalized boolean equivalence encodings."""
+        return value is True or value == "true"
+
     payload = json.loads(RUNTIME_FORMAL_ARTIFACT.read_text(encoding="utf-8"))
     truth_table = payload.get("truth_table", [])
     all_equivalent = bool(truth_table) and all(
-        row.get("equivalent") in {True, "true"}
+        _equivalent_cell_true(row.get("equivalent"))
         for row in truth_table
     )
     return {
@@ -100,7 +104,12 @@ def build_report() -> dict[str, Any]:
     claim_boundary_markers = _claim_boundary_markers_check()
 
     public_judgment_triad_preserved = True
-    no_certificate_bypass_claimed = theorem["passed"] and replay["passed"] and sovereignty["passed"]
+    certificate_bypass_prevention_checks = {
+        "formal_theorem_track_checked": theorem["passed"],
+        "replay_integrity_contract_checked": replay["passed"],
+        "layer_sovereignty_registry_checked": sovereignty["passed"],
+    }
+    no_certificate_bypass_claimed = all(certificate_bypass_prevention_checks.values())
     no_consciousness_claim = claim_boundary_markers["checked"]
 
     return {
@@ -119,7 +128,7 @@ def build_report() -> dict[str, Any]:
         "pilot_status": pilot.get("pilot_status") or "HYPOTHESIS",
         "remaining_production_gaps": REMAINING_PRODUCTION_GAPS,
         "artifacts_referenced": {
-            "pilot_validation_report": str(PILOT_REPORT.relative_to(REPO_ROOT)),
+            "pilot_validation_report": str(PILOT_VALIDATION_SCRIPT.relative_to(REPO_ROOT)),
             "runtime_formal_equivalence_artifact": str(RUNTIME_FORMAL_ARTIFACT.relative_to(REPO_ROOT)),
             "replay_integrity_test": "tests/test_replay_integrity_contract.py",
             "layer_sovereignty_test": "tests/test_layer_sovereignty_registry.py",
@@ -136,6 +145,7 @@ def build_report() -> dict[str, Any]:
             "repository_integrity": repository_integrity,
             "cli_dispatch_integrity": cli_dispatch,
             "claim_boundary_markers": claim_boundary_markers,
+            "certificate_bypass_prevention_checks": certificate_bypass_prevention_checks,
         },
     }
 

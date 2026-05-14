@@ -72,7 +72,8 @@ def test_release_candidate_claim_boundaries_and_artifact_references(tmp_path: Pa
 
     artifacts = payload["artifacts_referenced"]
     assert REQUIRED_ARTIFACT_KEYS.issubset(artifacts)
-    assert all(isinstance(value, str) and value for value in artifacts.values())
+    assert all(isinstance(value, str) for value in artifacts.values())
+    assert all(value for value in artifacts.values())
 
     for path in artifacts.values():
         assert (REPO_ROOT / path).exists(), f"missing referenced artifact/test path: {path}"
