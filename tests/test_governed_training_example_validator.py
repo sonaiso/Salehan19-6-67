@@ -69,3 +69,12 @@ def test_validator_requires_separate_trace_path_and_evidence_fields() -> None:
     report = validate_training_example(broken)
     assert not report.valid
     assert any(error.field.startswith("thought_trace") for error in report.errors)
+
+
+def test_certificate_example_requires_gate_residuals_when_gates_missing() -> None:
+    broken = copy.deepcopy(_load_example("complete_birth_not_final_certificate.json"))
+    broken["expected"]["residuals"] = []
+
+    report = validate_training_example(broken)
+    assert not report.valid
+    assert any("certificate_without_proof_object" in error.message for error in report.errors)

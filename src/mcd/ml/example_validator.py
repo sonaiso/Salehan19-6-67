@@ -5,7 +5,7 @@ from dataclasses import dataclass, field
 
 import jsonschema
 
-from mcd.core.public_judgment import PUBLIC_FINAL_JUDGMENTS, collapse_to_public_judgment
+from mcd.core.public_judgment import collapse_to_public_judgment
 from mcd.ml.dataset_schema import (
     CORE_EVIDENCE_RANK_TOKENS,
     THINKING_EVIDENCE_RANK_TOKENS,
@@ -47,11 +47,6 @@ def validate_training_example(example: dict, *, schema: dict | None = None) -> E
     final = collapse_to_public_judgment(expected.get("final_judgment", ""))
     requested = collapse_to_public_judgment(example.get("requested_public_judgment", ""))
 
-    if expected.get("birth_judgment") not in PUBLIC_FINAL_JUDGMENTS:
-        errors.append(ExampleValidationError("expected.birth_judgment", "birth_judgment outside public triad"))
-    if expected.get("final_judgment") not in PUBLIC_FINAL_JUDGMENTS:
-        errors.append(ExampleValidationError("expected.final_judgment", "final_judgment outside public triad"))
-
     if requested == "hypothesis" and (birth == "certificate" or final == "certificate"):
         errors.append(ExampleValidationError("expected.birth_judgment", "silent promotion from hypothesis to certificate"))
 
@@ -87,6 +82,33 @@ def validate_training_example(example: dict, *, schema: dict | None = None) -> E
         errors.append(ExampleValidationError("expected.blockers", "blockers must be an explicit list"))
     if not isinstance(residuals, list):
         errors.append(ExampleValidationError("expected.residuals", "residuals must be an explicit list"))
+
+    labels = {str(item).strip().lower() for item in (blockers or []) + (residuals or [])}
+    has_proof_object = bool((example.get("proof_object_ref") or "").strip())
+    has_governance_gate = bool(example.get("governance_gate_passed"))
+    has_reverse_trace = bool((example.get("reverse_trace_ref") or "").strip())
+    if birth == "certificate" or final == "certificate":
+        if not has_proof_object and "certificate_without_proof_object" not in labels:
+            errors.append(
+                ExampleValidationError(
+                    "expected.residuals",
+                    "certificate samples without proof_object_ref must preserve certificate_without_proof_object",
+                )
+            )
+        if not has_governance_gate and "certificate_without_governance_gate" not in labels:
+            errors.append(
+                ExampleValidationError(
+                    "expected.residuals",
+                    "certificate samples without governance_gate_passed must preserve certificate_without_governance_gate",
+                )
+            )
+        if not has_reverse_trace and "certificate_without_reverse_trace" not in labels:
+            errors.append(
+                ExampleValidationError(
+                    "expected.residuals",
+                    "certificate samples without reverse_trace_ref must preserve certificate_without_reverse_trace",
+                )
+            )
 
     method_type = str(example.get("thinking_method", {}).get("method_type", "")).strip().lower()
     output_kind = str(example.get("mentality_frame", {}).get("output_kind", "")).strip().lower()

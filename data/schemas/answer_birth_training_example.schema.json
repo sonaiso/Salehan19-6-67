@@ -255,7 +255,11 @@
                   "judgment"
                 ]
               },
-              "label": {"type": "string", "minLength": 1}
+              "label": {"type": "string", "minLength": 1},
+              "metadata": {
+                "type": "object",
+                "additionalProperties": true
+              }
             }
           }
         },
@@ -291,6 +295,9 @@
       }
     },
     "language_output": {"type": "string"},
+    "proof_object_ref": {"type": "string"},
+    "governance_gate_passed": {"type": "boolean"},
+    "reverse_trace_ref": {"type": "string"},
     "requested_public_judgment": {
       "type": "string",
       "enum": ["zero", "hypothesis", "certificate"]

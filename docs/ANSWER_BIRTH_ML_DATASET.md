@@ -15,7 +15,7 @@ Allowed public judgments remain:
 
 Dataset labels keep `birth_judgment` and `final_judgment` separate.
 
-`birth_judgment = certificate` means answer-birth certificate eligibility at this layer only, not final certificate issuance.
+`birth_judgment = certificate` means answer-birth layer eligibility only; it is **not** a final AFJG CERTIFICATE without ProofObject, GovernanceGate, and ReverseTrace.
 
 ## Required Example Structure
 
