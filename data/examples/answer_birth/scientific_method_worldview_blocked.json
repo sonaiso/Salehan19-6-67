@@ -1,0 +1,80 @@
+{
+  "sample_id": "AB-0003",
+  "user_request": "قدّم حكماً كونياً نهائياً باستخدام المنهج العلمي.",
+  "context": "governance stress test",
+  "intent_frame": {
+    "intent_status": "explicit",
+    "normalized_request": "حكم كوني نهائي",
+    "inferred_intent": "issue worldview judgment",
+    "uncertainty_preserved": true,
+    "residuals": []
+  },
+  "consciousness_frame": {
+    "awareness_object": "worldview claim",
+    "attention_state": "focused",
+    "distinction_state": "medium",
+    "reality_refs": ["artifact:experiment-summary"],
+    "prior_information_refs": []
+  },
+  "mentality_frame": {
+    "base_orientation": "empirical",
+    "domain": "technical",
+    "output_kind": "worldview",
+    "worldview_assumptions": ["totalizing inference"]
+  },
+  "thinking_method": {
+    "method_type": "scientific",
+    "required_inputs": ["intent", "trace", "evidence"],
+    "allowed_outputs": ["empirical"],
+    "forbidden_outputs": ["worldview", "normative"],
+    "required_evidence_rank": "high"
+  },
+  "thinking_style": {
+    "style_type": "experiment",
+    "required_method_type": "scientific"
+  },
+  "thinking_means": {
+    "means_type": "experiment",
+    "can_issue_judgment": false
+  },
+  "thought_trace": {
+    "trace_path_complete": true,
+    "trace_evidence_complete": true,
+    "trace_certificate_complete": true,
+    "intent_ref": "intent:AB-0003",
+    "consciousness_ref": "consciousness:AB-0003",
+    "mentality_ref": "mentality:AB-0003",
+    "method_ref": "method:scientific",
+    "style_ref": "style:experiment",
+    "means_ref": "means:experiment",
+    "language_ref": "language:AB-0003",
+    "evidence_refs": ["rank:high::ev-1"],
+    "evidence_rank": {
+      "thinking": "high",
+      "core": "strong_evidence"
+    }
+  },
+  "concept_graph": {
+    "nodes": [
+      {"id": "n1", "kind": "method", "label": "scientific"},
+      {"id": "n2", "kind": "judgment", "label": "worldview"},
+      {"id": "n3", "kind": "residual", "label": "scientific_method_as_worldview"}
+    ],
+    "edges": [
+      {"source": "n1", "target": "n2", "relation": "does_not_support"},
+      {"source": "n3", "target": "n2", "relation": "blocks"}
+    ]
+  },
+  "language_output": "لا يمكن للمنهج العلمي وحده إصدار شهادة رؤية كونية نهائية.",
+  "requested_public_judgment": "certificate",
+  "expected": {
+    "intent_status": "explicit",
+    "method_type": "scientific",
+    "output_kind": "worldview",
+    "birth_judgment": "zero",
+    "final_judgment": "zero",
+    "certificate_eligibility": false,
+    "blockers": ["scientific_method_as_worldview"],
+    "residuals": ["scientific_method_as_worldview"]
+  }
+}
