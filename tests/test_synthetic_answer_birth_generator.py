@@ -38,7 +38,7 @@ def test_generator_covers_all_declared_categories() -> None:
     generator = SyntheticAnswerBirthDatasetGenerator(seed=7)
     samples = generator.generate_examples(total_examples=250)
 
-    categories_seen = {sample["user_request"].split("(")[-1].rstrip(").") for sample in samples}
+    categories_seen = {sample["context"].split("category:", 1)[-1] for sample in samples}
     expected = {spec.key for spec in CATEGORY_SPECS}
     assert expected.issubset(categories_seen)
 

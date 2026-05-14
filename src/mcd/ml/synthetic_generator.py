@@ -209,7 +209,7 @@ class SyntheticAnswerBirthDatasetGenerator:
         return {
             "sample_id": sample_id,
             "user_request": f"Synthetic governed request #{idx} ({category_key}).",
-            "context": "synthetic governed answer-birth generation",
+            "context": f"synthetic governed answer-birth generation | category:{category_key}",
             "intent_frame": {
                 "intent_status": "explicit",
                 "normalized_request": "synthetic governed request",
@@ -658,9 +658,6 @@ class SyntheticAnswerBirthDatasetGenerator:
         residuals.update(intent.get("residuals", []))
         residuals.update(features["feature_residuals"])
 
-        if features["linking_validity"] == "invalid":
-            expected["blockers"].append("invalid_linking")
-
         expected["residuals"] = sorted(r for r in residuals if r)
         expected["blockers"] = sorted(set(token for token in expected.get("blockers", []) if token))
 
@@ -669,9 +666,9 @@ class SyntheticAnswerBirthDatasetGenerator:
         expected["output_kind"] = sample["mentality_frame"]["output_kind"]
 
         if expected["birth_judgment"] not in FINAL_JUDGMENT_TRIAD:
-            raise ValueError("birth_judgment must use public triad")
+            raise ValueError("birth_judgment must be one of: zero, hypothesis, certificate")
         if expected["final_judgment"] not in FINAL_JUDGMENT_TRIAD:
-            raise ValueError("final_judgment must use public triad")
+            raise ValueError("final_judgment must be one of: zero, hypothesis, certificate")
 
         if expected["birth_judgment"] == "certificate":
             sample["thought_trace"]["trace_path_complete"] = True
@@ -696,7 +693,8 @@ class SyntheticAnswerBirthDatasetGenerator:
             if not sample["thought_trace"]["evidence_refs"]:
                 sample["thought_trace"]["evidence_refs"] = [f"rank:governed::{sample['sample_id']}:proof"]
 
-        if expected["final_judgment"] != "certificate":
+        certificate_attempted = expected["birth_judgment"] == "certificate" or sample["requested_public_judgment"] == "certificate"
+        if expected["final_judgment"] != "certificate" and certificate_attempted:
             if not sample.get("proof_object_ref"):
                 expected["residuals"] = sorted(set(expected["residuals"]) | {"certificate_without_proof_object"})
             if not sample.get("governance_gate_passed"):
