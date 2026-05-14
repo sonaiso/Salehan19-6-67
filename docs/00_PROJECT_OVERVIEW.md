@@ -117,8 +117,8 @@ Reality -> Cognitive Distinction -> Linguistic Signification -> Conceptual Geome
 
 ### النتيجة العلمية والصناعية الحالية
 
-- **Scientific package posture:** HYPOTHESIS (أدلة قوية جزئية مع حدود formal closure).
-- **Industrial package posture:** HYPOTHESIS للإنتاج، مع أهلية Pilot controlled scope.
+- **Scientific package posture:** HYPOTHESIS (أدلة قوية جزئية مع حدود الإغلاق الشكلي).
+- **Industrial package posture:** HYPOTHESIS للإنتاج، مع أهلية نطاق تجريبي محكوم.
 - **Production certification:** غير مُدّعاة حاليًا.
 
 ## واجهات الاستخدام الرئيسية (مختصر)
