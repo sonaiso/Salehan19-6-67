@@ -82,11 +82,11 @@ def test_bridge_pattern_required_for_ascent() -> None:
     )
 
     ok = validate_bridge(source, "semantic_role", bridge)
-    missing = validate_bridge(source, "claim", bridge)
+    wrong_target_layer = validate_bridge(source, "claim", bridge)
 
     assert ok.passed is True
-    assert missing.passed is False
-    assert "target_layer_mismatch" in missing.blockers
+    assert wrong_target_layer.passed is False
+    assert "target_layer_mismatch" in wrong_target_layer.blockers
 
 
 def test_local_certificate_does_not_imply_global_certificate() -> None:

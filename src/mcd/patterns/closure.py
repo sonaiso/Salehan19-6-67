@@ -23,8 +23,12 @@ def satisfies_minimum_completion(hypothesis: FormRoleHypothesis, minimum_complet
     if hypothesis.layer != minimum_completion.layer:
         return False
 
-    available_dependencies = set(hypothesis.trace_refs) | set(hypothesis.residuals)
-    available_dependencies |= set(hypothesis.form.source_refs) | set(hypothesis.role.evidence_refs)
+    available_dependencies = (
+        set(hypothesis.trace_refs)
+        | set(hypothesis.residuals)
+        | set(hypothesis.form.source_refs)
+        | set(hypothesis.role.evidence_refs)
+    )
 
     if any(
         not _has_form_field(hypothesis, form_field)

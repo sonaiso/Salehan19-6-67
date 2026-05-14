@@ -32,6 +32,7 @@ _JUDGMENT_ORDER = {
     ClosureJudgment.HYPOTHESIS.value: 1,
     ClosureJudgment.CERTIFICATE.value: 2,
 }
+_CERTIFICATE_RANK = _JUDGMENT_ORDER[ClosureJudgment.CERTIFICATE.value]
 
 
 def validate_bridge(
@@ -47,7 +48,7 @@ def validate_bridge(
         blockers.append("target_layer_mismatch")
 
     source_rank = _JUDGMENT_ORDER[source_closure.judgment.value]
-    required_rank = _JUDGMENT_ORDER.get(bridge_pattern.source_required_judgment.lower(), 2)
+    required_rank = _JUDGMENT_ORDER.get(bridge_pattern.source_required_judgment.lower(), _CERTIFICATE_RANK)
     if source_rank < required_rank:
         blockers.append("insufficient_source_judgment")
 

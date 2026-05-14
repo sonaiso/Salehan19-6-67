@@ -15,6 +15,8 @@ from mcd.patterns.pattern_registry import (
 )
 from mcd.qualification.layer_sovereignty_registry import LayerSovereigntyRegistry
 
+_ARABIC_DIACRITICS = {"َ", "ُ", "ِ", "ْ", "ّ"}
+
 
 @dataclass(frozen=True)
 class LayerDefinition:
@@ -50,7 +52,7 @@ def wrap_pattern_operator_as_morphological_pattern(pattern_id: str) -> Morpholog
         pattern_form=operator.pattern_form,
         root_slots=("f", "a", "l"),
         added_letters=tuple(),
-        vowel_schema=tuple(symbol for symbol in operator.pattern_form if symbol in {"َ", "ُ", "ِ", "ْ", "ّ"}),
+        vowel_schema=tuple(symbol for symbol in operator.pattern_form if symbol in _ARABIC_DIACRITICS),
         operator_vector=dict(operator.operator_vector),
         certainty_policy=operator.certainty_policy,
     )
