@@ -52,7 +52,7 @@ The model uses a domain-general human-rational core:
 - evidence
 - certainty rank
 
-This aligns with existing Nabhani feature contracts (`docs/NABHANI_FEATURE_ADAPTER.md`, `data/schemas/nabhani_features.schema.json`) and is treated here as universal rational governance signals, not a narrow personality model.
+This aligns with existing Nabhani feature contracts ([docs/NABHANI_FEATURE_ADAPTER.md](NABHANI_FEATURE_ADAPTER.md), [data/schemas/nabhani_features.schema.json](../data/schemas/nabhani_features.schema.json)) and is treated here as universal rational governance signals, not a narrow personality model.
 The referenced schema defines the core rational-feature contract; PR #97 extends it into the full multi-path `Z` contract.
 
 ## Path Variable Contract (`Z`)
@@ -219,8 +219,8 @@ Naming convention:
 Final `CERTIFICATE` is forbidden unless all are true:
 
 - valid `ProofObject` (claim-evidence-governance linkage is complete and traceable)
-- passed `GovernanceGate`
-- complete `ReverseTrace`
+- passed `GovernanceGate` (required gate checks have succeeded for the claim path)
+- complete `ReverseTrace` (the claim path can be traced end-to-end to governed evidence)
 - evidence type matches claim domain
 - no blocking residual
 
