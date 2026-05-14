@@ -7,7 +7,7 @@ from mcd.core.public_judgment import PUBLIC_FINAL_JUDGMENTS, collapse_to_public_
 from mcd.thinking.forbidden_transitions import find_forbidden_transitions
 from mcd.thinking.intent import UserIntentFrame
 from mcd.thinking.means import ThinkingMeans
-from mcd.thinking.mentality import ControlledConsciousnessFrame, MentalityFrame
+from mcd.thinking.mentality import OUTPUT_KINDS, ControlledConsciousnessFrame, MentalityFrame
 from mcd.thinking.methods import ThinkingMethod, evidence_rank_sufficient
 from mcd.thinking.styles import ThinkingStyle, style_belongs_to_method
 from mcd.thinking.trace import ThoughtBirthTrace
@@ -120,7 +120,18 @@ def evaluate_answer_birth_contract(contract: AnswerBirthContract) -> AnswerBirth
             trace_evidence_complete=trace_evidence_complete,
         )
 
-    if not trace_evidence_complete or (method and not evidence_rank_sufficient(method.required_evidence_rank, evidence_refs)):
+    if not trace_evidence_complete:
+        return AnswerBirthEvaluationResult(
+            contract_id=contract.contract_id,
+            public_judgment="hypothesis",
+            blockers=[],
+            residuals=_merge_unique(residuals, ["incomplete_evidence_rank"]),
+            trace_complete=False,
+            trace_path_complete=trace_path_complete,
+            trace_evidence_complete=trace_evidence_complete,
+        )
+
+    if method and not evidence_rank_sufficient(method.required_evidence_rank, evidence_refs):
         return AnswerBirthEvaluationResult(
             contract_id=contract.contract_id,
             public_judgment="hypothesis",
@@ -239,6 +250,11 @@ def _collect_residuals(contract: AnswerBirthContract) -> list[str]:
 
 
 def _validate_method_requirements(contract: AnswerBirthContract) -> list[str]:
+    """Validate method-required inputs and output constraints.
+
+    Returns residual markers for missing required inputs and output-policy
+    mismatches.
+    """
     method = contract.thinking_method
     if method is None:
         return []
@@ -264,13 +280,14 @@ def _validate_method_requirements(contract: AnswerBirthContract) -> list[str]:
         if key and not present.get(key, False):
             residuals.append(f"missing_required_input::{key}")
 
-    output_kinds = {"descriptive", "empirical", "formal", "linguistic", "normative", "legal", "shari", "worldview", "systemic"}
     allowed_outputs = {(item or "").strip().lower() for item in method.allowed_outputs if (item or "").strip()}
     forbidden_outputs = {(item or "").strip().lower() for item in method.forbidden_outputs if (item or "").strip()}
-    output_kind = ((contract.mentality_frame.output_kind if contract.mentality_frame else "") or "").strip().lower()
+    output_kind = _normalized_output_kind(contract.mentality_frame)
     requested = collapse_to_public_judgment(contract.public_judgment)
+    output_kinds = set(OUTPUT_KINDS)
     forbidden_output_kinds = forbidden_outputs & output_kinds
-    if forbidden_outputs and (requested in forbidden_outputs or (output_kind in forbidden_output_kinds)):
+    output_forbidden = requested in forbidden_outputs or output_kind in forbidden_output_kinds
+    if forbidden_outputs and output_forbidden:
         residuals.append(f"method_forbidden_output::{requested or output_kind}")
     allowed_output_kinds = allowed_outputs & output_kinds
     if allowed_output_kinds and output_kind and output_kind not in allowed_output_kinds:
@@ -287,8 +304,13 @@ def _target_text(mentality: MentalityFrame | None, method: ThinkingMethod | None
     return " ".join((x or "").strip().lower() for x in hay)
 
 
+def _normalized_output_kind(mentality: MentalityFrame | None) -> str:
+    """Normalize mentality output kind into a lowercase token."""
+    return ((mentality.output_kind if mentality else "") or "").strip().lower()
+
+
 def _targets_worldview(mentality: MentalityFrame | None, method: ThinkingMethod | None) -> bool:
-    output_kind = ((mentality.output_kind if mentality else "") or "").strip().lower()
+    output_kind = _normalized_output_kind(mentality)
     if output_kind == "worldview":
         return True
     method_targets = {(x or "").strip().lower() for x in (method.allowed_outputs if method else [])}
@@ -299,7 +321,7 @@ def _targets_worldview(mentality: MentalityFrame | None, method: ThinkingMethod 
 
 
 def _targets_normative(mentality: MentalityFrame | None, method: ThinkingMethod | None) -> bool:
-    output_kind = ((mentality.output_kind if mentality else "") or "").strip().lower()
+    output_kind = _normalized_output_kind(mentality)
     if output_kind in {"normative", "legal", "shari"}:
         return True
     method_targets = {(x or "").strip().lower() for x in (method.allowed_outputs if method else [])}

@@ -17,7 +17,22 @@ _THINKING_TO_CORE_RANK: dict[str, EpistemicRank] = {
     # "governed" means certificate-eligible evidence rank, not certificate by itself.
     "governed": EpistemicRank.CERTIFICATE,
 }
-_CORE_RANK_TOKENS: dict[str, EpistemicRank] = {rank.name.lower(): rank for rank in EpistemicRank}
+_CORE_RANK_TOKENS: dict[str, EpistemicRank] = {
+    rank.name.lower(): rank
+    for rank in EpistemicRank
+    if rank not in {EpistemicRank.CERTIFICATE, EpistemicRank.FINAL_JUDGMENT}
+}
+
+
+def _build_rank_marker_forms(token: str) -> tuple[str, str, str, str]:
+    """Build accepted rank marker variants for a rank token."""
+    normalized = (token or "").strip().lower()
+    return (
+        f"rank:{normalized}",
+        f"rank={normalized}",
+        f"evidence_rank:{normalized}",
+        f"evidence_rank={normalized}",
+    )
 
 
 @dataclass
@@ -32,6 +47,7 @@ class ThinkingMethod:
 
 
 def thinking_rank_to_core_epistemic_rank(rank: str) -> EpistemicRank:
+    """Map thinking/core rank token into a core EpistemicRank value."""
     normalized = (rank or "").strip().lower()
     if normalized in _THINKING_TO_CORE_RANK:
         return _THINKING_TO_CORE_RANK[normalized]
@@ -41,25 +57,20 @@ def thinking_rank_to_core_epistemic_rank(rank: str) -> EpistemicRank:
 
 
 def detect_highest_evidence_rank(evidence_refs: list[str]) -> EpistemicRank:
+    """Return the highest core rank found in evidence refs.
+
+    If refs exist but no explicit rank marker is present, this defaults to
+    POSSIBILITY.
+    """
+    rank_markers: dict[str, EpistemicRank] = {
+        **_THINKING_TO_CORE_RANK,
+        **_CORE_RANK_TOKENS,
+    }
     highest = EpistemicRank.ZERO
     for ref in evidence_refs:
         lower = (ref or "").strip().lower()
-        for token, rank in _THINKING_TO_CORE_RANK.items():
-            token_forms = (
-                f"rank:{token}",
-                f"rank={token}",
-                f"evidence_rank:{token}",
-                f"evidence_rank={token}",
-            )
-            if any(marker in lower for marker in token_forms):
-                highest = max(highest, rank)
-        for token, rank in _CORE_RANK_TOKENS.items():
-            token_forms = (
-                f"rank:{token}",
-                f"rank={token}",
-                f"evidence_rank:{token}",
-                f"evidence_rank={token}",
-            )
+        for token, rank in rank_markers.items():
+            token_forms = _build_rank_marker_forms(token)
             if any(marker in lower for marker in token_forms):
                 highest = max(highest, rank)
     if highest == EpistemicRank.ZERO and evidence_refs:
@@ -73,7 +84,8 @@ def evidence_rank_sufficient(required_rank: str, evidence_refs: list[str]) -> bo
     Supports both thinking-rank markers (none/low/medium/high/governed) and
     core epistemic rank markers (ZERO/POSSIBILITY/HYPOTHESIS/WEAK_EVIDENCE/
     STRONG_EVIDENCE/CERTIFICATE).
-    Unranked evidence refs are treated as POSSIBILITY.
+    Unranked evidence refs are treated as POSSIBILITY by
+    ``detect_highest_evidence_rank``.
     """
     required = thinking_rank_to_core_epistemic_rank(required_rank)
     highest = detect_highest_evidence_rank(evidence_refs)

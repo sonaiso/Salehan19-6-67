@@ -15,6 +15,17 @@ OutputKind = Literal[
     "worldview",
     "systemic",
 ]
+OUTPUT_KINDS: tuple[str, ...] = (
+    "descriptive",
+    "empirical",
+    "formal",
+    "linguistic",
+    "normative",
+    "legal",
+    "shari",
+    "worldview",
+    "systemic",
+)
 
 
 @dataclass
