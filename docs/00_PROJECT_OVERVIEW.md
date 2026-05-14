@@ -119,7 +119,8 @@ Reality -> Cognitive Distinction -> Linguistic Signification -> Conceptual Geome
 
 - **Scientific package posture:** HYPOTHESIS (أدلة قوية جزئية مع حدود الإغلاق الشكلي).
 - **Industrial package posture:** HYPOTHESIS للإنتاج، مع أهلية نطاق تجريبي محكوم.
-- **Production certification:** غير مُدّعاة حاليًا.
+- **تنبيه حوكمي:** البنود السابقة تصف وضع الحزمة (package posture) وليست حكمًا كونيًا نهائيًا خارج نطاق الحزمة.
+- **الحكم على دعوى "المشروع جاهز للإنتاج الآن":** ZERO.
 
 ## واجهات الاستخدام الرئيسية (مختصر)
 
