@@ -38,7 +38,11 @@ class AnswerBirthEvaluationResult:
 
 
 def evaluate_answer_birth_contract(contract: AnswerBirthContract) -> AnswerBirthEvaluationResult:
-    """Evaluate governed answer birth before final public judgment."""
+    """Evaluate governed answer birth and emit only zero/hypothesis/certificate.
+
+    The decision is based on blocker presence, thought-trace completeness,
+    governed intent state, and evidence-rank sufficiency.
+    """
     blockers = _collect_blockers(contract)
     residuals = _collect_residuals(contract)
 
@@ -114,8 +118,8 @@ def evaluate_answer_birth_contract(contract: AnswerBirthContract) -> AnswerBirth
 
 
 def _collect_blockers(contract: AnswerBirthContract) -> list[str]:
-    blockers = _merge_unique([], contract.blockers)
-    blockers = _merge_unique(blockers, find_forbidden_transitions(contract.blockers))
+    blockers = _merge_unique([], find_forbidden_transitions(contract.blockers))
+    blockers = _merge_unique(blockers, contract.blockers)
 
     intent = contract.user_intent
     method = contract.thinking_method
@@ -157,15 +161,14 @@ def _collect_blockers(contract: AnswerBirthContract) -> list[str]:
     if trace and trace.language_ref and not trace.evidence_refs:
         blockers.append("fluent_language_as_proof")
 
-    if method and method.method_type == "scientific" and _targets_normative_or_worldview(mentality, method):
-        blockers.append("scientific_method_as_worldview")
-        blockers.append("scientific_method_as_normative_judgment")
+    if method and method.method_type == "scientific":
+        if _targets_worldview(mentality, method):
+            blockers.append("scientific_method_as_worldview")
+        if _targets_normative(mentality, method):
+            blockers.append("scientific_method_as_normative_judgment")
 
-    if _targets_normative_or_worldview(mentality, method) and not _has_normative_evidence(trace):
+    if _targets_normative(mentality, method) and not _has_normative_evidence(trace):
         blockers.append("normative_judgment_without_normative_evidence")
-
-    if "residual_erasure" in blockers:
-        blockers.append("residual_erasure")
 
     return list(dict.fromkeys(b for b in blockers if b))
 
@@ -183,14 +186,23 @@ def _collect_residuals(contract: AnswerBirthContract) -> list[str]:
     return list(dict.fromkeys((r or "").strip().lower() for r in residuals if (r or "").strip()))
 
 
-def _targets_normative_or_worldview(mentality: MentalityFrame | None, method: ThinkingMethod | None) -> bool:
+def _target_text(mentality: MentalityFrame | None, method: ThinkingMethod | None) -> str:
     if mentality is None:
-        return False
+        return ""
     hay = [mentality.base_orientation, mentality.domain, *mentality.worldview_assumptions]
     hay.extend(method.allowed_outputs if method else [])
     hay.extend(method.forbidden_outputs if method else [])
-    text = " ".join((x or "").strip().lower() for x in hay)
-    return any(token in text for token in ("normative", "worldview", "moral", "legal", "shari"))
+    return " ".join((x or "").strip().lower() for x in hay)
+
+
+def _targets_worldview(mentality: MentalityFrame | None, method: ThinkingMethod | None) -> bool:
+    text = _target_text(mentality, method)
+    return "worldview" in text
+
+
+def _targets_normative(mentality: MentalityFrame | None, method: ThinkingMethod | None) -> bool:
+    text = _target_text(mentality, method)
+    return any(token in text for token in ("normative", "moral", "legal", "shari"))
 
 
 def _has_normative_evidence(trace: ThoughtBirthTrace | None) -> bool:

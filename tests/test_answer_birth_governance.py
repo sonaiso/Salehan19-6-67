@@ -61,7 +61,7 @@ def _complete_contract() -> AnswerBirthContract:
             style_ref="TS-1",
             means_ref="ME-1",
             language_ref="L-1",
-            evidence_refs=["rank:high::ev-1", "normative::not-used"],
+            evidence_refs=["rank:high::ev-1", "normative::ev-norm-1"],
             residuals=["trace_residual"],
             complete=True,
         ),
@@ -84,7 +84,7 @@ def test_scientific_method_cannot_directly_issue_normative_or_worldview_judgment
     contract.mentality_frame.domain = "normative legal"
     result = evaluate_answer_birth_contract(contract)
     assert result.public_judgment == "zero"
-    assert "scientific_method_as_worldview" in result.blockers
+    assert "scientific_method_as_normative_judgment" in result.blockers
 
 
 def test_normative_judgment_without_normative_evidence_is_blocked():

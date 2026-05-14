@@ -30,7 +30,7 @@ class ThinkingStyle:
 
 
 def style_belongs_to_method(style: ThinkingStyle, method: ThinkingMethod) -> bool:
-    """A style can only operate within its method contract."""
+    """Return True iff style method_id and required method type match the method."""
     if style.method_id != method.method_id:
         return False
     return (style.required_method_type or "").strip().lower() == (method.method_type or "").strip().lower()

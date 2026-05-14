@@ -19,6 +19,7 @@ class ThoughtBirthTrace:
     complete: bool = False
 
     def assess_completeness(self) -> None:
+        """Update `complete` based on required refs and evidence refs presence."""
         self.complete = all(
             [
                 self.intent_ref,

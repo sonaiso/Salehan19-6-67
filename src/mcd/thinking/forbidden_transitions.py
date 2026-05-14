@@ -25,7 +25,7 @@ THINKING_FORBIDDEN_TRANSITIONS: tuple[str, ...] = (
 
 
 def find_forbidden_transitions(tags: list[str]) -> list[str]:
-    """Return unique forbidden transition tags while preserving order."""
+    """Filter input tags to registered forbidden transitions, normalized and deduplicated."""
     normalized = {(t or "").strip().lower() for t in THINKING_FORBIDDEN_TRANSITIONS}
     seen: set[str] = set()
     hits: list[str] = []

@@ -87,8 +87,9 @@ def test_complete_governed_contract_can_certificate():
     assert result.trace_complete is True
 
 
-def test_result_judgment_is_always_public_triad():
+def test_non_public_status_collapses_into_public_triad():
     contract = _complete_contract()
-    contract.public_judgment = "non-public"
+    contract.public_judgment = "UNKNOWN"
     result = evaluate_answer_birth_contract(contract)
+    assert result.public_judgment == "zero"
     assert result.public_judgment in {"zero", "hypothesis", "certificate"}

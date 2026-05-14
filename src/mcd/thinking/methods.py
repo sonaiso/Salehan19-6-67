@@ -27,7 +27,12 @@ class ThinkingMethod:
 
 
 def evidence_rank_sufficient(required_rank: str, evidence_refs: list[str]) -> bool:
-    """Check whether evidence refs satisfy a minimal rank requirement."""
+    """Check whether evidence refs satisfy a minimal rank requirement.
+
+    Rank markers are expected in refs like ``rank:high::source`` or ``rank=medium``.
+    Returns True when the best detected rank meets or exceeds ``required_rank``.
+    Unranked evidence refs are treated as low-rank evidence.
+    """
     required = _EVIDENCE_RANK_ORDER.get((required_rank or "").strip().lower(), 0)
     highest = 0
     for ref in evidence_refs:
