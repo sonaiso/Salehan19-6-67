@@ -4,7 +4,18 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Literal
 
-MeansType = Literal["llm", "database", "source_text", "experiment", "calculator", "code", "human_input", "external_tool"]
+MeansType = Literal[
+    "llm",
+    "database",
+    "source_text",
+    "experiment",
+    "calculator",
+    "code",
+    "human_input",
+    "external_tool",
+    "internal_reasoning",
+    "model_reasoning",
+]
 
 
 @dataclass

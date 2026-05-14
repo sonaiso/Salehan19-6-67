@@ -2,6 +2,19 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import Literal
+
+OutputKind = Literal[
+    "descriptive",
+    "empirical",
+    "formal",
+    "linguistic",
+    "normative",
+    "legal",
+    "shari",
+    "worldview",
+    "systemic",
+]
 
 
 @dataclass
@@ -23,6 +36,7 @@ class MentalityFrame:
     base_orientation: str
     worldview_assumptions: list[str] = field(default_factory=list)
     domain: str = ""
+    output_kind: OutputKind = "descriptive"
     allowed_methods: list[str] = field(default_factory=list)
     forbidden_outputs: list[str] = field(default_factory=list)
     residuals: list[str] = field(default_factory=list)

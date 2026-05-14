@@ -7,6 +7,7 @@ THINKING_FORBIDDEN_TRANSITIONS: tuple[str, ...] = (
     "uncertainty_erasure",
     "thought_without_method",
     "style_without_method",
+    "missing_means",
     "means_as_method",
     "means_as_judgment",
     "tool_output_as_evidence_without_governance",
