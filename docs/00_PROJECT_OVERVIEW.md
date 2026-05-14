@@ -117,10 +117,10 @@ Reality -> Cognitive Distinction -> Linguistic Signification -> Conceptual Geome
 
 ### النتيجة العلمية والصناعية الحالية
 
-- **Scientific package posture:** HYPOTHESIS (أدلة قوية جزئية مع حدود الإغلاق الشكلي).
-- **Industrial package posture:** HYPOTHESIS للإنتاج، مع أهلية نطاق تجريبي محكوم.
-- **تنبيه حوكمي:** البنود السابقة تصف وضع الحزمة (package posture) وليست حكمًا كونيًا نهائيًا خارج نطاق الحزمة.
-- **الحكم على دعوى "المشروع جاهز للإنتاج الآن":** ZERO.
+- **تقييم نطاق الحزمة (metadata تشغيلية):** المسار العلمي = HYPOTHESIS (أدلة جزئية مع حدود الإغلاق الشكلي).
+- **تقييم نطاق الحزمة (metadata تشغيلية):** المسار الصناعي للإنتاج = HYPOTHESIS، مع أهلية نطاق تجريبي محكوم.
+- **تنبيه حوكمي:** هذا التقييم ليس طبقة حكم رابعة؛ الحكم النهائي يبقى محصورًا في ZERO/HYPOTHESIS/CERTIFICATE فقط.
+- **الحكم النهائي على دعوى "المشروع جاهز للإنتاج الآن":** ZERO.
 
 ## واجهات الاستخدام الرئيسية (مختصر)
 
@@ -141,7 +141,9 @@ Reality -> Cognitive Distinction -> Linguistic Signification -> Conceptual Geome
 ## مراجع القراءة التالية
 
 - [Architecture Map](01_ARCHITECTURE_MAP.md)
+- [Product Roadmap](02_PRODUCT_ROADMAP.md)
 - [Judgment Model](03_JUDGMENT_MODEL.md)
+- [Merge Governance](04_MERGE_GOVERNANCE.md)
 - [Mathematical Function Governance](MATHEMATICAL_FUNCTION_GOVERNANCE.md)
 - [Dogfood PR Audit](17_DOGFOOD_PR_AUDIT.md)
 - [Scientific Validation Report](SCIENTIFIC_VALIDATION_REPORT.md)
