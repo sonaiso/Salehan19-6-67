@@ -38,7 +38,7 @@ Public final judgments remain exclusively:
 - `CERTIFICATE`
 
 No fourth final status is permitted.
-`birth_judgment = certificate` does not imply final `CERTIFICATE`.
+`birth_judgment = CERTIFICATE` does not imply final `CERTIFICATE`.
 
 ## Universal Human Rational Core
 
@@ -52,7 +52,7 @@ The model uses a domain-general human-rational core:
 - evidence
 - certainty rank
 
-This aligns with existing Nabhani feature contracts and is treated here as universal rational governance signals, not a narrow personality model.
+This aligns with existing Nabhani feature contracts (`docs/NABHANI_FEATURE_ADAPTER.md`, `data/schemas/nabhani_features.schema.json`) and is treated here as universal rational governance signals, not a narrow personality model.
 
 ## Path Variable Contract (`Z`)
 
@@ -247,5 +247,5 @@ This PR #97 scope is docs/contracts only:
 - No real consciousness claim.
 - Public final judgments remain `ZERO|HYPOTHESIS|CERTIFICATE`.
 - Human rational method remains domain-general.
-- Birth certificate remains distinct from final certificate.
+- Birth `CERTIFICATE` remains distinct from final `CERTIFICATE`.
 - Neural predictions remain hypothesis candidates until symbolic governance evaluation.
