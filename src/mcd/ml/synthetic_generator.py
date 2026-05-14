@@ -12,6 +12,7 @@ from mcd.ml.example_validator import validate_training_example
 from mcd.ml.nabhani_features import validate_nabhani_features
 
 
+# Constitutional epistemic triad: repository law allows no fourth final status.
 FINAL_JUDGMENT_TRIAD: tuple[str, ...] = ("zero", "hypothesis", "certificate")
 MISSING_TO_RESIDUAL = {
     "reality": "missing_reality",
@@ -667,11 +668,11 @@ class SyntheticAnswerBirthDatasetGenerator:
 
         if expected["birth_judgment"] not in FINAL_JUDGMENT_TRIAD:
             raise ValueError(
-                f"invalid birth_judgment {expected['birth_judgment']!r}; expected one of {FINAL_JUDGMENT_TRIAD}"
+                f"birth_judgment violates constitutional triad law: {expected['birth_judgment']!r}; expected {FINAL_JUDGMENT_TRIAD}"
             )
         if expected["final_judgment"] not in FINAL_JUDGMENT_TRIAD:
             raise ValueError(
-                f"invalid final_judgment {expected['final_judgment']!r}; expected one of {FINAL_JUDGMENT_TRIAD}"
+                f"final_judgment violates constitutional triad law: {expected['final_judgment']!r}; expected {FINAL_JUDGMENT_TRIAD}"
             )
 
         if expected["birth_judgment"] == "certificate":
@@ -712,17 +713,23 @@ class SyntheticAnswerBirthDatasetGenerator:
                 raise ValueError("birth certificate requires complete path and evidence trace")
 
         if sample["expected"]["final_judgment"] == "certificate":
-            required = (
-                bool(sample.get("proof_object_ref")),
-                bool(sample.get("governance_gate_passed")),
-                bool(sample.get("reverse_trace_ref")),
-                bool(sample["nabhani_features"].get("has_reality")),
-                bool(sample["nabhani_features"].get("has_correspondence")),
-                bool(sample["nabhani_features"].get("has_evidence")),
-                bool(sample["nabhani_features"].get("evidence_matches_claim_domain")),
-            )
-            if not all(required):
-                raise ValueError("final certificate sample missing required governance gates")
+            missing_requirements = [
+                field
+                for field, satisfied in (
+                    ("proof_object_ref", bool(sample.get("proof_object_ref"))),
+                    ("governance_gate_passed", bool(sample.get("governance_gate_passed"))),
+                    ("reverse_trace_ref", bool(sample.get("reverse_trace_ref"))),
+                    ("has_reality", bool(sample["nabhani_features"].get("has_reality"))),
+                    ("has_correspondence", bool(sample["nabhani_features"].get("has_correspondence"))),
+                    ("has_evidence", bool(sample["nabhani_features"].get("has_evidence"))),
+                    ("evidence_matches_claim_domain", bool(sample["nabhani_features"].get("evidence_matches_claim_domain"))),
+                )
+                if not satisfied
+            ]
+            if missing_requirements:
+                raise ValueError(
+                    "final certificate sample missing required governance gates: " + ", ".join(missing_requirements)
+                )
 
         features_report = validate_nabhani_features(deepcopy(sample["nabhani_features"]))
         if not features_report.valid:

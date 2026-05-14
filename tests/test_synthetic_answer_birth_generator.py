@@ -88,8 +88,12 @@ def test_missing_features_residuals_and_scientific_blockers_are_preserved() -> N
             output_kind = sample["mentality_frame"]["output_kind"]
             if output_kind == "worldview":
                 assert "scientific_method_as_worldview" in blockers
+                assert sample["expected"]["final_judgment"] == "zero"
+                assert "scientific_method_as_worldview" in residuals
             if output_kind in {"normative", "legal", "shari"}:
                 assert "scientific_method_as_normative_judgment" in blockers
+                assert sample["expected"]["final_judgment"] == "zero"
+                assert "scientific_method_as_normative_judgment" in residuals
 
 
 def test_script_writer_outputs_expected_split_files_and_stats(tmp_path: Path) -> None:
