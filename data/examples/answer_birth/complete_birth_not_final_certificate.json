@@ -1,0 +1,81 @@
+{
+  "sample_id": "AB-0002",
+  "user_request": "استنتج النتيجة التقنية من الأدلة المتاحة.",
+  "context": "governed benchmark",
+  "intent_frame": {
+    "intent_status": "explicit",
+    "normalized_request": "استنتاج نتيجة تقنية",
+    "inferred_intent": "derive technical conclusion",
+    "uncertainty_preserved": true,
+    "residuals": []
+  },
+  "consciousness_frame": {
+    "awareness_object": "technical claim",
+    "attention_state": "deep",
+    "distinction_state": "high",
+    "reality_refs": ["artifact:run-log"],
+    "prior_information_refs": ["prior:spec-v1"]
+  },
+  "mentality_frame": {
+    "base_orientation": "analytic",
+    "domain": "technical",
+    "output_kind": "descriptive",
+    "worldview_assumptions": []
+  },
+  "thinking_method": {
+    "method_type": "rational",
+    "required_inputs": ["intent", "trace", "evidence"],
+    "allowed_outputs": ["descriptive"],
+    "forbidden_outputs": ["worldview", "normative"],
+    "required_evidence_rank": "governed"
+  },
+  "thinking_style": {
+    "style_type": "deduction",
+    "required_method_type": "rational"
+  },
+  "thinking_means": {
+    "means_type": "model_reasoning",
+    "can_issue_judgment": false
+  },
+  "thought_trace": {
+    "trace_path_complete": true,
+    "trace_evidence_complete": true,
+    "trace_certificate_complete": true,
+    "intent_ref": "intent:AB-0002",
+    "consciousness_ref": "consciousness:AB-0002",
+    "mentality_ref": "mentality:AB-0002",
+    "method_ref": "method:rational",
+    "style_ref": "style:deduction",
+    "means_ref": "means:model_reasoning",
+    "language_ref": "language:AB-0002",
+    "evidence_refs": ["rank:governed::ev-1", "rank:governed::ev-2"],
+    "evidence_rank": {
+      "thinking": "governed",
+      "core": "certificate"
+    }
+  },
+  "concept_graph": {
+    "nodes": [
+      {"id": "n1", "kind": "user_intent", "label": "technical conclusion"},
+      {"id": "n2", "kind": "evidence", "label": "governed evidence"},
+      {"id": "n3", "kind": "judgment", "label": "birth_certificate"},
+      {"id": "n4", "kind": "judgment", "label": "final_hypothesis"}
+    ],
+    "edges": [
+      {"source": "n2", "target": "n3", "relation": "supports"},
+      {"source": "n3", "target": "n4", "relation": "does_not_support"}
+    ]
+  },
+  "language_output": "ولادة الجواب مكتملة، لكن الحكم النهائي يبقى تحت الحوكمة النهائية.",
+  "requested_public_judgment": "certificate",
+  "expected": {
+    "intent_status": "explicit",
+    "method_type": "rational",
+    "output_kind": "descriptive",
+    "birth_judgment": "certificate",
+    "final_judgment": "hypothesis",
+    "certificate_eligibility": true,
+    "blockers": [],
+    "residuals": ["certificate_without_proof_object", "certificate_without_governance_gate", "certificate_without_reverse_trace"]
+  }
+}

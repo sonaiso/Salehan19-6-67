@@ -1,0 +1,81 @@
+{
+  "sample_id": "AB-0001",
+  "user_request": "اشرح الفكرة الأساسية باختصار.",
+  "context": "technical support context",
+  "intent_frame": {
+    "intent_status": "ambiguous",
+    "normalized_request": "شرح الفكرة الأساسية",
+    "inferred_intent": "provide concise explanation",
+    "uncertainty_preserved": true,
+    "residuals": ["intent_not_fully_explicit"]
+  },
+  "consciousness_frame": {
+    "awareness_object": "user need",
+    "attention_state": "focused",
+    "distinction_state": "high",
+    "reality_refs": [],
+    "prior_information_refs": []
+  },
+  "mentality_frame": {
+    "base_orientation": "analytic",
+    "domain": "technical",
+    "output_kind": "descriptive",
+    "worldview_assumptions": []
+  },
+  "thinking_method": {
+    "method_type": "rational",
+    "required_inputs": ["intent", "trace", "evidence"],
+    "allowed_outputs": ["descriptive"],
+    "forbidden_outputs": ["worldview", "normative"],
+    "required_evidence_rank": "medium"
+  },
+  "thinking_style": {
+    "style_type": "analysis",
+    "required_method_type": "rational"
+  },
+  "thinking_means": {
+    "means_type": "internal_reasoning",
+    "can_issue_judgment": false
+  },
+  "thought_trace": {
+    "trace_path_complete": true,
+    "trace_evidence_complete": false,
+    "trace_certificate_complete": false,
+    "intent_ref": "intent:AB-0001",
+    "consciousness_ref": "consciousness:AB-0001",
+    "mentality_ref": "mentality:AB-0001",
+    "method_ref": "method:rational",
+    "style_ref": "style:analysis",
+    "means_ref": "means:internal_reasoning",
+    "language_ref": "language:AB-0001",
+    "evidence_refs": [],
+    "evidence_rank": {
+      "thinking": "none",
+      "core": "zero"
+    }
+  },
+  "concept_graph": {
+    "nodes": [
+      {"id": "n1", "kind": "user_intent", "label": "concise explanation"},
+      {"id": "n2", "kind": "method", "label": "rational"},
+      {"id": "n3", "kind": "judgment", "label": "hypothesis"},
+      {"id": "n4", "kind": "residual", "label": "incomplete_evidence_rank"}
+    ],
+    "edges": [
+      {"source": "n1", "target": "n2", "relation": "requires"},
+      {"source": "n4", "target": "n3", "relation": "residual_of"}
+    ]
+  },
+  "language_output": "أفهم الطلب، لكن الدليل الحالي غير كافٍ لإصدار شهادة.",
+  "requested_public_judgment": "hypothesis",
+  "expected": {
+    "intent_status": "ambiguous",
+    "method_type": "rational",
+    "output_kind": "descriptive",
+    "birth_judgment": "hypothesis",
+    "final_judgment": "hypothesis",
+    "certificate_eligibility": false,
+    "blockers": [],
+    "residuals": ["intent_not_fully_explicit", "incomplete_evidence_rank"]
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/governed_trace.schema.json",
+  "title": "Governed Thought Birth Trace",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "trace_path_complete",
+    "trace_evidence_complete",
+    "trace_certificate_complete",
+    "intent_ref",
+    "consciousness_ref",
+    "mentality_ref",
+    "method_ref",
+    "style_ref",
+    "means_ref",
+    "language_ref",
+    "evidence_refs",
+    "evidence_rank"
+  ],
+  "properties": {
+    "trace_path_complete": {"type": "boolean"},
+    "trace_evidence_complete": {"type": "boolean"},
+    "trace_certificate_complete": {"type": "boolean"},
+    "intent_ref": {"type": "string"},
+    "consciousness_ref": {"type": "string"},
+    "mentality_ref": {"type": "string"},
+    "method_ref": {"type": "string"},
+    "style_ref": {"type": "string"},
+    "means_ref": {"type": "string"},
+    "language_ref": {"type": "string"},
+    "evidence_refs": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "evidence_rank": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "thinking",
+        "core"
+      ],
+      "properties": {
+        "thinking": {
+          "type": "string",
+          "enum": ["none", "low", "medium", "high", "governed"]
+        },
+        "core": {
+          "type": "string",
+          "enum": [
+            "zero",
+            "possibility",
+            "hypothesis",
+            "weak_evidence",
+            "strong_evidence",
+            "certificate"
+          ]
+        }
+      }
+    }
+  }
+}

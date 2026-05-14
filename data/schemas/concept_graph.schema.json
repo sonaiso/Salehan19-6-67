@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/concept_graph.schema.json",
+  "title": "Governed Concept Graph",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "nodes",
+    "edges"
+  ],
+  "properties": {
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "kind",
+          "label"
+        ],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "kind": {
+            "type": "string",
+            "enum": [
+              "user_intent",
+              "awareness_object",
+              "concept",
+              "method",
+              "style",
+              "means",
+              "evidence",
+              "residual",
+              "judgment"
+            ]
+          },
+          "label": {"type": "string", "minLength": 1},
+          "metadata": {
+            "type": "object",
+            "description": "Optional node-level annotations for feature engineering or provenance context.",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source",
+          "target",
+          "relation"
+        ],
+        "properties": {
+          "source": {"type": "string", "minLength": 1},
+          "target": {"type": "string", "minLength": 1},
+          "relation": {
+            "type": "string",
+            "enum": [
+              "grounds",
+              "supports",
+              "blocks",
+              "requires",
+              "reveals",
+              "contradicts",
+              "residual_of",
+              "does_not_support"
+            ]
+          },
+          "weight": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "description": "Optional edge confidence score; omitted means unweighted relation."
+          }
+        }
+      }
+    }
+  }
+}

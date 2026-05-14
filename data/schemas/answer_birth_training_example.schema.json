@@ -1,0 +1,336 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/answer_birth_training_example.schema.json",
+  "title": "Answer Birth Governed Training Example",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "sample_id",
+    "user_request",
+    "intent_frame",
+    "consciousness_frame",
+    "mentality_frame",
+    "thinking_method",
+    "thinking_style",
+    "thinking_means",
+    "thought_trace",
+    "concept_graph",
+    "language_output",
+    "requested_public_judgment",
+    "expected"
+  ],
+  "properties": {
+    "sample_id": {"type": "string", "minLength": 1},
+    "user_request": {"type": "string", "minLength": 1},
+    "context": {"type": "string"},
+    "intent_frame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "intent_status",
+        "normalized_request",
+        "inferred_intent",
+        "uncertainty_preserved",
+        "residuals"
+      ],
+      "properties": {
+        "intent_status": {
+          "type": "string",
+          "enum": ["explicit", "inferred", "ambiguous", "missing"]
+        },
+        "normalized_request": {"type": "string"},
+        "inferred_intent": {"type": "string"},
+        "uncertainty_preserved": {"type": "boolean"},
+        "residuals": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "consciousness_frame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "awareness_object",
+        "attention_state",
+        "distinction_state",
+        "reality_refs",
+        "prior_information_refs"
+      ],
+      "properties": {
+        "awareness_object": {"type": "string"},
+        "attention_state": {"type": "string"},
+        "distinction_state": {"type": "string"},
+        "reality_refs": {"type": "array", "items": {"type": "string"}},
+        "prior_information_refs": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "mentality_frame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "base_orientation",
+        "domain",
+        "output_kind",
+        "worldview_assumptions"
+      ],
+      "properties": {
+        "base_orientation": {"type": "string"},
+        "domain": {"type": "string"},
+        "output_kind": {
+          "type": "string",
+          "enum": [
+            "descriptive",
+            "empirical",
+            "formal",
+            "linguistic",
+            "normative",
+            "legal",
+            "shari",
+            "worldview",
+            "systemic"
+          ]
+        },
+        "worldview_assumptions": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "thinking_method": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method_type",
+        "required_inputs",
+        "allowed_outputs",
+        "forbidden_outputs",
+        "required_evidence_rank"
+      ],
+      "properties": {
+        "method_type": {
+          "type": "string",
+          "enum": ["rational", "scientific", "formal", "linguistic", "normative", "systemic"]
+        },
+        "required_inputs": {"type": "array", "items": {"type": "string"}},
+        "allowed_outputs": {"type": "array", "items": {"type": "string"}},
+        "forbidden_outputs": {"type": "array", "items": {"type": "string"}},
+        "required_evidence_rank": {
+          "type": "string",
+          "enum": [
+            "none",
+            "low",
+            "medium",
+            "high",
+            "governed",
+            "zero",
+            "possibility",
+            "hypothesis",
+            "weak_evidence",
+            "strong_evidence",
+            "certificate"
+          ]
+        }
+      }
+    },
+    "thinking_style": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "style_type",
+        "required_method_type"
+      ],
+      "properties": {
+        "style_type": {"type": "string"},
+        "required_method_type": {"type": "string"}
+      }
+    },
+    "thinking_means": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "means_type",
+        "can_issue_judgment"
+      ],
+      "properties": {
+        "means_type": {
+          "type": "string",
+          "enum": [
+            "llm",
+            "database",
+            "source_text",
+            "experiment",
+            "calculator",
+            "code",
+            "human_input",
+            "external_tool",
+            "internal_reasoning",
+            "model_reasoning"
+          ]
+        },
+        "can_issue_judgment": {"type": "boolean"}
+      }
+    },
+    "thought_trace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "trace_path_complete",
+        "trace_evidence_complete",
+        "trace_certificate_complete",
+        "intent_ref",
+        "consciousness_ref",
+        "mentality_ref",
+        "method_ref",
+        "style_ref",
+        "means_ref",
+        "language_ref",
+        "evidence_refs",
+        "evidence_rank"
+      ],
+      "properties": {
+        "trace_path_complete": {"type": "boolean"},
+        "trace_evidence_complete": {"type": "boolean"},
+        "trace_certificate_complete": {"type": "boolean"},
+        "intent_ref": {"type": "string"},
+        "consciousness_ref": {"type": "string"},
+        "mentality_ref": {"type": "string"},
+        "method_ref": {"type": "string"},
+        "style_ref": {"type": "string"},
+        "means_ref": {"type": "string"},
+        "language_ref": {"type": "string"},
+        "evidence_refs": {"type": "array", "items": {"type": "string"}},
+        "evidence_rank": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "thinking",
+            "core"
+          ],
+          "properties": {
+            "thinking": {
+              "type": "string",
+              "enum": ["none", "low", "medium", "high", "governed"]
+            },
+            "core": {
+              "type": "string",
+              "enum": [
+                "zero",
+                "possibility",
+                "hypothesis",
+                "weak_evidence",
+                "strong_evidence",
+                "certificate"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "concept_graph": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "nodes",
+        "edges"
+      ],
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "kind",
+              "label"
+            ],
+            "properties": {
+              "id": {"type": "string", "minLength": 1},
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "user_intent",
+                  "awareness_object",
+                  "concept",
+                  "method",
+                  "style",
+                  "means",
+                  "evidence",
+                  "residual",
+                  "judgment"
+                ]
+              },
+              "label": {"type": "string", "minLength": 1},
+              "metadata": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "source",
+              "target",
+              "relation"
+            ],
+            "properties": {
+              "source": {"type": "string", "minLength": 1},
+              "target": {"type": "string", "minLength": 1},
+              "relation": {
+                "type": "string",
+                "enum": [
+                  "grounds",
+                  "supports",
+                  "blocks",
+                  "requires",
+                  "reveals",
+                  "contradicts",
+                  "residual_of",
+                  "does_not_support"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "language_output": {"type": "string"},
+    "proof_object_ref": {"type": "string"},
+    "governance_gate_passed": {"type": "boolean"},
+    "reverse_trace_ref": {"type": "string"},
+    "requested_public_judgment": {
+      "type": "string",
+      "enum": ["zero", "hypothesis", "certificate"]
+    },
+    "expected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "intent_status",
+        "method_type",
+        "output_kind",
+        "birth_judgment",
+        "final_judgment",
+        "certificate_eligibility",
+        "blockers",
+        "residuals"
+      ],
+      "properties": {
+        "intent_status": {"type": "string"},
+        "method_type": {"type": "string"},
+        "output_kind": {"type": "string"},
+        "birth_judgment": {
+          "type": "string",
+          "enum": ["zero", "hypothesis", "certificate"]
+        },
+        "final_judgment": {
+          "type": "string",
+          "enum": ["zero", "hypothesis", "certificate"]
+        },
+        "certificate_eligibility": {"type": "boolean"},
+        "blockers": {"type": "array", "items": {"type": "string"}},
+        "residuals": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}
