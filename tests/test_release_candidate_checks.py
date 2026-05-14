@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -42,7 +43,7 @@ def _run_script(*args: str) -> subprocess.CompletedProcess[str]:
         cwd=str(REPO_ROOT),
         capture_output=True,
         text=True,
-        env={**__import__("os").environ, "PYTHONPATH": "src:."},
+        env={**os.environ, "PYTHONPATH": "src:."},
     )
 
 

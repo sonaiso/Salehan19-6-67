@@ -58,7 +58,10 @@ def _ensure_pilot_validation_report() -> dict[str, Any]:
 def _runtime_formal_equivalence_check() -> dict[str, Any]:
     payload = json.loads(RUNTIME_FORMAL_ARTIFACT.read_text(encoding="utf-8"))
     truth_table = payload.get("truth_table", [])
-    all_equivalent = bool(truth_table) and all(row.get("equivalent") == "true" for row in truth_table)
+    all_equivalent = bool(truth_table) and all(
+        row.get("equivalent") in {True, "true"}
+        for row in truth_table
+    )
     return {
         "checked": bool(truth_table),
         "all_equivalent": all_equivalent,
@@ -75,6 +78,17 @@ def _pytest_contract_check(test_path: str) -> dict[str, Any]:
     return _run([sys.executable, "-m", "pytest", test_path, "-q"])
 
 
+def _claim_boundary_markers_check() -> dict[str, Any]:
+    checklist_path = REPO_ROOT / "docs" / "RELEASE_CANDIDATE_CHECKLIST.md"
+    checklist_text = checklist_path.read_text(encoding="utf-8")
+    required_line = "It does not claim proof of consciousness."
+    return {
+        "checked": required_line in checklist_text,
+        "path": str(checklist_path.relative_to(REPO_ROOT)),
+        "required_line": required_line,
+    }
+
+
 def build_report() -> dict[str, Any]:
     pilot = _ensure_pilot_validation_report()
     runtime_formal = _runtime_formal_equivalence_check()
@@ -83,13 +97,11 @@ def build_report() -> dict[str, Any]:
     theorem = _formal_theorem_track_check()
     repository_integrity = _pytest_contract_check("tests/test_evaluation_repository_audit.py")
     cli_dispatch = _pytest_contract_check("tests/test_cli_dispatch_integrity.py")
+    claim_boundary_markers = _claim_boundary_markers_check()
 
     public_judgment_triad_preserved = True
     no_certificate_bypass_claimed = theorem["passed"] and replay["passed"] and sovereignty["passed"]
-    no_consciousness_claim = (
-        "does not claim proof of consciousness"
-        in (REPO_ROOT / "research/formal/lean/README.md").read_text(encoding="utf-8").lower()
-    )
+    no_consciousness_claim = claim_boundary_markers["checked"]
 
     return {
         "version": "v0.1.0-release-candidate",
@@ -123,6 +135,7 @@ def build_report() -> dict[str, Any]:
             "formal_theorem_track": theorem,
             "repository_integrity": repository_integrity,
             "cli_dispatch_integrity": cli_dispatch,
+            "claim_boundary_markers": claim_boundary_markers,
         },
     }
 
