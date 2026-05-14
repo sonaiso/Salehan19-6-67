@@ -114,13 +114,15 @@ Reality -> Cognitive Distinction -> Linguistic Signification -> Conceptual Geome
 - تشغيل الاختبارات الشاملة:
   - `PYTHONPATH=src:. python -m pytest -q`
   - **2898 passed, 1 skipped, 2 warnings**
+  - التحذير 1: `PytestCollectionWarning` لصف `TestAudit` (وجود `__init__` يمنع جمعه كاختبار مباشر).
+  - التحذير 2: `DeprecationWarning` من `httpx` حول استخدام raw content upload.
 
 ### النتيجة العلمية والصناعية الحالية
 
 - **تقييم نطاق الحزمة (metadata تشغيلية):** المسار العلمي = HYPOTHESIS (أدلة جزئية مع حدود الإغلاق الشكلي).
 - **تقييم نطاق الحزمة (metadata تشغيلية):** المسار الصناعي للإنتاج = HYPOTHESIS، مع أهلية نطاق تجريبي محكوم.
 - **تنبيه حوكمي:** هذا التقييم ليس طبقة حكم رابعة؛ الحكم النهائي يبقى محصورًا في ZERO/HYPOTHESIS/CERTIFICATE فقط.
-- **الحكم النهائي على دعوى "المشروع جاهز للإنتاج الآن":** ZERO.
+- **الحكم النهائي على دعوى "المشروع جاهز للإنتاج الآن":** HYPOTHESIS (أدلة جزئية موجودة لكن غير كافية للشهادة الإنتاجية).
 
 ## واجهات الاستخدام الرئيسية (مختصر)
 
