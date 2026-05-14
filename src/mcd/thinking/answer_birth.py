@@ -264,13 +264,16 @@ def _validate_method_requirements(contract: AnswerBirthContract) -> list[str]:
         if key and not present.get(key, False):
             residuals.append(f"missing_required_input::{key}")
 
+    output_kinds = {"descriptive", "empirical", "formal", "linguistic", "normative", "legal", "shari", "worldview", "systemic"}
     allowed_outputs = {(item or "").strip().lower() for item in method.allowed_outputs if (item or "").strip()}
     forbidden_outputs = {(item or "").strip().lower() for item in method.forbidden_outputs if (item or "").strip()}
     output_kind = ((contract.mentality_frame.output_kind if contract.mentality_frame else "") or "").strip().lower()
     requested = collapse_to_public_judgment(contract.public_judgment)
-    if forbidden_outputs and (requested in forbidden_outputs or output_kind in forbidden_outputs):
+    forbidden_output_kinds = forbidden_outputs & output_kinds
+    if forbidden_outputs and (requested in forbidden_outputs or (output_kind in forbidden_output_kinds)):
         residuals.append(f"method_forbidden_output::{requested or output_kind}")
-    if allowed_outputs and output_kind and output_kind not in allowed_outputs:
+    allowed_output_kinds = allowed_outputs & output_kinds
+    if allowed_output_kinds and output_kind and output_kind not in allowed_output_kinds:
         residuals.append(f"output_kind_not_in_method_allowed_outputs::{output_kind}")
     return residuals
 
