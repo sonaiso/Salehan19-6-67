@@ -1,0 +1,72 @@
+{
+  "rule_id": "afaal_plural_derivation",
+  "rule_name_ar": "جمع التكسير على وزن أَفْعَال",
+  "target_pattern": "أَفْعَال",
+  "target_pattern_id": "afaal_plural",
+  "summary_ar": "همزة مفتوحة + فاء ساكنة + عين مفتوحة + ألف + لام، جمع تكسير قياسي يدلّ على ما زاد على الثلاثة وقلَّ عن العشرة (جمع قلة).",
+  "base_rule": {
+    "description_ar": "يُجمع الاسم الثلاثي على وزن أَفْعَال جمعَ قلّة، بزيادة همزة مفتوحة في أوّله، وإسكان فائه، وفتح عينه، وزيادة ألف قبل اللام.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "زيادة همزة مفتوحة في الأول",
+        "insert_at": "start",
+        "insert_letter": "أَ"
+      },
+      {
+        "step": 2,
+        "description_ar": "إسكان فاء الكلمة",
+        "target_position": "root[0]",
+        "harakah": "sukun"
+      },
+      {
+        "step": 3,
+        "description_ar": "فتح عين الكلمة",
+        "target_position": "root[1]",
+        "harakah": "fatha"
+      },
+      {
+        "step": 4,
+        "description_ar": "زيادة ألف قبل اللام",
+        "insert_before": "root[2]",
+        "insert_letter": "ا"
+      }
+    ]
+  },
+  "application_conditions": {
+    "conditions": [
+      {
+        "description_ar": "اسم ثلاثي على وزن فَعْل أو فَعَل أو فِعْل أو فُعْل غالباً"
+      },
+      {
+        "description_ar": "من جموع القلة (٣-١٠)"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "mufrad": "قَلَم",
+      "result": "أَقْلَام"
+    },
+    {
+      "mufrad": "بَاب",
+      "result": "أَبْوَاب"
+    },
+    {
+      "mufrad": "وَلَد",
+      "result": "أَوْلَاد"
+    },
+    {
+      "mufrad": "عَمَل",
+      "result": "أَعْمَال"
+    },
+    {
+      "mufrad": "قَوْل",
+      "result": "أَقْوَال"
+    },
+    {
+      "mufrad": "حَال",
+      "result": "أَحْوَال"
+    }
+  ]
+}

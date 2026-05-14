@@ -1,0 +1,77 @@
+{
+  "rule_id": "faail_agent_derivation",
+  "rule_name_ar": "قاعدة اشتقاق اسم الفاعل على وزن فَاعِل",
+  "target_pattern": "فَاعِل",
+  "target_pattern_id": "faail",
+  "summary_ar": "فاء مفتوحة + ألف زائدة + عين مكسورة + لام، يدلّ على من قام بالفعل على وجه الحدوث والتجدد لا الثبوت.",
+  "base_rule": {
+    "description_ar": "اسم الفاعل من الفعل الثلاثي المجرد المتصرّف يُصاغ على وزن فَاعِل.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "فتح فاء الكلمة",
+        "target_position": "root[0]",
+        "harakah": "fatha"
+      },
+      {
+        "step": 2,
+        "description_ar": "زيادة ألف ساكنة بعد الفاء",
+        "insert_after": "root[0]",
+        "insert_letter": "ا"
+      },
+      {
+        "step": 3,
+        "description_ar": "كسر عين الكلمة",
+        "target_position": "root[1]",
+        "harakah": "kasra"
+      }
+    ],
+    "example_walkthrough": {
+      "root": [
+        "ك",
+        "ت",
+        "ب"
+      ],
+      "verb": "كَتَبَ",
+      "result": "كَاتِب"
+    }
+  },
+  "application_conditions": {
+    "conditions": [
+      {
+        "description_ar": "ثلاثي مجرد"
+      },
+      {
+        "description_ar": "متصرّف"
+      },
+      {
+        "description_ar": "معلوم للفاعل"
+      },
+      {
+        "description_ar": "سالم من حروف العلة في العين واللام"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "verb": "كَتَبَ",
+      "result": "كَاتِب"
+    },
+    {
+      "verb": "قَرَأَ",
+      "result": "قَارِئ"
+    },
+    {
+      "verb": "سَمِعَ",
+      "result": "سَامِع"
+    },
+    {
+      "verb": "نَامَ",
+      "result": "نَائِم"
+    },
+    {
+      "verb": "قَالَ",
+      "result": "قَائِل"
+    }
+  ]
+}

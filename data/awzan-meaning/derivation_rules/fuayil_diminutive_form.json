@@ -1,0 +1,38 @@
+{
+  "rule_id": "fuayil_diminutive_form_derivation",
+  "rule_name_ar": "اسم تصغير الرباعي على وزن فُعَيْعِل",
+  "target_pattern": "فُعَيْعِل",
+  "target_pattern_id": "fuayil_diminutive_form",
+  "summary_ar": "فاء مضمومة + عين مفتوحة + ياء ساكنة + عين ثانية مكسورة + لام، تصغير الاسم الرباعي.",
+  "base_rule": {
+    "description_ar": "يُصغّر الاسم الرباعي بضمّ الأول وفتح الثاني وزيادة ياء قبل الحرف الثالث وكسر الثالث.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "ضمّ الحرف الأول"
+      },
+      {
+        "step": 2,
+        "description_ar": "فتح الحرف الثاني"
+      },
+      {
+        "step": 3,
+        "description_ar": "زيادة ياء ساكنة بعد الثاني"
+      },
+      {
+        "step": 4,
+        "description_ar": "كسر الحرف الثالث"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "original": "دِرْهَم",
+      "result": "دُرَيْهِم"
+    },
+    {
+      "original": "عَقْرَب",
+      "result": "عُقَيْرِب"
+    }
+  ]
+}

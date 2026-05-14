@@ -1,6 +1,7 @@
 """LexicalGroundingEngine — grounds Arabic lexemes against the knowledge store."""
 from __future__ import annotations
 
+import re
 import uuid
 from typing import Optional
 
@@ -15,11 +16,36 @@ _AMBIGUOUS_WORDS = {"علم", "عين", "جمال"}
 # Words requiring revelation evidence for grounding
 _SHARI_TERMS = {"حرام", "واجب", "مندوب", "مكروه", "مباح", "محرم", "فرض", "سنة"}
 
+# Arabic diacritics (tashkeel) — strip these before any lookup
+_DIACRITICS_RE = re.compile(
+    r"[ؐ-ًؚ-ٰٟۖ-ۜ۟-۪ۤۧۨ-ۭ]"
+)
+
+
+def _strip_diacritics(word: str) -> str:
+    return _DIACRITICS_RE.sub("", word)
+
 
 def _strip_article(word: str) -> str:
     if word.startswith("ال") and len(word) > 2:
         return word[2:]
     return word
+
+
+def _normalize(word: str) -> str:
+    """Strip diacritics then definite article — gives clean lookup key."""
+    return _strip_article(_strip_diacritics(word.strip()))
+
+
+def _lookup_variants(word: str) -> list[str]:
+    """Return lookup candidates: normalized form + without accusative alef."""
+    norm = _normalize(word)
+    variants = [norm]
+    # accusative tanwin writes an extra alef: زيدًا → زيدا after diacritic strip
+    # try stripping it so 'زيدا' also matches 'زيد'
+    if norm.endswith("ا") and len(norm) > 2:
+        variants.append(norm[:-1])
+    return variants
 
 
 class LexicalGroundingEngine:
@@ -32,8 +58,9 @@ class LexicalGroundingEngine:
         self._store = store
 
     def ground(self, surface: str, context: str = "") -> GroundedLexeme:
-        normalized = _strip_article(surface.strip())
-        lexeme_id = str(uuid.uuid4())[:8]
+        normalized = _normalize(surface)          # diacritics stripped + article stripped
+        variants   = _lookup_variants(surface)    # normalized + accusative-alef variant
+        lexeme_id  = str(uuid.uuid4())[:8]
         notes = ""
         warnings: list[str] = []
 
@@ -52,9 +79,13 @@ class LexicalGroundingEngine:
             )
 
         # Check ambiguous words
-        if normalized in _AMBIGUOUS_WORDS or surface in _AMBIGUOUS_WORDS:
+        if any(v in _AMBIGUOUS_WORDS for v in variants) or surface in _AMBIGUOUS_WORDS:
             # Try to ground from store, but mark as partially grounded
-            things = self._store.query_things_by_name(normalized) or self._store.query_things_by_name(surface)
+            things = []
+            for v in variants + [surface]:
+                things = self._store.query_things_by_name(v)
+                if things:
+                    break
             if things:
                 t = things[0]
                 return GroundedLexeme(
@@ -79,11 +110,12 @@ class LexicalGroundingEngine:
                 notes="لفظ مشترك — يحتاج سياقاً requires_context",
             )
 
-        # Try to find in ThingStore by name
-        things = (
-            self._store.query_things_by_name(normalized)
-            or self._store.query_things_by_name(surface)
-        )
+        # Try to find in ThingStore by name — check all variants
+        things = []
+        for v in variants + [surface]:
+            things = self._store.query_things_by_name(v)
+            if things:
+                break
         if things:
             t = things[0]
             return GroundedLexeme(

@@ -1,0 +1,43 @@
+{
+  "rule_id": "istifaal_masdar_derivation",
+  "rule_name_ar": "مصدر باب اِسْتَفْعَل على وزن اِسْتِفْعَال",
+  "target_pattern": "إِسْتِفْعَال",
+  "target_pattern_id": "istifaal_masdar",
+  "summary_ar": "همزة وصل + سين ساكنة + تاء مكسورة + فاء ساكنة + عين مفتوحة + ألف + لام، مصدر قياسي لباب اِسْتَفْعَل.",
+  "base_rule": {
+    "description_ar": "يُبنى المصدر القياسي من اِسْتَفْعَل بكسر التاء وفتح العين وزيادة ألف قبل اللام.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "همزة وصل + سين ساكنة + تاء مكسورة",
+        "insert_letter": "اِسْتِ"
+      },
+      {
+        "step": 2,
+        "description_ar": "إسكان الفاء"
+      },
+      {
+        "step": 3,
+        "description_ar": "فتح العين"
+      },
+      {
+        "step": 4,
+        "description_ar": "زيادة ألف قبل اللام"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "verb": "اِسْتَخْرَجَ",
+      "masdar": "اِسْتِخْرَاج"
+    },
+    {
+      "verb": "اِسْتَعْمَلَ",
+      "masdar": "اِسْتِعْمَال"
+    },
+    {
+      "verb": "اِسْتَغْفَرَ",
+      "masdar": "اِسْتِغْفَار"
+    }
+  ]
+}

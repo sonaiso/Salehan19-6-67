@@ -1,0 +1,2669 @@
+{
+  "patterns": [
+    {
+      "pattern_id": "faail",
+      "pattern_form": "فَاعِل",
+      "family": "agent_noun",
+      "operator_vector": {
+        "agency": 1.0,
+        "patienthood": 0.0,
+        "causation": 0.3,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.1,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "كَاتِب",
+        "عَالِم",
+        "فَاعِل",
+        "قَارِئ"
+      ],
+      "certainty_policy": "high",
+      "description": "اسمٌ يدلّ على من قام بالفعل على وجه الحدوث والتجدد، لا الثبوت. أي يدلّ على ذاتٍ وقع منها الحدث المشتق منه."
+    },
+    {
+      "pattern_id": "mafuul",
+      "pattern_form": "مَفْعُول",
+      "family": "patient_noun",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 1.0,
+        "causation": 0.2,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.2,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "مَكْتُوب",
+        "مَعْلُوم",
+        "مَفْعُول"
+      ],
+      "certainty_policy": "high",
+      "description": "اسمٌ يدلّ على من وقع عليه الفعل، أي على الذات التي تلقّت الحدث ولم تُحدثه."
+    },
+    {
+      "pattern_id": "mafal_place",
+      "pattern_form": "مَفْعَل",
+      "family": "place_noun",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 1.0,
+        "time": 0.3,
+        "instrument": 0.2,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.2,
+        "jamid": 0.0
+      },
+      "examples": [
+        "مَكْتَب",
+        "مَدْرَس",
+        "مَخْرَج"
+      ],
+      "certainty_policy": "medium",
+      "description": "اسمٌ يدلّ على مكان وقوع الفعل، وقد يدلّ على زمانه أو مصدره الميمي بحسب السياق."
+    },
+    {
+      "pattern_id": "mafala_place",
+      "pattern_form": "مَفْعَلَة",
+      "family": "place_noun",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 1.0,
+        "time": 0.2,
+        "instrument": 0.1,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.1,
+        "jamid": 0.0
+      },
+      "examples": [
+        "مَكْتَبَة",
+        "مَزْرَعَة",
+        "مَصْنَعَة"
+      ],
+      "certainty_policy": "medium",
+      "description": "اسمٌ يدلّ على مكان كثرة الشيء أو مكان وقوع الفعل، ويُلحق بالتاء للدلالة على الاختصاص المكاني."
+    },
+    {
+      "pattern_id": "faaaal_intense",
+      "pattern_form": "فَعَّال",
+      "family": "intensified_agent",
+      "operator_vector": {
+        "agency": 0.9,
+        "patienthood": 0.0,
+        "causation": 0.5,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.3,
+        "nisba": 0.0,
+        "comparison": 0.5,
+        "multiplication": 0.2,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "كَتَّاب",
+        "غَفَّار",
+        "صَنَّاع"
+      ],
+      "certainty_policy": "high",
+      "description": "صيغة مبالغة تدلّ على كثرة وقوع الفعل من الفاعل أو شدّته، وكثيراً ما تدلّ على الحرفة والمهنة."
+    },
+    {
+      "pattern_id": "istafala_verb",
+      "pattern_form": "إِسْتَفْعَل",
+      "family": "derived_verb",
+      "operator_vector": {
+        "agency": 0.7,
+        "patienthood": 0.3,
+        "causation": 0.8,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.4,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.9,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "اسْتَخْرَج",
+        "اسْتَعْمَل",
+        "اسْتَفْسَر"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ يدلّ على طلب وقوع الفعل أو ادّعائه أو التحوّل إلى الحالة المشتقّ منها، وهو من باب الزيادة بالسين والتاء والهمزة."
+    },
+    {
+      "pattern_id": "tafaala_reflex",
+      "pattern_form": "تَفَاعَل",
+      "family": "derived_verb",
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.5,
+        "causation": 0.3,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.7,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "تَعَاوَن",
+        "تَكَاتَب",
+        "تَفَاهَم"
+      ],
+      "certainty_policy": "medium",
+      "description": "فعلٌ يدلّ على المشاركة بين فاعلين فأكثر، يقع الفعل من كلٍّ منهما على الآخر."
+    },
+    {
+      "pattern_id": "faiil_attr",
+      "pattern_form": "فَعِيل",
+      "family": "attributive_adj",
+      "operator_vector": {
+        "agency": 0.2,
+        "patienthood": 0.4,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.3,
+        "comparison": 0.6,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.1
+      },
+      "examples": [
+        "كَرِيم",
+        "عَلِيم",
+        "حَكِيم"
+      ],
+      "certainty_policy": "medium",
+      "description": "صفةٌ مشبّهةٌ تدلّ على ثبوت الصفة في موصوفها على وجه الدوام، وقد تأتي بمعنى اسم الفاعل أو اسم المفعول."
+    },
+    {
+      "pattern_id": "fuayyil_dim",
+      "pattern_form": "فُعَيِّل",
+      "family": "diminutive",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.7,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.3
+      },
+      "examples": [
+        "كُتَيِّب",
+        "نُهَيِّر",
+        "جُبَيِّل"
+      ],
+      "certainty_policy": "high",
+      "description": "اسمٌ مصغّر يدلّ على تحقير الشيء أو تقليل حجمه أو تقريبه أو تحبيبه، ويُبنى بضم الأول وفتح الثاني وزيادة ياء ساكنة."
+    },
+    {
+      "pattern_id": "afaal_plural",
+      "pattern_form": "أَفْعَال",
+      "family": "broken_plural",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.1,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "أَعْمَال",
+        "أَقْوَال",
+        "أَفْعَال"
+      ],
+      "certainty_policy": "medium",
+      "description": "جمع تكسير قياسي يدلّ على ما زاد على الثلاثة وقلَّ عن العشرة، وهو من جموع القلّة."
+    },
+    {
+      "pattern_id": "fiaal_plural",
+      "pattern_form": "فِعَال",
+      "family": "broken_plural",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.1,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "جِبَال",
+        "رِجَال",
+        "كِبَاش"
+      ],
+      "certainty_policy": "medium",
+      "description": "جمع تكسير من جموع الكثرة، يدلّ على ما زاد على العشرة، وقد يكون مصدراً للفعل المجرد."
+    },
+    {
+      "pattern_id": "fuuul_plural",
+      "pattern_form": "فُعُول",
+      "family": "broken_plural",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.1,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "قُلُوب",
+        "كُتُب",
+        "بُيُوت"
+      ],
+      "certainty_policy": "medium",
+      "description": "جمع تكسير من جموع الكثرة، شائع في جمع فَعْل وفِعْل، وقد يكون مصدراً لفعل لازم."
+    },
+    {
+      "pattern_id": "fual_plural",
+      "pattern_form": "فُعَل",
+      "family": "broken_plural",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.1,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "دُوَل",
+        "صُوَر",
+        "حُجَج"
+      ],
+      "certainty_policy": "medium",
+      "description": "جمع تكسير من جموع الكثرة، يكثر في جمع فُعْلَة المؤنّثة وفُعْلَى."
+    },
+    {
+      "pattern_id": "nisba_yaa",
+      "pattern_form": "فَعَلِيّ",
+      "family": "nisba_adjective",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.3,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 1.0,
+        "comparison": 0.2,
+        "multiplication": 0.0,
+        "transformation": 0.1,
+        "masdar": 0.0,
+        "jamid": 0.2
+      },
+      "examples": [
+        "عَرَبِيّ",
+        "عِلْمِيّ",
+        "زِرَاعِيّ"
+      ],
+      "certainty_policy": "high",
+      "description": "صفةٌ منسوبة تُلحق بياء النسبة المشدّدة لتدلّ على نسبة الشيء إلى أصلٍ أو موضعٍ أو حرفةٍ."
+    },
+    {
+      "pattern_id": "mustafl_patient",
+      "pattern_form": "مُسْتَفْعَل",
+      "family": "patient_noun",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 1.0,
+        "causation": 0.5,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.8,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "مُسْتَخْرَج",
+        "مُسْتَعْمَل",
+        "مُسْتَشَار"
+      ],
+      "certainty_policy": "high",
+      "description": "اسم مفعول من الفعل المزيد بالسين والتاء، يدلّ على ما طُلب وقوع الفعل عليه أو تحوّل إلى الحالة المشتقّ منها."
+    },
+    {
+      "pattern_id": "mufaail_agent",
+      "pattern_form": "مُفَاعِل",
+      "family": "agent_noun",
+      "operator_vector": {
+        "agency": 0.9,
+        "patienthood": 0.2,
+        "causation": 0.4,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.1,
+        "nisba": 0.0,
+        "comparison": 0.1,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "مُكَاتِب",
+        "مُشَارِك",
+        "مُسَاعِد"
+      ],
+      "certainty_policy": "high",
+      "description": "اسم فاعل من فعل المفاعلة، يدلّ على من شارك غيره في الفعل أو قام به مع غيره."
+    },
+    {
+      "pattern_id": "fiaala_masdar_craft",
+      "pattern_form": "فِعَالَة",
+      "family": "masdar_craft",
+      "operator_vector": {
+        "agency": 0.2,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.2,
+        "nisba": 0.3,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 1.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "كِتَابَة",
+        "زِرَاعَة",
+        "صِنَاعَة"
+      ],
+      "certainty_policy": "high",
+      "description": "مصدر يدلّ على الحرفة والصناعة، أو على الحدث المجرّد بصيغة ثابتة."
+    },
+    {
+      "pattern_id": "faala_verb_base",
+      "pattern_form": "فَعَل",
+      "family": "base_verb",
+      "operator_vector": {
+        "agency": 0.7,
+        "patienthood": 0.2,
+        "causation": 0.3,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.4,
+        "masdar": 0.2,
+        "jamid": 0.1
+      },
+      "examples": [
+        "كَتَب",
+        "قَرَأ",
+        "فَتَح"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ ماضٍ ثلاثي مجرد على باب نَصَر يَنصُر أو فَتَح يَفتَح، يدلّ على وقوع الحدث وانقضائه."
+    },
+    {
+      "pattern_id": "faila_verb_state",
+      "pattern_form": "فَعِل",
+      "family": "stative_verb",
+      "operator_vector": {
+        "agency": 0.3,
+        "patienthood": 0.4,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.3,
+        "multiplication": 0.0,
+        "transformation": 0.5,
+        "masdar": 0.2,
+        "jamid": 0.1
+      },
+      "examples": [
+        "عَلِم",
+        "فَهِم",
+        "شَرِب"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ ماضٍ ثلاثي يدلّ على وقوع حالة أو صفة عارضة في الفاعل، على باب عَلِم يَعلَم."
+    },
+    {
+      "pattern_id": "faula_verb_quality",
+      "pattern_form": "فَعُل",
+      "family": "quality_verb",
+      "operator_vector": {
+        "agency": 0.1,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.5,
+        "multiplication": 0.0,
+        "transformation": 0.6,
+        "masdar": 0.3,
+        "jamid": 0.2
+      },
+      "examples": [
+        "ضَعُف",
+        "كَبُر",
+        "شَرُف"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ ماضٍ ثلاثي يدلّ على ثبوت صفة لازمة في الفاعل وتمكّنها منه، على باب كَرُم يَكرُم."
+    },
+    {
+      "pattern_id": "faal_noun",
+      "pattern_form": "فَعْل",
+      "family": "simple_noun",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.4,
+        "jamid": 0.6
+      },
+      "examples": [
+        "بَيْت",
+        "يَوْم",
+        "حَمْد"
+      ],
+      "certainty_policy": "high",
+      "description": "اسمٌ ثلاثي على وزن فَعْل، كثيراً ما يكون جامداً غير مشتق، أو مصدراً لفعل ثلاثي مجرد."
+    },
+    {
+      "pattern_id": "fial_noun",
+      "pattern_form": "فِعْل",
+      "family": "simple_noun",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.4,
+        "jamid": 0.6
+      },
+      "examples": [
+        "إِنْس",
+        "حِبْر",
+        "فِكْر"
+      ],
+      "certainty_policy": "high",
+      "description": "اسمٌ ثلاثي على وزن فِعْل، شائع في الأسماء الجامدة والمصادر."
+    },
+    {
+      "pattern_id": "fual_simple",
+      "pattern_form": "فُعْل",
+      "family": "simple_noun",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.3,
+        "jamid": 0.7
+      },
+      "examples": [
+        "قُفْل",
+        "حُكْم",
+        "حُسْن"
+      ],
+      "certainty_policy": "high",
+      "description": "اسمٌ ثلاثي على وزن فُعْل، يكثر في الأسماء الجامدة الدالّة على الذوات والأعيان."
+    },
+    {
+      "pattern_id": "fuul_plural_alt",
+      "pattern_form": "فُعُل",
+      "family": "broken_plural",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.1,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "كُتُب",
+        "رُسُل",
+        "سُبُل"
+      ],
+      "certainty_policy": "high",
+      "description": "جمع تكسير من جموع الكثرة على وزن فُعُل، يكثر في جمع فَعُول وفَعِيل."
+    },
+    {
+      "pattern_id": "fial_plural",
+      "pattern_form": "فِعَل",
+      "family": "broken_plural",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.0,
+        "masdar": 0.1,
+        "jamid": 0.1
+      },
+      "examples": [
+        "نِعَم",
+        "قِطَع",
+        "هِمَم"
+      ],
+      "certainty_policy": "medium",
+      "description": "جمع تكسير من جموع الكثرة على وزن فِعَل، يكثر في جمع فِعْلَة المؤنثة."
+    },
+    {
+      "pattern_id": "afaal_verb",
+      "pattern_form": "أَفْعَل",
+      "family": "causative_verb",
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.0,
+        "causation": 1.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.7,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "أَخْرَج",
+        "أَكْرَم",
+        "أَحْسَن"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ ماضٍ على وزن أَفْعَل، يدلّ على التعدية أو الصيرورة أو الإيجاد، وهو من باب الزيادة بالهمزة."
+    },
+    {
+      "pattern_id": "faaala_intensive_verb",
+      "pattern_form": "فَعَّل",
+      "family": "intensive_verb",
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.0,
+        "causation": 0.7,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.3,
+        "multiplication": 0.4,
+        "transformation": 0.8,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "عَلَّم",
+        "كَسَّر",
+        "فَرَّح"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مزيد بتضعيف العين، يدلّ على التكثير أو التعدية أو نسبة المفعول إلى أصل الفعل."
+    },
+    {
+      "pattern_id": "faaala_verb_form3",
+      "pattern_form": "فَاعَل",
+      "family": "form3_verb",
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.4,
+        "causation": 0.3,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.6,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "كَاتَب",
+        "وَاعَد",
+        "سَاعَد"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مزيد بألف بين الفاء والعين، يدلّ غالباً على المشاركة بين اثنين يقع الفعل من أحدهما على الآخر."
+    },
+    {
+      "pattern_id": "tafaaala_form5",
+      "pattern_form": "تَفَعَّل",
+      "family": "form5_verb",
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.4,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.2,
+        "transformation": 0.9,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "تَعَلَّم",
+        "تَكَسَّر",
+        "تَفَرَّق"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مزيد بالتاء وتضعيف العين، يدلّ على المطاوعة لفعَّل، أو التكلّف، أو التدرّج في الفعل."
+    },
+    {
+      "pattern_id": "infaala_form7",
+      "pattern_form": "إِنْفَعَل",
+      "family": "form7_verb",
+      "operator_vector": {
+        "agency": 0.1,
+        "patienthood": 0.9,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.9,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "انْكَسَر",
+        "انْفَتَح",
+        "انْطَلَق"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مزيد بالنون والهمزة، يدلّ على المطاوعة، أي قبول الفاعل لأثر فعلٍ واقع عليه دون اختياره."
+    },
+    {
+      "pattern_id": "iftaala_form8",
+      "pattern_form": "إِفْتَعَل",
+      "family": "form8_verb",
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.3,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.8,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "اقْتَرَب",
+        "اجْتَمَع",
+        "اخْتَلَف"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مزيد بالتاء والهمزة، يدلّ على المطاوعة، أو الاتخاذ، أو التشارك، أو الاجتهاد في الفعل."
+    },
+    {
+      "pattern_id": "yafal_present",
+      "pattern_form": "يَفْعَل",
+      "family": "present_verb",
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.2,
+        "causation": 0.2,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "يَخْدَع",
+        "يَفْتَح",
+        "يَعْلَم"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مضارع على وزن يَفْعَل، يدلّ على حدوث الفعل في الزمن الحاضر أو المستقبل، من مضارع فَعَلَ المفتوح العين."
+    },
+    {
+      "pattern_id": "yafil_present",
+      "pattern_form": "يَفْعِل",
+      "family": "present_verb",
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.2,
+        "causation": 0.2,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "يَكْذِب",
+        "يَضْرِب",
+        "يَغْلِب"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مضارع على وزن يَفْعِل، من مضارع فَعَلَ المكسور العين في المضارع."
+    },
+    {
+      "pattern_id": "yaful_present",
+      "pattern_form": "يَفْعُل",
+      "family": "present_verb",
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.2,
+        "causation": 0.2,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "يَدْخُل",
+        "يَكْتُب",
+        "يَكْفُر"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مضارع على وزن يَفْعُل، من مضارع فَعَلَ المضموم العين في المضارع."
+    },
+    {
+      "pattern_id": "yufil_present",
+      "pattern_form": "يُفْعِل",
+      "family": "causative_present",
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.0,
+        "causation": 0.9,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.6,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "يُخْرِج",
+        "يُؤْمِن",
+        "يُحْسِن"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مضارع مزيد بالهمزة، يدلّ على وقوع الفعل المتعدّي في الزمن الحاضر أو المستقبل بإسناده إلى الغائب."
+    },
+    {
+      "pattern_id": "yufaaeel_present",
+      "pattern_form": "يُفَعِّل",
+      "family": "intensive_present",
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.0,
+        "causation": 0.6,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.3,
+        "multiplication": 0.4,
+        "transformation": 0.7,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "يُعَلِّم",
+        "يُبَدِّل",
+        "يُحَدِّث"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مضارع من باب فَعَّل المزيد بالتضعيف، يدلّ على وقوع الفعل المكثَّر أو المُعدَّى في الحاضر."
+    },
+    {
+      "pattern_id": "yufaaeel_passive",
+      "pattern_form": "يُفْعَل",
+      "family": "passive_present",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.9,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.5,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "يُقْبَل",
+        "يُصْرَف",
+        "يُكْرَم"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مضارع مبني للمجهول من الثلاثي المزيد بالهمزة، يدلّ على وقوع الفعل دون ذكر فاعله."
+    },
+    {
+      "pattern_id": "yatafaaeel_present",
+      "pattern_form": "يَتَفَعَّل",
+      "family": "form5_present",
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.4,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.2,
+        "transformation": 0.9,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "يَتَفَجَّر",
+        "يَتَرَبَّص",
+        "يَتَعَلَّم"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مضارع من باب تَفَعَّل، يدلّ على المطاوعة أو التدرّج في الزمن الحاضر."
+    },
+    {
+      "pattern_id": "yatafaaaeel_present",
+      "pattern_form": "يَتَفَاعَل",
+      "family": "form6_present",
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.5,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.3,
+        "transformation": 0.8,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "يَتَرَاجَع",
+        "يَتَحَاجُّون",
+        "يَتَنَافَس"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مضارع من باب تَفَاعَل، يدلّ على المشاركة بين الفاعلين في الزمن الحاضر."
+    },
+    {
+      "pattern_id": "yastafaeel_present",
+      "pattern_form": "يَسْتَفْعِل",
+      "family": "form10_present",
+      "operator_vector": {
+        "agency": 0.7,
+        "patienthood": 0.2,
+        "causation": 0.4,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 1.0,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "يَسْتَهْزِئ",
+        "يَسْتَغْفِر",
+        "يَسْتَعْفِف"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مضارع من باب اسْتَفْعَل، يدلّ على طلب وقوع الفعل في الزمن الحاضر."
+    },
+    {
+      "pattern_id": "yufaaeel_form3",
+      "pattern_form": "يُفَاعِل",
+      "family": "form3_present",
+      "operator_vector": {
+        "agency": 0.7,
+        "patienthood": 0.3,
+        "causation": 0.3,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.5,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "يُخَادِع",
+        "يُؤَاخِذ",
+        "يُجَادِل"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مضارع من باب فَاعَل، يدلّ على المشاركة بين اثنين في الزمن الحاضر."
+    },
+    {
+      "pattern_id": "tafal_present",
+      "pattern_form": "تَفْعَل",
+      "family": "present_verb",
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.2,
+        "causation": 0.1,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "تَعْلَم",
+        "تَهْتَز",
+        "تَفْعَل"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مضارع مسند إلى المخاطب أو الغائبة المؤنثة، على وزن تَفْعَل."
+    },
+    {
+      "pattern_id": "tafil_present",
+      "pattern_form": "تَفْعِل",
+      "family": "present_verb",
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.2,
+        "causation": 0.1,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "تَجْرِي",
+        "تَحْمِل",
+        "تَهْوِي"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مضارع على وزن تَفْعِل، مسند إلى المخاطب أو الغائبة المؤنثة."
+    },
+    {
+      "pattern_id": "taful_present",
+      "pattern_form": "تَفْعُل",
+      "family": "present_verb",
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.2,
+        "causation": 0.1,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "تَكْفُر",
+        "تَكْتُب",
+        "تَخْرُج"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مضارع على وزن تَفْعُل، مسند إلى المخاطب أو الغائبة المؤنثة."
+    },
+    {
+      "pattern_id": "tufil_present",
+      "pattern_form": "تُفْعِل",
+      "family": "causative_present_2nd",
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.0,
+        "causation": 0.9,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.6,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "تُخْرِج",
+        "تُعْرِض",
+        "تُؤْتِي"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مضارع متعدٍّ مزيد بالهمزة، مسند إلى المخاطب أو الغائبة المؤنثة."
+    },
+    {
+      "pattern_id": "tufaaeel_present",
+      "pattern_form": "تُفَعِّل",
+      "family": "intensive_present_2nd",
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.0,
+        "causation": 0.6,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.7,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "تُكَلِّم",
+        "تُحَمِّل",
+        "تُعَلِّم"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مضارع من باب فَعَّل المزيد بالتضعيف، مسند إلى المخاطب أو الغائبة المؤنثة."
+    },
+    {
+      "pattern_id": "tastafeel_present",
+      "pattern_form": "تَسْتَفْعِل",
+      "family": "form10_present_2nd",
+      "operator_vector": {
+        "agency": 0.7,
+        "patienthood": 0.2,
+        "causation": 0.4,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 1.0,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "تَسْتَعْجِل",
+        "تَسْتَغْفِر",
+        "تَسْتَعْمِل"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مضارع من باب اسْتَفْعَل، مسند إلى المخاطب أو الغائبة المؤنثة، يدلّ على طلب الفعل."
+    },
+    {
+      "pattern_id": "nafal_present",
+      "pattern_form": "نَفْعَل",
+      "family": "present_verb_1pl",
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.2,
+        "causation": 0.2,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "نَسْتَع",
+        "نَضْطَر",
+        "نَكْتَل"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مضارع على وزن نَفْعَل، مسند إلى ضمير المتكلّمين (نحن)، يدلّ على وقوع الفعل من جماعة المتكلّمين."
+    },
+    {
+      "pattern_id": "nafil_present",
+      "pattern_form": "نَفْعِل",
+      "family": "present_verb_1pl",
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.2,
+        "causation": 0.2,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "نَجْزِي",
+        "نَخْسِف",
+        "نَدْرِي"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مضارع على وزن نَفْعِل، مسند إلى ضمير المتكلّمين."
+    },
+    {
+      "pattern_id": "naful_present",
+      "pattern_form": "نَفْعُل",
+      "family": "present_verb_1pl",
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.2,
+        "causation": 0.2,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "نَعْبُد",
+        "نَقْصُص",
+        "نَكْتُب"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مضارع على وزن نَفْعُل، مسند إلى ضمير المتكلّمين."
+    },
+    {
+      "pattern_id": "nufil_present",
+      "pattern_form": "نُفْعِل",
+      "family": "causative_present_1pl",
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.0,
+        "causation": 0.9,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.6,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "نُؤْمِن",
+        "نُسْقِط",
+        "نُخْرِج"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مضارع متعدٍّ مزيد بالهمزة، مسند إلى ضمير المتكلّمين، يدلّ على التعدية."
+    },
+    {
+      "pattern_id": "nufaaeel_present",
+      "pattern_form": "نُفَعِّل",
+      "family": "intensive_present_1pl",
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.0,
+        "causation": 0.6,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.3,
+        "multiplication": 0.4,
+        "transformation": 0.7,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "نُسَبِّح",
+        "نُكَفِّر",
+        "نُعَلِّم"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ مضارع من باب فَعَّل المزيد بالتضعيف، مسند إلى ضمير المتكلّمين."
+    },
+    {
+      "pattern_id": "ufeel_past_1sg",
+      "pattern_form": "أَفَعَل",
+      "family": "past_verb_1sg",
+      "operator_vector": {
+        "agency": 0.7,
+        "patienthood": 0.0,
+        "causation": 0.4,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.5,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "أَتَذَر",
+        "أَيَوَد",
+        "أَفَلَت"
+      ],
+      "certainty_policy": "medium",
+      "description": "فعلٌ ماضٍ مزيد بالهمزة في صدره، يدلّ على التعدية أو الصيرورة عند الفاعل المتكلّم."
+    },
+    {
+      "pattern_id": "uful_passive_past",
+      "pattern_form": "أُفْعِل",
+      "family": "passive_past",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.9,
+        "causation": 0.4,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.6,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "أُرْسِل",
+        "أُحْصِن",
+        "أُخْرِج"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ ماضٍ مبني للمجهول من الثلاثي المزيد بالهمزة، يدلّ على وقوع الفعل دون ذكر فاعله."
+    },
+    {
+      "pattern_id": "fueel_passive_past",
+      "pattern_form": "فُعِل",
+      "family": "passive_past",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 1.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.4,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "كُتِب",
+        "أُهِل",
+        "رُزِق"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ ماضٍ مبني للمجهول من الثلاثي المجرّد، يدلّ على وقوع الفعل على نائب الفاعل."
+    },
+    {
+      "pattern_id": "fueeel_intensive_passive",
+      "pattern_form": "فُعِّل",
+      "family": "intensive_passive",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 1.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.6,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "زُيِّن",
+        "حُمِّل",
+        "عُلِّم"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ ماضٍ مبني للمجهول من باب فَعَّل، يدلّ على وقوع الفعل المكثَّف على نائب الفاعل."
+    },
+    {
+      "pattern_id": "mufaaeel_intensive_agent",
+      "pattern_form": "مُفَعِّل",
+      "family": "intensive_agent",
+      "operator_vector": {
+        "agency": 1.0,
+        "patienthood": 0.0,
+        "causation": 0.5,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.3,
+        "multiplication": 0.0,
+        "transformation": 0.7,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "مُعَلِّم",
+        "مُدَرِّب",
+        "مُكَسِّر"
+      ],
+      "certainty_policy": "high",
+      "description": "اسم فاعل من باب فَعَّل المزيد بالتضعيف، يدلّ على من يقوم بالفعل مع كثرة أو شدّة."
+    },
+    {
+      "pattern_id": "mufaaeal_intensive_patient",
+      "pattern_form": "مُفَعَّل",
+      "family": "intensive_patient",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 1.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.7,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "مُعَلَّم",
+        "مُكَسَّر",
+        "مُنَظَّم"
+      ],
+      "certainty_policy": "high",
+      "description": "اسم مفعول من باب فَعَّل المزيد بالتضعيف، يدلّ على من وقع عليه الفعل المكثَّف."
+    },
+    {
+      "pattern_id": "mustafeel_agent",
+      "pattern_form": "مُسْتَفْعِل",
+      "family": "form10_agent",
+      "operator_vector": {
+        "agency": 1.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.8,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "مُسْتَخْرِج",
+        "مُسْتَعْمِل",
+        "مُسْتَغْفِر"
+      ],
+      "certainty_policy": "high",
+      "description": "اسم فاعل من باب اسْتَفْعَل، يدلّ على من يطلب وقوع الفعل أو يحاول إيقاعه."
+    },
+    {
+      "pattern_id": "mifaal_instrument",
+      "pattern_form": "مِفْعَال",
+      "family": "instrument_noun",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 1.0,
+        "nisba": 0.0,
+        "comparison": 0.3,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "مِفْتَاح",
+        "مِيزَان",
+        "مِنْشَار"
+      ],
+      "certainty_policy": "high",
+      "description": "اسم آلةٍ يدلّ على الأداة التي يُقام بها الفعل، وهو من أوصاف الآلة الواضحة المختصّة بها."
+    },
+    {
+      "pattern_id": "mifal_instrument",
+      "pattern_form": "مِفْعَل",
+      "family": "instrument_noun",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.1,
+        "time": 0.0,
+        "instrument": 0.9,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "مِبْرَد",
+        "مِشْرَط",
+        "مِقْوَد"
+      ],
+      "certainty_policy": "high",
+      "description": "اسم آلةٍ يدلّ على الأداة التي يُقام بها الفعل، وهو من أوزان اسم الآلة القياسية."
+    },
+    {
+      "pattern_id": "mifala_instrument",
+      "pattern_form": "مِفْعَلَة",
+      "family": "instrument_noun",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.9,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "مِكْنَسَة",
+        "مِلْعَقَة",
+        "مِطْرَقَة"
+      ],
+      "certainty_policy": "high",
+      "description": "اسم آلةٍ مؤنّث بالتاء، يدلّ على الأداة التي يُقام بها الفعل، وهو من أوزان اسم الآلة القياسية."
+    },
+    {
+      "pattern_id": "mafil_place_alt",
+      "pattern_form": "مَفْعِل",
+      "family": "place_noun",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.9,
+        "time": 0.4,
+        "instrument": 0.2,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.2,
+        "jamid": 0.0
+      },
+      "examples": [
+        "مَجْلِس",
+        "مَسْجِد",
+        "مَنْزِل"
+      ],
+      "certainty_policy": "high",
+      "description": "اسمٌ يدلّ على مكان وقوع الفعل، وقد يدلّ على زمانه، وهو على وزن مَفْعِل بكسر العين."
+    },
+    {
+      "pattern_id": "aful_plural",
+      "pattern_form": "أَفْعُل",
+      "family": "broken_plural",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "أَشْهُر",
+        "أَنْفُس",
+        "أَنْهُر"
+      ],
+      "certainty_policy": "high",
+      "description": "جمع تكسير من جموع القلّة على وزن أَفْعُل، يدلّ على ما بين الثلاثة والعشرة."
+    },
+    {
+      "pattern_id": "afil_imperative",
+      "pattern_form": "أَفْعِل",
+      "family": "imperative",
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.0,
+        "causation": 0.6,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.5,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "أَيْدِي",
+        "أَسْلِم",
+        "أَكْرِم"
+      ],
+      "certainty_policy": "medium",
+      "description": "فعلُ أمرٍ مبني على السكون من الفعل الرباعي، يدلّ على طلب وقوع الفعل من المخاطب."
+    },
+    {
+      "pattern_id": "afilah_plural",
+      "pattern_form": "أَفْعِلَة",
+      "family": "broken_plural",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "أَكْلِبَة",
+        "أَطْعِمَة",
+        "أَجْوِبَة"
+      ],
+      "certainty_policy": "high",
+      "description": "جمع تكسير من جموع القلّة على وزن أَفْعِلَة، يدلّ على ما بين الثلاثة والعشرة."
+    },
+    {
+      "pattern_id": "istifaal_masdar",
+      "pattern_form": "إِسْتِفْعَال",
+      "family": "masdar_form10",
+      "operator_vector": {
+        "agency": 0.2,
+        "patienthood": 0.0,
+        "causation": 0.3,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.5,
+        "masdar": 1.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "اسْتِعْمَال",
+        "اسْتِخْرَاج",
+        "اسْتِغْفَار"
+      ],
+      "certainty_policy": "high",
+      "description": "مصدر الفعل المزيد بالسين والتاء على وزن اسْتَفْعَل، يدلّ على الحدث المجرّد من الزمن."
+    },
+    {
+      "pattern_id": "iftiaal_masdar",
+      "pattern_form": "إِفْتِعَال",
+      "family": "masdar_form8",
+      "operator_vector": {
+        "agency": 0.2,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.5,
+        "masdar": 1.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "افْتِخَار",
+        "اقْتِرَاب",
+        "اجْتِمَاع"
+      ],
+      "certainty_policy": "high",
+      "description": "مصدر الفعل المزيد بالتاء والهمزة على وزن افْتَعَل، يدلّ على الحدث المجرّد من الزمن."
+    },
+    {
+      "pattern_id": "tafil_masdar",
+      "pattern_form": "تَفْعِيل",
+      "family": "masdar_form2",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.4,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.2,
+        "transformation": 0.4,
+        "masdar": 1.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "تَقْطِيع",
+        "تَعْلِيم",
+        "تَفْعِيل"
+      ],
+      "certainty_policy": "high",
+      "description": "مصدر الفعل المزيد بالتضعيف على وزن فَعَّل، يدلّ على الحدث المجرّد مع معنى التكثير."
+    },
+    {
+      "pattern_id": "tafaul_masdar",
+      "pattern_form": "تَفَعُّل",
+      "family": "masdar_form5",
+      "operator_vector": {
+        "agency": 0.3,
+        "patienthood": 0.2,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.5,
+        "masdar": 1.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "تَعَلُّم",
+        "تَقَدُّم",
+        "تَكَلُّم"
+      ],
+      "certainty_policy": "high",
+      "description": "مصدر الفعل المزيد بالتاء والتضعيف على وزن تَفَعَّل، يدلّ على الحدث المجرّد مع معنى المطاوعة."
+    },
+    {
+      "pattern_id": "tafaul_masdar_form6",
+      "pattern_form": "تَفَاعُل",
+      "family": "masdar_form6",
+      "operator_vector": {
+        "agency": 0.3,
+        "patienthood": 0.3,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.2,
+        "transformation": 0.5,
+        "masdar": 1.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "تَوَاصُل",
+        "تَعَاوُن",
+        "تَكَاتُب"
+      ],
+      "certainty_policy": "high",
+      "description": "مصدر الفعل المزيد بالتاء والألف على وزن تَفَاعَل، يدلّ على الحدث المجرّد مع معنى المشاركة."
+    },
+    {
+      "pattern_id": "faiilah_attr",
+      "pattern_form": "فَعِيلَة",
+      "family": "attributive_fem",
+      "operator_vector": {
+        "agency": 0.2,
+        "patienthood": 0.4,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.5,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.1,
+        "jamid": 0.1
+      },
+      "examples": [
+        "حَمِيدَة",
+        "سَمِيرَة",
+        "كَرِيمَة"
+      ],
+      "certainty_policy": "high",
+      "description": "صفةٌ مشبّهة مؤنّثة بالتاء، تدلّ على ثبوت الصفة في موصوفها، وقد تأتي بمعنى اسم الفاعل أو المفعول."
+    },
+    {
+      "pattern_id": "faaalah_intensive_fem",
+      "pattern_form": "فَعَّالَة",
+      "family": "intensified_fem",
+      "operator_vector": {
+        "agency": 0.7,
+        "patienthood": 0.0,
+        "causation": 0.2,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.5,
+        "nisba": 0.0,
+        "comparison": 0.4,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "كَمَّاشَة",
+        "غَسَّالَة",
+        "سَيَّارَة"
+      ],
+      "certainty_policy": "high",
+      "description": "صيغة مبالغة مؤنّثة بالتاء، تدلّ على كثرة وقوع الفعل أو شدّته، وقد تدلّ على اسم الآلة."
+    },
+    {
+      "pattern_id": "faulu_quality_noun",
+      "pattern_form": "فَعُول",
+      "family": "intensive_attr",
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.7,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.3,
+        "jamid": 0.0
+      },
+      "examples": [
+        "ذَلُول",
+        "صَبُور",
+        "شَكُور"
+      ],
+      "certainty_policy": "high",
+      "description": "صيغة مبالغة على وزن فَعُول، تدلّ على كثرة وقوع الصفة في الموصوف، وقد تأتي بمعنى اسم الفاعل أو المفعول."
+    },
+    {
+      "pattern_id": "fauliyya_masdar",
+      "pattern_form": "فَعُولِيَّة",
+      "family": "abstract_quality",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.6,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 1.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "صُبُوحِيَّة",
+        "ذُكُورِيَّة",
+        "بُطُولِيَّة"
+      ],
+      "certainty_policy": "medium",
+      "description": "مصدر صناعي يُبنى بزيادة ياء النسبة والتاء، يدلّ على الصفة المجردة من الموصوف."
+    },
+    {
+      "pattern_id": "fualiyya_masdar",
+      "pattern_form": "فَعَالِيَّة",
+      "family": "abstract_quality",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.6,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 1.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "عَمَالِيَّة",
+        "إِنْسَانِيَّة",
+        "وَطَنِيَّة"
+      ],
+      "certainty_policy": "high",
+      "description": "مصدر صناعي يُبنى بزيادة ياء النسبة والتاء على وزن فَعَالِيَّة، يدلّ على الصفة المجردة من الموصوف."
+    },
+    {
+      "pattern_id": "falaaan_attr",
+      "pattern_form": "فَعْلَان",
+      "family": "intensive_state",
+      "operator_vector": {
+        "agency": 0.3,
+        "patienthood": 0.2,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.6,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.1
+      },
+      "examples": [
+        "عَطْشَان",
+        "غَضْبَان",
+        "يَقْظَان"
+      ],
+      "certainty_policy": "high",
+      "description": "صفةٌ مشبّهة تدلّ على معنى عارض أو حالة مؤقتة، وكثيراً ما تأتي للدلالة على الامتلاء أو الانفعال."
+    },
+    {
+      "pattern_id": "falaa_fem_color",
+      "pattern_form": "فَعْلَاء",
+      "family": "fem_color",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.7,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.2
+      },
+      "examples": [
+        "صَفْرَاء",
+        "حَمْرَاء",
+        "بَيْضَاء"
+      ],
+      "certainty_policy": "high",
+      "description": "صفةٌ مشبّهة مؤنّثة تدلّ على اللون أو العيب أو الحلية، وهي مؤنّث أَفْعَل."
+    },
+    {
+      "pattern_id": "falaa_fem",
+      "pattern_form": "فَعْلَى",
+      "family": "fem_form",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.2,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.5,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.2,
+        "jamid": 0.2
+      },
+      "examples": [
+        "سَلْقَى",
+        "كُبْرَى",
+        "صُغْرَى"
+      ],
+      "certainty_policy": "medium",
+      "description": "صفةٌ مؤنّثة على وزن فَعْلَى، تأتي بمعنى التفضيل أو اسم المرة، أو تدلّ على معنى مفرد جامد."
+    },
+    {
+      "pattern_id": "falah_unit_noun",
+      "pattern_form": "فَعْلَة",
+      "family": "single_action",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.7,
+        "jamid": 0.3
+      },
+      "examples": [
+        "ضَرْبَة",
+        "قِصَّة",
+        "لَمْحَة"
+      ],
+      "certainty_policy": "high",
+      "description": "اسمٌ يدلّ على المرة الواحدة من وقوع الفعل، ويُبنى بزيادة التاء على وزن فَعْل."
+    },
+    {
+      "pattern_id": "falah_plural",
+      "pattern_form": "فَعَلَة",
+      "family": "broken_plural",
+      "operator_vector": {
+        "agency": 0.3,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "عَبَدَة",
+        "كَتَبَة",
+        "حَمَلَة"
+      ],
+      "certainty_policy": "high",
+      "description": "جمع تكسير من جموع الكثرة على وزن فَعَلَة، يكثر في جمع فاعل المختصّ بالعقلاء."
+    },
+    {
+      "pattern_id": "fualaa_plural",
+      "pattern_form": "فُعَلَاء",
+      "family": "broken_plural",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "عُلَمَاء",
+        "السُّفَهَاء",
+        "فُقَهَاء"
+      ],
+      "certainty_policy": "high",
+      "description": "جمع تكسير من جموع الكثرة على وزن فُعَلَاء، يكثر في جمع فعيل بمعنى فاعل المختصّ بالعقلاء."
+    },
+    {
+      "pattern_id": "faaail_plural",
+      "pattern_form": "فَعَائِل",
+      "family": "broken_plural",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "عَجَائِز",
+        "حَقَائِق",
+        "رَسَائِل"
+      ],
+      "certainty_policy": "high",
+      "description": "جمع تكسير من جموع الكثرة على وزن فَعَائِل، من صيغ منتهى الجموع غير المنصرفة."
+    },
+    {
+      "pattern_id": "fawaail_plural",
+      "pattern_form": "فَوَاعِل",
+      "family": "broken_plural",
+      "operator_vector": {
+        "agency": 0.2,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "فَوَارِس",
+        "شَوَاهِد",
+        "نَوَافِذ"
+      ],
+      "certainty_policy": "high",
+      "description": "جمع تكسير من جموع الكثرة على وزن فَوَاعِل، يكثر في جمع فاعِلة المؤنّثة."
+    },
+    {
+      "pattern_id": "faalaa_plural",
+      "pattern_form": "فَعَالَى",
+      "family": "broken_plural",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "خَطَايَا",
+        "أَسَارَى",
+        "مَوْتَى"
+      ],
+      "certainty_policy": "medium",
+      "description": "جمع تكسير من جموع الكثرة على وزن فَعَالَى، من صيغ منتهى الجموع غير المنصرفة."
+    },
+    {
+      "pattern_id": "fuayal_diminutive",
+      "pattern_form": "فُعَيْل",
+      "family": "diminutive",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.8,
+        "multiplication": 0.0,
+        "transformation": 0.4,
+        "masdar": 0.0,
+        "jamid": 0.2
+      },
+      "examples": [
+        "جُبَيْل",
+        "حُسَيْن",
+        "نُجَيْم"
+      ],
+      "certainty_policy": "high",
+      "description": "اسمٌ مصغّر يدلّ على تحقير الشيء أو تقليله أو تقريبه، على وزن فُعَيْل بضم الأول وفتح الثاني."
+    },
+    {
+      "pattern_id": "fuayil_diminutive_form",
+      "pattern_form": "فُعَيْعِل",
+      "family": "diminutive_form4",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.7,
+        "multiplication": 0.0,
+        "transformation": 0.4,
+        "masdar": 0.0,
+        "jamid": 0.2
+      },
+      "examples": [
+        "دُرَيْهِم",
+        "كُتَيِّب"
+      ],
+      "certainty_policy": "medium",
+      "description": "اسمٌ مصغّر للاسم الرباعي، على وزن فُعَيْعِل، يدلّ على التقليل أو التحقير."
+    },
+    {
+      "pattern_id": "fuaylaan_dim",
+      "pattern_form": "فُعَيْلَان",
+      "family": "diminutive",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.7,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.2
+      },
+      "examples": [
+        "نُعَيْمَان"
+      ],
+      "certainty_policy": "low",
+      "description": "اسمٌ مصغّر بزيادة الألف والنون، يدلّ على تقليل الشيء أو تحبيبه."
+    },
+    {
+      "pattern_id": "fuaylaa_dim",
+      "pattern_form": "فُعَيْلَاء",
+      "family": "diminutive",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.7,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.2
+      },
+      "examples": [
+        "دُرَيْلَاء"
+      ],
+      "certainty_policy": "low",
+      "description": "اسمٌ مصغّر بزيادة الألف والهمزة، يدلّ على تقليل الشيء أو تحبيبه."
+    },
+    {
+      "pattern_id": "faaiil_intensive",
+      "pattern_form": "فَعِّيل",
+      "family": "intensified_adj",
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.9,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "دَرِّيس",
+        "سِكِّير",
+        "خِمِّير"
+      ],
+      "certainty_policy": "medium",
+      "description": "صيغة مبالغة على وزن فَعِّيل بتشديد العين، تدلّ على شدّة قيام الفاعل بالحدث."
+    },
+    {
+      "pattern_id": "faayal_quadri",
+      "pattern_form": "فَعْيَل",
+      "family": "quadriliteral",
+      "operator_vector": {
+        "agency": 0.3,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.4
+      },
+      "examples": [
+        "عَثْيَر",
+        "قَرْيَة"
+      ],
+      "certainty_policy": "low",
+      "description": "اسمٌ رباعي على وزن فَعْيَل بزيادة الياء، يكثر فيه الجمود."
+    },
+    {
+      "pattern_id": "fayal_quadri",
+      "pattern_form": "فَيْعَل",
+      "family": "quadriliteral",
+      "operator_vector": {
+        "agency": 0.4,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.3
+      },
+      "examples": [
+        "بَيْطَر",
+        "صَيْقَل"
+      ],
+      "certainty_policy": "medium",
+      "description": "فعلٌ رباعي مجرد على وزن فَيْعَل بزيادة الياء، يدلّ على حدث متجدّد."
+    },
+    {
+      "pattern_id": "fawal_quadri",
+      "pattern_form": "فَوْعَل",
+      "family": "quadriliteral",
+      "operator_vector": {
+        "agency": 0.4,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.3
+      },
+      "examples": [
+        "جَوْرَب",
+        "حَوْقَل"
+      ],
+      "certainty_policy": "medium",
+      "description": "اسمٌ رباعي على وزن فَوْعَل بزيادة الواو، يكثر فيه الجمود."
+    },
+    {
+      "pattern_id": "falal_quadri",
+      "pattern_form": "فَعْلَل",
+      "family": "quadriliteral_verb",
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.0,
+        "causation": 0.5,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.7,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "دَحْرَج",
+        "بَعْثَر",
+        "زَلْزَل"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلٌ رباعي مجرد على وزن فَعْلَل، يدلّ على وقوع الحدث الرباعي بأصول حروفه."
+    },
+    {
+      "pattern_id": "falnal_quadri",
+      "pattern_form": "فَعْنَل",
+      "family": "quadriliteral",
+      "operator_vector": {
+        "agency": 0.3,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.4
+      },
+      "examples": [
+        "قَلْنَس"
+      ],
+      "certainty_policy": "low",
+      "description": "اسمٌ رباعي على وزن فَعْنَل بزيادة النون، يكثر فيه الجمود."
+    },
+    {
+      "pattern_id": "fawal_quadri_alt",
+      "pattern_form": "فَعْوَل",
+      "family": "quadriliteral_verb",
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.0,
+        "causation": 0.3,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.5,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "دَهْوَر",
+        "هَرْوَل"
+      ],
+      "certainty_policy": "low",
+      "description": "فعلٌ رباعي على وزن فَعْوَل بزيادة الواو، يدلّ على وقوع الحدث الرباعي."
+    },
+    {
+      "pattern_id": "tafil_arabic_word",
+      "pattern_form": "فَعَلِي",
+      "family": "nisba_adjective",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.3,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 1.0,
+        "comparison": 0.2,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.2
+      },
+      "examples": [
+        "عَرَبِي",
+        "بَلَدِي",
+        "قَمَرِي"
+      ],
+      "certainty_policy": "high",
+      "description": "صفةٌ منسوبة بياء النسبة المخفّفة، تدلّ على نسبة الشيء إلى أصلٍ أو موطنٍ."
+    },
+    {
+      "pattern_id": "tafili_nisba",
+      "pattern_form": "تَفْعِيلِي",
+      "family": "nisba_adjective",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.9,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.2,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "تَصْوِيرِي",
+        "تَعْلِيمِي",
+        "تَحْلِيلِي"
+      ],
+      "certainty_policy": "high",
+      "description": "صفةٌ منسوبة من المصدر على وزن تَفْعِيلِي، تدلّ على نسبة الشيء إلى الفعل المُكثَّر."
+    },
+    {
+      "pattern_id": "yufiil_weak",
+      "pattern_form": "يُفعِل",
+      "family": "weak_verb_present",
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.0,
+        "causation": 0.7,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.5,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "يُوصِي",
+        "يُوحِي",
+        "يُولِي"
+      ],
+      "certainty_policy": "medium",
+      "description": "فعلٌ مضارع متعدٍّ من الفعل المعتلّ، يدلّ على التعدية في الزمن الحاضر."
+    },
+    {
+      "pattern_id": "nufiil_weak",
+      "pattern_form": "نُفعِل",
+      "family": "weak_verb_present",
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.0,
+        "causation": 0.7,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.5,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "نُودِي",
+        "نُوحِي"
+      ],
+      "certainty_policy": "medium",
+      "description": "فعلٌ مضارع متعدٍّ من الفعل المعتلّ، مسند إلى ضمير المتكلّمين."
+    },
+    {
+      "pattern_id": "faeel_intensive_alt",
+      "pattern_form": "فَعِّل",
+      "family": "intensive_imperative",
+      "operator_vector": {
+        "agency": 0.4,
+        "patienthood": 0.0,
+        "causation": 0.6,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.3,
+        "multiplication": 0.4,
+        "transformation": 0.7,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "نَبِّئ",
+        "بَشِّر",
+        "عَلِّم"
+      ],
+      "certainty_policy": "high",
+      "description": "فعلُ أمرٍ من باب فَعَّل المزيد بالتضعيف، يدلّ على طلب وقوع الفعل المكثَّف."
+    },
+    {
+      "pattern_id": "fuaeel_passive_intensive",
+      "pattern_form": "فُعَّل",
+      "family": "passive_intensive",
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.9,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.6,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "حُجَّتُنَا",
+        "غُلَّت"
+      ],
+      "certainty_policy": "medium",
+      "description": "فعلٌ ماضٍ مبني للمجهول من باب فَعَّل، يدلّ على وقوع الفعل المُكثَّف على نائب الفاعل."
+    },
+    {
+      "pattern_id": "faooul_weak",
+      "pattern_form": "فَعَوْل",
+      "family": "weak_verb_past",
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.0
+      },
+      "examples": [
+        "عَنَوْا",
+        "دَعَوْت"
+      ],
+      "certainty_policy": "low",
+      "description": "فعلٌ ماضٍ من الفعل المعتلّ على وزن فَعَوْل، يدلّ على وقوع الحدث وانقضائه."
+    }
+  ]
+}

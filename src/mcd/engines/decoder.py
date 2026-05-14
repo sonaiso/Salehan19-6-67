@@ -72,25 +72,43 @@ class MinimalCognitiveDecoder:
                 role_vectors_out.append({"char": ch, "word": word, "roles": rv.to_dict(), "top_role": rv.top_role()})
 
         # Step 4: Pattern matching + build word nodes
+        from mcd.knowledge.mishkat_root_lookup import lookup_root
         word_nodes: list[KnowledgeNode] = []
         for word in words:
-            best = self._pattern_matcher.best_match(word)
+            # Strip article before PatternMatcher so ال doesn't bleed into root
+            pm_word = word[2:] if word.startswith('ال') and len(word) > 2 else word
+            best = self._pattern_matcher.best_match(pm_word)
             features: dict = {}
-            if best:
+            # Only trust PatternMatcher when certainty is meaningful (>= 0.65).
+            # Below that threshold false positives outweigh true matches
+            # (e.g. borrowed words accidentally matching افتعل structure).
+            if best and best.get("certainty", 0) >= 0.65:
                 features["pattern"] = best["pattern"]
                 features["role"] = best["role"]
                 features["semantic_hint"] = best["semantic_hint"]
-                features["root"] = best.get("root", "")
+                root = best.get("root", "")
+                # ة is never a root letter — apply hollow inference same as lookup_root
+                if root.endswith("ة"):
+                    root = root[:-1]
+                    if len(root) == 2:
+                        root = root[0] + "و" + root[1]
+                features["root"] = root
                 cert_score = best["certainty"]
             else:
-                # Extract simple root (strip ال prefix, ة suffix)
-                stem = word
-                if stem.startswith('ال') and len(stem) > 2:
-                    stem = stem[2:]
-                if stem.endswith('ة') and len(stem) > 1:
-                    stem = stem[:-1]
-                features["root"] = stem
-                cert_score = 0.5
+                # Four-layer root extractor (mishkat → audited → pattern → skeleton)
+                mishkat_root = lookup_root(word)
+                if mishkat_root:
+                    features["root"] = mishkat_root
+                    cert_score = 0.80
+                else:
+                    # Last resort: bare stem
+                    stem = word
+                    if stem.startswith('ال') and len(stem) > 2:
+                        stem = stem[2:]
+                    if stem.endswith('ة') and len(stem) > 1:
+                        stem = stem[:-1]
+                    features["root"] = stem
+                    cert_score = 0.5
 
             # Check if word/stem is in prior store → boost certainty
             prior_boost = 0.0

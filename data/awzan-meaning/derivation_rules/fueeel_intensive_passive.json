@@ -1,0 +1,34 @@
+{
+  "rule_id": "fueeel_intensive_passive_derivation",
+  "rule_name_ar": "الفعل المضعّف المبني للمجهول على وزن فُعِّل",
+  "target_pattern": "فُعِّل",
+  "target_pattern_id": "fueeel_intensive_passive",
+  "summary_ar": "فاء مضمومة + عين مضعّفة مكسورة + لام، المبني للمجهول من باب فَعَّل.",
+  "base_rule": {
+    "description_ar": "يُبنى المجهول من فَعَّل بضمّ الفاء وكسر العين المضعّفة.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "ضمّ الفاء"
+      },
+      {
+        "step": 2,
+        "description_ar": "تضعيف العين مع كسرها"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "active": "زَيَّنَ",
+      "passive": "زُيِّنَ"
+    },
+    {
+      "active": "حَمَّلَ",
+      "passive": "حُمِّلَ"
+    },
+    {
+      "active": "عَلَّمَ",
+      "passive": "عُلِّمَ"
+    }
+  ]
+}

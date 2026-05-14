@@ -1,0 +1,170 @@
+{
+  "rule_id": "ism_mafuul_derivation",
+  "rule_name_ar": "قاعدة اشتقاق اسم المفعول",
+  "target_pattern": "مَفْعُول",
+  "target_pattern_id": "mafuul",
+  "summary_ar": "ميم مفتوحة + فاء ساكنة + عين مضمومة + واو زائدة + لام، يدلّ على من وقع عليه الفعل في الفعل الثلاثي المجرد، أو على صيغة 'مُــ ـَ ـ' في غير الثلاثي.",
+
+  "base_rule": {
+    "description_ar": "اسم المفعول من الفعل الثلاثي المجرد المتصرّف المتعدّي يُصاغ على وزن مَفْعُول بزيادة ميم مفتوحة في أوله، وإسكان فائه، وزيادة واو ساكنة بعد عينه المضمومة.",
+    "operations": [
+      {
+        "step": 1,
+        "operation_id": "prefix_mim",
+        "description_ar": "زيادة ميم مفتوحة في أول الكلمة",
+        "insert_at": "start",
+        "insert_letter": "مَ"
+      },
+      {
+        "step": 2,
+        "operation_id": "silent_fa",
+        "description_ar": "إسكان فاء الكلمة (الحرف الأول من الجذر)",
+        "target_position": "root[0]",
+        "harakah": "sukun",
+        "harakah_code": "\u0652"
+      },
+      {
+        "step": 3,
+        "operation_id": "damm_ain",
+        "description_ar": "ضمّ عين الكلمة (الحرف الثاني من الجذر)",
+        "target_position": "root[1]",
+        "harakah": "damma",
+        "harakah_code": "\u064F"
+      },
+      {
+        "step": 4,
+        "operation_id": "insert_waw",
+        "description_ar": "زيادة واو ساكنة بعد العين",
+        "insert_after": "root[1]",
+        "insert_letter": "و"
+      },
+      {
+        "step": 5,
+        "operation_id": "lam_endings",
+        "description_ar": "تأتي لام الكلمة ساكنةً في الوقف، حاملةً علامة الإعراب في الوصل",
+        "target_position": "root[2]",
+        "harakah_default": "sukun_or_iaab"
+      }
+    ],
+    "example_walkthrough": {
+      "root": ["ك", "ت", "ب"],
+      "verb": "كَتَبَ",
+      "wazn_template": "مَ + فْـ + عُـ + و + ل",
+      "derivation": "مَ + كْـ + تُـ + و + ب",
+      "result": "مَكْتُوب"
+    }
+  },
+
+  "application_conditions": {
+    "description_ar": "تنطبق صيغة 'مَفْعُول' مباشرة إذا توفّرت كل هذه الشروط في الفعل",
+    "conditions": [
+      {
+        "condition_id": "is_trilateral",
+        "description_ar": "ثلاثي (ثلاثة أحرف أصلية)",
+        "check": "len(root) == 3"
+      },
+      {
+        "condition_id": "is_bare",
+        "description_ar": "مجرّد (لا زيادة فيه)",
+        "check": "no_augmentations(verb)"
+      },
+      {
+        "condition_id": "is_mutasarrif",
+        "description_ar": "متصرّف (يأتي منه الماضي والمضارع)",
+        "check": "has_past_and_present(verb)"
+      },
+      {
+        "condition_id": "is_transitive",
+        "description_ar": "متعدٍّ (يحتاج مفعولاً به)، لأنّ اللازم لا اسم مفعول له صريحاً",
+        "check": "is_transitive(verb)",
+        "note_ar": "إن كان الفعل لازماً، يُصاغ اسم المفعول بالظرف أو الجار والمجرور (مثل: مَمْرُور به)"
+      },
+      {
+        "condition_id": "no_weak_letters",
+        "description_ar": "سالم العين واللام من حروف العلة",
+        "check": "root[1] not in ['و','ي','ا'] and root[2] not in ['و','ي','ا']"
+      }
+    ]
+  },
+
+  "transformations": {
+    "description_ar": "حالات الإعلال في اسم المفعول",
+
+    "ajwaf_wawi": {
+      "label_ar": "أجوف واويّ (العين واو)",
+      "description_ar": "تُحذف واو مفعول لالتقاء الساكنين، وتبقى واو الجذر",
+      "trigger": "root[1] == 'و'",
+      "transformation": "مَفْعُول → مَفُول (تُحذف واو الزيادة)",
+      "examples": [
+        {"verb": "قَالَ", "root": ["ق","و","ل"], "result": "مَقُول"},
+        {"verb": "صَامَ", "root": ["ص","و","م"], "result": "مَصُوم"},
+        {"verb": "زَارَ", "root": ["ز","و","ر"], "result": "مَزُور"}
+      ]
+    },
+
+    "ajwaf_yai": {
+      "label_ar": "أجوف يائيّ (العين ياء)",
+      "description_ar": "تُحذف واو مفعول، وتُقلب ضمّة الفاء كسرةً لمناسبة الياء، وتبقى الياء",
+      "trigger": "root[1] == 'ي'",
+      "transformation": "مَفْعُول → مَفِيل (حذف الواو + كسر الفاء)",
+      "examples": [
+        {"verb": "بَاعَ", "root": ["ب","ي","ع"], "result": "مَبِيع"},
+        {"verb": "كَالَ", "root": ["ك","ي","ل"], "result": "مَكِيل"},
+        {"verb": "سَارَ", "root": ["س","ي","ر"], "result": "مَسِير"}
+      ]
+    },
+
+    "naqis_wawi": {
+      "label_ar": "ناقص واويّ (اللام واو)",
+      "description_ar": "تجتمع واو مفعول مع واو اللام فتُدغمان، وتُقلب ضمّة العين فتحةً",
+      "trigger": "root[2] == 'و'",
+      "transformation": "مَفْعُوو → مَفْعُوّ (إدغام)",
+      "examples": [
+        {"verb": "دَعَا", "root": ["د","ع","و"], "result": "مَدْعُوّ"},
+        {"verb": "رَجَا", "root": ["ر","ج","و"], "result": "مَرْجُوّ"},
+        {"verb": "غَزَا", "root": ["غ","ز","و"], "result": "مَغْزُوّ"}
+      ]
+    },
+
+    "naqis_yai": {
+      "label_ar": "ناقص يائيّ (اللام ياء)",
+      "description_ar": "تُقلب واو مفعول ياءً، فتُدغم مع ياء اللام، وتُقلب ضمّة العين كسرةً",
+      "trigger": "root[2] == 'ي'",
+      "transformation": "مَفْعُوي → مَفْعِيّ (قلب الواو ياءً + إدغام + كسر العين)",
+      "examples": [
+        {"verb": "رَمَى", "root": ["ر","م","ي"], "result": "مَرْمِيّ"},
+        {"verb": "بَنَى", "root": ["ب","ن","ي"], "result": "مَبْنِيّ"},
+        {"verb": "هَدَى", "root": ["ه","د","ي"], "result": "مَهْدِيّ"}
+      ]
+    },
+
+    "mudaaaf": {
+      "label_ar": "مضعّف (العين واللام من جنس واحد)",
+      "description_ar": "يُدغم الحرفان المتماثلان في اسم المفعول",
+      "trigger": "root[1] == root[2]",
+      "transformation": "الحرفان المتماثلان → حرف مشدّد",
+      "examples": [
+        {"verb": "مَدَّ", "root": ["م","د","د"], "result": "مَمْدُود"},
+        {"verb": "شَدَّ", "root": ["ش","د","د"], "result": "مَشْدُود"},
+        {"verb": "عَدَّ", "root": ["ع","د","د"], "result": "مَعْدُود"}
+      ]
+    }
+  },
+
+  "fallback_rule": {
+    "label_ar": "قاعدة الفرع: ما ليس ثلاثيًا مجردًا",
+    "description_ar": "اسم المفعول من غير الثلاثي يُصاغ على وزن مُسْتَفْعَل (مُــ ـَ ـ): يُؤتى بالمضارع المبني للمجهول، ويُقلب حرف المضارعة ميماً مضمومة، ويُفتح ما قبل الآخر.",
+    "procedure": [
+      "خذ المضارع المبني للمجهول",
+      "اقلب حرف المضارعة ميماً مضمومة (مُ)",
+      "افتح ما قبل الآخر"
+    ],
+    "examples": [
+      {"verb": "أَكْرَمَ", "mudari_passive": "يُكْرَم", "ism_mafuul": "مُكْرَم", "pattern": "مُفْعَل"},
+      {"verb": "اِنْطَلَقَ", "mudari_passive": "يُنْطَلَق", "ism_mafuul": "مُنْطَلَق", "pattern": "مُنْفَعَل"},
+      {"verb": "اِسْتَخْرَجَ", "mudari_passive": "يُسْتَخْرَج", "ism_mafuul": "مُسْتَخْرَج", "pattern": "مُسْتَفْعَل"},
+      {"verb": "دَحْرَجَ", "mudari_passive": "يُدَحْرَج", "ism_mafuul": "مُدَحْرَج", "pattern": "مُفَعْلَل"},
+      {"verb": "عَلَّمَ", "mudari_passive": "يُعَلَّم", "ism_mafuul": "مُعَلَّم", "pattern": "مُفَعَّل"}
+    ]
+  }
+}

@@ -1,0 +1,5897 @@
+{
+  "_meta": {
+    "version": "2.0",
+    "schema": "layered_architecture",
+    "description_ar": "البنية الطبقية الثلاثية: Φ_E (وجودية) + Φ_D (تحويلية) + Φ_O (وظيفية)",
+    "layers": {
+      "existential_signature": "Φ_E — ماهية الكلمة كصيغة صرفية",
+      "operator_vector": "Φ_D — الدلالة التحويلية (الـ12 الأصلية + stative_attribute + subtypes)",
+      "functional_operators": "Φ_O — العمليات الصرفية المطبّقة"
+    },
+    "migration_notes_ar": [
+      "Φ_E مستنتجة آلياً من pattern_form",
+      "Φ_D محفوظة من النموذج السابق + stative_attribute=0 + subtypes=null للمراجعة اليدوية",
+      "Φ_O مستنتجة جزئياً (voice, mood, tense, derivation_form). الـ phonological_processes تحتاج سياق كلمة فعلية."
+    ]
+  },
+  "patterns": [
+    {
+      "pattern_id": "faail",
+      "pattern_form": "فَاعِل",
+      "family": "agent_noun",
+      "description": "اسمٌ يدلّ على من قام بالفعل على وجه الحدوث والتجدد، لا الثبوت. أي يدلّ على ذاتٍ وقع منها الحدث المشتق منه.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ا"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 1.0,
+        "patienthood": 0.0,
+        "causation": 0.3,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.1,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "كَاتِب",
+        "عَالِم",
+        "فَاعِل",
+        "قَارِئ"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "mafuul",
+      "pattern_form": "مَفْعُول",
+      "family": "patient_noun",
+      "description": "اسمٌ يدلّ على من وقع عليه الفعل، أي على الذات التي تلقّت الحدث ولم تُحدثه.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "م",
+          "و"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 1.0,
+        "causation": 0.2,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.2,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "مجهول",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرفين"
+      },
+      "examples": [
+        "مَكْتُوب",
+        "مَعْلُوم",
+        "مَفْعُول"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "mafal_place",
+      "pattern_form": "مَفْعَل",
+      "family": "place_noun",
+      "description": "اسمٌ يدلّ على مكان وقوع الفعل، وقد يدلّ على زمانه أو مصدره الميمي بحسب السياق.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "م"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 1.0,
+        "time": 0.3,
+        "instrument": 0.2,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.2,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "مَكْتَب",
+        "مَدْرَس",
+        "مَخْرَج"
+      ],
+      "certainty_policy": "medium",
+      "notes": ""
+    },
+    {
+      "pattern_id": "mafala_place",
+      "pattern_form": "مَفْعَلَة",
+      "family": "place_noun",
+      "description": "اسمٌ يدلّ على مكان كثرة الشيء أو مكان وقوع الفعل، ويُلحق بالتاء للدلالة على الاختصاص المكاني.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "م",
+          "ة"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مؤنث_بالتاء",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 1.0,
+        "time": 0.2,
+        "instrument": 0.1,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.1,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرفين"
+      },
+      "examples": [
+        "مَكْتَبَة",
+        "مَزْرَعَة",
+        "مَصْنَعَة"
+      ],
+      "certainty_policy": "medium",
+      "notes": ""
+    },
+    {
+      "pattern_id": "faaaal_intense",
+      "pattern_form": "فَعَّال",
+      "family": "intensified_agent",
+      "description": "صيغة مبالغة تدلّ على كثرة وقوع الفعل من الفاعل أو شدّته، وكثيراً ما تدلّ على الحرفة والمهنة.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ا"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.9,
+        "patienthood": 0.0,
+        "causation": 0.5,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.3,
+        "nisba": 0.0,
+        "comparison": 0.5,
+        "multiplication": 0.2,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "كَتَّاب",
+        "غَفَّار",
+        "صَنَّاع"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "istafala_verb",
+      "pattern_form": "إِسْتَفْعَل",
+      "family": "derived_verb",
+      "description": "فعلٌ يدلّ على طلب وقوع الفعل أو ادّعائه أو التحوّل إلى الحالة المشتقّ منها، وهو من باب الزيادة بالسين والتاء والهمزة.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "إ",
+          "س",
+          "ت"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.7,
+        "patienthood": 0.3,
+        "causation": 0.8,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.4,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.9,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "ماضٍ",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بثلاثة"
+      },
+      "examples": [
+        "اسْتَخْرَج",
+        "اسْتَعْمَل",
+        "اسْتَفْسَر"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "tafaala_reflex",
+      "pattern_form": "تَفَاعَل",
+      "family": "derived_verb",
+      "description": "فعلٌ يدلّ على المشاركة بين فاعلين فأكثر، يقع الفعل من كلٍّ منهما على الآخر.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ت",
+          "ا"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.5,
+        "causation": 0.3,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.7,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "ماضٍ",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرفين"
+      },
+      "examples": [
+        "تَعَاوَن",
+        "تَكَاتَب",
+        "تَفَاهَم"
+      ],
+      "certainty_policy": "medium",
+      "notes": ""
+    },
+    {
+      "pattern_id": "faiil_attr",
+      "pattern_form": "فَعِيل",
+      "family": "attributive_adj",
+      "description": "صفةٌ مشبّهةٌ تدلّ على ثبوت الصفة في موصوفها على وجه الدوام، وقد تأتي بمعنى اسم الفاعل أو اسم المفعول.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ي"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.2,
+        "patienthood": 0.4,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.3,
+        "comparison": 0.6,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.1,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "كَرِيم",
+        "عَلِيم",
+        "حَكِيم"
+      ],
+      "certainty_policy": "medium",
+      "notes": ""
+    },
+    {
+      "pattern_id": "fuayyil_dim",
+      "pattern_form": "فُعَيِّل",
+      "family": "diminutive",
+      "description": "اسمٌ مصغّر يدلّ على تحقير الشيء أو تقليل حجمه أو تقريبه أو تحبيبه، ويُبنى بضم الأول وفتح الثاني وزيادة ياء ساكنة.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ي"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.7,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.3,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "كُتَيِّب",
+        "نُهَيِّر",
+        "جُبَيِّل"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "afaal_plural",
+      "pattern_form": "أَفْعَال",
+      "family": "broken_plural",
+      "description": "جمع تكسير قياسي يدلّ على ما زاد على الثلاثة وقلَّ عن العشرة، وهو من جموع القلّة.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "أ",
+          "ا"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "جمع_تكسير",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.1,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرفين"
+      },
+      "examples": [
+        "أَعْمَال",
+        "أَقْوَال",
+        "أَفْعَال"
+      ],
+      "certainty_policy": "medium",
+      "notes": ""
+    },
+    {
+      "pattern_id": "fiaal_plural",
+      "pattern_form": "فِعَال",
+      "family": "broken_plural",
+      "description": "جمع تكسير من جموع الكثرة، يدلّ على ما زاد على العشرة، وقد يكون مصدراً للفعل المجرد.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ا"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "جمع_تكسير",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.1,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "جِبَال",
+        "رِجَال",
+        "كِبَاش"
+      ],
+      "certainty_policy": "medium",
+      "notes": ""
+    },
+    {
+      "pattern_id": "fuuul_plural",
+      "pattern_form": "فُعُول",
+      "family": "broken_plural",
+      "description": "جمع تكسير من جموع الكثرة، شائع في جمع فَعْل وفِعْل، وقد يكون مصدراً لفعل لازم.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "و"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "جمع_تكسير",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.1,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "قُلُوب",
+        "كُتُب",
+        "بُيُوت"
+      ],
+      "certainty_policy": "medium",
+      "notes": ""
+    },
+    {
+      "pattern_id": "fual_plural",
+      "pattern_form": "فُعَل",
+      "family": "broken_plural",
+      "description": "جمع تكسير من جموع الكثرة، يكثر في جمع فُعْلَة المؤنّثة وفُعْلَى.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مجرد",
+        "augmentation_letters": [],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "جمع_تكسير",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.1,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مجرد"
+      },
+      "examples": [
+        "دُوَل",
+        "صُوَر",
+        "حُجَج"
+      ],
+      "certainty_policy": "medium",
+      "notes": ""
+    },
+    {
+      "pattern_id": "nisba_yaa",
+      "pattern_form": "فَعَلِيّ",
+      "family": "nisba_adjective",
+      "description": "صفةٌ منسوبة تُلحق بياء النسبة المشدّدة لتدلّ على نسبة الشيء إلى أصلٍ أو موضعٍ أو حرفةٍ.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ي"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.3,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 1.0,
+        "comparison": 0.2,
+        "multiplication": 0.0,
+        "transformation": 0.1,
+        "masdar": 0.0,
+        "jamid": 0.2,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "عَرَبِيّ",
+        "عِلْمِيّ",
+        "زِرَاعِيّ"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "mustafl_patient",
+      "pattern_form": "مُسْتَفْعَل",
+      "family": "patient_noun",
+      "description": "اسم مفعول من الفعل المزيد بالسين والتاء، يدلّ على ما طُلب وقوع الفعل عليه أو تحوّل إلى الحالة المشتقّ منها.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "م",
+          "س",
+          "ت"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 1.0,
+        "causation": 0.5,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.8,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "مجهول",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بثلاثة"
+      },
+      "examples": [
+        "مُسْتَخْرَج",
+        "مُسْتَعْمَل",
+        "مُسْتَشَار"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "mufaail_agent",
+      "pattern_form": "مُفَاعِل",
+      "family": "agent_noun",
+      "description": "اسم فاعل من فعل المفاعلة، يدلّ على من شارك غيره في الفعل أو قام به مع غيره.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "م",
+          "ا"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.9,
+        "patienthood": 0.2,
+        "causation": 0.4,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.1,
+        "nisba": 0.0,
+        "comparison": 0.1,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرفين"
+      },
+      "examples": [
+        "مُكَاتِب",
+        "مُشَارِك",
+        "مُسَاعِد"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "fiaala_masdar_craft",
+      "pattern_form": "فِعَالَة",
+      "family": "masdar_craft",
+      "description": "مصدر يدلّ على الحرفة والصناعة، أو على الحدث المجرّد بصيغة ثابتة.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ا",
+          "ة"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مؤنث_بالتاء",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.2,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.2,
+        "nisba": 0.3,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 1.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرفين"
+      },
+      "examples": [
+        "كِتَابَة",
+        "زِرَاعَة",
+        "صِنَاعَة"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "faala_verb_base",
+      "pattern_form": "فَعَل",
+      "family": "base_verb",
+      "description": "فعلٌ ماضٍ ثلاثي مجرد على باب نَصَر يَنصُر أو فَتَح يَفتَح، يدلّ على وقوع الحدث وانقضائه.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مجرد",
+        "augmentation_letters": [],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.7,
+        "patienthood": 0.2,
+        "causation": 0.3,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.4,
+        "masdar": 0.2,
+        "jamid": 0.1,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "ماضٍ",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مجرد"
+      },
+      "examples": [
+        "كَتَب",
+        "قَرَأ",
+        "فَتَح"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "faila_verb_state",
+      "pattern_form": "فَعِل",
+      "family": "stative_verb",
+      "description": "فعلٌ ماضٍ ثلاثي يدلّ على وقوع حالة أو صفة عارضة في الفاعل، على باب عَلِم يَعلَم.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مجرد",
+        "augmentation_letters": [],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.3,
+        "patienthood": 0.4,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.3,
+        "multiplication": 0.0,
+        "transformation": 0.5,
+        "masdar": 0.2,
+        "jamid": 0.1,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "ماضٍ",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مجرد"
+      },
+      "examples": [
+        "عَلِم",
+        "فَهِم",
+        "شَرِب"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "faula_verb_quality",
+      "pattern_form": "فَعُل",
+      "family": "quality_verb",
+      "description": "فعلٌ ماضٍ ثلاثي يدلّ على ثبوت صفة لازمة في الفاعل وتمكّنها منه، على باب كَرُم يَكرُم.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مجرد",
+        "augmentation_letters": [],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.1,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.5,
+        "multiplication": 0.0,
+        "transformation": 0.6,
+        "masdar": 0.3,
+        "jamid": 0.2,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "ماضٍ",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مجرد"
+      },
+      "examples": [
+        "ضَعُف",
+        "كَبُر",
+        "شَرُف"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "faal_noun",
+      "pattern_form": "فَعْل",
+      "family": "simple_noun",
+      "description": "اسمٌ ثلاثي على وزن فَعْل، كثيراً ما يكون جامداً غير مشتق، أو مصدراً لفعل ثلاثي مجرد.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مجرد",
+        "augmentation_letters": [],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": true
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.4,
+        "jamid": 0.6,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مجرد"
+      },
+      "examples": [
+        "بَيْت",
+        "يَوْم",
+        "حَمْد"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "fial_noun",
+      "pattern_form": "فِعْل",
+      "family": "simple_noun",
+      "description": "اسمٌ ثلاثي على وزن فِعْل، شائع في الأسماء الجامدة والمصادر.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مجرد",
+        "augmentation_letters": [],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": true
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.4,
+        "jamid": 0.6,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مجرد"
+      },
+      "examples": [
+        "إِنْس",
+        "حِبْر",
+        "فِكْر"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "fual_simple",
+      "pattern_form": "فُعْل",
+      "family": "simple_noun",
+      "description": "اسمٌ ثلاثي على وزن فُعْل، يكثر في الأسماء الجامدة الدالّة على الذوات والأعيان.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مجرد",
+        "augmentation_letters": [],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": true
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.3,
+        "jamid": 0.7,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مجرد"
+      },
+      "examples": [
+        "قُفْل",
+        "حُكْم",
+        "حُسْن"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "fuul_plural_alt",
+      "pattern_form": "فُعُل",
+      "family": "broken_plural",
+      "description": "جمع تكسير من جموع الكثرة على وزن فُعُل، يكثر في جمع فَعُول وفَعِيل.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مجرد",
+        "augmentation_letters": [],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "جمع_تكسير",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.1,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مجرد"
+      },
+      "examples": [
+        "كُتُب",
+        "رُسُل",
+        "سُبُل"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "fial_plural",
+      "pattern_form": "فِعَل",
+      "family": "broken_plural",
+      "description": "جمع تكسير من جموع الكثرة على وزن فِعَل، يكثر في جمع فِعْلَة المؤنثة.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مجرد",
+        "augmentation_letters": [],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "جمع_تكسير",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.0,
+        "masdar": 0.1,
+        "jamid": 0.1,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مجرد"
+      },
+      "examples": [
+        "نِعَم",
+        "قِطَع",
+        "هِمَم"
+      ],
+      "certainty_policy": "medium",
+      "notes": ""
+    },
+    {
+      "pattern_id": "afaal_verb",
+      "pattern_form": "أَفْعَل",
+      "family": "causative_verb",
+      "description": "فعلٌ ماضٍ على وزن أَفْعَل، يدلّ على التعدية أو الصيرورة أو الإيجاد، وهو من باب الزيادة بالهمزة.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "أ"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.0,
+        "causation": 1.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.7,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "ماضٍ",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "أَخْرَج",
+        "أَكْرَم",
+        "أَحْسَن"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "faaala_intensive_verb",
+      "pattern_form": "فَعَّل",
+      "family": "intensive_verb",
+      "description": "فعلٌ مزيد بتضعيف العين، يدلّ على التكثير أو التعدية أو نسبة المفعول إلى أصل الفعل.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مجرد",
+        "augmentation_letters": [],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.0,
+        "causation": 0.7,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.3,
+        "multiplication": 0.4,
+        "transformation": 0.8,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "ماضٍ",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مجرد"
+      },
+      "examples": [
+        "عَلَّم",
+        "كَسَّر",
+        "فَرَّح"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "faaala_verb_form3",
+      "pattern_form": "فَاعَل",
+      "family": "form3_verb",
+      "description": "فعلٌ مزيد بألف بين الفاء والعين، يدلّ غالباً على المشاركة بين اثنين يقع الفعل من أحدهما على الآخر.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ا"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.4,
+        "causation": 0.3,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.6,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "ماضٍ",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "كَاتَب",
+        "وَاعَد",
+        "سَاعَد"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "tafaaala_form5",
+      "pattern_form": "تَفَعَّل",
+      "family": "form5_verb",
+      "description": "فعلٌ مزيد بالتاء وتضعيف العين، يدلّ على المطاوعة لفعَّل، أو التكلّف، أو التدرّج في الفعل.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ت"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.4,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.2,
+        "transformation": 0.9,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "ماضٍ",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "تَعَلَّم",
+        "تَكَسَّر",
+        "تَفَرَّق"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "infaala_form7",
+      "pattern_form": "إِنْفَعَل",
+      "family": "form7_verb",
+      "description": "فعلٌ مزيد بالنون والهمزة، يدلّ على المطاوعة، أي قبول الفاعل لأثر فعلٍ واقع عليه دون اختياره.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "إ",
+          "ن"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.1,
+        "patienthood": 0.9,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.9,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "ماضٍ",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرفين"
+      },
+      "examples": [
+        "انْكَسَر",
+        "انْفَتَح",
+        "انْطَلَق"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "iftaala_form8",
+      "pattern_form": "إِفْتَعَل",
+      "family": "form8_verb",
+      "description": "فعلٌ مزيد بالتاء والهمزة، يدلّ على المطاوعة، أو الاتخاذ، أو التشارك، أو الاجتهاد في الفعل.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "إ",
+          "ت"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.3,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.8,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "ماضٍ",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرفين"
+      },
+      "examples": [
+        "اقْتَرَب",
+        "اجْتَمَع",
+        "اخْتَلَف"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "yafal_present",
+      "pattern_form": "يَفْعَل",
+      "family": "present_verb",
+      "description": "فعلٌ مضارع على وزن يَفْعَل، يدلّ على حدوث الفعل في الزمن الحاضر أو المستقبل، من مضارع فَعَلَ المفتوح العين.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ي"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.2,
+        "causation": 0.2,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "يَخْدَع",
+        "يَفْتَح",
+        "يَعْلَم"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "yafil_present",
+      "pattern_form": "يَفْعِل",
+      "family": "present_verb",
+      "description": "فعلٌ مضارع على وزن يَفْعِل، من مضارع فَعَلَ المكسور العين في المضارع.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ي"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.2,
+        "causation": 0.2,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "يَكْذِب",
+        "يَضْرِب",
+        "يَغْلِب"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "yaful_present",
+      "pattern_form": "يَفْعُل",
+      "family": "present_verb",
+      "description": "فعلٌ مضارع على وزن يَفْعُل، من مضارع فَعَلَ المضموم العين في المضارع.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ي"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.2,
+        "causation": 0.2,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "يَدْخُل",
+        "يَكْتُب",
+        "يَكْفُر"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "yufil_present",
+      "pattern_form": "يُفْعِل",
+      "family": "causative_present",
+      "description": "فعلٌ مضارع مزيد بالهمزة، يدلّ على وقوع الفعل المتعدّي في الزمن الحاضر أو المستقبل بإسناده إلى الغائب.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ي"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.0,
+        "causation": 0.9,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.6,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "يُخْرِج",
+        "يُؤْمِن",
+        "يُحْسِن"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "yufaaeel_present",
+      "pattern_form": "يُفَعِّل",
+      "family": "intensive_present",
+      "description": "فعلٌ مضارع من باب فَعَّل المزيد بالتضعيف، يدلّ على وقوع الفعل المكثَّر أو المُعدَّى في الحاضر.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ي"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.0,
+        "causation": 0.6,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.3,
+        "multiplication": 0.4,
+        "transformation": 0.7,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "يُعَلِّم",
+        "يُبَدِّل",
+        "يُحَدِّث"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "yufaaeel_passive",
+      "pattern_form": "يُفْعَل",
+      "family": "passive_present",
+      "description": "فعلٌ مضارع مبني للمجهول من الثلاثي المزيد بالهمزة، يدلّ على وقوع الفعل دون ذكر فاعله.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ي"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.9,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.5,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "مجهول",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "يُقْبَل",
+        "يُصْرَف",
+        "يُكْرَم"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "yatafaaeel_present",
+      "pattern_form": "يَتَفَعَّل",
+      "family": "form5_present",
+      "description": "فعلٌ مضارع من باب تَفَعَّل، يدلّ على المطاوعة أو التدرّج في الزمن الحاضر.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ي",
+          "ت"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.4,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.2,
+        "transformation": 0.9,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرفين"
+      },
+      "examples": [
+        "يَتَفَجَّر",
+        "يَتَرَبَّص",
+        "يَتَعَلَّم"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "yatafaaaeel_present",
+      "pattern_form": "يَتَفَاعَل",
+      "family": "form6_present",
+      "description": "فعلٌ مضارع من باب تَفَاعَل، يدلّ على المشاركة بين الفاعلين في الزمن الحاضر.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ي",
+          "ت",
+          "ا"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.5,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.3,
+        "transformation": 0.8,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بثلاثة"
+      },
+      "examples": [
+        "يَتَرَاجَع",
+        "يَتَحَاجُّون",
+        "يَتَنَافَس"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "yastafaeel_present",
+      "pattern_form": "يَسْتَفْعِل",
+      "family": "form10_present",
+      "description": "فعلٌ مضارع من باب اسْتَفْعَل، يدلّ على طلب وقوع الفعل في الزمن الحاضر.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ي",
+          "س",
+          "ت"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.7,
+        "patienthood": 0.2,
+        "causation": 0.4,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 1.0,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بثلاثة"
+      },
+      "examples": [
+        "يَسْتَهْزِئ",
+        "يَسْتَغْفِر",
+        "يَسْتَعْفِف"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "yufaaeel_form3",
+      "pattern_form": "يُفَاعِل",
+      "family": "form3_present",
+      "description": "فعلٌ مضارع من باب فَاعَل، يدلّ على المشاركة بين اثنين في الزمن الحاضر.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ي",
+          "ا"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.7,
+        "patienthood": 0.3,
+        "causation": 0.3,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.5,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرفين"
+      },
+      "examples": [
+        "يُخَادِع",
+        "يُؤَاخِذ",
+        "يُجَادِل"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "tafal_present",
+      "pattern_form": "تَفْعَل",
+      "family": "present_verb",
+      "description": "فعلٌ مضارع مسند إلى المخاطب أو الغائبة المؤنثة، على وزن تَفْعَل.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ت"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.2,
+        "causation": 0.1,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "تَعْلَم",
+        "تَهْتَز",
+        "تَفْعَل"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "tafil_present",
+      "pattern_form": "تَفْعِل",
+      "family": "present_verb",
+      "description": "فعلٌ مضارع على وزن تَفْعِل، مسند إلى المخاطب أو الغائبة المؤنثة.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ت"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.2,
+        "causation": 0.1,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "تَجْرِي",
+        "تَحْمِل",
+        "تَهْوِي"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "taful_present",
+      "pattern_form": "تَفْعُل",
+      "family": "present_verb",
+      "description": "فعلٌ مضارع على وزن تَفْعُل، مسند إلى المخاطب أو الغائبة المؤنثة.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ت"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.2,
+        "causation": 0.1,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "تَكْفُر",
+        "تَكْتُب",
+        "تَخْرُج"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "tufil_present",
+      "pattern_form": "تُفْعِل",
+      "family": "causative_present_2nd",
+      "description": "فعلٌ مضارع متعدٍّ مزيد بالهمزة، مسند إلى المخاطب أو الغائبة المؤنثة.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ت"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.0,
+        "causation": 0.9,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.6,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "تُخْرِج",
+        "تُعْرِض",
+        "تُؤْتِي"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "tufaaeel_present",
+      "pattern_form": "تُفَعِّل",
+      "family": "intensive_present_2nd",
+      "description": "فعلٌ مضارع من باب فَعَّل المزيد بالتضعيف، مسند إلى المخاطب أو الغائبة المؤنثة.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ت"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.0,
+        "causation": 0.6,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.7,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "تُكَلِّم",
+        "تُحَمِّل",
+        "تُعَلِّم"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "tastafeel_present",
+      "pattern_form": "تَسْتَفْعِل",
+      "family": "form10_present_2nd",
+      "description": "فعلٌ مضارع من باب اسْتَفْعَل، مسند إلى المخاطب أو الغائبة المؤنثة، يدلّ على طلب الفعل.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ت",
+          "س",
+          "ت"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.7,
+        "patienthood": 0.2,
+        "causation": 0.4,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 1.0,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بثلاثة"
+      },
+      "examples": [
+        "تَسْتَعْجِل",
+        "تَسْتَغْفِر",
+        "تَسْتَعْمِل"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "nafal_present",
+      "pattern_form": "نَفْعَل",
+      "family": "present_verb_1pl",
+      "description": "فعلٌ مضارع على وزن نَفْعَل، مسند إلى ضمير المتكلّمين (نحن)، يدلّ على وقوع الفعل من جماعة المتكلّمين.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ن"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.2,
+        "causation": 0.2,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "نَسْتَع",
+        "نَضْطَر",
+        "نَكْتَل"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "nafil_present",
+      "pattern_form": "نَفْعِل",
+      "family": "present_verb_1pl",
+      "description": "فعلٌ مضارع على وزن نَفْعِل، مسند إلى ضمير المتكلّمين.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ن"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.2,
+        "causation": 0.2,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "نَجْزِي",
+        "نَخْسِف",
+        "نَدْرِي"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "naful_present",
+      "pattern_form": "نَفْعُل",
+      "family": "present_verb_1pl",
+      "description": "فعلٌ مضارع على وزن نَفْعُل، مسند إلى ضمير المتكلّمين.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ن"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.2,
+        "causation": 0.2,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "نَعْبُد",
+        "نَقْصُص",
+        "نَكْتُب"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "nufil_present",
+      "pattern_form": "نُفْعِل",
+      "family": "causative_present_1pl",
+      "description": "فعلٌ مضارع متعدٍّ مزيد بالهمزة، مسند إلى ضمير المتكلّمين، يدلّ على التعدية.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ن"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.0,
+        "causation": 0.9,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.6,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "نُؤْمِن",
+        "نُسْقِط",
+        "نُخْرِج"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "nufaaeel_present",
+      "pattern_form": "نُفَعِّل",
+      "family": "intensive_present_1pl",
+      "description": "فعلٌ مضارع من باب فَعَّل المزيد بالتضعيف، مسند إلى ضمير المتكلّمين.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ن"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.0,
+        "causation": 0.6,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.3,
+        "multiplication": 0.4,
+        "transformation": 0.7,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "نُسَبِّح",
+        "نُكَفِّر",
+        "نُعَلِّم"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "ufeel_past_1sg",
+      "pattern_form": "أَفَعَل",
+      "family": "past_verb_1sg",
+      "description": "فعلٌ ماضٍ مزيد بالهمزة في صدره، يدلّ على التعدية أو الصيرورة عند الفاعل المتكلّم.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "أ"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.7,
+        "patienthood": 0.0,
+        "causation": 0.4,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.5,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "ماضٍ",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "أَتَذَر",
+        "أَيَوَد",
+        "أَفَلَت"
+      ],
+      "certainty_policy": "medium",
+      "notes": ""
+    },
+    {
+      "pattern_id": "uful_passive_past",
+      "pattern_form": "أُفْعِل",
+      "family": "passive_past",
+      "description": "فعلٌ ماضٍ مبني للمجهول من الثلاثي المزيد بالهمزة، يدلّ على وقوع الفعل دون ذكر فاعله.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "أ"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.9,
+        "causation": 0.4,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.6,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "مجهول",
+        "mood": "خبر",
+        "tense_marker": "ماضٍ",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "أُرْسِل",
+        "أُحْصِن",
+        "أُخْرِج"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "fueel_passive_past",
+      "pattern_form": "فُعِل",
+      "family": "passive_past",
+      "description": "فعلٌ ماضٍ مبني للمجهول من الثلاثي المجرّد، يدلّ على وقوع الفعل على نائب الفاعل.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مجرد",
+        "augmentation_letters": [],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 1.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.4,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "مجهول",
+        "mood": "خبر",
+        "tense_marker": "ماضٍ",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مجرد"
+      },
+      "examples": [
+        "كُتِب",
+        "أُهِل",
+        "رُزِق"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "fueeel_intensive_passive",
+      "pattern_form": "فُعِّل",
+      "family": "intensive_passive",
+      "description": "فعلٌ ماضٍ مبني للمجهول من باب فَعَّل، يدلّ على وقوع الفعل المكثَّف على نائب الفاعل.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مجرد",
+        "augmentation_letters": [],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 1.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.6,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "مجهول",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مجرد"
+      },
+      "examples": [
+        "زُيِّن",
+        "حُمِّل",
+        "عُلِّم"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "mufaaeel_intensive_agent",
+      "pattern_form": "مُفَعِّل",
+      "family": "intensive_agent",
+      "description": "اسم فاعل من باب فَعَّل المزيد بالتضعيف، يدلّ على من يقوم بالفعل مع كثرة أو شدّة.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "م"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 1.0,
+        "patienthood": 0.0,
+        "causation": 0.5,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.3,
+        "multiplication": 0.0,
+        "transformation": 0.7,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "مُعَلِّم",
+        "مُدَرِّب",
+        "مُكَسِّر"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "mufaaeal_intensive_patient",
+      "pattern_form": "مُفَعَّل",
+      "family": "intensive_patient",
+      "description": "اسم مفعول من باب فَعَّل المزيد بالتضعيف، يدلّ على من وقع عليه الفعل المكثَّف.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "م"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 1.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.7,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "مجهول",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "مُعَلَّم",
+        "مُكَسَّر",
+        "مُنَظَّم"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "mustafeel_agent",
+      "pattern_form": "مُسْتَفْعِل",
+      "family": "form10_agent",
+      "description": "اسم فاعل من باب اسْتَفْعَل، يدلّ على من يطلب وقوع الفعل أو يحاول إيقاعه.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "م",
+          "س",
+          "ت"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 1.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.8,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بثلاثة"
+      },
+      "examples": [
+        "مُسْتَخْرِج",
+        "مُسْتَعْمِل",
+        "مُسْتَغْفِر"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "mifaal_instrument",
+      "pattern_form": "مِفْعَال",
+      "family": "instrument_noun",
+      "description": "اسم آلةٍ يدلّ على الأداة التي يُقام بها الفعل، وهو من أوصاف الآلة الواضحة المختصّة بها.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "م",
+          "ا"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 1.0,
+        "nisba": 0.0,
+        "comparison": 0.3,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرفين"
+      },
+      "examples": [
+        "مِفْتَاح",
+        "مِيزَان",
+        "مِنْشَار"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "mifal_instrument",
+      "pattern_form": "مِفْعَل",
+      "family": "instrument_noun",
+      "description": "اسم آلةٍ يدلّ على الأداة التي يُقام بها الفعل، وهو من أوزان اسم الآلة القياسية.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "م"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.1,
+        "time": 0.0,
+        "instrument": 0.9,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "مِبْرَد",
+        "مِشْرَط",
+        "مِقْوَد"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "mifala_instrument",
+      "pattern_form": "مِفْعَلَة",
+      "family": "instrument_noun",
+      "description": "اسم آلةٍ مؤنّث بالتاء، يدلّ على الأداة التي يُقام بها الفعل، وهو من أوزان اسم الآلة القياسية.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "م",
+          "ة"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مؤنث_بالتاء",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.9,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرفين"
+      },
+      "examples": [
+        "مِكْنَسَة",
+        "مِلْعَقَة",
+        "مِطْرَقَة"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "mafil_place_alt",
+      "pattern_form": "مَفْعِل",
+      "family": "place_noun",
+      "description": "اسمٌ يدلّ على مكان وقوع الفعل، وقد يدلّ على زمانه، وهو على وزن مَفْعِل بكسر العين.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "م"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.9,
+        "time": 0.4,
+        "instrument": 0.2,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.2,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "مَجْلِس",
+        "مَسْجِد",
+        "مَنْزِل"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "aful_plural",
+      "pattern_form": "أَفْعُل",
+      "family": "broken_plural",
+      "description": "جمع تكسير من جموع القلّة على وزن أَفْعُل، يدلّ على ما بين الثلاثة والعشرة.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "أ"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "جمع_تكسير",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "أَشْهُر",
+        "أَنْفُس",
+        "أَنْهُر"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "afil_imperative",
+      "pattern_form": "أَفْعِل",
+      "family": "imperative",
+      "description": "فعلُ أمرٍ مبني على السكون من الفعل الرباعي، يدلّ على طلب وقوع الفعل من المخاطب.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "أ"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.0,
+        "causation": 0.6,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.5,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "أمر",
+        "tense_marker": "أمر",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "أَيْدِي",
+        "أَسْلِم",
+        "أَكْرِم"
+      ],
+      "certainty_policy": "medium",
+      "notes": ""
+    },
+    {
+      "pattern_id": "afilah_plural",
+      "pattern_form": "أَفْعِلَة",
+      "family": "broken_plural",
+      "description": "جمع تكسير من جموع القلّة على وزن أَفْعِلَة، يدلّ على ما بين الثلاثة والعشرة.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "أ",
+          "ة"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مؤنث_بالتاء",
+        "number_marker": "جمع_تكسير",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرفين"
+      },
+      "examples": [
+        "أَكْلِبَة",
+        "أَطْعِمَة",
+        "أَجْوِبَة"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "istifaal_masdar",
+      "pattern_form": "إِسْتِفْعَال",
+      "family": "masdar_form10",
+      "description": "مصدر الفعل المزيد بالسين والتاء على وزن اسْتَفْعَل، يدلّ على الحدث المجرّد من الزمن.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "إ",
+          "س",
+          "ت",
+          "ا"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.2,
+        "patienthood": 0.0,
+        "causation": 0.3,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.5,
+        "masdar": 1.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بأربعة"
+      },
+      "examples": [
+        "اسْتِعْمَال",
+        "اسْتِخْرَاج",
+        "اسْتِغْفَار"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "iftiaal_masdar",
+      "pattern_form": "إِفْتِعَال",
+      "family": "masdar_form8",
+      "description": "مصدر الفعل المزيد بالتاء والهمزة على وزن افْتَعَل، يدلّ على الحدث المجرّد من الزمن.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "إ",
+          "ت",
+          "ا"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.2,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.5,
+        "masdar": 1.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بثلاثة"
+      },
+      "examples": [
+        "افْتِخَار",
+        "اقْتِرَاب",
+        "اجْتِمَاع"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "tafil_masdar",
+      "pattern_form": "تَفْعِيل",
+      "family": "masdar_form2",
+      "description": "مصدر الفعل المزيد بالتضعيف على وزن فَعَّل، يدلّ على الحدث المجرّد مع معنى التكثير.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ت",
+          "ي"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.4,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.2,
+        "transformation": 0.4,
+        "masdar": 1.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرفين"
+      },
+      "examples": [
+        "تَقْطِيع",
+        "تَعْلِيم",
+        "تَفْعِيل"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "tafaul_masdar",
+      "pattern_form": "تَفَعُّل",
+      "family": "masdar_form5",
+      "description": "مصدر الفعل المزيد بالتاء والتضعيف على وزن تَفَعَّل، يدلّ على الحدث المجرّد مع معنى المطاوعة.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ت"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.3,
+        "patienthood": 0.2,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.5,
+        "masdar": 1.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "تَعَلُّم",
+        "تَقَدُّم",
+        "تَكَلُّم"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "tafaul_masdar_form6",
+      "pattern_form": "تَفَاعُل",
+      "family": "masdar_form6",
+      "description": "مصدر الفعل المزيد بالتاء والألف على وزن تَفَاعَل، يدلّ على الحدث المجرّد مع معنى المشاركة.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ت",
+          "ا"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.3,
+        "patienthood": 0.3,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.2,
+        "transformation": 0.5,
+        "masdar": 1.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرفين"
+      },
+      "examples": [
+        "تَوَاصُل",
+        "تَعَاوُن",
+        "تَكَاتُب"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "faiilah_attr",
+      "pattern_form": "فَعِيلَة",
+      "family": "attributive_fem",
+      "description": "صفةٌ مشبّهة مؤنّثة بالتاء، تدلّ على ثبوت الصفة في موصوفها، وقد تأتي بمعنى اسم الفاعل أو المفعول.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ي",
+          "ة"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مؤنث_بالتاء",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.2,
+        "patienthood": 0.4,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.5,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.1,
+        "jamid": 0.1,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرفين"
+      },
+      "examples": [
+        "حَمِيدَة",
+        "سَمِيرَة",
+        "كَرِيمَة"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "faaalah_intensive_fem",
+      "pattern_form": "فَعَّالَة",
+      "family": "intensified_fem",
+      "description": "صيغة مبالغة مؤنّثة بالتاء، تدلّ على كثرة وقوع الفعل أو شدّته، وقد تدلّ على اسم الآلة.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ا",
+          "ة"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مؤنث_بالتاء",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.7,
+        "patienthood": 0.0,
+        "causation": 0.2,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.5,
+        "nisba": 0.0,
+        "comparison": 0.4,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرفين"
+      },
+      "examples": [
+        "كَمَّاشَة",
+        "غَسَّالَة",
+        "سَيَّارَة"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "faulu_quality_noun",
+      "pattern_form": "فَعُول",
+      "family": "intensive_attr",
+      "description": "صيغة مبالغة على وزن فَعُول، تدلّ على كثرة وقوع الصفة في الموصوف، وقد تأتي بمعنى اسم الفاعل أو المفعول.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "و"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.7,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.3,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "ذَلُول",
+        "صَبُور",
+        "شَكُور"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "fauliyya_masdar",
+      "pattern_form": "فَعُولِيَّة",
+      "family": "abstract_quality",
+      "description": "مصدر صناعي يُبنى بزيادة ياء النسبة والتاء، يدلّ على الصفة المجردة من الموصوف.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "و",
+          "ي",
+          "ة"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مؤنث_بالتاء",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.6,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 1.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بثلاثة"
+      },
+      "examples": [
+        "صُبُوحِيَّة",
+        "ذُكُورِيَّة",
+        "بُطُولِيَّة"
+      ],
+      "certainty_policy": "medium",
+      "notes": ""
+    },
+    {
+      "pattern_id": "fualiyya_masdar",
+      "pattern_form": "فَعَالِيَّة",
+      "family": "abstract_quality",
+      "description": "مصدر صناعي يُبنى بزيادة ياء النسبة والتاء على وزن فَعَالِيَّة، يدلّ على الصفة المجردة من الموصوف.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ا",
+          "ي",
+          "ة"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مؤنث_بالتاء",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.6,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 1.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بثلاثة"
+      },
+      "examples": [
+        "عَمَالِيَّة",
+        "إِنْسَانِيَّة",
+        "وَطَنِيَّة"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "falaaan_attr",
+      "pattern_form": "فَعْلَان",
+      "family": "intensive_state",
+      "description": "صفةٌ مشبّهة تدلّ على معنى عارض أو حالة مؤقتة، وكثيراً ما تأتي للدلالة على الامتلاء أو الانفعال.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ا",
+          "ن"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.3,
+        "patienthood": 0.2,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.6,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.1,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرفين"
+      },
+      "examples": [
+        "عَطْشَان",
+        "غَضْبَان",
+        "يَقْظَان"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "falaa_fem_color",
+      "pattern_form": "فَعْلَاء",
+      "family": "fem_color",
+      "description": "صفةٌ مشبّهة مؤنّثة تدلّ على اللون أو العيب أو الحلية، وهي مؤنّث أَفْعَل.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ا",
+          "ء"
+        ],
+        "final_letter_type_default": "ممدود",
+        "gender_marker": "مؤنث_بألف_التأنيث",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.7,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.2,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرفين"
+      },
+      "examples": [
+        "صَفْرَاء",
+        "حَمْرَاء",
+        "بَيْضَاء"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "falaa_fem",
+      "pattern_form": "فَعْلَى",
+      "family": "fem_form",
+      "description": "صفةٌ مؤنّثة على وزن فَعْلَى، تأتي بمعنى التفضيل أو اسم المرة، أو تدلّ على معنى مفرد جامد.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ى"
+        ],
+        "final_letter_type_default": "مقصور",
+        "gender_marker": "مؤنث_بألف_التأنيث",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.2,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.5,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.2,
+        "jamid": 0.2,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "سَلْقَى",
+        "كُبْرَى",
+        "صُغْرَى"
+      ],
+      "certainty_policy": "medium",
+      "notes": ""
+    },
+    {
+      "pattern_id": "falah_unit_noun",
+      "pattern_form": "فَعْلَة",
+      "family": "single_action",
+      "description": "اسمٌ يدلّ على المرة الواحدة من وقوع الفعل، ويُبنى بزيادة التاء على وزن فَعْل.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ة"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مؤنث_بالتاء",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.7,
+        "jamid": 0.3,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "ضَرْبَة",
+        "قِصَّة",
+        "لَمْحَة"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "falah_plural",
+      "pattern_form": "فَعَلَة",
+      "family": "broken_plural",
+      "description": "جمع تكسير من جموع الكثرة على وزن فَعَلَة، يكثر في جمع فاعل المختصّ بالعقلاء.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ة"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مؤنث_بالتاء",
+        "number_marker": "جمع_تكسير",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.3,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "عَبَدَة",
+        "كَتَبَة",
+        "حَمَلَة"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "fualaa_plural",
+      "pattern_form": "فُعَلَاء",
+      "family": "broken_plural",
+      "description": "جمع تكسير من جموع الكثرة على وزن فُعَلَاء، يكثر في جمع فعيل بمعنى فاعل المختصّ بالعقلاء.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ا",
+          "ء"
+        ],
+        "final_letter_type_default": "ممدود",
+        "gender_marker": "مؤنث_بألف_التأنيث",
+        "number_marker": "جمع_تكسير",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرفين"
+      },
+      "examples": [
+        "عُلَمَاء",
+        "السُّفَهَاء",
+        "فُقَهَاء"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "faaail_plural",
+      "pattern_form": "فَعَائِل",
+      "family": "broken_plural",
+      "description": "جمع تكسير من جموع الكثرة على وزن فَعَائِل، من صيغ منتهى الجموع غير المنصرفة.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ا",
+          "ئ"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "جمع_تكسير",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرفين"
+      },
+      "examples": [
+        "عَجَائِز",
+        "حَقَائِق",
+        "رَسَائِل"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "fawaail_plural",
+      "pattern_form": "فَوَاعِل",
+      "family": "broken_plural",
+      "description": "جمع تكسير من جموع الكثرة على وزن فَوَاعِل، يكثر في جمع فاعِلة المؤنّثة.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "و",
+          "ا"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "جمع_تكسير",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.2,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرفين"
+      },
+      "examples": [
+        "فَوَارِس",
+        "شَوَاهِد",
+        "نَوَافِذ"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "faalaa_plural",
+      "pattern_form": "فَعَالَى",
+      "family": "broken_plural",
+      "description": "جمع تكسير من جموع الكثرة على وزن فَعَالَى، من صيغ منتهى الجموع غير المنصرفة.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ا",
+          "ى"
+        ],
+        "final_letter_type_default": "مقصور",
+        "gender_marker": "مؤنث_بألف_التأنيث",
+        "number_marker": "جمع_تكسير",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 1.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرفين"
+      },
+      "examples": [
+        "خَطَايَا",
+        "أَسَارَى",
+        "مَوْتَى"
+      ],
+      "certainty_policy": "medium",
+      "notes": ""
+    },
+    {
+      "pattern_id": "fuayal_diminutive",
+      "pattern_form": "فُعَيْل",
+      "family": "diminutive",
+      "description": "اسمٌ مصغّر يدلّ على تحقير الشيء أو تقليله أو تقريبه، على وزن فُعَيْل بضم الأول وفتح الثاني.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ي"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.8,
+        "multiplication": 0.0,
+        "transformation": 0.4,
+        "masdar": 0.0,
+        "jamid": 0.2,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "جُبَيْل",
+        "حُسَيْن",
+        "نُجَيْم"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "fuayil_diminutive_form",
+      "pattern_form": "فُعَيْعِل",
+      "family": "diminutive_form4",
+      "description": "اسمٌ مصغّر للاسم الرباعي، على وزن فُعَيْعِل، يدلّ على التقليل أو التحقير.",
+      "existential_signature": {
+        "root_arity": "رباعي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ي"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.7,
+        "multiplication": 0.0,
+        "transformation": 0.4,
+        "masdar": 0.0,
+        "jamid": 0.2,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "رباعي_مزيد"
+      },
+      "examples": [
+        "دُرَيْهِم",
+        "كُتَيِّب"
+      ],
+      "certainty_policy": "medium",
+      "notes": ""
+    },
+    {
+      "pattern_id": "fuaylaan_dim",
+      "pattern_form": "فُعَيْلَان",
+      "family": "diminutive",
+      "description": "اسمٌ مصغّر بزيادة الألف والنون، يدلّ على تقليل الشيء أو تحبيبه.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ي",
+          "ا",
+          "ن"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.7,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.2,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بثلاثة"
+      },
+      "examples": [
+        "نُعَيْمَان"
+      ],
+      "certainty_policy": "low",
+      "notes": ""
+    },
+    {
+      "pattern_id": "fuaylaa_dim",
+      "pattern_form": "فُعَيْلَاء",
+      "family": "diminutive",
+      "description": "اسمٌ مصغّر بزيادة الألف والهمزة، يدلّ على تقليل الشيء أو تحبيبه.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ي",
+          "ا",
+          "ء"
+        ],
+        "final_letter_type_default": "ممدود",
+        "gender_marker": "مؤنث_بألف_التأنيث",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.7,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.2,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بثلاثة"
+      },
+      "examples": [
+        "دُرَيْلَاء"
+      ],
+      "certainty_policy": "low",
+      "notes": ""
+    },
+    {
+      "pattern_id": "faaiil_intensive",
+      "pattern_form": "فَعِّيل",
+      "family": "intensified_adj",
+      "description": "صيغة مبالغة على وزن فَعِّيل بتشديد العين، تدلّ على شدّة قيام الفاعل بالحدث.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ي"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.9,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "دَرِّيس",
+        "سِكِّير",
+        "خِمِّير"
+      ],
+      "certainty_policy": "medium",
+      "notes": ""
+    },
+    {
+      "pattern_id": "faayal_quadri",
+      "pattern_form": "فَعْيَل",
+      "family": "quadriliteral",
+      "description": "اسمٌ رباعي على وزن فَعْيَل بزيادة الياء، يكثر فيه الجمود.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ي"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.3,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.4,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "عَثْيَر",
+        "قَرْيَة"
+      ],
+      "certainty_policy": "low",
+      "notes": ""
+    },
+    {
+      "pattern_id": "fayal_quadri",
+      "pattern_form": "فَيْعَل",
+      "family": "quadriliteral",
+      "description": "فعلٌ رباعي مجرد على وزن فَيْعَل بزيادة الياء، يدلّ على حدث متجدّد.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ي"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.4,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.3,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "بَيْطَر",
+        "صَيْقَل"
+      ],
+      "certainty_policy": "medium",
+      "notes": ""
+    },
+    {
+      "pattern_id": "fawal_quadri",
+      "pattern_form": "فَوْعَل",
+      "family": "quadriliteral",
+      "description": "اسمٌ رباعي على وزن فَوْعَل بزيادة الواو، يكثر فيه الجمود.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "و"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.4,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.3,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "جَوْرَب",
+        "حَوْقَل"
+      ],
+      "certainty_policy": "medium",
+      "notes": ""
+    },
+    {
+      "pattern_id": "falal_quadri",
+      "pattern_form": "فَعْلَل",
+      "family": "quadriliteral_verb",
+      "description": "فعلٌ رباعي مجرد على وزن فَعْلَل، يدلّ على وقوع الحدث الرباعي بأصول حروفه.",
+      "existential_signature": {
+        "root_arity": "رباعي",
+        "augmentation_status": "مجرد",
+        "augmentation_letters": [],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.6,
+        "patienthood": 0.0,
+        "causation": 0.5,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.7,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "ماضٍ",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "رباعي_مجرد"
+      },
+      "examples": [
+        "دَحْرَج",
+        "بَعْثَر",
+        "زَلْزَل"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "falnal_quadri",
+      "pattern_form": "فَعْنَل",
+      "family": "quadriliteral",
+      "description": "اسمٌ رباعي على وزن فَعْنَل بزيادة النون، يكثر فيه الجمود.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ن"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.3,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.4,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "قَلْنَس"
+      ],
+      "certainty_policy": "low",
+      "notes": ""
+    },
+    {
+      "pattern_id": "fawal_quadri_alt",
+      "pattern_form": "فَعْوَل",
+      "family": "quadriliteral_verb",
+      "description": "فعلٌ رباعي على وزن فَعْوَل بزيادة الواو، يدلّ على وقوع الحدث الرباعي.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "و"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.0,
+        "causation": 0.3,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.5,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "ماضٍ",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "دَهْوَر",
+        "هَرْوَل"
+      ],
+      "certainty_policy": "low",
+      "notes": ""
+    },
+    {
+      "pattern_id": "tafil_arabic_word",
+      "pattern_form": "فَعَلِي",
+      "family": "nisba_adjective",
+      "description": "صفةٌ منسوبة بياء النسبة المخفّفة، تدلّ على نسبة الشيء إلى أصلٍ أو موطنٍ.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ي"
+        ],
+        "final_letter_type_default": "منقوص",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.3,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 1.0,
+        "comparison": 0.2,
+        "multiplication": 0.0,
+        "transformation": 0.0,
+        "masdar": 0.0,
+        "jamid": 0.2,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "عَرَبِي",
+        "بَلَدِي",
+        "قَمَرِي"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "tafili_nisba",
+      "pattern_form": "تَفْعِيلِي",
+      "family": "nisba_adjective",
+      "description": "صفةٌ منسوبة من المصدر على وزن تَفْعِيلِي، تدلّ على نسبة الشيء إلى الفعل المُكثَّر.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ت",
+          "ي",
+          "ي"
+        ],
+        "final_letter_type_default": "منقوص",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.9,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.2,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بثلاثة"
+      },
+      "examples": [
+        "تَصْوِيرِي",
+        "تَعْلِيمِي",
+        "تَحْلِيلِي"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "yufiil_weak",
+      "pattern_form": "يُفعِل",
+      "family": "weak_verb_present",
+      "description": "فعلٌ مضارع متعدٍّ من الفعل المعتلّ، يدلّ على التعدية في الزمن الحاضر.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ي"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.0,
+        "causation": 0.7,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.5,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "يُوصِي",
+        "يُوحِي",
+        "يُولِي"
+      ],
+      "certainty_policy": "medium",
+      "notes": ""
+    },
+    {
+      "pattern_id": "nufiil_weak",
+      "pattern_form": "نُفعِل",
+      "family": "weak_verb_present",
+      "description": "فعلٌ مضارع متعدٍّ من الفعل المعتلّ، مسند إلى ضمير المتكلّمين.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "ن"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.0,
+        "causation": 0.7,
+        "place": 0.0,
+        "time": 0.3,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.5,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "مضارع",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "نُودِي",
+        "نُوحِي"
+      ],
+      "certainty_policy": "medium",
+      "notes": ""
+    },
+    {
+      "pattern_id": "faeel_intensive_alt",
+      "pattern_form": "فَعِّل",
+      "family": "intensive_imperative",
+      "description": "فعلُ أمرٍ من باب فَعَّل المزيد بالتضعيف، يدلّ على طلب وقوع الفعل المكثَّف.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مجرد",
+        "augmentation_letters": [],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.4,
+        "patienthood": 0.0,
+        "causation": 0.6,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.3,
+        "multiplication": 0.4,
+        "transformation": 0.7,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "أمر",
+        "tense_marker": "أمر",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مجرد"
+      },
+      "examples": [
+        "نَبِّئ",
+        "بَشِّر",
+        "عَلِّم"
+      ],
+      "certainty_policy": "high",
+      "notes": ""
+    },
+    {
+      "pattern_id": "fuaeel_passive_intensive",
+      "pattern_form": "فُعَّل",
+      "family": "passive_intensive",
+      "description": "فعلٌ ماضٍ مبني للمجهول من باب فَعَّل، يدلّ على وقوع الفعل المُكثَّف على نائب الفاعل.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مجرد",
+        "augmentation_letters": [],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.0,
+        "patienthood": 0.9,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.6,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "مجهول",
+        "mood": "خبر",
+        "tense_marker": null,
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مجرد"
+      },
+      "examples": [
+        "حُجَّتُنَا",
+        "غُلَّت"
+      ],
+      "certainty_policy": "medium",
+      "notes": ""
+    },
+    {
+      "pattern_id": "faooul_weak",
+      "pattern_form": "فَعَوْل",
+      "family": "weak_verb_past",
+      "description": "فعلٌ ماضٍ من الفعل المعتلّ على وزن فَعَوْل، يدلّ على وقوع الحدث وانقضائه.",
+      "existential_signature": {
+        "root_arity": "ثلاثي",
+        "augmentation_status": "مزيد",
+        "augmentation_letters": [
+          "و"
+        ],
+        "final_letter_type_default": "صحيح",
+        "gender_marker": "مذكر",
+        "number_marker": "مفرد",
+        "is_jamid": false
+      },
+      "operator_vector": {
+        "agency": 0.5,
+        "patienthood": 0.0,
+        "causation": 0.0,
+        "place": 0.0,
+        "time": 0.0,
+        "instrument": 0.0,
+        "nisba": 0.0,
+        "comparison": 0.0,
+        "multiplication": 0.0,
+        "transformation": 0.3,
+        "masdar": 0.0,
+        "jamid": 0.0,
+        "stative_attribute": 0.0,
+        "subtypes": {
+          "masdar": null,
+          "multiplication": null,
+          "comparison": null
+        }
+      },
+      "functional_operators": {
+        "voice": "معلوم",
+        "mood": "خبر",
+        "tense_marker": "ماضٍ",
+        "phonological_processes": {
+          "has_ialal": null,
+          "has_ibdaal": null,
+          "has_idgham": null,
+          "has_qalb": null,
+          "has_hadhf": null
+        },
+        "derivation_form": "ثلاثي_مزيد_بحرف"
+      },
+      "examples": [
+        "عَنَوْا",
+        "دَعَوْت"
+      ],
+      "certainty_policy": "low",
+      "notes": ""
+    }
+  ]
+}

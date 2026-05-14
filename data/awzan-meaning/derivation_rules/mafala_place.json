@@ -1,0 +1,105 @@
+{
+  "rule_id": "mafala_place_derivation",
+  "rule_name_ar": "قاعدة اشتقاق اسم المكان المختصّ على وزن مَفْعَلَة",
+  "target_pattern": "مَفْعَلَة",
+  "target_pattern_id": "mafala_place",
+  "summary_ar": "اسم مكان مؤنّث بالتاء، يُبنى بزيادة تاء التأنيث على وزن مَفْعَل أو مَفْعِل، ويدلّ على مكان كثرة الشيء أو الاختصاص بالشيء.",
+
+  "base_rule": {
+    "description_ar": "اسم المكان المختصّ يُصاغ بزيادة تاء التأنيث على وزن مَفْعَل أو مَفْعِل من الاسم الجامد (لا من الفعل). يدلّ على المكان الذي يكثر فيه الشيء المشتقّ منه أو يُختصّ به.",
+    "operations": [
+      {
+        "step": 1,
+        "operation_id": "take_noun",
+        "description_ar": "خذ الاسم الجامد الذي يكثر في المكان",
+        "input_type": "noun_root"
+      },
+      {
+        "step": 2,
+        "operation_id": "prefix_mim",
+        "description_ar": "زيادة ميم مفتوحة في أوله",
+        "insert_at": "start",
+        "insert_letter": "مَ"
+      },
+      {
+        "step": 3,
+        "operation_id": "silent_fa",
+        "description_ar": "إسكان فاء الكلمة",
+        "target_position": "root[0]",
+        "harakah": "sukun",
+        "harakah_code": "\u0652"
+      },
+      {
+        "step": 4,
+        "operation_id": "fath_ain",
+        "description_ar": "فتح عين الكلمة",
+        "target_position": "root[1]",
+        "harakah": "fatha",
+        "harakah_code": "\u064E"
+      },
+      {
+        "step": 5,
+        "operation_id": "fath_lam",
+        "description_ar": "فتح لام الكلمة",
+        "target_position": "root[2]",
+        "harakah": "fatha",
+        "harakah_code": "\u064E"
+      },
+      {
+        "step": 6,
+        "operation_id": "append_taa",
+        "description_ar": "زيادة تاء التأنيث المربوطة في الآخر",
+        "insert_at": "end",
+        "insert_letter": "ة"
+      }
+    ],
+    "example_walkthrough": {
+      "noun": "كِتَاب",
+      "root": ["ك", "ت", "ب"],
+      "wazn_template": "مَ + فْـ + عَـ + لَـ + ة",
+      "derivation": "مَ + كْـ + تَـ + بَـ + ة",
+      "result": "مَكْتَبَة",
+      "meaning_ar": "مكان كثرة الكُتُب"
+    }
+  },
+
+  "application_conditions": {
+    "description_ar": "تنطبق صيغة 'مَفْعَلَة' لمكان الكثرة والاختصاص",
+    "conditions": [
+      {
+        "condition_id": "from_noun_not_verb",
+        "description_ar": "تُشتقّ من الاسم الجامد لا من الفعل غالباً",
+        "check": "input is jamid_noun"
+      },
+      {
+        "condition_id": "indicates_abundance",
+        "description_ar": "تدلّ على مكان كثرة الشيء أو الاختصاص به",
+        "semantic": "place_of_abundance_or_specialization"
+      }
+    ]
+  },
+
+  "common_examples": [
+    {"noun": "كِتَاب", "root": ["ك","ت","ب"], "result": "مَكْتَبَة", "meaning_ar": "مكان الكتب"},
+    {"noun": "زَرْع", "root": ["ز","ر","ع"], "result": "مَزْرَعَة", "meaning_ar": "مكان الزرع"},
+    {"noun": "سَبْع", "root": ["س","ب","ع"], "result": "مَسْبَعَة", "meaning_ar": "أرض كثيرة السباع"},
+    {"noun": "أَسَد", "root": ["أ","س","د"], "result": "مَأْسَدَة", "meaning_ar": "مكان كثرة الأسود"},
+    {"noun": "ذِئْب", "root": ["ذ","ئ","ب"], "result": "مَذْأَبَة", "meaning_ar": "مكان كثرة الذئاب"},
+    {"noun": "سَمَك", "root": ["س","م","ك"], "result": "مَسْمَكَة", "meaning_ar": "مكان السمك"},
+    {"noun": "قَبْر", "root": ["ق","ب","ر"], "result": "مَقْبَرَة", "meaning_ar": "مكان القبور"},
+    {"noun": "نَحْل", "root": ["ن","ح","ل"], "result": "مَنْحَلَة", "meaning_ar": "مكان كثرة النحل"}
+  ],
+
+  "transformations": {
+    "description_ar": "تتبع نفس قواعد إعلال مَفْعَل، مع إضافة التاء"
+  },
+
+  "related_pattern": {
+    "label_ar": "العلاقة بـ مَفْعَل",
+    "description_ar": "مَفْعَلَة فرع من مَفْعَل بزيادة التاء، وتفترق عنها بأنها تدلّ على المكان المختصّ بكثرة الشيء، بينما مَفْعَل أعمّ يدلّ على مجرد مكان وقوع الفعل",
+    "comparison": {
+      "مَفْعَل": "مكان الفعل (مَكْتَب = مكان الكتابة)",
+      "مَفْعَلَة": "مكان كثرة الشيء (مَكْتَبَة = مكان كثرة الكتب)"
+    }
+  }
+}

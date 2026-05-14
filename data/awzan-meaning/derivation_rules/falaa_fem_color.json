@@ -1,0 +1,43 @@
+{
+  "rule_id": "falaa_fem_color_derivation",
+  "rule_name_ar": "مؤنث الصفة المشبّهة على وزن فَعْلَاء",
+  "target_pattern": "فَعْلَاء",
+  "target_pattern_id": "falaa_fem_color",
+  "summary_ar": "فاء مفتوحة + عين ساكنة + لام مفتوحة + ألف + همزة، مؤنث أَفْعَل، يدلّ على اللون أو العيب أو الحلية.",
+  "base_rule": {
+    "description_ar": "تأتي صيغة فَعْلَاء مؤنّثاً لِـ أَفْعَل في الألوان والعيوب والحلى.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "خذ أَفْعَل المذكر"
+      },
+      {
+        "step": 2,
+        "description_ar": "احذف همزة الأول"
+      },
+      {
+        "step": 3,
+        "description_ar": "زِد ألف + همزة في الآخر",
+        "insert_at_end": "اء"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "masculine": "أَحْمَر",
+      "feminine": "حَمْرَاء"
+    },
+    {
+      "masculine": "أَصْفَر",
+      "feminine": "صَفْرَاء"
+    },
+    {
+      "masculine": "أَبْيَض",
+      "feminine": "بَيْضَاء"
+    },
+    {
+      "masculine": "أَعْرَج",
+      "feminine": "عَرْجَاء"
+    }
+  ]
+}

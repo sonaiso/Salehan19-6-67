@@ -1,0 +1,42 @@
+{
+  "rule_id": "faalaa_plural_derivation",
+  "rule_name_ar": "جمع التكسير على وزن فَعَالَى",
+  "target_pattern": "فَعَالَى",
+  "target_pattern_id": "faalaa_plural",
+  "summary_ar": "فاء مفتوحة + عين مفتوحة + ألف + لام مفتوحة + ألف مقصورة، صيغة منتهى الجموع.",
+  "base_rule": {
+    "description_ar": "يُجمع بعض الأسماء على وزن فَعَالَى، وهو من صيغ منتهى الجموع.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "فتح الفاء"
+      },
+      {
+        "step": 2,
+        "description_ar": "فتح العين"
+      },
+      {
+        "step": 3,
+        "description_ar": "زيادة ألف"
+      },
+      {
+        "step": 4,
+        "description_ar": "فتح اللام + ألف مقصورة"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "mufrad": "خَطِيئَة",
+      "result": "خَطَايَا"
+    },
+    {
+      "mufrad": "أَسِير",
+      "result": "أَسَارَى"
+    },
+    {
+      "mufrad": "مَيِّت",
+      "result": "مَوْتَى"
+    }
+  ]
+}

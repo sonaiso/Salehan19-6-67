@@ -1,0 +1,67 @@
+{
+  "rule_id": "fiaala_masdar_craft_derivation",
+  "rule_name_ar": "قاعدة اشتقاق مصدر الحرفة على وزن فِعَالَة",
+  "target_pattern": "فِعَالَة",
+  "target_pattern_id": "fiaala_masdar_craft",
+  "summary_ar": "فاء مكسورة + عين مفتوحة + ألف + لام مفتوحة + تاء، مصدر يدلّ على الحرفة والصناعة.",
+  "base_rule": {
+    "description_ar": "مصدر الحرفة يُصاغ على وزن فِعَالَة من الفعل الثلاثي بكسر الفاء وفتح العين وزيادة ألف بعدها وتاء التأنيث في الآخر.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "كسر الفاء",
+        "target_position": "root[0]",
+        "harakah": "kasra"
+      },
+      {
+        "step": 2,
+        "description_ar": "فتح العين",
+        "target_position": "root[1]",
+        "harakah": "fatha"
+      },
+      {
+        "step": 3,
+        "description_ar": "زيادة ألف بعد العين",
+        "insert_after": "root[1]",
+        "insert_letter": "ا"
+      },
+      {
+        "step": 4,
+        "description_ar": "فتح اللام",
+        "target_position": "root[2]",
+        "harakah": "fatha"
+      },
+      {
+        "step": 5,
+        "description_ar": "زيادة تاء التأنيث",
+        "insert_at": "end",
+        "insert_letter": "ة"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "verb": "كَتَبَ",
+      "result": "كِتَابَة",
+      "meaning_ar": "حرفة الكتابة"
+    },
+    {
+      "verb": "زَرَعَ",
+      "result": "زِرَاعَة",
+      "meaning_ar": "حرفة الزراعة"
+    },
+    {
+      "verb": "صَنَعَ",
+      "result": "صِنَاعَة",
+      "meaning_ar": "حرفة الصناعة"
+    },
+    {
+      "verb": "نَجَرَ",
+      "result": "نِجَارَة"
+    },
+    {
+      "verb": "تَجَرَ",
+      "result": "تِجَارَة"
+    }
+  ]
+}

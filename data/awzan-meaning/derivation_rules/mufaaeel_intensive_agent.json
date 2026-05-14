@@ -1,0 +1,120 @@
+{
+  "rule_id": "mufaaeel_intensive_agent_derivation",
+  "rule_name_ar": "قاعدة اشتقاق اسم الفاعل من باب فَعَّل على وزن مُفَعِّل",
+  "target_pattern": "مُفَعِّل",
+  "target_pattern_id": "mufaaeel_intensive_agent",
+  "summary_ar": "ميم مضمومة + فاء مفتوحة + عين مضعّفة مكسورة + لام، يدلّ على من قام بالفعل المُكثَّر أو المُعدَّى في باب فَعَّل، وهو اسم الفاعل القياسي من الفعل المزيد بالتضعيف.",
+
+  "base_rule": {
+    "description_ar": "اسم الفاعل من الفعل المزيد بالتضعيف (باب فَعَّل) يُصاغ بإجراء العملية القياسية لاسم الفاعل من غير الثلاثي: أخذ المضارع وقلب حرف المضارعة ميماً مضمومة وكسر ما قبل الآخر.",
+    "operations": [
+      {
+        "step": 1,
+        "operation_id": "take_mudari",
+        "description_ar": "خذ مضارع الفعل (يُفَعِّل)",
+        "input_type": "mudari",
+        "expected_pattern": "يُفَعِّل"
+      },
+      {
+        "step": 2,
+        "operation_id": "replace_yaa_with_mim",
+        "description_ar": "اقلب ياء المضارعة ميماً، مع بقاء الضمة",
+        "transformation": "يُ → مُ"
+      },
+      {
+        "step": 3,
+        "operation_id": "ensure_kasra_before_last",
+        "description_ar": "تأكّد من كسر ما قبل الآخر (وهو محقّق في يُفَعِّل)",
+        "verify": "second_to_last is kasrah"
+      }
+    ],
+    "example_walkthrough": {
+      "root": ["ع", "ل", "م"],
+      "verb_past": "عَلَّمَ",
+      "verb_present": "يُعَلِّم",
+      "transformation": "يُعَلِّم → مُعَلِّم (قلب الياء ميماً)",
+      "result": "مُعَلِّم"
+    }
+  },
+
+  "application_conditions": {
+    "description_ar": "تنطبق صيغة 'مُفَعِّل' بالشروط التالية",
+    "conditions": [
+      {
+        "condition_id": "from_form2_verb",
+        "description_ar": "من فعل على باب فَعَّل (الثلاثي المزيد بتضعيف العين)",
+        "check": "verb_form == 'فَعَّل'",
+        "form_number": 2
+      },
+      {
+        "condition_id": "active_voice",
+        "description_ar": "اسم فاعل لا مفعول (المعلوم لا المجهول)",
+        "check": "voice == 'active'"
+      }
+    ]
+  },
+
+  "semantic_functions": {
+    "description_ar": "يحمل مُفَعِّل معاني باب فَعَّل التي يقوم بها الفاعل",
+    "functions": [
+      {
+        "function_id": "causation",
+        "label_ar": "التعدية",
+        "description_ar": "من جعل غيره يفعل الفعل",
+        "examples": [
+          {"verb": "عَلَّمَ", "result": "مُعَلِّم", "meaning_ar": "من يجعل غيره يعلم"},
+          {"verb": "فَرَّحَ", "result": "مُفَرِّح", "meaning_ar": "من يجعل غيره يفرح"}
+        ]
+      },
+      {
+        "function_id": "intensification",
+        "label_ar": "التكثير",
+        "description_ar": "من قام بالفعل مع كثرة أو شدة أو تكرار",
+        "examples": [
+          {"verb": "كَسَّرَ", "result": "مُكَسِّر", "meaning_ar": "من يكسر كثيراً"},
+          {"verb": "قَطَّعَ", "result": "مُقَطِّع", "meaning_ar": "من يقطع تقطيعاً متعدداً"}
+        ]
+      },
+      {
+        "function_id": "attribution",
+        "label_ar": "النسبة",
+        "description_ar": "من نسب الشيء إلى أصله أو رماه به",
+        "examples": [
+          {"verb": "كَفَّرَ", "result": "مُكَفِّر", "meaning_ar": "من ينسب غيره إلى الكفر"},
+          {"verb": "صَدَّقَ", "result": "مُصَدِّق", "meaning_ar": "من ينسب الصدق إلى غيره"}
+        ]
+      }
+    ]
+  },
+
+  "common_examples": [
+    {"verb": "عَلَّمَ", "result": "مُعَلِّم"},
+    {"verb": "دَرَّسَ", "result": "مُدَرِّس"},
+    {"verb": "كَسَّرَ", "result": "مُكَسِّر"},
+    {"verb": "بَدَّلَ", "result": "مُبَدِّل"},
+    {"verb": "حَدَّثَ", "result": "مُحَدِّث"},
+    {"verb": "صَوَّرَ", "result": "مُصَوِّر"},
+    {"verb": "نَظَّمَ", "result": "مُنَظِّم"},
+    {"verb": "عَدَّلَ", "result": "مُعَدِّل"}
+  ],
+
+  "related_patterns": {
+    "description_ar": "أوزان اسم الفاعل من الأفعال المزيدة",
+    "patterns": [
+      {"form": 2, "verb_pattern": "فَعَّل", "agent_pattern": "مُفَعِّل", "example": "عَلَّمَ → مُعَلِّم"},
+      {"form": 3, "verb_pattern": "فَاعَل", "agent_pattern": "مُفَاعِل", "example": "كَاتَبَ → مُكَاتِب"},
+      {"form": 4, "verb_pattern": "أَفْعَل", "agent_pattern": "مُفْعِل", "example": "أَكْرَمَ → مُكْرِم"},
+      {"form": 5, "verb_pattern": "تَفَعَّل", "agent_pattern": "مُتَفَعِّل", "example": "تَعَلَّمَ → مُتَعَلِّم"},
+      {"form": 6, "verb_pattern": "تَفَاعَل", "agent_pattern": "مُتَفَاعِل", "example": "تَكَاتَبَ → مُتَكَاتِب"},
+      {"form": 7, "verb_pattern": "اِنْفَعَل", "agent_pattern": "مُنْفَعِل", "example": "اِنْكَسَرَ → مُنْكَسِر"},
+      {"form": 8, "verb_pattern": "اِفْتَعَل", "agent_pattern": "مُفْتَعِل", "example": "اِجْتَمَعَ → مُجْتَمِع"},
+      {"form": 10, "verb_pattern": "اِسْتَفْعَل", "agent_pattern": "مُسْتَفْعِل", "example": "اِسْتَخْرَجَ → مُسْتَخْرِج"}
+    ]
+  },
+
+  "general_rule_for_non_trilateral_agent": {
+    "label_ar": "القاعدة العامة لاسم الفاعل من غير الثلاثي",
+    "rule_ar": "يُؤتى بمضارعه + يُقلب حرف المضارعة ميماً مضمومة + يُكسر ما قبل الآخر",
+    "exception_ar": "إن كان مضارعه مفتوح ما قبل الآخر يبقى مفتوحاً (اِحْمَرَّ → يَحْمَرّ → مُحْمَرّ)"
+  }
+}

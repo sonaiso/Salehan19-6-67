@@ -84,6 +84,61 @@ _KNOWN_WORDS: dict[str, tuple[str, str]] = {
     "مخرج": ("xrj", "mafal_place"),
     "مَدخَل": ("dxl", "mafal_place"),
     "مدخل": ("dxl", "mafal_place"),
+    # ── فعل / fal ─────────────────────────────────────────────────────────
+    "فاعِل": ("fal", "faail"),
+    "فاعل": ("fal", "faail"),
+    "مَفعول": ("fal", "mafuul"),
+    "مفعول": ("fal", "mafuul"),
+    "فِعل": ("fal", "fiaala_masdar_craft"),
+    "فعل": ("fal", "fiaala_masdar_craft"),
+    "أفعال": ("fal", "afaal_plural"),
+    # ── نور / nwr ─────────────────────────────────────────────────────────
+    "نور": ("nwr", "faail"),
+    "نُور": ("nwr", "faail"),
+    "أنوار": ("nwr", "afaal_plural"),
+    "مُنير": ("nwr", "mufaail_agent"),
+    "منير": ("nwr", "mufaail_agent"),
+    # ── رفع / rfa ─────────────────────────────────────────────────────────
+    "مَرفوع": ("rfa", "mafuul"),
+    "مرفوع": ("rfa", "mafuul"),
+    "رَفع": ("rfa", "fiaala_masdar_craft"),
+    "رفع": ("rfa", "fiaala_masdar_craft"),
+    # ── حرم / hrm ─────────────────────────────────────────────────────────
+    "حَرام": ("hrm", "faiil_attr"),
+    "حرام": ("hrm", "faiil_attr"),
+    "مُحرَّم": ("hrm", "mafuul"),
+    "محرم": ("hrm", "mafuul"),
+    "حُرمة": ("hrm", "fiaala_masdar_craft"),
+    "حرمة": ("hrm", "fiaala_masdar_craft"),
+    # ── قول / qwl ─────────────────────────────────────────────────────────
+    "قائِل": ("qwl", "faail"),
+    "قائل": ("qwl", "faail"),
+    "مَقول": ("qwl", "mafuul"),
+    "مقول": ("qwl", "mafuul"),
+    "قَول": ("qwl", "fiaala_masdar_craft"),
+    "قول": ("qwl", "fiaala_masdar_craft"),
+    # ── عمل / aml ─────────────────────────────────────────────────────────
+    "عامِل": ("aml", "faail"),
+    "عامل": ("aml", "faail"),
+    "مَعمول": ("aml", "mafuul"),
+    "معمول": ("aml", "mafuul"),
+    "عَمَل": ("aml", "fiaala_masdar_craft"),
+    "عمل": ("aml", "fiaala_masdar_craft"),
+    "أعمال": ("aml", "afaal_plural"),
+    # ── ذهب / dhb ─────────────────────────────────────────────────────────
+    "ذاهِب": ("dhb", "faail"),
+    "ذاهب": ("dhb", "faail"),
+    "مَذهَب": ("dhb", "mafal_place"),
+    "مذهب": ("dhb", "mafal_place"),
+    # ── سلم / slm ─────────────────────────────────────────────────────────
+    "سالِم": ("slm", "faail"),
+    "سالم": ("slm", "faail"),
+    "مُسلِم": ("slm", "mufaail_agent"),
+    "مسلم": ("slm", "mufaail_agent"),
+    "سَلام": ("slm", "faiil_attr"),
+    "سلام": ("slm", "faiil_attr"),
+    "إسلام": ("slm", "istafala_verb"),
+    "اسلام": ("slm", "istafala_verb"),
 }
 
 _ROOT_DOMAIN_MAP: dict[str, dict[str, float]] = {
@@ -119,8 +174,19 @@ class MorphosemanticTraceLinker:
         norm_result = self._normalizer.normalize(word)
         norm = norm_result.normalized
 
-        # Look up root and pattern
-        root_id, pattern_id = _KNOWN_WORDS.get(word) or _KNOWN_WORDS.get(norm, ("unknown", "unknown"))
+        # Look up root and pattern — try: original, normalised, article-stripped
+        def _strip_article(w: str) -> str:
+            return w[2:] if w.startswith("ال") and len(w) > 2 else w
+
+        bare_word = _strip_article(word)
+        bare_norm = _strip_article(norm)
+        root_id, pattern_id = (
+            _KNOWN_WORDS.get(word)
+            or _KNOWN_WORDS.get(norm)
+            or _KNOWN_WORDS.get(bare_word)
+            or _KNOWN_WORDS.get(bare_norm)
+            or ("unknown", "unknown")
+        )
 
         # Token trace (simplified)
         token_trace = {

@@ -1,0 +1,38 @@
+{
+  "rule_id": "yaful_present_derivation",
+  "rule_name_ar": "الفعل المضارع على وزن يَفْعُل",
+  "target_pattern": "يَفْعُل",
+  "target_pattern_id": "yaful_present",
+  "summary_ar": "يَفْعُل، فعل مضارع من فَعَلَ المضموم العين في المضارع، يدلّ على حدوث الفعل في الزمن الحاضر أو المستقبل.",
+  "base_rule": {
+    "description_ar": "المضارع على وزن يَفْعُل يُبنى بإلصاق حرف المضارعة في أوّل الفعل مع إجراء التغييرات على الفاء والعين.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "زيادة ياء مفتوحة (الغائب) في الأول",
+        "insert_letter": "يَ"
+      },
+      {
+        "step": 2,
+        "description_ar": "إسكان الفاء (الحرف الأول من الجذر)",
+        "target_position": "root[0]",
+        "harakah": "sukun"
+      },
+      {
+        "step": 3,
+        "description_ar": "حركة العين damma",
+        "target_position": "root[1]",
+        "harakah": "damma"
+      }
+    ]
+  },
+  "mudaariah_letters": {
+    "description_ar": "حروف المضارعة الأربعة (أنيت)",
+    "letters": {
+      "أ": "للمتكلّم المفرد",
+      "ن": "للمتكلّمين (نحن)",
+      "ي": "للغائب",
+      "ت": "للمخاطب أو للغائبة"
+    }
+  }
+}

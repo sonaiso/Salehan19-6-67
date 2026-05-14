@@ -1,0 +1,114 @@
+{
+  "rule_id": "mifaal_instrument_derivation",
+  "rule_name_ar": "قاعدة اشتقاق اسم الآلة على وزن مِفْعَال",
+  "target_pattern": "مِفْعَال",
+  "target_pattern_id": "mifaal_instrument",
+  "summary_ar": "ميم مكسورة + فاء ساكنة + عين مفتوحة + ألف زائدة + لام، يدلّ على الأداة الكبيرة أو الواضحة التي يُقام بها الفعل، وهو أحد الأوزان الثلاثة القياسية لاسم الآلة.",
+
+  "base_rule": {
+    "description_ar": "اسم الآلة من الفعل الثلاثي المتعدّي يُصاغ على وزن مِفْعَال بزيادة ميم مكسورة في أوله، وإسكان فائه، وفتح عينه، وزيادة ألف بعد العين.",
+    "operations": [
+      {
+        "step": 1,
+        "operation_id": "prefix_mim_kasra",
+        "description_ar": "زيادة ميم مكسورة في أول الكلمة",
+        "insert_at": "start",
+        "insert_letter": "مِ"
+      },
+      {
+        "step": 2,
+        "operation_id": "silent_fa",
+        "description_ar": "إسكان فاء الكلمة",
+        "target_position": "root[0]",
+        "harakah": "sukun",
+        "harakah_code": "\u0652"
+      },
+      {
+        "step": 3,
+        "operation_id": "fath_ain",
+        "description_ar": "فتح عين الكلمة",
+        "target_position": "root[1]",
+        "harakah": "fatha",
+        "harakah_code": "\u064E"
+      },
+      {
+        "step": 4,
+        "operation_id": "insert_alif",
+        "description_ar": "زيادة ألف بعد العين",
+        "insert_after": "root[1]",
+        "insert_letter": "ا"
+      }
+    ],
+    "example_walkthrough": {
+      "root": ["ف", "ت", "ح"],
+      "verb": "فَتَحَ",
+      "wazn_template": "مِ + فْـ + عَـ + ا + ل",
+      "derivation": "مِ + فْـ + تَـ + ا + ح",
+      "result": "مِفْتَاح"
+    }
+  },
+
+  "application_conditions": {
+    "description_ar": "تنطبق صيغة 'مِفْعَال' بالشروط التالية",
+    "conditions": [
+      {
+        "condition_id": "is_trilateral",
+        "description_ar": "ثلاثي مجرد",
+        "check": "len(root) == 3 and no_augmentations(verb)"
+      },
+      {
+        "condition_id": "is_transitive",
+        "description_ar": "متعدٍّ، لأن اللازم لا يحتاج آلة",
+        "check": "is_transitive(verb)"
+      },
+      {
+        "condition_id": "indicates_large_tool",
+        "description_ar": "تدلّ غالباً على الأداة الكبيرة أو ظاهرة الاستعمال",
+        "semantic": "large_or_prominent_instrument"
+      }
+    ]
+  },
+
+  "common_examples": [
+    {"verb": "فَتَحَ", "root": ["ف","ت","ح"], "result": "مِفْتَاح", "meaning_ar": "أداة الفتح"},
+    {"verb": "وَزَنَ", "root": ["و","ز","ن"], "result": "مِيزَان", "meaning_ar": "أداة الوزن (الميم انقلبت ياءً للإعلال)"},
+    {"verb": "نَشَرَ", "root": ["ن","ش","ر"], "result": "مِنْشَار", "meaning_ar": "أداة النشر"},
+    {"verb": "حَرَثَ", "root": ["ح","ر","ث"], "result": "مِحْرَاث", "meaning_ar": "أداة الحرث"},
+    {"verb": "ذَاعَ", "root": ["ذ","ي","ع"], "result": "مِذْيَاع", "meaning_ar": "أداة الإذاعة"},
+    {"verb": "صَعِدَ", "root": ["ص","ع","د"], "result": "مِصْعَاد", "meaning_ar": "أداة الصعود"},
+    {"verb": "زَمَرَ", "root": ["ز","م","ر"], "result": "مِزْمَار", "meaning_ar": "أداة الزمر"},
+    {"verb": "غَرَفَ", "root": ["غ","ر","ف"], "result": "مِغْرَاف", "meaning_ar": "أداة الغرف"}
+  ],
+
+  "transformations": {
+    "description_ar": "حالات إعلال اسم الآلة على وزن مِفْعَال",
+
+    "mithaal_wawi": {
+      "label_ar": "مثال واويّ",
+      "description_ar": "تُقلب الواو ياءً لانكسار ما قبلها",
+      "trigger": "root[0] == 'و'",
+      "examples": [
+        {"verb": "وَزَنَ", "root": ["و","ز","ن"], "result": "مِيزَان"},
+        {"verb": "وَعَدَ", "root": ["و","ع","د"], "result": "مِيعَاد"}
+      ]
+    }
+  },
+
+  "related_patterns": {
+    "description_ar": "أوزان اسم الآلة الثلاثة القياسية",
+    "patterns": [
+      {"pattern": "مِفْعَال", "pattern_id": "mifaal_instrument", "usage_ar": "الآلة الكبيرة الظاهرة (مِفْتَاح، مِنْشَار)"},
+      {"pattern": "مِفْعَل", "pattern_id": "mifal_instrument", "usage_ar": "الآلة العادية (مِبْرَد، مِقَصّ)"},
+      {"pattern": "مِفْعَلَة", "pattern_id": "mifala_instrument", "usage_ar": "الآلة المؤنّثة بالتاء (مِكْنَسَة، مِلْعَقَة)"}
+    ]
+  },
+
+  "modern_extensions": {
+    "description_ar": "أوزان حديثة لاسم الآلة (أقرّها مجمع اللغة العربية)",
+    "patterns": [
+      {"pattern": "فَعَّالَة", "usage_ar": "الأدوات الحديثة الكبيرة (غَسَّالَة، ثَلَّاجَة، سَيَّارَة)"},
+      {"pattern": "فَاعُول", "usage_ar": "بعض الأدوات (حَاسُوب، سَاطُور)"},
+      {"pattern": "فَاعِلَة", "usage_ar": "الأدوات الحديثة المؤنثة (طَائِرَة، رَافِعَة)"}
+    ]
+  }
+}

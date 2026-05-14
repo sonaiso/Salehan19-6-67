@@ -1,0 +1,37 @@
+{
+  "rule_id": "fial_plural_derivation",
+  "rule_name_ar": "جمع التكسير على وزن فِعَل",
+  "target_pattern": "فِعَل",
+  "target_pattern_id": "fial_plural",
+  "summary_ar": "فاء مكسورة + عين مفتوحة + لام، جمع تكسير من جموع الكثرة، يكثر في جمع فِعْلَة المؤنّثة.",
+  "base_rule": {
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "كسر الفاء"
+      },
+      {
+        "step": 2,
+        "description_ar": "فتح العين"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "mufrad": "نِعْمَة",
+      "result": "نِعَم"
+    },
+    {
+      "mufrad": "قِطْعَة",
+      "result": "قِطَع"
+    },
+    {
+      "mufrad": "هِمَّة",
+      "result": "هِمَم"
+    },
+    {
+      "mufrad": "حِجَّة",
+      "result": "حِجَج"
+    }
+  ]
+}

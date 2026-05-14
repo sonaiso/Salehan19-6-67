@@ -1,0 +1,42 @@
+{
+  "rule_id": "faaalah_intensive_fem_derivation",
+  "rule_name_ar": "صيغة المبالغة المؤنثة على وزن فَعَّالَة",
+  "target_pattern": "فَعَّالَة",
+  "target_pattern_id": "faaalah_intensive_fem",
+  "summary_ar": "فاء مفتوحة + عين مضعّفة مفتوحة + ألف + لام مفتوحة + تاء، صيغة مبالغة مؤنثة، تُستعمل حديثاً لاسم الآلة.",
+  "base_rule": {
+    "description_ar": "صيغة فَعَّالَة تأتي للمبالغة المؤنثة، وتُستعمل في الوزن الحديث لأسماء الآلات الكبيرة.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "بناء فَعَّال"
+      },
+      {
+        "step": 2,
+        "description_ar": "زيادة تاء التأنيث",
+        "insert_letter": "ة"
+      }
+    ]
+  },
+  "modern_usage": {
+    "description_ar": "اعتمدها مجمع اللغة العربية اسماً للآلات الحديثة الكبيرة",
+    "examples": [
+      {
+        "result": "غَسَّالَة",
+        "meaning_ar": "آلة الغسل"
+      },
+      {
+        "result": "ثَلَّاجَة",
+        "meaning_ar": "آلة التبريد"
+      },
+      {
+        "result": "سَيَّارَة",
+        "meaning_ar": "آلة المسير"
+      },
+      {
+        "result": "طَيَّارَة",
+        "meaning_ar": "آلة الطيران"
+      }
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "rule_id": "afilah_plural_derivation",
+  "rule_name_ar": "جمع التكسير على وزن أَفْعِلَة",
+  "target_pattern": "أَفْعِلَة",
+  "target_pattern_id": "afilah_plural",
+  "summary_ar": "همزة مفتوحة + فاء ساكنة + عين مكسورة + لام مفتوحة + تاء، جمع تكسير من جموع القلّة (٣-١٠).",
+  "base_rule": {
+    "description_ar": "يُجمع الاسم على أَفْعِلَة جمعَ قلّة، يكثر في جمع فَعَام أو فَعِيل أو فِعَال.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "زيادة همزة مفتوحة",
+        "insert_letter": "أَ"
+      },
+      {
+        "step": 2,
+        "description_ar": "إسكان الفاء"
+      },
+      {
+        "step": 3,
+        "description_ar": "كسر العين"
+      },
+      {
+        "step": 4,
+        "description_ar": "فتح اللام + تاء",
+        "insert_at_end": "َة"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "mufrad": "كَلْب",
+      "result": "أَكْلِبَة"
+    },
+    {
+      "mufrad": "طَعَام",
+      "result": "أَطْعِمَة"
+    },
+    {
+      "mufrad": "جَوَاب",
+      "result": "أَجْوِبَة"
+    }
+  ]
+}

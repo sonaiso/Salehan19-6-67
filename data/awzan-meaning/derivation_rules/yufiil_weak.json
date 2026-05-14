@@ -1,0 +1,20 @@
+{
+  "rule_id": "yufiil_weak_derivation",
+  "rule_name_ar": "مضارع الفعل المعتلّ على وزن يُفْعِل",
+  "target_pattern": "يُفعِل",
+  "target_pattern_id": "yufiil_weak",
+  "summary_ar": "ياء مضمومة + فاء + عين مكسورة + لام، مضارع متعدٍّ من الفعل المعتلّ.",
+  "base_rule": {
+    "description_ar": "مضارع الفعل المعتلّ من باب أَفْعَل بإلحاق ياء المضارعة المضمومة، مع وقوع الإعلال على حرف العلّة."
+  },
+  "common_examples": [
+    {
+      "madi": "أَوْحَى",
+      "mudari": "يُوحِي"
+    },
+    {
+      "madi": "أَوْصَى",
+      "mudari": "يُوصِي"
+    }
+  ]
+}

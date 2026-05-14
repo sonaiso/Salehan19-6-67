@@ -1,0 +1,109 @@
+{
+  "rule_id": "tafaala_reflex_derivation",
+  "rule_name_ar": "قاعدة بناء الفعل على وزن تَفَاعَل",
+  "target_pattern": "تَفَاعَل",
+  "target_pattern_id": "tafaala_reflex",
+  "summary_ar": "تاء مفتوحة + فاء مفتوحة + ألف + عين مفتوحة + لام، فعلٌ مزيد بالتاء والألف يدلّ على المشاركة بين فاعلين فأكثر.",
+  "base_rule": {
+    "description_ar": "يُبنى فعل المشاركة بزيادة تاء في أوّله، وزيادة ألف بين الفاء والعين من الفعل الثلاثي.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "زيادة تاء مفتوحة في أول الفعل",
+        "insert_at": "start",
+        "insert_letter": "تَ"
+      },
+      {
+        "step": 2,
+        "description_ar": "فتح فاء الكلمة",
+        "target_position": "root[0]",
+        "harakah": "fatha"
+      },
+      {
+        "step": 3,
+        "description_ar": "زيادة ألف بعد الفاء",
+        "insert_after": "root[0]",
+        "insert_letter": "ا"
+      },
+      {
+        "step": 4,
+        "description_ar": "فتح عين الكلمة",
+        "target_position": "root[1]",
+        "harakah": "fatha"
+      }
+    ],
+    "example_walkthrough": {
+      "root": [
+        "ك",
+        "ت",
+        "ب"
+      ],
+      "verb": "كَتَبَ",
+      "result": "تَكَاتَبَ",
+      "meaning_ar": "تبادلوا الكتابة"
+    }
+  },
+  "semantic_functions": {
+    "functions": [
+      {
+        "label_ar": "المشاركة",
+        "description_ar": "وقوع الفعل بين اثنين فأكثر، كلٌّ منهما فاعل ومفعول",
+        "examples": [
+          {
+            "result": "تَعَاوَنَ"
+          },
+          {
+            "result": "تَكَاتَبَ"
+          },
+          {
+            "result": "تَفَاهَمَ"
+          }
+        ]
+      },
+      {
+        "label_ar": "إظهار خلاف الواقع",
+        "description_ar": "التظاهر بشيء ليس حقيقياً",
+        "examples": [
+          {
+            "result": "تَمَارَضَ",
+            "meaning_ar": "أظهر المرض دون أن يكون مريضاً"
+          },
+          {
+            "result": "تَجَاهَلَ",
+            "meaning_ar": "أظهر الجهل"
+          }
+        ]
+      },
+      {
+        "label_ar": "حدوث الفعل تدريجياً",
+        "examples": [
+          {
+            "result": "تَوَارَدَ",
+            "meaning_ar": "ورد شيئاً فشيئاً"
+          },
+          {
+            "result": "تَتَابَعَ"
+          }
+        ]
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "verb": "كَتَبَ",
+      "result": "تَكَاتَبَ"
+    },
+    {
+      "verb": "عَوَنَ",
+      "result": "تَعَاوَنَ"
+    },
+    {
+      "verb": "قَاتَلَ",
+      "result": "تَقَاتَلَ"
+    },
+    {
+      "verb": "فَهِمَ",
+      "result": "تَفَاهَمَ"
+    }
+  ]
+}

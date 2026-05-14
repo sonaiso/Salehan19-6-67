@@ -1,0 +1,34 @@
+{
+  "rule_id": "tafaul_masdar_form6_derivation",
+  "rule_name_ar": "مصدر باب تَفَاعَل على وزن تَفَاعُل",
+  "target_pattern": "تَفَاعُل",
+  "target_pattern_id": "tafaul_masdar_form6",
+  "summary_ar": "تاء مفتوحة + فاء مفتوحة + ألف + عين مضمومة + لام، مصدر قياسي لباب تَفَاعَل.",
+  "base_rule": {
+    "description_ar": "يُبنى مصدر تَفَاعَل بضمّ ما قبل الآخر.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "خذ الماضي تَفَاعَل"
+      },
+      {
+        "step": 2,
+        "description_ar": "ضمّ ما قبل الآخر"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "verb": "تَوَاصَلَ",
+      "masdar": "تَوَاصُل"
+    },
+    {
+      "verb": "تَعَاوَنَ",
+      "masdar": "تَعَاوُن"
+    },
+    {
+      "verb": "تَكَاتَبَ",
+      "masdar": "تَكَاتُب"
+    }
+  ]
+}

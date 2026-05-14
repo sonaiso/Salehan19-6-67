@@ -1,0 +1,74 @@
+{
+  "rule_id": "fuayal_diminutive_derivation",
+  "rule_name_ar": "اسم التصغير على وزن فُعَيْل",
+  "target_pattern": "فُعَيْل",
+  "target_pattern_id": "fuayal_diminutive",
+  "summary_ar": "فاء مضمومة + عين مفتوحة + ياء ساكنة + لام، اسم تصغير قياسي للاسم الثلاثي.",
+  "base_rule": {
+    "description_ar": "يُصغّر الاسم الثلاثي على وزن فُعَيْل بضمّ الأول وفتح الثاني وزيادة ياء ساكنة بعد الثاني.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "ضمّ الفاء"
+      },
+      {
+        "step": 2,
+        "description_ar": "فتح العين"
+      },
+      {
+        "step": 3,
+        "description_ar": "زيادة ياء ساكنة بعد العين",
+        "insert_after": "root[1]",
+        "insert_letter": "ي"
+      }
+    ]
+  },
+  "semantic_functions": {
+    "functions": [
+      {
+        "label_ar": "تصغير الحجم",
+        "examples": [
+          {
+            "original": "جَبَل",
+            "result": "جُبَيْل"
+          }
+        ]
+      },
+      {
+        "label_ar": "تحقير الشأن"
+      },
+      {
+        "label_ar": "التحبيب",
+        "examples": [
+          {
+            "original": "حَسَن",
+            "result": "حُسَيْن"
+          }
+        ]
+      },
+      {
+        "label_ar": "التقريب الزماني أو المكاني",
+        "examples": [
+          {
+            "original": "قَبْل",
+            "result": "قُبَيْل"
+          }
+        ]
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "original": "جَبَل",
+      "result": "جُبَيْل"
+    },
+    {
+      "original": "نَجْم",
+      "result": "نُجَيْم"
+    },
+    {
+      "original": "كَلْب",
+      "result": "كُلَيْب"
+    }
+  ]
+}

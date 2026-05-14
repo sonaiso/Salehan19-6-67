@@ -1,0 +1,38 @@
+{
+  "rule_id": "fuul_plural_alt_derivation",
+  "rule_name_ar": "جمع التكسير على وزن فُعُل",
+  "target_pattern": "فُعُل",
+  "target_pattern_id": "fuul_plural_alt",
+  "summary_ar": "فاء مضمومة + عين مضمومة + لام، جمع تكسير من جموع الكثرة، يكثر في جمع فَعُول وفَعِيل.",
+  "base_rule": {
+    "description_ar": "يُجمع الاسم على وزن فُعُل من المفرد على وزن فَعُول أو فَعِيل أو فَعَال غالباً.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "ضمّ الفاء"
+      },
+      {
+        "step": 2,
+        "description_ar": "ضمّ العين"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "mufrad": "كِتَاب",
+      "result": "كُتُب"
+    },
+    {
+      "mufrad": "رَسُول",
+      "result": "رُسُل"
+    },
+    {
+      "mufrad": "سَبِيل",
+      "result": "سُبُل"
+    },
+    {
+      "mufrad": "مَدِينَة",
+      "result": "مُدُن"
+    }
+  ]
+}

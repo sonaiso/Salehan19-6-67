@@ -1,0 +1,68 @@
+{
+  "rule_id": "fuuul_plural_derivation",
+  "rule_name_ar": "جمع التكسير والمصدر على وزن فُعُول",
+  "target_pattern": "فُعُول",
+  "target_pattern_id": "fuuul_plural",
+  "summary_ar": "فاء مضمومة + عين مضمومة + واو + لام، يأتي جمع تكسير من جموع الكثرة، ومصدراً لفعل ثلاثي لازم.",
+  "base_rule": {
+    "description_ar": "وزن فُعُول يأتي لمعنيين: جمعَ كثرةٍ شائع، أو مصدراً للفعل الثلاثي اللازم على باب دخل وخرج.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "ضمّ الفاء",
+        "target_position": "root[0]",
+        "harakah": "damma"
+      },
+      {
+        "step": 2,
+        "description_ar": "ضمّ العين",
+        "target_position": "root[1]",
+        "harakah": "damma"
+      },
+      {
+        "step": 3,
+        "description_ar": "زيادة واو بعد العين",
+        "insert_after": "root[1]",
+        "insert_letter": "و"
+      }
+    ]
+  },
+  "semantic_functions": {
+    "functions": [
+      {
+        "label_ar": "جمع كثرة",
+        "examples": [
+          {
+            "mufrad": "قَلْب",
+            "result": "قُلُوب"
+          },
+          {
+            "mufrad": "بَيْت",
+            "result": "بُيُوت"
+          },
+          {
+            "mufrad": "كِتَاب",
+            "result": "كُتُب"
+          }
+        ]
+      },
+      {
+        "label_ar": "مصدر",
+        "examples": [
+          {
+            "verb": "دَخَلَ",
+            "result": "دُخُول"
+          },
+          {
+            "verb": "خَرَجَ",
+            "result": "خُرُوج"
+          },
+          {
+            "verb": "نَزَلَ",
+            "result": "نُزُول"
+          }
+        ]
+      }
+    ]
+  }
+}

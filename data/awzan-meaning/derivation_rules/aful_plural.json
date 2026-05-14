@@ -1,0 +1,39 @@
+{
+  "rule_id": "aful_plural_derivation",
+  "rule_name_ar": "جمع التكسير على وزن أَفْعُل",
+  "target_pattern": "أَفْعُل",
+  "target_pattern_id": "aful_plural",
+  "summary_ar": "همزة مفتوحة + فاء ساكنة + عين مضمومة + لام، جمع تكسير من جموع القلّة (٣-١٠).",
+  "base_rule": {
+    "description_ar": "يُجمع الاسم الثلاثي على أَفْعُل جمعَ قلّة، يكثر في جمع فَعْل المذكر.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "زيادة همزة مفتوحة في الأول",
+        "insert_letter": "أَ"
+      },
+      {
+        "step": 2,
+        "description_ar": "إسكان الفاء"
+      },
+      {
+        "step": 3,
+        "description_ar": "ضمّ العين"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "mufrad": "شَهْر",
+      "result": "أَشْهُر"
+    },
+    {
+      "mufrad": "نَفْس",
+      "result": "أَنْفُس"
+    },
+    {
+      "mufrad": "نَهْر",
+      "result": "أَنْهُر"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "rule_id": "fuaylaa_dim_derivation",
+  "rule_name_ar": "اسم التصغير على وزن فُعَيْلَاء",
+  "target_pattern": "فُعَيْلَاء",
+  "target_pattern_id": "fuaylaa_dim",
+  "summary_ar": "فاء مضمومة + عين مفتوحة + ياء + لام + ألف وهمزة، تصغير الاسم المنتهي بألف وهمزة زائدتين.",
+  "base_rule": {
+    "description_ar": "يُصغّر الاسم على وزن فَعْلَاء بضمّ الأول وفتح الثاني وزيادة الياء والإبقاء على الألف والهمزة.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "ضمّ الأول"
+      },
+      {
+        "step": 2,
+        "description_ar": "فتح الثاني"
+      },
+      {
+        "step": 3,
+        "description_ar": "زيادة ياء"
+      },
+      {
+        "step": 4,
+        "description_ar": "إبقاء ألف وهمزة النهاية"
+      }
+    ]
+  }
+}

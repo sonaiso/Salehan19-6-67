@@ -1,0 +1,80 @@
+{
+  "rule_id": "fuayyil_dim_derivation",
+  "rule_name_ar": "قاعدة تصغير الاسم على وزن فُعَيِّل",
+  "target_pattern": "فُعَيِّل",
+  "target_pattern_id": "fuayyil_dim",
+  "summary_ar": "ضمّ الأول + فتح الثاني + زيادة ياء ساكنة + تشديد الثاني، يدلّ على تحقير الشيء أو تقريبه أو تحبيبه.",
+  "base_rule": {
+    "description_ar": "تصغير الاسم الثلاثي يكون بضم أوله، وفتح ثانيه، وزيادة ياء ساكنة بعد الثاني (مع تشديد عند بعضهم)، ويُسمّى مصغّراً.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "ضمّ الحرف الأول",
+        "target_position": "root[0]",
+        "harakah": "damma"
+      },
+      {
+        "step": 2,
+        "description_ar": "فتح الحرف الثاني",
+        "target_position": "root[1]",
+        "harakah": "fatha"
+      },
+      {
+        "step": 3,
+        "description_ar": "زيادة ياء ساكنة بعد الثاني",
+        "insert_after": "root[1]",
+        "insert_letter": "ي"
+      },
+      {
+        "step": 4,
+        "description_ar": "تكرار الثاني مع التشديد للدلالة على المبالغة في التصغير",
+        "doubling": "root[1]"
+      }
+    ]
+  },
+  "semantic_functions": {
+    "functions": [
+      {
+        "label_ar": "تصغير الحجم",
+        "examples": [
+          {
+            "original": "نهر",
+            "result": "نُهَيِّر"
+          }
+        ]
+      },
+      {
+        "label_ar": "تحقير الشأن",
+        "examples": [
+          {
+            "original": "رجل",
+            "result": "رُجَيِّل"
+          }
+        ]
+      },
+      {
+        "label_ar": "التحبيب والتقريب",
+        "examples": [
+          {
+            "original": "بُنَيِّ",
+            "meaning_ar": "ابن صغير محبوب"
+          }
+        ]
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "original": "كتاب",
+      "result": "كُتَيِّب"
+    },
+    {
+      "original": "نهر",
+      "result": "نُهَيِّر"
+    },
+    {
+      "original": "جبل",
+      "result": "جُبَيِّل"
+    }
+  ]
+}

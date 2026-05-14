@@ -1,0 +1,85 @@
+{
+  "rule_id": "faaala_intensive_verb_derivation",
+  "rule_name_ar": "بناء الفعل المزيد بالتضعيف على وزن فَعَّل",
+  "target_pattern": "فَعَّل",
+  "target_pattern_id": "faaala_intensive_verb",
+  "summary_ar": "فاء مفتوحة + عين مضعّفة مفتوحة + لام، فعل مزيد بتضعيف العين يدلّ على التكثير أو التعدية أو النسبة.",
+  "base_rule": {
+    "description_ar": "يُبنى فعل التضعيف بتشديد عين الفعل الثلاثي المجرد، فيُكثر معناه أو يُعدّى أو يُنسب.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "فتح الفاء"
+      },
+      {
+        "step": 2,
+        "description_ar": "تضعيف العين مع فتحها (شدّة)"
+      },
+      {
+        "step": 3,
+        "description_ar": "فتح اللام"
+      }
+    ]
+  },
+  "semantic_functions": {
+    "functions": [
+      {
+        "label_ar": "التكثير",
+        "description_ar": "كثرة وقوع الفعل أو تعدّده",
+        "examples": [
+          {
+            "original": "قَطَعَ",
+            "result": "قَطَّعَ",
+            "meaning_ar": "قَطَع مراراً"
+          }
+        ]
+      },
+      {
+        "label_ar": "التعدية",
+        "examples": [
+          {
+            "original": "فَرِحَ",
+            "result": "فَرَّحَ",
+            "meaning_ar": "جعله يفرح"
+          }
+        ]
+      },
+      {
+        "label_ar": "النسبة",
+        "examples": [
+          {
+            "original": "كَفَرَ",
+            "result": "كَفَّرَ",
+            "meaning_ar": "نسبه إلى الكفر"
+          }
+        ]
+      },
+      {
+        "label_ar": "السلب والإزالة",
+        "examples": [
+          {
+            "original": "قَذَى",
+            "result": "قَذَّى",
+            "meaning_ar": "أزال القذى"
+          }
+        ]
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "verb": "عَلَّمَ",
+      "ism_fail": "مُعَلِّم",
+      "ism_mafuul": "مُعَلَّم",
+      "masdar": "تَعْلِيم"
+    },
+    {
+      "verb": "كَسَّرَ",
+      "masdar": "تَكْسِير"
+    },
+    {
+      "verb": "فَرَّحَ",
+      "masdar": "تَفْرِيح"
+    }
+  ]
+}

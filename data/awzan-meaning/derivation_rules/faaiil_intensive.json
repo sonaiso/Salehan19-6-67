@@ -1,0 +1,34 @@
+{
+  "rule_id": "faaiil_intensive_derivation",
+  "rule_name_ar": "صيغة المبالغة على وزن فَعِّيل",
+  "target_pattern": "فَعِّيل",
+  "target_pattern_id": "faaiil_intensive",
+  "summary_ar": "فاء مفتوحة + عين مضعّفة مكسورة + ياء + لام، صيغة مبالغة تدلّ على شدّة قيام الفاعل بالحدث.",
+  "base_rule": {
+    "description_ar": "صيغة مبالغة شديدة بتضعيف العين مع الكسر وزيادة ياء.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "فتح الفاء"
+      },
+      {
+        "step": 2,
+        "description_ar": "تضعيف العين مع كسرها"
+      },
+      {
+        "step": 3,
+        "description_ar": "زيادة ياء"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "verb": "دَرَسَ",
+      "result": "دَرِّيس"
+    },
+    {
+      "verb": "سَكِرَ",
+      "result": "سِكِّير"
+    }
+  ]
+}

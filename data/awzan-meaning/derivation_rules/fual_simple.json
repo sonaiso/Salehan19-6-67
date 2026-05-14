@@ -1,0 +1,46 @@
+{
+  "rule_id": "fual_simple_derivation",
+  "rule_name_ar": "الأسماء الجامدة على وزن فُعْل",
+  "target_pattern": "فُعْل",
+  "target_pattern_id": "fual_simple",
+  "summary_ar": "اسم ثلاثي على وزن فُعْل، كثيراً ما يكون جامداً غير مشتق، أو مصدراً لفعل ثلاثي مجرد.",
+  "base_rule": {
+    "description_ar": "اسم ثلاثي بسيط على وزن فُعْل، الحرف الأول بحركة محددة، والثاني ساكن، والثالث بحركة الإعراب.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "الحرف الأول حركته damma"
+      },
+      {
+        "step": 2,
+        "description_ar": "الحرف الثاني ساكن"
+      },
+      {
+        "step": 3,
+        "description_ar": "الحرف الثالث يحمل علامة الإعراب"
+      }
+    ]
+  },
+  "semantic_classification": {
+    "primary": "jamid",
+    "description_ar": "غالبه جامد لا اشتقاق فيه، وقليله مصدر لفعل ثلاثي."
+  },
+  "common_examples": [
+    {
+      "result": "قُفْل"
+    },
+    {
+      "result": "حُكْم"
+    },
+    {
+      "result": "حُسْن"
+    },
+    {
+      "result": "قُرْب"
+    },
+    {
+      "result": "بُعْد"
+    }
+  ],
+  "note_ar": "السماعية تطغى على القياسية في هذا الوزن. الكلمات غالباً مسموعة عن العرب لا مشتقة بقاعدة."
+}

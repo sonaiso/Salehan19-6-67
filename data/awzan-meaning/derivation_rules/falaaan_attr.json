@@ -1,0 +1,143 @@
+{
+  "rule_id": "falaaan_attr_derivation",
+  "rule_name_ar": "قاعدة اشتقاق الصفة المشبّهة على وزن فَعْلَان",
+  "target_pattern": "فَعْلَان",
+  "target_pattern_id": "falaaan_attr",
+  "summary_ar": "فاء مفتوحة + عين ساكنة + لام مفتوحة + ألف + نون، صفة مشبّهة تدلّ على معنى عارض أو حالة مؤقتة، وكثيراً ما تدلّ على الامتلاء أو الانفعال.",
+
+  "base_rule": {
+    "description_ar": "الصفة المشبّهة على وزن فَعْلَان تُصاغ من الفعل الثلاثي اللازم على باب فَعِل (بكسر العين في الماضي)، بفتح الفاء، وإسكان العين، وفتح اللام، وزيادة ألف ونون. تدلّ غالباً على الامتلاء بشيء أو الاتصاف بحالة عارضة.",
+    "operations": [
+      {
+        "step": 1,
+        "operation_id": "fath_fa",
+        "description_ar": "فتح فاء الكلمة",
+        "target_position": "root[0]",
+        "harakah": "fatha",
+        "harakah_code": "\u064E"
+      },
+      {
+        "step": 2,
+        "operation_id": "silent_ain",
+        "description_ar": "إسكان عين الكلمة",
+        "target_position": "root[1]",
+        "harakah": "sukun",
+        "harakah_code": "\u0652"
+      },
+      {
+        "step": 3,
+        "operation_id": "fath_lam",
+        "description_ar": "فتح لام الكلمة",
+        "target_position": "root[2]",
+        "harakah": "fatha",
+        "harakah_code": "\u064E"
+      },
+      {
+        "step": 4,
+        "operation_id": "append_alif_noon",
+        "description_ar": "زيادة ألف ونون بعد اللام",
+        "insert_at": "end",
+        "insert_letter": "ان"
+      }
+    ],
+    "example_walkthrough": {
+      "root": ["ع", "ط", "ش"],
+      "verb": "عَطِشَ",
+      "wazn_template": "فَ + عْـ + لَـ + ان",
+      "derivation": "عَ + طْـ + شَـ + ان",
+      "result": "عَطْشَان"
+    }
+  },
+
+  "application_conditions": {
+    "description_ar": "تنطبق صيغة 'فَعْلَان' بالشروط التالية",
+    "conditions": [
+      {
+        "condition_id": "from_fail_lazim",
+        "description_ar": "من الفعل اللازم على باب فَعِل (المكسور العين)",
+        "check": "verb_form == 'فَعِل' and is_lazim(verb)",
+        "preferred_bab": "فَعِل"
+      },
+      {
+        "condition_id": "indicates_state_or_fullness",
+        "description_ar": "يدلّ على امتلاء أو حالة عارضة كالجوع والعطش والغضب",
+        "semantic": "transient_state_or_fullness"
+      }
+    ]
+  },
+
+  "semantic_functions": {
+    "description_ar": "تأتي فَعْلَان لمعانٍ متقاربة",
+    "functions": [
+      {
+        "function_id": "fullness",
+        "label_ar": "الامتلاء بشيء",
+        "description_ar": "يدلّ على امتلاء الموصوف بمعنى الفعل",
+        "examples": [
+          {"verb": "شَبِعَ", "result": "شَبْعَان", "meaning_ar": "ممتلئ شِبَعاً"},
+          {"verb": "رَوِيَ", "result": "رَيَّان", "meaning_ar": "ممتلئ رِيَّاً"},
+          {"verb": "مَلَأ", "result": "مَلْآن", "meaning_ar": "ممتلئ"}
+        ]
+      },
+      {
+        "function_id": "lack",
+        "label_ar": "الخلوّ من شيء",
+        "description_ar": "يدلّ على فقدان الموصوف للشيء",
+        "examples": [
+          {"verb": "عَطِشَ", "result": "عَطْشَان", "meaning_ar": "فاقد للماء"},
+          {"verb": "جَاعَ", "result": "جَوْعَان", "meaning_ar": "فاقد للطعام"},
+          {"verb": "ظَمِئَ", "result": "ظَمْآن", "meaning_ar": "شديد العطش"}
+        ]
+      },
+      {
+        "function_id": "emotional_state",
+        "label_ar": "الحالة الانفعالية",
+        "description_ar": "يدلّ على انفعال نفسي عارض",
+        "examples": [
+          {"verb": "غَضِبَ", "result": "غَضْبَان", "meaning_ar": "في حالة غضب"},
+          {"verb": "حَزِنَ", "result": "حَزْنَان (نادر)", "meaning_ar": "في حالة حزن"},
+          {"verb": "فَرِحَ", "result": "فَرْحَان", "meaning_ar": "في حالة فرح"},
+          {"verb": "كَسِلَ", "result": "كَسْلَان", "meaning_ar": "متّصف بالكسل"}
+        ]
+      },
+      {
+        "function_id": "alertness",
+        "label_ar": "الوصف باليقظة والحركة",
+        "examples": [
+          {"verb": "يَقِظَ", "result": "يَقْظَان", "meaning_ar": "غير نائم"},
+          {"verb": "سَكِرَ", "result": "سَكْرَان", "meaning_ar": "متّصف بالسُكر"},
+          {"verb": "نَدِمَ", "result": "نَدْمَان", "meaning_ar": "متّصف بالندم"}
+        ]
+      }
+    ]
+  },
+
+  "feminine_form": {
+    "description_ar": "مؤنّث فَعْلَان",
+    "rule_ar": "مؤنّث فَعْلَان (الصفة المشبّهة) على وزن فَعْلَى لا فَعْلَانَة",
+    "examples": [
+      {"masculine": "عَطْشَان", "feminine": "عَطْشَى"},
+      {"masculine": "غَضْبَان", "feminine": "غَضْبَى"},
+      {"masculine": "سَكْرَان", "feminine": "سَكْرَى"},
+      {"masculine": "كَسْلَان", "feminine": "كَسْلَى"},
+      {"masculine": "جَوْعَان", "feminine": "جَوْعَى"}
+    ],
+    "note_ar": "لا يُجمع فَعْلَان جمع مذكر سالم، وإنما جمع تكسير على فِعَال"
+  },
+
+  "common_examples": [
+    {"verb": "عَطِشَ", "result": "عَطْشَان"},
+    {"verb": "جَاعَ", "result": "جَوْعَان"},
+    {"verb": "غَضِبَ", "result": "غَضْبَان"},
+    {"verb": "شَبِعَ", "result": "شَبْعَان"},
+    {"verb": "كَسِلَ", "result": "كَسْلَان"},
+    {"verb": "سَكِرَ", "result": "سَكْرَان"},
+    {"verb": "يَقِظَ", "result": "يَقْظَان"},
+    {"verb": "نَدِمَ", "result": "نَدْمَان"}
+  ],
+
+  "grammatical_note": {
+    "label_ar": "ممنوع من الصرف",
+    "description_ar": "فَعْلَان الصفة المشبّهة ممنوع من الصرف لزيادة الألف والنون، فلا يُنوَّن في حالة التنكير ولا يُجرّ بالكسرة بل بالفتحة."
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "rule_id": "tufil_present_derivation",
+  "rule_name_ar": "الفعل المضارع على وزن تُفْعِل",
+  "target_pattern": "تُفْعِل",
+  "target_pattern_id": "tufil_present",
+  "summary_ar": "تُفْعِل، فعل مضارع للمخاطب من أَفْعَلَ، يدلّ على حدوث الفعل في الزمن الحاضر أو المستقبل.",
+  "base_rule": {
+    "description_ar": "المضارع على وزن تُفْعِل يُبنى بإلصاق حرف المضارعة في أوّل الفعل مع إجراء التغييرات على الفاء والعين.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "زيادة تاء مضمومة (المخاطب من المتعدّي) في الأول",
+        "insert_letter": "تُ"
+      },
+      {
+        "step": 2,
+        "description_ar": "إسكان الفاء (الحرف الأول من الجذر)",
+        "target_position": "root[0]",
+        "harakah": "sukun"
+      },
+      {
+        "step": 3,
+        "description_ar": "حركة العين kasra",
+        "target_position": "root[1]",
+        "harakah": "kasra"
+      }
+    ]
+  },
+  "mudaariah_letters": {
+    "description_ar": "حروف المضارعة الأربعة (أنيت)",
+    "letters": {
+      "أ": "للمتكلّم المفرد",
+      "ن": "للمتكلّمين (نحن)",
+      "ي": "للغائب",
+      "ت": "للمخاطب أو للغائبة"
+    }
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "rule_id": "faiil_attributive_derivation",
+  "rule_name_ar": "قاعدة اشتقاق الصفة المشبّهة على وزن فَعِيل",
+  "target_pattern": "فَعِيل",
+  "target_pattern_id": "faiil_attr",
+  "summary_ar": "فاء مفتوحة + عين مكسورة + ياء زائدة + لام، تدلّ على ثبوت الصفة في الموصوف على وجه الدوام، وقد تأتي بمعنى اسم الفاعل أو اسم المفعول بحسب السياق.",
+
+  "base_rule": {
+    "description_ar": "الصفة المشبّهة باسم الفاعل على وزن فَعِيل تُصاغ من الفعل الثلاثي اللازم بفتح الفاء، وكسر العين، وزيادة ياء بعد العين. تدلّ على ثبوت الصفة في الموصوف دواماً واستمراراً، خلافاً لاسم الفاعل الذي يدلّ على الحدوث والتجدد.",
+    "operations": [
+      {
+        "step": 1,
+        "operation_id": "fath_fa",
+        "description_ar": "فتح فاء الكلمة",
+        "target_position": "root[0]",
+        "harakah": "fatha",
+        "harakah_code": "\u064E"
+      },
+      {
+        "step": 2,
+        "operation_id": "kasr_ain",
+        "description_ar": "كسر عين الكلمة",
+        "target_position": "root[1]",
+        "harakah": "kasra",
+        "harakah_code": "\u0650"
+      },
+      {
+        "step": 3,
+        "operation_id": "insert_yaa",
+        "description_ar": "زيادة ياء ساكنة بعد العين",
+        "insert_after": "root[1]",
+        "insert_letter": "ي"
+      }
+    ],
+    "example_walkthrough": {
+      "root": ["ك", "ر", "م"],
+      "verb": "كَرُمَ",
+      "wazn_template": "فَ + عِـ + ي + ل",
+      "derivation": "كَ + رِ + ي + م",
+      "result": "كَرِيم"
+    }
+  },
+
+  "application_conditions": {
+    "description_ar": "تنطبق صيغة 'فَعِيل' كصفة مشبّهة بالشروط التالية",
+    "conditions": [
+      {
+        "condition_id": "from_lazim",
+        "description_ar": "من الفعل اللازم، خاصة على باب فَعُل (كرُم) أو فَعِل (علِم)",
+        "check": "is_lazim(verb)",
+        "preferred_babs": ["فَعُل", "فَعِل"]
+      },
+      {
+        "condition_id": "indicates_permanent_quality",
+        "description_ar": "يدلّ على صفة ثابتة في الموصوف",
+        "semantic": "permanent_quality"
+      }
+    ]
+  },
+
+  "semantic_functions": {
+    "description_ar": "تأتي فَعِيل لعدة معانٍ، يُميَّز بينها بالسياق",
+    "functions": [
+      {
+        "function_id": "permanent_attribute",
+        "label_ar": "الصفة المشبّهة الأصلية",
+        "description_ar": "صفة ثابتة في الموصوف",
+        "examples": [
+          {"verb": "كَرُمَ", "result": "كَرِيم", "meaning_ar": "ثابت الكرم"},
+          {"verb": "عَلِمَ", "result": "عَلِيم", "meaning_ar": "ثابت العلم"},
+          {"verb": "حَكَمَ", "result": "حَكِيم", "meaning_ar": "ثابت الحكمة"},
+          {"verb": "جَمُلَ", "result": "جَمِيل", "meaning_ar": "ثابت الجمال"}
+        ]
+      },
+      {
+        "function_id": "active_meaning",
+        "label_ar": "بمعنى اسم الفاعل",
+        "description_ar": "تأتي فَعِيل أحياناً بمعنى فاعل",
+        "examples": [
+          {"verb": "رَحِمَ", "result": "رَحِيم", "by_meaning_of": "رَاحِم"},
+          {"verb": "سَمِعَ", "result": "سَمِيع", "by_meaning_of": "سَامِع"},
+          {"verb": "شَهِدَ", "result": "شَهِيد", "by_meaning_of": "شَاهِد"}
+        ]
+      },
+      {
+        "function_id": "passive_meaning",
+        "label_ar": "بمعنى اسم المفعول",
+        "description_ar": "تأتي فَعِيل أحياناً بمعنى مفعول",
+        "examples": [
+          {"verb": "قَتَلَ", "result": "قَتِيل", "by_meaning_of": "مَقْتُول"},
+          {"verb": "جَرَحَ", "result": "جَرِيح", "by_meaning_of": "مَجْرُوح"},
+          {"verb": "أَسَرَ", "result": "أَسِير", "by_meaning_of": "مَأْسُور"},
+          {"verb": "ذَبَحَ", "result": "ذَبِيح", "by_meaning_of": "مَذْبُوح"}
+        ]
+      },
+      {
+        "function_id": "intensification",
+        "label_ar": "للمبالغة",
+        "description_ar": "إحدى صيغ المبالغة الخمس",
+        "note_ar": "تأتي بمعنى الكثرة والشدة"
+      }
+    ]
+  },
+
+  "transformations": {
+    "description_ar": "حالات الإعلال",
+
+    "ajwaf_wawi": {
+      "label_ar": "أجوف واويّ",
+      "description_ar": "تبقى الواو ياءً في الصفة",
+      "trigger": "root[1] == 'و'",
+      "examples": [
+        {"verb": "طَالَ", "root": ["ط","و","ل"], "result": "طَوِيل"},
+        {"verb": "هَالَ", "root": ["ه","و","ل"], "result": "هَوِيل"}
+      ]
+    },
+
+    "naqis_yai": {
+      "label_ar": "ناقص يائي",
+      "description_ar": "تبقى الياء، فيلتقي ياءان فيُدغمان",
+      "trigger": "root[2] == 'ي'",
+      "examples": [
+        {"verb": "رَضِيَ", "root": ["ر","ض","ي"], "result": "رَضِيّ"},
+        {"verb": "غَنِيَ", "root": ["غ","ن","ي"], "result": "غَنِيّ"}
+      ]
+    },
+
+    "mudaaaf": {
+      "label_ar": "مضعّف",
+      "description_ar": "يُدغم الحرفان المتماثلان",
+      "trigger": "root[1] == root[2]",
+      "examples": [
+        {"verb": "خَفَّ", "root": ["خ","ف","ف"], "result": "خَفِيف"},
+        {"verb": "ذَلَّ", "root": ["ذ","ل","ل"], "result": "ذَلِيل"},
+        {"verb": "شَدَّ", "root": ["ش","د","د"], "result": "شَدِيد"}
+      ]
+    }
+  },
+
+  "feminine_form": {
+    "description_ar": "مؤنّث فَعِيل",
+    "rules": [
+      {
+        "case": "بمعنى فاعل",
+        "feminine": "فَعِيلَة",
+        "examples": ["كَرِيم → كَرِيمَة", "عَلِيم → عَلِيمَة"]
+      },
+      {
+        "case": "بمعنى مفعول",
+        "feminine": "فَعِيل (بلا تاء)",
+        "examples": ["قَتِيل (رجل) ← قَتِيل (امرأة)", "جَرِيح (رجل) ← جَرِيح (امرأة)"],
+        "note_ar": "يُؤمن اللبس بالقرينة"
+      }
+    ]
+  }
+}

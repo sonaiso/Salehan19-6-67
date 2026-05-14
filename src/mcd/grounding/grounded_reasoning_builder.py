@@ -15,6 +15,8 @@ from mcd.grounding.idea_method_pair import IdeaMethodPairModel
 from mcd.grounding.system_derivation import SystemDerivationModel
 from mcd.knowledge.prior_store import PriorKnowledgeStore
 from mcd.knowledge.seed_data import load_seed_data
+from mcd.knowledge.csv_loader import load_csv_data        # Layer 2: CSV knowledge
+from mcd.knowledge.mabniyat_loader import load_mabniyat   # Layer 2b: مبنيات database
 
 # Value-related keywords
 _VALUE_KEYWORDS = {
@@ -57,6 +59,8 @@ class GroundedReasoningBuilder:
         if store is None:
             store = PriorKnowledgeStore()
             load_seed_data(store)
+            load_csv_data(store)     # Layer 2: things.csv + facts.csv
+            load_mabniyat(store)     # Layer 2b: pronouns, particles, prepositions
         self._store = store
         self._lexical = LexicalGroundingEngine(store)
         self._role_builder = RoleFrameBuilder()

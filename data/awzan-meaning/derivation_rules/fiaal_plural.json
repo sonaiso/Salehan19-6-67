@@ -1,0 +1,64 @@
+{
+  "rule_id": "fiaal_plural_derivation",
+  "rule_name_ar": "جمع التكسير والمصدر على وزن فِعَال",
+  "target_pattern": "فِعَال",
+  "target_pattern_id": "fiaal_plural",
+  "summary_ar": "فاء مكسورة + عين مفتوحة + ألف + لام، يأتي جمعَ تكسير لجموع الكثرة أو مصدراً للفعل الثلاثي المجرد.",
+  "base_rule": {
+    "description_ar": "وزن فِعَال يأتي لمعنيين: جمعَ تكسيرٍ كثيرٍ، أو مصدراً للثلاثي المجرد على باب فاعَل وغيره.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "كسر الفاء",
+        "target_position": "root[0]",
+        "harakah": "kasra"
+      },
+      {
+        "step": 2,
+        "description_ar": "فتح العين",
+        "target_position": "root[1]",
+        "harakah": "fatha"
+      },
+      {
+        "step": 3,
+        "description_ar": "زيادة ألف بعد العين",
+        "insert_after": "root[1]",
+        "insert_letter": "ا"
+      }
+    ]
+  },
+  "semantic_functions": {
+    "functions": [
+      {
+        "label_ar": "جمع كثرة",
+        "examples": [
+          {
+            "mufrad": "جَبَل",
+            "result": "جِبَال"
+          },
+          {
+            "mufrad": "رَجُل",
+            "result": "رِجَال"
+          },
+          {
+            "mufrad": "كَلْب",
+            "result": "كِلَاب"
+          }
+        ]
+      },
+      {
+        "label_ar": "مصدر",
+        "examples": [
+          {
+            "verb": "قَاتَلَ",
+            "result": "قِتَال"
+          },
+          {
+            "verb": "كَتَبَ",
+            "result": "كِتَاب"
+          }
+        ]
+      }
+    ]
+  }
+}

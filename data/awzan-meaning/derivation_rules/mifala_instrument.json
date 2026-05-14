@@ -1,0 +1,48 @@
+{
+  "rule_id": "mifala_instrument_derivation",
+  "rule_name_ar": "اسم الآلة المؤنّث على وزن مِفْعَلَة",
+  "target_pattern": "مِفْعَلَة",
+  "target_pattern_id": "mifala_instrument",
+  "summary_ar": "ميم مكسورة + فاء ساكنة + عين مفتوحة + لام مفتوحة + تاء، اسم آلة قياسي مؤنّث بالتاء.",
+  "base_rule": {
+    "description_ar": "يُصاغ بزيادة ميم مكسورة وتاء التأنيث على مِفْعَل.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "زيادة ميم مكسورة",
+        "insert_letter": "مِ"
+      },
+      {
+        "step": 2,
+        "description_ar": "إسكان الفاء"
+      },
+      {
+        "step": 3,
+        "description_ar": "فتح العين"
+      },
+      {
+        "step": 4,
+        "description_ar": "فتح اللام"
+      },
+      {
+        "step": 5,
+        "description_ar": "زيادة تاء التأنيث",
+        "insert_letter": "ة"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "verb": "كَنَسَ",
+      "result": "مِكْنَسَة"
+    },
+    {
+      "verb": "لَعِقَ",
+      "result": "مِلْعَقَة"
+    },
+    {
+      "verb": "طَرَقَ",
+      "result": "مِطْرَقَة"
+    }
+  ]
+}

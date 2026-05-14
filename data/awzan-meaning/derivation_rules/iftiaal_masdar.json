@@ -1,0 +1,44 @@
+{
+  "rule_id": "iftiaal_masdar_derivation",
+  "rule_name_ar": "مصدر باب اِفْتَعَل على وزن اِفْتِعَال",
+  "target_pattern": "إِفْتِعَال",
+  "target_pattern_id": "iftiaal_masdar",
+  "summary_ar": "همزة وصل + فاء ساكنة + تاء مكسورة + عين مفتوحة + ألف + لام، مصدر قياسي لباب اِفْتَعَل.",
+  "base_rule": {
+    "description_ar": "يُبنى مصدر اِفْتَعَل بكسر التاء وفتح العين وزيادة ألف.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "همزة وصل + إسكان الفاء",
+        "insert_letter": "اِ"
+      },
+      {
+        "step": 2,
+        "description_ar": "تاء مكسورة",
+        "insert_after_root0": "تِ"
+      },
+      {
+        "step": 3,
+        "description_ar": "فتح العين"
+      },
+      {
+        "step": 4,
+        "description_ar": "زيادة ألف قبل اللام"
+      }
+    ]
+  },
+  "common_examples": [
+    {
+      "verb": "اِفْتَخَرَ",
+      "masdar": "اِفْتِخَار"
+    },
+    {
+      "verb": "اِجْتَمَعَ",
+      "masdar": "اِجْتِمَاع"
+    },
+    {
+      "verb": "اِقْتَرَبَ",
+      "masdar": "اِقْتِرَاب"
+    }
+  ]
+}

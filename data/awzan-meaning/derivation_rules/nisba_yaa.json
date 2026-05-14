@@ -1,0 +1,73 @@
+{
+  "rule_id": "nisba_yaa_derivation",
+  "rule_name_ar": "قاعدة اشتقاق اسم المنسوب على وزن فَعَلِيّ",
+  "target_pattern": "فَعَلِيّ",
+  "target_pattern_id": "nisba_yaa",
+  "summary_ar": "زيادة ياء مشدّدة مكسور ما قبلها في آخر الاسم، تدلّ على نسبة الشيء إلى أصلٍ أو موضعٍ أو حرفةٍ.",
+  "base_rule": {
+    "description_ar": "اسم المنسوب يُصاغ بزيادة ياء مشدّدة في آخر الاسم مع كسر ما قبلها، ويدلّ على نسبة الموصوف إلى الاسم المنسوب إليه.",
+    "operations": [
+      {
+        "step": 1,
+        "description_ar": "خذ الاسم المنسوب إليه",
+        "input_type": "noun"
+      },
+      {
+        "step": 2,
+        "description_ar": "احذف تاء التأنيث وياء التصغير إن وُجدت"
+      },
+      {
+        "step": 3,
+        "description_ar": "اكسر آخر حرف",
+        "target_position": "last",
+        "harakah": "kasra"
+      },
+      {
+        "step": 4,
+        "description_ar": "زِد ياء مشدّدة في الآخر",
+        "insert_at": "end",
+        "insert_letter": "يّ"
+      }
+    ],
+    "example_walkthrough": {
+      "original": "عَرَب",
+      "result": "عَرَبِيّ"
+    }
+  },
+  "common_examples": [
+    {
+      "original": "عَرَب",
+      "result": "عَرَبِيّ"
+    },
+    {
+      "original": "عِلْم",
+      "result": "عِلْمِيّ"
+    },
+    {
+      "original": "زِرَاعَة",
+      "result": "زِرَاعِيّ"
+    },
+    {
+      "original": "ذَهَب",
+      "result": "ذَهَبِيّ"
+    },
+    {
+      "original": "مِصْر",
+      "result": "مِصْرِيّ"
+    }
+  ],
+  "special_rules": {
+    "feminine_ending": {
+      "rule_ar": "تُحذف تاء التأنيث في النسبة",
+      "example": "مَكَّة → مَكِّيّ"
+    },
+    "maqsura_ending": {
+      "rule_ar": "تُقلب الألف المقصورة واواً إن كانت ثالثة",
+      "example": "هُدَى → هُدَوِيّ"
+    },
+    "long_alif": {
+      "rule_ar": "إن كان الاسم على وزن فعِيلة تُحذف ياؤه والتاء",
+      "example": "حَنِيفَة → حَنَفِيّ"
+    }
+  }
+}
