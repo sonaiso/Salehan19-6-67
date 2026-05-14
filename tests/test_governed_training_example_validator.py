@@ -22,7 +22,7 @@ def test_reference_examples_pass_validator() -> None:
         "scientific_method_worldview_blocked.json",
     ]:
         report = validate_training_example(_load_example(name))
-        assert report.valid, [f"{error.field}: {error.message}" for error in report.errors]
+        assert report.valid, "\n".join(f"{error.field}: {error.message}" for error in report.errors)
 
 
 def test_validator_blocks_silent_promotion_from_hypothesis() -> None:

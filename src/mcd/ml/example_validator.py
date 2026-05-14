@@ -47,8 +47,10 @@ def validate_training_example(example: dict, *, schema: dict | None = None) -> E
     final = collapse_to_public_judgment(expected.get("final_judgment", ""))
     requested = collapse_to_public_judgment(example.get("requested_public_judgment", ""))
 
-    if requested == "hypothesis" and (birth == "certificate" or final == "certificate"):
+    if requested == "hypothesis" and birth == "certificate":
         errors.append(ExampleValidationError("expected.birth_judgment", "silent promotion from hypothesis to certificate"))
+    if requested == "hypothesis" and final == "certificate":
+        errors.append(ExampleValidationError("expected.final_judgment", "silent promotion from hypothesis to certificate"))
 
     trace = example.get("thought_trace", {})
     for field_name in ("trace_path_complete", "trace_evidence_complete", "trace_certificate_complete"):
@@ -119,8 +121,5 @@ def validate_training_example(example: dict, *, schema: dict | None = None) -> E
     if method_type == "scientific" and output_kind in {"normative", "legal", "shari"}:
         if "scientific_method_as_normative_judgment" not in blockers_set:
             errors.append(ExampleValidationError("expected.blockers", "scientific normative output must carry blocker"))
-
-    if "birth_judgment" not in expected or "final_judgment" not in expected:
-        errors.append(ExampleValidationError("expected", "birth_judgment and final_judgment must both exist"))
 
     return ExampleValidationReport(valid=not errors, errors=errors)

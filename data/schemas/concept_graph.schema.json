@@ -70,7 +70,12 @@
               "does_not_support"
             ]
           },
-          "weight": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+          "weight": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "description": "Optional edge confidence score; omitted means unweighted relation."
+          }
         }
       }
     }
