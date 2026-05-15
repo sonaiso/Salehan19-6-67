@@ -122,6 +122,32 @@ Each benchmark case must include:
 - Allowed decision level
 - ReverseTrace requirement
 
+## Benchmark Dataset v0
+
+PR #105 adds explicit benchmark fixtures under:
+
+- `examples/fractal_governance_benchmarks/arabic_language.json`
+- `examples/fractal_governance_benchmarks/mathematics.json`
+- `examples/fractal_governance_benchmarks/physical_reality.json`
+- `examples/fractal_governance_benchmarks/coding_pr_governance.json`
+
+Each file contains inspectable `BenchmarkCase` rows with governance fields:
+
+- id
+- domain
+- input
+- candidates
+- constraints
+- required_evidence
+- expected_residuals
+- forbidden_decisions
+- allowed_decision_level
+- reverse_trace_required
+- notes
+
+Dataset v0 is measurement-only and keeps theorem status at **STRONG_HYPOTHESIS**.
+It does not claim trained embedding completion, global CERTIFICATE, or consciousness.
+
 ## Example Case Pattern
 
 Input: رأيت دخانًا  

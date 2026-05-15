@@ -1,0 +1,48 @@
+[
+  {
+    "id": "math-triangle-001",
+    "domain": "mathematics",
+    "input": "The angles of a triangle sum to 180 degrees.",
+    "candidates": ["true_in_euclidean_geometry", "not_universally_true"],
+    "constraints": ["geometry_system_required"],
+    "required_evidence": ["euclidean_geometry_assumption", "parallel_postulate_or_equivalent_proof"],
+    "expected_residuals": ["non_euclidean_context_not_excluded"],
+    "forbidden_decisions": ["CERTIFICATE"],
+    "allowed_decision_level": "HYPOTHESIS",
+    "reverse_trace_required": true,
+    "notes": "Separates answer_likelihood from justified_decision unless geometry assumptions are explicit."
+  },
+  {
+    "id": "math-triangle-euclidean-002",
+    "domain": "mathematics",
+    "input": "In Euclidean geometry, the angles of a triangle sum to 180 degrees.",
+    "candidates": ["true"],
+    "constraints": ["euclidean_geometry_declared"],
+    "required_evidence": ["euclidean_axioms", "valid_proof_path"],
+    "expected_residuals": [],
+    "forbidden_decisions": [],
+    "allowed_decision_level": "CERTIFICATE_CANDIDATE",
+    "reverse_trace_required": true,
+    "certificate_obligations": {
+      "proof_object": true,
+      "governance_gate_passed": true,
+      "reverse_trace_complete": true,
+      "evidence_complete": true,
+      "no_blocking_residual": true
+    },
+    "notes": "Can rise to CERTIFICATE_CANDIDATE, while global theorem status still remains STRONG_HYPOTHESIS."
+  },
+  {
+    "id": "math-missing-assumptions-003",
+    "domain": "mathematics",
+    "input": "Therefore the claim is proven.",
+    "candidates": ["proof_complete", "proof_incomplete"],
+    "constraints": ["proof_assumptions_must_be_explicit"],
+    "required_evidence": ["axiom_scope", "derivation_steps"],
+    "expected_residuals": ["assumption_gap_detected"],
+    "forbidden_decisions": ["CERTIFICATE"],
+    "allowed_decision_level": "HYPOTHESIS",
+    "reverse_trace_required": true,
+    "notes": "Invalid certificate path when assumptions are missing even if the answer text sounds confident."
+  }
+]

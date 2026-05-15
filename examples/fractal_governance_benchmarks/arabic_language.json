@@ -1,0 +1,41 @@
+[
+  {
+    "id": "arabic-ala-no-context-001",
+    "domain": "arabic_language",
+    "input": "على",
+    "candidates": ["harf_jarr", "ism", "fi_l", "spatial_relation", "metaphorical_relation"],
+    "constraints": ["context_required", "dependency_required"],
+    "required_evidence": ["following_nominal_dependency", "syntactic_context"],
+    "expected_residuals": ["ambiguous_without_context"],
+    "forbidden_decisions": ["CERTIFICATE"],
+    "allowed_decision_level": "HYPOTHESIS",
+    "reverse_trace_required": true,
+    "notes": "Distinguishes answer_likelihood from justified_decision by blocking certificate under missing context."
+  },
+  {
+    "id": "arabic-ala-context-002",
+    "domain": "arabic_language",
+    "input": "جلست على الكرسي",
+    "candidates": ["harf_jarr", "spatial_relation", "metaphorical_relation"],
+    "constraints": ["prepositional_attachment", "nominal_object_after_preposition"],
+    "required_evidence": ["على followed by definite noun الكرسي", "verb جلست supports spatial relation"],
+    "expected_residuals": [],
+    "forbidden_decisions": ["CERTIFICATE"],
+    "allowed_decision_level": "STRONG",
+    "reverse_trace_required": true,
+    "notes": "High answer_likelihood is separated from certificate rights unless full certificate obligations are met."
+  },
+  {
+    "id": "arabic-ala-metaphor-003",
+    "domain": "arabic_language",
+    "input": "له عليّ فضل",
+    "candidates": ["literal_spatial_relation", "metaphorical_obligation_relation"],
+    "constraints": ["literal_spatial_reading_not_sufficient", "semantic_context_required"],
+    "required_evidence": ["فضل indicates obligation/favor relation", "no physical location relation intended"],
+    "expected_residuals": ["metaphorical_mapping_required"],
+    "forbidden_decisions": ["CERTIFICATE"],
+    "allowed_decision_level": "STRONG",
+    "reverse_trace_required": true,
+    "notes": "Justified_decision demands semantic evidence and preserved residuals, not lexical probability only."
+  }
+]

@@ -1,0 +1,48 @@
+[
+  {
+    "id": "coding-ci-pass-001",
+    "domain": "coding_pr_governance",
+    "input": "PR has passing CI checks.",
+    "candidates": ["safe_to_merge", "tests_pass_only", "architectural_risk_remaining"],
+    "constraints": ["ci_pass_is_not_certificate", "governance_review_required"],
+    "required_evidence": ["tests_pass", "diff_review", "reverse_trace", "no_blocking_residual"],
+    "expected_residuals": ["ci_does_not_prove_architectural_correctness"],
+    "forbidden_decisions": ["CERTIFICATE"],
+    "allowed_decision_level": "HYPOTHESIS",
+    "reverse_trace_required": true,
+    "notes": "Separates likely answer from justified decision by requiring governance evidence beyond CI."
+  },
+  {
+    "id": "coding-governed-pr-002",
+    "domain": "coding_pr_governance",
+    "input": "PR includes tests, docs, proof object, reverse trace, and no blocking residuals.",
+    "candidates": ["certificate_candidate", "strong"],
+    "constraints": ["certificate_gate_required"],
+    "required_evidence": ["tests_pass", "proof_object", "governance_gate_passed", "reverse_trace_complete"],
+    "expected_residuals": [],
+    "forbidden_decisions": [],
+    "allowed_decision_level": "CERTIFICATE_CANDIDATE",
+    "reverse_trace_required": true,
+    "certificate_obligations": {
+      "proof_object": true,
+      "governance_gate_passed": true,
+      "reverse_trace_complete": true,
+      "evidence_complete": true,
+      "no_blocking_residual": true
+    },
+    "notes": "Remains candidate-level governance evidence; does not assert global CERTIFICATE."
+  },
+  {
+    "id": "coding-zero-in-path-local-003",
+    "domain": "coding_pr_governance",
+    "input": "One sub-path in review has missing evidence while other paths are supported.",
+    "candidates": ["local_zero_in_path", "global_zero", "hypothesis_with_local_zero_path"],
+    "constraints": ["zero_in_path_must_remain_local", "no_silent_global_downgrade"],
+    "required_evidence": ["path_level_trace", "cross_path_status_table"],
+    "expected_residuals": ["path_branch_missing_evidence", "local_zero_in_path"],
+    "forbidden_decisions": ["CERTIFICATE", "ZERO"],
+    "allowed_decision_level": "HYPOTHESIS",
+    "reverse_trace_required": true,
+    "notes": "Ensures ZERO_IN_PATH locality and prevents local path failure from becoming global ZERO."
+  }
+]

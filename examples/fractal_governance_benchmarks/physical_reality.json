@@ -1,0 +1,41 @@
+[
+  {
+    "id": "physical-smoke-001",
+    "domain": "physical_reality",
+    "input": "I see smoke.",
+    "candidates": ["fire", "steam", "dust", "smoke_machine"],
+    "constraints": ["indirect_observation", "alternative_causes_possible"],
+    "required_evidence": ["heat", "burning_smell", "visible_flame"],
+    "expected_residuals": ["fire_not_directly_seen", "alternative_causes_possible"],
+    "forbidden_decisions": ["CERTIFICATE"],
+    "allowed_decision_level": "HYPOTHESIS",
+    "reverse_trace_required": true,
+    "notes": "Answer likelihood for fire does not grant justified_decision certificate without direct closure."
+  },
+  {
+    "id": "physical-fire-strong-002",
+    "domain": "physical_reality",
+    "input": "I see flames, feel heat, and smell burning.",
+    "candidates": ["fire", "visual_effect"],
+    "constraints": ["multi_sensor_confirmation"],
+    "required_evidence": ["visible_flame", "heat", "burning_smell"],
+    "expected_residuals": ["exact_cause_of_fire_unknown"],
+    "forbidden_decisions": ["CERTIFICATE"],
+    "allowed_decision_level": "STRONG",
+    "reverse_trace_required": true,
+    "notes": "Supports STRONG only; residual cause ambiguity still blocks certificate."
+  },
+  {
+    "id": "physical-alternative-cause-003",
+    "domain": "physical_reality",
+    "input": "The room appears smoky during a stage show.",
+    "candidates": ["fire", "smoke_machine", "steam"],
+    "constraints": ["environmental_context_required", "instrumented_verification_required"],
+    "required_evidence": ["heat_sensor_reading", "source_localization"],
+    "expected_residuals": ["stage_effect_possible", "alternative_causes_possible"],
+    "forbidden_decisions": ["CERTIFICATE"],
+    "allowed_decision_level": "HYPOTHESIS",
+    "reverse_trace_required": true,
+    "notes": "Alternative-cause path preserves residuals and blocks unjustified certainty ascent."
+  }
+]
