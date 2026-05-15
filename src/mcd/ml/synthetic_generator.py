@@ -298,6 +298,18 @@ class SyntheticAnswerBirthDatasetGenerator:
                 "evidence_matches_claim_domain": True,
                 "method_type": method_type,
                 "judgment_domain": "epistemic",
+                "thinking_type": "deep",
+                "thinking_domain_scope": "rational_general",
+                "thinking_topic": "general",
+                "matrix_method_alignment": True,
+                "matrix_topic_alignment": True,
+                "matrix_gate_reality": True,
+                "matrix_gate_sense": True,
+                "matrix_gate_prior_information": True,
+                "matrix_gate_domain": True,
+                "matrix_gate_depth": True,
+                "matrix_gate_enlightenment": True,
+                "matrix_gate_action": True,
                 "certainty_rank": "hypothesis",
                 "rank_source": "feature_annotation",
                 "missing_features": [],
@@ -635,6 +647,7 @@ class SyntheticAnswerBirthDatasetGenerator:
         features = sample["nabhani_features"]
         expected = sample["expected"]
         intent = sample["intent_frame"]
+        self._sync_thinking_matrix(sample)
 
         missing_features = {
             token
@@ -698,6 +711,59 @@ class SyntheticAnswerBirthDatasetGenerator:
             if not sample["thought_trace"]["evidence_refs"]:
                 sample["thought_trace"]["evidence_refs"] = [f"rank:governed::{sample['sample_id']}:proof"]
 
+    def _infer_topic_for_sample(self, sample: dict) -> str:
+        output_kind = str(sample["mentality_frame"].get("output_kind", "")).strip().lower()
+        method_type = str(sample["thinking_method"].get("method_type", "")).strip().lower()
+        request = str(sample.get("user_request", "")).strip()
+
+        if method_type == "scientific":
+            return "material"
+        if output_kind == "worldview":
+            return "creed"
+        if output_kind in {"normative", "legal", "shari"}:
+            return "legislation"
+        if output_kind == "linguistic":
+            return "concept"
+        if "مجتمع" in request or "نهضة" in request:
+            return "society"
+        return "general"
+
+    def _sync_thinking_matrix(self, sample: dict) -> None:
+        features = sample["nabhani_features"]
+        method_type = str(sample["thinking_method"].get("method_type", "")).strip().lower()
+        judgment_domain = str(features.get("judgment_domain", "")).strip().lower()
+
+        features["thinking_domain_scope"] = (
+            "scientific_experimental" if method_type == "scientific" else "rational_general"
+        )
+        features["thinking_topic"] = self._infer_topic_for_sample(sample)
+        if features["thinking_topic"] in {"society", "renaissance"}:
+            features["thinking_type"] = "enlightened"
+        else:
+            features["thinking_type"] = "deep"
+
+        features["matrix_method_alignment"] = not (
+            features["thinking_domain_scope"] == "scientific_experimental"
+            and judgment_domain in {"worldview", "shari", "normative", "legal"}
+        )
+        features["matrix_topic_alignment"] = True
+        features["matrix_gate_reality"] = bool(features.get("has_reality"))
+        features["matrix_gate_sense"] = bool(features.get("has_source"))
+        features["matrix_gate_prior_information"] = bool(features.get("has_prior_information"))
+        features["matrix_gate_domain"] = bool(features.get("matrix_method_alignment"))
+        features["matrix_gate_depth"] = features["thinking_type"] in {"deep", "enlightened"}
+        features["matrix_gate_enlightenment"] = (
+            features["thinking_type"] == "enlightened"
+            or features["thinking_topic"] not in {"society", "renaissance"}
+        )
+        features["matrix_gate_action"] = bool(sample["thinking_method"].get("allowed_outputs"))
+
+        if not features["matrix_method_alignment"]:
+            residuals = set(features.get("feature_residuals", []))
+            residuals.add("matrix_method_topic_misalignment")
+            features["feature_residuals"] = sorted(residuals)
+
+        expected = sample["expected"]
         certificate_attempted = expected["birth_judgment"] == "certificate" or sample["requested_public_judgment"] == "certificate"
         if expected["final_judgment"] != "certificate" and certificate_attempted:
             if not sample.get("proof_object_ref"):

@@ -61,6 +61,9 @@ EVIDENCE_TYPE_TOKENS: tuple[str, ...] = (
 EVIDENCE_SUFFICIENCY_TOKENS: tuple[str, ...] = ("absent", "insufficient", "partial", "sufficient", "governed")
 METHOD_TYPE_TOKENS: tuple[str, ...] = ("rational", "scientific", "formal", "linguistic", "normative", "systemic")
 JUDGMENT_DOMAIN_TOKENS: tuple[str, ...] = ("epistemic", "empirical", "formal", "linguistic", "normative", "legal", "shari", "worldview", "systemic")
+THINKING_TYPE_TOKENS: tuple[str, ...] = ("surface", "deep", "enlightened")
+THINKING_DOMAIN_SCOPE_TOKENS: tuple[str, ...] = ("rational_general", "scientific_experimental")
+THINKING_TOPIC_TOKENS: tuple[str, ...] = ("material", "human", "society", "creed", "legislation", "renaissance", "concept", "general")
 CERTAINTY_RANK_TOKENS: tuple[str, ...] = ("zero", "possibility", "hypothesis", "weak_evidence", "strong_evidence", "certificate")
 RANK_SOURCE_TOKENS: tuple[str, ...] = ("none", "trace_core_rank", "expected_final_judgment", "feature_annotation")
 MISSING_FEATURE_TOKENS: tuple[str, ...] = ("reality", "source", "prior_information", "linking", "correspondence", "evidence")
@@ -102,6 +105,18 @@ class NabhaniFeatureFrame:
     evidence_matches_claim_domain: bool
     method_type: str
     judgment_domain: str
+    thinking_type: str
+    thinking_domain_scope: str
+    thinking_topic: str
+    matrix_method_alignment: bool
+    matrix_topic_alignment: bool
+    matrix_gate_reality: bool
+    matrix_gate_sense: bool
+    matrix_gate_prior_information: bool
+    matrix_gate_domain: bool
+    matrix_gate_depth: bool
+    matrix_gate_enlightenment: bool
+    matrix_gate_action: bool
     certainty_rank: str
     rank_source: str
     missing_features: list[str] = field(default_factory=list)
@@ -140,6 +155,54 @@ def _infer_certainty_rank(example: dict, *, fallback: str = "zero") -> tuple[str
     return fallback, "none"
 
 
+def _infer_thinking_domain_scope(*, method_type: str) -> str:
+    if method_type == "scientific":
+        return "scientific_experimental"
+    return "rational_general"
+
+
+def _infer_thinking_topic(example: dict) -> str:
+    explicit = _token(example.get("nabhani_features", {}).get("thinking_topic"), default="")
+    if explicit in THINKING_TOPIC_TOKENS:
+        return explicit
+
+    request = _token(example.get("user_request"), default="")
+    domain = _token(example.get("mentality_frame", {}).get("domain"), default="general")
+    output_kind = _token(example.get("mentality_frame", {}).get("output_kind"), default="")
+
+    if any(token in request for token in ("مختبر", "تجربة", "فيزياء", "كيمياء")):
+        return "material"
+    if any(token in request for token in ("إنسان", "البشر", "نفسي", "غرائز", "حاجات")):
+        return "human"
+    if any(token in request for token in ("مجتمع", "اجتماع", "علاقات", "نظام")):
+        return "society"
+    if any(token in request for token in ("عقيدة", "إيمان", "وجود")) or output_kind == "worldview":
+        return "creed"
+    if any(token in request for token in ("تشريع", "حكم شرعي", "فقه", "حلال", "حرام")):
+        return "legislation"
+    if any(token in request for token in ("نهضة", "تغيير", "إصلاح")):
+        return "renaissance"
+    if any(token in request for token in ("مفهوم", "تصور", "فكرة")):
+        return "concept"
+    if domain in {"technical", "empirical"}:
+        return "material"
+    return "general"
+
+
+def _required_thinking_type_for_topic(topic: str) -> set[str]:
+    mapping = {
+        "material": {"deep"},
+        "human": {"deep"},
+        "society": {"enlightened"},
+        "creed": {"deep"},
+        "legislation": {"deep"},
+        "renaissance": {"enlightened"},
+        "concept": {"deep", "enlightened"},
+        "general": {"surface", "deep", "enlightened"},
+    }
+    return mapping.get(topic, {"deep"})
+
+
 def derive_nabhani_features_from_example(example: dict) -> NabhaniFeatureFrame:
     """Derive Nabhani features from an answer-birth training example."""
     feature_input = example.get("nabhani_features", {})
@@ -148,6 +211,12 @@ def derive_nabhani_features_from_example(example: dict) -> NabhaniFeatureFrame:
     expected = example.get("expected", {})
     method_type = _token(feature_input.get("method_type") or example.get("thinking_method", {}).get("method_type"), default="rational")
     judgment_domain = _token(feature_input.get("judgment_domain"), default=_infer_judgment_domain(example))
+    thinking_type = _token(feature_input.get("thinking_type"), default="deep")
+    thinking_domain_scope = _token(
+        feature_input.get("thinking_domain_scope"),
+        default=_infer_thinking_domain_scope(method_type=method_type),
+    )
+    thinking_topic = _infer_thinking_topic(example)
     certainty_rank, derived_rank_source = _infer_certainty_rank(example)
 
     has_reality = bool(feature_input.get("has_reality", bool(consciousness.get("reality_refs"))))
@@ -156,6 +225,38 @@ def derive_nabhani_features_from_example(example: dict) -> NabhaniFeatureFrame:
     has_linking = bool(feature_input.get("has_linking", bool(trace.get("trace_path_complete"))))
     has_correspondence = bool(feature_input.get("has_correspondence", bool(trace.get("trace_evidence_complete"))))
     has_evidence = bool(feature_input.get("has_evidence", bool(trace.get("evidence_refs"))))
+    matrix_method_alignment = bool(
+        feature_input.get(
+            "matrix_method_alignment",
+            not (
+                thinking_domain_scope == "scientific_experimental"
+                and judgment_domain in {"worldview", "shari", "normative", "legal"}
+            ),
+        )
+    )
+    matrix_topic_alignment = bool(
+        feature_input.get(
+            "matrix_topic_alignment",
+            thinking_type in _required_thinking_type_for_topic(thinking_topic),
+        )
+    )
+    matrix_gate_reality = bool(feature_input.get("matrix_gate_reality", has_reality))
+    matrix_gate_sense = bool(feature_input.get("matrix_gate_sense", has_source))
+    matrix_gate_prior_information = bool(feature_input.get("matrix_gate_prior_information", has_prior_information))
+    matrix_gate_domain = bool(feature_input.get("matrix_gate_domain", matrix_method_alignment))
+    matrix_gate_depth = bool(feature_input.get("matrix_gate_depth", thinking_type in {"deep", "enlightened"}))
+    matrix_gate_enlightenment = bool(
+        feature_input.get(
+            "matrix_gate_enlightenment",
+            (thinking_type == "enlightened") or (thinking_topic not in {"society", "renaissance"}),
+        )
+    )
+    matrix_gate_action = bool(
+        feature_input.get(
+            "matrix_gate_action",
+            bool(example.get("thinking_method", {}).get("allowed_outputs")),
+        )
+    )
 
     missing_features = list(feature_input.get("missing_features") or [])
     if not missing_features:
@@ -186,6 +287,14 @@ def derive_nabhani_features_from_example(example: dict) -> NabhaniFeatureFrame:
             mapped = residual_map.get(missing)
             if mapped:
                 feature_residuals.append(mapped)
+    if not matrix_method_alignment and "matrix_method_topic_misalignment" not in feature_residuals:
+        feature_residuals.append("matrix_method_topic_misalignment")
+    if not matrix_topic_alignment and "matrix_thinking_type_mismatch" not in feature_residuals:
+        feature_residuals.append("matrix_thinking_type_mismatch")
+    if not matrix_gate_enlightenment and "matrix_missing_enlightenment_gate" not in feature_residuals:
+        feature_residuals.append("matrix_missing_enlightenment_gate")
+    if not matrix_gate_action and "matrix_missing_action_gate" not in feature_residuals:
+        feature_residuals.append("matrix_missing_action_gate")
     for token in expected.get("residuals", []) or []:
         normalized = _token(token, default="")
         if normalized and normalized.startswith("missing_") and normalized not in feature_residuals:
@@ -216,6 +325,18 @@ def derive_nabhani_features_from_example(example: dict) -> NabhaniFeatureFrame:
         evidence_matches_claim_domain=bool(feature_input.get("evidence_matches_claim_domain", True)),
         method_type=method_type,
         judgment_domain=judgment_domain,
+        thinking_type=thinking_type,
+        thinking_domain_scope=thinking_domain_scope,
+        thinking_topic=thinking_topic,
+        matrix_method_alignment=matrix_method_alignment,
+        matrix_topic_alignment=matrix_topic_alignment,
+        matrix_gate_reality=matrix_gate_reality,
+        matrix_gate_sense=matrix_gate_sense,
+        matrix_gate_prior_information=matrix_gate_prior_information,
+        matrix_gate_domain=matrix_gate_domain,
+        matrix_gate_depth=matrix_gate_depth,
+        matrix_gate_enlightenment=matrix_gate_enlightenment,
+        matrix_gate_action=matrix_gate_action,
         certainty_rank=certainty_rank,
         rank_source=_token(feature_input.get("rank_source"), default=derived_rank_source),
         missing_features=sorted(set(missing_features)),
@@ -241,6 +362,15 @@ def validate_nabhani_features(features: dict) -> NabhaniFeatureValidationReport:
         "has_correspondence",
         "has_evidence",
         "evidence_matches_claim_domain",
+        "matrix_method_alignment",
+        "matrix_topic_alignment",
+        "matrix_gate_reality",
+        "matrix_gate_sense",
+        "matrix_gate_prior_information",
+        "matrix_gate_domain",
+        "matrix_gate_depth",
+        "matrix_gate_enlightenment",
+        "matrix_gate_action",
     ):
         if not isinstance(features.get(boolean_field), bool):
             errors.append(NabhaniFeatureValidationError(boolean_field, "field must be boolean"))
@@ -267,6 +397,9 @@ def validate_nabhani_features(features: dict) -> NabhaniFeatureValidationReport:
     evidence_sufficiency = _require_token("evidence_sufficiency", EVIDENCE_SUFFICIENCY_TOKENS)
     _require_token("method_type", METHOD_TYPE_TOKENS)
     _require_token("judgment_domain", JUDGMENT_DOMAIN_TOKENS)
+    thinking_type = _require_token("thinking_type", THINKING_TYPE_TOKENS)
+    thinking_domain_scope = _require_token("thinking_domain_scope", THINKING_DOMAIN_SCOPE_TOKENS)
+    thinking_topic = _require_token("thinking_topic", THINKING_TOPIC_TOKENS)
     _require_token("certainty_rank", CERTAINTY_RANK_TOKENS)
     _require_token("rank_source", RANK_SOURCE_TOKENS)
 
@@ -330,6 +463,38 @@ def validate_nabhani_features(features: dict) -> NabhaniFeatureValidationReport:
             )
         )
 
+    domain_mismatch = thinking_domain_scope == "scientific_experimental" and _token(
+        features.get("judgment_domain"), default="epistemic"
+    ) in {
+        "worldview",
+        "shari",
+        "normative",
+        "legal",
+    }
+    if domain_mismatch and bool(features.get("matrix_method_alignment", False)):
+        errors.append(
+            NabhaniFeatureValidationError(
+                "matrix_method_alignment",
+                "matrix_method_alignment must be false when scientific_experimental scope targets worldview/shari/normative/legal judgments",
+            )
+        )
+
+    if thinking_type not in _required_thinking_type_for_topic(thinking_topic):
+        errors.append(
+            NabhaniFeatureValidationError(
+                "thinking_type",
+                "thinking_type does not satisfy required type for the selected thinking_topic",
+            )
+        )
+
+    if thinking_topic in {"society", "renaissance"} and thinking_type != "enlightened":
+        errors.append(
+            NabhaniFeatureValidationError(
+                "matrix_gate_enlightenment",
+                "society/renaissance topics require enlightened thinking gate",
+            )
+        )
+
     return NabhaniFeatureValidationReport(valid=not errors, errors=errors)
 
 
@@ -354,6 +519,11 @@ def nabhani_features_to_training_vector(features: dict) -> dict:
         "has_evidence": int(bool(features["has_evidence"])),
         "method_type": _token_to_id(_token(features["method_type"], default="rational"), METHOD_TYPE_TOKENS),
         "judgment_domain": _token_to_id(_token(features["judgment_domain"], default="epistemic"), JUDGMENT_DOMAIN_TOKENS),
+        "thinking_type": _token_to_id(_token(features["thinking_type"], default="deep"), THINKING_TYPE_TOKENS),
+        "thinking_domain_scope": _token_to_id(
+            _token(features["thinking_domain_scope"], default="rational_general"), THINKING_DOMAIN_SCOPE_TOKENS
+        ),
+        "thinking_topic": _token_to_id(_token(features["thinking_topic"], default="general"), THINKING_TOPIC_TOKENS),
         "certainty_rank": _token_to_id(_token(features["certainty_rank"], default="zero"), CERTAINTY_RANK_TOKENS),
     }
     return normalized
