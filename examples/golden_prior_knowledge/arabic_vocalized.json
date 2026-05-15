@@ -1,0 +1,42 @@
+[
+  {
+    "rule_id": "ar-vocalized-haraka-anchor",
+    "domain": "arabic_language",
+    "layer": "phonology_vocalization",
+    "claim": "Haraka requires base letter; floating haraka yields local ZERO_IN_PATH residual",
+    "scope": "LINGUISTIC",
+    "certainty_level": "LINGUISTIC_NORMATIVE",
+    "required_evidence": {
+      "required_items": ["base_letter_alignment", "haraka_anchor_check"],
+      "all_required": true,
+      "notes": "Shadda and long-vowel compatibility must be governed."
+    },
+    "certificate_blockers": [
+      {
+        "blocker_id": "floating_haraka_blocker",
+        "description": "Floating haraka blocks certificate and candidate.",
+        "match_any": ["floating_haraka", "local_zero_in_path"],
+        "blocks_levels": ["CERTIFICATE", "CERTIFICATE_CANDIDATE"]
+      }
+    ],
+    "expected_residuals": [
+      {
+        "residual_id": "floating_haraka_local_zero_in_path",
+        "description": "Floating haraka is a local path failure residual.",
+        "local_only": true,
+        "blocks_certificate": true
+      }
+    ],
+    "forbidden_transitions": [
+      "floating_haraka_to_certificate"
+    ],
+    "reverse_trace_requirements": {
+      "required": true,
+      "required_fields": ["input", "candidate", "evidence", "decision_path"]
+    },
+    "examples": ["haraka_without_letter"],
+    "test_refs": ["tests/test_golden_prior_registry.py"],
+    "case_refs": [],
+    "keywords": ["haraka", "shadda", "long vowel"]
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "rule_id": "chem-reaction-conditions-required",
+    "domain": "physical_reality",
+    "layer": "conditioned_empirical_governance",
+    "claim": "Reaction claims require reactants, conditions, and measured products",
+    "scope": "EMPIRICAL",
+    "certainty_level": "EMPIRICAL_UNDER_CONDITIONS",
+    "required_evidence": {
+      "required_items": ["reactants_declared", "temperature_measured", "concentration_measured", "product_measurement_trace"],
+      "all_required": true,
+      "notes": "Chemistry priors are scoped under conditions."
+    },
+    "certificate_blockers": [
+      {
+        "blocker_id": "missing_reaction_conditions",
+        "description": "Missing temperature/concentration/trace blocks certificate.",
+        "match_any": ["missing_temperature", "missing_concentration", "missing_measurement_trace"],
+        "blocks_levels": ["CERTIFICATE", "CERTIFICATE_CANDIDATE"]
+      }
+    ],
+    "expected_residuals": [
+      {
+        "residual_id": "conditions_not_universal",
+        "description": "Empirical chemistry is not absolute across contexts.",
+        "local_only": false,
+        "blocks_certificate": false
+      }
+    ],
+    "forbidden_transitions": [
+      "empirical_without_conditions_to_certificate"
+    ],
+    "reverse_trace_requirements": {
+      "required": true,
+      "required_fields": ["input", "candidate", "evidence", "decision_path"]
+    },
+    "examples": ["reaction claim with missing temperature"],
+    "test_refs": ["tests/test_golden_prior_registry.py"],
+    "case_refs": [],
+    "keywords": ["reaction", "temperature", "concentration", "product"]
+  }
+]

@@ -1,0 +1,49 @@
+[
+  {
+    "rule_id": "math-euclidean-triangle-sum",
+    "domain": "mathematics",
+    "layer": "claim_to_evidence",
+    "claim": "Euclidean triangle angle sum is 180 degrees under Euclidean scope with valid proof trace",
+    "scope": "FORMAL",
+    "certainty_level": "FORMAL_CERTAINTY",
+    "required_evidence": {
+      "required_items": ["euclidean_axioms", "valid_proof_path"],
+      "all_required": true,
+      "notes": "Scope and proof are mandatory."
+    },
+    "certificate_blockers": [
+      {
+        "blocker_id": "triangle_missing_geometry_scope",
+        "description": "Missing geometry assumptions blocks certificate.",
+        "match_any": ["missing_geometry_assumption", "geometry_system_required", "TRIANGLE_WITHOUT_GEOMETRY_SCOPE_TO_CERTIFICATE"],
+        "blocks_levels": ["CERTIFICATE", "CERTIFICATE_CANDIDATE"]
+      },
+      {
+        "blocker_id": "proof_sketch_not_proof",
+        "description": "Proof sketch does not equal proof.",
+        "match_any": ["proof_assumptions_must_be_explicit", "formal_proof_steps_required"],
+        "blocks_levels": ["CERTIFICATE", "CERTIFICATE_CANDIDATE"]
+      }
+    ],
+    "expected_residuals": [
+      {
+        "residual_id": "missing_geometry_assumption",
+        "description": "Residual when scope is not fully declared.",
+        "local_only": false,
+        "blocks_certificate": true
+      }
+    ],
+    "forbidden_transitions": [
+      "TRIANGLE_WITHOUT_GEOMETRY_SCOPE_TO_CERTIFICATE",
+      "certificate_without_proof_object"
+    ],
+    "reverse_trace_requirements": {
+      "required": true,
+      "required_fields": ["input", "candidate", "evidence", "decision_path"]
+    },
+    "examples": ["math-triangle-001", "math-triangle-missing-assumptions-003"],
+    "test_refs": ["tests/test_golden_prior_registry.py"],
+    "case_refs": ["math-triangle-001", "math-triangle-missing-assumptions-003", "math-triangle-euclidean-002"],
+    "keywords": ["triangle", "euclidean", "proof"]
+  }
+]

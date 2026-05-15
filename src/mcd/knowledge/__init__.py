@@ -4,3 +4,9 @@ from mcd.knowledge.facts import Fact, FactStore
 from mcd.knowledge.sources import Source
 from mcd.knowledge.prior_store import PriorKnowledgeStore
 from mcd.knowledge.seed_data import load_seed_data
+from mcd.knowledge.golden_prior_registry import (
+    PriorRule,
+    PriorRegistry,
+    load_golden_prior_registry,
+    validate_prior_rule,
+)
