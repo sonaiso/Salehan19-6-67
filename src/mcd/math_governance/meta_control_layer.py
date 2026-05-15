@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from hashlib import sha256
 import json
+from uuid import uuid4
 from typing import Any
 
 from mcd.core.public_judgment import collapse_to_public_judgment
@@ -42,6 +43,98 @@ SUPPORT_RANK_NORMALIZATION_FACTOR = 10.0
 CERTIFICATE_RANK_THRESHOLD = 0.95
 STRONG_RANK_THRESHOLD = 0.75
 LIKELY_RANK_THRESHOLD = 0.55
+
+
+@dataclass
+class EvidenceObject:
+    evidence_id: str
+    source: str
+    evidence_type: str
+    domain: str
+    strength: float
+    independence_group: str
+    scope: str
+    supports: list[str] = field(default_factory=list)
+    residuals: list[str] = field(default_factory=list)
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "evidence_id": self.evidence_id,
+            "source": self.source,
+            "evidence_type": self.evidence_type,
+            "domain": self.domain,
+            "strength": self.strength,
+            "independence_group": self.independence_group,
+            "scope": self.scope,
+            "supports": self.supports,
+            "residuals": self.residuals,
+        }
+
+
+@dataclass
+class ConstraintObject:
+    constraint_id: str
+    layer: str
+    axis: str
+    severity: str  # informational | weakening | blocking | defeating
+    passed: bool
+    reason: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "constraint_id": self.constraint_id,
+            "layer": self.layer,
+            "axis": self.axis,
+            "severity": self.severity,
+            "passed": self.passed,
+            "reason": self.reason,
+        }
+
+
+@dataclass
+class TransitionObject:
+    from_layer: str
+    to_layer: str
+    transform: str
+    valid: bool
+    constraints: list[ConstraintObject] = field(default_factory=list)
+    evidence: list[EvidenceObject] = field(default_factory=list)
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "from_layer": self.from_layer,
+            "to_layer": self.to_layer,
+            "transform": self.transform,
+            "valid": self.valid,
+            "constraints": [constraint.to_dict() for constraint in self.constraints],
+            "evidence": [evidence.to_dict() for evidence in self.evidence],
+        }
+
+
+@dataclass
+class ProofObject:
+    claim: str
+    selected_path_id: str
+    transitions: list[TransitionObject]
+    evidence: list[EvidenceObject]
+    constraints: list[ConstraintObject]
+    rank: float
+    judgment: str
+    residuals: list[str] = field(default_factory=list)
+    proof_id: str = field(default_factory=lambda: f"MCL-PO-{uuid4().hex[:12]}")
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "proof_id": self.proof_id,
+            "claim": self.claim,
+            "selected_path_id": self.selected_path_id,
+            "transitions": [transition.to_dict() for transition in self.transitions],
+            "evidence": [evidence.to_dict() for evidence in self.evidence],
+            "constraints": [constraint.to_dict() for constraint in self.constraints],
+            "rank": self.rank,
+            "judgment": self.judgment,
+            "residuals": self.residuals,
+        }
 
 
 @dataclass
@@ -143,6 +236,12 @@ class MetaCapsule:
     judgment: str
     residuals: list[str]
     trace: list[str]
+    evidence_objects: list[EvidenceObject]
+    constraint_objects: list[ConstraintObject]
+    transition_objects: list[TransitionObject]
+    proof_object: ProofObject | None
+    governance_gate: dict[str, Any]
+    reverse_trace: dict[str, Any]
     fold_hash: str
     unfold_recipe: dict[str, Any]
 
@@ -161,6 +260,12 @@ class MetaCapsule:
             "judgment": self.judgment,
             "residuals": self.residuals,
             "trace": self.trace,
+            "evidence_objects": [e.to_dict() for e in self.evidence_objects],
+            "constraint_objects": [c.to_dict() for c in self.constraint_objects],
+            "transition_objects": [t.to_dict() for t in self.transition_objects],
+            "proof_object": self.proof_object.to_dict() if self.proof_object else None,
+            "governance_gate": self.governance_gate,
+            "reverse_trace": self.reverse_trace,
             "fold_hash": self.fold_hash,
             "unfold_recipe": self.unfold_recipe,
         }
@@ -168,6 +273,139 @@ class MetaCapsule:
 
 class MetaControlLayer:
     """Governs analysis paths instead of assigning absolute unit meaning."""
+
+    @staticmethod
+    def _parse_evidence_token(token: str) -> tuple[str, str]:
+        if ":" in token:
+            source, payload = token.split(":", 1)
+            source = source.strip() or "unknown"
+            payload = payload.strip() or token
+            return source, payload
+        normalized = token.strip() or "unknown"
+        return normalized, normalized
+
+    def _build_evidence_objects(self, path: CandidatePath, final_rank: float) -> list[EvidenceObject]:
+        tokens = list(dict.fromkeys(path.evidence_chain + [e for unit in path.units for e in unit.evidence]))
+        if not tokens:
+            return []
+        strength = max(0.0, min(1.0, round(final_rank, 4)))
+        evidence_objects: list[EvidenceObject] = []
+        for index, token in enumerate(tokens, start=1):
+            source, payload = self._parse_evidence_token(token)
+            evidence_objects.append(
+                EvidenceObject(
+                    evidence_id=f"EVD-{path.path_id}-{index}",
+                    source=source,
+                    evidence_type="attested",
+                    domain="morpho_syntactic_path",
+                    strength=strength,
+                    independence_group=source,
+                    scope="path",
+                    supports=[f"path:{path.path_id}", f"payload:{payload}"],
+                    residuals=[],
+                )
+            )
+        return evidence_objects
+
+    @staticmethod
+    def _constraint_severity(value: str, passed: bool) -> str:
+        lowered = value.lower()
+        if lowered.startswith("defeating:"):
+            return "defeating"
+        if lowered.startswith("blocking:"):
+            return "blocking"
+        if lowered.startswith("weakening:"):
+            return "weakening"
+        return "informational" if passed else "weakening"
+
+    def _build_constraint_objects(self, path: CandidatePath, assessment: PathAssessment) -> list[ConstraintObject]:
+        constraints: list[ConstraintObject] = []
+        for index, item in enumerate(path.constraints_passed, start=1):
+            constraints.append(
+                ConstraintObject(
+                    constraint_id=f"CON-{path.path_id}-P{index}",
+                    layer="path",
+                    axis="governance",
+                    severity=self._constraint_severity(item, True),
+                    passed=True,
+                    reason=item,
+                )
+            )
+        for index, item in enumerate(path.constraints_failed, start=1):
+            constraints.append(
+                ConstraintObject(
+                    constraint_id=f"CON-{path.path_id}-F{index}",
+                    layer="path",
+                    axis="governance",
+                    severity=self._constraint_severity(item, False),
+                    passed=False,
+                    reason=item,
+                )
+            )
+        for index, reason in enumerate(assessment.reasons, start=1):
+            constraints.append(
+                ConstraintObject(
+                    constraint_id=f"CON-{path.path_id}-R{index}",
+                    layer="path",
+                    axis="consistency",
+                    severity="blocking",
+                    passed=False,
+                    reason=reason,
+                )
+            )
+        return constraints
+
+    @staticmethod
+    def _build_transition_objects(
+        path: CandidatePath,
+        constraints: list[ConstraintObject],
+        evidence: list[EvidenceObject],
+    ) -> list[TransitionObject]:
+        if not path.transformations:
+            return []
+        layer_chain = [unit.layer or "unknown" for unit in path.units]
+        if not layer_chain:
+            layer_chain = ["unknown"]
+        transitions: list[TransitionObject] = []
+        for index, transform in enumerate(path.transformations):
+            from_layer = layer_chain[min(index, len(layer_chain) - 1)]
+            to_layer = layer_chain[min(index + 1, len(layer_chain) - 1)] if len(layer_chain) > 1 else from_layer
+            transitions.append(
+                TransitionObject(
+                    from_layer=from_layer,
+                    to_layer=to_layer,
+                    transform=transform,
+                    valid=all(constraint.passed or constraint.severity not in {"blocking", "defeating"} for constraint in constraints),
+                    constraints=constraints,
+                    evidence=evidence,
+                )
+            )
+        return transitions
+
+    @staticmethod
+    def _has_blocking_or_defeating_residuals(residuals: list[str]) -> bool:
+        return any(residual.startswith(("blocking", "defeating")) for residual in residuals)
+
+    @staticmethod
+    def _evidence_independent_enough(evidence_objects: list[EvidenceObject]) -> bool:
+        return len({e.independence_group for e in evidence_objects if e.independence_group}) >= 2
+
+    @staticmethod
+    def _all_blocking_constraints_pass(constraints: list[ConstraintObject]) -> bool:
+        return not any((not c.passed) and c.severity in {"blocking", "defeating"} for c in constraints)
+
+    @staticmethod
+    def _build_reverse_trace(path: CandidatePath, trace: list[str], unfold_recipe: dict[str, Any], proof_id: str) -> dict[str, Any]:
+        has_steps = bool(unfold_recipe.get("replay_steps"))
+        replayable = bool(path.transformations) and bool(trace) and has_steps
+        return {
+            "reverse_trace_id": f"MCL-RT-{uuid4().hex[:12]}",
+            "proof_id": proof_id,
+            "selected_path_id": path.path_id,
+            "trace": trace,
+            "replay_steps": unfold_recipe.get("replay_steps", []),
+            "replayable": replayable,
+        }
 
     def role(self, unit: MetaUnit, *, path: CandidatePath, context: dict[str, Any] | None = None) -> str:
         context = context or {}
@@ -327,9 +565,10 @@ class MetaControlLayer:
         reasons = list(impossible_reasons)
         residuals = list(dict.fromkeys(path.residuals + [r for u in path.units for r in u.residuals]))
 
+        has_blocking_residuals = self._has_blocking_or_defeating_residuals(residuals)
         if is_impossible:
             status = PATH_ZERO_IN_PATH
-        elif final_rank >= CERTIFICATE_RANK_THRESHOLD and not any(r.startswith(("blocking", "defeating")) for r in residuals):
+        elif final_rank >= CERTIFICATE_RANK_THRESHOLD and not has_blocking_residuals:
             status = PATH_CERTIFICATE
         elif final_rank >= STRONG_RANK_THRESHOLD:
             status = PATH_STRONG
@@ -379,14 +618,6 @@ class MetaControlLayer:
         selected_assessment = assessed_by_id[selected.path_id] if selected else None
         selected_status = selected_assessment.path_status if selected_assessment else PATH_ZERO_IN_PATH
 
-        if selected_status == PATH_CERTIFICATE:
-            judgment_source = "certificate"
-        elif selected_status == PATH_ZERO_IN_PATH:
-            judgment_source = "zero"
-        else:
-            judgment_source = "hypothesis"
-        judgment = collapse_to_public_judgment(judgment_source)
-
         unit_roles: dict[str, str] = {}
         transformations: list[str] = []
         evidence: list[str] = []
@@ -418,12 +649,99 @@ class MetaControlLayer:
         residuals = list(dict.fromkeys(residuals))
         evidence = list(dict.fromkeys(evidence))
 
+        evidence_objects: list[EvidenceObject] = []
+        constraint_objects: list[ConstraintObject] = []
+        transition_objects: list[TransitionObject] = []
+        proof_object: ProofObject | None = None
+        governance_gate = {
+            "passed": False,
+            "checks": {
+                "has_proof_object": False,
+                "all_blocking_constraints_pass": False,
+                "reverse_trace_replayable": False,
+                "evidence_independent_enough": False,
+                "no_defeating_residual": False,
+            },
+            "failures": [],
+        }
+        reverse_trace: dict[str, Any] = {
+            "reverse_trace_id": None,
+            "proof_id": None,
+            "selected_path_id": selected.path_id if selected else None,
+            "trace": trace,
+            "replay_steps": [],
+            "replayable": False,
+        }
+
+        if selected and selected_assessment:
+            evidence_objects = self._build_evidence_objects(selected, selected_assessment.final_rank)
+            constraint_objects = self._build_constraint_objects(selected, selected_assessment)
+            transition_objects = self._build_transition_objects(selected, constraint_objects, evidence_objects)
+            provisional_judgment = "certificate" if selected_status == PATH_CERTIFICATE else ("zero" if selected_status == PATH_ZERO_IN_PATH else "hypothesis")
+            proof_object = ProofObject(
+                claim=f"path:{selected.path_id}",
+                selected_path_id=selected.path_id,
+                transitions=transition_objects,
+                evidence=evidence_objects,
+                constraints=constraint_objects,
+                rank=selected_assessment.final_rank,
+                judgment=provisional_judgment,
+                residuals=list(residuals),
+            )
+            reverse_trace = self._build_reverse_trace(selected, trace, {
+                "replay_steps": [
+                    "GenerateCandidates",
+                    "AttachRoles",
+                    "ApplyConstraints",
+                    "FilterImpossible",
+                    "RankLikely",
+                    "KeepTopK",
+                    "PreserveResiduals",
+                    "Fold",
+                    "Unfold",
+                ]
+            }, proof_object.proof_id)
+
+            checks = {
+                "has_proof_object": proof_object is not None,
+                "all_blocking_constraints_pass": self._all_blocking_constraints_pass(constraint_objects),
+                "reverse_trace_replayable": bool(reverse_trace.get("replayable", False)),
+                "evidence_independent_enough": self._evidence_independent_enough(evidence_objects),
+                "no_defeating_residual": not self._has_blocking_or_defeating_residuals(residuals),
+            }
+            failures = [name for name, ok in checks.items() if not ok]
+            gate_passed = all(checks.values())
+            governance_gate = {"passed": gate_passed, "checks": checks, "failures": failures}
+
+            if selected_status == PATH_CERTIFICATE and not gate_passed:
+                selected_status = PATH_STRONG if selected_assessment.final_rank >= STRONG_RANK_THRESHOLD else PATH_HYPOTHESIS
+                selected_assessment.path_status = selected_status
+                residuals.extend(["certificate_blocked"] + [f"certificate_gate:{failure}" for failure in failures])
+                residuals = list(dict.fromkeys(residuals))
+                proof_object.judgment = "hypothesis"
+                proof_object.residuals = list(residuals)
+            elif selected_status == PATH_CERTIFICATE:
+                proof_object.judgment = "certificate"
+            elif selected_status == PATH_ZERO_IN_PATH:
+                proof_object.judgment = "zero"
+            else:
+                proof_object.judgment = "hypothesis"
+
+        if selected_status == PATH_CERTIFICATE:
+            judgment_source = "certificate"
+        elif selected_status == PATH_ZERO_IN_PATH:
+            judgment_source = "zero"
+        else:
+            judgment_source = "hypothesis"
+        judgment = collapse_to_public_judgment(judgment_source)
+
         payload_for_hash = {
             "input": input_text,
             "selected_path": selected.to_dict() if selected else None,
             "judgment": judgment,
             "rank": selected_assessment.final_rank if selected_assessment else 0.0,
             "residuals": residuals,
+            "governance_gate": governance_gate,
         }
         fold_hash = sha256(json.dumps(payload_for_hash, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
 
@@ -458,6 +776,12 @@ class MetaControlLayer:
             judgment=judgment,
             residuals=residuals,
             trace=trace,
+            evidence_objects=evidence_objects,
+            constraint_objects=constraint_objects,
+            transition_objects=transition_objects,
+            proof_object=proof_object,
+            governance_gate=governance_gate,
+            reverse_trace=reverse_trace,
             fold_hash=fold_hash,
             unfold_recipe=unfold_recipe,
         )
@@ -471,6 +795,12 @@ class MetaControlLayer:
             "constraints": capsule.constraints,
             "evidence": capsule.evidence,
             "residuals": capsule.residuals,
+            "evidence_objects": [e.to_dict() for e in capsule.evidence_objects],
+            "constraint_objects": [c.to_dict() for c in capsule.constraint_objects],
+            "transition_objects": [t.to_dict() for t in capsule.transition_objects],
+            "proof_object": capsule.proof_object.to_dict() if capsule.proof_object else None,
+            "governance_gate": capsule.governance_gate,
+            "reverse_trace": capsule.reverse_trace,
             "fold_hash": capsule.fold_hash,
             "unfold_recipe": capsule.unfold_recipe,
         }

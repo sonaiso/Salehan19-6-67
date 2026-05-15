@@ -1,5 +1,6 @@
 from mcd.math_governance import (
     PATH_CERTIFICATE,
+    PATH_STRONG,
     PATH_ZERO_IN_PATH,
     CandidatePath,
     MetaControlLayer,
@@ -173,6 +174,7 @@ def test_path_certificate_maps_to_public_certificate():
         "p_cert",
         units,
         evidence_chain=["ctx", "lex", "shahid", "sem", "trace", "proof", "reverse", "gate"],
+        transformations=["T_pattern", "T_rank", "T_fold"],
         rank_components={
             "phonetic": 0.99,
             "morphological": 0.99,
@@ -188,6 +190,10 @@ def test_path_certificate_maps_to_public_certificate():
 
     assert assessment.path_status == PATH_CERTIFICATE
     assert capsule.judgment == "certificate"
+    assert capsule.governance_gate["passed"] is True
+    assert capsule.proof_object is not None
+    assert capsule.proof_object.judgment == "certificate"
+    assert capsule.reverse_trace["replayable"] is True
 
 
 def test_haraka_role_supports_mabni_with_i3rab_position_without_conflict():
@@ -229,6 +235,50 @@ def test_unfold_restores_why_not_only_what():
     assert unfolded["trace"]
     assert unfolded["constraints"]["passed"] == []
     assert unfolded["evidence"]
+    assert unfolded["proof_object"] is not None
+    assert "governance_gate" in unfolded
+    assert "reverse_trace" in unfolded
+    assert isinstance(unfolded["evidence_objects"], list)
+    assert isinstance(unfolded["constraint_objects"], list)
+    assert isinstance(unfolded["transition_objects"], list)
+
+
+def test_certificate_downgrades_when_reverse_trace_is_not_replayable():
+    mcl = MetaControlLayer()
+    p = _path(
+        "p_cert_gate_fail",
+        [
+            _unit("م", 0, layer="template", role="augment", evidence=["lex:pattern"]),
+            _unit("ك", 1, layer="root", role="root", evidence=["root:attested"]),
+        ],
+        evidence_chain=[
+            "ctx:governed",
+            "corpus:attested",
+            "syntax:agreement",
+            "sem:licensed",
+            "trace:stable",
+            "proof:linked",
+            "rank:high",
+            "gate:ready",
+        ],
+        transformations=[],  # no transition replay path => gate should block certificate
+        rank_components={
+            "phonetic": 0.99,
+            "morphological": 0.99,
+            "syntactic": 0.99,
+            "semantic": 0.99,
+            "context": 0.99,
+            "evidence": 0.99,
+        },
+    )
+    capsule = mcl.govern(input_text="مكتب", candidate_paths=[p], top_k=1)
+    assessment = next(a for a in capsule.path_assessments if a.path_id == "p_cert_gate_fail")
+
+    assert assessment.path_status == PATH_STRONG
+    assert capsule.judgment == "hypothesis"
+    assert "certificate_blocked" in capsule.residuals
+    assert capsule.governance_gate["passed"] is False
+    assert "reverse_trace_replayable" in capsule.governance_gate["failures"]
 
 
 def test_govern_rejects_non_positive_top_k():
