@@ -96,3 +96,9 @@ All case-level errors are tagged under:
 
 Post-merge CI residual: if a PR reports N of M checks passed, identify whether remaining checks are failed, skipped, pending, canceled, or non-required before using the PR as a dependency for certificate claims.
 Do not treat this as a development blocker unless the remaining check is both required and failed/canceled.
+
+## Prior-Aware Ablation Dependency
+- #106 deterministic baseline metrics become stronger when interpreted with #107 Golden Prior Knowledge constraints.
+- #108 explicitly measures the effect of GPKB by comparing no-prior and prior-aware governed protocol modes.
+- GPKB is a minimal scoped prior base for governance reliability, not universal omniscience and not a replacement for evidence.
+- Missing prior coverage must be emitted as a residual (`prior_coverage_gap`) and must not be silently ignored.

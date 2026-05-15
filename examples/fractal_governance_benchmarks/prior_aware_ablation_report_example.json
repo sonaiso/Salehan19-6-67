@@ -1,0 +1,4703 @@
+{
+  "artificial_consciousness_claim": false,
+  "dataset_id": "fractal_governance_benchmark_105",
+  "dataset_path": "/home/runner/work/Salehan19-6-67/Salehan19-6-67/examples/fractal_governance_benchmarks",
+  "deltas": {
+    "prior_false_certificate_delta": 0.0,
+    "prior_gettier_detection_delta": 0.0,
+    "prior_overblocking_delta": 0.4,
+    "prior_trace_enforcement_delta": 0.0
+  },
+  "deterministic": true,
+  "external_models_used": [],
+  "final_epistemic_judgments": [
+    "ZERO",
+    "HYPOTHESIS",
+    "CERTIFICATE"
+  ],
+  "global_certificate_claim": false,
+  "modes": {
+    "prior_blockers_only": {
+      "cases": [
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "arabic-ala-no-context-001",
+          "confidence": 0.78,
+          "domain": "arabic_language",
+          "error_tags": [
+            "prior_blocking:surface_fluency_not_semantic_certificate"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_blocking:surface_fluency_not_semantic_certificate"
+          ],
+          "prior_rule_ids": [
+            "lang-context-required-for-ambiguity"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "arabic-ala-context-002",
+          "confidence": 0.91,
+          "domain": "arabic_language",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": false,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "STRONG",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [
+            "ar-morph-syntax-path-preservation",
+            "ar-vocalized-haraka-anchor",
+            "lang-context-required-for-ambiguity"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "arabic-ala-metaphor-003",
+          "confidence": 0.9,
+          "domain": "arabic_language",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "STRONG",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [
+            "lang-context-required-for-ambiguity"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "arabic-zero-in-path-local-004",
+          "confidence": 0.78,
+          "domain": "arabic_language",
+          "error_tags": [
+            "prior_blocking:path_failure_not_global_zero"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_blocking:path_failure_not_global_zero"
+          ],
+          "prior_rule_ids": [
+            "ar-morph-syntax-path-preservation"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-triangle-001",
+          "confidence": 0.78,
+          "domain": "mathematics",
+          "error_tags": [
+            "prior_blocking:triangle_missing_geometry_scope"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_blocking:triangle_missing_geometry_scope"
+          ],
+          "prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-triangle-euclidean-002",
+          "confidence": 0.98,
+          "domain": "mathematics",
+          "error_tags": [
+            "false_strong"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "CERTIFICATE",
+          "governance_gate_passed": true,
+          "has_blocking_residual": false,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "CERTIFICATE",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-triangle-missing-assumptions-003",
+          "confidence": 0.77,
+          "domain": "mathematics",
+          "error_tags": [
+            "prior_blocking:proof_sketch_not_proof",
+            "prior_blocking:triangle_missing_geometry_scope"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_blocking:proof_sketch_not_proof",
+            "prior_blocking:triangle_missing_geometry_scope"
+          ],
+          "prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-zero-in-path-local-004",
+          "confidence": 0.78,
+          "domain": "mathematics",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-gettier-true-accidental-005",
+          "confidence": 0.78,
+          "domain": "mathematics",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-smoke-001",
+          "confidence": 0.775,
+          "domain": "physical_reality",
+          "error_tags": [
+            "prior_blocking:alternative_causes_block_certificate",
+            "prior_blocking:smoke_only_not_certificate"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_blocking:alternative_causes_block_certificate",
+            "prior_blocking:smoke_only_not_certificate"
+          ],
+          "prior_rule_ids": [
+            "physics-smoke-fire-conditional"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-fire-strong-002",
+          "confidence": 0.905,
+          "domain": "physical_reality",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "STRONG",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [
+            "physics-smoke-fire-conditional"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-alternative-cause-003",
+          "confidence": 0.77,
+          "domain": "physical_reality",
+          "error_tags": [
+            "prior_blocking:alternative_causes_block_certificate"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_blocking:alternative_causes_block_certificate"
+          ],
+          "prior_rule_ids": [
+            "physics-smoke-fire-conditional"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-zero-in-path-local-004",
+          "confidence": 0.78,
+          "domain": "physical_reality",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [
+            "chem-reaction-conditions-required",
+            "physics-smoke-fire-conditional"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-gettier-accidental-correct-005",
+          "confidence": 0.78,
+          "domain": "physical_reality",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [
+            "chem-reaction-conditions-required",
+            "physics-smoke-fire-conditional"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-ci-pass-001",
+          "confidence": 0.79,
+          "domain": "coding_pr_governance",
+          "error_tags": [
+            "prior_blocking:ci_pass_to_certificate"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_blocking:ci_pass_to_certificate"
+          ],
+          "prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-governed-pr-002",
+          "confidence": 0.99,
+          "domain": "coding_pr_governance",
+          "error_tags": [
+            "false_strong"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "CERTIFICATE",
+          "governance_gate_passed": true,
+          "has_blocking_residual": false,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "CERTIFICATE",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-zero-in-path-local-003",
+          "confidence": 0.77,
+          "domain": "coding_pr_governance",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-gettier-accidental-pass-004",
+          "confidence": 0.785,
+          "domain": "coding_pr_governance",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-zero-in-path-local-005",
+          "confidence": 0.78,
+          "domain": "coding_pr_governance",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "reverse_trace_complete": true
+        }
+      ],
+      "metrics": {
+        "decision_calibration_error": 0.1876,
+        "false_certificate_rate": 0.0,
+        "forbidden_transition_violation_rate": 0.0,
+        "gettier_detection_rate": 1.0,
+        "overblocking_rate": 0.0,
+        "prior_blocker_activation_rate": 0.3684,
+        "prior_coverage_gap_count": 0.0,
+        "prior_missing_evidence_rate": 0.0,
+        "prior_residual_preservation_rate": 1.0,
+        "prior_rule_coverage_rate": 1.0,
+        "residual_preservation_rate": 1.0,
+        "reverse_trace_coverage": 1.0,
+        "zero_in_path_locality_accuracy": 1.0
+      },
+      "mode": "prior_blockers_only",
+      "prior_coverage_matrix": [
+        {
+          "case_id": "arabic-ala-no-context-001",
+          "certificate_blockers_activated": [
+            "surface_fluency_not_semantic_certificate"
+          ],
+          "decision_delta": "UNCHANGED",
+          "domain": "arabic_language",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "lang-context-required-for-ambiguity"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_blockers_only",
+          "prior_residuals": [
+            "prior_blocking:surface_fluency_not_semantic_certificate"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": [
+            "syntactic_context"
+          ]
+        },
+        {
+          "case_id": "arabic-ala-context-002",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "arabic_language",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "STRONG",
+          "final_decision_before_priors": "STRONG",
+          "matched_prior_rule_ids": [
+            "ar-morph-syntax-path-preservation",
+            "ar-vocalized-haraka-anchor",
+            "lang-context-required-for-ambiguity"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_blockers_only",
+          "prior_residuals": [],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "arabic-ala-metaphor-003",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "arabic_language",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "STRONG",
+          "final_decision_before_priors": "STRONG",
+          "matched_prior_rule_ids": [
+            "lang-context-required-for-ambiguity"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_blockers_only",
+          "prior_residuals": [],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "arabic-zero-in-path-local-004",
+          "certificate_blockers_activated": [
+            "path_failure_not_global_zero"
+          ],
+          "decision_delta": "UNCHANGED",
+          "domain": "arabic_language",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "ar-morph-syntax-path-preservation"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_blockers_only",
+          "prior_residuals": [
+            "prior_blocking:path_failure_not_global_zero"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": [
+            "clause_scoped_attachment",
+            "semantic_role_split"
+          ]
+        },
+        {
+          "case_id": "math-triangle-001",
+          "certificate_blockers_activated": [
+            "triangle_missing_geometry_scope"
+          ],
+          "decision_delta": "UNCHANGED",
+          "domain": "mathematics",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_blockers_only",
+          "prior_residuals": [
+            "prior_blocking:triangle_missing_geometry_scope"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "math-triangle-euclidean-002",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "mathematics",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "CERTIFICATE",
+          "final_decision_before_priors": "CERTIFICATE",
+          "matched_prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_blockers_only",
+          "prior_residuals": [],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": [
+            "euclidean_axioms",
+            "valid_proof_path"
+          ]
+        },
+        {
+          "case_id": "math-triangle-missing-assumptions-003",
+          "certificate_blockers_activated": [
+            "proof_sketch_not_proof",
+            "triangle_missing_geometry_scope"
+          ],
+          "decision_delta": "UNCHANGED",
+          "domain": "mathematics",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_blockers_only",
+          "prior_residuals": [
+            "prior_blocking:proof_sketch_not_proof",
+            "prior_blocking:triangle_missing_geometry_scope"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "math-zero-in-path-local-004",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "mathematics",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_blockers_only",
+          "prior_residuals": [],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "math-gettier-true-accidental-005",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "mathematics",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_blockers_only",
+          "prior_residuals": [],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "physical-smoke-001",
+          "certificate_blockers_activated": [
+            "alternative_causes_block_certificate",
+            "smoke_only_not_certificate"
+          ],
+          "decision_delta": "UNCHANGED",
+          "domain": "physical_reality",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "physics-smoke-fire-conditional"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_blockers_only",
+          "prior_residuals": [
+            "prior_blocking:alternative_causes_block_certificate",
+            "prior_blocking:smoke_only_not_certificate"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": [
+            "burning_smell",
+            "heat",
+            "visible_flame"
+          ]
+        },
+        {
+          "case_id": "physical-fire-strong-002",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "physical_reality",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "STRONG",
+          "final_decision_before_priors": "STRONG",
+          "matched_prior_rule_ids": [
+            "physics-smoke-fire-conditional"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_blockers_only",
+          "prior_residuals": [],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": [
+            "burning_smell",
+            "heat",
+            "visible_flame"
+          ]
+        },
+        {
+          "case_id": "physical-alternative-cause-003",
+          "certificate_blockers_activated": [
+            "alternative_causes_block_certificate"
+          ],
+          "decision_delta": "UNCHANGED",
+          "domain": "physical_reality",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "physics-smoke-fire-conditional"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_blockers_only",
+          "prior_residuals": [
+            "prior_blocking:alternative_causes_block_certificate"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "physical-zero-in-path-local-004",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "physical_reality",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "chem-reaction-conditions-required",
+            "physics-smoke-fire-conditional"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_blockers_only",
+          "prior_residuals": [],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "physical-gettier-accidental-correct-005",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "physical_reality",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "chem-reaction-conditions-required",
+            "physics-smoke-fire-conditional"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_blockers_only",
+          "prior_residuals": [],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "coding-ci-pass-001",
+          "certificate_blockers_activated": [
+            "ci_pass_to_certificate"
+          ],
+          "decision_delta": "UNCHANGED",
+          "domain": "coding_pr_governance",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_blockers_only",
+          "prior_residuals": [
+            "prior_blocking:ci_pass_to_certificate"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": [
+            "tests_pass"
+          ]
+        },
+        {
+          "case_id": "coding-governed-pr-002",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "coding_pr_governance",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "CERTIFICATE",
+          "final_decision_before_priors": "CERTIFICATE",
+          "matched_prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_blockers_only",
+          "prior_residuals": [],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": [
+            "governance_gate_passed",
+            "proof_object",
+            "reverse_trace_complete",
+            "tests_pass"
+          ]
+        },
+        {
+          "case_id": "coding-zero-in-path-local-003",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "coding_pr_governance",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_blockers_only",
+          "prior_residuals": [],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "coding-gettier-accidental-pass-004",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "coding_pr_governance",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_blockers_only",
+          "prior_residuals": [],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": [
+            "proof_object"
+          ]
+        },
+        {
+          "case_id": "coding-zero-in-path-local-005",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "coding_pr_governance",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_blockers_only",
+          "prior_residuals": [],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": []
+        }
+      ]
+    },
+    "prior_disabled_ablation": {
+      "cases": [
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "arabic-ala-no-context-001",
+          "confidence": 0.78,
+          "domain": "arabic_language",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "arabic-ala-context-002",
+          "confidence": 0.91,
+          "domain": "arabic_language",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": false,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "STRONG",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "arabic-ala-metaphor-003",
+          "confidence": 0.9,
+          "domain": "arabic_language",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "STRONG",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "arabic-zero-in-path-local-004",
+          "confidence": 0.78,
+          "domain": "arabic_language",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-triangle-001",
+          "confidence": 0.78,
+          "domain": "mathematics",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-triangle-euclidean-002",
+          "confidence": 0.98,
+          "domain": "mathematics",
+          "error_tags": [
+            "false_strong"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "CERTIFICATE",
+          "governance_gate_passed": true,
+          "has_blocking_residual": false,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "CERTIFICATE",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-triangle-missing-assumptions-003",
+          "confidence": 0.77,
+          "domain": "mathematics",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-zero-in-path-local-004",
+          "confidence": 0.78,
+          "domain": "mathematics",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-gettier-true-accidental-005",
+          "confidence": 0.78,
+          "domain": "mathematics",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-smoke-001",
+          "confidence": 0.775,
+          "domain": "physical_reality",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-fire-strong-002",
+          "confidence": 0.905,
+          "domain": "physical_reality",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "STRONG",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-alternative-cause-003",
+          "confidence": 0.77,
+          "domain": "physical_reality",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-zero-in-path-local-004",
+          "confidence": 0.78,
+          "domain": "physical_reality",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-gettier-accidental-correct-005",
+          "confidence": 0.78,
+          "domain": "physical_reality",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-ci-pass-001",
+          "confidence": 0.79,
+          "domain": "coding_pr_governance",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-governed-pr-002",
+          "confidence": 0.99,
+          "domain": "coding_pr_governance",
+          "error_tags": [
+            "false_strong"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "CERTIFICATE",
+          "governance_gate_passed": true,
+          "has_blocking_residual": false,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "CERTIFICATE",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-zero-in-path-local-003",
+          "confidence": 0.77,
+          "domain": "coding_pr_governance",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-gettier-accidental-pass-004",
+          "confidence": 0.785,
+          "domain": "coding_pr_governance",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-zero-in-path-local-005",
+          "confidence": 0.78,
+          "domain": "coding_pr_governance",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        }
+      ],
+      "metrics": {
+        "decision_calibration_error": 0.1876,
+        "false_certificate_rate": 0.0,
+        "forbidden_transition_violation_rate": 0.0,
+        "gettier_detection_rate": 1.0,
+        "overblocking_rate": 0.0,
+        "prior_blocker_activation_rate": 0.0,
+        "prior_coverage_gap_count": 0.0,
+        "prior_missing_evidence_rate": 0.0,
+        "prior_residual_preservation_rate": 1.0,
+        "prior_rule_coverage_rate": 0.0,
+        "residual_preservation_rate": 1.0,
+        "reverse_trace_coverage": 1.0,
+        "zero_in_path_locality_accuracy": 1.0
+      },
+      "mode": "prior_disabled_ablation",
+      "prior_coverage_matrix": []
+    },
+    "prior_evidence_requirements_only": {
+      "cases": [
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "arabic-ala-no-context-001",
+          "confidence": 0.78,
+          "domain": "arabic_language",
+          "error_tags": [
+            "prior_missing_evidence:semantic_context",
+            "prior_missing:lang-context-required-for-ambiguity"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_missing_evidence:semantic_context"
+          ],
+          "prior_rule_ids": [
+            "lang-context-required-for-ambiguity"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "arabic-ala-context-002",
+          "confidence": 0.91,
+          "domain": "arabic_language",
+          "error_tags": [
+            "prior_missing_evidence:base_letter_alignment",
+            "prior_missing_evidence:clause_scoped_attachment",
+            "prior_missing_evidence:haraka_anchor_check",
+            "prior_missing_evidence:path_level_trace",
+            "prior_missing_evidence:semantic_context",
+            "prior_missing_evidence:semantic_role_split",
+            "prior_missing_evidence:syntactic_context",
+            "prior_missing:ar-morph-syntax-path-preservation",
+            "prior_missing:ar-vocalized-haraka-anchor",
+            "prior_missing:lang-context-required-for-ambiguity"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "STRONG",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_missing_evidence:base_letter_alignment",
+            "prior_missing_evidence:clause_scoped_attachment",
+            "prior_missing_evidence:haraka_anchor_check",
+            "prior_missing_evidence:path_level_trace",
+            "prior_missing_evidence:semantic_context",
+            "prior_missing_evidence:semantic_role_split",
+            "prior_missing_evidence:syntactic_context"
+          ],
+          "prior_rule_ids": [
+            "ar-morph-syntax-path-preservation",
+            "ar-vocalized-haraka-anchor",
+            "lang-context-required-for-ambiguity"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "arabic-ala-metaphor-003",
+          "confidence": 0.9,
+          "domain": "arabic_language",
+          "error_tags": [
+            "prior_missing_evidence:semantic_context",
+            "prior_missing_evidence:syntactic_context",
+            "prior_missing:lang-context-required-for-ambiguity"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "STRONG",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_missing_evidence:semantic_context",
+            "prior_missing_evidence:syntactic_context"
+          ],
+          "prior_rule_ids": [
+            "lang-context-required-for-ambiguity"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "arabic-zero-in-path-local-004",
+          "confidence": 0.78,
+          "domain": "arabic_language",
+          "error_tags": [
+            "prior_missing_evidence:path_level_trace",
+            "prior_missing:ar-morph-syntax-path-preservation"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_missing_evidence:path_level_trace"
+          ],
+          "prior_rule_ids": [
+            "ar-morph-syntax-path-preservation"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-triangle-001",
+          "confidence": 0.78,
+          "domain": "mathematics",
+          "error_tags": [
+            "prior_missing_evidence:euclidean_axioms",
+            "prior_missing_evidence:valid_proof_path",
+            "prior_missing:math-euclidean-triangle-sum"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_missing_evidence:euclidean_axioms",
+            "prior_missing_evidence:valid_proof_path"
+          ],
+          "prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-triangle-euclidean-002",
+          "confidence": 0.98,
+          "domain": "mathematics",
+          "error_tags": [
+            "false_strong"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "CERTIFICATE",
+          "governance_gate_passed": true,
+          "has_blocking_residual": false,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "CERTIFICATE",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-triangle-missing-assumptions-003",
+          "confidence": 0.77,
+          "domain": "mathematics",
+          "error_tags": [
+            "prior_missing_evidence:euclidean_axioms",
+            "prior_missing_evidence:valid_proof_path",
+            "prior_missing:math-euclidean-triangle-sum"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_missing_evidence:euclidean_axioms",
+            "prior_missing_evidence:valid_proof_path"
+          ],
+          "prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-zero-in-path-local-004",
+          "confidence": 0.78,
+          "domain": "mathematics",
+          "error_tags": [
+            "prior_missing_evidence:euclidean_axioms",
+            "prior_missing_evidence:valid_proof_path",
+            "prior_missing:math-euclidean-triangle-sum"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_missing_evidence:euclidean_axioms",
+            "prior_missing_evidence:valid_proof_path"
+          ],
+          "prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-gettier-true-accidental-005",
+          "confidence": 0.78,
+          "domain": "mathematics",
+          "error_tags": [
+            "prior_missing_evidence:euclidean_axioms",
+            "prior_missing_evidence:valid_proof_path",
+            "prior_missing:math-euclidean-triangle-sum"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_missing_evidence:euclidean_axioms",
+            "prior_missing_evidence:valid_proof_path"
+          ],
+          "prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-smoke-001",
+          "confidence": 0.775,
+          "domain": "physical_reality",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [
+            "physics-smoke-fire-conditional"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-fire-strong-002",
+          "confidence": 0.905,
+          "domain": "physical_reality",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "STRONG",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [
+            "physics-smoke-fire-conditional"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-alternative-cause-003",
+          "confidence": 0.77,
+          "domain": "physical_reality",
+          "error_tags": [
+            "prior_missing_evidence:burning_smell",
+            "prior_missing_evidence:heat",
+            "prior_missing_evidence:visible_flame",
+            "prior_missing:physics-smoke-fire-conditional"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_missing_evidence:burning_smell",
+            "prior_missing_evidence:heat",
+            "prior_missing_evidence:visible_flame"
+          ],
+          "prior_rule_ids": [
+            "physics-smoke-fire-conditional"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-zero-in-path-local-004",
+          "confidence": 0.78,
+          "domain": "physical_reality",
+          "error_tags": [
+            "prior_missing_evidence:burning_smell",
+            "prior_missing_evidence:concentration_measured",
+            "prior_missing_evidence:heat",
+            "prior_missing_evidence:product_measurement_trace",
+            "prior_missing_evidence:reactants_declared",
+            "prior_missing_evidence:temperature_measured",
+            "prior_missing_evidence:visible_flame",
+            "prior_missing:chem-reaction-conditions-required",
+            "prior_missing:physics-smoke-fire-conditional"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_missing_evidence:burning_smell",
+            "prior_missing_evidence:concentration_measured",
+            "prior_missing_evidence:heat",
+            "prior_missing_evidence:product_measurement_trace",
+            "prior_missing_evidence:reactants_declared",
+            "prior_missing_evidence:temperature_measured",
+            "prior_missing_evidence:visible_flame"
+          ],
+          "prior_rule_ids": [
+            "chem-reaction-conditions-required",
+            "physics-smoke-fire-conditional"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-gettier-accidental-correct-005",
+          "confidence": 0.78,
+          "domain": "physical_reality",
+          "error_tags": [
+            "prior_missing_evidence:burning_smell",
+            "prior_missing_evidence:concentration_measured",
+            "prior_missing_evidence:heat",
+            "prior_missing_evidence:product_measurement_trace",
+            "prior_missing_evidence:reactants_declared",
+            "prior_missing_evidence:temperature_measured",
+            "prior_missing_evidence:visible_flame",
+            "prior_missing:chem-reaction-conditions-required",
+            "prior_missing:physics-smoke-fire-conditional"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_missing_evidence:burning_smell",
+            "prior_missing_evidence:concentration_measured",
+            "prior_missing_evidence:heat",
+            "prior_missing_evidence:product_measurement_trace",
+            "prior_missing_evidence:reactants_declared",
+            "prior_missing_evidence:temperature_measured",
+            "prior_missing_evidence:visible_flame"
+          ],
+          "prior_rule_ids": [
+            "chem-reaction-conditions-required",
+            "physics-smoke-fire-conditional"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-ci-pass-001",
+          "confidence": 0.79,
+          "domain": "coding_pr_governance",
+          "error_tags": [
+            "prior_missing_evidence:governance_gate_passed",
+            "prior_missing_evidence:proof_object",
+            "prior_missing_evidence:reverse_trace_complete",
+            "prior_missing:prog-ci-merge-not-certificate"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_missing_evidence:governance_gate_passed",
+            "prior_missing_evidence:proof_object",
+            "prior_missing_evidence:reverse_trace_complete"
+          ],
+          "prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-governed-pr-002",
+          "confidence": 0.99,
+          "domain": "coding_pr_governance",
+          "error_tags": [
+            "false_strong"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "CERTIFICATE",
+          "governance_gate_passed": true,
+          "has_blocking_residual": false,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "CERTIFICATE",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-zero-in-path-local-003",
+          "confidence": 0.77,
+          "domain": "coding_pr_governance",
+          "error_tags": [
+            "prior_missing_evidence:governance_gate_passed",
+            "prior_missing_evidence:proof_object",
+            "prior_missing_evidence:reverse_trace_complete",
+            "prior_missing_evidence:tests_pass",
+            "prior_missing:prog-ci-merge-not-certificate"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_missing_evidence:governance_gate_passed",
+            "prior_missing_evidence:proof_object",
+            "prior_missing_evidence:reverse_trace_complete",
+            "prior_missing_evidence:tests_pass"
+          ],
+          "prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-gettier-accidental-pass-004",
+          "confidence": 0.785,
+          "domain": "coding_pr_governance",
+          "error_tags": [
+            "prior_missing_evidence:governance_gate_passed",
+            "prior_missing_evidence:reverse_trace_complete",
+            "prior_missing_evidence:tests_pass",
+            "prior_missing:prog-ci-merge-not-certificate"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_missing_evidence:governance_gate_passed",
+            "prior_missing_evidence:reverse_trace_complete",
+            "prior_missing_evidence:tests_pass"
+          ],
+          "prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-zero-in-path-local-005",
+          "confidence": 0.78,
+          "domain": "coding_pr_governance",
+          "error_tags": [
+            "prior_missing_evidence:governance_gate_passed",
+            "prior_missing_evidence:proof_object",
+            "prior_missing_evidence:reverse_trace_complete",
+            "prior_missing_evidence:tests_pass",
+            "prior_missing:prog-ci-merge-not-certificate"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_missing_evidence:governance_gate_passed",
+            "prior_missing_evidence:proof_object",
+            "prior_missing_evidence:reverse_trace_complete",
+            "prior_missing_evidence:tests_pass"
+          ],
+          "prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "reverse_trace_complete": true
+        }
+      ],
+      "metrics": {
+        "decision_calibration_error": 0.1876,
+        "false_certificate_rate": 0.0,
+        "forbidden_transition_violation_rate": 0.0,
+        "gettier_detection_rate": 1.0,
+        "overblocking_rate": 0.0,
+        "prior_blocker_activation_rate": 0.0,
+        "prior_coverage_gap_count": 0.0,
+        "prior_missing_evidence_rate": 0.7895,
+        "prior_residual_preservation_rate": 1.0,
+        "prior_rule_coverage_rate": 1.0,
+        "residual_preservation_rate": 1.0,
+        "reverse_trace_coverage": 1.0,
+        "zero_in_path_locality_accuracy": 1.0
+      },
+      "mode": "prior_evidence_requirements_only",
+      "prior_coverage_matrix": [
+        {
+          "case_id": "arabic-ala-no-context-001",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "arabic_language",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "lang-context-required-for-ambiguity"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_evidence_requirements_only",
+          "prior_residuals": [
+            "prior_missing_evidence:semantic_context"
+          ],
+          "required_evidence_missing": [
+            "semantic_context"
+          ],
+          "required_evidence_supplied": [
+            "syntactic_context"
+          ]
+        },
+        {
+          "case_id": "arabic-ala-context-002",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "arabic_language",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "STRONG",
+          "final_decision_before_priors": "STRONG",
+          "matched_prior_rule_ids": [
+            "ar-morph-syntax-path-preservation",
+            "ar-vocalized-haraka-anchor",
+            "lang-context-required-for-ambiguity"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_evidence_requirements_only",
+          "prior_residuals": [
+            "prior_missing_evidence:base_letter_alignment",
+            "prior_missing_evidence:clause_scoped_attachment",
+            "prior_missing_evidence:haraka_anchor_check",
+            "prior_missing_evidence:path_level_trace",
+            "prior_missing_evidence:semantic_context",
+            "prior_missing_evidence:semantic_role_split",
+            "prior_missing_evidence:syntactic_context"
+          ],
+          "required_evidence_missing": [
+            "base_letter_alignment",
+            "clause_scoped_attachment",
+            "haraka_anchor_check",
+            "path_level_trace",
+            "semantic_context",
+            "semantic_role_split",
+            "syntactic_context"
+          ],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "arabic-ala-metaphor-003",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "arabic_language",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "STRONG",
+          "final_decision_before_priors": "STRONG",
+          "matched_prior_rule_ids": [
+            "lang-context-required-for-ambiguity"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_evidence_requirements_only",
+          "prior_residuals": [
+            "prior_missing_evidence:semantic_context",
+            "prior_missing_evidence:syntactic_context"
+          ],
+          "required_evidence_missing": [
+            "semantic_context",
+            "syntactic_context"
+          ],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "arabic-zero-in-path-local-004",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "arabic_language",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "ar-morph-syntax-path-preservation"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_evidence_requirements_only",
+          "prior_residuals": [
+            "prior_missing_evidence:path_level_trace"
+          ],
+          "required_evidence_missing": [
+            "path_level_trace"
+          ],
+          "required_evidence_supplied": [
+            "clause_scoped_attachment",
+            "semantic_role_split"
+          ]
+        },
+        {
+          "case_id": "math-triangle-001",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "mathematics",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_evidence_requirements_only",
+          "prior_residuals": [
+            "prior_missing_evidence:euclidean_axioms",
+            "prior_missing_evidence:valid_proof_path"
+          ],
+          "required_evidence_missing": [
+            "euclidean_axioms",
+            "valid_proof_path"
+          ],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "math-triangle-euclidean-002",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "mathematics",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "CERTIFICATE",
+          "final_decision_before_priors": "CERTIFICATE",
+          "matched_prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_evidence_requirements_only",
+          "prior_residuals": [],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": [
+            "euclidean_axioms",
+            "valid_proof_path"
+          ]
+        },
+        {
+          "case_id": "math-triangle-missing-assumptions-003",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "mathematics",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_evidence_requirements_only",
+          "prior_residuals": [
+            "prior_missing_evidence:euclidean_axioms",
+            "prior_missing_evidence:valid_proof_path"
+          ],
+          "required_evidence_missing": [
+            "euclidean_axioms",
+            "valid_proof_path"
+          ],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "math-zero-in-path-local-004",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "mathematics",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_evidence_requirements_only",
+          "prior_residuals": [
+            "prior_missing_evidence:euclidean_axioms",
+            "prior_missing_evidence:valid_proof_path"
+          ],
+          "required_evidence_missing": [
+            "euclidean_axioms",
+            "valid_proof_path"
+          ],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "math-gettier-true-accidental-005",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "mathematics",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_evidence_requirements_only",
+          "prior_residuals": [
+            "prior_missing_evidence:euclidean_axioms",
+            "prior_missing_evidence:valid_proof_path"
+          ],
+          "required_evidence_missing": [
+            "euclidean_axioms",
+            "valid_proof_path"
+          ],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "physical-smoke-001",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "physical_reality",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "physics-smoke-fire-conditional"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_evidence_requirements_only",
+          "prior_residuals": [],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": [
+            "burning_smell",
+            "heat",
+            "visible_flame"
+          ]
+        },
+        {
+          "case_id": "physical-fire-strong-002",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "physical_reality",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "STRONG",
+          "final_decision_before_priors": "STRONG",
+          "matched_prior_rule_ids": [
+            "physics-smoke-fire-conditional"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_evidence_requirements_only",
+          "prior_residuals": [],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": [
+            "burning_smell",
+            "heat",
+            "visible_flame"
+          ]
+        },
+        {
+          "case_id": "physical-alternative-cause-003",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "physical_reality",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "physics-smoke-fire-conditional"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_evidence_requirements_only",
+          "prior_residuals": [
+            "prior_missing_evidence:burning_smell",
+            "prior_missing_evidence:heat",
+            "prior_missing_evidence:visible_flame"
+          ],
+          "required_evidence_missing": [
+            "burning_smell",
+            "heat",
+            "visible_flame"
+          ],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "physical-zero-in-path-local-004",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "physical_reality",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "chem-reaction-conditions-required",
+            "physics-smoke-fire-conditional"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_evidence_requirements_only",
+          "prior_residuals": [
+            "prior_missing_evidence:burning_smell",
+            "prior_missing_evidence:concentration_measured",
+            "prior_missing_evidence:heat",
+            "prior_missing_evidence:product_measurement_trace",
+            "prior_missing_evidence:reactants_declared",
+            "prior_missing_evidence:temperature_measured",
+            "prior_missing_evidence:visible_flame"
+          ],
+          "required_evidence_missing": [
+            "burning_smell",
+            "concentration_measured",
+            "heat",
+            "product_measurement_trace",
+            "reactants_declared",
+            "temperature_measured",
+            "visible_flame"
+          ],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "physical-gettier-accidental-correct-005",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "physical_reality",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "chem-reaction-conditions-required",
+            "physics-smoke-fire-conditional"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_evidence_requirements_only",
+          "prior_residuals": [
+            "prior_missing_evidence:burning_smell",
+            "prior_missing_evidence:concentration_measured",
+            "prior_missing_evidence:heat",
+            "prior_missing_evidence:product_measurement_trace",
+            "prior_missing_evidence:reactants_declared",
+            "prior_missing_evidence:temperature_measured",
+            "prior_missing_evidence:visible_flame"
+          ],
+          "required_evidence_missing": [
+            "burning_smell",
+            "concentration_measured",
+            "heat",
+            "product_measurement_trace",
+            "reactants_declared",
+            "temperature_measured",
+            "visible_flame"
+          ],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "coding-ci-pass-001",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "coding_pr_governance",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_evidence_requirements_only",
+          "prior_residuals": [
+            "prior_missing_evidence:governance_gate_passed",
+            "prior_missing_evidence:proof_object",
+            "prior_missing_evidence:reverse_trace_complete"
+          ],
+          "required_evidence_missing": [
+            "governance_gate_passed",
+            "proof_object",
+            "reverse_trace_complete"
+          ],
+          "required_evidence_supplied": [
+            "tests_pass"
+          ]
+        },
+        {
+          "case_id": "coding-governed-pr-002",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "coding_pr_governance",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "CERTIFICATE",
+          "final_decision_before_priors": "CERTIFICATE",
+          "matched_prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_evidence_requirements_only",
+          "prior_residuals": [],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": [
+            "governance_gate_passed",
+            "proof_object",
+            "reverse_trace_complete",
+            "tests_pass"
+          ]
+        },
+        {
+          "case_id": "coding-zero-in-path-local-003",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "coding_pr_governance",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_evidence_requirements_only",
+          "prior_residuals": [
+            "prior_missing_evidence:governance_gate_passed",
+            "prior_missing_evidence:proof_object",
+            "prior_missing_evidence:reverse_trace_complete",
+            "prior_missing_evidence:tests_pass"
+          ],
+          "required_evidence_missing": [
+            "governance_gate_passed",
+            "proof_object",
+            "reverse_trace_complete",
+            "tests_pass"
+          ],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "coding-gettier-accidental-pass-004",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "coding_pr_governance",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_evidence_requirements_only",
+          "prior_residuals": [
+            "prior_missing_evidence:governance_gate_passed",
+            "prior_missing_evidence:reverse_trace_complete",
+            "prior_missing_evidence:tests_pass"
+          ],
+          "required_evidence_missing": [
+            "governance_gate_passed",
+            "reverse_trace_complete",
+            "tests_pass"
+          ],
+          "required_evidence_supplied": [
+            "proof_object"
+          ]
+        },
+        {
+          "case_id": "coding-zero-in-path-local-005",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "coding_pr_governance",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_evidence_requirements_only",
+          "prior_residuals": [
+            "prior_missing_evidence:governance_gate_passed",
+            "prior_missing_evidence:proof_object",
+            "prior_missing_evidence:reverse_trace_complete",
+            "prior_missing_evidence:tests_pass"
+          ],
+          "required_evidence_missing": [
+            "governance_gate_passed",
+            "proof_object",
+            "reverse_trace_complete",
+            "tests_pass"
+          ],
+          "required_evidence_supplied": []
+        }
+      ]
+    },
+    "prior_residual_expectations_only": {
+      "cases": [
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "arabic-ala-no-context-001",
+          "confidence": 0.78,
+          "domain": "arabic_language",
+          "error_tags": [
+            "prior_expected_residual_missing:metaphorical_mapping_required"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:metaphorical_mapping_required"
+          ],
+          "prior_rule_ids": [
+            "lang-context-required-for-ambiguity"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "arabic-ala-context-002",
+          "confidence": 0.91,
+          "domain": "arabic_language",
+          "error_tags": [
+            "prior_expected_residual_missing:floating_haraka_local_zero_in_path",
+            "prior_expected_residual_missing:local_path_failure",
+            "prior_expected_residual_missing:metaphorical_mapping_required"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "STRONG",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:floating_haraka_local_zero_in_path",
+            "prior_expected_residual_missing:local_path_failure",
+            "prior_expected_residual_missing:metaphorical_mapping_required"
+          ],
+          "prior_rule_ids": [
+            "ar-morph-syntax-path-preservation",
+            "ar-vocalized-haraka-anchor",
+            "lang-context-required-for-ambiguity"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "arabic-ala-metaphor-003",
+          "confidence": 0.9,
+          "domain": "arabic_language",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "STRONG",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [
+            "lang-context-required-for-ambiguity"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "arabic-zero-in-path-local-004",
+          "confidence": 0.78,
+          "domain": "arabic_language",
+          "error_tags": [
+            "prior_expected_residual_missing:local_path_failure"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:local_path_failure"
+          ],
+          "prior_rule_ids": [
+            "ar-morph-syntax-path-preservation"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-triangle-001",
+          "confidence": 0.78,
+          "domain": "mathematics",
+          "error_tags": [
+            "prior_expected_residual_missing:missing_geometry_assumption"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:missing_geometry_assumption"
+          ],
+          "prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-triangle-euclidean-002",
+          "confidence": 0.98,
+          "domain": "mathematics",
+          "error_tags": [
+            "false_strong",
+            "prior_expected_residual_missing:missing_geometry_assumption",
+            "overblocking"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": true,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:missing_geometry_assumption"
+          ],
+          "prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-triangle-missing-assumptions-003",
+          "confidence": 0.77,
+          "domain": "mathematics",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-zero-in-path-local-004",
+          "confidence": 0.78,
+          "domain": "mathematics",
+          "error_tags": [
+            "prior_expected_residual_missing:missing_geometry_assumption"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:missing_geometry_assumption"
+          ],
+          "prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-gettier-true-accidental-005",
+          "confidence": 0.78,
+          "domain": "mathematics",
+          "error_tags": [
+            "prior_expected_residual_missing:missing_geometry_assumption"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:missing_geometry_assumption"
+          ],
+          "prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-smoke-001",
+          "confidence": 0.775,
+          "domain": "physical_reality",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [
+            "physics-smoke-fire-conditional"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-fire-strong-002",
+          "confidence": 0.905,
+          "domain": "physical_reality",
+          "error_tags": [
+            "prior_expected_residual_missing:alternative_causes_possible"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "STRONG",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:alternative_causes_possible"
+          ],
+          "prior_rule_ids": [
+            "physics-smoke-fire-conditional"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-alternative-cause-003",
+          "confidence": 0.77,
+          "domain": "physical_reality",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [
+            "physics-smoke-fire-conditional"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-zero-in-path-local-004",
+          "confidence": 0.78,
+          "domain": "physical_reality",
+          "error_tags": [
+            "prior_expected_residual_missing:alternative_causes_possible",
+            "prior_expected_residual_missing:conditions_not_universal"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:alternative_causes_possible",
+            "prior_expected_residual_missing:conditions_not_universal"
+          ],
+          "prior_rule_ids": [
+            "chem-reaction-conditions-required",
+            "physics-smoke-fire-conditional"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-gettier-accidental-correct-005",
+          "confidence": 0.78,
+          "domain": "physical_reality",
+          "error_tags": [
+            "prior_expected_residual_missing:alternative_causes_possible",
+            "prior_expected_residual_missing:conditions_not_universal"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:alternative_causes_possible",
+            "prior_expected_residual_missing:conditions_not_universal"
+          ],
+          "prior_rule_ids": [
+            "chem-reaction-conditions-required",
+            "physics-smoke-fire-conditional"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-ci-pass-001",
+          "confidence": 0.79,
+          "domain": "coding_pr_governance",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-governed-pr-002",
+          "confidence": 0.99,
+          "domain": "coding_pr_governance",
+          "error_tags": [
+            "false_strong",
+            "prior_expected_residual_missing:ci_does_not_prove_architectural_correctness",
+            "overblocking"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": true,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:ci_does_not_prove_architectural_correctness"
+          ],
+          "prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-zero-in-path-local-003",
+          "confidence": 0.77,
+          "domain": "coding_pr_governance",
+          "error_tags": [
+            "prior_expected_residual_missing:ci_does_not_prove_architectural_correctness"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:ci_does_not_prove_architectural_correctness"
+          ],
+          "prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-gettier-accidental-pass-004",
+          "confidence": 0.785,
+          "domain": "coding_pr_governance",
+          "error_tags": [
+            "prior_expected_residual_missing:ci_does_not_prove_architectural_correctness"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:ci_does_not_prove_architectural_correctness"
+          ],
+          "prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-zero-in-path-local-005",
+          "confidence": 0.78,
+          "domain": "coding_pr_governance",
+          "error_tags": [
+            "prior_expected_residual_missing:ci_does_not_prove_architectural_correctness"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:ci_does_not_prove_architectural_correctness"
+          ],
+          "prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "reverse_trace_complete": true
+        }
+      ],
+      "metrics": {
+        "decision_calibration_error": 0.1876,
+        "false_certificate_rate": 0.0,
+        "forbidden_transition_violation_rate": 0.0,
+        "gettier_detection_rate": 1.0,
+        "overblocking_rate": 0.4,
+        "prior_blocker_activation_rate": 0.0,
+        "prior_coverage_gap_count": 0.0,
+        "prior_missing_evidence_rate": 0.0,
+        "prior_residual_preservation_rate": 0.2632,
+        "prior_rule_coverage_rate": 1.0,
+        "residual_preservation_rate": 1.0,
+        "reverse_trace_coverage": 1.0,
+        "zero_in_path_locality_accuracy": 1.0
+      },
+      "mode": "prior_residual_expectations_only",
+      "prior_coverage_matrix": [
+        {
+          "case_id": "arabic-ala-no-context-001",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "arabic_language",
+          "expected_residuals_missing": [
+            "metaphorical_mapping_required"
+          ],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "lang-context-required-for-ambiguity"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_residual_expectations_only",
+          "prior_residuals": [
+            "prior_expected_residual_missing:metaphorical_mapping_required"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": [
+            "syntactic_context"
+          ]
+        },
+        {
+          "case_id": "arabic-ala-context-002",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "arabic_language",
+          "expected_residuals_missing": [
+            "floating_haraka_local_zero_in_path",
+            "local_path_failure",
+            "metaphorical_mapping_required"
+          ],
+          "final_decision_after_priors": "STRONG",
+          "final_decision_before_priors": "STRONG",
+          "matched_prior_rule_ids": [
+            "ar-morph-syntax-path-preservation",
+            "ar-vocalized-haraka-anchor",
+            "lang-context-required-for-ambiguity"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_residual_expectations_only",
+          "prior_residuals": [
+            "prior_expected_residual_missing:floating_haraka_local_zero_in_path",
+            "prior_expected_residual_missing:local_path_failure",
+            "prior_expected_residual_missing:metaphorical_mapping_required"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "arabic-ala-metaphor-003",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "arabic_language",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "STRONG",
+          "final_decision_before_priors": "STRONG",
+          "matched_prior_rule_ids": [
+            "lang-context-required-for-ambiguity"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_residual_expectations_only",
+          "prior_residuals": [],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "arabic-zero-in-path-local-004",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "arabic_language",
+          "expected_residuals_missing": [
+            "local_path_failure"
+          ],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "ar-morph-syntax-path-preservation"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_residual_expectations_only",
+          "prior_residuals": [
+            "prior_expected_residual_missing:local_path_failure"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": [
+            "clause_scoped_attachment",
+            "semantic_role_split"
+          ]
+        },
+        {
+          "case_id": "math-triangle-001",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "mathematics",
+          "expected_residuals_missing": [
+            "missing_geometry_assumption"
+          ],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_residual_expectations_only",
+          "prior_residuals": [
+            "prior_expected_residual_missing:missing_geometry_assumption"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "math-triangle-euclidean-002",
+          "certificate_blockers_activated": [],
+          "decision_delta": "CERTIFICATE->HYPOTHESIS",
+          "domain": "mathematics",
+          "expected_residuals_missing": [
+            "missing_geometry_assumption"
+          ],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "CERTIFICATE",
+          "matched_prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_residual_expectations_only",
+          "prior_residuals": [
+            "prior_expected_residual_missing:missing_geometry_assumption"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": [
+            "euclidean_axioms",
+            "valid_proof_path"
+          ]
+        },
+        {
+          "case_id": "math-triangle-missing-assumptions-003",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "mathematics",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_residual_expectations_only",
+          "prior_residuals": [],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "math-zero-in-path-local-004",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "mathematics",
+          "expected_residuals_missing": [
+            "missing_geometry_assumption"
+          ],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_residual_expectations_only",
+          "prior_residuals": [
+            "prior_expected_residual_missing:missing_geometry_assumption"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "math-gettier-true-accidental-005",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "mathematics",
+          "expected_residuals_missing": [
+            "missing_geometry_assumption"
+          ],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_residual_expectations_only",
+          "prior_residuals": [
+            "prior_expected_residual_missing:missing_geometry_assumption"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "physical-smoke-001",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "physical_reality",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "physics-smoke-fire-conditional"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_residual_expectations_only",
+          "prior_residuals": [],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": [
+            "burning_smell",
+            "heat",
+            "visible_flame"
+          ]
+        },
+        {
+          "case_id": "physical-fire-strong-002",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "physical_reality",
+          "expected_residuals_missing": [
+            "alternative_causes_possible"
+          ],
+          "final_decision_after_priors": "STRONG",
+          "final_decision_before_priors": "STRONG",
+          "matched_prior_rule_ids": [
+            "physics-smoke-fire-conditional"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_residual_expectations_only",
+          "prior_residuals": [
+            "prior_expected_residual_missing:alternative_causes_possible"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": [
+            "burning_smell",
+            "heat",
+            "visible_flame"
+          ]
+        },
+        {
+          "case_id": "physical-alternative-cause-003",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "physical_reality",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "physics-smoke-fire-conditional"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_residual_expectations_only",
+          "prior_residuals": [],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "physical-zero-in-path-local-004",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "physical_reality",
+          "expected_residuals_missing": [
+            "alternative_causes_possible",
+            "conditions_not_universal"
+          ],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "chem-reaction-conditions-required",
+            "physics-smoke-fire-conditional"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_residual_expectations_only",
+          "prior_residuals": [
+            "prior_expected_residual_missing:alternative_causes_possible",
+            "prior_expected_residual_missing:conditions_not_universal"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "physical-gettier-accidental-correct-005",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "physical_reality",
+          "expected_residuals_missing": [
+            "alternative_causes_possible",
+            "conditions_not_universal"
+          ],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "chem-reaction-conditions-required",
+            "physics-smoke-fire-conditional"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_residual_expectations_only",
+          "prior_residuals": [
+            "prior_expected_residual_missing:alternative_causes_possible",
+            "prior_expected_residual_missing:conditions_not_universal"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "coding-ci-pass-001",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "coding_pr_governance",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_residual_expectations_only",
+          "prior_residuals": [],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": [
+            "tests_pass"
+          ]
+        },
+        {
+          "case_id": "coding-governed-pr-002",
+          "certificate_blockers_activated": [],
+          "decision_delta": "CERTIFICATE->HYPOTHESIS",
+          "domain": "coding_pr_governance",
+          "expected_residuals_missing": [
+            "ci_does_not_prove_architectural_correctness"
+          ],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "CERTIFICATE",
+          "matched_prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_residual_expectations_only",
+          "prior_residuals": [
+            "prior_expected_residual_missing:ci_does_not_prove_architectural_correctness"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": [
+            "governance_gate_passed",
+            "proof_object",
+            "reverse_trace_complete",
+            "tests_pass"
+          ]
+        },
+        {
+          "case_id": "coding-zero-in-path-local-003",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "coding_pr_governance",
+          "expected_residuals_missing": [
+            "ci_does_not_prove_architectural_correctness"
+          ],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_residual_expectations_only",
+          "prior_residuals": [
+            "prior_expected_residual_missing:ci_does_not_prove_architectural_correctness"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "coding-gettier-accidental-pass-004",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "coding_pr_governance",
+          "expected_residuals_missing": [
+            "ci_does_not_prove_architectural_correctness"
+          ],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_residual_expectations_only",
+          "prior_residuals": [
+            "prior_expected_residual_missing:ci_does_not_prove_architectural_correctness"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": [
+            "proof_object"
+          ]
+        },
+        {
+          "case_id": "coding-zero-in-path-local-005",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "coding_pr_governance",
+          "expected_residuals_missing": [
+            "ci_does_not_prove_architectural_correctness"
+          ],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "missing_prior_rule": false,
+          "mode": "prior_residual_expectations_only",
+          "prior_residuals": [
+            "prior_expected_residual_missing:ci_does_not_prove_architectural_correctness"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": []
+        }
+      ]
+    },
+    "with_golden_prior_registry": {
+      "cases": [
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "arabic-ala-no-context-001",
+          "confidence": 0.78,
+          "domain": "arabic_language",
+          "error_tags": [
+            "prior_blocking:surface_fluency_not_semantic_certificate",
+            "prior_expected_residual_missing:metaphorical_mapping_required",
+            "prior_missing_evidence:semantic_context",
+            "prior_missing:lang-context-required-for-ambiguity"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_blocking:surface_fluency_not_semantic_certificate",
+            "prior_expected_residual_missing:metaphorical_mapping_required",
+            "prior_missing_evidence:semantic_context"
+          ],
+          "prior_rule_ids": [
+            "lang-context-required-for-ambiguity"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "arabic-ala-context-002",
+          "confidence": 0.91,
+          "domain": "arabic_language",
+          "error_tags": [
+            "prior_expected_residual_missing:floating_haraka_local_zero_in_path",
+            "prior_expected_residual_missing:local_path_failure",
+            "prior_expected_residual_missing:metaphorical_mapping_required",
+            "prior_missing_evidence:base_letter_alignment",
+            "prior_missing_evidence:clause_scoped_attachment",
+            "prior_missing_evidence:haraka_anchor_check",
+            "prior_missing_evidence:path_level_trace",
+            "prior_missing_evidence:semantic_context",
+            "prior_missing_evidence:semantic_role_split",
+            "prior_missing_evidence:syntactic_context",
+            "prior_missing:ar-morph-syntax-path-preservation",
+            "prior_missing:ar-vocalized-haraka-anchor",
+            "prior_missing:lang-context-required-for-ambiguity"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "STRONG",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:floating_haraka_local_zero_in_path",
+            "prior_expected_residual_missing:local_path_failure",
+            "prior_expected_residual_missing:metaphorical_mapping_required",
+            "prior_missing_evidence:base_letter_alignment",
+            "prior_missing_evidence:clause_scoped_attachment",
+            "prior_missing_evidence:haraka_anchor_check",
+            "prior_missing_evidence:path_level_trace",
+            "prior_missing_evidence:semantic_context",
+            "prior_missing_evidence:semantic_role_split",
+            "prior_missing_evidence:syntactic_context"
+          ],
+          "prior_rule_ids": [
+            "ar-morph-syntax-path-preservation",
+            "ar-vocalized-haraka-anchor",
+            "lang-context-required-for-ambiguity"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "arabic-ala-metaphor-003",
+          "confidence": 0.9,
+          "domain": "arabic_language",
+          "error_tags": [
+            "prior_missing_evidence:semantic_context",
+            "prior_missing_evidence:syntactic_context",
+            "prior_missing:lang-context-required-for-ambiguity"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "STRONG",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_missing_evidence:semantic_context",
+            "prior_missing_evidence:syntactic_context"
+          ],
+          "prior_rule_ids": [
+            "lang-context-required-for-ambiguity"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "arabic-zero-in-path-local-004",
+          "confidence": 0.78,
+          "domain": "arabic_language",
+          "error_tags": [
+            "prior_blocking:path_failure_not_global_zero",
+            "prior_expected_residual_missing:local_path_failure",
+            "prior_missing_evidence:path_level_trace",
+            "prior_missing:ar-morph-syntax-path-preservation"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_blocking:path_failure_not_global_zero",
+            "prior_expected_residual_missing:local_path_failure",
+            "prior_missing_evidence:path_level_trace"
+          ],
+          "prior_rule_ids": [
+            "ar-morph-syntax-path-preservation"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-triangle-001",
+          "confidence": 0.78,
+          "domain": "mathematics",
+          "error_tags": [
+            "prior_blocking:triangle_missing_geometry_scope",
+            "prior_expected_residual_missing:missing_geometry_assumption",
+            "prior_missing_evidence:euclidean_axioms",
+            "prior_missing_evidence:valid_proof_path",
+            "prior_missing:math-euclidean-triangle-sum"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_blocking:triangle_missing_geometry_scope",
+            "prior_expected_residual_missing:missing_geometry_assumption",
+            "prior_missing_evidence:euclidean_axioms",
+            "prior_missing_evidence:valid_proof_path"
+          ],
+          "prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-triangle-euclidean-002",
+          "confidence": 0.98,
+          "domain": "mathematics",
+          "error_tags": [
+            "false_strong",
+            "prior_expected_residual_missing:missing_geometry_assumption",
+            "overblocking"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": true,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:missing_geometry_assumption"
+          ],
+          "prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-triangle-missing-assumptions-003",
+          "confidence": 0.77,
+          "domain": "mathematics",
+          "error_tags": [
+            "prior_blocking:proof_sketch_not_proof",
+            "prior_blocking:triangle_missing_geometry_scope",
+            "prior_missing_evidence:euclidean_axioms",
+            "prior_missing_evidence:valid_proof_path",
+            "prior_missing:math-euclidean-triangle-sum"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_blocking:proof_sketch_not_proof",
+            "prior_blocking:triangle_missing_geometry_scope",
+            "prior_missing_evidence:euclidean_axioms",
+            "prior_missing_evidence:valid_proof_path"
+          ],
+          "prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-zero-in-path-local-004",
+          "confidence": 0.78,
+          "domain": "mathematics",
+          "error_tags": [
+            "prior_expected_residual_missing:missing_geometry_assumption",
+            "prior_missing_evidence:euclidean_axioms",
+            "prior_missing_evidence:valid_proof_path",
+            "prior_missing:math-euclidean-triangle-sum"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:missing_geometry_assumption",
+            "prior_missing_evidence:euclidean_axioms",
+            "prior_missing_evidence:valid_proof_path"
+          ],
+          "prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-gettier-true-accidental-005",
+          "confidence": 0.78,
+          "domain": "mathematics",
+          "error_tags": [
+            "prior_expected_residual_missing:missing_geometry_assumption",
+            "prior_missing_evidence:euclidean_axioms",
+            "prior_missing_evidence:valid_proof_path",
+            "prior_missing:math-euclidean-triangle-sum"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:missing_geometry_assumption",
+            "prior_missing_evidence:euclidean_axioms",
+            "prior_missing_evidence:valid_proof_path"
+          ],
+          "prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-smoke-001",
+          "confidence": 0.775,
+          "domain": "physical_reality",
+          "error_tags": [
+            "prior_blocking:alternative_causes_block_certificate",
+            "prior_blocking:smoke_only_not_certificate"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_blocking:alternative_causes_block_certificate",
+            "prior_blocking:smoke_only_not_certificate"
+          ],
+          "prior_rule_ids": [
+            "physics-smoke-fire-conditional"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-fire-strong-002",
+          "confidence": 0.905,
+          "domain": "physical_reality",
+          "error_tags": [
+            "prior_expected_residual_missing:alternative_causes_possible"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "STRONG",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:alternative_causes_possible"
+          ],
+          "prior_rule_ids": [
+            "physics-smoke-fire-conditional"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-alternative-cause-003",
+          "confidence": 0.77,
+          "domain": "physical_reality",
+          "error_tags": [
+            "prior_blocking:alternative_causes_block_certificate",
+            "prior_missing_evidence:burning_smell",
+            "prior_missing_evidence:heat",
+            "prior_missing_evidence:visible_flame",
+            "prior_missing:physics-smoke-fire-conditional"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_blocking:alternative_causes_block_certificate",
+            "prior_missing_evidence:burning_smell",
+            "prior_missing_evidence:heat",
+            "prior_missing_evidence:visible_flame"
+          ],
+          "prior_rule_ids": [
+            "physics-smoke-fire-conditional"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-zero-in-path-local-004",
+          "confidence": 0.78,
+          "domain": "physical_reality",
+          "error_tags": [
+            "prior_expected_residual_missing:alternative_causes_possible",
+            "prior_expected_residual_missing:conditions_not_universal",
+            "prior_missing_evidence:burning_smell",
+            "prior_missing_evidence:concentration_measured",
+            "prior_missing_evidence:heat",
+            "prior_missing_evidence:product_measurement_trace",
+            "prior_missing_evidence:reactants_declared",
+            "prior_missing_evidence:temperature_measured",
+            "prior_missing_evidence:visible_flame",
+            "prior_missing:chem-reaction-conditions-required",
+            "prior_missing:physics-smoke-fire-conditional"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:alternative_causes_possible",
+            "prior_expected_residual_missing:conditions_not_universal",
+            "prior_missing_evidence:burning_smell",
+            "prior_missing_evidence:concentration_measured",
+            "prior_missing_evidence:heat",
+            "prior_missing_evidence:product_measurement_trace",
+            "prior_missing_evidence:reactants_declared",
+            "prior_missing_evidence:temperature_measured",
+            "prior_missing_evidence:visible_flame"
+          ],
+          "prior_rule_ids": [
+            "chem-reaction-conditions-required",
+            "physics-smoke-fire-conditional"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-gettier-accidental-correct-005",
+          "confidence": 0.78,
+          "domain": "physical_reality",
+          "error_tags": [
+            "prior_expected_residual_missing:alternative_causes_possible",
+            "prior_expected_residual_missing:conditions_not_universal",
+            "prior_missing_evidence:burning_smell",
+            "prior_missing_evidence:concentration_measured",
+            "prior_missing_evidence:heat",
+            "prior_missing_evidence:product_measurement_trace",
+            "prior_missing_evidence:reactants_declared",
+            "prior_missing_evidence:temperature_measured",
+            "prior_missing_evidence:visible_flame",
+            "prior_missing:chem-reaction-conditions-required",
+            "prior_missing:physics-smoke-fire-conditional"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:alternative_causes_possible",
+            "prior_expected_residual_missing:conditions_not_universal",
+            "prior_missing_evidence:burning_smell",
+            "prior_missing_evidence:concentration_measured",
+            "prior_missing_evidence:heat",
+            "prior_missing_evidence:product_measurement_trace",
+            "prior_missing_evidence:reactants_declared",
+            "prior_missing_evidence:temperature_measured",
+            "prior_missing_evidence:visible_flame"
+          ],
+          "prior_rule_ids": [
+            "chem-reaction-conditions-required",
+            "physics-smoke-fire-conditional"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-ci-pass-001",
+          "confidence": 0.79,
+          "domain": "coding_pr_governance",
+          "error_tags": [
+            "prior_blocking:ci_pass_to_certificate",
+            "prior_missing_evidence:governance_gate_passed",
+            "prior_missing_evidence:proof_object",
+            "prior_missing_evidence:reverse_trace_complete",
+            "prior_missing:prog-ci-merge-not-certificate"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_blocking:ci_pass_to_certificate",
+            "prior_missing_evidence:governance_gate_passed",
+            "prior_missing_evidence:proof_object",
+            "prior_missing_evidence:reverse_trace_complete"
+          ],
+          "prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-governed-pr-002",
+          "confidence": 0.99,
+          "domain": "coding_pr_governance",
+          "error_tags": [
+            "false_strong",
+            "prior_expected_residual_missing:ci_does_not_prove_architectural_correctness",
+            "overblocking"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": true,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:ci_does_not_prove_architectural_correctness"
+          ],
+          "prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-zero-in-path-local-003",
+          "confidence": 0.77,
+          "domain": "coding_pr_governance",
+          "error_tags": [
+            "prior_expected_residual_missing:ci_does_not_prove_architectural_correctness",
+            "prior_missing_evidence:governance_gate_passed",
+            "prior_missing_evidence:proof_object",
+            "prior_missing_evidence:reverse_trace_complete",
+            "prior_missing_evidence:tests_pass",
+            "prior_missing:prog-ci-merge-not-certificate"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:ci_does_not_prove_architectural_correctness",
+            "prior_missing_evidence:governance_gate_passed",
+            "prior_missing_evidence:proof_object",
+            "prior_missing_evidence:reverse_trace_complete",
+            "prior_missing_evidence:tests_pass"
+          ],
+          "prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-gettier-accidental-pass-004",
+          "confidence": 0.785,
+          "domain": "coding_pr_governance",
+          "error_tags": [
+            "prior_expected_residual_missing:ci_does_not_prove_architectural_correctness",
+            "prior_missing_evidence:governance_gate_passed",
+            "prior_missing_evidence:reverse_trace_complete",
+            "prior_missing_evidence:tests_pass",
+            "prior_missing:prog-ci-merge-not-certificate"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:ci_does_not_prove_architectural_correctness",
+            "prior_missing_evidence:governance_gate_passed",
+            "prior_missing_evidence:reverse_trace_complete",
+            "prior_missing_evidence:tests_pass"
+          ],
+          "prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-zero-in-path-local-005",
+          "confidence": 0.78,
+          "domain": "coding_pr_governance",
+          "error_tags": [
+            "prior_expected_residual_missing:ci_does_not_prove_architectural_correctness",
+            "prior_missing_evidence:governance_gate_passed",
+            "prior_missing_evidence:proof_object",
+            "prior_missing_evidence:reverse_trace_complete",
+            "prior_missing_evidence:tests_pass",
+            "prior_missing:prog-ci-merge-not-certificate"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [
+            "prior_expected_residual_missing:ci_does_not_prove_architectural_correctness",
+            "prior_missing_evidence:governance_gate_passed",
+            "prior_missing_evidence:proof_object",
+            "prior_missing_evidence:reverse_trace_complete",
+            "prior_missing_evidence:tests_pass"
+          ],
+          "prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "reverse_trace_complete": true
+        }
+      ],
+      "metrics": {
+        "decision_calibration_error": 0.1876,
+        "false_certificate_rate": 0.0,
+        "forbidden_transition_violation_rate": 0.0,
+        "gettier_detection_rate": 1.0,
+        "overblocking_rate": 0.4,
+        "prior_blocker_activation_rate": 0.3684,
+        "prior_coverage_gap_count": 0.0,
+        "prior_missing_evidence_rate": 0.7895,
+        "prior_residual_preservation_rate": 0.2632,
+        "prior_rule_coverage_rate": 1.0,
+        "residual_preservation_rate": 1.0,
+        "reverse_trace_coverage": 1.0,
+        "zero_in_path_locality_accuracy": 1.0
+      },
+      "mode": "with_golden_prior_registry",
+      "prior_coverage_matrix": [
+        {
+          "case_id": "arabic-ala-no-context-001",
+          "certificate_blockers_activated": [
+            "surface_fluency_not_semantic_certificate"
+          ],
+          "decision_delta": "UNCHANGED",
+          "domain": "arabic_language",
+          "expected_residuals_missing": [
+            "metaphorical_mapping_required"
+          ],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "lang-context-required-for-ambiguity"
+          ],
+          "missing_prior_rule": false,
+          "mode": "with_golden_prior_registry",
+          "prior_residuals": [
+            "prior_blocking:surface_fluency_not_semantic_certificate",
+            "prior_expected_residual_missing:metaphorical_mapping_required",
+            "prior_missing_evidence:semantic_context"
+          ],
+          "required_evidence_missing": [
+            "semantic_context"
+          ],
+          "required_evidence_supplied": [
+            "syntactic_context"
+          ]
+        },
+        {
+          "case_id": "arabic-ala-context-002",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "arabic_language",
+          "expected_residuals_missing": [
+            "floating_haraka_local_zero_in_path",
+            "local_path_failure",
+            "metaphorical_mapping_required"
+          ],
+          "final_decision_after_priors": "STRONG",
+          "final_decision_before_priors": "STRONG",
+          "matched_prior_rule_ids": [
+            "ar-morph-syntax-path-preservation",
+            "ar-vocalized-haraka-anchor",
+            "lang-context-required-for-ambiguity"
+          ],
+          "missing_prior_rule": false,
+          "mode": "with_golden_prior_registry",
+          "prior_residuals": [
+            "prior_expected_residual_missing:floating_haraka_local_zero_in_path",
+            "prior_expected_residual_missing:local_path_failure",
+            "prior_expected_residual_missing:metaphorical_mapping_required",
+            "prior_missing_evidence:base_letter_alignment",
+            "prior_missing_evidence:clause_scoped_attachment",
+            "prior_missing_evidence:haraka_anchor_check",
+            "prior_missing_evidence:path_level_trace",
+            "prior_missing_evidence:semantic_context",
+            "prior_missing_evidence:semantic_role_split",
+            "prior_missing_evidence:syntactic_context"
+          ],
+          "required_evidence_missing": [
+            "base_letter_alignment",
+            "clause_scoped_attachment",
+            "haraka_anchor_check",
+            "path_level_trace",
+            "semantic_context",
+            "semantic_role_split",
+            "syntactic_context"
+          ],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "arabic-ala-metaphor-003",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "arabic_language",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "STRONG",
+          "final_decision_before_priors": "STRONG",
+          "matched_prior_rule_ids": [
+            "lang-context-required-for-ambiguity"
+          ],
+          "missing_prior_rule": false,
+          "mode": "with_golden_prior_registry",
+          "prior_residuals": [
+            "prior_missing_evidence:semantic_context",
+            "prior_missing_evidence:syntactic_context"
+          ],
+          "required_evidence_missing": [
+            "semantic_context",
+            "syntactic_context"
+          ],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "arabic-zero-in-path-local-004",
+          "certificate_blockers_activated": [
+            "path_failure_not_global_zero"
+          ],
+          "decision_delta": "UNCHANGED",
+          "domain": "arabic_language",
+          "expected_residuals_missing": [
+            "local_path_failure"
+          ],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "ar-morph-syntax-path-preservation"
+          ],
+          "missing_prior_rule": false,
+          "mode": "with_golden_prior_registry",
+          "prior_residuals": [
+            "prior_blocking:path_failure_not_global_zero",
+            "prior_expected_residual_missing:local_path_failure",
+            "prior_missing_evidence:path_level_trace"
+          ],
+          "required_evidence_missing": [
+            "path_level_trace"
+          ],
+          "required_evidence_supplied": [
+            "clause_scoped_attachment",
+            "semantic_role_split"
+          ]
+        },
+        {
+          "case_id": "math-triangle-001",
+          "certificate_blockers_activated": [
+            "triangle_missing_geometry_scope"
+          ],
+          "decision_delta": "UNCHANGED",
+          "domain": "mathematics",
+          "expected_residuals_missing": [
+            "missing_geometry_assumption"
+          ],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "missing_prior_rule": false,
+          "mode": "with_golden_prior_registry",
+          "prior_residuals": [
+            "prior_blocking:triangle_missing_geometry_scope",
+            "prior_expected_residual_missing:missing_geometry_assumption",
+            "prior_missing_evidence:euclidean_axioms",
+            "prior_missing_evidence:valid_proof_path"
+          ],
+          "required_evidence_missing": [
+            "euclidean_axioms",
+            "valid_proof_path"
+          ],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "math-triangle-euclidean-002",
+          "certificate_blockers_activated": [],
+          "decision_delta": "CERTIFICATE->HYPOTHESIS",
+          "domain": "mathematics",
+          "expected_residuals_missing": [
+            "missing_geometry_assumption"
+          ],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "CERTIFICATE",
+          "matched_prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "missing_prior_rule": false,
+          "mode": "with_golden_prior_registry",
+          "prior_residuals": [
+            "prior_expected_residual_missing:missing_geometry_assumption"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": [
+            "euclidean_axioms",
+            "valid_proof_path"
+          ]
+        },
+        {
+          "case_id": "math-triangle-missing-assumptions-003",
+          "certificate_blockers_activated": [
+            "proof_sketch_not_proof",
+            "triangle_missing_geometry_scope"
+          ],
+          "decision_delta": "UNCHANGED",
+          "domain": "mathematics",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "missing_prior_rule": false,
+          "mode": "with_golden_prior_registry",
+          "prior_residuals": [
+            "prior_blocking:proof_sketch_not_proof",
+            "prior_blocking:triangle_missing_geometry_scope",
+            "prior_missing_evidence:euclidean_axioms",
+            "prior_missing_evidence:valid_proof_path"
+          ],
+          "required_evidence_missing": [
+            "euclidean_axioms",
+            "valid_proof_path"
+          ],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "math-zero-in-path-local-004",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "mathematics",
+          "expected_residuals_missing": [
+            "missing_geometry_assumption"
+          ],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "missing_prior_rule": false,
+          "mode": "with_golden_prior_registry",
+          "prior_residuals": [
+            "prior_expected_residual_missing:missing_geometry_assumption",
+            "prior_missing_evidence:euclidean_axioms",
+            "prior_missing_evidence:valid_proof_path"
+          ],
+          "required_evidence_missing": [
+            "euclidean_axioms",
+            "valid_proof_path"
+          ],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "math-gettier-true-accidental-005",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "mathematics",
+          "expected_residuals_missing": [
+            "missing_geometry_assumption"
+          ],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "math-euclidean-triangle-sum"
+          ],
+          "missing_prior_rule": false,
+          "mode": "with_golden_prior_registry",
+          "prior_residuals": [
+            "prior_expected_residual_missing:missing_geometry_assumption",
+            "prior_missing_evidence:euclidean_axioms",
+            "prior_missing_evidence:valid_proof_path"
+          ],
+          "required_evidence_missing": [
+            "euclidean_axioms",
+            "valid_proof_path"
+          ],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "physical-smoke-001",
+          "certificate_blockers_activated": [
+            "alternative_causes_block_certificate",
+            "smoke_only_not_certificate"
+          ],
+          "decision_delta": "UNCHANGED",
+          "domain": "physical_reality",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "physics-smoke-fire-conditional"
+          ],
+          "missing_prior_rule": false,
+          "mode": "with_golden_prior_registry",
+          "prior_residuals": [
+            "prior_blocking:alternative_causes_block_certificate",
+            "prior_blocking:smoke_only_not_certificate"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": [
+            "burning_smell",
+            "heat",
+            "visible_flame"
+          ]
+        },
+        {
+          "case_id": "physical-fire-strong-002",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "physical_reality",
+          "expected_residuals_missing": [
+            "alternative_causes_possible"
+          ],
+          "final_decision_after_priors": "STRONG",
+          "final_decision_before_priors": "STRONG",
+          "matched_prior_rule_ids": [
+            "physics-smoke-fire-conditional"
+          ],
+          "missing_prior_rule": false,
+          "mode": "with_golden_prior_registry",
+          "prior_residuals": [
+            "prior_expected_residual_missing:alternative_causes_possible"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": [
+            "burning_smell",
+            "heat",
+            "visible_flame"
+          ]
+        },
+        {
+          "case_id": "physical-alternative-cause-003",
+          "certificate_blockers_activated": [
+            "alternative_causes_block_certificate"
+          ],
+          "decision_delta": "UNCHANGED",
+          "domain": "physical_reality",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "physics-smoke-fire-conditional"
+          ],
+          "missing_prior_rule": false,
+          "mode": "with_golden_prior_registry",
+          "prior_residuals": [
+            "prior_blocking:alternative_causes_block_certificate",
+            "prior_missing_evidence:burning_smell",
+            "prior_missing_evidence:heat",
+            "prior_missing_evidence:visible_flame"
+          ],
+          "required_evidence_missing": [
+            "burning_smell",
+            "heat",
+            "visible_flame"
+          ],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "physical-zero-in-path-local-004",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "physical_reality",
+          "expected_residuals_missing": [
+            "alternative_causes_possible",
+            "conditions_not_universal"
+          ],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "chem-reaction-conditions-required",
+            "physics-smoke-fire-conditional"
+          ],
+          "missing_prior_rule": false,
+          "mode": "with_golden_prior_registry",
+          "prior_residuals": [
+            "prior_expected_residual_missing:alternative_causes_possible",
+            "prior_expected_residual_missing:conditions_not_universal",
+            "prior_missing_evidence:burning_smell",
+            "prior_missing_evidence:concentration_measured",
+            "prior_missing_evidence:heat",
+            "prior_missing_evidence:product_measurement_trace",
+            "prior_missing_evidence:reactants_declared",
+            "prior_missing_evidence:temperature_measured",
+            "prior_missing_evidence:visible_flame"
+          ],
+          "required_evidence_missing": [
+            "burning_smell",
+            "concentration_measured",
+            "heat",
+            "product_measurement_trace",
+            "reactants_declared",
+            "temperature_measured",
+            "visible_flame"
+          ],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "physical-gettier-accidental-correct-005",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "physical_reality",
+          "expected_residuals_missing": [
+            "alternative_causes_possible",
+            "conditions_not_universal"
+          ],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "chem-reaction-conditions-required",
+            "physics-smoke-fire-conditional"
+          ],
+          "missing_prior_rule": false,
+          "mode": "with_golden_prior_registry",
+          "prior_residuals": [
+            "prior_expected_residual_missing:alternative_causes_possible",
+            "prior_expected_residual_missing:conditions_not_universal",
+            "prior_missing_evidence:burning_smell",
+            "prior_missing_evidence:concentration_measured",
+            "prior_missing_evidence:heat",
+            "prior_missing_evidence:product_measurement_trace",
+            "prior_missing_evidence:reactants_declared",
+            "prior_missing_evidence:temperature_measured",
+            "prior_missing_evidence:visible_flame"
+          ],
+          "required_evidence_missing": [
+            "burning_smell",
+            "concentration_measured",
+            "heat",
+            "product_measurement_trace",
+            "reactants_declared",
+            "temperature_measured",
+            "visible_flame"
+          ],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "coding-ci-pass-001",
+          "certificate_blockers_activated": [
+            "ci_pass_to_certificate"
+          ],
+          "decision_delta": "UNCHANGED",
+          "domain": "coding_pr_governance",
+          "expected_residuals_missing": [],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "missing_prior_rule": false,
+          "mode": "with_golden_prior_registry",
+          "prior_residuals": [
+            "prior_blocking:ci_pass_to_certificate",
+            "prior_missing_evidence:governance_gate_passed",
+            "prior_missing_evidence:proof_object",
+            "prior_missing_evidence:reverse_trace_complete"
+          ],
+          "required_evidence_missing": [
+            "governance_gate_passed",
+            "proof_object",
+            "reverse_trace_complete"
+          ],
+          "required_evidence_supplied": [
+            "tests_pass"
+          ]
+        },
+        {
+          "case_id": "coding-governed-pr-002",
+          "certificate_blockers_activated": [],
+          "decision_delta": "CERTIFICATE->HYPOTHESIS",
+          "domain": "coding_pr_governance",
+          "expected_residuals_missing": [
+            "ci_does_not_prove_architectural_correctness"
+          ],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "CERTIFICATE",
+          "matched_prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "missing_prior_rule": false,
+          "mode": "with_golden_prior_registry",
+          "prior_residuals": [
+            "prior_expected_residual_missing:ci_does_not_prove_architectural_correctness"
+          ],
+          "required_evidence_missing": [],
+          "required_evidence_supplied": [
+            "governance_gate_passed",
+            "proof_object",
+            "reverse_trace_complete",
+            "tests_pass"
+          ]
+        },
+        {
+          "case_id": "coding-zero-in-path-local-003",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "coding_pr_governance",
+          "expected_residuals_missing": [
+            "ci_does_not_prove_architectural_correctness"
+          ],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "missing_prior_rule": false,
+          "mode": "with_golden_prior_registry",
+          "prior_residuals": [
+            "prior_expected_residual_missing:ci_does_not_prove_architectural_correctness",
+            "prior_missing_evidence:governance_gate_passed",
+            "prior_missing_evidence:proof_object",
+            "prior_missing_evidence:reverse_trace_complete",
+            "prior_missing_evidence:tests_pass"
+          ],
+          "required_evidence_missing": [
+            "governance_gate_passed",
+            "proof_object",
+            "reverse_trace_complete",
+            "tests_pass"
+          ],
+          "required_evidence_supplied": []
+        },
+        {
+          "case_id": "coding-gettier-accidental-pass-004",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "coding_pr_governance",
+          "expected_residuals_missing": [
+            "ci_does_not_prove_architectural_correctness"
+          ],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "missing_prior_rule": false,
+          "mode": "with_golden_prior_registry",
+          "prior_residuals": [
+            "prior_expected_residual_missing:ci_does_not_prove_architectural_correctness",
+            "prior_missing_evidence:governance_gate_passed",
+            "prior_missing_evidence:reverse_trace_complete",
+            "prior_missing_evidence:tests_pass"
+          ],
+          "required_evidence_missing": [
+            "governance_gate_passed",
+            "reverse_trace_complete",
+            "tests_pass"
+          ],
+          "required_evidence_supplied": [
+            "proof_object"
+          ]
+        },
+        {
+          "case_id": "coding-zero-in-path-local-005",
+          "certificate_blockers_activated": [],
+          "decision_delta": "UNCHANGED",
+          "domain": "coding_pr_governance",
+          "expected_residuals_missing": [
+            "ci_does_not_prove_architectural_correctness"
+          ],
+          "final_decision_after_priors": "HYPOTHESIS",
+          "final_decision_before_priors": "HYPOTHESIS",
+          "matched_prior_rule_ids": [
+            "prog-ci-merge-not-certificate"
+          ],
+          "missing_prior_rule": false,
+          "mode": "with_golden_prior_registry",
+          "prior_residuals": [
+            "prior_expected_residual_missing:ci_does_not_prove_architectural_correctness",
+            "prior_missing_evidence:governance_gate_passed",
+            "prior_missing_evidence:proof_object",
+            "prior_missing_evidence:reverse_trace_complete",
+            "prior_missing_evidence:tests_pass"
+          ],
+          "required_evidence_missing": [
+            "governance_gate_passed",
+            "proof_object",
+            "reverse_trace_complete",
+            "tests_pass"
+          ],
+          "required_evidence_supplied": []
+        }
+      ]
+    },
+    "without_prior_registry": {
+      "cases": [
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "arabic-ala-no-context-001",
+          "confidence": 0.78,
+          "domain": "arabic_language",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "arabic-ala-context-002",
+          "confidence": 0.91,
+          "domain": "arabic_language",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": false,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "STRONG",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "arabic-ala-metaphor-003",
+          "confidence": 0.9,
+          "domain": "arabic_language",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "STRONG",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "arabic-zero-in-path-local-004",
+          "confidence": 0.78,
+          "domain": "arabic_language",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-triangle-001",
+          "confidence": 0.78,
+          "domain": "mathematics",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-triangle-euclidean-002",
+          "confidence": 0.98,
+          "domain": "mathematics",
+          "error_tags": [
+            "false_strong"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "CERTIFICATE",
+          "governance_gate_passed": true,
+          "has_blocking_residual": false,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "CERTIFICATE",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-triangle-missing-assumptions-003",
+          "confidence": 0.77,
+          "domain": "mathematics",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-zero-in-path-local-004",
+          "confidence": 0.78,
+          "domain": "mathematics",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "math-gettier-true-accidental-005",
+          "confidence": 0.78,
+          "domain": "mathematics",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-smoke-001",
+          "confidence": 0.775,
+          "domain": "physical_reality",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-fire-strong-002",
+          "confidence": 0.905,
+          "domain": "physical_reality",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "STRONG",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-alternative-cause-003",
+          "confidence": 0.77,
+          "domain": "physical_reality",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-zero-in-path-local-004",
+          "confidence": 0.78,
+          "domain": "physical_reality",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "physical-gettier-accidental-correct-005",
+          "confidence": 0.78,
+          "domain": "physical_reality",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-ci-pass-001",
+          "confidence": 0.79,
+          "domain": "coding_pr_governance",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-governed-pr-002",
+          "confidence": 0.99,
+          "domain": "coding_pr_governance",
+          "error_tags": [
+            "false_strong"
+          ],
+          "evidence_complete": true,
+          "final_judgment": "CERTIFICATE",
+          "governance_gate_passed": true,
+          "has_blocking_residual": false,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "CERTIFICATE",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-zero-in-path-local-003",
+          "confidence": 0.77,
+          "domain": "coding_pr_governance",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-gettier-accidental-pass-004",
+          "confidence": 0.785,
+          "domain": "coding_pr_governance",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": false,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        },
+        {
+          "baseline": "GovernedProtocolBaseline",
+          "case_id": "coding-zero-in-path-local-005",
+          "confidence": 0.78,
+          "domain": "coding_pr_governance",
+          "error_tags": [],
+          "evidence_complete": true,
+          "final_judgment": "HYPOTHESIS",
+          "governance_gate_passed": false,
+          "has_blocking_residual": true,
+          "local_zero_in_path": true,
+          "local_zero_preserved": true,
+          "predicted_decision": "HYPOTHESIS",
+          "preserved_residuals": true,
+          "prior_residual_tags": [],
+          "prior_rule_ids": [],
+          "reverse_trace_complete": true
+        }
+      ],
+      "metrics": {
+        "decision_calibration_error": 0.1876,
+        "false_certificate_rate": 0.0,
+        "forbidden_transition_violation_rate": 0.0,
+        "gettier_detection_rate": 1.0,
+        "overblocking_rate": 0.0,
+        "prior_blocker_activation_rate": 0.0,
+        "prior_coverage_gap_count": 0.0,
+        "prior_missing_evidence_rate": 0.0,
+        "prior_residual_preservation_rate": 1.0,
+        "prior_rule_coverage_rate": 0.0,
+        "residual_preservation_rate": 1.0,
+        "reverse_trace_coverage": 1.0,
+        "zero_in_path_locality_accuracy": 1.0
+      },
+      "mode": "without_prior_registry",
+      "prior_coverage_matrix": []
+    }
+  },
+  "prior_coverage_gap_residual": {
+    "case_ids": [],
+    "count": 0,
+    "default_policy_blocks_certificate": true,
+    "residual_id": "prior_coverage_gap"
+  },
+  "protocol_id": "PRIOR-AWARE-BASELINE-ABLATION-108",
+  "theorem_status": "STRONG_HYPOTHESIS",
+  "trained_model_used": false
+}
