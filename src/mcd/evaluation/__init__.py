@@ -23,6 +23,10 @@ from mcd.evaluation.fractal_benchmark_dataset import (
     validate_case,
 )
 from mcd.evaluation.fractal_baseline_comparison import run_fractal_baseline_comparison
+from mcd.evaluation.prior_aware_baseline_ablation import (
+    compute_prior_coverage_matrix,
+    run_prior_aware_baseline_ablation,
+)
 from mcd.evaluation.judgment_routing_matrix import JudgmentRoutingMatrix, MatrixEntry
 
 __all__ = [
@@ -48,4 +52,6 @@ __all__ = [
     "validate_all_cases",
     "validate_case",
     "run_fractal_baseline_comparison",
+    "run_prior_aware_baseline_ablation",
+    "compute_prior_coverage_matrix",
 ]
