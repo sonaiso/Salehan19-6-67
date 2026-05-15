@@ -1,0 +1,106 @@
+[
+  {
+    "id": "physical-smoke-001",
+    "domain": "physical_reality",
+    "input": "I see smoke.",
+    "candidates": ["fire", "steam", "dust", "smoke_machine"],
+    "constraints": ["indirect_observation", "alternative_causes_possible"],
+    "required_evidence": ["heat", "burning_smell", "visible_flame"],
+    "expected_residuals": ["fire_not_directly_seen", "alternative_causes_possible"],
+    "forbidden_decisions": ["CERTIFICATE"],
+    "allowed_decision_level": "HYPOTHESIS",
+    "expected_decision_level": "HYPOTHESIS",
+    "reverse_trace_required": true,
+    "trace_definition": {
+      "input": "smoke_observation",
+      "candidate": "fire",
+      "evidence": "indirect_only_missing_multisensor",
+      "decision_path": "observe->consider_alternatives->hypothesis"
+    },
+    "notes": "Answer likelihood for fire does not grant justified_decision certificate without direct closure."
+  },
+  {
+    "id": "physical-fire-strong-002",
+    "domain": "physical_reality",
+    "input": "I see flames, feel heat, and smell burning.",
+    "candidates": ["fire", "visual_effect"],
+    "constraints": ["multi_sensor_confirmation"],
+    "required_evidence": ["visible_flame", "heat", "burning_smell"],
+    "expected_residuals": ["exact_cause_of_fire_unknown"],
+    "forbidden_decisions": ["CERTIFICATE"],
+    "allowed_decision_level": "STRONG",
+    "expected_decision_level": "STRONG",
+    "reverse_trace_required": true,
+    "trace_definition": {
+      "input": "flame_heat_smell",
+      "candidate": "fire",
+      "evidence": "multi_sensor_confirmation",
+      "decision_path": "sensor_fusion->strong_with_residual"
+    },
+    "notes": "Supports STRONG only; residual cause ambiguity still blocks certificate."
+  },
+  {
+    "id": "physical-alternative-cause-003",
+    "domain": "physical_reality",
+    "input": "The room appears smoky during a stage show.",
+    "candidates": ["fire", "smoke_machine", "steam"],
+    "constraints": ["environmental_context_required", "instrumented_verification_required"],
+    "required_evidence": ["heat_sensor_reading", "source_localization"],
+    "expected_residuals": ["stage_effect_possible", "alternative_causes_possible"],
+    "forbidden_decisions": ["CERTIFICATE"],
+    "allowed_decision_level": "HYPOTHESIS",
+    "expected_decision_level": "HYPOTHESIS",
+    "reverse_trace_required": true,
+    "trace_definition": {
+      "input": "stage_show_smoke",
+      "candidate": "smoke_machine",
+      "evidence": "environment_context+source_localization_pending",
+      "decision_path": "contextual_filter->alternative_cause_preserved->hypothesis"
+    },
+    "notes": "Alternative-cause path preserves residuals and blocks unjustified certainty ascent."
+  },
+  {
+    "id": "physical-zero-in-path-local-004",
+    "domain": "physical_reality",
+    "input": "Thermal camera shows no hotspot on path A, while path B still indicates a possible controlled burn nearby.",
+    "candidates": ["path_a_open_fire", "path_b_controlled_burn"],
+    "constraints": ["zero_in_path_must_remain_local", "path_specific_sensor_evidence"],
+    "required_evidence": ["thermal_trace_by_path", "location_correlated_observation"],
+    "expected_residuals": ["path_a_blocked_by_no_heat"],
+    "forbidden_decisions": ["CERTIFICATE"],
+    "allowed_decision_level": "HYPOTHESIS",
+    "expected_decision_level": "HYPOTHESIS",
+    "reverse_trace_required": true,
+    "trace_definition": {
+      "input": "split_path_sensor_readings",
+      "candidate": "path_b_controlled_burn",
+      "evidence": "path_specific_thermal_validation",
+      "decision_path": "path_partition->block_path_a->retain_path_b"
+    },
+    "local_zero_in_path": true,
+    "global_zero": false,
+    "blocked_path": "path_a_open_fire",
+    "remaining_paths": ["path_b_controlled_burn"],
+    "notes": "Path-local failure stays local and does not collapse the entire physical interpretation."
+  },
+  {
+    "id": "physical-gettier-accidental-correct-005",
+    "domain": "physical_reality",
+    "input": "A stopped wall clock shows 6:00 and the observer concludes it is 6:00, which happens to be true now.",
+    "candidates": ["true_time_accidentally", "reliably_justified_time"],
+    "constraints": ["accidental_truth_not_certificate"],
+    "required_evidence": ["reliable_time_source", "instrument_validity_check"],
+    "expected_residuals": ["instrument_unreliable"],
+    "forbidden_decisions": ["CERTIFICATE"],
+    "allowed_decision_level": "HYPOTHESIS",
+    "expected_decision_level": "HYPOTHESIS",
+    "reverse_trace_required": true,
+    "trace_definition": {
+      "input": "stopped_clock_observation",
+      "candidate": "true_time_accidentally",
+      "evidence": "clock_failure_detected",
+      "decision_path": "answer_may_match->justification_defective->hypothesis"
+    },
+    "notes": "Gettier-style case: answer may be correct while justified decision remains low due to defective evidence source."
+  }
+]

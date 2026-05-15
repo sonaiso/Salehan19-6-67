@@ -1,0 +1,114 @@
+[
+  {
+    "id": "math-triangle-001",
+    "domain": "mathematics",
+    "input": "The angles of a triangle sum to 180 degrees.",
+    "candidates": ["true_in_euclidean_geometry", "not_universally_true"],
+    "constraints": ["geometry_system_required"],
+    "required_evidence": ["euclidean_geometry_assumption", "parallel_postulate_or_equivalent_proof"],
+    "expected_residuals": ["non_euclidean_context_not_excluded"],
+    "forbidden_decisions": ["CERTIFICATE"],
+    "allowed_decision_level": "HYPOTHESIS",
+    "expected_decision_level": "HYPOTHESIS",
+    "reverse_trace_required": true,
+    "trace_definition": {
+      "input": "triangle_angles_sum_180",
+      "candidate": "true_in_euclidean_geometry",
+      "evidence": "geometry_assumption_required",
+      "decision_path": "claim->assumption_check->hypothesis"
+    },
+    "notes": "Separates answer_likelihood from justified_decision unless geometry assumptions are explicit."
+  },
+  {
+    "id": "math-triangle-euclidean-002",
+    "domain": "mathematics",
+    "input": "In Euclidean geometry, the angles of a triangle sum to 180 degrees.",
+    "candidates": ["true"],
+    "constraints": ["euclidean_geometry_declared"],
+    "required_evidence": ["euclidean_axioms", "valid_proof_path"],
+    "expected_residuals": [],
+    "forbidden_decisions": [],
+    "allowed_decision_level": "CERTIFICATE_CANDIDATE",
+    "expected_decision_level": "CERTIFICATE_CANDIDATE",
+    "reverse_trace_required": true,
+    "trace_definition": {
+      "input": "triangle_angles_sum_180_in_euclidean_geometry",
+      "candidate": "true",
+      "evidence": "euclidean_axioms+proof_path",
+      "decision_path": "axioms->proof_chain->certificate_candidate"
+    },
+    "certificate_obligations": {
+      "proof_object": true,
+      "governance_gate_passed": true,
+      "reverse_trace_complete": true,
+      "evidence_complete": true,
+      "no_blocking_residual": true
+    },
+    "notes": "Can rise to CERTIFICATE_CANDIDATE, while global theorem status still remains STRONG_HYPOTHESIS."
+  },
+  {
+    "id": "math-triangle-missing-assumptions-003",
+    "domain": "mathematics",
+    "input": "Draw a parallel through the vertex; therefore triangle angles sum to 180.",
+    "candidates": ["proof_complete", "proof_incomplete"],
+    "constraints": ["proof_assumptions_must_be_explicit", "formal_proof_steps_required"],
+    "required_evidence": ["axiom_scope", "derivation_steps"],
+    "expected_residuals": ["missing_geometry_assumption", "missing_formal_proof_obligation"],
+    "forbidden_decisions": ["STRONG", "CERTIFICATE_CANDIDATE", "CERTIFICATE"],
+    "allowed_decision_level": "HYPOTHESIS",
+    "expected_decision_level": "HYPOTHESIS",
+    "reverse_trace_required": true,
+    "trace_definition": {
+      "input": "parallel_line_proof_sketch",
+      "candidate": "proof_incomplete",
+      "evidence": "assumption_or_step_gap_detected",
+      "decision_path": "sketch->gap_detection->hypothesis_insufficient_for_certificate",
+      "trace_status": "incomplete_for_certificate"
+    },
+    "notes": "A proof sketch may sound correct but remains below justified STRONG/CERTIFICATE_CANDIDATE without explicit assumptions and complete derivation."
+  },
+  {
+    "id": "math-zero-in-path-local-004",
+    "domain": "mathematics",
+    "input": "Given mixed assumptions, candidate A uses Euclidean axioms and candidate B mixes inconsistent geometry.",
+    "candidates": ["euclidean_consistent_path", "inconsistent_mixed_axioms_path"],
+    "constraints": ["zero_in_path_must_remain_local", "consistency_required_per_path"],
+    "required_evidence": ["axiom_consistency_check", "path_level_derivation"],
+    "expected_residuals": ["mixed_axioms_path_blocked"],
+    "forbidden_decisions": ["CERTIFICATE"],
+    "allowed_decision_level": "HYPOTHESIS",
+    "expected_decision_level": "HYPOTHESIS",
+    "reverse_trace_required": true,
+    "trace_definition": {
+      "input": "mixed_assumptions_triangle_claim",
+      "candidate": "euclidean_consistent_path",
+      "evidence": "path_level_consistency_validation",
+      "decision_path": "evaluate_paths->block_inconsistent_path->preserve_valid_path"
+    },
+    "local_zero_in_path": true,
+    "global_zero": false,
+    "blocked_path": "inconsistent_mixed_axioms_path",
+    "remaining_paths": ["euclidean_consistent_path"],
+    "notes": "A blocked derivation branch must remain local and must not erase remaining governed candidate paths."
+  },
+  {
+    "id": "math-gettier-true-accidental-005",
+    "domain": "mathematics",
+    "input": "The theorem statement is true, but the provided proof uses an invalid step.",
+    "candidates": ["true_with_invalid_justification", "fully_justified_theorem"],
+    "constraints": ["truth_without_valid_justification_not_certificate"],
+    "required_evidence": ["valid_proof_obligation", "step_soundness_check"],
+    "expected_residuals": ["defective_justification_detected"],
+    "forbidden_decisions": ["CERTIFICATE"],
+    "allowed_decision_level": "HYPOTHESIS",
+    "expected_decision_level": "HYPOTHESIS",
+    "reverse_trace_required": true,
+    "trace_definition": {
+      "input": "true_claim_invalid_proof",
+      "candidate": "true_with_invalid_justification",
+      "evidence": "proof_step_invalid",
+      "decision_path": "claim_truth_check->justification_failure->hypothesis"
+    },
+    "notes": "Gettier-style split: answer may be true while justified decision remains below certificate."
+  }
+]
