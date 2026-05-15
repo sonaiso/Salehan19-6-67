@@ -60,6 +60,29 @@ from mcd.cfk.cross_layer_conservation import (
     CrossLayerViolation,
 )
 from mcd.cfk.reverse_trace import ReverseTrace, ReverseTraceBuilder
+from mcd.cfk.cfk_proof_track import (
+    KernelStep,
+    GateResult,
+    LayerSpec,
+    TransitionSpec,
+    ResidualSeverity,
+    EvidenceStrength,
+    DecisionLevel,
+    EvidenceObject,
+    ResidualObject,
+    ReverseTraceGraph,
+    GateContract,
+    FractalInvariant,
+    CFKTheoremStatus,
+    CFKProofObligations,
+    CFK_LAYER_REGISTRY,
+    CFK_LAYER_SEQUENCE,
+    CFK_TRANSITIONS,
+    propagate_residuals,
+    evaluate_transition,
+    current_cfk_proof_obligations,
+    resolve_cfk_theorem_status,
+)
 
 __all__ = [
     # Schema
@@ -118,4 +141,26 @@ __all__ = [
     # Phase 8.1 — ReverseTrace
     "ReverseTrace",
     "ReverseTraceBuilder",
+    # CFK proof-track contracts
+    "KernelStep",
+    "GateResult",
+    "LayerSpec",
+    "TransitionSpec",
+    "ResidualSeverity",
+    "EvidenceStrength",
+    "DecisionLevel",
+    "EvidenceObject",
+    "ResidualObject",
+    "ReverseTraceGraph",
+    "GateContract",
+    "FractalInvariant",
+    "CFKTheoremStatus",
+    "CFKProofObligations",
+    "CFK_LAYER_REGISTRY",
+    "CFK_LAYER_SEQUENCE",
+    "CFK_TRANSITIONS",
+    "propagate_residuals",
+    "evaluate_transition",
+    "current_cfk_proof_obligations",
+    "resolve_cfk_theorem_status",
 ]

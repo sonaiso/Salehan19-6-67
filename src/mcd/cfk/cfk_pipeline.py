@@ -28,6 +28,10 @@ from mcd.cfk.conservation_law import ConservationLawChecker, ConservationCheckRe
 from mcd.cfk.cross_layer_conservation import CrossLayerConservationChecker, CrossLayerConservationReport
 from mcd.cfk.proof_object import ProofObject, ProofObjectBuilder
 from mcd.cfk.cfk_comparison_table import ComparisonTable, ComparisonTableBuilder
+from mcd.cfk.cfk_proof_track import (
+    current_cfk_proof_obligations,
+    resolve_cfk_theorem_status,
+)
 
 
 @dataclass
@@ -41,6 +45,8 @@ class CognitiveFractalResult:
     cross_layer_report: CrossLayerConservationReport | None
     proof: ProofObject
     table: ComparisonTable
+    theorem_status: str = "STRONG_HYPOTHESIS"
+    theorem_scope: dict[str, str] = field(default_factory=dict)
 
     def to_dict(self) -> dict:
         return {
@@ -53,6 +59,8 @@ class CognitiveFractalResult:
             ),
             "proof": self.proof.to_dict(),
             "table": self.table.to_dict(),
+            "theorem_status": self.theorem_status,
+            "theorem_scope": self.theorem_scope,
         }
 
     def summary(self) -> str:
@@ -179,4 +187,11 @@ class CognitiveFractalPipeline:
             cross_layer_report=cross_layer_report,
             proof=proof,
             table=table,
+            theorem_status=resolve_cfk_theorem_status(
+                current_cfk_proof_obligations()
+            ).value,
+            theorem_scope={
+                "pr_governance_domain": "closer_to_certificate",
+                "unicode_to_awareness_theorem": "not_yet_certificate",
+            },
         )
