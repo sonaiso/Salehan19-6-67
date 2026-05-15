@@ -1,0 +1,42 @@
+[
+  {
+    "rule_id": "lang-context-required-for-ambiguity",
+    "domain": "arabic_language",
+    "layer": "linguistic_signification",
+    "claim": "Word meaning requires context under ambiguity; surface fluency is not semantic certificate",
+    "scope": "LINGUISTIC",
+    "certainty_level": "LINGUISTIC_NORMATIVE",
+    "required_evidence": {
+      "required_items": ["syntactic_context", "semantic_context"],
+      "all_required": true,
+      "notes": "Metaphor may become strong under context but can retain residual blockers."
+    },
+    "certificate_blockers": [
+      {
+        "blocker_id": "surface_fluency_not_semantic_certificate",
+        "description": "Surface fluency cannot certify meaning.",
+        "match_any": ["ambiguous_without_context", "context_required"],
+        "blocks_levels": ["CERTIFICATE", "CERTIFICATE_CANDIDATE"]
+      }
+    ],
+    "expected_residuals": [
+      {
+        "residual_id": "metaphorical_mapping_required",
+        "description": "Metaphorical mapping residual can block certificate.",
+        "local_only": false,
+        "blocks_certificate": true
+      }
+    ],
+    "forbidden_transitions": [
+      "surface_fluency_to_semantic_certificate"
+    ],
+    "reverse_trace_requirements": {
+      "required": true,
+      "required_fields": ["input", "candidate", "evidence", "decision_path"]
+    },
+    "examples": ["arabic-ala-no-context-001", "arabic-ala-metaphor-003"],
+    "test_refs": ["tests/test_golden_prior_registry.py"],
+    "case_refs": ["arabic-ala-no-context-001", "arabic-ala-metaphor-003"],
+    "keywords": ["context", "metaphor", "semantic"]
+  }
+]

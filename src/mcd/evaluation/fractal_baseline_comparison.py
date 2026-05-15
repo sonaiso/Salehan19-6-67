@@ -8,6 +8,7 @@ from mcd.evaluation.fractal_benchmark_dataset import (
     DEFAULT_BENCHMARK_DIR,
     iter_all_cases,
 )
+from mcd.knowledge.golden_prior_registry import PriorRegistry, evaluate_case_against_priors
 
 DECISION_LEVELS: tuple[str, ...] = (
     "ZERO",
@@ -90,6 +91,8 @@ class BaselineCaseResult:
     local_zero_in_path: bool
     local_zero_preserved: bool
     final_judgment: str
+    prior_rule_ids: tuple[str, ...]
+    prior_residual_tags: tuple[str, ...]
     error_tags: tuple[str, ...]
 
 
@@ -118,6 +121,8 @@ class BaseBaseline:
         reverse_trace_complete: bool,
         has_blocking_residual: bool,
         preserved_residuals: bool,
+        prior_rule_ids: tuple[str, ...] = (),
+        prior_residual_tags: tuple[str, ...] = (),
     ) -> BaselineCaseResult:
         local_zero_in_path = bool(case.get("local_zero_in_path"))
         local_zero_preserved = not (local_zero_in_path and predicted_decision == "ZERO")
@@ -130,6 +135,7 @@ class BaseBaseline:
             has_blocking_residual=has_blocking_residual,
             preserved_residuals=preserved_residuals,
             local_zero_preserved=local_zero_preserved,
+            prior_error_tags=prior_residual_tags,
         )
         return BaselineCaseResult(
             case_id=str(case["id"]),
@@ -145,6 +151,8 @@ class BaseBaseline:
             local_zero_in_path=local_zero_in_path,
             local_zero_preserved=local_zero_preserved,
             final_judgment=self._final_judgment(predicted_decision),
+            prior_rule_ids=prior_rule_ids,
+            prior_residual_tags=prior_residual_tags,
             error_tags=tuple(tags),
         )
 
@@ -212,12 +220,25 @@ class ConservativeHypothesisBaseline(BaseBaseline):
 class GovernedProtocolBaseline(BaseBaseline):
     name = "GovernedProtocolBaseline"
 
+    def __init__(self, prior_registry: PriorRegistry | None = None) -> None:
+        self._prior_registry = prior_registry
+
     def predict(self, case: dict[str, object]) -> BaselineCaseResult:
         confidence = _baseline_confidence(case)
         evidence_complete = bool(case.get("required_evidence"))
         reverse_trace_complete = _trace_complete(case) and bool(case.get("reverse_trace_required"))
         has_blocking_residual = bool(case.get("expected_residuals"))
         governance_gate_passed = bool(_certificate_obligations_complete(case))
+        prior_rule_ids: tuple[str, ...] = ()
+        prior_residual_tags: tuple[str, ...] = ()
+
+        if self._prior_registry is not None:
+            rules = self._prior_registry.find_case_rules(case)
+            prior_missing, prior_blocking, used_rule_ids, prior_tags = evaluate_case_against_priors(case, rules)
+            prior_rule_ids = tuple(sorted(used_rule_ids))
+            prior_residual_tags = tuple(prior_tags)
+            if prior_blocking:
+                has_blocking_residual = True
 
         if confidence < 0.2:
             decision = "ZERO"
@@ -241,6 +262,11 @@ class GovernedProtocolBaseline(BaseBaseline):
             )
             decision = "CERTIFICATE" if can_certificate else "CERTIFICATE_CANDIDATE"
 
+        if self._prior_registry is not None and decision in {"CERTIFICATE_CANDIDATE", "CERTIFICATE"}:
+            if any(tag.startswith("prior_missing:") or tag.startswith("prior_blocking:") for tag in prior_residual_tags):
+                decision = "HYPOTHESIS"
+                has_blocking_residual = True
+
         if decision == "CERTIFICATE" and (
             not evidence_complete
             or not governance_gate_passed
@@ -261,6 +287,8 @@ class GovernedProtocolBaseline(BaseBaseline):
             reverse_trace_complete=reverse_trace_complete,
             has_blocking_residual=has_blocking_residual,
             preserved_residuals=True,
+            prior_rule_ids=prior_rule_ids,
+            prior_residual_tags=prior_residual_tags,
         )
 
 
@@ -301,6 +329,7 @@ def _error_tags(
     has_blocking_residual: bool,
     preserved_residuals: bool,
     local_zero_preserved: bool,
+    prior_error_tags: tuple[str, ...] = (),
 ) -> list[str]:
     tags: list[str] = []
     expected_level = str(case.get("expected_decision_level", "HYPOTHESIS"))
@@ -336,6 +365,7 @@ def _error_tags(
         tags.append("gettier_failure")
     if predicted_decision in forbidden or false_certificate:
         tags.append("forbidden_transition")
+    tags.extend(prior_error_tags)
     return tags
 
 
@@ -419,13 +449,14 @@ def _compute_metrics(cases: list[dict[str, object]], results: list[BaselineCaseR
 
 def run_fractal_baseline_comparison(
     dataset_dir: Path = DEFAULT_BENCHMARK_DIR,
+    prior_registry: PriorRegistry | None = None,
 ) -> dict[str, object]:
     cases = iter_all_cases(dataset_dir=dataset_dir)
     baselines: tuple[BaseBaseline, ...] = (
         AnswerConfidenceBaseline(),
         NaiveCertificateBaseline(),
         ConservativeHypothesisBaseline(),
-        GovernedProtocolBaseline(),
+        GovernedProtocolBaseline(prior_registry=prior_registry),
     )
 
     by_baseline: dict[str, dict[str, object]] = {}

@@ -1,0 +1,50 @@
+[
+  {
+    "rule_id": "prog-ci-merge-not-certificate",
+    "domain": "coding_pr_governance",
+    "layer": "governance_gate",
+    "claim": "CI_PASS and MERGED alone do not imply CERTIFICATE",
+    "scope": "COMPUTATIONAL",
+    "certainty_level": "COMPUTATIONAL_CONTRACT",
+    "required_evidence": {
+      "required_items": ["proof_object", "governance_gate_passed", "reverse_trace_complete", "tests_pass"],
+      "all_required": true,
+      "notes": "Certificate requires governed contract fields, not CI score only."
+    },
+    "certificate_blockers": [
+      {
+        "blocker_id": "ci_pass_to_certificate",
+        "description": "CI pass only cannot escalate to certificate.",
+        "match_any": ["ci_pass_is_not_certificate", "CI_PASS_TO_CERTIFICATE"],
+        "blocks_levels": ["CERTIFICATE", "CERTIFICATE_CANDIDATE"]
+      },
+      {
+        "blocker_id": "score_only_certificate",
+        "description": "Score-only certificate is forbidden.",
+        "match_any": ["score_only_certificate", "tests_pass_only"],
+        "blocks_levels": ["CERTIFICATE", "CERTIFICATE_CANDIDATE"]
+      }
+    ],
+    "expected_residuals": [
+      {
+        "residual_id": "ci_does_not_prove_architectural_correctness",
+        "description": "CI residual persists without architecture-governed evidence.",
+        "local_only": false,
+        "blocks_certificate": true
+      }
+    ],
+    "forbidden_transitions": [
+      "CI_PASS_TO_CERTIFICATE",
+      "score_only_certificate",
+      "MERGED_TO_CERTIFICATE"
+    ],
+    "reverse_trace_requirements": {
+      "required": true,
+      "required_fields": ["input", "candidate", "evidence", "decision_path"]
+    },
+    "examples": ["coding-ci-pass-001"],
+    "test_refs": ["tests/test_golden_prior_registry.py"],
+    "case_refs": ["coding-ci-pass-001", "coding-governed-pr-002"],
+    "keywords": ["ci", "pr", "certificate"]
+  }
+]

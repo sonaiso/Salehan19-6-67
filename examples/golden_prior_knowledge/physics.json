@@ -1,0 +1,48 @@
+[
+  {
+    "rule_id": "physics-smoke-fire-conditional",
+    "domain": "physical_reality",
+    "layer": "evidence_gate",
+    "claim": "Smoke may indicate fire but does not certify fire without additional evidence",
+    "scope": "EMPIRICAL",
+    "certainty_level": "EMPIRICAL_UNDER_CONDITIONS",
+    "required_evidence": {
+      "required_items": ["visible_flame", "heat", "burning_smell"],
+      "all_required": true,
+      "notes": "Multi-sensor confirmation supports strong judgment under conditions."
+    },
+    "certificate_blockers": [
+      {
+        "blocker_id": "smoke_only_not_certificate",
+        "description": "Smoke-only evidence cannot certify fire.",
+        "match_any": ["indirect_observation", "SMOKE_ONLY_TO_FIRE_CERTIFICATE"],
+        "blocks_levels": ["CERTIFICATE", "CERTIFICATE_CANDIDATE"]
+      },
+      {
+        "blocker_id": "alternative_causes_block_certificate",
+        "description": "Alternative causes block certificate.",
+        "match_any": ["alternative_causes_possible", "stage_effect_possible"],
+        "blocks_levels": ["CERTIFICATE", "CERTIFICATE_CANDIDATE"]
+      }
+    ],
+    "expected_residuals": [
+      {
+        "residual_id": "alternative_causes_possible",
+        "description": "Cause uncertainty residual must be preserved.",
+        "local_only": false,
+        "blocks_certificate": true
+      }
+    ],
+    "forbidden_transitions": [
+      "SMOKE_ONLY_TO_FIRE_CERTIFICATE"
+    ],
+    "reverse_trace_requirements": {
+      "required": true,
+      "required_fields": ["input", "candidate", "evidence", "decision_path"]
+    },
+    "examples": ["physical-smoke-001", "physical-fire-strong-002"],
+    "test_refs": ["tests/test_golden_prior_registry.py"],
+    "case_refs": ["physical-smoke-001", "physical-fire-strong-002", "physical-alternative-cause-003"],
+    "keywords": ["smoke", "fire", "heat", "flame"]
+  }
+]

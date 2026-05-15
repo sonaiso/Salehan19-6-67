@@ -88,3 +88,11 @@ All case-level errors are tagged under:
 - No prompt-freeze/version-pin/sampling-control pipeline in this PR.
 - No embedding/training prototype in this PR.
 - No global `CERTIFICATE` claim.
+
+## Golden Prior Knowledge Dependency
+- Baseline metrics in #106 become stronger under #107 when governed priors define scope, evidence requirements, blockers, residual expectations, and forbidden transitions.
+- `false_certificate_rate` is only meaningful when explicit certificate blockers are defined and checked.
+- GPKB is not a universal knowledge claim; it is a minimal, scoped, testable prior base used by governance gates.
+
+Post-merge CI residual: if a PR reports N of M checks passed, identify whether remaining checks are failed, skipped, pending, canceled, or non-required before using the PR as a dependency for certificate claims.
+Do not treat this as a development blocker unless the remaining check is both required and failed/canceled.

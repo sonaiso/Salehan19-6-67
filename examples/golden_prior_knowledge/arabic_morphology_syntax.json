@@ -1,0 +1,43 @@
+[
+  {
+    "rule_id": "ar-morph-syntax-path-preservation",
+    "domain": "arabic_language",
+    "layer": "morphology_syntax",
+    "claim": "Multiple candidate paths may exist; local path failure must preserve remaining paths and reverse trace for strong decisions",
+    "scope": "CONTEXTUAL",
+    "certainty_level": "CONTEXTUAL_USAGE",
+    "required_evidence": {
+      "required_items": ["clause_scoped_attachment", "semantic_role_split", "path_level_trace"],
+      "all_required": true,
+      "notes": "Ism/fi‘l/harf classification and ifadah require context and reverse trace."
+    },
+    "certificate_blockers": [
+      {
+        "blocker_id": "path_failure_not_global_zero",
+        "description": "Local path failure cannot collapse all remaining paths.",
+        "match_any": ["zero_in_path_must_remain_local", "no_silent_global_downgrade"],
+        "blocks_levels": ["CERTIFICATE", "CERTIFICATE_CANDIDATE"]
+      }
+    ],
+    "expected_residuals": [
+      {
+        "residual_id": "local_path_failure",
+        "description": "Local failure must be preserved while keeping remaining paths.",
+        "local_only": true,
+        "blocks_certificate": false
+      }
+    ],
+    "forbidden_transitions": [
+      "silent_level_skip",
+      "local_zero_to_global_zero"
+    ],
+    "reverse_trace_requirements": {
+      "required": true,
+      "required_fields": ["input", "candidate", "evidence", "decision_path"]
+    },
+    "examples": ["arabic-zero-in-path-local-004"],
+    "test_refs": ["tests/test_golden_prior_registry.py"],
+    "case_refs": ["arabic-zero-in-path-local-004"],
+    "keywords": ["local_zero_in_path", "path", "ism", "fi_l", "harf"]
+  }
+]
