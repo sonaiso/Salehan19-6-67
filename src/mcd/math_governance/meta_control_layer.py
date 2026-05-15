@@ -38,6 +38,11 @@ ROLE_CATEGORIES = {
     "residual",
 }
 
+SUPPORT_RANK_NORMALIZATION_FACTOR = 10.0
+CERTIFICATE_RANK_THRESHOLD = 0.95
+STRONG_RANK_THRESHOLD = 0.75
+LIKELY_RANK_THRESHOLD = 0.55
+
 
 @dataclass
 class MetaUnit:
@@ -310,7 +315,7 @@ class MetaControlLayer:
     def _support_rank(path: CandidatePath) -> float:
         independent = len(set(path.evidence_chain))
         by_units = sum(len(set(unit.evidence)) for unit in path.units)
-        raw = (independent + by_units) / 10.0
+        raw = (independent + by_units) / SUPPORT_RANK_NORMALIZATION_FACTOR
         return max(0.0, min(1.0, round(raw, 4)))
 
     def assess(self, path: CandidatePath) -> PathAssessment:
@@ -324,11 +329,11 @@ class MetaControlLayer:
 
         if is_impossible:
             status = PATH_ZERO_IN_PATH
-        elif final_rank >= 0.95 and not any(r.startswith(("blocking", "defeating")) for r in residuals):
+        elif final_rank >= CERTIFICATE_RANK_THRESHOLD and not any(r.startswith(("blocking", "defeating")) for r in residuals):
             status = PATH_CERTIFICATE
-        elif final_rank >= 0.75:
+        elif final_rank >= STRONG_RANK_THRESHOLD:
             status = PATH_STRONG
-        elif final_rank >= 0.55:
+        elif final_rank >= LIKELY_RANK_THRESHOLD:
             status = PATH_LIKELY
         elif final_rank > 0.0:
             status = PATH_HYPOTHESIS
@@ -350,6 +355,9 @@ class MetaControlLayer:
         )
 
     def govern(self, *, input_text: str, candidate_paths: list[CandidatePath], top_k: int = 3) -> MetaCapsule:
+        if top_k < 1:
+            raise ValueError("top_k must be >= 1")
+
         assessed = [self.assess(path) for path in candidate_paths]
         assessed_by_id = {a.path_id: a for a in assessed}
 
@@ -365,7 +373,7 @@ class MetaControlLayer:
             ),
             reverse=True,
         )
-        top_paths = ranked[: max(0, top_k)]
+        top_paths = ranked[:top_k]
         selected = top_paths[0] if top_paths else None
 
         selected_assessment = assessed_by_id[selected.path_id] if selected else None
