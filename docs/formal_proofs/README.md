@@ -7,6 +7,7 @@ This folder tracks formalization artifacts for:
 - ForbiddenEscalation
 - TriadClosure
 - ReplayIntegrity
+- FractalEmbeddingMeasurementProtocol
 
 Final epistemic judgments policy:
 
