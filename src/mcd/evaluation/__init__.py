@@ -22,6 +22,7 @@ from mcd.evaluation.fractal_benchmark_dataset import (
     validate_all_cases,
     validate_case,
 )
+from mcd.evaluation.fractal_baseline_comparison import run_fractal_baseline_comparison
 from mcd.evaluation.judgment_routing_matrix import JudgmentRoutingMatrix, MatrixEntry
 
 __all__ = [
@@ -46,4 +47,5 @@ __all__ = [
     "load_domain_cases",
     "validate_all_cases",
     "validate_case",
+    "run_fractal_baseline_comparison",
 ]
