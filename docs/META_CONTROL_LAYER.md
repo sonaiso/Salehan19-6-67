@@ -62,6 +62,32 @@ But **public final judgment remains triadic only**:
 
 `zero_in_path` means failure **inside this path**, not absolute non-existence.
 
+## Certificate Governance Gate
+
+Certificate is not issued from rank threshold alone.
+MCL now treats threshold-level certificate as a **candidate** that must pass
+an explicit governance gate:
+
+- has `ProofObject`
+- all blocking/defeating constraints are passed
+- reverse trace is replayable
+- evidence is independent enough (at least two independence groups)
+- no blocking/defeating residuals
+
+If any gate check fails, output is downgraded to governed non-certificate
+(`hypothesis` publicly, with residual reasons like `certificate_blocked`).
+
+## Structured Explainability Objects
+
+MCL capsule/unfold include object-level governance artifacts:
+
+- `EvidenceObject`
+- `ConstraintObject`
+- `TransitionObject`
+- `ProofObject`
+- governance gate report
+- reverse trace record
+
 ## Capsule Contract
 
 MCL emits a foldable capsule containing:
