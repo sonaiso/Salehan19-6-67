@@ -99,7 +99,7 @@ def test_govern_filters_impossible_keeps_topk_and_preserves_competing_residuals(
 
     p1 = _path(
         "p1",
-        [_unit("م", 0, layer="template", role="augment", evidence=["wazn"]), _unit("غ", 3, layer="root", role="root", evidence=["root"] )],
+        [_unit("م", 0, layer="template", role="augment", evidence=["wazn"]), _unit("غ", 3, layer="root", role="root", evidence=["root"])],
         evidence_chain=["ctx:agent", "lex:istafala"],
         score=0.9,
         transformations=["T_pattern", "T_derivation"],
@@ -215,7 +215,10 @@ def test_unfold_restores_why_not_only_what():
     mcl = MetaControlLayer()
     p = _path(
         "p1",
-        [_unit("م", 0, layer="template", role="augment", evidence=["lex"]), _unit("ك", 1, layer="root", role="root", evidence=["root"])],
+        [
+            _unit("م", 0, layer="template", role="augment", evidence=["lex"]),
+            _unit("ك", 1, layer="root", role="root", evidence=["root"]),
+        ],
         evidence_chain=["ctx"],
         transformations=["T_pattern"],
     )
