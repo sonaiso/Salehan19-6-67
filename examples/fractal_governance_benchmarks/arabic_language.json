@@ -9,7 +9,14 @@
     "expected_residuals": ["ambiguous_without_context"],
     "forbidden_decisions": ["CERTIFICATE"],
     "allowed_decision_level": "HYPOTHESIS",
+    "expected_decision_level": "HYPOTHESIS",
     "reverse_trace_required": true,
+    "trace_definition": {
+      "input": "على",
+      "candidate": "harf_jarr|ism|fi_l|spatial_relation|metaphorical_relation",
+      "evidence": "syntactic_context_missing",
+      "decision_path": "token->dependency_check->hypothesis"
+    },
     "notes": "Distinguishes answer_likelihood from justified_decision by blocking certificate under missing context."
   },
   {
@@ -22,7 +29,14 @@
     "expected_residuals": [],
     "forbidden_decisions": ["CERTIFICATE"],
     "allowed_decision_level": "STRONG",
+    "expected_decision_level": "STRONG",
     "reverse_trace_required": true,
+    "trace_definition": {
+      "input": "جلست على الكرسي",
+      "candidate": "spatial_relation",
+      "evidence": "preposition_attachment+verb_support",
+      "decision_path": "syntax->semantic_fit->strong"
+    },
     "notes": "High answer_likelihood is separated from certificate rights unless full certificate obligations are met."
   },
   {
@@ -35,7 +49,38 @@
     "expected_residuals": ["metaphorical_mapping_required"],
     "forbidden_decisions": ["CERTIFICATE"],
     "allowed_decision_level": "STRONG",
+    "expected_decision_level": "STRONG",
     "reverse_trace_required": true,
-    "notes": "Justified_decision demands semantic evidence and preserved residuals, not lexical probability only."
+    "trace_definition": {
+      "input": "له عليّ فضل",
+      "candidate": "metaphorical_obligation_relation",
+      "evidence": "semantic_context_obligation",
+      "decision_path": "lexical_signal->contextual_semantics->strong"
+    },
+    "notes": "Residuals here block CERTIFICATE, not STRONG: context supports governed metaphorical reading but leaves non-certificate epistemic remainder."
+  },
+  {
+    "id": "arabic-zero-in-path-local-004",
+    "domain": "arabic_language",
+    "input": "وضعتُ الكتاب على الطاولة وله عليّ فضل",
+    "candidates": ["literal_spatial_relation", "metaphorical_obligation_relation", "single_literal_reading"],
+    "constraints": ["multi_clause_interpretation_required", "zero_in_path_must_remain_local"],
+    "required_evidence": ["clause_scoped_attachment", "semantic_role_split"],
+    "expected_residuals": ["single_literal_reading_blocked"],
+    "forbidden_decisions": ["CERTIFICATE"],
+    "allowed_decision_level": "HYPOTHESIS",
+    "expected_decision_level": "HYPOTHESIS",
+    "reverse_trace_required": true,
+    "trace_definition": {
+      "input": "وضعتُ الكتاب على الطاولة وله عليّ فضل",
+      "candidate": "literal_spatial_relation + metaphorical_obligation_relation",
+      "evidence": "clause_level_semantic_disambiguation",
+      "decision_path": "path_split->block_one_path->preserve_remaining_paths"
+    },
+    "local_zero_in_path": true,
+    "global_zero": false,
+    "blocked_path": "single_literal_reading",
+    "remaining_paths": ["literal_spatial_relation", "metaphorical_obligation_relation"],
+    "notes": "One candidate path is locally blocked without collapsing the whole utterance to global ZERO."
   }
 ]

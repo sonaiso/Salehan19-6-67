@@ -9,7 +9,14 @@
     "expected_residuals": ["ci_does_not_prove_architectural_correctness"],
     "forbidden_decisions": ["CERTIFICATE"],
     "allowed_decision_level": "HYPOTHESIS",
+    "expected_decision_level": "HYPOTHESIS",
     "reverse_trace_required": true,
+    "trace_definition": {
+      "input": "ci_checks_passed",
+      "candidate": "safe_to_merge",
+      "evidence": "ci_only_without_governance_trace",
+      "decision_path": "ci_signal->missing_governance_evidence->hypothesis"
+    },
     "notes": "Separates likely answer from justified decision by requiring governance evidence beyond CI."
   },
   {
@@ -22,7 +29,14 @@
     "expected_residuals": [],
     "forbidden_decisions": [],
     "allowed_decision_level": "CERTIFICATE_CANDIDATE",
+    "expected_decision_level": "CERTIFICATE_CANDIDATE",
     "reverse_trace_required": true,
+    "trace_definition": {
+      "input": "governed_pr_bundle",
+      "candidate": "certificate_candidate",
+      "evidence": "tests_docs_proof_object_reverse_trace",
+      "decision_path": "governance_obligations->candidate_only_not_global_certificate"
+    },
     "certificate_obligations": {
       "proof_object": true,
       "governance_gate_passed": true,
@@ -40,9 +54,66 @@
     "constraints": ["zero_in_path_must_remain_local", "no_silent_global_downgrade"],
     "required_evidence": ["path_level_trace", "cross_path_status_table"],
     "expected_residuals": ["path_branch_missing_evidence", "local_zero_in_path"],
-    "forbidden_decisions": ["CERTIFICATE", "ZERO"],
+    "forbidden_decisions": ["CERTIFICATE"],
     "allowed_decision_level": "HYPOTHESIS",
+    "expected_decision_level": "HYPOTHESIS",
     "reverse_trace_required": true,
+    "trace_definition": {
+      "input": "multi_path_pr_review",
+      "candidate": "hypothesis_with_local_zero_path",
+      "evidence": "path_level_trace+cross_path_status",
+      "decision_path": "block_missing_evidence_path->preserve_other_paths"
+    },
     "notes": "Ensures ZERO_IN_PATH locality and prevents local path failure from becoming global ZERO."
+    ,
+    "local_zero_in_path": true,
+    "global_zero": false,
+    "blocked_path": "local_zero_in_path",
+    "remaining_paths": ["hypothesis_with_local_zero_path"]
+  },
+  {
+    "id": "coding-gettier-accidental-pass-004",
+    "domain": "coding_pr_governance",
+    "input": "PR appears to work in one run due to environment coincidence, but lacks proof object and traceability.",
+    "candidates": ["accidentally_passing", "governed_merge_ready"],
+    "constraints": ["accidental_pass_not_certificate", "proof_and_trace_required"],
+    "required_evidence": ["reproducible_tests", "proof_object", "reverse_trace"],
+    "expected_residuals": ["non_reproducible_behavior_risk"],
+    "forbidden_decisions": ["CERTIFICATE"],
+    "allowed_decision_level": "HYPOTHESIS",
+    "expected_decision_level": "HYPOTHESIS",
+    "reverse_trace_required": true,
+    "trace_definition": {
+      "input": "single_run_pass_without_trace",
+      "candidate": "accidentally_passing",
+      "evidence": "missing_proof_and_reverse_trace",
+      "decision_path": "pass_signal->justification_gap->hypothesis"
+    },
+    "notes": "Gettier-style governance: a seemingly correct outcome is not a justified certificate without reproducible evidence chain."
+  },
+  {
+    "id": "coding-zero-in-path-local-005",
+    "domain": "coding_pr_governance",
+    "input": "Static checks pass on one module, but another module has a blocked architectural violation path.",
+    "candidates": ["module_a_ready", "module_b_blocked", "global_failure"],
+    "constraints": ["zero_in_path_must_remain_local", "retain_candidate_structure_under_global_blockers"],
+    "required_evidence": ["module_level_trace", "architecture_violation_report"],
+    "expected_residuals": ["module_b_blocking_residual"],
+    "forbidden_decisions": ["CERTIFICATE"],
+    "allowed_decision_level": "HYPOTHESIS",
+    "expected_decision_level": "HYPOTHESIS",
+    "reverse_trace_required": true,
+    "trace_definition": {
+      "input": "module_split_governance_state",
+      "candidate": "module_a_ready",
+      "evidence": "module_scoped_reports",
+      "decision_path": "detect_module_b_zero_in_path->retain_module_a_path"
+    },
+    "local_zero_in_path": true,
+    "global_zero": false,
+    "blocked_path": "module_b_blocked",
+    "remaining_paths": ["module_a_ready"],
+    "global_blocking_residual": "certificate_gate_incomplete",
+    "notes": "Global CERTIFICATE remains blocked while local candidate structure is preserved."
   }
 ]

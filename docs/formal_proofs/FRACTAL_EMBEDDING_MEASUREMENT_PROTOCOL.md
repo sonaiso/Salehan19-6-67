@@ -142,11 +142,20 @@ Each file contains inspectable `BenchmarkCase` rows with governance fields:
 - expected_residuals
 - forbidden_decisions
 - allowed_decision_level
+- expected_decision_level
 - reverse_trace_required
+- trace_definition
 - notes
 
 Dataset v0 is measurement-only and keeps theorem status at **STRONG_HYPOTHESIS**.
 It does not claim trained embedding completion, global CERTIFICATE, or consciousness.
+
+Hardening constraints before merge:
+
+- `STRONG` and `CERTIFICATE_CANDIDATE` cases must require reverse trace and provide explicit trace definitions.
+- Local `ZERO_IN_PATH` must remain local (`global_zero=false`) with blocked path and preserved remaining paths.
+- `CERTIFICATE_CANDIDATE` is not `CERTIFICATE`; certificate obligations remain explicitly gated.
+- Cases with incomplete obligations must explicitly forbid `CERTIFICATE`.
 
 ## Example Case Pattern
 

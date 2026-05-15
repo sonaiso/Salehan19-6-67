@@ -14,7 +14,9 @@ REQUIRED_CASE_FIELDS: tuple[str, ...] = (
     "expected_residuals",
     "forbidden_decisions",
     "allowed_decision_level",
+    "expected_decision_level",
     "reverse_trace_required",
+    "trace_definition",
     "notes",
 )
 
@@ -57,6 +59,17 @@ def _certificate_obligations_explicitly_satisfied(case: dict[str, object]) -> bo
     if any(not isinstance(obligations.get(key), bool) for key in REQUIRED_CERTIFICATE_OBLIGATIONS):
         return False
     return all(bool(obligations[key]) for key in REQUIRED_CERTIFICATE_OBLIGATIONS)
+
+
+def _valid_trace_definition(value: object) -> bool:
+    if not isinstance(value, dict):
+        return False
+    required = ("input", "candidate", "evidence", "decision_path")
+    for key in required:
+        item = value.get(key)
+        if not isinstance(item, str) or not item.strip():
+            return False
+    return True
 
 
 def load_domain_cases(
@@ -120,11 +133,42 @@ def validate_case(case: dict[str, object]) -> list[str]:
             + ", ".join(ALLOWED_DECISION_LEVELS)
         )
 
+    expected_level = case["expected_decision_level"]
+    if expected_level not in ALLOWED_DECISION_LEVELS:
+        errors.append(
+            "expected_decision_level must be one of "
+            + ", ".join(ALLOWED_DECISION_LEVELS)
+        )
+    elif expected_level != allowed_level:
+        errors.append("expected_decision_level must match allowed_decision_level")
+
     reverse_trace_required = case["reverse_trace_required"]
+    trace_definition = case["trace_definition"]
+    has_valid_trace = _valid_trace_definition(trace_definition)
     if not isinstance(reverse_trace_required, bool):
         errors.append("reverse_trace_required must be bool")
     elif allowed_level in {"STRONG", "CERTIFICATE_CANDIDATE"} and not reverse_trace_required:
         errors.append("STRONG/CERTIFICATE_CANDIDATE cases require reverse_trace_required=true")
+    elif reverse_trace_required and not has_valid_trace:
+        errors.append(
+            "reverse_trace_required=true requires trace_definition with input/candidate/evidence/decision_path"
+        )
+
+    if allowed_level in {"STRONG", "CERTIFICATE_CANDIDATE"} and not has_valid_trace:
+        errors.append("STRONG/CERTIFICATE_CANDIDATE cases require non-empty trace_definition")
+
+    if allowed_level == "ZERO" and not reverse_trace_required:
+        blocked_path = case.get("blocked_path")
+        failure_reason = case.get("failure_reason")
+        if not (
+            isinstance(blocked_path, str)
+            and blocked_path.strip()
+            or isinstance(failure_reason, str)
+            and failure_reason.strip()
+        ):
+            errors.append(
+                "ZERO with reverse_trace_required=false requires blocked_path or failure_reason"
+            )
 
     if not isinstance(case["notes"], str) or not case["notes"].strip():
         errors.append("notes must be a non-empty string")
@@ -150,8 +194,33 @@ def validate_case(case: dict[str, object]) -> list[str]:
     else:
         errors.append("forbidden_decisions must be a list of strings")
 
+    if allowed_level == "CERTIFICATE_CANDIDATE" and (
+        not isinstance(required_evidence, list) or len(required_evidence) == 0
+    ):
+        errors.append("CERTIFICATE_CANDIDATE requires non-empty required_evidence")
+
     if allowed_level == "CERTIFICATE" and not obligations_satisfied:
         errors.append("CERTIFICATE level requires explicit certificate obligations")
+    if allowed_level == "CERTIFICATE":
+        if not reverse_trace_required or not has_valid_trace:
+            errors.append("CERTIFICATE requires full reverse trace definition")
+        if not isinstance(required_evidence, list) or len(required_evidence) == 0:
+            errors.append("CERTIFICATE requires non-empty required_evidence")
+        if isinstance(residuals, list) and len(residuals) > 0:
+            errors.append("CERTIFICATE cannot carry expected residuals")
+
+    local_zero_in_path = case.get("local_zero_in_path")
+    if local_zero_in_path is not None and not isinstance(local_zero_in_path, bool):
+        errors.append("local_zero_in_path must be bool when present")
+    if bool(local_zero_in_path):
+        if case.get("global_zero") is not False:
+            errors.append("local_zero_in_path=true requires global_zero=false")
+        blocked_path = case.get("blocked_path")
+        if not isinstance(blocked_path, str) or not blocked_path.strip():
+            errors.append("local_zero_in_path=true requires non-empty blocked_path")
+        remaining_paths = case.get("remaining_paths")
+        if not _all_str_list(remaining_paths) or len(remaining_paths) == 0:
+            errors.append("local_zero_in_path=true requires non-empty remaining_paths")
 
     return errors
 
