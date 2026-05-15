@@ -21,12 +21,21 @@ class PriorScope(str, Enum):
 
 
 class CertaintyLevel(str, Enum):
+    CONSTITUTIONAL_GOVERNANCE = "CONSTITUTIONAL_GOVERNANCE"
     FORMAL_CERTAINTY = "FORMAL_CERTAINTY"
     COMPUTATIONAL_CONTRACT = "COMPUTATIONAL_CONTRACT"
     EMPIRICAL_UNDER_CONDITIONS = "EMPIRICAL_UNDER_CONDITIONS"
     LINGUISTIC_NORMATIVE = "LINGUISTIC_NORMATIVE"
     CONTEXTUAL_USAGE = "CONTEXTUAL_USAGE"
     HYPOTHESIS_PRIOR = "HYPOTHESIS_PRIOR"
+
+
+class GoldenRuleMaturityLevel(str, Enum):
+    DRAFT_PRIOR = "DRAFT_PRIOR"
+    SCOPED_PRIOR = "SCOPED_PRIOR"
+    GOVERNING_PRIOR = "GOVERNING_PRIOR"
+    GOLDEN_RULE_CANDIDATE = "GOLDEN_RULE_CANDIDATE"
+    GOLDEN_RULE = "GOLDEN_RULE"
 
 
 @dataclass(frozen=True)
@@ -75,6 +84,17 @@ class PriorRule:
     test_refs: tuple[str, ...] = ()
     case_refs: tuple[str, ...] = ()
     keywords: tuple[str, ...] = ()
+    is_golden_rule: bool = False
+    maturity_level: GoldenRuleMaturityLevel = GoldenRuleMaturityLevel.DRAFT_PRIOR
+    scope_complete: bool | None = None
+    evidence_requirements_complete: bool | None = None
+    certificate_blockers_complete: bool | None = None
+    residual_expectations_defined: bool | None = None
+    forbidden_transitions_defined: bool | None = None
+    reverse_trace_requirements_defined: bool | None = None
+    concept_measurement_capable: bool | None = None
+    applicability_conditions: tuple[str, ...] = ()
+    known_exceptions: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -82,6 +102,17 @@ class PriorValidationResult:
     rule_id: str
     valid: bool
     errors: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
+class GoldenRuleQualificationResult:
+    qualified: bool
+    maturity_level: GoldenRuleMaturityLevel
+    missing_requirements: tuple[str, ...]
+    blocking_issues: tuple[str, ...]
+    warnings: tuple[str, ...]
+    can_block_certificate: bool
+    can_measure_new_concepts: bool
 
 
 @dataclass
@@ -133,6 +164,26 @@ class PriorRegistry:
             return direct
         return self.find_rules(domain=domain)
 
+    def qualified_rules(
+        self,
+        *,
+        min_maturity: GoldenRuleMaturityLevel = GoldenRuleMaturityLevel.GOLDEN_RULE_CANDIDATE,
+    ) -> list[PriorRule]:
+        rank = {
+            GoldenRuleMaturityLevel.DRAFT_PRIOR: 0,
+            GoldenRuleMaturityLevel.SCOPED_PRIOR: 1,
+            GoldenRuleMaturityLevel.GOVERNING_PRIOR: 2,
+            GoldenRuleMaturityLevel.GOLDEN_RULE_CANDIDATE: 3,
+            GoldenRuleMaturityLevel.GOLDEN_RULE: 4,
+        }
+        threshold = rank[min_maturity]
+        out: list[PriorRule] = []
+        for rule in self.rules:
+            qualification = qualify_golden_rule(rule)
+            if rank[qualification.maturity_level] >= threshold:
+                out.append(rule)
+        return out
+
     def validate(self) -> dict[str, list[str]]:
         errors: dict[str, list[str]] = {}
         for rule in self.rules:
@@ -148,6 +199,122 @@ _REQUIRED_FORBIDDEN_HINTS = {
     "SMOKE_ONLY_TO_FIRE_CERTIFICATE",
     "TRIANGLE_WITHOUT_GEOMETRY_SCOPE_TO_CERTIFICATE",
 }
+
+
+def _has_test_or_benchmark_ref(rule: PriorRule) -> bool:
+    return bool(rule.test_refs or rule.case_refs or rule.examples)
+
+
+def qualify_golden_rule(rule: PriorRule) -> GoldenRuleQualificationResult:
+    missing: list[str] = []
+    blockers: list[str] = []
+    warnings: list[str] = []
+
+    scope_complete = rule.scope_complete if rule.scope_complete is not None else isinstance(rule.scope, PriorScope)
+    certainty_explicit = isinstance(rule.certainty_level, CertaintyLevel)
+    evidence_complete = (
+        rule.evidence_requirements_complete
+        if rule.evidence_requirements_complete is not None
+        else bool(rule.required_evidence.required_items)
+    )
+    certificate_blockers_complete = (
+        rule.certificate_blockers_complete
+        if rule.certificate_blockers_complete is not None
+        else bool(rule.certificate_blockers)
+    )
+    residuals_defined = (
+        rule.residual_expectations_defined
+        if rule.residual_expectations_defined is not None
+        else bool(rule.expected_residuals)
+    )
+    forbidden_defined = (
+        rule.forbidden_transitions_defined
+        if rule.forbidden_transitions_defined is not None
+        else bool(rule.forbidden_transitions)
+    )
+    reverse_trace_defined = (
+        rule.reverse_trace_requirements_defined
+        if rule.reverse_trace_requirements_defined is not None
+        else bool(rule.reverse_trace_requirements.required)
+    )
+    has_tests = _has_test_or_benchmark_ref(rule)
+
+    if not scope_complete:
+        missing.append("scope")
+        blockers.append("scope is required before any golden governance")
+    if not certainty_explicit:
+        missing.append("certainty_level")
+        blockers.append("certainty level must be explicit")
+    if not evidence_complete:
+        missing.append("required_evidence")
+        blockers.append("evidence requirements must be explicit")
+    if not certificate_blockers_complete:
+        missing.append("certificate_blockers")
+        blockers.append("certificate blockers are required to govern certificate")
+    if not residuals_defined:
+        missing.append("expected_residuals")
+        warnings.append("residual expectations missing; uncertainty governance is incomplete")
+    if not forbidden_defined:
+        missing.append("forbidden_transitions")
+        warnings.append("forbidden transitions are not explicit")
+    if not reverse_trace_defined:
+        missing.append("reverse_trace_requirements")
+        blockers.append("reverse trace requirements are mandatory for governed ascent")
+    if not has_tests:
+        missing.append("test_cases")
+        warnings.append("no test/benchmark reference; rule cannot mature to GOLDEN_RULE")
+
+    maturity = GoldenRuleMaturityLevel.DRAFT_PRIOR
+    if scope_complete:
+        maturity = GoldenRuleMaturityLevel.SCOPED_PRIOR
+    if scope_complete and certainty_explicit and evidence_complete:
+        maturity = GoldenRuleMaturityLevel.GOVERNING_PRIOR
+    if (
+        scope_complete
+        and certainty_explicit
+        and evidence_complete
+        and certificate_blockers_complete
+        and forbidden_defined
+        and residuals_defined
+        and reverse_trace_defined
+    ):
+        maturity = GoldenRuleMaturityLevel.GOLDEN_RULE_CANDIDATE
+    if maturity == GoldenRuleMaturityLevel.GOLDEN_RULE_CANDIDATE and has_tests:
+        maturity = GoldenRuleMaturityLevel.GOLDEN_RULE
+
+    if rule.maturity_level != GoldenRuleMaturityLevel.DRAFT_PRIOR:
+        maturity = rule.maturity_level
+
+    can_block_certificate = certificate_blockers_complete and forbidden_defined
+    concept_measurement_capable = (
+        rule.concept_measurement_capable
+        if rule.concept_measurement_capable is not None
+        else (
+            scope_complete
+            and evidence_complete
+            and forbidden_defined
+            and reverse_trace_defined
+            and can_block_certificate
+        )
+    )
+
+    qualified = maturity in {
+        GoldenRuleMaturityLevel.GOLDEN_RULE_CANDIDATE,
+        GoldenRuleMaturityLevel.GOLDEN_RULE,
+    }
+    if qualified and not concept_measurement_capable:
+        qualified = False
+        blockers.append("concept measurement capability is required for golden qualification")
+
+    return GoldenRuleQualificationResult(
+        qualified=qualified,
+        maturity_level=maturity,
+        missing_requirements=tuple(dict.fromkeys(missing)),
+        blocking_issues=tuple(dict.fromkeys(blockers)),
+        warnings=tuple(dict.fromkeys(warnings)),
+        can_block_certificate=can_block_certificate,
+        can_measure_new_concepts=concept_measurement_capable,
+    )
 
 
 def validate_prior_rule(rule: PriorRule) -> PriorValidationResult:
@@ -240,6 +407,11 @@ def _load_reverse_trace_requirement(raw: object) -> ReverseTraceRequirement:
     return ReverseTraceRequirement(required=bool(raw.get("required", True)), required_fields=tuple(fields))
 
 
+def _as_maturity(raw: object) -> GoldenRuleMaturityLevel:
+    value = str(raw or GoldenRuleMaturityLevel.DRAFT_PRIOR.value)
+    return GoldenRuleMaturityLevel(value)
+
+
 def _parse_rule(raw: dict[str, object]) -> PriorRule:
     return PriorRule(
         rule_id=str(raw.get("rule_id", "")),
@@ -259,6 +431,45 @@ def _parse_rule(raw: dict[str, object]) -> PriorRule:
         test_refs=tuple(raw.get("test_refs", []) if isinstance(raw.get("test_refs"), list) else []),
         case_refs=tuple(raw.get("case_refs", []) if isinstance(raw.get("case_refs"), list) else []),
         keywords=tuple(raw.get("keywords", []) if isinstance(raw.get("keywords"), list) else []),
+        is_golden_rule=bool(raw.get("is_golden_rule", False)),
+        maturity_level=_as_maturity(raw.get("maturity_level", GoldenRuleMaturityLevel.DRAFT_PRIOR.value)),
+        scope_complete=raw.get("scope_complete") if isinstance(raw.get("scope_complete"), bool) else None,
+        evidence_requirements_complete=(
+            raw.get("evidence_requirements_complete")
+            if isinstance(raw.get("evidence_requirements_complete"), bool)
+            else None
+        ),
+        certificate_blockers_complete=(
+            raw.get("certificate_blockers_complete")
+            if isinstance(raw.get("certificate_blockers_complete"), bool)
+            else None
+        ),
+        residual_expectations_defined=(
+            raw.get("residual_expectations_defined")
+            if isinstance(raw.get("residual_expectations_defined"), bool)
+            else None
+        ),
+        forbidden_transitions_defined=(
+            raw.get("forbidden_transitions_defined")
+            if isinstance(raw.get("forbidden_transitions_defined"), bool)
+            else None
+        ),
+        reverse_trace_requirements_defined=(
+            raw.get("reverse_trace_requirements_defined")
+            if isinstance(raw.get("reverse_trace_requirements_defined"), bool)
+            else None
+        ),
+        concept_measurement_capable=(
+            raw.get("concept_measurement_capable")
+            if isinstance(raw.get("concept_measurement_capable"), bool)
+            else None
+        ),
+        applicability_conditions=tuple(
+            raw.get("applicability_conditions", [])
+            if isinstance(raw.get("applicability_conditions"), list)
+            else []
+        ),
+        known_exceptions=tuple(raw.get("known_exceptions", []) if isinstance(raw.get("known_exceptions"), list) else []),
     )
 
 
@@ -278,7 +489,15 @@ def load_golden_prior_registry(
 ) -> PriorRegistry:
     registry = PriorRegistry()
     for path in sorted(prior_dir.glob("*.json")):
-        for rule in load_prior_rules_file(path):
+        with path.open(encoding="utf-8") as fh:
+            payload = json.load(fh)
+        if not (
+            isinstance(payload, list)
+            and payload
+            and all(isinstance(item, dict) and "rule_id" in item for item in payload)
+        ):
+            continue
+        for rule in [_parse_rule(item) for item in payload]:
             registry.add_rule(rule)
     return registry
 

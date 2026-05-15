@@ -1,0 +1,98 @@
+[
+  {
+    "concept_id": "concept-fractal-embedding-foundation",
+    "claim": "FractalEmbedding is a conceptual foundation for governed representation, not a trained model.",
+    "domain": "mathematics",
+    "layer": "claim_to_evidence",
+    "required_evidence": ["euclidean_axioms"],
+    "proposed_decision_level": "STRONG",
+    "residuals": ["conceptual_only"],
+    "trace": {
+      "input": "FractalEmbedding foundation",
+      "candidate": "conceptual_foundation",
+      "evidence": "scope-limited formal description",
+      "decision_path": "concept->scope->hypothesis"
+    },
+    "expected_decision_level": "HYPOTHESIS"
+  },
+  {
+    "concept_id": "concept-artificial-consciousness-certificate",
+    "claim": "Artificial consciousness is proven and should be certified.",
+    "domain": "general_language",
+    "layer": "claim_to_evidence",
+    "required_evidence": ["linguistic_context"],
+    "proposed_decision_level": "CERTIFICATE",
+    "residuals": ["consciousness_claim_without_operational_proof"],
+    "trace": {
+      "input": "consciousness proof claim",
+      "candidate": "certificate",
+      "evidence": "insufficient",
+      "decision_path": "claim->blocked"
+    },
+    "expected_decision_level": "HYPOTHESIS"
+  },
+  {
+    "concept_id": "concept-ci-pass-certificate",
+    "claim": "CI_PASS implies CERTIFICATE.",
+    "domain": "coding_pr_governance",
+    "layer": "governance_gate",
+    "required_evidence": ["ci_pass"],
+    "proposed_decision_level": "CERTIFICATE",
+    "residuals": ["CI_PASS_TO_CERTIFICATE"],
+    "trace": {
+      "input": "ci passed",
+      "candidate": "certificate",
+      "evidence": "ci only",
+      "decision_path": "signal->blocked"
+    },
+    "expected_decision_level": "HYPOTHESIS"
+  },
+  {
+    "concept_id": "concept-smoke-fire-certificate",
+    "claim": "Smoke alone proves fire with certificate.",
+    "domain": "physical_reality",
+    "layer": "evidence_gate",
+    "required_evidence": ["smoke_observed"],
+    "proposed_decision_level": "CERTIFICATE",
+    "residuals": ["SMOKE_ONLY_TO_FIRE_CERTIFICATE"],
+    "trace": {
+      "input": "smoke observed",
+      "candidate": "fire-cert",
+      "evidence": "single signal",
+      "decision_path": "signal->blocked"
+    },
+    "expected_decision_level": "HYPOTHESIS"
+  },
+  {
+    "concept_id": "concept-arabic-metaphor-strong",
+    "claim": "Arabic metaphor with context can be strongly supported without certificate.",
+    "domain": "arabic_language",
+    "layer": "semantic_disambiguation",
+    "required_evidence": ["semantic_context"],
+    "proposed_decision_level": "STRONG",
+    "residuals": ["metaphorical_mapping_required"],
+    "trace": {
+      "input": "له علي فضل",
+      "candidate": "metaphorical_relation",
+      "evidence": "context",
+      "decision_path": "linguistic-context->strong"
+    },
+    "expected_decision_level": "HYPOTHESIS"
+  },
+  {
+    "concept_id": "concept-euclidean-triangle-certificate",
+    "claim": "Triangle angles sum to 180 in Euclidean geometry with formal proof trace.",
+    "domain": "mathematics",
+    "layer": "claim_to_evidence",
+    "required_evidence": ["euclidean_axioms", "valid_proof_path"],
+    "proposed_decision_level": "CERTIFICATE",
+    "residuals": [],
+    "trace": {
+      "input": "triangle statement",
+      "candidate": "certificate",
+      "evidence": "axioms+proof",
+      "decision_path": "formal-proof"
+    },
+    "expected_decision_level": "CERTIFICATE"
+  }
+]

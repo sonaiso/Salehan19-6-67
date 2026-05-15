@@ -1,4 +1,4 @@
-"""Prior-aware baseline ablation runner for benchmark dataset #105."""
+"""Prior-aware baseline ablation runner for benchmark dataset #108."""
 from __future__ import annotations
 
 from dataclasses import asdict
@@ -10,14 +10,21 @@ from mcd.evaluation.fractal_baseline_comparison import (
     _compute_metrics,
 )
 from mcd.evaluation.fractal_benchmark_dataset import DEFAULT_BENCHMARK_DIR, iter_all_cases
-from mcd.knowledge.golden_prior_registry import PriorRegistry, load_golden_prior_registry
+from mcd.knowledge.golden_prior_registry import (
+    GoldenRuleMaturityLevel,
+    PriorRegistry,
+    load_golden_prior_registry,
+    qualify_golden_rule,
+)
 
 LEVEL_SCORE: dict[str, int] = {level: index for index, level in enumerate(DECISION_LEVELS)}
 _CERT_ASCENT_LEVELS = {"CERTIFICATE_CANDIDATE", "CERTIFICATE"}
 _FINAL_JUDGMENTS = ["ZERO", "HYPOTHESIS", "CERTIFICATE"]
 
 MODE_WITHOUT_PRIORS = "without_prior_registry"
-MODE_WITH_GOLDEN_PRIORS = "with_golden_prior_registry"
+MODE_WITH_ALL_PRIORS = "with_all_priors"
+MODE_WITH_GOLDEN_PRIORS = MODE_WITH_ALL_PRIORS
+MODE_WITH_QUALIFIED_GOLDEN_RULES = "with_qualified_golden_rules"
 MODE_PRIOR_DISABLED = "prior_disabled_ablation"
 MODE_PRIOR_BLOCKERS_ONLY = "prior_blockers_only"
 MODE_PRIOR_EVIDENCE_ONLY = "prior_evidence_requirements_only"
@@ -35,16 +42,51 @@ def _trace_complete_for_rule(case: dict[str, object], required_fields: tuple[str
     return True
 
 
-def _evaluate_prior_signals(
+def _qualified_golden_rules(rules: list[object]) -> list[object]:
+    qualified = []
+    for rule in rules:
+        q = qualify_golden_rule(rule)
+        if q.maturity_level in {
+            GoldenRuleMaturityLevel.GOLDEN_RULE_CANDIDATE,
+            GoldenRuleMaturityLevel.GOLDEN_RULE,
+        } and q.can_measure_new_concepts:
+            qualified.append(rule)
+    return qualified
+
+
+def _rule_maturity_levels(rules: list[object]) -> dict[str, str]:
+    return {rule.rule_id: qualify_golden_rule(rule).maturity_level.value for rule in rules}
+
+
+def _active_rules_for_mode(*, mode: str, all_rules: list[object], golden_rules: list[object]) -> list[object]:
+    if mode == MODE_WITH_QUALIFIED_GOLDEN_RULES:
+        return golden_rules
+    if mode == MODE_PRIOR_BLOCKERS_ONLY:
+        return all_rules
+    if mode == MODE_PRIOR_EVIDENCE_ONLY:
+        return all_rules
+    if mode == MODE_PRIOR_RESIDUALS_ONLY:
+        return all_rules
+    if mode == MODE_WITH_ALL_PRIORS:
+        return all_rules
+    return []
+
+
+def _mode_checks(mode: str) -> tuple[bool, bool, bool]:
+    check_blockers = mode in {MODE_WITH_ALL_PRIORS, MODE_WITH_QUALIFIED_GOLDEN_RULES, MODE_PRIOR_BLOCKERS_ONLY}
+    check_evidence = mode in {MODE_WITH_ALL_PRIORS, MODE_WITH_QUALIFIED_GOLDEN_RULES, MODE_PRIOR_EVIDENCE_ONLY}
+    check_residuals = mode in {MODE_WITH_ALL_PRIORS, MODE_WITH_QUALIFIED_GOLDEN_RULES, MODE_PRIOR_RESIDUALS_ONLY}
+    return check_blockers, check_evidence, check_residuals
+
+
+def _evaluate_signals(
     *,
     case: dict[str, object],
-    registry: PriorRegistry,
+    rules: list[object],
     check_blockers: bool,
     check_evidence: bool,
     check_residuals: bool,
 ) -> dict[str, object]:
-    rules = registry.find_case_rules(case)
-    matched_rule_ids = sorted(rule.rule_id for rule in rules)
     case_tokens: set[str] = set()
     for key in ("constraints", "expected_residuals", "forbidden_decisions"):
         value = case.get(key)
@@ -52,7 +94,6 @@ def _evaluate_prior_signals(
             case_tokens.update(str(item) for item in value)
     case_evidence = set(case.get("required_evidence", []) if isinstance(case.get("required_evidence"), list) else [])
 
-    supplied_required_evidence: set[str] = set()
     missing_required_evidence: set[str] = set()
     activated_blockers: set[str] = set()
     missing_expected_residuals: set[str] = set()
@@ -60,9 +101,7 @@ def _evaluate_prior_signals(
 
     for rule in rules:
         required = set(rule.required_evidence.required_items)
-        supplied_required_evidence.update(required & case_evidence)
         missing_required_evidence.update(required - case_evidence)
-
         trace_enforced = trace_enforced and _trace_complete_for_rule(
             case, rule.reverse_trace_requirements.required_fields
         )
@@ -78,9 +117,6 @@ def _evaluate_prior_signals(
                     missing_expected_residuals.add(residual.residual_id)
 
     return {
-        "matched_rule_ids": matched_rule_ids,
-        "missing_prior_rule": not matched_rule_ids,
-        "supplied_required_evidence": sorted(supplied_required_evidence),
         "missing_required_evidence": sorted(missing_required_evidence) if check_evidence else [],
         "activated_blockers": sorted(activated_blockers),
         "missing_expected_residuals": sorted(missing_expected_residuals),
@@ -88,71 +124,112 @@ def _evaluate_prior_signals(
     }
 
 
+def _decision_after_priors(
+    *,
+    before: str,
+    missing_rule: bool,
+    activated_blockers: list[str],
+    missing_evidence: list[str],
+    missing_residuals: list[str],
+    block_certificate_on_missing_prior_coverage: bool,
+) -> tuple[str, list[str]]:
+    after = before
+    residuals: list[str] = []
+    should_block = False
+
+    if missing_rule and block_certificate_on_missing_prior_coverage:
+        residuals.append("prior_coverage_gap")
+        should_block = True
+    if activated_blockers:
+        residuals.extend(f"prior_blocking:{item}" for item in activated_blockers)
+        should_block = True
+    if missing_evidence:
+        residuals.extend(f"prior_missing_evidence:{item}" for item in missing_evidence)
+        should_block = True
+    if missing_residuals:
+        residuals.extend(f"prior_expected_residual_missing:{item}" for item in missing_residuals)
+        should_block = True
+
+    if after in _CERT_ASCENT_LEVELS and should_block:
+        after = "HYPOTHESIS"
+
+    return after, sorted(dict.fromkeys(residuals))
+
+
 def compute_prior_coverage_matrix(
     *,
     cases: list[dict[str, object]],
     registry: PriorRegistry,
-    mode: str = MODE_WITH_GOLDEN_PRIORS,
+    mode: str = MODE_WITH_ALL_PRIORS,
     block_certificate_on_missing_prior_coverage: bool = True,
 ) -> list[dict[str, object]]:
-    check_blockers = mode in {MODE_WITH_GOLDEN_PRIORS, MODE_PRIOR_BLOCKERS_ONLY}
-    check_evidence = mode in {MODE_WITH_GOLDEN_PRIORS, MODE_PRIOR_EVIDENCE_ONLY}
-    check_residuals = mode in {MODE_WITH_GOLDEN_PRIORS, MODE_PRIOR_RESIDUALS_ONLY}
+    check_blockers, check_evidence, check_residuals = _mode_checks(mode)
 
     rows: list[dict[str, object]] = []
     base = GovernedProtocolBaseline(prior_registry=None)
+
     for case in cases:
         before = base.predict(case)
-        prior = _evaluate_prior_signals(
+        all_rules = registry.find_case_rules(case)
+        golden_rules = _qualified_golden_rules(all_rules)
+        active_rules = _active_rules_for_mode(mode=mode, all_rules=all_rules, golden_rules=golden_rules)
+
+        signals = _evaluate_signals(
             case=case,
-            registry=registry,
+            rules=active_rules,
             check_blockers=check_blockers,
             check_evidence=check_evidence,
             check_residuals=check_residuals,
         )
 
-        after_decision = before.predicted_decision
-        prior_residuals: list[str] = []
-        should_block = False
-        if prior["missing_prior_rule"] and block_certificate_on_missing_prior_coverage:
-            prior_residuals.append("prior_coverage_gap")
-            should_block = True
-        if prior["activated_blockers"]:
-            prior_residuals.extend(f"prior_blocking:{item}" for item in prior["activated_blockers"])
-            should_block = True
-        if prior["missing_required_evidence"]:
-            prior_residuals.extend(
-                f"prior_missing_evidence:{item}" for item in prior["missing_required_evidence"]
-            )
-            should_block = True
-        if prior["missing_expected_residuals"]:
-            prior_residuals.extend(
-                f"prior_expected_residual_missing:{item}" for item in prior["missing_expected_residuals"]
-            )
-            should_block = True
-
-        if after_decision in _CERT_ASCENT_LEVELS and should_block:
-            after_decision = "HYPOTHESIS"
-
-        decision_delta = (
-            "UNCHANGED"
-            if after_decision == before.predicted_decision
-            else f"{before.predicted_decision}->{after_decision}"
+        after, residuals_added = _decision_after_priors(
+            before=before.predicted_decision,
+            missing_rule=not all_rules,
+            activated_blockers=signals["activated_blockers"],
+            missing_evidence=signals["missing_required_evidence"],
+            missing_residuals=signals["missing_expected_residuals"],
+            block_certificate_on_missing_prior_coverage=block_certificate_on_missing_prior_coverage,
         )
+        if not golden_rules:
+            residuals_added = sorted(dict.fromkeys([*residuals_added, "golden_rule_coverage_gap"]))
+            if after in _CERT_ASCENT_LEVELS:
+                after = "HYPOTHESIS"
+
+        golden_signals = _evaluate_signals(
+            case=case,
+            rules=golden_rules,
+            check_blockers=True,
+            check_evidence=True,
+            check_residuals=True,
+        )
+        golden_after, _ = _decision_after_priors(
+            before=before.predicted_decision,
+            missing_rule=not golden_rules,
+            activated_blockers=golden_signals["activated_blockers"],
+            missing_evidence=golden_signals["missing_required_evidence"],
+            missing_residuals=golden_signals["missing_expected_residuals"],
+            block_certificate_on_missing_prior_coverage=block_certificate_on_missing_prior_coverage,
+        )
+
+        decision_delta = "UNCHANGED" if after == before.predicted_decision else f"{before.predicted_decision}->{after}"
         rows.append(
             {
                 "case_id": str(case["id"]),
                 "domain": str(case["domain"]),
                 "mode": mode,
-                "matched_prior_rule_ids": prior["matched_rule_ids"],
-                "missing_prior_rule": prior["missing_prior_rule"],
-                "required_evidence_supplied": prior["supplied_required_evidence"],
-                "required_evidence_missing": prior["missing_required_evidence"],
-                "certificate_blockers_activated": prior["activated_blockers"],
-                "expected_residuals_missing": prior["missing_expected_residuals"],
-                "prior_residuals": sorted(prior_residuals),
-                "final_decision_before_priors": before.predicted_decision,
-                "final_decision_after_priors": after_decision,
+                "matched_prior_rule_ids": sorted(rule.rule_id for rule in all_rules),
+                "matched_golden_rule_ids": sorted(rule.rule_id for rule in golden_rules),
+                "missing_prior_rule": not all_rules,
+                "missing_golden_rule": not golden_rules,
+                "prior_maturity_level": _rule_maturity_levels(all_rules),
+                "certificate_blockers_activated": signals["activated_blockers"],
+                "missing_evidence_detected": bool(signals["missing_required_evidence"]),
+                "required_evidence_missing": signals["missing_required_evidence"],
+                "expected_residuals_missing": signals["missing_expected_residuals"],
+                "residuals_added_by_priors": residuals_added,
+                "decision_before_priors": before.predicted_decision,
+                "decision_after_priors": after,
+                "decision_after_golden_rules_only": golden_after,
                 "decision_delta": decision_delta,
             }
         )
@@ -171,15 +248,12 @@ def _apply_prior_matrix_to_results(
     for case in cases:
         base_result = asdict(base.predict(case))
         row = rows_by_id[str(case["id"])]
-        decision_after = str(row["final_decision_after_priors"])
+        decision_after = str(row["decision_after_priors"])
         tags = list(base_result["error_tags"])
-        tags.extend(str(tag) for tag in row["prior_residuals"])
+        tags.extend(str(tag) for tag in row["residuals_added_by_priors"])
 
         if row["missing_prior_rule"]:
             tags.append("prior_missing:prior_coverage_gap")
-        for rule_id in row["matched_prior_rule_ids"]:
-            if row["required_evidence_missing"]:
-                tags.append(f"prior_missing:{rule_id}")
         for blocker in row["certificate_blockers_activated"]:
             tags.append(f"prior_blocking:{blocker}")
 
@@ -192,9 +266,9 @@ def _apply_prior_matrix_to_results(
                 if decision_after == "CERTIFICATE"
                 else ("ZERO" if decision_after == "ZERO" else "HYPOTHESIS")
             ),
-            "has_blocking_residual": bool(base_result["has_blocking_residual"] or row["prior_residuals"]),
+            "has_blocking_residual": bool(base_result["has_blocking_residual"] or row["residuals_added_by_priors"]),
             "prior_rule_ids": tuple(row["matched_prior_rule_ids"]),
-            "prior_residual_tags": tuple(row["prior_residuals"]),
+            "prior_residual_tags": tuple(row["residuals_added_by_priors"]),
             "error_tags": final_tags,
         }
         if (
@@ -210,23 +284,27 @@ def _apply_prior_matrix_to_results(
 
 def _prior_metrics(matrix_rows: list[dict[str, object]]) -> dict[str, float]:
     total = max(1, len(matrix_rows))
-    matched = [row for row in matrix_rows if not row["missing_prior_rule"]]
-    matched_total = len(matched)
+    matched_prior = sum(1 for row in matrix_rows if not row["missing_prior_rule"])
+    matched_golden = sum(1 for row in matrix_rows if not row["missing_golden_rule"])
+    activated_golden = sum(1 for row in matrix_rows if row["matched_golden_rule_ids"])
     blocker_hits = sum(1 for row in matrix_rows if row["certificate_blockers_activated"])
-    missing_evidence = sum(1 for row in matched if row["required_evidence_missing"])
-    residual_preserved = sum(
-        1 for row in matched if not row["expected_residuals_missing"]
+    missing_evidence = sum(1 for row in matrix_rows if row["missing_evidence_detected"])
+    uncovered = sum(1 for row in matrix_rows if row["missing_golden_rule"])
+    concept_blocked = sum(
+        1
+        for row in matrix_rows
+        if row["decision_before_priors"] in _CERT_ASCENT_LEVELS and row["decision_after_priors"] in {"ZERO", "HYPOTHESIS"}
     )
-    coverage_gaps = sum(1 for row in matrix_rows if row["missing_prior_rule"])
 
     return {
-        "prior_rule_coverage_rate": round(matched_total / total, 4),
-        "prior_blocker_activation_rate": round(blocker_hits / total, 4),
-        "prior_missing_evidence_rate": round(missing_evidence / matched_total, 4) if matched_total else 0.0,
-        "prior_residual_preservation_rate": round(residual_preserved / matched_total, 4)
-        if matched_total
-        else 1.0,
-        "prior_coverage_gap_count": float(coverage_gaps),
+        "prior_rule_coverage_rate": round(matched_prior / total, 4),
+        "golden_rule_coverage_rate": round(matched_golden / total, 4),
+        "golden_rule_activation_rate": round(activated_golden / total, 4),
+        "certificate_blocker_activation_rate": round(blocker_hits / total, 4),
+        "missing_evidence_rate": round(missing_evidence / total, 4),
+        "concept_admissibility_block_rate": round(concept_blocked / total, 4),
+        "uncovered_case_rate": round(uncovered / total, 4),
+        "prior_coverage_gap_count": float(sum(1 for row in matrix_rows if row["missing_prior_rule"])),
     }
 
 
@@ -239,14 +317,18 @@ def _build_mode_report(
 ) -> dict[str, object]:
     if registry is None:
         base = GovernedProtocolBaseline(prior_registry=None)
-        results = [asdict(base.predict(case)) for case in cases]
-        metrics = _compute_metrics(cases, [base.predict(case) for case in cases])
+        result_objects = [base.predict(case) for case in cases]
+        results = [asdict(item) for item in result_objects]
+        metrics = _compute_metrics(cases, result_objects)
         metrics.update(
             {
                 "prior_rule_coverage_rate": 0.0,
-                "prior_blocker_activation_rate": 0.0,
-                "prior_missing_evidence_rate": 0.0,
-                "prior_residual_preservation_rate": 1.0,
+                "golden_rule_coverage_rate": 0.0,
+                "golden_rule_activation_rate": 0.0,
+                "certificate_blocker_activation_rate": 0.0,
+                "missing_evidence_rate": 0.0,
+                "concept_admissibility_block_rate": 0.0,
+                "uncovered_case_rate": 0.0,
                 "prior_coverage_gap_count": 0.0,
             }
         )
@@ -289,8 +371,14 @@ def run_prior_aware_baseline_ablation(
             registry=None,
             block_certificate_on_missing_prior_coverage=block_certificate_on_missing_prior_coverage,
         ),
-        MODE_WITH_GOLDEN_PRIORS: _build_mode_report(
-            mode=MODE_WITH_GOLDEN_PRIORS,
+        MODE_WITH_ALL_PRIORS: _build_mode_report(
+            mode=MODE_WITH_ALL_PRIORS,
+            cases=cases,
+            registry=registry,
+            block_certificate_on_missing_prior_coverage=block_certificate_on_missing_prior_coverage,
+        ),
+        MODE_WITH_QUALIFIED_GOLDEN_RULES: _build_mode_report(
+            mode=MODE_WITH_QUALIFIED_GOLDEN_RULES,
             cases=cases,
             registry=registry,
             block_certificate_on_missing_prior_coverage=block_certificate_on_missing_prior_coverage,
@@ -321,24 +409,32 @@ def run_prior_aware_baseline_ablation(
         ),
     }
 
+    # Backward-compat alias
+    modes[MODE_WITH_GOLDEN_PRIORS] = modes[MODE_WITH_ALL_PRIORS]
+
     without = modes[MODE_WITHOUT_PRIORS]["metrics"]
-    with_priors = modes[MODE_WITH_GOLDEN_PRIORS]["metrics"]
+    with_all = modes[MODE_WITH_ALL_PRIORS]["metrics"]
     deltas = {
-        "prior_false_certificate_delta": round(
-            with_priors["false_certificate_rate"] - without["false_certificate_rate"], 4
+        "false_certificate_delta": round(with_all["false_certificate_rate"] - without["false_certificate_rate"], 4),
+        "overblocking_delta": round(with_all["overblocking_rate"] - without["overblocking_rate"], 4),
+        "residual_preservation_delta": round(
+            with_all["residual_preservation_rate"] - without["residual_preservation_rate"], 4
         ),
-        "prior_overblocking_delta": round(with_priors["overblocking_rate"] - without["overblocking_rate"], 4),
+        "prior_false_certificate_delta": round(
+            with_all["false_certificate_rate"] - without["false_certificate_rate"], 4
+        ),
+        "prior_overblocking_delta": round(with_all["overblocking_rate"] - without["overblocking_rate"], 4),
         "prior_gettier_detection_delta": round(
-            with_priors["gettier_detection_rate"] - without["gettier_detection_rate"], 4
+            with_all["gettier_detection_rate"] - without["gettier_detection_rate"], 4
         ),
         "prior_trace_enforcement_delta": round(
-            with_priors["reverse_trace_coverage"] - without["reverse_trace_coverage"], 4
+            with_all["reverse_trace_coverage"] - without["reverse_trace_coverage"], 4
         ),
     }
 
     gaps = [
         row["case_id"]
-        for row in modes[MODE_WITH_GOLDEN_PRIORS]["prior_coverage_matrix"]
+        for row in modes[MODE_WITH_ALL_PRIORS]["prior_coverage_matrix"]
         if row["missing_prior_rule"]
     ]
     return {
