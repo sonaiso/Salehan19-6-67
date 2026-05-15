@@ -27,6 +27,18 @@ from mcd.math_governance.text_ascent_chain import (
     validate_text_ascent_chain,
 )
 from mcd.math_governance.governance_report import GovernanceReportBuilder
+from mcd.math_governance.meta_control_layer import (
+    PATH_ZERO_IN_PATH,
+    PATH_HYPOTHESIS,
+    PATH_LIKELY,
+    PATH_STRONG,
+    PATH_CERTIFICATE,
+    MetaUnit,
+    CandidatePath,
+    PathAssessment,
+    MetaCapsule,
+    MetaControlLayer,
+)
 from mcd.math_governance.serializers import to_json
 from mcd.math_governance.layer_closure_algebra import (
     ZERO,
@@ -89,6 +101,16 @@ __all__ = [
     "TextAscentValidationReport",
     "validate_text_ascent_chain",
     "GovernanceReportBuilder",
+    "PATH_ZERO_IN_PATH",
+    "PATH_HYPOTHESIS",
+    "PATH_LIKELY",
+    "PATH_STRONG",
+    "PATH_CERTIFICATE",
+    "MetaUnit",
+    "CandidatePath",
+    "PathAssessment",
+    "MetaCapsule",
+    "MetaControlLayer",
     "to_json",
     "ZERO",
     "HYPOTHESIS",
