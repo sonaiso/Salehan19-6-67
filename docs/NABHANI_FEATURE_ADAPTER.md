@@ -16,9 +16,25 @@ The adapter maps the Nabhani thought path into features:
 - correspondence (`has_correspondence`, `correspondence_type`)
 - evidence (`has_evidence`, `evidence_type`, `evidence_sufficiency`, `evidence_matches_claim_domain`)
 - method/domain/rank (`method_type`, `judgment_domain`, `certainty_rank`, `rank_source`)
+- type-domain-topic operational matrix:
+  - thinking type (`thinking_type`: `surface|deep|enlightened`)
+  - domain scope (`thinking_domain_scope`: `rational_general|scientific_experimental`)
+  - topic (`thinking_topic`: `material|human|society|creed|legislation|renaissance|concept|general`)
+  - alignment/gates (`matrix_method_alignment`, `matrix_topic_alignment`, and matrix gates for reality/sense/prior/domain/depth/enlightenment/action)
 - missing/residual tracking (`missing_features`, `feature_residuals`)
 
 These are governed thinking features, not decorative boolean labels.
+
+## Nabhani Thinking Matrix Law
+
+The adapter treats thinking as an operational matrix, not labels:
+
+`thinking_type × thinking_domain_scope × thinking_topic`
+
+Examples:
+- society/renaissance topics require enlightened gate.
+- scientific-experimental scope cannot be treated as directly governing worldview/shari/normative/legal judgments.
+- topic/type mismatch emits residuals (e.g., `matrix_thinking_type_mismatch`) instead of silent acceptance.
 
 ## Governance Boundaries
 

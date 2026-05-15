@@ -31,6 +31,18 @@
         "evidence_matches_claim_domain",
         "method_type",
         "judgment_domain",
+        "thinking_type",
+        "thinking_domain_scope",
+        "thinking_topic",
+        "matrix_method_alignment",
+        "matrix_topic_alignment",
+        "matrix_gate_reality",
+        "matrix_gate_sense",
+        "matrix_gate_prior_information",
+        "matrix_gate_domain",
+        "matrix_gate_depth",
+        "matrix_gate_enlightenment",
+        "matrix_gate_action",
         "certainty_rank",
         "rank_source",
         "missing_features",
@@ -104,6 +116,27 @@
           "type": "string",
           "enum": ["epistemic", "empirical", "formal", "linguistic", "normative", "legal", "shari", "worldview", "systemic"]
         },
+        "thinking_type": {
+          "type": "string",
+          "enum": ["surface", "deep", "enlightened"]
+        },
+        "thinking_domain_scope": {
+          "type": "string",
+          "enum": ["rational_general", "scientific_experimental"]
+        },
+        "thinking_topic": {
+          "type": "string",
+          "enum": ["material", "human", "society", "creed", "legislation", "renaissance", "concept", "general"]
+        },
+        "matrix_method_alignment": {"type": "boolean"},
+        "matrix_topic_alignment": {"type": "boolean"},
+        "matrix_gate_reality": {"type": "boolean"},
+        "matrix_gate_sense": {"type": "boolean"},
+        "matrix_gate_prior_information": {"type": "boolean"},
+        "matrix_gate_domain": {"type": "boolean"},
+        "matrix_gate_depth": {"type": "boolean"},
+        "matrix_gate_enlightenment": {"type": "boolean"},
+        "matrix_gate_action": {"type": "boolean"},
         "certainty_rank": {
           "type": "string",
           "enum": ["zero", "possibility", "hypothesis", "weak_evidence", "strong_evidence", "certificate"]

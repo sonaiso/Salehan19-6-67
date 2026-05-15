@@ -37,3 +37,9 @@ Prior knowledge includes different certainty modes. Formal mathematics can reach
 - No claim of trained Fractal Governance Network.
 - No artificial consciousness claim.
 - Global theorem status remains `STRONG_HYPOTHESIS`.
+
+## From PriorRule to GoldenRule
+- Not every prior is golden.
+- Golden rules are qualified through a `GoldenRuleQualificationGate` before they can govern certificate ascent.
+- Qualified golden rules are used as measuring instruments for new concepts (admissibility checks).
+- Missing golden coverage is a residual (`golden_rule_coverage_gap`), not permission to issue certificate.
