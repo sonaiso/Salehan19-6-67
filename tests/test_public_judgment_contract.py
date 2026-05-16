@@ -84,6 +84,7 @@ def test_nested_reverse_trace_preserves_certificate():
                 "final_judgment": "certificate",
                 "reverse_trace_id": "RT-1",
                 "complete": True,
+                "raw_text_units": ["النار حارة"],
             },
             "residuals": [],
         }
