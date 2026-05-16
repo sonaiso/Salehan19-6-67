@@ -154,6 +154,7 @@ def test_definition_cannot_promote_directly_to_judgment(evaluator):
     assert decision.status == "invalid_measure"
     assert decision.gates["semantic_layer_separation_gate"] is False
     assert "definition_as_judgment" in decision.residuals
+    assert "invalid_semantic_transition" in decision.residuals
 
 
 def test_interpretation_cannot_promote_directly_to_evidence(evaluator):
@@ -161,6 +162,7 @@ def test_interpretation_cannot_promote_directly_to_evidence(evaluator):
     assert decision.status == "invalid_measure"
     assert decision.gates["semantic_layer_separation_gate"] is False
     assert "interpretation_as_evidence" in decision.residuals
+    assert "invalid_semantic_transition" in decision.residuals
 
 
 def test_relation_cannot_promote_directly_to_inference(evaluator):
@@ -168,6 +170,7 @@ def test_relation_cannot_promote_directly_to_inference(evaluator):
     assert decision.status == "invalid_measure"
     assert decision.gates["semantic_layer_separation_gate"] is False
     assert "relation_as_inference" in decision.residuals
+    assert "invalid_semantic_transition" in decision.residuals
 
 
 def test_semantic_cannot_promote_to_judgment_without_semantic_inference_gate(evaluator):
@@ -188,3 +191,4 @@ def test_semantic_cannot_promote_to_judgment_without_semantic_inference_gate(eva
     assert decision.gates["semantic_inference_gate"] is False
     assert decision.gates["semantic_layer_separation_gate"] is False
     assert "dalala_without_gate" in decision.residuals
+    assert "invalid_semantic_transition" in decision.residuals

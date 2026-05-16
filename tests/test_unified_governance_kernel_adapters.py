@@ -71,3 +71,30 @@ def test_unified_kernel_adapter_maps_concept_claim_flow():
     assert kernel["Input"]["representation_type"] == ""
     assert kernel["Decision"]["status"] == "accepted"
     assert kernel["Trace"]["reverse_trace_complete"] is True
+
+
+def test_unified_kernel_adapter_emits_transition_reconstruction_fields():
+    evaluator = ConceptClaimGovernanceEvaluator()
+    claim = ConceptClaim(
+        claim="A definition alone proves final judgment.",
+        domain="scientific_experimental",
+        topic="material",
+        thinking_type="deep",
+        reality_anchor="lab observation",
+        sensation_path="experiment",
+        prior_information=["known base"],
+        governing_measure="experimental",
+        certainty_level="HYPOTHESIS",
+        evidence_refs=["exp-001"],
+        reverse_trace_ref="rt-200",
+        judgment_basis_type="definition",
+    )
+    decision = evaluator.evaluate(claim)
+    kernel = to_unified_kernel_from_concept_claim(claim, decision).to_dict()
+    assert kernel["Trace"]["topic"] == "material"
+    assert kernel["Trace"]["domain"] == "scientific_experimental"
+    assert kernel["Trace"]["measure"] == "experimental"
+    assert kernel["Trace"]["certainty"] == "HYPOTHESIS"
+    assert kernel["Trace"]["governance_transitions"][0]["source"] == "definition"
+    assert kernel["Trace"]["governance_transitions"][0]["target"] == "judgment"
+    assert "invalid_semantic_transition" in kernel["Trace"]["blocking_reasons"]

@@ -40,6 +40,7 @@ _BLOCKING_TRANSITIONS = frozenset(
         "interpretation_as_evidence",
         "relation_as_inference",
         "dalala_without_gate",
+        "invalid_semantic_transition",
     }
 )
 
