@@ -25,6 +25,7 @@ class ReverseTrace:
     sentence_units: list[str] = field(default_factory=list)
     token_units: list[str] = field(default_factory=list)
     unicode_units: list[str] = field(default_factory=list)
+    raw_text_units: list[str] = field(default_factory=list)
     proof_object_units: list[str] = field(default_factory=list)
     final_judgment_units: list[str] = field(default_factory=list)
     evidence_chain: list[str] = field(default_factory=list)
@@ -58,6 +59,7 @@ class ReverseTrace:
             "sentence_units": self.sentence_units,
             "token_units": self.token_units,
             "unicode_units": self.unicode_units,
+            "raw_text_units": self.raw_text_units,
             "proof_object_units": self.proof_object_units,
             "final_judgment_units": self.final_judgment_units,
             "evidence_chain": self.evidence_chain,

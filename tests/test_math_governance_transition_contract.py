@@ -19,6 +19,7 @@ def test_phi_transition_suspended_when_condition_unknown():
     assert out.judgment == "suspended"
     assert out.known == 0
     assert out.passed == 0
+    assert "transition_condition_unknown" in out.residuals
 
 
 def test_phi_transition_blocked_when_condition_fails():
@@ -26,6 +27,7 @@ def test_phi_transition_blocked_when_condition_fails():
     assert out.judgment == "blocked"
     assert out.known == 1
     assert out.passed == 0
+    assert "transition_condition_failed" in out.residuals
 
 
 def test_phi_transition_allowed_when_condition_passes():
@@ -33,3 +35,4 @@ def test_phi_transition_allowed_when_condition_passes():
     assert out.judgment == "allowed"
     assert out.known == 1
     assert out.passed == 1
+    assert out.residuals == []

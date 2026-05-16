@@ -94,6 +94,7 @@ def test_reverse_trace_exposes_unified_layer_channels():
         "claim_graph_units",
         "proof_object_units",
         "final_judgment_units",
+        "raw_text_units",
     ):
         assert key in d
 

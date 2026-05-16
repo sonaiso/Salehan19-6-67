@@ -38,6 +38,8 @@ class ReverseTrace:
         Evidence references collected from the EpistemicTransform.
     conservation_refs:
         IDs/summaries of ConservationCheckResult instances that were passed.
+    raw_text_units:
+        Canonical raw text anchors required for full reverse traceability.
     residual_refs:
         Residual notes (e.g. "evidence_gap_residual").
     complete:
@@ -58,6 +60,7 @@ class ReverseTrace:
 
     evidence_refs: list[str] = field(default_factory=list)
     conservation_refs: list[str] = field(default_factory=list)
+    raw_text_units: list[str] = field(default_factory=list)
     residual_refs: list[str] = field(default_factory=list)
 
     blocking_violations: list[str] = field(default_factory=list)
@@ -73,6 +76,7 @@ class ReverseTrace:
             "epistemic_projection_id": self.epistemic_projection_id,
             "evidence_refs": self.evidence_refs,
             "conservation_refs": self.conservation_refs,
+            "raw_text_units": self.raw_text_units,
             "residual_refs": self.residual_refs,
             "blocking_violations": self.blocking_violations,
             "complete": self.complete,
@@ -106,6 +110,12 @@ class ReverseTraceBuilder:
         rid = f"RT-{uuid.uuid4().hex[:16]}"
 
         evidence_refs = list(epistemic_projection.unit.E.evidence_refs)
+        raw_text = (
+            epistemic_projection.unit.source_text
+            or arabic_projection.unit.source_text
+            or statistical_projection.unit.source_text
+        )
+        raw_text_units = [raw_text] if raw_text else []
 
         # Collect conservation refs
         conservation_refs: list[str] = [
@@ -144,6 +154,7 @@ class ReverseTraceBuilder:
         complete = (
             has_all_projections
             and bool(evidence_refs)
+            and bool(raw_text_units)
             and len(blocking_violations) == 0
         )
 
@@ -156,6 +167,7 @@ class ReverseTraceBuilder:
             epistemic_projection_id=epistemic_projection.projection_id,
             evidence_refs=evidence_refs,
             conservation_refs=conservation_refs,
+            raw_text_units=raw_text_units,
             residual_refs=residual_refs,
             blocking_violations=blocking_violations,
             complete=complete,
