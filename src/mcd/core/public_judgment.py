@@ -5,6 +5,8 @@ from copy import deepcopy
 from typing import Any
 from collections.abc import Iterator
 
+from mcd.core.governance_audit import build_governance_audit_event
+
 PUBLIC_FINAL_JUDGMENTS: tuple[str, ...] = ("zero", "hypothesis", "certificate")
 INTERNAL_SUSPEND = "suspend"
 INTERNAL_SUSPENDED = "suspended"
@@ -83,7 +85,9 @@ def normalize_public_judgment_fields(payload: Any) -> Any:
     return payload
 
 
-def enforce_governed_output_contract(payload: dict[str, Any]) -> dict[str, Any]:
+def enforce_governed_output_contract(
+    payload: dict[str, Any], *, include_audit: bool = False
+) -> dict[str, Any]:
     """Enforce AFJG public-output rules on governed payloads.
 
     Rules applied to every nested dict node:
@@ -94,10 +98,20 @@ def enforce_governed_output_contract(payload: dict[str, Any]) -> dict[str, Any]:
       requirements are missing.
     - Preserve existing residuals and append governance residual markers.
     """
+    input_payload = deepcopy(payload)
     normalized = normalize_public_judgment_fields(deepcopy(payload))
-    for node in _iter_dict_nodes(normalized):
+    internal_suspension_applied = _enforce_internal_state_rule(normalized)
+    certificate_reason_codes = _enforce_certificate_gate(normalized)
+    for node in _iter_child_dict_nodes(normalized):
         _enforce_internal_state_rule(node)
         _enforce_certificate_gate(node)
+    if include_audit:
+        normalized["_governance_audit"] = build_governance_audit_event(
+            input_payload=input_payload,
+            output_payload=normalized,
+            certificate_reason_codes=certificate_reason_codes,
+            internal_suspension_applied=internal_suspension_applied,
+        ).to_dict()
     return normalized
 
 
@@ -112,28 +126,44 @@ def _iter_dict_nodes(payload: Any) -> Iterator[dict[str, Any]]:
             yield from _iter_dict_nodes(value)
 
 
-def _enforce_internal_state_rule(payload: dict[str, Any]) -> None:
+def _iter_child_dict_nodes(payload: Any) -> Iterator[dict[str, Any]]:
+    if not isinstance(payload, dict):
+        return
+    for value in payload.values():
+        yield from _iter_dict_nodes(value)
+
+
+def _enforce_internal_state_rule(payload: dict[str, Any]) -> bool:
     """Mutate payload in place: suspend/suspended internal state => hypothesis."""
     internal_state = str(payload.get("internal_state", "")).strip().lower()
     if internal_state not in {INTERNAL_SUSPEND, INTERNAL_SUSPENDED}:
-        return
+        return False
     for key in ("judgment", "final_judgment", "proof_status"):
         if key in payload:
             payload[key] = "hypothesis"
     _append_residual(payload, "internal_suspension_collapsed")
+    return True
 
 
-def _enforce_certificate_gate(payload: dict[str, Any]) -> None:
+def _enforce_certificate_gate(payload: dict[str, Any]) -> list[str]:
     if _is_reverse_trace_payload(payload):
-        return
+        return []
     if not _has_governance_context(payload):
-        return
-    for key in ("judgment", "final_judgment", "proof_status"):
-        current = payload.get(key)
-        if not isinstance(current, str) or collapse_to_public_judgment(current) != "certificate":
-            continue
-        if _certificate_blocked(payload):
+        return []
+    keys_to_check = [
+        key
+        for key in ("judgment", "final_judgment", "proof_status")
+        if isinstance(payload.get(key), str) and collapse_to_public_judgment(payload[key]) == "certificate"
+    ]
+    if not keys_to_check:
+        return []
+    blocked_reasons = _certificate_block_reasons(payload)
+    for reason in dict.fromkeys(blocked_reasons):
+        _append_residual(payload, reason)
+    if blocked_reasons:
+        for key in keys_to_check:
             payload[key] = "hypothesis"
+    return blocked_reasons
 
 
 def _has_governance_context(payload: dict[str, Any]) -> bool:
@@ -156,7 +186,7 @@ def _is_reverse_trace_payload(payload: dict[str, Any]) -> bool:
     )
 
 
-def _certificate_blocked(payload: dict[str, Any]) -> bool:
+def _certificate_block_reasons(payload: dict[str, Any]) -> list[str]:
     blocked_reasons: list[str] = []
 
     proof_ref = payload.get("proof_id") or payload.get("proof_object_ref")
@@ -199,9 +229,7 @@ def _certificate_blocked(payload: dict[str, Any]) -> bool:
             if tag_normalized in _BLOCKING_TRANSITIONS:
                 blocked_reasons.append(tag_normalized)
 
-    for reason in dict.fromkeys(blocked_reasons):
-        _append_residual(payload, reason)
-    return bool(blocked_reasons)
+    return blocked_reasons
 
 
 def _append_residual(payload: dict[str, Any], residual: str) -> None:
