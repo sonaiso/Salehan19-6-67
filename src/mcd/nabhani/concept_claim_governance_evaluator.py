@@ -182,6 +182,9 @@ class ConceptClaim:
     relation_type: str | None = None
     semantic_type: str | None = None
     inference_type: str | None = None
+    evidence_basis_type: str | None = None
+    inference_basis_type: str | None = None
+    judgment_basis_type: str | None = None
 
 
 @dataclass(frozen=True)
@@ -242,6 +245,12 @@ class ConceptClaimGovernanceEvaluator:
         residuals.extend(metric_eval["residuals"])
 
         semantic_inference_ok = metric_eval["semantic_inference_ok"]
+        semantic_layer_separation_eval = _evaluate_semantic_layer_separation(
+            claim=claim,
+            semantic_inference_gate=semantic_inference_ok,
+        )
+        semantic_layer_separation_ok = semantic_layer_separation_eval["semantic_layer_separation_ok"]
+        residuals.extend(semantic_layer_separation_eval["residuals"])
 
         certainty_ok = _is_certainty_admissible(
             claim.certainty_level,
@@ -280,6 +289,7 @@ class ConceptClaimGovernanceEvaluator:
             "thinking_type_gate": thinking_ok,
             "governing_measure_gate": measure_ok,
             "semantic_inference_gate": semantic_inference_ok,
+            "semantic_layer_separation_gate": semantic_layer_separation_ok,
             "certainty_gate": certainty_ok,
             "reverse_trace_gate": reverse_trace_ok,
         }
@@ -292,6 +302,7 @@ class ConceptClaimGovernanceEvaluator:
             domain_topic_ok=domain_topic_ok,
             thinking_ok=thinking_ok,
             semantic_inference_ok=semantic_inference_ok,
+            semantic_layer_separation_ok=semantic_layer_separation_ok,
             sensation_ok=sensation_ok,
             prior_ok=prior_ok,
             certainty_ok=certainty_ok,
@@ -317,6 +328,7 @@ def _resolve_status(
     domain_topic_ok: bool,
     thinking_ok: bool,
     semantic_inference_ok: bool,
+    semantic_layer_separation_ok: bool,
     sensation_ok: bool,
     prior_ok: bool,
     certainty_ok: bool,
@@ -331,7 +343,7 @@ def _resolve_status(
         return "misclassified"
     if not measure_ok:
         return "invalid_measure"
-    if not semantic_inference_ok:
+    if not semantic_inference_ok or not semantic_layer_separation_ok:
         return "invalid_measure"
     if (not sensation_ok) or (not prior_ok) or (not certainty_ok):
         return "needs_evidence"
@@ -487,6 +499,31 @@ def _evaluate_metric_operator(
         "measure_ok": measure_ok,
         "semantic_inference_ok": semantic_inference_ok,
         "certificate_allowed": certificate_allowed,
+        "residuals": _unique_in_order(residuals),
+    }
+
+
+def _evaluate_semantic_layer_separation(
+    *,
+    claim: ConceptClaim,
+    semantic_inference_gate: bool,
+) -> dict[str, bool | list[str]]:
+    residuals: list[str] = []
+    normalized_evidence_basis = str(claim.evidence_basis_type or "").strip().lower()
+    normalized_inference_basis = str(claim.inference_basis_type or "").strip().lower()
+    normalized_judgment_basis = str(claim.judgment_basis_type or "").strip().lower()
+
+    if normalized_judgment_basis in {"definition", "definitional"}:
+        residuals.append("definition_as_judgment")
+    if normalized_evidence_basis in {"interpretation", "interpretive"}:
+        residuals.append("interpretation_as_evidence")
+    if normalized_inference_basis in {"relation", "relational"}:
+        residuals.append("relation_as_inference")
+    if normalized_judgment_basis in {"semantic", "dalala"} and not semantic_inference_gate:
+        residuals.append("dalala_without_gate")
+
+    return {
+        "semantic_layer_separation_ok": not residuals,
         "residuals": _unique_in_order(residuals),
     }
 

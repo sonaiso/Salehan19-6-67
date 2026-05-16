@@ -52,6 +52,10 @@ The following transitions are mechanically forbidden:
 - `SEMANTIC_LINK -> FINAL_JUDGMENT`
 - `ZERO -> CERTIFICATE`
 - `HYPOTHESIS -> FINAL_JUDGMENT` without sufficient evidence rank
+- `DEFINITION -> JUDGMENT`
+- `INTERPRETATION -> EVIDENCE`
+- `RELATION -> INFERENCE`
+- `DALALA -> TANZIL` without a passed semantic governance gate
 
 Additional constitutional forbidden transitions from the core remain active.
 

@@ -32,6 +32,7 @@ def test_accepts_when_all_required_gates_pass(evaluator):
     decision = evaluator.evaluate(_base_claim())
     assert decision.status == "accepted"
     assert decision.can_issue_certificate is False
+    assert decision.gates["semantic_layer_separation_gate"] is True
     assert decision.residuals == []
 
 
@@ -146,3 +147,44 @@ def test_metric_certainty_capped_when_measure_cannot_issue_certificate(evaluator
     assert decision.status == "needs_evidence"
     assert decision.can_issue_certificate is False
     assert "metric_certainty_capped" in decision.residuals
+
+
+def test_definition_cannot_promote_directly_to_judgment(evaluator):
+    decision = evaluator.evaluate(_base_claim(judgment_basis_type="definition"))
+    assert decision.status == "invalid_measure"
+    assert decision.gates["semantic_layer_separation_gate"] is False
+    assert "definition_as_judgment" in decision.residuals
+
+
+def test_interpretation_cannot_promote_directly_to_evidence(evaluator):
+    decision = evaluator.evaluate(_base_claim(evidence_basis_type="interpretation"))
+    assert decision.status == "invalid_measure"
+    assert decision.gates["semantic_layer_separation_gate"] is False
+    assert "interpretation_as_evidence" in decision.residuals
+
+
+def test_relation_cannot_promote_directly_to_inference(evaluator):
+    decision = evaluator.evaluate(_base_claim(inference_basis_type="relation"))
+    assert decision.status == "invalid_measure"
+    assert decision.gates["semantic_layer_separation_gate"] is False
+    assert "relation_as_inference" in decision.residuals
+
+
+def test_semantic_cannot_promote_to_judgment_without_semantic_inference_gate(evaluator):
+    decision = evaluator.evaluate(
+        _base_claim(
+            governing_measure="dalala",
+            domain="rational_general",
+            topic="concept",
+            ontological_object_type="entity",
+            representation_type="linguistic",
+            semantic_type="linguistic",
+            relation_type="linguistic",
+            inference_type="deductive",
+            judgment_basis_type="semantic",
+        )
+    )
+    assert decision.status == "invalid_measure"
+    assert decision.gates["semantic_inference_gate"] is False
+    assert decision.gates["semantic_layer_separation_gate"] is False
+    assert "dalala_without_gate" in decision.residuals

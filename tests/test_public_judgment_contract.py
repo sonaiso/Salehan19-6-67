@@ -91,3 +91,18 @@ def test_nested_reverse_trace_preserves_certificate():
     assert payload["judgment"] == "certificate"
     assert payload["reverse_trace_obj"]["final_judgment"] == "certificate"
     assert "residuals" not in payload["reverse_trace_obj"]
+
+
+def test_semantic_layer_forbidden_transition_blocks_certificate():
+    payload = enforce_governed_output_contract(
+        {
+            "proof_id": "PO-113",
+            "judgment": "certificate",
+            "governance_gate_passed": True,
+            "reverse_trace_ref": "RT-113",
+            "transition_tags": ["definition_as_judgment"],
+            "residuals": [],
+        }
+    )
+    assert payload["judgment"] == "hypothesis"
+    assert "definition_as_judgment" in payload["residuals"]
