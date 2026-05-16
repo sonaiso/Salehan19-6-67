@@ -14,6 +14,11 @@ Disallowed transitions:
 - certificate_without_proof_object
 - certificate_without_governance_gate
 - certificate_without_reverse_trace
+
+## Proposed / PR-6 additions (not yet part of the runtime canonical forbidden-transition sets)
+
 - certainty_rise_without_transition_legitimacy
 - certificate_with_incomplete_reverse_trace
 - certificate_with_blocking_residual
+
+These remain constitutional targets until they are added to all relevant runtime blocking sets.
