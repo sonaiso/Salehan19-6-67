@@ -27,6 +27,21 @@ ASCENT_LEVELS: list[str] = [
 FINAL_JUDGMENTS = {"zero", "hypothesis", "certificate"}
 VALID_BETA_STATUSES = {"undefined", "invalid", "valid_uncertified", "valid_certified"}
 VALID_TRANSITION_BETA = {"valid_uncertified", "valid_certified"}
+CONSTITUTIONAL_FORBIDDEN_TRANSITIONS = {
+    "root_or_pattern_as_factual_proof",
+    "derivative_as_proof",
+    "irab_as_factual_certainty",
+    "emphasis_as_evidence",
+    "metaphor_as_literal_certificate",
+    "memory_as_external_evidence",
+    "model_output_as_evidence",
+    "tool_output_as_certificate_without_governance",
+    "residual_erasure",
+    "silent_level_skip",
+    "certificate_without_proof_object",
+    "certificate_without_governance_gate",
+    "certificate_without_reverse_trace",
+}
 
 
 @dataclass
@@ -58,6 +73,7 @@ def validate_text_ascent_chain(units: list[GovernedFractalUnit]) -> TextAscentVa
         return TextAscentValidationReport(passed=False, violations=["text ascent chain is empty"])
 
     by_id = {u.unit_id: u for u in units}
+    level_order = {name: i for i, name in enumerate(ASCENT_LEVELS)}
     first_seen: dict[str, int] = {}
     for i, u in enumerate(units):
         if u.level_id not in first_seen:
@@ -86,6 +102,26 @@ def validate_text_ascent_chain(units: list[GovernedFractalUnit]) -> TextAscentVa
                     f"{src.unit_id}: beta_status '{src.beta_status}' is invalid for transition {src_level}->{tgt_level}"
                 )
 
+    for unit in units:
+        declared_forbidden = unit.metadata.get("forbidden_transitions", [])
+        normalized = {(item or "").strip().lower() for item in declared_forbidden}
+        blocked = sorted(normalized.intersection(CONSTITUTIONAL_FORBIDDEN_TRANSITIONS))
+        if blocked:
+            violations.append(f"{unit.unit_id}: forbidden transitions detected: {blocked}")
+
+        for post_id in unit.post_unit_ids:
+            target = by_id.get(post_id)
+            if target is None:
+                continue
+            src_idx = level_order.get(unit.level_id)
+            tgt_idx = level_order.get(target.level_id)
+            if src_idx is None or tgt_idx is None:
+                continue
+            if tgt_idx - src_idx != 1:
+                violations.append(
+                    f"{unit.unit_id}: silent_level_skip {unit.level_id}->{target.level_id} is forbidden"
+                )
+
     final_units = [u for u in units if u.level_id == "final_judgment"]
     if not final_units:
         violations.append("missing final_judgment unit")
@@ -107,5 +143,23 @@ def validate_text_ascent_chain(units: list[GovernedFractalUnit]) -> TextAscentVa
                 violations.append(f"{unit.unit_id}: reverse trace does not reach claim_graph")
             if unit.unit_type == "certificate" and unit.beta_status != "valid_certified":
                 violations.append(f"{unit.unit_id}: certificate requires beta_status=valid_certified")
+            if unit.unit_type == "certificate" and unit.residuals:
+                violations.append(f"{unit.unit_id}: certificate cannot erase or bypass residuals")
+            if unit.unit_type == "certificate" and not _can_reach_level(unit, by_id, "proof_object"):
+                violations.append(
+                    f"{unit.unit_id}: certificate_without_proof_object is forbidden"
+                )
+            governance_passed = bool(
+                unit.metadata.get("governance_gate_passed", unit.beta_status == "valid_certified")
+            )
+            if unit.unit_type == "certificate" and not governance_passed:
+                violations.append(
+                    f"{unit.unit_id}: certificate_without_governance_gate is forbidden"
+                )
+            reverse_trace_complete = bool(unit.metadata.get("reverse_trace_complete", bool(unit.trace_refs)))
+            if unit.unit_type == "certificate" and not reverse_trace_complete:
+                violations.append(
+                    f"{unit.unit_id}: certificate_without_reverse_trace is forbidden"
+                )
 
     return TextAscentValidationReport(passed=len(violations) == 0, violations=violations)

@@ -1,4 +1,12 @@
-from mcd.math_governance import ALL_LEVELS, get_level, next_level, previous_level, level_chain
+from mcd.math_governance import (
+    ALL_LEVELS,
+    get_level,
+    next_level,
+    previous_level,
+    level_chain,
+    canonical_level_for_interpretive,
+    supported_interpretive_levels,
+)
 
 
 def test_levels_defined():
@@ -17,3 +25,16 @@ def test_unicode_to_output_chain_has_morphisms():
     assert chain[1] == "unicode"
     assert chain[-2] == "proof_object"
     assert chain[-1] == "final_judgment"
+
+
+def test_interpretive_levels_are_explicitly_supported():
+    aliases = supported_interpretive_levels()
+    assert "phoneme" in aliases
+    assert "syllable" in aliases
+    assert "wazn" in aliases
+
+
+def test_interpretive_level_maps_to_canonical_runtime_level():
+    assert canonical_level_for_interpretive("phoneme") == "grapheme"
+    assert canonical_level_for_interpretive("syllable") == "orthographic_unit"
+    assert canonical_level_for_interpretive("wazn") == "morphology"

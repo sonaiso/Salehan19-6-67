@@ -121,8 +121,13 @@ class MathematicalGovernanceGate:
     @staticmethod
     def validate_no_certificate_without_governance(proof: dict) -> tuple[bool, list[str]]:
         violations = []
-        if proof.get("judgment") == "certificate" and not proof.get("governance_passed", False):
-            violations.append("certificate requires governance gate pass")
+        if proof.get("judgment") == "certificate":
+            if not proof.get("governance_passed", False):
+                violations.append("certificate requires governance gate pass")
+            if not proof.get("proof_object_ref"):
+                violations.append("certificate requires proof object reference")
+            if not proof.get("reverse_trace_ref"):
+                violations.append("certificate requires reverse trace reference")
         return len(violations) == 0, violations
 
     def run(

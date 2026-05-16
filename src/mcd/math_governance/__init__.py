@@ -5,10 +5,14 @@ from mcd.math_governance.level_schema import (
     ALL_LEVELS,
     LEVELS_BY_ID,
     LEVELS_BY_NAME,
+    INTERPRETIVE_LEVEL_ALIASES,
+    INTERPRETIVE_TO_CANONICAL_LEVEL,
     get_level,
     next_level,
     previous_level,
     level_chain,
+    canonical_level_for_interpretive,
+    supported_interpretive_levels,
 )
 from mcd.math_governance.fractal_unit_governance import GovernedFractalUnit
 from mcd.math_governance.level_morphism_registry import LevelMorphism, LevelMorphismRegistry
@@ -23,8 +27,16 @@ from mcd.math_governance.invariant_suite import InvariantResult, MathematicalInv
 from mcd.math_governance.text_ascent_chain import (
     ASCENT_LEVELS,
     FINAL_JUDGMENTS,
+    CONSTITUTIONAL_FORBIDDEN_TRANSITIONS,
     TextAscentValidationReport,
     validate_text_ascent_chain,
+)
+from mcd.math_governance.transition_contract import (
+    TRANSITION_JUDGMENTS,
+    KNOWN_PASSED_BY_JUDGMENT,
+    TransitionInput,
+    TransitionOutput,
+    phi_transition,
 )
 from mcd.math_governance.governance_report import GovernanceReportBuilder
 from mcd.math_governance.meta_control_layer import (
@@ -73,10 +85,14 @@ __all__ = [
     "ALL_LEVELS",
     "LEVELS_BY_ID",
     "LEVELS_BY_NAME",
+    "INTERPRETIVE_LEVEL_ALIASES",
+    "INTERPRETIVE_TO_CANONICAL_LEVEL",
     "get_level",
     "next_level",
     "previous_level",
     "level_chain",
+    "canonical_level_for_interpretive",
+    "supported_interpretive_levels",
     "GovernedFractalUnit",
     "LevelMorphism",
     "LevelMorphismRegistry",
@@ -102,8 +118,14 @@ __all__ = [
     "MathematicalInvariantSuite",
     "ASCENT_LEVELS",
     "FINAL_JUDGMENTS",
+    "CONSTITUTIONAL_FORBIDDEN_TRANSITIONS",
     "TextAscentValidationReport",
     "validate_text_ascent_chain",
+    "TRANSITION_JUDGMENTS",
+    "KNOWN_PASSED_BY_JUDGMENT",
+    "TransitionInput",
+    "TransitionOutput",
+    "phi_transition",
     "GovernanceReportBuilder",
     "PATH_ZERO_IN_PATH",
     "PATH_HYPOTHESIS",

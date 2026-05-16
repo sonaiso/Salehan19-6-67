@@ -68,6 +68,22 @@ ALL_LEVELS: list[CognitiveLevel] = [
 LEVELS_BY_ID = {level.level_id: level for level in ALL_LEVELS}
 LEVELS_BY_NAME = {level.name: level for level in ALL_LEVELS}
 
+# Phase-0 interpretive aliases are explicit governance contracts, not runtime-level replacements.
+INTERPRETIVE_LEVEL_ALIASES: dict[str, tuple[str, ...]] = {
+    "grapheme": ("phoneme", "phonetic_node"),
+    "orthographic_unit": ("syllable",),
+    "morphology": ("wazn", "root_pattern"),
+    "phrase": ("syntactic_function",),
+    "clause": ("isnad_structure",),
+    "final_judgment": ("hukm", "interpretive_meaning"),
+}
+
+INTERPRETIVE_TO_CANONICAL_LEVEL: dict[str, str] = {
+    alias: canonical
+    for canonical, aliases in INTERPRETIVE_LEVEL_ALIASES.items()
+    for alias in aliases
+}
+
 
 def get_level(level_id_or_name: str) -> CognitiveLevel | None:
     return LEVELS_BY_ID.get(level_id_or_name) or LEVELS_BY_NAME.get(level_id_or_name)
@@ -95,3 +111,14 @@ def previous_level(level_id_or_name: str) -> CognitiveLevel | None:
 
 def level_chain() -> list[str]:
     return [lvl.name for lvl in ALL_LEVELS]
+
+
+def canonical_level_for_interpretive(level_name: str) -> str | None:
+    current = (level_name or "").strip()
+    if current in LEVELS_BY_NAME:
+        return current
+    return INTERPRETIVE_TO_CANONICAL_LEVEL.get(current)
+
+
+def supported_interpretive_levels() -> list[str]:
+    return sorted(INTERPRETIVE_TO_CANONICAL_LEVEL)
