@@ -5,6 +5,8 @@ from dataclasses import asdict, dataclass
 from typing import Literal
 from uuid import uuid4
 
+from mcd.core.residual_taxonomy import classify_residuals, has_blocking_residuals
+
 GovernanceDecision = Literal["allowed", "downgraded", "blocked", "suspended"]
 GovernanceGate = Literal["phi", "omega", "proof_object", "governance_gate", "residuals", "certificate"]
 _PUBLIC_FINAL_JUDGMENTS = frozenset({"zero", "hypothesis", "certificate"})
@@ -68,6 +70,10 @@ class GovernanceAuditEvent:
     has_proof_object: bool
     governance_gate_passed: bool
     blocking_residuals_present: bool
+    residual_families: list[str]
+    residual_severities: list[str]
+    blocking_residuals: list[str]
+    remediation_hints: list[str]
     silent_level_skip_present: bool
     timestamp: str | None
 
@@ -122,13 +128,14 @@ def build_governance_audit_event(
     governance_gate_passed = _governance_gate_passed(input_payload)
 
     existing_residuals = _normalize_residuals(input_payload.get("residuals"))
-    blocking_residuals_present = bool(existing_residuals)
+    blocking_residuals_present = has_blocking_residuals(existing_residuals)
 
     reason_codes = normalize_reason_codes(
         list(dict.fromkeys([*certificate_reason_codes, *existing_residuals]))
     )
     if output_judgment == "certificate" and not reason_codes:
         reason_codes = ["certificate_allowed"]
+    residual_specs = classify_residuals(reason_codes)
 
     decision = _derive_decision(
         input_judgment=input_judgment,
@@ -152,6 +159,12 @@ def build_governance_audit_event(
         has_proof_object=has_proof_object,
         governance_gate_passed=governance_gate_passed,
         blocking_residuals_present=blocking_residuals_present,
+        residual_families=[spec.family.value for spec in residual_specs],
+        residual_severities=[spec.severity.value for spec in residual_specs],
+        blocking_residuals=[spec.code for spec in residual_specs if spec.blocks_certificate],
+        remediation_hints=list(
+            dict.fromkeys(spec.remediation_hint for spec in residual_specs if spec.remediation_hint)
+        ),
         silent_level_skip_present=silent_level_skip_present,
         timestamp=None,
     )
