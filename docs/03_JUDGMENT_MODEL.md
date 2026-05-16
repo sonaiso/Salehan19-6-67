@@ -24,6 +24,12 @@ Plausible structure with missing or incomplete evidence.
 
 Valid evidence + governance gate passed + reverse trace complete + no blocking residual.
 
+Certificate issuance is additionally bounded by a governed epistemic ceiling:
+- Transition chain is complete and lawful.
+- Residual burden is non-blocking.
+- ReverseTrace reconstruction is complete.
+- Evidence strength matches claim type.
+
 ## Clarifications
 
 - `SUSPENDED` may exist as an internal control state, but it must collapse publicly to `HYPOTHESIS` with residuals.
