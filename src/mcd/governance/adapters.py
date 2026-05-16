@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from mcd.core.public_judgment import collapse_to_public_judgment, enforce_governed_output_contract
 from mcd.governance.contracts import CanonicalGovernanceRecord
+from mcd.governance.unified_kernel import UnifiedGovernanceKernel, from_canonical_record
 
 
 def from_cfk_proof(proof) -> CanonicalGovernanceRecord:
@@ -101,4 +102,47 @@ def from_coding_judgment(judgment) -> CanonicalGovernanceRecord:
         legitimacy_state=payload["legitimacy_state"],
         rank_calculus_state=payload["rank_calculus_state"],
         residuals=payload["residuals"],
+    )
+
+
+def to_unified_kernel_from_cfk_proof(proof) -> UnifiedGovernanceKernel:
+    return from_canonical_record(from_cfk_proof(proof))
+
+
+def to_unified_kernel_from_fractal_kernel_proof(proof) -> UnifiedGovernanceKernel:
+    return from_canonical_record(from_fractal_kernel_proof(proof))
+
+
+def to_unified_kernel_from_coding_judgment(judgment) -> UnifiedGovernanceKernel:
+    return from_canonical_record(from_coding_judgment(judgment))
+
+
+def to_unified_kernel_from_concept_claim(claim, decision) -> UnifiedGovernanceKernel:
+    certificate_requested = str(getattr(claim, "certainty_level", "")).strip().lower() == "certificate"
+    gates = dict(getattr(decision, "gates", {}) or {})
+    reverse_trace_ref = getattr(claim, "reverse_trace_ref", None)
+    constraints = [{"id": gate_name, "passed": bool(gate_result)} for gate_name, gate_result in gates.items()]
+    evidence = [{"type": "evidence_ref", "ref": ref} for ref in list(getattr(claim, "evidence_refs", []) or []) if str(ref).strip()]
+    return UnifiedGovernanceKernel(
+        Input={
+            "claim": getattr(claim, "claim", ""),
+            "domain": getattr(claim, "domain", ""),
+            "topic": getattr(claim, "topic", ""),
+            "thinking_type": getattr(claim, "thinking_type", ""),
+            "governing_measure": getattr(claim, "governing_measure", ""),
+        },
+        Candidates=[{"certainty_level": getattr(claim, "certainty_level", ""), "status": getattr(decision, "status", "")}],
+        Constraints=constraints,
+        Evidence=evidence,
+        Residuals=list(getattr(decision, "residuals", []) or []),
+        Decision={
+            "status": getattr(decision, "status", ""),
+            "certainty_level": getattr(decision, "certainty_level", ""),
+            "certificate_requested": certificate_requested,
+            "certificate_allowed": bool(getattr(decision, "can_issue_certificate", False)),
+        },
+        Trace={
+            "reverse_trace_ref": reverse_trace_ref or "",
+            "reverse_trace_complete": bool(reverse_trace_ref),
+        },
     )
