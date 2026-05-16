@@ -69,3 +69,24 @@ def test_full_validation_with_valid_units():
     units = [make_unit(unit_id=f"CFU-{i}", trace_refs=["T-001"]) for i in range(5)]
     report = validator.run_full_validation(units=units)
     assert report.unit_validity_score == 1.0
+
+
+def test_certificate_requires_raw_text_units_in_reverse_trace():
+    validator = KernelValidator()
+    proof = ProofObject(
+        proof_id="P1",
+        claim_id="C1",
+        proof_status="certificate",
+        evidence_refs=["E1"],
+        reverse_trace_id="RT-1",
+    )
+    reverse_trace = ReverseTrace(
+        reverse_trace_id="RT-1",
+        final_claim="النار حارة",
+        proof_id="P1",
+        complete=True,
+        raw_text_units=[],
+    )
+    ok, violations = validator.validate_proof_object(proof, {"RT-1": reverse_trace})
+    assert ok is False
+    assert any("missing raw_text_units" in v for v in violations)

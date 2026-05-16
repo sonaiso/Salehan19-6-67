@@ -34,12 +34,14 @@ class TestReverseTraceDataclass:
             final_judgment="certificate",
             proof_id="PO-001",
             evidence_refs=["e1", "e2"],
+            raw_text_units=["النار حارة"],
             complete=True,
         )
         d = rt.to_dict()
         assert d["complete"] is True
         assert d["evidence_refs"] == ["e1", "e2"]
         assert d["final_judgment"] == "certificate"
+        assert d["raw_text_units"] == ["النار حارة"]
 
     def test_incomplete_without_evidence(self):
         rt = ReverseTrace(
@@ -106,12 +108,20 @@ class TestReverseTraceBuilder:
         cr = self._conservation_results(s, a, e)
         rt = self.builder.build("PO-001", "certificate", s, a, e, cr)
         assert rt.complete is True
+        assert rt.raw_text_units == ["النار حارة"]
 
     def test_incomplete_without_evidence(self):
         s, a, e = _make_projections(evidence_refs=[])
         cr = self._conservation_results(s, a, e)
         rt = self.builder.build("PO-001", "certificate", s, a, e, cr)
         assert rt.complete is False
+
+    def test_incomplete_without_raw_text_anchor(self):
+        s, a, e = _make_projections(text="", evidence_refs=["e1"])
+        cr = self._conservation_results(s, a, e)
+        rt = self.builder.build("PO-001", "certificate", s, a, e, cr)
+        assert rt.complete is False
+        assert rt.raw_text_units == []
 
     def test_evidence_refs_collected(self):
         s, a, e = _make_projections(evidence_refs=["e1", "e2", "e3"])
@@ -168,6 +178,7 @@ class TestProofObjectReverseTrace:
         if proof.judgment == JudgmentStatus.CERTIFICATE.value:
             assert proof.reverse_trace_obj is not None
             assert proof.reverse_trace_obj.complete is True
+            assert proof.reverse_trace_obj.raw_text_units
 
     def test_certificate_requires_evidence(self):
         """Without evidence, judgment must not be certificate even if score is high."""

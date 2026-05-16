@@ -149,7 +149,10 @@ class ProofObjectBuilder:
                 # Downgrade to Hypothesis if reverse trace is incomplete
                 judgment = JudgmentStatus.HYPOTHESIS.value
                 rt.final_judgment = judgment
-                residuals.extend(["certificate_blocked", "reverse_trace_missing"])
+                residuals.append("certificate_blocked")
+                if not rt.raw_text_units:
+                    residuals.append("reverse_trace_missing_raw_text")
+                residuals.append("reverse_trace_missing")
 
         if internal_state == JudgmentStatus.SUSPENDED.value:
             residuals.append("certificate_blocked")

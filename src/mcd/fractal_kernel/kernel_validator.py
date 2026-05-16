@@ -92,6 +92,10 @@ class KernelValidator:
             violations.append(f"proof {proof.proof_id}: no reverse_trace_id")
         elif proof.reverse_trace_id not in reverse_traces:
             violations.append(f"proof {proof.proof_id}: reverse_trace not found")
+        else:
+            reverse_trace = reverse_traces[proof.reverse_trace_id]
+            if proof.proof_status == "certificate" and not reverse_trace.raw_text_units:
+                violations.append(f"proof {proof.proof_id}: certificate reverse_trace missing raw_text_units")
         if proof.proof_status == "certificate":
             if not proof.evidence_refs:
                 violations.append(f"proof {proof.proof_id}: Certificate requires evidence_refs")
