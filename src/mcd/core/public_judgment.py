@@ -6,6 +6,7 @@ from typing import Any
 from collections.abc import Iterator
 
 from mcd.core.governance_audit import build_governance_audit_event
+from mcd.core.residual_taxonomy import has_blocking_residuals
 
 PUBLIC_FINAL_JUDGMENTS: tuple[str, ...] = ("zero", "hypothesis", "certificate")
 INTERNAL_SUSPEND = "suspend"
@@ -219,7 +220,12 @@ def _certificate_block_reasons(payload: dict[str, Any]) -> list[str]:
         blocked_reasons.append("certificate_without_reverse_trace")
 
     existing_residuals = payload.get("residuals")
-    if isinstance(existing_residuals, list) and any(str(item).strip() for item in existing_residuals):
+    existing_residual_codes = (
+        [str(item) for item in existing_residuals if str(item).strip()]
+        if isinstance(existing_residuals, list)
+        else []
+    )
+    if has_blocking_residuals(existing_residual_codes):
         blocked_reasons.append("certificate_with_blocking_residuals")
 
     transition_tags = payload.get("transition_tags")

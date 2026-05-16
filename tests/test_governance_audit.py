@@ -24,6 +24,10 @@ def test_certificate_allowed_emits_certificate_allowed_reason_code():
     audit = payload["_governance_audit"]
     assert audit["decision"] == "allowed"
     assert audit["reason_codes"] == ["certificate_allowed"]
+    assert audit["residual_families"] == ["certificate"]
+    assert audit["residual_severities"] == ["info"]
+    assert audit["blocking_residuals"] == []
+    assert audit["remediation_hints"] == []
 
 
 def test_missing_raw_text_units_emits_reverse_trace_missing_raw_text():
@@ -78,6 +82,8 @@ def test_blocking_residual_emits_certificate_with_blocking_residuals():
 
     assert governed["judgment"] == "hypothesis"
     assert "certificate_with_blocking_residuals" in governed["_governance_audit"]["reason_codes"]
+    assert "certificate_with_blocking_residuals" in governed["_governance_audit"]["blocking_residuals"]
+    assert "unknown" in governed["_governance_audit"]["residual_families"]
 
 
 def test_silent_level_skip_emits_silent_level_skip():

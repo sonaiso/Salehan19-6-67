@@ -36,3 +36,12 @@ from mcd.core.public_judgment import (
     is_public_final_judgment,
     normalize_public_judgment_fields,
 )
+from mcd.core.residual_taxonomy import (
+    ResidualFamily,
+    ResidualSeverity,
+    ResidualSpec,
+    blocking_residuals,
+    classify_residual,
+    classify_residuals,
+    has_blocking_residuals,
+)
