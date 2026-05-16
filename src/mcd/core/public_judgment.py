@@ -6,20 +6,34 @@ from typing import Any
 from collections.abc import Iterator
 
 from mcd.core.governance_audit import build_governance_audit_event
+from mcd.core.public_schema import (
+    FIELD_GOVERNANCE_AUDIT,
+    FIELD_GOVERNANCE_GATE_PASSED,
+    FIELD_JUDGMENT,
+    FIELD_PROOF_ID,
+    FIELD_PROOF_OBJECT_REF,
+    FIELD_RAW_TEXT_UNITS,
+    FIELD_RESIDUALS,
+    FIELD_REVERSE_TRACE_OBJ,
+    FIELD_REVERSE_TRACE_REF,
+    JUDGMENT_CERTIFICATE,
+    JUDGMENT_HYPOTHESIS,
+    JUDGMENT_ZERO,
+)
 from mcd.core.residual_taxonomy import has_blocking_residuals
 
-PUBLIC_FINAL_JUDGMENTS: tuple[str, ...] = ("zero", "hypothesis", "certificate")
+PUBLIC_FINAL_JUDGMENTS: tuple[str, ...] = (JUDGMENT_ZERO, JUDGMENT_HYPOTHESIS, JUDGMENT_CERTIFICATE)
 INTERNAL_SUSPEND = "suspend"
 INTERNAL_SUSPENDED = "suspended"
-_JUDGMENT_KEYS = frozenset({"judgment", "kernel_judgment", "final_judgment", "proof_status"})
+_JUDGMENT_KEYS = frozenset({FIELD_JUDGMENT, "kernel_judgment", "final_judgment", "proof_status"})
 _GOVERNANCE_CONTEXT_KEYS = frozenset(
     {
-        "proof_id",
-        "proof_object_ref",
-        "governance_gate_passed",
+        FIELD_PROOF_ID,
+        FIELD_PROOF_OBJECT_REF,
+        FIELD_GOVERNANCE_GATE_PASSED,
         "conservation",
-        "reverse_trace_ref",
-        "reverse_trace_obj",
+        FIELD_REVERSE_TRACE_REF,
+        FIELD_REVERSE_TRACE_OBJ,
         "reverse_trace",
         "transition_tags",
     }
@@ -54,8 +68,8 @@ def collapse_to_public_judgment(status: str) -> str:
     if normalized in PUBLIC_FINAL_JUDGMENTS:
         return normalized
     if normalized in {INTERNAL_SUSPEND, INTERNAL_SUSPENDED}:
-        return "hypothesis"
-    return "zero"
+        return JUDGMENT_HYPOTHESIS
+    return JUDGMENT_ZERO
 
 
 def is_public_final_judgment(status: str) -> bool:
@@ -107,7 +121,7 @@ def enforce_governed_output_contract(
         _enforce_internal_state_rule(node)
         _enforce_certificate_gate(node)
     if include_audit:
-        normalized["_governance_audit"] = build_governance_audit_event(
+        normalized[FIELD_GOVERNANCE_AUDIT] = build_governance_audit_event(
             input_payload=input_payload,
             output_payload=normalized,
             certificate_reason_codes=certificate_reason_codes,
@@ -139,9 +153,9 @@ def _enforce_internal_state_rule(payload: dict[str, Any]) -> bool:
     internal_state = str(payload.get("internal_state", "")).strip().lower()
     if internal_state not in {INTERNAL_SUSPEND, INTERNAL_SUSPENDED}:
         return False
-    for key in ("judgment", "final_judgment", "proof_status"):
+    for key in (FIELD_JUDGMENT, "final_judgment", "proof_status"):
         if key in payload:
-            payload[key] = "hypothesis"
+            payload[key] = JUDGMENT_HYPOTHESIS
     _append_residual(payload, "internal_suspension_collapsed")
     return True
 
@@ -153,8 +167,8 @@ def _enforce_certificate_gate(payload: dict[str, Any]) -> list[str]:
         return []
     keys_to_check = [
         key
-        for key in ("judgment", "final_judgment", "proof_status")
-        if isinstance(payload.get(key), str) and collapse_to_public_judgment(payload[key]) == "certificate"
+        for key in (FIELD_JUDGMENT, "final_judgment", "proof_status")
+        if isinstance(payload.get(key), str) and collapse_to_public_judgment(payload[key]) == JUDGMENT_CERTIFICATE
     ]
     if not keys_to_check:
         return []
@@ -181,21 +195,21 @@ def _is_reverse_trace_payload(payload: dict[str, Any]) -> bool:
     return (
         "reverse_trace_id" in payload
         and "complete" in payload
-        and "governance_gate_passed" not in payload
+        and FIELD_GOVERNANCE_GATE_PASSED not in payload
         and "conservation" not in payload
-        and "reverse_trace_ref" not in payload
+        and FIELD_REVERSE_TRACE_REF not in payload
     )
 
 
 def _certificate_block_reasons(payload: dict[str, Any]) -> list[str]:
     blocked_reasons: list[str] = []
 
-    proof_ref = payload.get("proof_id") or payload.get("proof_object_ref")
+    proof_ref = payload.get(FIELD_PROOF_ID) or payload.get(FIELD_PROOF_OBJECT_REF)
     if not proof_ref:
         blocked_reasons.append("certificate_without_proof_object")
 
-    if "governance_gate_passed" in payload:
-        if not bool(payload.get("governance_gate_passed")):
+    if FIELD_GOVERNANCE_GATE_PASSED in payload:
+        if not bool(payload.get(FIELD_GOVERNANCE_GATE_PASSED)):
             blocked_reasons.append("certificate_without_governance_gate")
     else:
         conservation = payload.get("conservation")
@@ -203,8 +217,8 @@ def _certificate_block_reasons(payload: dict[str, Any]) -> list[str]:
             if not bool(conservation.get("passed", False)):
                 blocked_reasons.append("certificate_without_governance_gate")
 
-    reverse_trace_ref = payload.get("reverse_trace_ref")
-    reverse_trace_obj = payload.get("reverse_trace_obj")
+    reverse_trace_ref = payload.get(FIELD_REVERSE_TRACE_REF)
+    reverse_trace_obj = payload.get(FIELD_REVERSE_TRACE_OBJ)
     reverse_trace = payload.get("reverse_trace")
     has_reverse_trace = bool(reverse_trace_ref)
     if isinstance(reverse_trace_obj, dict):
@@ -212,16 +226,16 @@ def _certificate_block_reasons(payload: dict[str, Any]) -> list[str]:
         has_reverse_trace = has_reverse_trace or trace_complete
         if not trace_complete:
             blocked_reasons.append("certificate_without_reverse_trace")
-        elif not bool(reverse_trace_obj.get("raw_text_units")):
+        elif not bool(reverse_trace_obj.get(FIELD_RAW_TEXT_UNITS)):
             blocked_reasons.append("reverse_trace_missing_raw_text")
     if isinstance(reverse_trace, list):
         has_reverse_trace = has_reverse_trace or bool(reverse_trace)
     if not has_reverse_trace:
         blocked_reasons.append("certificate_without_reverse_trace")
 
-    existing_residuals = payload.get("residuals")
+    existing_residuals = payload.get(FIELD_RESIDUALS)
     existing_residual_codes = (
-        [str(item) for item in existing_residuals if str(item).strip()]
+        [code for item in existing_residuals if (code := str(item).strip())]
         if isinstance(existing_residuals, list)
         else []
     )
@@ -243,9 +257,9 @@ def _append_residual(payload: dict[str, Any], residual: str) -> None:
     existing = payload.get("residuals")
     residuals: list[str]
     if isinstance(existing, list):
-        residuals = [str(item) for item in existing if str(item).strip()]
+        residuals = [code for item in existing if (code := str(item).strip())]
     else:
         residuals = []
     if residual not in residuals:
         residuals.append(residual)
-    payload["residuals"] = residuals
+    payload[FIELD_RESIDUALS] = residuals
