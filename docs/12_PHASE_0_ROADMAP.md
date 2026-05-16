@@ -17,3 +17,6 @@ Enforce ProofObject + GovernanceGate + ReverseTrace for certificate issuance.
 
 ## PR-5
 Enforce Language Reveals Mind contract across language/concept commands.
+
+## PR-6
+Enforce governed epistemic ceiling so CERTIFICATE is blocked when transition lineage, residual governance, or ReverseTrace completeness is insufficient.
