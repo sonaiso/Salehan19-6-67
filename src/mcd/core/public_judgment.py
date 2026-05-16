@@ -177,11 +177,20 @@ def _certificate_blocked(payload: dict[str, Any]) -> bool:
     reverse_trace = payload.get("reverse_trace")
     has_reverse_trace = bool(reverse_trace_ref)
     if isinstance(reverse_trace_obj, dict):
-        has_reverse_trace = has_reverse_trace or bool(reverse_trace_obj.get("complete", False))
+        trace_complete = bool(reverse_trace_obj.get("complete", False))
+        has_reverse_trace = has_reverse_trace or trace_complete
+        if not trace_complete:
+            blocked_reasons.append("certificate_without_reverse_trace")
+        elif not bool(reverse_trace_obj.get("raw_text_units")):
+            blocked_reasons.append("reverse_trace_missing_raw_text")
     if isinstance(reverse_trace, list):
         has_reverse_trace = has_reverse_trace or bool(reverse_trace)
     if not has_reverse_trace:
         blocked_reasons.append("certificate_without_reverse_trace")
+
+    existing_residuals = payload.get("residuals")
+    if isinstance(existing_residuals, list) and any(str(item).strip() for item in existing_residuals):
+        blocked_reasons.append("certificate_with_blocking_residuals")
 
     transition_tags = payload.get("transition_tags")
     if isinstance(transition_tags, list):
