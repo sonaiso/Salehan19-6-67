@@ -36,6 +36,21 @@ from mcd.core.public_judgment import (
     is_public_final_judgment,
     normalize_public_judgment_fields,
 )
+from mcd.core.public_schema import (
+    FIELD_GOVERNANCE_AUDIT,
+    FIELD_GOVERNANCE_GATE_PASSED,
+    FIELD_JUDGMENT,
+    FIELD_PROOF_ID,
+    FIELD_PROOF_OBJECT_REF,
+    FIELD_RAW_TEXT_UNITS,
+    FIELD_RESIDUALS,
+    FIELD_REVERSE_TRACE_OBJ,
+    FIELD_REVERSE_TRACE_REF,
+    JUDGMENT_CERTIFICATE,
+    JUDGMENT_HYPOTHESIS,
+    JUDGMENT_ZERO,
+)
+from mcd.core.governance_audit import GovernanceAuditEvent
 from mcd.core.residual_taxonomy import (
     ResidualFamily,
     ResidualSeverity,

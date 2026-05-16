@@ -5,11 +5,24 @@ from dataclasses import asdict, dataclass
 from typing import Literal
 from uuid import uuid4
 
+from mcd.core.public_schema import (
+    FIELD_GOVERNANCE_GATE_PASSED,
+    FIELD_JUDGMENT,
+    FIELD_PROOF_ID,
+    FIELD_PROOF_OBJECT_REF,
+    FIELD_RAW_TEXT_UNITS,
+    FIELD_RESIDUALS,
+    FIELD_REVERSE_TRACE_OBJ,
+    FIELD_REVERSE_TRACE_REF,
+    JUDGMENT_CERTIFICATE,
+    JUDGMENT_HYPOTHESIS,
+    JUDGMENT_ZERO,
+)
 from mcd.core.residual_taxonomy import classify_residuals, has_blocking_residuals
 
 GovernanceDecision = Literal["allowed", "downgraded", "blocked", "suspended"]
 GovernanceGate = Literal["phi", "omega", "proof_object", "governance_gate", "residuals", "certificate"]
-_PUBLIC_FINAL_JUDGMENTS = frozenset({"zero", "hypothesis", "certificate"})
+_PUBLIC_FINAL_JUDGMENTS = frozenset({JUDGMENT_ZERO, JUDGMENT_HYPOTHESIS, JUDGMENT_CERTIFICATE})
 
 REASON_CODE_ALIASES: dict[str, str] = {
     "transition_condition_unknown": "phi_transition_condition_unknown",
@@ -102,22 +115,22 @@ def build_governance_audit_event(
     certificate_reason_codes: list[str],
     internal_suspension_applied: bool,
 ) -> GovernanceAuditEvent:
-    proof_ref = _as_non_empty(input_payload.get("proof_id")) or _as_non_empty(input_payload.get("proof_object_ref"))
-    input_judgment_raw = input_payload.get("judgment")
+    proof_ref = _as_non_empty(input_payload.get(FIELD_PROOF_ID)) or _as_non_empty(input_payload.get(FIELD_PROOF_OBJECT_REF))
+    input_judgment_raw = input_payload.get(FIELD_JUDGMENT)
     input_judgment = (
         _collapse_to_public_judgment(str(input_judgment_raw)) if isinstance(input_judgment_raw, str) else None
     )
-    output_judgment = _collapse_to_public_judgment(str(output_payload.get("judgment", "")))
+    output_judgment = _collapse_to_public_judgment(str(output_payload.get(FIELD_JUDGMENT, "")))
 
     transition_tags = input_payload.get("transition_tags")
     silent_level_skip_present = isinstance(transition_tags, list) and any(
         str(tag).strip().lower() == "silent_level_skip" for tag in transition_tags
     )
 
-    reverse_trace_obj = input_payload.get("reverse_trace_obj")
+    reverse_trace_obj = input_payload.get(FIELD_REVERSE_TRACE_OBJ)
     reverse_trace = input_payload.get("reverse_trace")
-    reverse_trace_ref = input_payload.get("reverse_trace_ref")
-    has_raw_text_anchor = isinstance(reverse_trace_obj, dict) and bool(reverse_trace_obj.get("raw_text_units"))
+    reverse_trace_ref = input_payload.get(FIELD_REVERSE_TRACE_REF)
+    has_raw_text_anchor = isinstance(reverse_trace_obj, dict) and bool(reverse_trace_obj.get(FIELD_RAW_TEXT_UNITS))
     has_reverse_trace = bool(reverse_trace_ref)
     if isinstance(reverse_trace_obj, dict):
         has_reverse_trace = has_reverse_trace or bool(reverse_trace_obj.get("complete", False))
@@ -127,13 +140,13 @@ def build_governance_audit_event(
     has_proof_object = bool(proof_ref)
     governance_gate_passed = _governance_gate_passed(input_payload)
 
-    existing_residuals = _normalize_residuals(input_payload.get("residuals"))
+    existing_residuals = _normalize_residuals(input_payload.get(FIELD_RESIDUALS))
     blocking_residuals_present = has_blocking_residuals(existing_residuals)
 
     reason_codes = normalize_reason_codes(
         list(dict.fromkeys([*certificate_reason_codes, *existing_residuals]))
     )
-    if output_judgment == "certificate" and not reason_codes:
+    if output_judgment == JUDGMENT_CERTIFICATE and not reason_codes:
         reason_codes = ["certificate_allowed"]
     residual_specs = classify_residuals(reason_codes)
 
@@ -153,7 +166,7 @@ def build_governance_audit_event(
         decision=decision,
         gate=gate,
         reason_codes=reason_codes,
-        residuals=_normalize_residuals(output_payload.get("residuals")),
+        residuals=_normalize_residuals(output_payload.get(FIELD_RESIDUALS)),
         has_raw_text_anchor=has_raw_text_anchor,
         has_reverse_trace=has_reverse_trace,
         has_proof_object=has_proof_object,
@@ -179,9 +192,9 @@ def _derive_decision(
 ) -> GovernanceDecision:
     if internal_suspension_applied or "phi_transition_condition_unknown" in reason_codes:
         return "suspended"
-    if input_judgment == "certificate" and output_judgment != "certificate":
+    if input_judgment == JUDGMENT_CERTIFICATE and output_judgment != JUDGMENT_CERTIFICATE:
         return "downgraded"
-    if output_judgment == "zero" or "phi_transition_condition_failed" in reason_codes:
+    if output_judgment == JUDGMENT_ZERO or "phi_transition_condition_failed" in reason_codes:
         return "blocked"
     return "allowed"
 
@@ -204,8 +217,8 @@ def _derive_gate(reason_codes: list[str]) -> GovernanceGate:
 
 
 def _governance_gate_passed(payload: dict[str, object]) -> bool:
-    if "governance_gate_passed" in payload:
-        return bool(payload.get("governance_gate_passed"))
+    if FIELD_GOVERNANCE_GATE_PASSED in payload:
+        return bool(payload.get(FIELD_GOVERNANCE_GATE_PASSED))
     conservation = payload.get("conservation")
     if isinstance(conservation, dict):
         return bool(conservation.get("passed", False))
@@ -220,7 +233,7 @@ def _as_non_empty(value: object) -> str | None:
 def _normalize_residuals(raw: object) -> list[str]:
     if not isinstance(raw, list):
         return []
-    return [str(item) for item in raw if str(item).strip()]
+    return [code for item in raw if (code := str(item).strip())]
 
 
 def _collapse_to_public_judgment(status: str) -> str:
@@ -228,5 +241,5 @@ def _collapse_to_public_judgment(status: str) -> str:
     if normalized in _PUBLIC_FINAL_JUDGMENTS:
         return normalized
     if normalized in {"suspend", "suspended"}:
-        return "hypothesis"
-    return "zero"
+        return JUDGMENT_HYPOTHESIS
+    return JUDGMENT_ZERO
