@@ -67,6 +67,7 @@ def test_unified_kernel_adapter_maps_concept_claim_flow():
     kernel = to_unified_kernel_from_concept_claim(claim, decision).to_dict()
     assert kernel["Input"]["domain"] == "scientific_experimental"
     assert kernel["Input"]["topic"] == "material"
+    assert kernel["Input"]["ontological_object_type"] == ""
+    assert kernel["Input"]["representation_type"] == ""
     assert kernel["Decision"]["status"] == "accepted"
     assert kernel["Trace"]["reverse_trace_complete"] is True
-
