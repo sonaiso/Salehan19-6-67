@@ -10,6 +10,11 @@ from mcd.nabhani.correspondence_checker import CorrespondenceChecker, Correspond
 from mcd.nabhani.fake_evidence_detector import FakeEvidenceDetector, FakeEvidenceReport
 from mcd.nabhani.conflict_resolver import ConflictResolver, ConflictResolution
 from mcd.nabhani.cognitive_measure import CognitiveMeasure, CognitiveMeasureBuilder
+from mcd.nabhani.concept_claim_governance_evaluator import (
+    ConceptClaim,
+    ConceptClaimDecision,
+    ConceptClaimGovernanceEvaluator,
+)
 from mcd.nabhani.nabhani_decoder import NabhaniDecoder
 
 __all__ = [
@@ -31,5 +36,8 @@ __all__ = [
     "ConflictResolution",
     "CognitiveMeasure",
     "CognitiveMeasureBuilder",
+    "ConceptClaim",
+    "ConceptClaimDecision",
+    "ConceptClaimGovernanceEvaluator",
     "NabhaniDecoder",
 ]
