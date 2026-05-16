@@ -14,6 +14,7 @@ from mcd.nabhani.concept_claim_governance_evaluator import (
     ConceptClaim,
     ConceptClaimDecision,
     ConceptClaimGovernanceEvaluator,
+    OntologicalMetricOperator,
 )
 from mcd.nabhani.nabhani_decoder import NabhaniDecoder
 
@@ -39,5 +40,6 @@ __all__ = [
     "ConceptClaim",
     "ConceptClaimDecision",
     "ConceptClaimGovernanceEvaluator",
+    "OntologicalMetricOperator",
     "NabhaniDecoder",
 ]

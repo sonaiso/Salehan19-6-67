@@ -51,6 +51,7 @@ def test_marks_invalid_measure_when_measure_not_allowed_for_domain(evaluator):
     decision = evaluator.evaluate(_base_claim(governing_measure="scriptural"))
     assert decision.status == "invalid_measure"
     assert "invalid_governing_measure" in decision.residuals
+    assert "invalid_measure_domain" in decision.residuals
 
 
 def test_certificate_needs_reverse_trace_when_requested(evaluator):
@@ -92,3 +93,56 @@ def test_certificate_allowed_only_when_all_certificate_conditions_pass(evaluator
     assert decision.status == "accepted"
     assert decision.can_issue_certificate is True
     assert decision.residuals == []
+
+
+def test_invalid_measure_topic_residual_is_emitted(evaluator):
+    decision = evaluator.evaluate(
+        _base_claim(
+            governing_measure="experimental",
+            topic="creed",
+        )
+    )
+    assert "invalid_measure_topic" in decision.residuals
+
+
+def test_unsupported_data_type_when_representation_type_unknown(evaluator):
+    decision = evaluator.evaluate(
+        _base_claim(
+            representation_type="quantum_qualia",
+        )
+    )
+    assert decision.status == "invalid_measure"
+    assert "unsupported_data_type" in decision.residuals
+
+
+def test_metric_extension_fallacy_when_cross_layer_transition_invalid(evaluator):
+    decision = evaluator.evaluate(
+        _base_claim(
+            governing_measure="dalala",
+            ontological_object_type="event",
+            representation_type="causal",
+        )
+    )
+    assert decision.status == "invalid_measure"
+    assert "metric_extension_fallacy" in decision.residuals
+
+
+def test_metric_certainty_capped_when_measure_cannot_issue_certificate(evaluator):
+    decision = evaluator.evaluate(
+        _base_claim(
+            governing_measure="dalala",
+            domain="rational_general",
+            topic="concept",
+            ontological_object_type="entity",
+            representation_type="linguistic",
+            semantic_type="linguistic",
+            inference_type="dalala",
+            relation_type="linguistic",
+            certainty_level="CERTIFICATE",
+            evidence_refs=["e1", "e2", "e3"],
+            reverse_trace_ref="rt-1",
+        )
+    )
+    assert decision.status == "needs_evidence"
+    assert decision.can_issue_certificate is False
+    assert "metric_certainty_capped" in decision.residuals
