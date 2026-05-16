@@ -18,6 +18,10 @@ FORBIDDEN_TRANSITIONS: set[str] = {
     "certificate_without_proof_object",
     "certificate_without_governance_gate",
     "certificate_without_reverse_trace",
+    "definition_as_judgment",
+    "interpretation_as_evidence",
+    "relation_as_inference",
+    "dalala_without_gate",
 }
 
 _BIT_FIELDS: tuple[str, ...] = (
