@@ -77,4 +77,19 @@ def test_no_certificate_without_governance():
         {"judgment": "certificate", "governance_passed": False}
     )
     assert ok is False
-    assert violations
+    assert any("governance gate pass" in v for v in violations)
+    assert any("proof object" in v for v in violations)
+    assert any("reverse trace" in v for v in violations)
+
+
+def test_certificate_governance_passes_with_required_refs():
+    ok, violations = MathematicalGovernanceGate.validate_no_certificate_without_governance(
+        {
+            "judgment": "certificate",
+            "governance_passed": True,
+            "proof_object_ref": "PO-1",
+            "reverse_trace_ref": "RT-1",
+        }
+    )
+    assert ok is True
+    assert violations == []

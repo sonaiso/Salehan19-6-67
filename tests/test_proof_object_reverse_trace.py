@@ -73,6 +73,31 @@ def test_reverse_trace_to_dict():
     assert d["complete"] is True
 
 
+def test_reverse_trace_exposes_unified_layer_channels():
+    rt = ReverseTrace(
+        reverse_trace_id=ReverseTrace.make_id(),
+        final_claim="النار حارة",
+        proof_id="P1",
+    )
+    d = rt.to_dict()
+    for key in (
+        "grapheme_units",
+        "orthographic_units",
+        "lexeme_units",
+        "morphology_units",
+        "phrase_units",
+        "clause_units",
+        "paragraph_units",
+        "section_units",
+        "full_text_units",
+        "discourse_graph_units",
+        "claim_graph_units",
+        "proof_object_units",
+        "final_judgment_units",
+    ):
+        assert key in d
+
+
 def test_proof_to_dict():
     proof = ProofObject(proof_id="P1", claim_id="C1", proof_status="zero")
     d = proof.to_dict()

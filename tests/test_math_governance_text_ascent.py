@@ -102,6 +102,33 @@ def test_zero_reports_broken_unicode_or_token_trace():
     assert any("unicode" in v.lower() for v in report.violations)
 
 
+def test_forbidden_transition_marker_is_blocked():
+    units = _build_full_chain(final_unit_type="hypothesis")
+    token = next(u for u in units if u.level_id == "token")
+    token.metadata["forbidden_transitions"] = ["silent_level_skip"]
+    report = validate_text_ascent_chain(units)
+    assert report.passed is False
+    assert any("forbidden transitions detected" in v for v in report.violations)
+
+
+def test_certificate_requires_governance_gate_signal():
+    units = _build_full_chain(final_unit_type="certificate")
+    final = units[-1]
+    final.metadata["governance_gate_passed"] = False
+    report = validate_text_ascent_chain(units)
+    assert report.passed is False
+    assert any("certificate_without_governance_gate" in v for v in report.violations)
+
+
+def test_certificate_with_residual_is_rejected():
+    units = _build_full_chain(final_unit_type="certificate")
+    final = units[-1]
+    final.residuals = ["open_gap"]
+    report = validate_text_ascent_chain(units)
+    assert report.passed is False
+    assert any("residual" in v.lower() for v in report.violations)
+
+
 def test_no_final_status_without_unicode_to_fulltext_path():
     units = _build_full_chain()
     units.pop()
