@@ -521,6 +521,8 @@ def _evaluate_semantic_layer_separation(
         residuals.append("relation_as_inference")
     if normalized_judgment_basis in {"semantic", "dalala"} and not semantic_inference_gate:
         residuals.append("dalala_without_gate")
+    if residuals:
+        residuals.append("invalid_semantic_transition")
 
     return {
         "semantic_layer_separation_ok": not residuals,

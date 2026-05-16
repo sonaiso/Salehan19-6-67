@@ -106,3 +106,18 @@ def test_semantic_layer_forbidden_transition_blocks_certificate():
     )
     assert payload["judgment"] == "hypothesis"
     assert "definition_as_judgment" in payload["residuals"]
+
+
+def test_invalid_semantic_transition_tag_blocks_certificate():
+    payload = enforce_governed_output_contract(
+        {
+            "proof_id": "PO-114",
+            "judgment": "certificate",
+            "governance_gate_passed": True,
+            "reverse_trace_ref": "RT-114",
+            "transition_tags": ["invalid_semantic_transition"],
+            "residuals": [],
+        }
+    )
+    assert payload["judgment"] == "hypothesis"
+    assert "invalid_semantic_transition" in payload["residuals"]

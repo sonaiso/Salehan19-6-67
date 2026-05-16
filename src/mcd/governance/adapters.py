@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from mcd.core.public_judgment import collapse_to_public_judgment, enforce_governed_output_contract
+from mcd.core.transition_governance import assess_transition
 from mcd.governance.contracts import CanonicalGovernanceRecord
 from mcd.governance.unified_kernel import UnifiedGovernanceKernel, from_canonical_record
 
@@ -120,9 +121,12 @@ def to_unified_kernel_from_coding_judgment(judgment) -> UnifiedGovernanceKernel:
 def to_unified_kernel_from_concept_claim(claim, decision) -> UnifiedGovernanceKernel:
     certificate_requested = str(getattr(claim, "certainty_level", "")).strip().lower() == "certificate"
     gates = dict(getattr(decision, "gates", {}) or {})
+    residuals = list(getattr(decision, "residuals", []) or [])
     reverse_trace_ref = getattr(claim, "reverse_trace_ref", None)
     constraints = [{"id": gate_name, "passed": bool(gate_result)} for gate_name, gate_result in gates.items()]
     evidence = [{"type": "evidence_ref", "ref": ref} for ref in list(getattr(claim, "evidence_refs", []) or []) if str(ref).strip()]
+    transitions = _build_governance_transitions(claim, gates)
+    transition_blockers = [t["residual"] for t in transitions if t["residual"]]
     return UnifiedGovernanceKernel(
         Input={
             "claim": getattr(claim, "claim", ""),
@@ -142,7 +146,7 @@ def to_unified_kernel_from_concept_claim(claim, decision) -> UnifiedGovernanceKe
         Candidates=[{"certainty_level": getattr(claim, "certainty_level", ""), "status": getattr(decision, "status", "")}],
         Constraints=constraints,
         Evidence=evidence,
-        Residuals=list(getattr(decision, "residuals", []) or []),
+        Residuals=residuals,
         Decision={
             "status": getattr(decision, "status", ""),
             "certainty_level": getattr(decision, "certainty_level", ""),
@@ -152,5 +156,64 @@ def to_unified_kernel_from_concept_claim(claim, decision) -> UnifiedGovernanceKe
         Trace={
             "reverse_trace_ref": reverse_trace_ref or "",
             "reverse_trace_complete": bool(reverse_trace_ref),
+            "topic": getattr(claim, "topic", ""),
+            "domain": getattr(claim, "domain", ""),
+            "representation": getattr(claim, "representation_type", "") or "",
+            "measure": getattr(claim, "governing_measure", ""),
+            "evidence": [item["ref"] for item in evidence],
+            "dalala": getattr(claim, "semantic_type", "") or "",
+            "inference": getattr(claim, "inference_type", "") or "",
+            "residuals": residuals,
+            "certainty": getattr(claim, "certainty_level", ""),
+            "governance_transitions": transitions,
+            "blocking_reasons": list(dict.fromkeys([*transition_blockers, *residuals])),
         },
     )
+
+
+def _build_governance_transitions(claim, gates: dict[str, bool]) -> list[dict[str, str | bool]]:
+    transitions: list[dict[str, str | bool]] = []
+    semantic_layer_gate = bool(gates.get("semantic_layer_separation_gate", True))
+    semantic_inference_gate = bool(gates.get("semantic_inference_gate", True))
+
+    judgment_basis = str(getattr(claim, "judgment_basis_type", "") or "").strip().lower()
+    evidence_basis = str(getattr(claim, "evidence_basis_type", "") or "").strip().lower()
+    inference_basis = str(getattr(claim, "inference_basis_type", "") or "").strip().lower()
+
+    if judgment_basis in {"definition", "definitional"}:
+        transitions.append(
+            assess_transition(
+                "definition",
+                "judgment",
+                gate="semantic_layer_separation_gate",
+                gate_passed=semantic_layer_gate,
+            ).to_dict()
+        )
+    if evidence_basis in {"interpretation", "interpretive"}:
+        transitions.append(
+            assess_transition(
+                "interpretation",
+                "evidence",
+                gate="semantic_layer_separation_gate",
+                gate_passed=semantic_layer_gate,
+            ).to_dict()
+        )
+    if inference_basis in {"relation", "relational"}:
+        transitions.append(
+            assess_transition(
+                "relation",
+                "inference",
+                gate="semantic_layer_separation_gate",
+                gate_passed=semantic_layer_gate,
+            ).to_dict()
+        )
+    if judgment_basis in {"semantic", "dalala"}:
+        transitions.append(
+            assess_transition(
+                "dalala",
+                "application",
+                gate="semantic_inference_gate",
+                gate_passed=semantic_inference_gate,
+            ).to_dict()
+        )
+    return transitions
