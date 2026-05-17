@@ -14,16 +14,39 @@ This scorecard assesses the production readiness of the MCD/NERL/FPCL/GLCFL/EIRL
 
 **Current Average: 2.4/5 — Working Prototype**
 
+> **Audit note (current-state alignment):** Earlier revisions of this scorecard
+> claimed *"No REST API"*. That claim is **incorrect against the current code
+> state**. A FastAPI application exists at `src/mcd/api/app.py` with v1
+> versioned routes (`src/mcd/api/v1_routes.py`), observability hooks
+> (`src/mcd/api/observability.py`), schema stability checks, and a dedicated
+> pilot-readiness endpoint. However, the API itself declares in its module
+> docstring: *"No LLM calls. No external network calls. No GraphRAG. Not
+> production-ready. Pilot-ready candidate only."* The correct framing is
+> therefore a three-way distinction:
+>
+> - **API exists** — confirmed (`src/mcd/api/app.py`, tests under
+>   `tests/test_api_*.py`).
+> - **API pilot-ready candidate** — declared by the code itself; gated by
+>   `docs/API_PILOT_READINESS.md` and `docs/PILOT_READINESS_GATE.md`.
+> - **API production-ready** — **NOT** claimed; production blockers remain
+>   open per `docs/PRODUCTION_GAP_ANALYSIS.md`.
+>
+> Per the documentation rule established by this audit (see
+> [`CURRENT_CAPABILITY_MATRIX.md`](CURRENT_CAPABILITY_MATRIX.md)), no document
+> in this repository may claim *production-ready*, *fully compliant*, or
+> *certificate* status without citing the specific tests and governance gates
+> that prove it.
+
 ---
 
 ## 10-Dimension Scorecard
 
 | # | Dimension | Score | Rationale |
 |---|-----------|-------|-----------|
-| 1 | Architecture Maturity | 3/5 | Four fully implemented layers with clean separation. CLI works. No REST API. |
+| 1 | Architecture Maturity | 3/5 | Multiple layers with clean separation. CLI works. FastAPI REST API exists at `src/mcd/api/app.py` but declares itself "Not production-ready. Pilot-ready candidate only." |
 | 2 | Test Maturity | 4/5 | 600+ deterministic tests across all layers. No load/stress tests. |
 | 3 | CLI Usability | 3/5 | decode, nabhani, classify, ground, evaluate-project commands work. No shell completion. |
-| 4 | API Readiness | 1/5 | No HTTP/REST API. Python library and CLI only. |
+| 4 | API Readiness | 2/5 | FastAPI REST API exists (`src/mcd/api/app.py`, `src/mcd/api/v1_routes.py`) with health, observability, schema stability, and pilot-readiness endpoints — but pilot-ready candidate only, not production. No auth/rate limiting/SLA. |
 | 5 | Documentation | 3/5 | README, docs folder. No API reference or deployment guide. |
 | 6 | Observability | 1/5 | No logging, metrics, or monitoring. Some print() in source. |
 | 7 | Evaluation Dataset | 2/5 | 10 benchmark examples. No human annotation or calibration study. |
@@ -37,7 +60,7 @@ This scorecard assesses the production readiness of the MCD/NERL/FPCL/GLCFL/EIRL
 
 The following must be resolved before the system can be used in any controlled pilot:
 
-1. **No REST API** — prevents integration with any external system, workflow, or frontend
+1. **No REST API** — ~~prevents integration with any external system, workflow, or frontend~~ **CLOSED for "API exists"** (FastAPI app at `src/mcd/api/app.py`, tests at `tests/test_api_*.py`). The API is declared *pilot-ready candidate only* by its own module docstring; it is **not** production-ready. Remaining work is tracked under production blockers below, not as a missing API.
 2. **No observability** — cannot monitor behavior, detect errors, or measure performance in production
 3. **No evaluation dataset calibration** — cannot reliably measure accuracy without human-annotated gold labels
 4. **No LLM output guardrails** — if this system wraps an LLM, the LLM's output is currently unvalidated
@@ -61,7 +84,7 @@ Beyond pilot readiness, production requires:
 
 | Priority | Action | Responsible Area |
 |----------|--------|-----------------|
-| 🔴 Critical | Implement FastAPI REST endpoint for `classify` and `decode` | API |
+| 🔴 Critical | ~~Implement FastAPI REST endpoint for `classify` and `decode`~~ **DONE** — present at `src/mcd/api/app.py`; remaining work is production hardening, not initial implementation | API |
 | 🔴 Critical | Add structured logging with Python `logging` module | Observability |
 | 🟡 High | Expand benchmark dataset to 50 examples | Evaluation |
 | 🟡 High | Add integration tests for CLI + FPCL + NERL pipeline | Testing |
@@ -95,7 +118,7 @@ Beyond pilot readiness, production requires:
 - No LLM dependencies in deterministic classifiers
 
 **What's missing:**
-- REST API
+- ~~REST API~~ — present at `src/mcd/api/app.py` (pilot-ready candidate only, not production).
 - Async support for concurrent requests
 - Plugin/extension mechanism
 
@@ -129,14 +152,34 @@ Beyond pilot readiness, production requires:
 
 ---
 
-### 4. API Readiness (1/5)
+### 4. API Readiness (2/5)
 
-**Current state:** No HTTP API exists. Only Python library and CLI.
+**Current state:** A FastAPI REST application exists at `src/mcd/api/app.py`
+(application factory `build_app()`), with versioned routes
+(`src/mcd/api/v1_routes.py`), middleware (`src/mcd/api/middleware.py`),
+observability hooks (`src/mcd/api/observability.py`), schema stability checks
+(`src/mcd/api/schema_stability.py`), and a pilot-readiness endpoint. The
+module docstring explicitly states: *"No LLM calls. No external network
+calls. No GraphRAG. Not production-ready. Pilot-ready candidate only."*
 
-**Required for score 3:**
-- FastAPI or Flask REST endpoint
-- OpenAPI/Swagger documentation
-- Basic input validation
+**Evidence:**
+- Code: `src/mcd/api/app.py`, `src/mcd/api/v1_routes.py`,
+  `src/mcd/api/routes.py`, `src/mcd/api/health.py`,
+  `src/mcd/api/observability.py`, `src/mcd/api/schema_stability.py`.
+- Tests: `tests/test_api_classify.py`, `tests/test_api_v1_routes.py`,
+  `tests/test_api_health.py`, `tests/test_api_observability.py`,
+  `tests/test_api_pilot_readiness.py`, `tests/test_api_schema_stability.py`,
+  `tests/test_api_response_envelope.py`, `tests/test_api_error_handling.py`,
+  `tests/test_api_error_hardening.py`, `tests/test_api_hardening.py`,
+  `tests/test_api_version.py`.
+
+**Required for score 3 ("working API"):**
+- ~~FastAPI or Flask REST endpoint~~ — present.
+- ~~OpenAPI/Swagger documentation~~ — present (`/docs`, `/redoc`).
+- Basic input validation — present via FastAPI schemas
+  (`src/mcd/api/schemas.py`).
+- Closure of any remaining contract-level residuals before raising the score
+  beyond 2/5.
 
 **Required for score 5:**
 - Authentication and authorization
