@@ -1,14 +1,14 @@
 """ProposerTrace — serialize, persist, and replay governed pipeline runs.
 
-Each run is saved as a JSON artifact under::
+Each run is saved as a replay/audit JSON artifact under::
 
     artifacts/llm_proposer/<timestamp>_<VERDICT>.json
 
 Replay:
     answer = ProposerTrace.replay("artifacts/llm_proposer/xxx.json", proposer)
 
-Replay is deterministic when using EchoProposer because the raw_text is
-reconstructed from the stored prompt and the governance gates are stateless.
+Replay artifacts support reproducibility and audits, but they are not
+authoritative ProofObject contracts by themselves.
 """
 from __future__ import annotations
 
@@ -31,6 +31,7 @@ def _ensure_artifacts_dir() -> Path:
 
 def _answer_to_dict(answer: GovernedAnswer) -> dict[str, object]:
     return {
+        "artifact_role": "audit_replay_artifact",
         "verdict": answer.verdict,
         "evidence": answer.evidence,
         "reverse_trace": answer.reverse_trace,

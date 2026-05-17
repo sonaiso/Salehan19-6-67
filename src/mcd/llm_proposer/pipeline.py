@@ -12,6 +12,8 @@ from __future__ import annotations
 
 from mcd.llm_proposer.base import BaseLLMProposer
 from mcd.llm_proposer.governor import AFJGGovernor
+from typing import Any
+
 from mcd.llm_proposer.types import GovernedAnswer
 
 
@@ -35,8 +37,8 @@ class GovernedProposalPipeline:
         self,
         prompt: str,
         *,
-        evidence: list[str] | None = None,
-        reverse_trace: list[str] | None = None,
+        evidence: list[Any] | None = None,
+        reverse_trace: list[str] | dict[str, Any] | None = None,
     ) -> GovernedAnswer:
         """Propose then govern.
 

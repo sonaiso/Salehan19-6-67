@@ -36,7 +36,7 @@ class GovernedAnswer:
 
     proposal: Proposal
     verdict: Verdict
-    evidence: list[str]
+    evidence: list[Any]
     reverse_trace: list[str]
     violated_rules: list[str]
     created_at: str = field(

@@ -17,8 +17,8 @@
 
 أي مخرج LLM هو في الأصل ادعاء (claim) يحتاج إلى:
 1. واقع قابل للتحقق (target_reality)
-2. دليل خارجي (evidence)
-3. سجل عكسي كامل (reverse_trace)
+2. دليل خارجي صالح (evidence)
+3. سجل عكسي كامل ومُرسى إلى raw_text_units (reverse_trace)
 4. اجتياز جميع بوابات AFJG
 
 ---
@@ -29,8 +29,8 @@ CERTIFICATE يتطلب **الثلاثة معاً** (لا يمكن تخطي أي�
 
 | الشرط | الوصف |
 |---|---|
-| `evidence != []` | دليل خارجي حقيقي (ليس مخرج النموذج) |
-| `reverse_trace != []` | سجل عكسي من المدقق الخارجي |
+| evidence valid | دليل خارجي حقيقي غير فارغ وغير blank وبنوع معتمد |
+| reverse_trace complete + raw_text anchor | سجل عكسي كامل ومرتبط بـ raw_text_units |
 | `violated_rules == []` | لا انتهاكات لقواعد AFJG |
 
 أي فشل → `HYPOTHESIS`. تناقض داخلي أو مخالفة صريحة → `ZERO`.
@@ -67,7 +67,7 @@ src/mcd/llm_proposer/
 |---|---|---|
 | Emptiness gate | `governor.py` | proposal prompt فارغ → ZERO |
 | Contradiction gate | `governor.py` | ادعاء تناقضي بدون دليل → ZERO |
-| Nabhani rational gate | `src/mcd/nabhani/rational_method_judge.py` | `RationalMethodJudge.judge()` — يفحص: واقع + حس + سابق + ربط + مطابقة + دليل + يقين |
+| Nabhani rational gate | `src/mcd/nabhani/rational_method_judge.py` | `rejected → ZERO` و `suspended → HYPOTHESIS` |
 | Evidence gate | `governor.py` | لا دليل أو لا trace → HYPOTHESIS |
 | Certificate gate | `governor.py` | كل البوابات + evidence + trace → CERTIFICATE |
 
@@ -148,3 +148,4 @@ assert replayed.verdict == answer.verdict
 - ❌ `3/4 checks != CERTIFICATE` — أي بوابة ناقصة → HYPOTHESIS
 - ❌ لا حكم رابع — `ValueError` فوري لأي verdict خارج الثلاثة
 - ✅ مخرج LLM = HYPOTHESIS دائماً حتى إثبات العكس
+- ✅ artifact المحفوظ = replay/audit فقط، وليس ProofObject حاكم بذاته

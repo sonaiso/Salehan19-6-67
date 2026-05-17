@@ -19,7 +19,12 @@ class TestGovernorCertificatePath:
         return ["empirical observation", "peer review", "reproducible experiment"]
 
     def _full_trace(self) -> list[str]:
-        return ["step 1: claim formulated", "step 2: evidence gathered", "step 3: gates passed"]
+        return [
+            "step 1: claim formulated",
+            "step 2: evidence gathered",
+            "raw_text_units: النار محرقة",
+            "step 3: gates passed",
+        ]
 
     def test_evidence_and_trace_yields_certificate(self) -> None:
         proposal = _make_proposal("النار محرقة")
@@ -75,6 +80,6 @@ class TestGovernorCertificatePath:
         answer = self.governor.govern(
             proposal,
             evidence=["one piece of evidence"],
-            reverse_trace=["one trace step"],
+            reverse_trace=["raw_text_units: claim anchor"],
         )
         assert answer.verdict == "CERTIFICATE"

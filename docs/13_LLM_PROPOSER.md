@@ -23,8 +23,8 @@ certificate_without_reverse_trace → محظور
 **اللغة الكبيرة تُولِّد ادعاءات — لا براهين.**  
 أي مخرج LLM يدخل مسار الحوكمة بافتراض `HYPOTHESIS` ولا يرتقي إلا بعد:
 1. اجتياز جميع بوابات AFJG الموجودة
-2. وجود دليل خارجي حقيقي (`evidence != []`)
-3. وجود سجل عكسي كامل (`reverse_trace != []`)
+2. وجود دليل خارجي صالح (غير فارغ وغير blank وبنوع معتمد)
+3. وجود سجل عكسي كامل ومُرسى إلى `raw_text_units`
 4. لا انتهاكات (`violated_rules == []`)
 
 ---
@@ -33,8 +33,8 @@ certificate_without_reverse_trace → محظور
 
 ```text
 ZERO        = fatal violation or invalid proof path
-HYPOTHESIS  = plausible structure with incomplete evidence
-CERTIFICATE = evidence + governance + reverse trace completed
+HYPOTHESIS  = plausible structure with incomplete evidence or suspended rational gate
+CERTIFICATE = evidence + governance + raw_text-anchored reverse trace completed
 ```
 
 **لا يُسمح بحكم رابع.** أي محاولة لإنشاء `GovernedAnswer(verdict="MERGED")` ترفع `ValueError` فوراً.
@@ -49,10 +49,11 @@ LLM output (Proposal)
 Gate 1: Emptiness gate          → ZERO  if prompt is empty
 Gate 2: Contradiction gate      → ZERO  if contradiction claim without evidence
 Gate 3: Nabhani rational gate   → ZERO  if RationalMethodJudge.judge() = "rejected"
-                                  (soft warnings → trace only, not blocking)
-Gate 4: Evidence gate           → HYPOTHESIS if evidence == [] OR reverse_trace == []
-Gate 5: Certificate gate        → CERTIFICATE if evidence != [] AND reverse_trace != []
-                                              AND violated_rules == []
+                                  HYPOTHESIS if RationalMethodJudge.judge() = "suspended"
+Gate 4: Evidence gate           → HYPOTHESIS if evidence is missing/blank/invalid
+Gate 5: Reverse trace gate      → HYPOTHESIS if trace missing raw_text anchor
+Gate 6: Certificate gate        → CERTIFICATE only after core governed output contract
+                                              and no blocking residuals
 ```
 
 ### القاعدة الصارمة
@@ -146,6 +147,9 @@ replayed = trace_module.replay(path, governor)
 assert replayed.verdict == answer.verdict
 ```
 
+> artifact المحفوظ هو **Replay/Audit Artifact** فقط، وليس ProofObject حاكم بذاته.
+> الشهادة لا تصح إلا عبر ProofObject + GovernanceGate + ReverseTrace ضمن العقد المركزي.
+
 ---
 
 ## المراجع
@@ -156,3 +160,20 @@ assert replayed.verdict == answer.verdict
 - `docs/03_JUDGMENT_MODEL.md` — نموذج الأحكام
 - `docs/04_MERGE_GOVERNANCE.md` — حوكمة الدمج
 - `AGENTS.md` — القانون الحاكم
+## ربط الأحكام الداخلية بالعقد العام
+
+داخل `llm_proposer` تبقى الأحكام الداخلية:
+
+```text
+ZERO / HYPOTHESIS / CERTIFICATE
+```
+
+وعند الخروج إلى payload الحوكمي العام تُحوَّل صراحةً إلى:
+
+```text
+zero / hypothesis / certificate
+```
+
+مع تطبيق `enforce_governed_output_contract(...)` قبل أي إخراج نهائي.
+
+---

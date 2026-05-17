@@ -38,7 +38,7 @@ class TestTraceReplay:
 
     def test_replay_certificate_matches_original(self) -> None:
         evidence = ["observation 1", "observation 2"]
-        rt = ["step 1", "step 2"]
+        rt = ["step 1", "raw_text_units: النار محرقة", "step 2"]
         original = self._run_pipeline("النار محرقة", evidence=evidence, reverse_trace=rt)
         assert original.verdict == "CERTIFICATE"
 
