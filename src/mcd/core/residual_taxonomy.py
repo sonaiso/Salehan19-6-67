@@ -29,6 +29,7 @@ class ResidualFamily(str, Enum):
     CERTIFICATE = "certificate"
     TRANSITION = "transition"
     SERIALIZATION = "serialization"
+    PROMPT_UNDERSTANDING = "prompt_understanding"
     UNKNOWN = "unknown"
 
 
@@ -202,6 +203,70 @@ _RESIDUAL_REGISTRY: dict[str, ResidualSpec] = {
         blocks_certificate=False,
         default_message="Certificate gates passed.",
         remediation_hint=None,
+    ),
+    "missing_prompt_understanding_schema_version": ResidualSpec(
+        code="missing_prompt_understanding_schema_version",
+        family=ResidualFamily.PROMPT_UNDERSTANDING,
+        severity=ResidualSeverity.BLOCKER,
+        blocks_certificate=True,
+        default_message="Prompt understanding payload is missing schema version.",
+        remediation_hint="Add prompt_understanding_schema_version.",
+    ),
+    "unsupported_prompt_understanding_schema_version": ResidualSpec(
+        code="unsupported_prompt_understanding_schema_version",
+        family=ResidualFamily.PROMPT_UNDERSTANDING,
+        severity=ResidualSeverity.BLOCKER,
+        blocks_certificate=True,
+        default_message="Prompt understanding payload uses an unsupported schema version.",
+        remediation_hint="Use a supported prompt_understanding_schema_version.",
+    ),
+    "prompt_missing_raw_text": ResidualSpec(
+        code="prompt_missing_raw_text",
+        family=ResidualFamily.PROMPT_UNDERSTANDING,
+        severity=ResidualSeverity.BLOCKER,
+        blocks_certificate=True,
+        default_message="Prompt understanding payload is missing raw prompt text.",
+        remediation_hint="Provide raw_prompt before ranking understanding.",
+    ),
+    "prompt_missing_trace_anchors": ResidualSpec(
+        code="prompt_missing_trace_anchors",
+        family=ResidualFamily.PROMPT_UNDERSTANDING,
+        severity=ResidualSeverity.BLOCKER,
+        blocks_certificate=True,
+        default_message="Prompt understanding payload has no trace anchors.",
+        remediation_hint="Anchor understanding outputs to raw prompt spans.",
+    ),
+    "prompt_intent_ambiguous": ResidualSpec(
+        code="prompt_intent_ambiguous",
+        family=ResidualFamily.PROMPT_UNDERSTANDING,
+        severity=ResidualSeverity.WARNING,
+        blocks_certificate=False,
+        default_message="Prompt intent is ambiguous.",
+        remediation_hint="Add context or clarify the user objective.",
+    ),
+    "prompt_task_type_missing": ResidualSpec(
+        code="prompt_task_type_missing",
+        family=ResidualFamily.PROMPT_UNDERSTANDING,
+        severity=ResidualSeverity.BLOCKER,
+        blocks_certificate=True,
+        default_message="Prompt task type could not be determined.",
+        remediation_hint="Provide a supported task cue or explicit task_type.",
+    ),
+    "prompt_domain_ambiguous": ResidualSpec(
+        code="prompt_domain_ambiguous",
+        family=ResidualFamily.PROMPT_UNDERSTANDING,
+        severity=ResidualSeverity.WARNING,
+        blocks_certificate=False,
+        default_message="Prompt domain is ambiguous.",
+        remediation_hint="Provide explicit domain context when needed.",
+    ),
+    "prompt_understanding_payload_invalid": ResidualSpec(
+        code="prompt_understanding_payload_invalid",
+        family=ResidualFamily.PROMPT_UNDERSTANDING,
+        severity=ResidualSeverity.BLOCKER,
+        blocks_certificate=True,
+        default_message="Prompt understanding payload structure is invalid.",
+        remediation_hint="Validate required fields and field types.",
     ),
     "unknown_residual": ResidualSpec(
         code="unknown_residual",
