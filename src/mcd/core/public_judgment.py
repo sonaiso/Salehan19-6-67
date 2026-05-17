@@ -7,6 +7,8 @@ from collections.abc import Iterator
 
 from mcd.core.governance_audit import build_governance_audit_event
 from mcd.core.public_schema import (
+    FIELD_AUDIT_SCHEMA_VERSION,
+    FIELD_CONTRACT_VERSION,
     FIELD_GOVERNANCE_AUDIT,
     FIELD_GOVERNANCE_GATE_PASSED,
     FIELD_JUDGMENT,
@@ -14,11 +16,16 @@ from mcd.core.public_schema import (
     FIELD_PROOF_OBJECT_REF,
     FIELD_RAW_TEXT_UNITS,
     FIELD_RESIDUALS,
+    FIELD_RESIDUAL_TAXONOMY_VERSION,
     FIELD_REVERSE_TRACE_OBJ,
     FIELD_REVERSE_TRACE_REF,
+    FIELD_SCHEMA_VERSION,
+    GOVERNANCE_AUDIT_SCHEMA_VERSION,
+    GOVERNED_PAYLOAD_SCHEMA_VERSION,
     JUDGMENT_CERTIFICATE,
     JUDGMENT_HYPOTHESIS,
     JUDGMENT_ZERO,
+    RESIDUAL_TAXONOMY_SCHEMA_VERSION,
 )
 from mcd.core.residual_taxonomy import has_blocking_residuals
 
@@ -115,18 +122,25 @@ def enforce_governed_output_contract(
     """
     input_payload = deepcopy(payload)
     normalized = normalize_public_judgment_fields(deepcopy(payload))
+    if _should_emit_schema_version(normalized):
+        normalized[FIELD_SCHEMA_VERSION] = GOVERNED_PAYLOAD_SCHEMA_VERSION
+        if FIELD_CONTRACT_VERSION in normalized and not normalized[FIELD_CONTRACT_VERSION]:
+            normalized[FIELD_CONTRACT_VERSION] = GOVERNED_PAYLOAD_SCHEMA_VERSION
     internal_suspension_applied = _enforce_internal_state_rule(normalized)
     certificate_reason_codes = _enforce_certificate_gate(normalized)
     for node in _iter_child_dict_nodes(normalized):
         _enforce_internal_state_rule(node)
         _enforce_certificate_gate(node)
     if include_audit:
-        normalized[FIELD_GOVERNANCE_AUDIT] = build_governance_audit_event(
+        audit_payload = build_governance_audit_event(
             input_payload=input_payload,
             output_payload=normalized,
             certificate_reason_codes=certificate_reason_codes,
             internal_suspension_applied=internal_suspension_applied,
         ).to_dict()
+        audit_payload[FIELD_AUDIT_SCHEMA_VERSION] = GOVERNANCE_AUDIT_SCHEMA_VERSION
+        audit_payload[FIELD_RESIDUAL_TAXONOMY_VERSION] = RESIDUAL_TAXONOMY_SCHEMA_VERSION
+        normalized[FIELD_GOVERNANCE_AUDIT] = audit_payload
     return normalized
 
 
@@ -183,6 +197,10 @@ def _enforce_certificate_gate(payload: dict[str, Any]) -> list[str]:
 
 def _has_governance_context(payload: dict[str, Any]) -> bool:
     return bool(payload.keys() & _GOVERNANCE_CONTEXT_KEYS)
+
+
+def _should_emit_schema_version(payload: dict[str, Any]) -> bool:
+    return bool(payload.keys() & _GOVERNANCE_CONTEXT_KEYS) or any(key in payload for key in _JUDGMENT_KEYS)
 
 
 def _is_reverse_trace_payload(payload: dict[str, Any]) -> bool:

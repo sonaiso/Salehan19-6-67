@@ -15,6 +15,8 @@ Phase 0 contracts remain unchanged.
 - `reverse_trace_ref`
 - `reverse_trace_obj`
 - `residuals`
+- `schema_version`
+- `contract_version`
 - `forbidden_transition_markers`
 - `conservation`
 - `_governance_audit`
@@ -24,6 +26,8 @@ Phase 0 contracts remain unchanged.
 - `judgment` runtime values are lowercase: `zero`, `hypothesis`, `certificate`.
 - `reverse_trace_obj` must include `raw_text_units` for certificate eligibility.
 - `residuals` preserve governance residual markers used for downgrade/blocking.
+- `schema_version` identifies governed payload serialization schema compatibility.
+- `contract_version` identifies public contract compatibility for serialized payloads.
 - `forbidden_transition_markers` are governance blockers when present.
 - `conservation` may carry governance pass/fail state when explicit gate field is absent.
 
@@ -32,6 +36,7 @@ Phase 0 contracts remain unchanged.
 - `_governance_audit` is optional.
 - `_governance_audit` appears only when `include_audit=True`.
 - Audit is non-authoritative diagnostic metadata.
+- When present, audit metadata carries `audit_schema_version`.
 
 ## Certificate governance policy
 

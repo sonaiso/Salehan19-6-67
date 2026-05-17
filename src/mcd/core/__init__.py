@@ -37,6 +37,8 @@ from mcd.core.public_judgment import (
     normalize_public_judgment_fields,
 )
 from mcd.core.public_schema import (
+    FIELD_AUDIT_SCHEMA_VERSION,
+    FIELD_CONTRACT_VERSION,
     FIELD_GOVERNANCE_AUDIT,
     FIELD_GOVERNANCE_GATE_PASSED,
     FIELD_JUDGMENT,
@@ -44,11 +46,16 @@ from mcd.core.public_schema import (
     FIELD_PROOF_OBJECT_REF,
     FIELD_RAW_TEXT_UNITS,
     FIELD_RESIDUALS,
+    FIELD_RESIDUAL_TAXONOMY_VERSION,
     FIELD_REVERSE_TRACE_OBJ,
     FIELD_REVERSE_TRACE_REF,
+    FIELD_SCHEMA_VERSION,
+    GOVERNANCE_AUDIT_SCHEMA_VERSION,
+    GOVERNED_PAYLOAD_SCHEMA_VERSION,
     JUDGMENT_CERTIFICATE,
     JUDGMENT_HYPOTHESIS,
     JUDGMENT_ZERO,
+    RESIDUAL_TAXONOMY_SCHEMA_VERSION,
 )
 from mcd.core.governance_audit import GovernanceAuditEvent
 from mcd.core.residual_taxonomy import (
@@ -59,4 +66,9 @@ from mcd.core.residual_taxonomy import (
     classify_residual,
     classify_residuals,
     has_blocking_residuals,
+)
+from mcd.core.serialization import (
+    deserialize_governed_payload,
+    serialize_governed_payload,
+    validate_governed_payload_schema,
 )

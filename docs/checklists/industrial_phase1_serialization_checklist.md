@@ -1,0 +1,9 @@
+- [ ] schema_version exists.
+- [ ] audit_schema_version exists when audit is present.
+- [ ] residual taxonomy version exists where applicable.
+- [ ] serialization preserves raw_text_units.
+- [ ] deserialization cannot upgrade judgment.
+- [ ] unsupported schema version blocks certificate.
+- [ ] missing raw_text_units blocks certificate.
+- [ ] round-trip tests pass.
+- [ ] final judgment triad unchanged.
