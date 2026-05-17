@@ -30,6 +30,7 @@ class ResidualFamily(str, Enum):
     TRANSITION = "transition"
     SERIALIZATION = "serialization"
     PROMPT_UNDERSTANDING = "prompt_understanding"
+    FRACTAL_OPERATOR = "fractal_operator"
     UNKNOWN = "unknown"
 
 
@@ -267,6 +268,62 @@ _RESIDUAL_REGISTRY: dict[str, ResidualSpec] = {
         blocks_certificate=True,
         default_message="Prompt understanding payload structure is invalid.",
         remediation_hint="Validate required fields and field types.",
+    ),
+    "operator_missing_layer_mapping": ResidualSpec(
+        code="operator_missing_layer_mapping",
+        family=ResidualFamily.FRACTAL_OPERATOR,
+        severity=ResidualSeverity.BLOCKER,
+        blocks_certificate=True,
+        default_message="Operator is missing layer_from or layer_to mapping.",
+        remediation_hint="Declare exactly one typed transition Lᵢ → Lᵢ₊₁.",
+    ),
+    "operator_missing_gate": ResidualSpec(
+        code="operator_missing_gate",
+        family=ResidualFamily.FRACTAL_OPERATOR,
+        severity=ResidualSeverity.BLOCKER,
+        blocks_certificate=True,
+        default_message="Operator contract is missing required gates.",
+        remediation_hint="Declare missing_gate and non-empty gates.",
+    ),
+    "operator_forbidden_output": ResidualSpec(
+        code="operator_forbidden_output",
+        family=ResidualFamily.FRACTAL_OPERATOR,
+        severity=ResidualSeverity.BLOCKER,
+        blocks_certificate=True,
+        default_message="Operator emits forbidden output for its local layer.",
+        remediation_hint="Restrict output_type to the declared local transition.",
+    ),
+    "operator_missing_reverse_trace": ResidualSpec(
+        code="operator_missing_reverse_trace",
+        family=ResidualFamily.FRACTAL_OPERATOR,
+        severity=ResidualSeverity.BLOCKER,
+        blocks_certificate=True,
+        default_message="Certificate-capable operator lacks reverse trace requirement.",
+        remediation_hint="Set reverse_trace_required=True for certificate-capable operators.",
+    ),
+    "operator_multi_transition_forbidden": ResidualSpec(
+        code="operator_multi_transition_forbidden",
+        family=ResidualFamily.FRACTAL_OPERATOR,
+        severity=ResidualSeverity.BLOCKER,
+        blocks_certificate=True,
+        default_message="Operator attempts to span multiple transitions.",
+        remediation_hint="Bind operator to a single transition only.",
+    ),
+    "operator_contract_invalid": ResidualSpec(
+        code="operator_contract_invalid",
+        family=ResidualFamily.FRACTAL_OPERATOR,
+        severity=ResidualSeverity.BLOCKER,
+        blocks_certificate=True,
+        default_message="Operator contract failed typed governance validation.",
+        remediation_hint="Provide required typed fields and valid rank.",
+    ),
+    "transition_repair_missing_evidence": ResidualSpec(
+        code="transition_repair_missing_evidence",
+        family=ResidualFamily.FRACTAL_OPERATOR,
+        severity=ResidualSeverity.BLOCKER,
+        blocks_certificate=True,
+        default_message="Transition repair candidate lacks evidence requirements.",
+        remediation_hint="Declare concrete evidence requirements for the operator.",
     ),
     "unknown_residual": ResidualSpec(
         code="unknown_residual",
