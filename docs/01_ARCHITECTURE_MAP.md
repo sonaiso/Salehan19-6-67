@@ -54,6 +54,19 @@ Responsibilities:
 - coding judgment output
 - PR reverse trace packaging
 
+## Governed LLM Auditor
+
+Governed LLM Auditor is the implementation of "LLMs propose; AFJG governs judgment."
+
+Responsibilities:
+
+- accepting LLM proposals (never judgments)
+- applying AFJG governance gates (Nabhani rational method, evidence, reverse trace)
+- emitting ZERO / HYPOTHESIS / CERTIFICATE final verdicts
+- saving and replaying governance artifacts
+
+Implementation root: `src/mcd/llm_proposer`.
+
 ## Canonical Separation Statement
 
 AFJG is the law. Bayani is the Arabic verifier. MCD is the implementation. Coding Copilot is the industrial dogfood application.

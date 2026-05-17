@@ -48,6 +48,7 @@ AFJG is the law. Bayani is the Arabic verifier. MCD is the implementation namesp
 3. Grounded Lexical Cognitive Frame Layer (GLCFL)
 4. Epistemic Decoder
 5. AFJG Coding Copilot Auditor
+6. Governed LLM Proposer (AFJG-controlled) — `src/mcd/llm_proposer/`
 
 ## Final Judgments
 
@@ -90,6 +91,7 @@ python -m pytest tests/test_coding_real_pr_fixtures.py -v
 - [Developer Guide](docs/10_DEVELOPER_GUIDE.md)
 - [Testing and CI](docs/11_TESTING_AND_CI.md)
 - [Historical README Archive](docs/12_ARCHIVE_README_HISTORY.md)
+- [Governed LLM Proposer](docs/13_LLM_PROPOSER.md)
 - [Enlightened Governed Prediction Architecture (PR #97)](docs/ENLIGHTENED_GOVERNED_PREDICTION.md)
 - [Synthetic Governed Answer-Birth Dataset Generator (PR #98)](docs/SYNTHETIC_GOVERNED_ANSWER_BIRTH_DATASET.md)
 - [Worktree Progress](docs/worktree/00_WORKTREE_INDEX.md)
