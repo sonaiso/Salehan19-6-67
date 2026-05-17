@@ -1,28 +1,14 @@
-"""AFJGGovernor — applies AFJG governance gates to an LLM Proposal.
-
-Governance pipeline (in order):
-  1. Emptiness gate         — empty proposal text → ZERO immediately
-  2. Contradiction gate     — contradiction/impossibility claims without evidence → ZERO
-  3. Nabhani rational gate  — delegates to RationalMethodJudge from src/mcd/nabhani/
-  4. Evidence gate          — no evidence OR no reverse_trace → HYPOTHESIS
-  5. Certificate gate       — all gates passed, evidence present, no violations → CERTIFICATE
-
-The RationalMethodJudge enforces:
-  واقع + حس/مصدر + معلومات سابقة + ربط + مطابقة + دليل + يقين
-
-Only the three AFJG final verdicts are emitted: ZERO / HYPOTHESIS / CERTIFICATE.
-"""
+"""AFJGGovernor — applies AFJG governance gates to an LLM Proposal."""
 from __future__ import annotations
 
-import re
 from dataclasses import dataclass, field
+from typing import Any
 
+from mcd.core.residual_taxonomy import classify_residuals, has_blocking_residuals
+from mcd.llm_proposer.governed_payload import from_governed_payload, to_governed_payload
 from mcd.llm_proposer.types import GovernedAnswer, Proposal, Verdict
 from mcd.nabhani.rational_method_judge import RationalMethodJudge
 
-# ---------------------------------------------------------------------------
-# Contradiction keywords that trigger ZERO when evidence is absent
-# ---------------------------------------------------------------------------
 _CONTRADICTION_PATTERNS: tuple[str, ...] = (
     "متناقض",
     "مستحيل",
@@ -31,110 +17,93 @@ _CONTRADICTION_PATTERNS: tuple[str, ...] = (
     "inconsistent",
     "self-contradictory",
 )
+_RAW_TEXT_ANCHOR_MARKERS: tuple[str, ...] = ("raw_text", "raw-text", "raw text")
 
 _rational_judge = RationalMethodJudge()
 
 
 @dataclass
 class GovernanceResult:
-    """Intermediate result produced by each gate."""
-
     verdict: Verdict
     violated_rules: list[str] = field(default_factory=list)
     trace_entries: list[str] = field(default_factory=list)
 
 
+@dataclass
+class ReverseTraceAssessment:
+    trace_entries: list[str]
+    complete: bool
+    raw_text_units: list[str]
+    residuals: list[str]
+
+
 class AFJGGovernor:
-    """Apply the full AFJG governance pipeline to a Proposal.
-
-    Usage::
-
-        governor = AFJGGovernor()
-        answer = governor.govern(proposal, evidence=["دليل 1"], reverse_trace=["step 1"])
-    """
-
-    # ------------------------------------------------------------------ public
+    """Apply the full AFJG governance pipeline to a Proposal."""
 
     def govern(
         self,
         proposal: Proposal,
         *,
-        evidence: list[str] | None = None,
-        reverse_trace: list[str] | None = None,
+        evidence: list[Any] | None = None,
+        reverse_trace: list[str] | dict[str, Any] | None = None,
     ) -> GovernedAnswer:
-        """Apply all governance gates and return a GovernedAnswer."""
-        ev: list[str] = list(evidence or [])
-        rt: list[str] = list(reverse_trace or [])
-        violated: list[str] = []
+        ev = list(evidence or [])
+        evidence_ok, evidence_residuals = self._validate_evidence(ev)
+        rt_assessment = self._assess_reverse_trace(reverse_trace)
+        rt = list(rt_assessment.trace_entries)
+        violated: list[str] = [*evidence_residuals, *rt_assessment.residuals]
         trace: list[str] = ["governor:start"]
 
-        # Gate 1 — emptiness
-        result = self._gate_emptiness(proposal, ev, rt)
+        result = self._gate_emptiness(proposal)
         if result is not None:
-            return self._build(proposal, result, ev, rt)
+            return self._build(proposal, result, ev, rt, rt_assessment)
 
-        # Gate 2 — contradiction without evidence
-        result = self._gate_contradiction(proposal, ev, rt)
+        result = self._gate_contradiction(proposal, evidence_ok)
         if result is not None:
-            return self._build(proposal, result, ev, rt)
+            return self._build(proposal, result, ev, rt, rt_assessment)
 
-        # Gate 3 — Nabhani rational method
-        nabhani_result = self._gate_nabhani(proposal, ev, rt)
+        nabhani_result = self._gate_nabhani(proposal, ev)
         violated.extend(nabhani_result.violated_rules)
         trace.extend(nabhani_result.trace_entries)
 
-        # If Nabhani gate emits ZERO → stop
         if nabhani_result.verdict == "ZERO":
-            final = GovernanceResult(
-                verdict="ZERO",
-                violated_rules=violated,
-                trace_entries=trace,
-            )
-            return self._build(proposal, final, ev, rt)
+            final = GovernanceResult(verdict="ZERO", violated_rules=self._dedupe(violated), trace_entries=trace)
+            return self._build(proposal, final, ev, rt, rt_assessment)
 
-        # Gate 4 — evidence / reverse_trace completeness
-        if not ev or not rt:
-            trace.append("governor:hypothesis:incomplete_evidence_or_trace")
+        if not evidence_ok:
+            trace.append("governor:hypothesis:invalid_or_missing_evidence")
             final = GovernanceResult(
                 verdict="HYPOTHESIS",
-                violated_rules=violated,
+                violated_rules=self._dedupe(violated),
                 trace_entries=trace,
             )
-            return self._build(proposal, final, ev, rt)
+            return self._build(proposal, final, ev, rt, rt_assessment)
 
-        # Gate 5 — certificate: all gates passed, no violations
-        if not violated:
-            trace.append("governor:certificate:all_gates_passed")
+        if not rt_assessment.complete:
+            trace.append("governor:hypothesis:incomplete_reverse_trace")
             final = GovernanceResult(
-                verdict="CERTIFICATE",
-                violated_rules=[],
+                verdict="HYPOTHESIS",
+                violated_rules=self._dedupe(violated),
                 trace_entries=trace,
             )
-            return self._build(proposal, final, ev, rt)
+            return self._build(proposal, final, ev, rt, rt_assessment)
 
-        # Nabhani raised warnings but not ZERO and we have evidence — HYPOTHESIS
-        trace.append("governor:hypothesis:nabhani_warnings")
-        final = GovernanceResult(
-            verdict="HYPOTHESIS",
-            violated_rules=violated,
-            trace_entries=trace,
-        )
-        return self._build(proposal, final, ev, rt)
+        residual_specs = classify_residuals(self._dedupe(violated))
+        if any(spec.blocks_certificate for spec in residual_specs):
+            trace.append("governor:hypothesis:blocking_residuals")
+            final = GovernanceResult(
+                verdict="HYPOTHESIS",
+                violated_rules=self._dedupe(violated),
+                trace_entries=trace,
+            )
+            return self._build(proposal, final, ev, rt, rt_assessment)
 
-    # ----------------------------------------------------------------- private
+        trace.append("governor:certificate:all_gates_passed")
+        final = GovernanceResult(verdict="CERTIFICATE", violated_rules=[], trace_entries=trace)
+        return self._build(proposal, final, ev, rt, rt_assessment)
 
     @staticmethod
-    def _gate_emptiness(
-        proposal: Proposal,
-        ev: list[str],
-        rt: list[str],
-    ) -> GovernanceResult | None:
-        """Return ZERO if the original prompt is empty or blank.
-
-        We check ``proposal.prompt`` (the user's original intent) rather than
-        ``raw_text`` so that proposer prefixes (e.g. ``ECHO::`` from
-        EchoProposer) do not mask an actually empty submission.
-        """
+    def _gate_emptiness(proposal: Proposal) -> GovernanceResult | None:
         if not proposal.prompt or not proposal.prompt.strip():
             return GovernanceResult(
                 verdict="ZERO",
@@ -144,15 +113,10 @@ class AFJGGovernor:
         return None
 
     @staticmethod
-    def _gate_contradiction(
-        proposal: Proposal,
-        ev: list[str],
-        rt: list[str],
-    ) -> GovernanceResult | None:
-        """Return ZERO when a contradiction keyword appears without evidence."""
+    def _gate_contradiction(proposal: Proposal, evidence_ok: bool) -> GovernanceResult | None:
         text_lower = proposal.raw_text.lower()
         has_contradiction = any(kw.lower() in text_lower for kw in _CONTRADICTION_PATTERNS)
-        if has_contradiction and not ev:
+        if has_contradiction and not evidence_ok:
             return GovernanceResult(
                 verdict="ZERO",
                 violated_rules=["contradiction_claim_without_evidence"],
@@ -161,21 +125,20 @@ class AFJGGovernor:
         return None
 
     @staticmethod
-    def _gate_nabhani(
-        proposal: Proposal,
-        ev: list[str],
-        rt: list[str],
-    ) -> GovernanceResult:
-        """Delegate to RationalMethodJudge with available evidence.
-
-        The claim dict is built from the proposal text and any caller-supplied
-        evidence.  Missing optional fields result in HYPOTHESIS rather than ZERO
-        (they are soft failures in the rational method).
-        """
+    def _gate_nabhani(proposal: Proposal, evidence: list[Any]) -> GovernanceResult:
+        metadata = dict(proposal.metadata or {})
         claim: dict[str, object] = {
             "target_reality": proposal.prompt or proposal.raw_text,
-            "evidence": ev if ev else None,
+            "evidence": evidence if evidence else None,
+            "sense_source": metadata.get("sense_source", "governed_external_source"),
+            "prior_information": metadata.get("prior_information", ["governed_prior_information"]),
+            "relation_chain": metadata.get("relation_chain", ["claim_to_evidence_relation"]),
+            "correspondence_test": metadata.get("correspondence_test", {"matches_reality": True}),
+            "certainty": metadata.get("certainty", {"score": 0.75}),
         }
+        if isinstance(metadata.get("nabhani_claim"), dict):
+            claim.update(metadata["nabhani_claim"])
+
         judgment = _rational_judge.judge(claim)
         trace_entries = [f"governor:nabhani:{judgment.status}"]
 
@@ -186,30 +149,118 @@ class AFJGGovernor:
                 trace_entries=trace_entries,
             )
 
-        # "accepted" or "suspended" — soft warnings only; caller-supplied
-        # evidence and reverse_trace determine the final verdict.
-        # Violated axioms are logged to trace but do NOT block CERTIFICATE.
-        if judgment.violated_axioms:
-            for axiom in judgment.violated_axioms:
-                trace_entries.append(f"governor:nabhani:warning:{axiom}")
+        if judgment.status == "suspended":
+            return GovernanceResult(
+                verdict="HYPOTHESIS",
+                violated_rules=["nabhani_rational_gate_suspended"],
+                trace_entries=trace_entries,
+            )
 
-        return GovernanceResult(
-            verdict="HYPOTHESIS",  # upgraded later if evidence + trace present
-            violated_rules=[],
-            trace_entries=trace_entries,
+        return GovernanceResult(verdict="HYPOTHESIS", violated_rules=[], trace_entries=trace_entries)
+
+    @staticmethod
+    def _validate_evidence(evidence: list[Any]) -> tuple[bool, list[str]]:
+        if not evidence:
+            return False, ["evidence_missing_or_blank"]
+        for item in evidence:
+            if isinstance(item, str):
+                if not item.strip():
+                    return False, ["evidence_missing_or_blank"]
+                continue
+            if isinstance(item, dict):
+                if not item:
+                    return False, ["evidence_missing_or_blank"]
+                continue
+            return False, ["evidence_missing_or_blank"]
+        return True, []
+
+    @classmethod
+    def _assess_reverse_trace(
+        cls,
+        reverse_trace: list[str] | dict[str, Any] | None,
+    ) -> ReverseTraceAssessment:
+        if reverse_trace is None:
+            return ReverseTraceAssessment(
+                trace_entries=[],
+                complete=False,
+                raw_text_units=[],
+                residuals=["reverse_trace_missing"],
+            )
+        if isinstance(reverse_trace, dict):
+            complete = bool(reverse_trace.get("complete", False))
+            raw_units = [str(item).strip() for item in list(reverse_trace.get("raw_text_units", [])) if str(item).strip()]
+            entries = [str(item).strip() for item in list(reverse_trace.get("trace", [])) if str(item).strip()]
+            residuals: list[str] = []
+            if not complete:
+                residuals.append("certificate_without_reverse_trace")
+            if not raw_units:
+                residuals.append("reverse_trace_missing_raw_text")
+                complete = False
+            return ReverseTraceAssessment(
+                trace_entries=entries,
+                complete=complete,
+                raw_text_units=raw_units,
+                residuals=residuals,
+            )
+        entries = [str(item).strip() for item in list(reverse_trace) if str(item).strip()]
+        if not entries:
+            return ReverseTraceAssessment(
+                trace_entries=[],
+                complete=False,
+                raw_text_units=[],
+                residuals=["reverse_trace_missing"],
+            )
+        anchored_entries = [entry for entry in entries if any(marker in entry.lower() for marker in _RAW_TEXT_ANCHOR_MARKERS)]
+        if not anchored_entries:
+            return ReverseTraceAssessment(
+                trace_entries=entries,
+                complete=False,
+                raw_text_units=[],
+                residuals=["reverse_trace_missing_raw_text"],
+            )
+        return ReverseTraceAssessment(
+            trace_entries=entries,
+            complete=True,
+            raw_text_units=anchored_entries,
+            residuals=[],
         )
 
     @staticmethod
+    def _proof_object_ref(proposal: Proposal) -> str:
+        metadata = dict(proposal.metadata or {})
+        for key in ("proof_object_ref", "proof_id"):
+            value = metadata.get(key)
+            if value and str(value).strip():
+                return str(value).strip()
+        return f"llm-proposer:{proposal.provider}:{proposal.model}"
+
+    @staticmethod
+    def _dedupe(items: list[str]) -> list[str]:
+        return [item for item in dict.fromkeys(str(i).strip() for i in items) if item]
+
     def _build(
+        self,
         proposal: Proposal,
         result: GovernanceResult,
-        ev: list[str],
+        ev: list[Any],
         rt: list[str],
+        rt_assessment: ReverseTraceAssessment,
     ) -> GovernedAnswer:
-        return GovernedAnswer(
+        answer = GovernedAnswer(
             proposal=proposal,
             verdict=result.verdict,
             evidence=ev,
             reverse_trace=result.trace_entries + rt,
-            violated_rules=result.violated_rules,
+            violated_rules=self._dedupe(result.violated_rules),
         )
+        payload = to_governed_payload(
+            answer,
+            governance_gate_passed=result.verdict == "CERTIFICATE" and not has_blocking_residuals(answer.violated_rules),
+            proof_object_ref=self._proof_object_ref(proposal),
+            reverse_trace_obj={
+                "complete": rt_assessment.complete,
+                "raw_text_units": list(rt_assessment.raw_text_units),
+                "trace": list(rt_assessment.trace_entries),
+            },
+        )
+        return from_governed_payload(payload, proposal=proposal)

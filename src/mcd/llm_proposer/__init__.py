@@ -23,6 +23,12 @@ from mcd.llm_proposer.types import (
     Proposal,
     Verdict,
 )
+from mcd.llm_proposer.verdict_mapping import (
+    PUBLIC_JUDGMENT_TO_VERDICT,
+    VERDICT_TO_PUBLIC_JUDGMENT,
+    public_judgment_to_verdict,
+    verdict_to_public_judgment,
+)
 
 __all__ = [
     "AFJGGovernor",
@@ -31,5 +37,9 @@ __all__ = [
     "GovernedAnswer",
     "GovernedProposalPipeline",
     "Proposal",
+    "PUBLIC_JUDGMENT_TO_VERDICT",
+    "VERDICT_TO_PUBLIC_JUDGMENT",
     "Verdict",
+    "public_judgment_to_verdict",
+    "verdict_to_public_judgment",
 ]

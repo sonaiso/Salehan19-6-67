@@ -2,12 +2,6 @@ fastapi>=0.100.0
 uvicorn>=0.22.0
 httpx>=0.24.0
 
-[anthropic]
-anthropic>=0.25
-
-[openai]
-openai>=1.0
-
 [test]
 pytest>=8.0.0
 hypothesis>=6.152.6
