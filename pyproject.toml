@@ -18,6 +18,8 @@ test = [
     "pytest>=8.0.0",
     "hypothesis>=6.152.6",
 ]
+openai = ["openai>=1.0"]
+anthropic = ["anthropic>=0.25"]
 
 [project.scripts]
 mcd = "mcd.cli:main"
