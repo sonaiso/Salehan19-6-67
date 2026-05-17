@@ -19,7 +19,7 @@
 - **Purpose:** Gate LLM outputs with AFJG verification before acceptance.
 - **Input:** Model prompts, answers, and context evidence.
 - **Output:** Governed acceptance/rejection decision with trace.
-- **Current status:** **spec-only**
+- **Current status:** **implemented** (`src/mcd/llm_proposer/`)
 
 ## Product 4 — Judgment-Trace Training Dataset
 
