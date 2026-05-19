@@ -1,0 +1,16 @@
+# Signifier (دال) — §10 of the brief.
+name: "دال"
+layer: "semantic"
+carrier: "لفظ/رسم/تركيب"
+domain: "وضع لغوي أو عرفي أو شرعي"
+prior_information: ["وضع", "استعمال", "مجال", "قرينة"]
+distinction: ["دال مفرد", "دال مركب", "دال ذري"]
+relation_before: ["حامل صوتي أو كتابي"]
+relation_after: ["مدلول مرخص"]
+function: "فتح إمكان دلالة"
+formation_gate: "gate_signifier_attested_in_domain"
+backward_gate: "gate_signified_matches_signifier_domain"
+evidence: []
+residuals: []
+rank: "HYPOTHESIS"
+output_contract: "دال لا ينتقل إلى مدلول بلا مجال"

@@ -1,0 +1,16 @@
+# Relation (نسبة) — §11 of the brief.
+name: "نسبة"
+layer: "syntactic-semantic"
+carrier: "تركيب"
+domain: "إسناد أو تقييد أو إضافة أو شرط"
+prior_information: ["عامل", "معمول", "رابط", "جهة"]
+distinction: ["إسنادية", "تقييدية", "شرطية", "إضافية"]
+relation_before: ["مفردات مرخصة"]
+relation_after: ["إفادة محتملة"]
+function: "ربط أطراف المعنى"
+formation_gate: "gate_operator_and_link_present"
+backward_gate: "gate_later_predication_confirms_relation"
+evidence: []
+residuals: []
+rank: "HYPOTHESIS"
+output_contract: "نسبة مرخصة لا حكمًا بعد"

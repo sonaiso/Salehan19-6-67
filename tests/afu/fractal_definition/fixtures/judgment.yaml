@@ -1,0 +1,16 @@
+# Judgment (حكم) — §12 of the brief.
+name: "حكم"
+layer: "normative-inferential"
+carrier: "إفادة ذات قوة خطابية"
+domain: "تكليفي/وضعي/عقلي/لغوي"
+prior_information: ["دليل", "جهة دلالة", "موانع"]
+distinction: ["واجب", "حرام", "مندوب", "مكروه", "مباح"]
+relation_before: ["إفادة", "قوة خطابية", "جهة دلالة"]
+relation_after: ["تنزيل", "أثر"]
+function: "تعيين موقف معتبر"
+formation_gate: "gate_evidence_and_dalala_sufficient"
+backward_gate: "gate_tanzil_reveals_no_blocker"
+evidence: []
+residuals: []
+rank: "HYPOTHESIS"
+output_contract: "حكم مرخص لا ينزل بلا مناط"

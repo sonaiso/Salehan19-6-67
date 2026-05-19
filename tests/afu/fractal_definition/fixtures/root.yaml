@@ -1,0 +1,16 @@
+# Root (جذر) — §8 of the brief.
+name: "جذر"
+layer: "morpho-semantic"
+carrier: "حروف أصلية"
+domain: "مادة لغوية عربية"
+prior_information: ["معجم", "استعمال", "قياس", "سماع"]
+distinction: ["أصلية", "زيادة", "إعلال", "إبدال"]
+relation_before: ["مقاطع وحروف"]
+relation_after: ["وزن", "صيغة", "مصدر", "مشتق"]
+function: "حمل مادة دلالية كامنة"
+formation_gate: "gate_root_letters_are_original"
+backward_gate: "gate_derivations_confirm_root"
+evidence: []
+residuals: []
+rank: "HYPOTHESIS"
+output_contract: "جذر مرخص لا يدعي الحدث دائمًا"

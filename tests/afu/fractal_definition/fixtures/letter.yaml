@@ -1,0 +1,16 @@
+# Letter (حرف) — §6 of the brief.
+name: "حرف"
+layer: "phonological"
+carrier: "صوت/رسم"
+domain: "نظام العربية"
+prior_information: ["مخارج", "صفات", "رسم", "موضع"]
+distinction: ["يميز صوتًا عن صوت"]
+relation_before: ["اتصال بما قبله أو بداية"]
+relation_after: ["اتصال بما بعده أو نهاية"]
+function: "حمل إمكان صوتي/بنيوي"
+formation_gate: "gate_letter_is_arabic"
+backward_gate: "gate_letter_function_confirmed_by_neighbour"
+evidence: []
+residuals: []
+rank: "HYPOTHESIS"
+output_contract: "حرف مرخص داخل الكلمة"

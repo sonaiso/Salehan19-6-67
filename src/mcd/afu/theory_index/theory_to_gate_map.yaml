@@ -1,0 +1,15 @@
+# AFU Theory-to-Gate Map (PR 2: empty but structured).
+#
+# Schema:
+#   schema_version: str (semver)
+#   layers:
+#     - name: str          # e.g. phonological, morphological, semantic, ...
+#       gates: list[str]   # gate identifiers from the Gate Registry
+#
+# Invariants enforced by tests/afu/registry/test_gate_registry.py:
+#   * schema_version is non-empty;
+#   * layers is a (possibly empty) list;
+#   * every gate id referenced here MUST exist in the Gate Registry
+#     once the registry is populated (PR 3+).
+schema_version: "1.0.0"
+layers: []

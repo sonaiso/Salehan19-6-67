@@ -1,0 +1,16 @@
+# Vowel (حركة) — §7 of the brief.
+name: "حركة"
+layer: "phonological"
+carrier: "حرف"
+domain: "موضع داخل الكلمة أو آخرها"
+prior_information: ["نوع الكلمة", "موقعها", "الوقف/الوصل"]
+distinction: ["فتح", "ضم", "كسر", "سكون"]
+relation_before: ["الحرف الذي تحمل عليه"]
+relation_after: ["أثرها في المقطع أو الإعراب"]
+function: "تقييد تشغيل الحرف"
+formation_gate: "gate_vowel_role_classified"
+backward_gate: "gate_final_effect_explains_vowel"
+evidence: []
+residuals: []
+rank: "HYPOTHESIS"
+output_contract: "حركة مرخصة بوظيفة محددة"

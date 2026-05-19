@@ -1,0 +1,16 @@
+# Pattern (وزن) — §9 of the brief.
+name: "وزن"
+layer: "morphological"
+carrier: "بنية صوتية/حرفية"
+domain: "صرف عربي"
+prior_information: ["أبواب", "صيغ", "زوائد", "إعلال"]
+distinction: ["أصلي", "مزيد", "مصدر", "مشتق"]
+relation_before: ["جذر", "مقاطع"]
+relation_after: ["معنى صرفي", "وظيفة"]
+function: "تحويل المادة الدلالية"
+formation_gate: "gate_structure_matches_licensed_pattern"
+backward_gate: "gate_later_semantics_matches_pattern_function"
+evidence: []
+residuals: []
+rank: "HYPOTHESIS"
+output_contract: "صيغة صرفية مرخصة"
